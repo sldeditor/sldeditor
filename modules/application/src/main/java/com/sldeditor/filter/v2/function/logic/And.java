@@ -19,19 +19,17 @@
 
 package com.sldeditor.filter.v2.function.logic;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.filter.AndImpl;
-import org.opengis.filter.Filter;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.filter.AndImpl;
+import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class And.
@@ -40,14 +38,10 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class And extends FilterBase implements FilterConfigInterface {
 
-    /**
-     * The Class AndExtended.
-     */
+    /** The Class AndExtended. */
     public class AndExtended extends AndImpl implements FilterExtendedInterface {
 
-        /**
-         * Instantiates a new and extended.
-         */
+        /** Instantiates a new and extended. */
         public AndExtended() {
             super(new ArrayList<Filter>());
         }
@@ -63,7 +57,7 @@ public class And extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.geotools.filter.LogicFilterImpl#toString()
          */
         public String toString() {
@@ -79,7 +73,7 @@ public class And extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -88,9 +82,7 @@ public class And extends FilterBase implements FilterConfigInterface {
         }
     }
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public And(String category) {
         super(category);
     }

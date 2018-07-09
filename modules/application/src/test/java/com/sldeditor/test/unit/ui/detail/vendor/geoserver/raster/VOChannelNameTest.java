@@ -21,9 +21,19 @@ package com.sldeditor.test.unit.ui.detail.vendor.geoserver.raster;
 
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.GeoServerVendorOption;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.ui.detail.RasterSymbolizerDetails;
+import com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameRedExpression;
+import com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameRedNoExpression;
+import com.sldeditor.ui.detail.vendor.geoserver.raster.VendorOptionRasterFactory;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.ContrastEnhancement;
 import org.geotools.styling.FeatureTypeStyle;
@@ -36,47 +46,33 @@ import org.junit.After;
 import org.junit.Test;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.vendoroption.GeoServerVendorOption;
-import com.sldeditor.common.vendoroption.VendorOptionManager;
-import com.sldeditor.common.vendoroption.VersionData;
-import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.ui.detail.RasterSymbolizerDetails;
-import com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameRedExpression;
-import com.sldeditor.ui.detail.vendor.geoserver.raster.VOChannelNameRedNoExpression;
-import com.sldeditor.ui.detail.vendor.geoserver.raster.VendorOptionRasterFactory;
-
 /**
  * The unit test for VOChannelNameTest.
- * 
- * <p>
- * {@link com.sldeditor.ui.detail.vendor.geoserver.raster.ChannelName}
+ *
+ * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.raster.ChannelName}
  *
  * @author Robert Ward (SCISYS)
  */
 public class VOChannelNameTest {
 
-    /**
-     * Called after each test.
-     */
+    /** Called after each test. */
     @After
     public void afterEachTest() {
         VendorOptionManager.destroyInstance();
     }
 
     /**
-     * Test method for populate
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeRed#VOGeoServerContrastEnhancementNormalizeRed(java.lang.Class, com.sldeditor.ui.detail.RasterSymbolizerDetails)}.
+     * Test method for populate {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalizeRed#VOGeoServerContrastEnhancementNormalizeRed(java.lang.Class,
+     * com.sldeditor.ui.detail.RasterSymbolizerDetails)}.
      */
     @Test
     public void testPopulate() {
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
         RasterSymbolizerDetails panel = new RasterSymbolizerDetails();
-        VendorOptionRasterFactory vendorOptionRasterFactory = new VendorOptionRasterFactory(
-                getClass(), panel);
+        VendorOptionRasterFactory vendorOptionRasterFactory =
+                new VendorOptionRasterFactory(getClass(), panel);
 
         List<VersionData> stringVersionDataList = new ArrayList<VersionData>();
         stringVersionDataList.add(VersionData.decode(GeoServerVendorOption.class, "2.3.1"));
@@ -88,13 +84,14 @@ public class VOChannelNameTest {
         VendorOptionManager.getInstance().setSelectedVendorOptions(stringVersionDataList);
 
         String expectedNameString = "test grey name string";
-        SelectedChannelType channelTypeString = styleFactory
-                .createSelectedChannelType(expectedNameString, (ContrastEnhancement) null);
+        SelectedChannelType channelTypeString =
+                styleFactory.createSelectedChannelType(
+                        expectedNameString, (ContrastEnhancement) null);
 
-        vendorOptionRasterFactory.setChannelName(GroupIdEnum.RASTER_GREY_CHANNEL,
-                channelTypeString);
-        Expression actual = vendorOptionRasterFactory
-                .getChannelName(GroupIdEnum.RASTER_GREY_CHANNEL);
+        vendorOptionRasterFactory.setChannelName(
+                GroupIdEnum.RASTER_GREY_CHANNEL, channelTypeString);
+        Expression actual =
+                vendorOptionRasterFactory.getChannelName(GroupIdEnum.RASTER_GREY_CHANNEL);
 
         assertTrue(actual.toString().equals(expectedNameString));
 
@@ -102,23 +99,24 @@ public class VOChannelNameTest {
         VendorOptionManager.getInstance().setSelectedVendorOptions(expressionVersionDataList);
 
         String expectedNameExpression = "test grey name expression";
-        SelectedChannelType channelTypeExpression = styleFactory
-                .createSelectedChannelType(expectedNameExpression, (ContrastEnhancement) null);
+        SelectedChannelType channelTypeExpression =
+                styleFactory.createSelectedChannelType(
+                        expectedNameExpression, (ContrastEnhancement) null);
 
-        vendorOptionRasterFactory.setChannelName(GroupIdEnum.RASTER_GREY_CHANNEL,
-                channelTypeExpression);
+        vendorOptionRasterFactory.setChannelName(
+                GroupIdEnum.RASTER_GREY_CHANNEL, channelTypeExpression);
         actual = vendorOptionRasterFactory.getChannelName(GroupIdEnum.RASTER_GREY_CHANNEL);
         assertTrue(actual.toString().equals(expectedNameExpression));
     }
 
-    /**
-     * Increase coverage.
-     */
+    /** Increase coverage. */
     @Test
     public void increaseCoverage() {
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
-        VOChannelNameRedNoExpression noExpression = new VOChannelNameRedNoExpression(getClass(), FieldIdEnum.VO_RASTER_RGB_RED_NAME_NO_EXPRESSION);
+        VOChannelNameRedNoExpression noExpression =
+                new VOChannelNameRedNoExpression(
+                        getClass(), FieldIdEnum.VO_RASTER_RGB_RED_NAME_NO_EXPRESSION);
         noExpression.setUp("symbol/raster/PanelConfig_ChannelNameRedNoExpression.xml");
         noExpression.preLoadSymbol();
         noExpression.populate((FeatureTypeStyle) null);
@@ -138,12 +136,14 @@ public class VOChannelNameTest {
         noExpression.getMinimumVersion(null, null, vendorOptionsPresentList);
 
         String expectedNameExpression = "test string";
-        SelectedChannelType channelTypeExpression = styleFactory
-                .createSelectedChannelType(expectedNameExpression, (ContrastEnhancement) null);
+        SelectedChannelType channelTypeExpression =
+                styleFactory.createSelectedChannelType(
+                        expectedNameExpression, (ContrastEnhancement) null);
         noExpression.getMinimumVersion(null, channelTypeExpression, vendorOptionsPresentList);
 
-        VOChannelNameRedExpression expression = new VOChannelNameRedExpression(getClass(),
-                FieldIdEnum.VO_RASTER_RGB_RED_NAME_EXPRESSION);
+        VOChannelNameRedExpression expression =
+                new VOChannelNameRedExpression(
+                        getClass(), FieldIdEnum.VO_RASTER_RGB_RED_NAME_EXPRESSION);
         noExpression.setUp("symbol/raster/PanelConfig_ChannelNameRedExpression.xml");
         expression.preLoadSymbol();
         expression.populate((FeatureTypeStyle) null);

@@ -45,9 +45,7 @@ public class TypeManager {
         return instance;
     }
 
-    /**
-     * Reset the literal data type.
-     */
+    /** Reset the literal data type. */
     public void reset() {
         firstLiteralType = null;
     }

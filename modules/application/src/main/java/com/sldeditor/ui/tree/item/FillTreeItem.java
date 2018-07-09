@@ -19,17 +19,15 @@
 
 package com.sldeditor.ui.tree.item;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.geotools.styling.Symbolizer;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.tree.SLDTreeTools;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.geotools.styling.Symbolizer;
 
 /**
  * Class that display fill data within the sld tree structure.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FillTreeItem implements SLDTreeItemInterface {
@@ -37,15 +35,12 @@ public class FillTreeItem implements SLDTreeItemInterface {
     /** The Constant TITLE. */
     private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.fill");
 
-    /**
-     * Instantiates a new fill tree item.
-     */
-    public FillTreeItem() {
-    }
+    /** Instantiates a new fill tree item. */
+    public FillTreeItem() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -55,7 +50,7 @@ public class FillTreeItem implements SLDTreeItemInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -73,5 +68,4 @@ public class FillTreeItem implements SLDTreeItemInterface {
             }
         }
     }
-
 }

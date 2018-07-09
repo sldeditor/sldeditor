@@ -23,13 +23,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.ui.attribute.AttributeUtils;
+import org.junit.Test;
 
 /**
  * The unit test for AttributeUtils.
- * 
+ *
  * <p>{@link com.sldeditor.ui.attribute.AttributeUtils}
  *
  * @author Robert Ward (SCISYS)
@@ -37,7 +36,8 @@ import com.sldeditor.ui.attribute.AttributeUtils;
 public class AttributeUtilsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.attribute.AttributeUtils#isAttribute(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.attribute.AttributeUtils#isAttribute(java.lang.Object)}.
      */
     @Test
     public void testIsAttribute() {
@@ -70,5 +70,4 @@ public class AttributeUtilsTest {
         objValue = "<ogc:PropertyName></ogc:PropertyName>";
         assertTrue("".compareTo(AttributeUtils.extract(objValue)) == 0);
     }
-
 }

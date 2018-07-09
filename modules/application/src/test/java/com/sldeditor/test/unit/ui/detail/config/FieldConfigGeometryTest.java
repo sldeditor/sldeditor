@@ -24,8 +24,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -33,11 +31,12 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import org.junit.Test;
 import org.locationtech.jts.geom.Geometry;
 
 /**
  * The unit test for FieldConfigGeometry.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.FieldConfigGeometry}
  *
  * @author Robert Ward (SCISYS)
@@ -45,17 +44,19 @@ import org.locationtech.jts.geom.Geometry;
 public class FieldConfigGeometryTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#internal_setEnabled(boolean)}. Test
-     * method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#isEnabled()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#internal_setEnabled(boolean)}. Test method
+     * for {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigGeometry field = new FieldConfigGeometry(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
-                "button text");
+        FieldConfigGeometry field =
+                new FieldConfigGeometry(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                        "button text");
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -74,9 +75,11 @@ public class FieldConfigGeometryTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigGeometry field2 = new FieldConfigGeometry(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
-                "button text");
+        FieldConfigGeometry field2 =
+                new FieldConfigGeometry(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                        "button text");
 
         // Text field will not have been created
         expectedValue = true;
@@ -96,15 +99,17 @@ public class FieldConfigGeometryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#setVisible(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigGeometry field = new FieldConfigGeometry(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
-                "button text");
+        FieldConfigGeometry field =
+                new FieldConfigGeometry(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                        "button text");
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -116,21 +121,23 @@ public class FieldConfigGeometryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#generateExpression()}. Test method
-     * for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#populateField(java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#getStringValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#generateExpression()}. Test method for
+     * {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#populateExpression(java.lang.Object,
+     * org.opengis.filter.expression.Expression)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#populateField(java.lang.String)}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#setTestValue(com.sldeditor.ui.detail.config.FieldId,
+     * java.lang.String)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#getStringValue()}.
      */
     @Test
     public void testGenerateExpression() {
-        FieldConfigGeometry field = new FieldConfigGeometry(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true),
-                "button text");
+        FieldConfigGeometry field =
+                new FieldConfigGeometry(
+                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true),
+                        "button text");
 
         field.createUI();
         field.setTestValue(FieldIdEnum.UNKNOWN, (String) null);
@@ -157,17 +164,18 @@ public class FieldConfigGeometryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#revertToDefaultValue()}. Test
-     * method for
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#revertToDefaultValue()}. Test method for
      * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#setDefaultValue(java.lang.String)}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigGeometry field = new FieldConfigGeometry(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
-                "button text");
+        FieldConfigGeometry field =
+                new FieldConfigGeometry(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                        "button text");
 
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
@@ -183,8 +191,8 @@ public class FieldConfigGeometryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
@@ -200,9 +208,11 @@ public class FieldConfigGeometryTest {
             }
         }
 
-        TestFieldConfigGeometry field = new TestFieldConfigGeometry(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
-                "button text");
+        TestFieldConfigGeometry field =
+                new TestFieldConfigGeometry(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                        "button text");
         FieldConfigGeometry copy = (TestFieldConfigGeometry) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -213,31 +223,34 @@ public class FieldConfigGeometryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#attributeSelection(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigGeometry field = new FieldConfigGeometry(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
-                "button text");
+        FieldConfigGeometry field =
+                new FieldConfigGeometry(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                        "button text");
         field.attributeSelection(null);
 
         // Does nothing
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
-        FieldConfigGeometry field = new FieldConfigGeometry(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", false),
-                "button text");
+        FieldConfigGeometry field =
+                new FieldConfigGeometry(
+                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", false),
+                        "button text");
         field.undoAction(null);
         field.redoAction(null);
 
@@ -277,21 +290,21 @@ public class FieldConfigGeometryTest {
         field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
-
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigGeometry#addButtonPressedListener(com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigGeometry#addButtonPressedListener(com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface)}.
      */
     @Test
     public void testAddButtonPressedListener() {
         boolean valueOnly = true;
-        FieldConfigGeometry field = new FieldConfigGeometry(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
-                "button text");
+        FieldConfigGeometry field =
+                new FieldConfigGeometry(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                        "button text");
 
         field.addButtonPressedListener(null);
     }
-
 }

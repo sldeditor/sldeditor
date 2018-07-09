@@ -21,16 +21,15 @@ package com.sldeditor.test.unit.common.property;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.common.property.PropertyManagerFactory;
 import com.sldeditor.common.property.PropertyManagerInterface;
+import org.junit.Test;
 
 /**
  * Unit test for PropertyManagerFactory.
- * 
+ *
  * <p>{@link com.sldeditor.common.property.PropertyManagerFactory}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class PropertyManagerFactoryTest {
@@ -44,5 +43,4 @@ public class PropertyManagerFactoryTest {
 
         assertTrue(instance != null);
     }
-
 }

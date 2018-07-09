@@ -19,7 +19,7 @@
 
 /**
  * Interfaces updating preferences.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.preferences.iface;

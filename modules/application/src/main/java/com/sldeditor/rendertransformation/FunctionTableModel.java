@@ -19,11 +19,12 @@
 
 package com.sldeditor.rendertransformation;
 
+import com.sldeditor.common.localisation.Localisation;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
-
+import net.opengis.wps10.ProcessBriefType;
+import net.opengis.wps10.ProcessDescriptionType;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.FunctionFactory;
 import org.geotools.process.function.ProcessFunction;
@@ -31,11 +32,6 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Function;
-
-import com.sldeditor.common.localisation.Localisation;
-
-import net.opengis.wps10.ProcessBriefType;
-import net.opengis.wps10.ProcessDescriptionType;
 
 /**
  * Table model that displays/edits process functions.
@@ -45,10 +41,8 @@ import net.opengis.wps10.ProcessDescriptionType;
 public class FunctionTableModel extends AbstractTableModel {
 
     /**
-     * The Constant PARAMETER.
-     * 
-     * @TODO Should be ParameterFunction.NAME.getName() but
-     *     ParameterFunction is not publicly accessible.
+     * The Constant PARAMETER. @TODO Should be ParameterFunction.NAME.getName() but
+     * ParameterFunction is not publicly accessible.
      */
     private static final String PARAMETER = "parameter";
 
@@ -74,23 +68,21 @@ public class FunctionTableModel extends AbstractTableModel {
     private List<String> columnList = new ArrayList<String>();
 
     /** The value list. */
-    private List<ProcessFunctionParameterValue> valueList = 
+    private List<ProcessFunctionParameterValue> valueList =
             new ArrayList<ProcessFunctionParameterValue>();
 
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
-    /**
-     * Instantiates a new function table model.
-     */
+    /** Instantiates a new function table model. */
     public FunctionTableModel() {
         columnList.add(
                 Localisation.getString(FunctionTableModel.class, "FunctionTableModel.parameter"));
         columnList.add(Localisation.getString(FunctionTableModel.class, "FunctionTableModel.type"));
         columnList.add(
                 Localisation.getString(FunctionTableModel.class, "FunctionTableModel.optional"));
-        columnList
-                .add(Localisation.getString(FunctionTableModel.class, "FunctionTableModel.value"));
+        columnList.add(
+                Localisation.getString(FunctionTableModel.class, "FunctionTableModel.value"));
     }
 
     /**
@@ -125,25 +117,25 @@ public class FunctionTableModel extends AbstractTableModel {
         ProcessFunctionParameterValue value = valueList.get(rowIndex);
 
         switch (columnIndex) {
-        case COL_PARAMETER:
-            return value.name;
-        case COL_TYPE:
-            return value.dataType;
-        case COL_OPTIONAL:
-            if (value.optional) {
-                return value.included;
-            }
-            break;
-        case COL_VALUE:
-            if (value.objectValue != null) {
-                Expression expression = value.objectValue.getExpression();
-                if (expression != null) {
-                    return expression.toString();
+            case COL_PARAMETER:
+                return value.name;
+            case COL_TYPE:
+                return value.dataType;
+            case COL_OPTIONAL:
+                if (value.optional) {
+                    return value.included;
                 }
-            }
-            break;
-        default:
-            break;
+                break;
+            case COL_VALUE:
+                if (value.objectValue != null) {
+                    Expression expression = value.objectValue.getExpression();
+                    if (expression != null) {
+                        return expression.toString();
+                    }
+                }
+                break;
+            default:
+                break;
         }
         return null;
     }
@@ -180,13 +172,13 @@ public class FunctionTableModel extends AbstractTableModel {
         ProcessFunctionParameterValue value = valueList.get(rowIndex);
 
         switch (columnIndex) {
-        case COL_OPTIONAL:
-            return value.optional;
-        case COL_VALUE:
-        case COL_PARAMETER:
-        case COL_TYPE:
-        default:
-            return false;
+            case COL_OPTIONAL:
+                return value.optional;
+            case COL_VALUE:
+            case COL_PARAMETER:
+            case COL_TYPE:
+            default:
+                return false;
         }
     }
 
@@ -315,8 +307,9 @@ public class FunctionTableModel extends AbstractTableModel {
         if (this.selectedFunction.getFunctionName() == null) {
             return null;
         }
-        Function processFunction = factory.function(this.selectedFunction.getFunctionName(),
-                overallParameterList, null);
+        Function processFunction =
+                factory.function(
+                        this.selectedFunction.getFunctionName(), overallParameterList, null);
 
         return (ProcessFunction) processFunction;
     }

@@ -19,14 +19,17 @@
 
 package com.sldeditor.ui.detail.config.inlinefeature;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.coordinate.CoordManager;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
+import com.sldeditor.ui.widgets.ValueComboBox;
+import com.sldeditor.ui.widgets.ValueComboBoxData;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
-
 import org.geotools.data.DataStore;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.collection.ListFeatureCollection;
@@ -37,17 +40,11 @@ import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.feature.type.GeometryDescriptorImpl;
 import org.geotools.styling.UserLayer;
+import org.locationtech.jts.geom.Geometry;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.coordinate.CoordManager;
-import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
-import com.sldeditor.ui.widgets.ValueComboBox;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
-import org.locationtech.jts.geom.Geometry;
 
 /**
  * The Class InLineFeatureModel.
@@ -97,7 +94,7 @@ public class InLineFeatureModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     @Override
@@ -121,7 +118,7 @@ public class InLineFeatureModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getRowCount()
      */
     @Override
@@ -134,7 +131,7 @@ public class InLineFeatureModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
@@ -203,8 +200,8 @@ public class InLineFeatureModel extends AbstractTableModel {
             if (userLayer.getInlineFeatureType() != null) {
                 String typeName = userLayer.getInlineFeatureType().getTypeName();
                 try {
-                    SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
-                            .getFeatureSource(typeName);
+                    SimpleFeatureSource featureSource =
+                            userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
                     if (featureSource != null) {
                         featureCollection = featureSource.getFeatures();
                     }
@@ -214,8 +211,8 @@ public class InLineFeatureModel extends AbstractTableModel {
 
                 if (featureCollection != null) {
                     // Populate field names
-                    List<AttributeDescriptor> descriptorList = featureCollection.getSchema()
-                            .getAttributeDescriptors();
+                    List<AttributeDescriptor> descriptorList =
+                            featureCollection.getSchema().getAttributeDescriptors();
                     int index = 0;
                     for (AttributeDescriptor descriptor : descriptorList) {
                         if (descriptor instanceof GeometryDescriptorImpl) {
@@ -314,9 +311,7 @@ public class InLineFeatureModel extends AbstractTableModel {
         return InlineFeatureUtils.getInlineFeaturesText(userLayer);
     }
 
-    /**
-     * Adds the new column.
-     */
+    /** Adds the new column. */
     public void addNewColumn() {
         if (featureCollection != null) {
             String attributeName = getUniqueAttributeName();
@@ -332,8 +327,8 @@ public class InLineFeatureModel extends AbstractTableModel {
 
             String typeName = userLayer.getInlineFeatureType().getTypeName();
             try {
-                SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
-                        .getFeatureSource(typeName);
+                SimpleFeatureSource featureSource =
+                        userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
 
                 SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType);
 
@@ -351,8 +346,8 @@ public class InLineFeatureModel extends AbstractTableModel {
                     it.close();
                 }
 
-                SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType,
-                        featureList);
+                SimpleFeatureCollection collection =
+                        new ListFeatureCollection(newFeatureType, featureList);
 
                 featureCollection = collection;
                 cachedFeature = null;
@@ -383,8 +378,8 @@ public class InLineFeatureModel extends AbstractTableModel {
         String newColumnName = "";
         List<String> columnNameList = new ArrayList<String>();
 
-        List<AttributeDescriptor> descriptorList = featureCollection.getSchema()
-                .getAttributeDescriptors();
+        List<AttributeDescriptor> descriptorList =
+                featureCollection.getSchema().getAttributeDescriptors();
 
         for (AttributeDescriptor attribute : descriptorList) {
             columnNameList.add(attribute.getLocalName());
@@ -448,8 +443,8 @@ public class InLineFeatureModel extends AbstractTableModel {
 
                 String typeName = userLayer.getInlineFeatureType().getTypeName();
                 try {
-                    SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
-                            .getFeatureSource(typeName);
+                    SimpleFeatureSource featureSource =
+                            userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
 
                     SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType);
 
@@ -469,8 +464,8 @@ public class InLineFeatureModel extends AbstractTableModel {
                         it.close();
                     }
 
-                    SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType,
-                            featureList);
+                    SimpleFeatureCollection collection =
+                            new ListFeatureCollection(newFeatureType, featureList);
 
                     featureCollection = collection;
                     cachedFeature = null;
@@ -504,13 +499,13 @@ public class InLineFeatureModel extends AbstractTableModel {
 
             CoordinateReferenceSystem newCRS = CoordManager.getInstance().getCRS(crsCode);
 
-            SimpleFeatureType newFeatureType = SimpleFeatureTypeBuilder
-                    .retype(featureCollection.getSchema(), newCRS);
+            SimpleFeatureType newFeatureType =
+                    SimpleFeatureTypeBuilder.retype(featureCollection.getSchema(), newCRS);
 
             String typeName = userLayer.getInlineFeatureType().getTypeName();
             try {
-                SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
-                        .getFeatureSource(typeName);
+                SimpleFeatureSource featureSource =
+                        userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
 
                 SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(newFeatureType);
 
@@ -528,8 +523,8 @@ public class InLineFeatureModel extends AbstractTableModel {
                     it.close();
                 }
 
-                SimpleFeatureCollection collection = new ListFeatureCollection(newFeatureType,
-                        featureList);
+                SimpleFeatureCollection collection =
+                        new ListFeatureCollection(newFeatureType, featureList);
 
                 featureCollection = collection;
                 cachedFeature = null;
@@ -561,16 +556,14 @@ public class InLineFeatureModel extends AbstractTableModel {
         setValueAt(geometry, row, getGeometryFieldIndex());
     }
 
-    /**
-     * Adds the new feature.
-     */
+    /** Adds the new feature. */
     public void addNewFeature() {
         SimpleFeatureType featureType = userLayer.getInlineFeatureType();
 
         String typeName = userLayer.getInlineFeatureType().getTypeName();
         try {
-            SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
-                    .getFeatureSource(typeName);
+            SimpleFeatureSource featureSource =
+                    userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
 
             SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(featureType);
 
@@ -586,16 +579,16 @@ public class InLineFeatureModel extends AbstractTableModel {
                 }
                 // Add new feature
                 String wktString = "wkt://POINT(0 0)";
-                Geometry geometry = WKTConversion.convertToGeometry(wktString,
-                        getSelectedCRSCode());
+                Geometry geometry =
+                        WKTConversion.convertToGeometry(wktString, getSelectedCRSCode());
                 sfb.add(geometry);
                 featureList.add(sfb.buildFeature(null));
             } finally {
                 it.close();
             }
 
-            SimpleFeatureCollection collection = new ListFeatureCollection(featureType,
-                    featureList);
+            SimpleFeatureCollection collection =
+                    new ListFeatureCollection(featureType, featureList);
 
             featureCollection = collection;
             cachedFeature = null;
@@ -629,8 +622,8 @@ public class InLineFeatureModel extends AbstractTableModel {
 
         String typeName = userLayer.getInlineFeatureType().getTypeName();
         try {
-            SimpleFeatureSource featureSource = userLayer.getInlineFeatureDatastore()
-                    .getFeatureSource(typeName);
+            SimpleFeatureSource featureSource =
+                    userLayer.getInlineFeatureDatastore().getFeatureSource(typeName);
 
             SimpleFeatureBuilder sfb = new SimpleFeatureBuilder(featureType);
 
@@ -653,8 +646,8 @@ public class InLineFeatureModel extends AbstractTableModel {
                 it.close();
             }
 
-            SimpleFeatureCollection collection = new ListFeatureCollection(featureType,
-                    featureList);
+            SimpleFeatureCollection collection =
+                    new ListFeatureCollection(featureType, featureList);
 
             featureCollection = collection;
             cachedFeature = null;

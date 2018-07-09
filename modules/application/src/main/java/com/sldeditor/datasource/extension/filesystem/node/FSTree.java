@@ -19,16 +19,15 @@
 
 package com.sldeditor.datasource.extension.filesystem.node;
 
+import com.sldeditor.extension.filesystem.FileSelectionInterface;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 
-import com.sldeditor.extension.filesystem.FileSelectionInterface;
-
 /**
  * The file system tree class.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FSTree extends JTree {
@@ -41,9 +40,7 @@ public class FSTree extends JTree {
     /** The ignore selection flag. */
     private boolean ignoreSelection = false;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public FSTree() {
         transferHandler = new TreeTransferHandler();
         setTransferHandler(transferHandler);
@@ -51,7 +48,6 @@ public class FSTree extends JTree {
 
         FSTreeCellRenderer cellRenderer = new FSTreeCellRenderer();
         setCellRenderer(cellRenderer);
-
     }
 
     /**
@@ -63,9 +59,7 @@ public class FSTree extends JTree {
         return transferHandler.isDragging();
     }
 
-    /**
-     * Sets the ignore selection flag state.
-     */
+    /** Sets the ignore selection flag state. */
     public void setIgnoreSelection(boolean value) {
         ignoreSelection = value;
     }
@@ -97,15 +91,16 @@ public class FSTree extends JTree {
      */
     public void setTreeSelection(FileSelectionInterface fileSelection) {
 
-        addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                if (!shouldIgnoreSelection()) {
-                    if (fileSelection != null) {
-                        fileSelection.treeSelection(e);
+        addTreeSelectionListener(
+                new TreeSelectionListener() {
+                    @Override
+                    public void valueChanged(TreeSelectionEvent e) {
+                        if (!shouldIgnoreSelection()) {
+                            if (fileSelection != null) {
+                                fileSelection.treeSelection(e);
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
     }
 }

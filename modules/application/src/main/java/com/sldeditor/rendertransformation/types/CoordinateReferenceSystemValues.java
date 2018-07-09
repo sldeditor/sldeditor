@@ -19,20 +19,18 @@
 
 package com.sldeditor.rendertransformation.types;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.geotools.filter.AttributeExpressionImpl;
-import org.geotools.filter.FunctionExpressionImpl;
-import org.geotools.filter.LiteralExpressionImpl;
-import org.geotools.filter.MathExpressionImpl;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import java.util.Arrays;
+import java.util.List;
+import org.geotools.filter.AttributeExpressionImpl;
+import org.geotools.filter.FunctionExpressionImpl;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.geotools.filter.MathExpressionImpl;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class CoordinateReferenceSystemValues.
@@ -50,7 +48,7 @@ public class CoordinateReferenceSystemValues extends BaseValue
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -60,7 +58,7 @@ public class CoordinateReferenceSystemValues extends BaseValue
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.lang.Object)
      */
     @Override
@@ -70,7 +68,7 @@ public class CoordinateReferenceSystemValues extends BaseValue
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.BaseValue#populateSymbolType(com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig)
      */
     protected void populateSymbolType(SymbolTypeConfig symbolTypeConfig) {
@@ -85,7 +83,7 @@ public class CoordinateReferenceSystemValues extends BaseValue
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getExpression()
      */
     @Override
@@ -98,7 +96,7 @@ public class CoordinateReferenceSystemValues extends BaseValue
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.Object)
      */
     @Override
@@ -124,7 +122,7 @@ public class CoordinateReferenceSystemValues extends BaseValue
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -134,7 +132,7 @@ public class CoordinateReferenceSystemValues extends BaseValue
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

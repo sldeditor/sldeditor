@@ -19,9 +19,13 @@
 
 package com.sldeditor.tool.batchupdatefont;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDUtils;
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.output.SLDWriterInterface;
+import com.sldeditor.datasource.SLDEditorFile;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.ConstantExpression;
@@ -37,23 +41,15 @@ import org.geotools.styling.TextSymbolizer;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.data.SLDUtils;
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.output.SLDWriterInterface;
-import com.sldeditor.datasource.SLDEditorFile;
-
-/**
- * Class that encapsulates information about the scales at which a rule is displayed.
- */
+/** Class that encapsulates information about the scales at which a rule is displayed. */
 public class BatchUpdateFontData {
 
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private static StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /** The Constant NOT_SET_STRING. */
     private static final String NOT_SET_STRING = "";
@@ -264,9 +260,7 @@ public class BatchUpdateFontData {
         this.rule = rule;
     }
 
-    /**
-     * Revert to original.
-     */
+    /** Revert to original. */
     public void revertToOriginal() {
 
         if (this.font != null) {
@@ -351,8 +345,9 @@ public class BatchUpdateFontData {
                                 && current.getSLDFile().equals(sldData.getSLDFile()))
                         || ((current.getSLDURL() != null)
                                 && current.getSLDURL().equals(sldData.getSLDURL()))) {
-                    Symbolizer currentSymbolizer = SLDUtils.findSymbolizer(sld, symbolizer,
-                            SelectedSymbol.getInstance().getSld());
+                    Symbolizer currentSymbolizer =
+                            SLDUtils.findSymbolizer(
+                                    sld, symbolizer, SelectedSymbol.getInstance().getSld());
                     if (currentSymbolizer != null) {
                         if (currentSymbolizer instanceof TextSymbolizer) {
                             TextSymbolizer textSymbolizer = (TextSymbolizer) currentSymbolizer;
@@ -537,7 +532,9 @@ public class BatchUpdateFontData {
      * @return true, if any data has been changed
      */
     public boolean anyChanges() {
-        return isFontNameUpdated() || isFontStyleUpdated() || isFontWeightUpdated()
+        return isFontNameUpdated()
+                || isFontStyleUpdated()
+                || isFontWeightUpdated()
                 || isFontSizeUpdated();
     }
 
@@ -550,8 +547,8 @@ public class BatchUpdateFontData {
         if (font != null) {
             if (!(String.valueOf(fontSize).equals(font.getSize().toString()))) {
                 if (font.getSize() instanceof LiteralExpressionImpl) {
-                    int updatedSize = Double.valueOf(font.getSize().toString()).intValue()
-                            + fontSize;
+                    int updatedSize =
+                            Double.valueOf(font.getSize().toString()).intValue() + fontSize;
                     // Make sure we don't get negative sized fonts!
                     if (updatedSize < 1) {
                         updatedSize = 1;
@@ -569,5 +566,4 @@ public class BatchUpdateFontData {
             }
         }
     }
-
 }

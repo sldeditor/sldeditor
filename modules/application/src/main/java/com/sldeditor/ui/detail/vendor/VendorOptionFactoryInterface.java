@@ -19,10 +19,9 @@
 
 package com.sldeditor.ui.detail.vendor;
 
-import java.util.List;
-
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
+import java.util.List;
 
 /**
  * The Interface VendorOptionFactoryInterface.

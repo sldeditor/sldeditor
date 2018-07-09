@@ -19,22 +19,20 @@
 
 package com.sldeditor.ui.detail.config.symboltype;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValue;
 import com.sldeditor.common.xml.ui.XMLPanelDetails;
 import com.sldeditor.common.xml.ui.XMLSymbolTypeConfig;
 import com.sldeditor.ui.detail.config.ReadPanelConfig;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import org.apache.log4j.Logger;
 
 /**
  * Class that read symbol type configuration data from an XML file.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SymbolTypeConfigReader {
@@ -53,10 +51,14 @@ public class SymbolTypeConfigReader {
      * @param fieldEnableMap the field enable map
      * @return true, if successful
      */
-    public static boolean readConfig(Class<?> panelId, String fullResourceName,
+    public static boolean readConfig(
+            Class<?> panelId,
+            String fullResourceName,
             Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
-        XMLSymbolTypeConfig symbolTypeConfig = (XMLSymbolTypeConfig) ParseXML
-                .parseUIFile(fullResourceName, SCHEMA_RESOURCE, XMLSymbolTypeConfig.class);
+        XMLSymbolTypeConfig symbolTypeConfig =
+                (XMLSymbolTypeConfig)
+                        ParseXML.parseUIFile(
+                                fullResourceName, SCHEMA_RESOURCE, XMLSymbolTypeConfig.class);
 
         if (symbolTypeConfig == null) {
             return false;
@@ -88,14 +90,14 @@ public class SymbolTypeConfigReader {
      * @param xmlPanelDetails the xml panel details
      * @return the symbol type config
      */
-    private static List<SymbolTypeConfig> readSymbolizerConfig(Class<?> panelId,
-            XMLPanelDetails xmlPanelDetails) {
+    private static List<SymbolTypeConfig> readSymbolizerConfig(
+            Class<?> panelId, XMLPanelDetails xmlPanelDetails) {
         List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
 
         for (XMLFieldConfigEnumValue value : xmlPanelDetails.getValue()) {
 
-            SymbolTypeConfig config = ReadPanelConfig.parseSymbolTypeConfig(SymbolTypeConfig.class,
-                    panelId, value);
+            SymbolTypeConfig config =
+                    ReadPanelConfig.parseSymbolTypeConfig(SymbolTypeConfig.class, panelId, value);
 
             configList.add(config);
         }

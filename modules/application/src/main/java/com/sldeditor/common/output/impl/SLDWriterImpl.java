@@ -19,29 +19,23 @@
 
 package com.sldeditor.common.output.impl;
 
-import java.net.URL;
-
-import javax.xml.transform.TransformerException;
-
-import org.geotools.styling.SLDTransformer;
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDExternalImages;
 import com.sldeditor.common.output.SLDWriterInterface;
+import java.net.URL;
+import javax.xml.transform.TransformerException;
+import org.geotools.styling.SLDTransformer;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * Class that converts an SLD stored as a StyledLayerDescriptor to a SLD formatted string.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDWriterImpl implements SLDWriterInterface {
 
-    /**
-     * Default constructor.
-     */
-    public SLDWriterImpl() {
-    }
+    /** Default constructor. */
+    public SLDWriterImpl() {}
 
     /**
      * Encode sld to a string.

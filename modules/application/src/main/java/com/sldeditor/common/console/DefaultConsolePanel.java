@@ -19,25 +19,22 @@
 
 package com.sldeditor.common.console;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.reportissue.ReportIssue;
 import java.awt.BorderLayout;
-
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.ui.reportissue.ReportIssue;
-
-import javax.swing.JButton;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 /**
  * Default implementation of the console panel.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface {
@@ -50,9 +47,7 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
     /** The model. */
     private DefaultListModel<ConsoleData> model = new DefaultListModel<ConsoleData>();
 
-    /**
-     * Instantiates a new console panel.
-     */
+    /** Instantiates a new console panel. */
     public DefaultConsolePanel() {
         setLayout(new BorderLayout(0, 0));
 
@@ -70,12 +65,16 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
         flowLayout.setHgap(1);
         add(panel, BorderLayout.SOUTH);
 
-        JButton btnFeedback = new JButton(Localisation.getString(DefaultConsolePanel.class, "DefaultConsolePanel.feedback"));
-        btnFeedback.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ReportIssue.getInstance().display();
-            }
-        });
+        JButton btnFeedback =
+                new JButton(
+                        Localisation.getString(
+                                DefaultConsolePanel.class, "DefaultConsolePanel.feedback"));
+        btnFeedback.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        ReportIssue.getInstance().display();
+                    }
+                });
         panel.add(btnFeedback);
     }
 
@@ -86,7 +85,7 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.console.ConsolePanelInterface#addMessage(java.lang.String)
      */
     @Override
@@ -102,7 +101,7 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.console.ConsolePanelInterface#addErrorMessage(java.lang.String)
      */
     @Override
@@ -116,20 +115,19 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
         model.clear();
     }
 
-    /**
-     * Show last item.
-     */
+    /** Show last item. */
     private void showLastItem() {
-        SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(
+                new Runnable() {
 
-            @Override
-            public void run() {
-                int lastIndex = model.getSize() - 1;
+                    @Override
+                    public void run() {
+                        int lastIndex = model.getSize() - 1;
 
-                if (lastIndex >= 0) {
-                    textPane.ensureIndexIsVisible(lastIndex);
-                }
-            }
-        });
+                        if (lastIndex >= 0) {
+                            textPane.ensureIndexIsVisible(lastIndex);
+                        }
+                    }
+                });
     }
 }

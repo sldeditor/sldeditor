@@ -21,14 +21,13 @@ package com.sldeditor.test.unit.common.output;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test;
-
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
+import org.junit.Test;
 
 /**
  * The unit test for SLDWriterFactory.
- * 
+ *
  * <p>{@link com.sldeditor.common.output.impl.SLDWriterFactory}
  *
  * @author Robert Ward (SCISYS)
@@ -36,13 +35,13 @@ import com.sldeditor.common.output.impl.SLDWriterFactory;
 public class SLDWriterFactoryTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.output.impl.SLDWriterFactory#createWriter(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.common.output.impl.SLDWriterFactory#createWriter(java.lang.String)}.
      */
     @Test
     public void testCreateSLDWriter() {
         SLDWriterInterface writer = SLDWriterFactory.createWriter(null);
-        
+
         assertNotNull(writer);
     }
-
 }

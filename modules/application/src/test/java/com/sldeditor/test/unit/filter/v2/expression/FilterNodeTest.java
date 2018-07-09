@@ -24,8 +24,18 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
+import com.sldeditor.filter.v2.expression.FilterNode;
+import com.sldeditor.filter.v2.function.FilterConfigInterface;
+import com.sldeditor.filter.v2.function.geometry.Overlaps;
+import com.sldeditor.filter.v2.function.logic.And;
+import com.sldeditor.filter.v2.function.misc.IsLike;
+import com.sldeditor.filter.v2.function.misc.IsNull;
+import com.sldeditor.filter.v2.function.property.IsBetween;
+import com.sldeditor.filter.v2.function.property.IsGreaterThan;
+import com.sldeditor.filter.v2.function.temporal.After;
 import java.text.ParseException;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.Hints;
 import org.geotools.geometry.GeometryFactoryFinder;
@@ -40,42 +50,33 @@ import org.opengis.geometry.aggregate.AggregateFactory;
 import org.opengis.geometry.coordinate.GeometryFactory;
 import org.opengis.geometry.primitive.PrimitiveFactory;
 
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
-import com.sldeditor.filter.v2.expression.FilterNode;
-import com.sldeditor.filter.v2.function.FilterConfigInterface;
-import com.sldeditor.filter.v2.function.geometry.Overlaps;
-import com.sldeditor.filter.v2.function.logic.And;
-import com.sldeditor.filter.v2.function.misc.IsLike;
-import com.sldeditor.filter.v2.function.misc.IsNull;
-import com.sldeditor.filter.v2.function.property.IsBetween;
-import com.sldeditor.filter.v2.function.property.IsGreaterThan;
-import com.sldeditor.filter.v2.function.temporal.After;
-
 /**
  * Unit test for FilterNode class.
- * 
- * <p>{@link com.sldeditor.filter.v2.expression.FilterNode}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.filter.v2.expression.FilterNode}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class FilterNodeTest {
 
     /**
      * Test method for {@link com.sldeditor.filter.v2.expression.FilterNode#FilterNode()}. Test
      * method for {@link com.sldeditor.filter.v2.expression.FilterNode#toString()}. Test method for
-     * {@link com.sldeditor.filter.v2.expression.FilterNode#getFilter()}. Test method for
-     * {@link com.sldeditor.filter.v2.expression.FilterNode#getType()}. Test method for
-     * {@link com.sldeditor.filter.v2.expression.FilterNode#setType(java.lang.Class)}.
+     * {@link com.sldeditor.filter.v2.expression.FilterNode#getFilter()}. Test method for {@link
+     * com.sldeditor.filter.v2.expression.FilterNode#getType()}. Test method for {@link
+     * com.sldeditor.filter.v2.expression.FilterNode#setType(java.lang.Class)}.
      */
     @Test
     public void testFilterNode() {
         FilterNode node = new FilterNode();
         assertNull(node.getFilter());
 
-        assertTrue(node.toString().compareTo(
-                Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet")) == 0);
+        assertTrue(
+                node.toString()
+                                .compareTo(
+                                        Localisation.getString(
+                                                ExpressionPanelv2.class, "FilterNode.filterNotSet"))
+                        == 0);
 
         Class<?> type = Double.class;
         node.setType(type);
@@ -83,8 +84,9 @@ public class FilterNodeTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.filter.v2.expression.FilterNode#setFilter(org.opengis.filter.Filter, com.sldeditor.filter.v2.function.FilterConfigInterface)}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.expression.FilterNode#setFilter(org.opengis.filter.Filter,
+     * com.sldeditor.filter.v2.function.FilterConfigInterface)}.
      */
     @Test
     public void testSetFilter() {
@@ -99,8 +101,10 @@ public class FilterNodeTest {
         node.addFilter();
 
         String actual = node.toString();
-        String expected = "Filter : "
-                + Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet");
+        String expected =
+                "Filter : "
+                        + Localisation.getString(
+                                ExpressionPanelv2.class, "FilterNode.filterNotSet");
         assertTrue(actual.compareTo(expected) == 0);
         assertEquals(filter, node.getFilter());
 
@@ -130,8 +134,8 @@ public class FilterNodeTest {
         PrimitiveFactory primitiveFactory = GeometryFactoryFinder.getPrimitiveFactory(hints);
         AggregateFactory aggregateFactory = GeometryFactoryFinder.getAggregateFactory(hints);
 
-        WKTParser wktParser = new WKTParser(geometryFactory, primitiveFactory, positionFactory,
-                aggregateFactory);
+        WKTParser wktParser =
+                new WKTParser(geometryFactory, primitiveFactory, positionFactory, aggregateFactory);
         Geometry geometry = null;
         try {
             geometry = wktParser.parse("POINT( 48.44 -123.37)");
@@ -175,8 +179,10 @@ public class FilterNodeTest {
         assertTrue(filterConfig.category().compareTo(category) == 0);
 
         // Logic filter
-        filter = ff.and(ff.after(ff.literal(12), ff.literal(312)),
-                ff.between(ff.literal(25), ff.literal(5), ff.literal(50)));
+        filter =
+                ff.and(
+                        ff.after(ff.literal(12), ff.literal(312)),
+                        ff.between(ff.literal(25), ff.literal(5), ff.literal(50)));
         filterConfig = new And(category);
         node.setFilter(filter, filterConfig);
         expected = "Filter : And";
@@ -188,8 +194,8 @@ public class FilterNodeTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.filter.v2.expression.FilterNode#setName(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.expression.FilterNode#setName(java.lang.String)}.
      */
     @Test
     public void testSetName() {
@@ -198,8 +204,11 @@ public class FilterNodeTest {
 
         String name = "filtername";
         node.setName(name);
-        String expected = name + " : "
-                + Localisation.getString(ExpressionPanelv2.class, "FilterNode.filterNotSet");
+        String expected =
+                name
+                        + " : "
+                        + Localisation.getString(
+                                ExpressionPanelv2.class, "FilterNode.filterNotSet");
         assertTrue(node.toString().compareTo(expected) == 0);
     }
 }

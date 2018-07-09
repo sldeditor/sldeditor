@@ -22,32 +22,32 @@ package com.sldeditor.ui.detail.config.base.defaults;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.TextSymbolizer;
 
 /**
  * Class for configuration file text symbolizer default values.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DefaultTextSymbols extends DefaultBase {
 
     /** The Constant EXPECTED_PREFIX_LIST. */
-    private static final List<String> EXPECTED_PREFIX_LIST = Arrays
-            .asList("org.geotools.styling.TextSymbolizer2", "org.geotools.styling.TextSymbolizer");
+    private static final List<String> EXPECTED_PREFIX_LIST =
+            Arrays.asList(
+                    "org.geotools.styling.TextSymbolizer2", "org.geotools.styling.TextSymbolizer");
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private static StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /** The expected interface. */
     private static Class<?> expectedInterface = null;
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#accepts(java.lang.String)
      */
     @Override
@@ -62,7 +62,7 @@ public class DefaultTextSymbols extends DefaultBase {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#getValue(java.lang.String)
      */
     @Override

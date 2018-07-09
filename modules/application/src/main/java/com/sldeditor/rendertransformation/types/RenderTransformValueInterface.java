@@ -19,12 +19,10 @@
 
 package com.sldeditor.rendertransformation.types;
 
-import java.util.List;
-
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import java.util.List;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Interface RenderTransformValueInterface.
@@ -75,5 +73,4 @@ public interface RenderTransformValueInterface {
      * @return the render transform value interface
      */
     RenderTransformValueInterface createInstance();
- 
 }

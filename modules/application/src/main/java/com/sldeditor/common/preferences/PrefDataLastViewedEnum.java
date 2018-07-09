@@ -26,6 +26,6 @@ package com.sldeditor.common.preferences;
  */
 public enum PrefDataLastViewedEnum {
     FOLDER,
-    
+
     GEOSERVER
 }

@@ -19,6 +19,15 @@
 
 package com.sldeditor.tool.raster;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.output.SLDWriterInterface;
+import com.sldeditor.common.output.impl.SLDWriterFactory;
+import com.sldeditor.common.utils.ColourUtils;
+import com.sldeditor.common.utils.ExternalFilenames;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.File;
@@ -26,9 +35,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.imageio.ImageIO;
-
 import org.geotools.coverage.GridSampleDimension;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridEnvelope2D;
@@ -52,16 +59,6 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.Literal;
 import org.opengis.style.ContrastMethod;
-
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.SLDData;
-import com.sldeditor.common.data.StyleWrapper;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.output.SLDWriterInterface;
-import com.sldeditor.common.output.impl.SLDWriterFactory;
-import com.sldeditor.common.utils.ColourUtils;
-import com.sldeditor.common.utils.ExternalFilenames;
 
 /**
  * The Class RasterReader.
@@ -99,9 +96,11 @@ public class RasterReader implements RasterReaderInterface {
         try {
             reader = format.getReader(rasterFile);
         } catch (UnsupportedOperationException e) {
-            ConsoleManager.getInstance().error(this,
-                    Localisation.getField(RasterTool.class, "RasterReader.unknownFormat")
-                            + rasterFile.getAbsolutePath());
+            ConsoleManager.getInstance()
+                    .error(
+                            this,
+                            Localisation.getField(RasterTool.class, "RasterReader.unknownFormat")
+                                    + rasterFile.getAbsolutePath());
             return null;
         }
 
@@ -165,8 +164,8 @@ public class RasterReader implements RasterReaderInterface {
      * @param cov the cov
      * @param raster the raster
      */
-    private void createRGBImageSymbol(RasterSymbolizer sym, GridCoverage2D cov,
-            WritableRaster raster) {
+    private void createRGBImageSymbol(
+            RasterSymbolizer sym, GridCoverage2D cov, WritableRaster raster) {
         double dest;
         List<Double> valueList = new ArrayList<Double>();
 
@@ -193,8 +192,8 @@ public class RasterReader implements RasterReaderInterface {
         // Create colour amp entries in the colour map for all the sample values
         for (Double value : valueList) {
             ColorMapEntry entry = new ColorMapEntryImpl();
-            Literal colourExpression = ff
-                    .literal(ColourUtils.fromColour(ColourUtils.createRandomColour()));
+            Literal colourExpression =
+                    ff.literal(ColourUtils.fromColour(ColourUtils.createRandomColour()));
             entry.setColor(colourExpression);
             entry.setQuantity(ff.literal(value.doubleValue()));
 
@@ -223,7 +222,7 @@ public class RasterReader implements RasterReaderInterface {
         final int RED = 0;
         final int GREEN = 1;
         final int BLUE = 2;
-        int[] channelNum = { -1, -1, -1 };
+        int[] channelNum = {-1, -1, -1};
         // We examine the band names looking for "red...", "green...", "blue...".
         // Note that the channel numbers we record are indexed from 1, not 0.
         for (int i = 0; i < numBands; i++) {

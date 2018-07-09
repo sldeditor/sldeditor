@@ -19,24 +19,6 @@
 
 package com.sldeditor.common.vendoroption.minversion;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.border.TitledBorder;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
@@ -54,6 +36,21 @@ import com.sldeditor.common.vendoroption.selection.VersionCellRenderer;
 import com.sldeditor.help.Help;
 import com.sldeditor.render.RenderPanelFactory;
 import com.sldeditor.ui.panels.GetMinimumVersionInterface;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The Class VendorOptionUI.
@@ -121,19 +118,21 @@ public class VendorOptionUI extends JPanel
         options.put(vendorOption, vendorOption.getName());
     }
 
-    /**
-     * Creates the UI.
-     */
+    /** Creates the UI. */
     public void createUI() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Vendor options
         JPanel vendorOptionSelectionPanel = new JPanel();
-        vendorOptionSelectionPanel
-                .setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-                        Localisation.getString(VendorOptionUI.class,
-                                "VendorOptionUI.vendorOptions"),
-                        TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        vendorOptionSelectionPanel.setBorder(
+                new TitledBorder(
+                        UIManager.getBorder("TitledBorder.border"),
+                        Localisation.getString(
+                                VendorOptionUI.class, "VendorOptionUI.vendorOptions"),
+                        TitledBorder.LEADING,
+                        TitledBorder.TOP,
+                        null,
+                        null));
         vendorOptionSelectionPanel.setLayout(new BorderLayout());
         add(vendorOptionSelectionPanel);
 
@@ -146,20 +145,27 @@ public class VendorOptionUI extends JPanel
 
         vendorOptionTable.setModel(vendorOptionModel);
         vendorOptionTable.getColumnModel().getColumn(1).setCellRenderer(new VersionCellRenderer());
-        vendorOptionTable.getColumnModel().getColumn(1)
+        vendorOptionTable
+                .getColumnModel()
+                .getColumn(1)
                 .setCellEditor(new VersionCellEditor(vendorOptionModel));
 
         // Vendor option information
-        VendorOptionInfoPanel vendorOptionInfoPanel = VendorOptionInfoManager.getInstance()
-                .getPanel(getClass());
+        VendorOptionInfoPanel vendorOptionInfoPanel =
+                VendorOptionInfoManager.getInstance().getPanel(getClass());
         vendorOptionInfoPanel.setPreferredSize(new Dimension(400, 200));
         add(vendorOptionInfoPanel);
 
         // VendorOption present table
         JPanel voPresentPanel = new JPanel();
-        voPresentPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-                Localisation.getString(VendorOptionUI.class, "VendorOptionUI.loadedSymbol"),
-                TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        voPresentPanel.setBorder(
+                new TitledBorder(
+                        UIManager.getBorder("TitledBorder.border"),
+                        Localisation.getString(VendorOptionUI.class, "VendorOptionUI.loadedSymbol"),
+                        TitledBorder.LEADING,
+                        TitledBorder.TOP,
+                        null,
+                        null));
         voPresentPanel.setLayout(new BorderLayout());
         voPresentPanel.setPreferredSize(new Dimension(400, 300));
 
@@ -180,39 +186,43 @@ public class VendorOptionUI extends JPanel
 
         JButton btnHelp = new JButton(Localisation.getString(VendorOptionUI.class, "common.help"));
         panel_2.add(btnHelp);
-        btnHelp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Help.getInstance().display(CONTEXT_HELP);
-            }
-        });
+        btnHelp.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        Help.getInstance().display(CONTEXT_HELP);
+                    }
+                });
 
         JPanel panel_1 = new JPanel();
         panel.add(panel_1, BorderLayout.CENTER);
 
-        btnLatestVO = new JButton(
-                Localisation.getString(VendorOptionUI.class, "VendorOptionUI.latest"));
+        btnLatestVO =
+                new JButton(Localisation.getString(VendorOptionUI.class, "VendorOptionUI.latest"));
         panel_1.add(btnLatestVO);
         btnLatestVO.setEnabled(false);
 
-        btnMinimumVendorOption = new JButton(
-                Localisation.getString(VendorOptionUI.class, "VendorOptionUI.minimumVO"));
+        btnMinimumVendorOption =
+                new JButton(
+                        Localisation.getString(VendorOptionUI.class, "VendorOptionUI.minimumVO"));
         panel_1.add(btnMinimumVendorOption);
         btnMinimumVendorOption.setEnabled(false);
-        btnMinimumVendorOption.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                vendorOptionsUpdated(vendorOptionPresentModel.getMinimum());
-            }
-        });
-        btnLatestVO.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                vendorOptionsUpdated(VendorOptionManager.getInstance().getLatest());
-            }
-        });
+        btnMinimumVendorOption.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        vendorOptionsUpdated(vendorOptionPresentModel.getMinimum());
+                    }
+                });
+        btnLatestVO.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        vendorOptionsUpdated(VendorOptionManager.getInstance().getLatest());
+                    }
+                });
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.output.SLDOutputInterface#updatedSLD(com.sldeditor.common.SLDDataInterface,
      * org.geotools.styling.StyledLayerDescriptor)
      */
@@ -223,7 +233,7 @@ public class VendorOptionUI extends JPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override

@@ -19,7 +19,7 @@
 
 /**
  * Connect/disconnect to GeoServer.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.tool.geoserverconnection;

@@ -19,7 +19,7 @@
 
 /**
  * Classes that provide the GUI to display/edit sld attributes.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail;

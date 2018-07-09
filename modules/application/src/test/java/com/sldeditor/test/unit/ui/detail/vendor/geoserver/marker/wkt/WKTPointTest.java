@@ -22,15 +22,14 @@ package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.wkt;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint;
 import org.geotools.geometry.DirectPosition2D;
 import org.junit.Test;
 import org.opengis.geometry.DirectPosition;
 
-import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint;
-
 /**
  * The unit test for WKTPoint.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint}
  *
  * @author Robert Ward (SCISYS)
@@ -38,13 +37,16 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint;
 public class WKTPointTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#WKTPoint(org.opengis.geometry.DirectPosition)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#WKTPoint()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#getX()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#getY()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#setX(double)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#setY(double)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#equals(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#WKTPoint(org.opengis.geometry.DirectPosition)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#WKTPoint()}. Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#getX()}. Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#getY()}. Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#setX(double)}. Test
+     * method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#setY(double)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#equals(java.lang.Object)}.
      */
     @Test
     public void testWKTPointDirectPosition() {
@@ -84,5 +86,4 @@ public class WKTPointTest {
 
         assertTrue(point.hashCode() != point2.hashCode());
     }
-
 }

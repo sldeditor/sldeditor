@@ -19,7 +19,7 @@
 
 /**
  * Package handling the user interface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui;

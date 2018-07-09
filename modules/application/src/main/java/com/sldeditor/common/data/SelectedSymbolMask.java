@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.data;
 
 import java.util.ArrayList;
@@ -25,14 +24,12 @@ import java.util.List;
 
 /**
  * The Class SelectedSymbolMask handles the updating of SLD data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SelectedSymbolMask {
 
-    /**
-     * The Enum SymbolMaskEnum representing the different attributes of an SLD symbol.
-     */
+    /** The Enum SymbolMaskEnum representing the different attributes of an SLD symbol. */
     public enum SymbolMaskEnum {
 
         /** Styled layer. */

@@ -1,4 +1,3 @@
-
 package com.sldeditor;
 
 import com.sldeditor.common.xml.ui.SelectedTreeItemEnum;
@@ -11,9 +10,7 @@ import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.TextSymbolizerDetails;
 
-/**
- * Class containing data that describes the selected SLD item with in the tree structure.
- */
+/** Class containing data that describes the selected SLD item with in the tree structure. */
 public class TreeSelectionData {
 
     /** The layer index. */
@@ -153,20 +150,40 @@ public class TreeSelectionData {
     public SelectedTreeItemEnum getSelection() {
         SelectedTreeItemEnum selection = SelectedTreeItemEnum.UNKNOWN;
 
-        if ((layerIndex > -1) && (styleIndex == -1) && (featureTypeStyleIndex == -1)
-                && (ruleIndex == -1) && (symbolizerIndex == -1) && (symbolizerDetailIndex == -1)) {
+        if ((layerIndex > -1)
+                && (styleIndex == -1)
+                && (featureTypeStyleIndex == -1)
+                && (ruleIndex == -1)
+                && (symbolizerIndex == -1)
+                && (symbolizerDetailIndex == -1)) {
             selection = SelectedTreeItemEnum.LAYER;
-        } else if ((layerIndex > -1) && (styleIndex > -1) && (featureTypeStyleIndex == -1)
-                && (ruleIndex == -1) && (symbolizerIndex == -1) && (symbolizerDetailIndex == -1)) {
+        } else if ((layerIndex > -1)
+                && (styleIndex > -1)
+                && (featureTypeStyleIndex == -1)
+                && (ruleIndex == -1)
+                && (symbolizerIndex == -1)
+                && (symbolizerDetailIndex == -1)) {
             selection = SelectedTreeItemEnum.STYLE;
-        } else if ((layerIndex > -1) && (styleIndex > -1) && (featureTypeStyleIndex > -1)
-                && (ruleIndex == -1) && (symbolizerIndex == -1) && (symbolizerDetailIndex == -1)) {
+        } else if ((layerIndex > -1)
+                && (styleIndex > -1)
+                && (featureTypeStyleIndex > -1)
+                && (ruleIndex == -1)
+                && (symbolizerIndex == -1)
+                && (symbolizerDetailIndex == -1)) {
             selection = SelectedTreeItemEnum.FEATURETYPESTYLE;
-        } else if ((layerIndex > -1) && (styleIndex > -1) && (featureTypeStyleIndex > -1)
-                && (ruleIndex > -1) && (symbolizerIndex == -1) && (symbolizerDetailIndex == -1)) {
+        } else if ((layerIndex > -1)
+                && (styleIndex > -1)
+                && (featureTypeStyleIndex > -1)
+                && (ruleIndex > -1)
+                && (symbolizerIndex == -1)
+                && (symbolizerDetailIndex == -1)) {
             selection = SelectedTreeItemEnum.RULE;
-        } else if ((layerIndex > -1) && (styleIndex > -1) && (featureTypeStyleIndex > -1)
-                && (ruleIndex > -1) && (symbolizerIndex > -1) && (symbolizerDetailIndex == -1)) {
+        } else if ((layerIndex > -1)
+                && (styleIndex > -1)
+                && (featureTypeStyleIndex > -1)
+                && (ruleIndex > -1)
+                && (symbolizerIndex > -1)
+                && (symbolizerDetailIndex == -1)) {
             if (selectedPanel == PointSymbolizerDetails.class) {
                 selection = SelectedTreeItemEnum.POINT_SYMBOLIZER;
             } else if (selectedPanel == LineSymbolizerDetails.class) {
@@ -180,8 +197,11 @@ public class TreeSelectionData {
             } else {
                 selection = SelectedTreeItemEnum.UNKNOWN;
             }
-        } else if ((layerIndex > -1) && (styleIndex > -1) && (featureTypeStyleIndex > -1)
-                && (ruleIndex > -1) && (symbolizerIndex > -1)) {
+        } else if ((layerIndex > -1)
+                && (styleIndex > -1)
+                && (featureTypeStyleIndex > -1)
+                && (ruleIndex > -1)
+                && (symbolizerIndex > -1)) {
             if (selectedPanel == PointFillDetails.class) {
                 selection = SelectedTreeItemEnum.POINT_FILL;
             } else if (selectedPanel == PolygonFillDetails.class) {
@@ -213,5 +233,4 @@ public class TreeSelectionData {
     public void setSelectedPanel(Class<?> selectedPanel) {
         this.selectedPanel = selectedPanel;
     }
-
 }

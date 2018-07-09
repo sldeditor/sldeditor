@@ -19,11 +19,10 @@
 
 package com.sldeditor.common.filesystem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.GeoServerConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Class SelectedFiles.
@@ -47,11 +46,8 @@ public class SelectedFiles {
     /** The connection data. */
     private GeoServerConnection connectionData = null;
 
-    /**
-     * Instantiates a new selected files.
-     */
-    public SelectedFiles() {
-    }
+    /** Instantiates a new selected files. */
+    public SelectedFiles() {}
 
     /**
      * Gets the sld data.
@@ -151,5 +147,4 @@ public class SelectedFiles {
     public void appendSLDData(List<SLDDataInterface> newDataList) {
         sldData.addAll(newDataList);
     }
-
 }

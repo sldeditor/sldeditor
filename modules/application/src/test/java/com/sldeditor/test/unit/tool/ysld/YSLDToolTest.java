@@ -23,25 +23,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.Component;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JPanel;
-
-import org.apache.commons.io.IOUtils;
-import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.ysld.Ysld;
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
@@ -56,10 +37,26 @@ import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ysld.YSLDTool;
+import java.awt.Component;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JPanel;
+import org.apache.commons.io.IOUtils;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.ysld.Ysld;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * The unit test for YSLDTool.
- * 
+ *
  * <p>{@link com.sldeditor.tool.ysld.YSLDTool}
  *
  * @author Robert Ward (SCISYS)
@@ -67,9 +64,7 @@ import com.sldeditor.tool.ysld.YSLDTool;
 public class YSLDToolTest {
     public static final String PREFIX = "extracted";
 
-    /**
-     * Test get layer name.
-     */
+    /** Test get layer name. */
     @Test
     public void testPanel() {
         YSLDTool tool = new YSLDTool();
@@ -77,9 +72,7 @@ public class YSLDToolTest {
         assertTrue(tool.getPanel() != null);
     }
 
-    /**
-     * Test sld file.
-     */
+    /** Test sld file. */
     @Test
     public void testSetSelectedItems() {
         YSLDTool tool = new YSLDTool();
@@ -94,10 +87,12 @@ public class YSLDToolTest {
                 ToolButton button = (ToolButton) c;
                 String toolTipText = button.getToolTipText();
                 if (toolTipText.compareTo(
-                        Localisation.getString(YSLDTool.class, "YSLDTool.exportToSLD")) == 0) {
+                                Localisation.getString(YSLDTool.class, "YSLDTool.exportToSLD"))
+                        == 0) {
                     toSLD = button;
                 } else if (toolTipText.compareTo(
-                        Localisation.getString(YSLDTool.class, "YSLDTool.exportToYSLD")) == 0) {
+                                Localisation.getString(YSLDTool.class, "YSLDTool.exportToYSLD"))
+                        == 0) {
                     toYSLD = button;
                 }
             }
@@ -180,9 +175,7 @@ public class YSLDToolTest {
         ysld.delete();
     }
 
-    /**
-     * Test get tool name.
-     */
+    /** Test get tool name. */
     @Test
     public void testGetToolName() {
         YSLDTool tool = new YSLDTool();
@@ -191,9 +184,7 @@ public class YSLDToolTest {
         assertTrue(toolName.compareTo("com.sldeditor.tool.ysld.YSLDTool") == 0);
     }
 
-    /**
-     * Test which file types the tool supports.
-     */
+    /** Test which file types the tool supports. */
     @Test
     public void testSupports() {
 
@@ -289,16 +280,18 @@ public class YSLDToolTest {
             File f = null;
             try {
                 String fileExtension = ExternalFilenames.getFileExtension(testfile);
-                f = stream2file(inputStream,
-                        ExternalFilenames.addFileExtensionSeparator(fileExtension));
+                f =
+                        stream2file(
+                                inputStream,
+                                ExternalFilenames.addFileExtensionSeparator(fileExtension));
                 String sldContents = readFile(f.getAbsolutePath());
 
                 if (fileExtension.compareTo("ysld") == 0) {
                     StyledLayerDescriptor sld = Ysld.parse(sldContents);
 
                     // Convert YSLD to SLD string
-                    SLDWriterInterface sldWriter = SLDWriterFactory
-                            .createWriter(SLDOutputFormatEnum.SLD);
+                    SLDWriterInterface sldWriter =
+                            SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD);
 
                     sldContents = sldWriter.encodeSLD(null, sld);
                 }
@@ -337,5 +330,4 @@ public class YSLDToolTest {
             br.close();
         }
     }
-
 }

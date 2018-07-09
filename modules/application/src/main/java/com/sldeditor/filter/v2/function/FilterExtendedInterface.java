@@ -32,5 +32,4 @@ public interface FilterExtendedInterface {
      * @return the original filter
      */
     Class<?> getOriginalFilter();
-
 }

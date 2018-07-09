@@ -24,6 +24,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.output.SLDWriterInterface;
+import com.sldeditor.common.output.impl.SLDWriterFactory;
+import com.sldeditor.tool.batchupdatefont.BatchUpdateFontData;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Font;
 import org.geotools.styling.Rule;
@@ -32,15 +37,9 @@ import org.geotools.styling.TextSymbolizer;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 
-import com.sldeditor.common.data.SLDData;
-import com.sldeditor.common.data.StyleWrapper;
-import com.sldeditor.common.output.SLDWriterInterface;
-import com.sldeditor.common.output.impl.SLDWriterFactory;
-import com.sldeditor.tool.batchupdatefont.BatchUpdateFontData;
-
 /**
  * The unit test for BatchUpdateFontData.
- * 
+ *
  * <p>{@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontData}
  *
  * @author Robert Ward (SCISYS)
@@ -48,8 +47,9 @@ import com.sldeditor.tool.batchupdatefont.BatchUpdateFontData;
 public class BatchUpdateFontDataTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontData#BatchUpdateFontData(org.geotools.styling.StyledLayerDescriptor, com.sldeditor.common.SLDDataInterface)}.
+     * Test method for {@link
+     * com.sldeditor.tool.batchupdatefont.BatchUpdateFontData#BatchUpdateFontData(org.geotools.styling.StyledLayerDescriptor,
+     * com.sldeditor.common.SLDDataInterface)}.
      */
     @Test
     public void testBatchUpdateFontData() {
@@ -122,9 +122,12 @@ public class BatchUpdateFontDataTest {
         String originalFontStyle = "normal";
         String originalFontWeight = "normal";
         int originalFontSize = 24;
-        Font font = styleFactory.createFont(ff.literal(originalFontname),
-                ff.literal(originalFontStyle),
-                ff.literal(originalFontWeight), ff.literal(originalFontSize));
+        Font font =
+                styleFactory.createFont(
+                        ff.literal(originalFontname),
+                        ff.literal(originalFontStyle),
+                        ff.literal(originalFontWeight),
+                        ff.literal(originalFontSize));
         testObj.setFont(font);
         assertTrue(testObj.isFontNameSet());
         assertTrue(testObj.isFontStyleSet());
@@ -137,9 +140,12 @@ public class BatchUpdateFontDataTest {
         assertFalse(testObj.anyChanges());
 
         // Update with a different copy of the same font - no changes
-        Font unchangedFont = styleFactory.createFont(ff.literal(originalFontname), 
-                ff.literal(originalFontStyle),
-                ff.literal(originalFontWeight), ff.literal(originalFontSize));
+        Font unchangedFont =
+                styleFactory.createFont(
+                        ff.literal(originalFontname),
+                        ff.literal(originalFontStyle),
+                        ff.literal(originalFontWeight),
+                        ff.literal(originalFontSize));
 
         testObj.updateFont(unchangedFont);
         assertFalse(testObj.isFontNameUpdated());
@@ -152,9 +158,12 @@ public class BatchUpdateFontDataTest {
         String expectedFontStyle = "italic";
         String expectedFontWeight = "bold";
         int expectedFontSize = 12;
-        Font changedFont = styleFactory.createFont(ff.literal(expectedFontName),
-                ff.literal(expectedFontStyle), ff.literal(expectedFontWeight),
-                ff.literal(expectedFontSize));
+        Font changedFont =
+                styleFactory.createFont(
+                        ff.literal(expectedFontName),
+                        ff.literal(expectedFontStyle),
+                        ff.literal(expectedFontWeight),
+                        ff.literal(expectedFontSize));
 
         testObj.updateFont(changedFont);
         assertTrue(testObj.isFontNameUpdated());
@@ -172,8 +181,8 @@ public class BatchUpdateFontDataTest {
         // Increment font size
         int expectedIncreaseFontSize = 5;
         testObj.updateFontSize(expectedIncreaseFontSize);
-        assertEquals(testObj.getFontSize(),
-                String.valueOf(expectedFontSize + expectedIncreaseFontSize));
+        assertEquals(
+                testObj.getFontSize(), String.valueOf(expectedFontSize + expectedIncreaseFontSize));
 
         // Decrease font size
         expectedIncreaseFontSize *= -1;
@@ -191,11 +200,11 @@ public class BatchUpdateFontDataTest {
         testObj.updateFont(changedFont);
         expectedIncreaseFontSize = 5;
         testObj.updateFontSize(expectedIncreaseFontSize);
-        String expectedResult = String.format("(%s+%d)", expectedFieldname,
-                expectedIncreaseFontSize);
+        String expectedResult =
+                String.format("(%s+%d)", expectedFieldname, expectedIncreaseFontSize);
         String actualResult = testObj.getFontSize();
         assertEquals(actualResult, expectedResult);
-        
+
         // Revert to original
         testObj.revertToOriginal();
         assertFalse(testObj.isFontNameUpdated());
@@ -207,7 +216,7 @@ public class BatchUpdateFontDataTest {
         assertEquals(testObj.getFontStyle(), originalFontStyle);
         assertEquals(testObj.getFontWeight(), originalFontWeight);
         assertEquals(testObj.getFontSize(), String.valueOf(originalFontSize));
-        
+
         // Update with the changed font again
         testObj.updateFont(changedFont);
 
@@ -215,5 +224,4 @@ public class BatchUpdateFontDataTest {
         symbolizer.fonts().add(changedFont);
         assertFalse(testObj.updateFont(sldWriter));
     }
-
 }

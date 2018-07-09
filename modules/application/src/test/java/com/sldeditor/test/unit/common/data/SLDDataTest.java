@@ -7,18 +7,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.data.GeoServerConnection;
@@ -28,10 +16,20 @@ import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.ui.legend.option.LegendOptionData;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * The unit test for SLDData.
- * 
+ *
  * <p>{@link com.sldeditor.common.data.SLDData}
  *
  * @author Robert Ward (SCISYS)
@@ -51,12 +49,10 @@ public class SLDDataTest {
         }
 
         @Override
-        public void setPropertyMap(Map<String, Object> propertyMap) {
-        }
+        public void setPropertyMap(Map<String, Object> propertyMap) {}
 
         @Override
-        public void setFilename(String filename) {
-        }
+        public void setFilename(String filename) {}
 
         @Override
         public DataSourceConnectorInterface getDataSourceConnector() {
@@ -64,8 +60,7 @@ public class SLDDataTest {
         }
 
         @Override
-        public void populate() {
-        }
+        public void populate() {}
 
         @Override
         public String getFilename() {
@@ -73,8 +68,7 @@ public class SLDDataTest {
         }
 
         @Override
-        public void encodeXML(Document doc, Element root, String elementName) {
-        }
+        public void encodeXML(Document doc, Element root, String elementName) {}
 
         @Override
         public boolean isEmpty() {
@@ -92,8 +86,7 @@ public class SLDDataTest {
         }
 
         @Override
-        public void setPassword(String password) {
-        }
+        public void setPassword(String password) {}
 
         @Override
         public String getDebugConnectionString() {
@@ -101,9 +94,7 @@ public class SLDDataTest {
         }
     }
 
-    /**
-     * Test get layer name.
-     */
+    /** Test get layer name. */
     @Test
     public void testGetLayerName() {
         String styleName = "style";
@@ -117,9 +108,7 @@ public class SLDDataTest {
         assertEquals(styleName, actualLayerNameWithOutSuffix);
     }
 
-    /**
-     * Test sld file.
-     */
+    /** Test sld file. */
     @Test
     public void testSLDFile() {
         SLDData data = new SLDData(null, null);
@@ -142,9 +131,7 @@ public class SLDDataTest {
         sldFile.delete();
     }
 
-    /**
-     * Test connection data.
-     */
+    /** Test connection data. */
     @Test
     public void testConnectionData() {
         SLDData data = new SLDData(null, null);
@@ -154,9 +141,7 @@ public class SLDDataTest {
         assertEquals(connectionData, data.getConnectionData());
     }
 
-    /**
-     * Test read only.
-     */
+    /** Test read only. */
     @Test
     public void testReadOnly() {
         SLDData data = new SLDData(null, null);
@@ -167,9 +152,7 @@ public class SLDDataTest {
         assertFalse(data.isReadOnly());
     }
 
-    /**
-     * Test vendor option list.
-     */
+    /** Test vendor option list. */
     @Test
     public void testVendorOptionList() {
         List<VersionData> vendorOptionList = new ArrayList<VersionData>();
@@ -179,9 +162,7 @@ public class SLDDataTest {
         assertEquals(vendorOptionList, data.getVendorOptionList());
     }
 
-    /**
-     * Test field list.
-     */
+    /** Test field list. */
     @Test
     public void testFieldList() {
         List<DataSourceAttributeData> fieldList = new ArrayList<DataSourceAttributeData>();
@@ -193,9 +174,7 @@ public class SLDDataTest {
         assertEquals(fieldList, data.getFieldList());
     }
 
-    /**
-     * Test data source properties.
-     */
+    /** Test data source properties. */
     @Test
     public void testDataSourceProperties() {
         DataSourcePropertiesInterface dataSourceProperties = new DummyDataSourceProperties();
@@ -208,19 +187,15 @@ public class SLDDataTest {
         assertEquals(dataSourceProperties, data.getDataSourceProperties());
     }
 
-    /**
-     * Test style.
-     */
+    /** Test style. */
     @Test
     public void testStyle() {
-        StyleWrapper styleWrapper = new StyleWrapper("workspace","style");
+        StyleWrapper styleWrapper = new StyleWrapper("workspace", "style");
         SLDData data = new SLDData(styleWrapper, null);
         assertEquals(styleWrapper, data.getStyle());
     }
 
-    /**
-     * Test sld editor file.
-     */
+    /** Test sld editor file. */
     @Test
     public void testSldEditorFile() {
         SLDData data = new SLDData(null, null);
@@ -238,9 +213,7 @@ public class SLDDataTest {
         sldEditorFile.delete();
     }
 
-    /**
-     * Test update sld contents.
-     */
+    /** Test update sld contents. */
     @Test
     public void testUpdateSLDContents() {
         String sldContents = "Original sld contents";
@@ -252,9 +225,7 @@ public class SLDDataTest {
         assertEquals(updateSldContents, data.getSld());
     }
 
-    /**
-     * Test original format.
-     */
+    /** Test original format. */
     @Test
     public void testOriginalFormat() {
         SLDData data = new SLDData(null, null);
@@ -265,9 +236,7 @@ public class SLDDataTest {
         assertEquals(expected, data.getOriginalFormat());
     }
 
-    /**
-     * Test resource locator.
-     */
+    /** Test resource locator. */
     @Test
     public void testResourceLocator() {
         SLDData data = new SLDData(null, null);
@@ -287,16 +256,14 @@ public class SLDDataTest {
         }
     }
 
-    /**
-     * Test legend options.
-     */
+    /** Test legend options. */
     @Test
     public void testLegendOptions() {
         SLDData data = new SLDData(null, null);
 
         LegendOptionData legendOptions = null;
         assertNotNull(data.getLegendOptions());
-        
+
         data.setLegendOptions(legendOptions);
         assertNotNull(data.getLegendOptions());
 

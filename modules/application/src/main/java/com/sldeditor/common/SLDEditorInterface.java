@@ -20,13 +20,12 @@
 package com.sldeditor.common;
 
 import java.net.URL;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
  * The Interface SLDEditorInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SLDEditorInterface {
@@ -45,14 +44,10 @@ public interface SLDEditorInterface {
      */
     void updateWindowTitle(boolean dataEditedFlag);
 
-    /**
-     * Choose new sld.
-     */
+    /** Choose new sld. */
     void chooseNewSLD();
 
-    /**
-     * Exit application.
-     */
+    /** Exit application. */
     void exitApplication();
 
     /**
@@ -104,5 +99,4 @@ public interface SLDEditorInterface {
      * @param panelClass the panel class
      */
     void refreshPanel(Class<?> parent, Class<?> panelClass);
-
 }

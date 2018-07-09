@@ -19,12 +19,13 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.coordinate.CoordManager;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.geotools.factory.Hints;
 import org.geotools.geometry.GeometryFactoryFinder;
 import org.geotools.geometry.iso.aggregate.MultiPrimitiveImpl;
@@ -34,6 +35,9 @@ import org.geotools.geometry.iso.primitive.SurfaceImpl;
 import org.geotools.geometry.text.WKTParser;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.PrecisionModel;
+import org.locationtech.jts.io.WKTReader;
 import org.opengis.geometry.PositionFactory;
 import org.opengis.geometry.aggregate.AggregateFactory;
 import org.opengis.geometry.coordinate.GeometryFactory;
@@ -43,15 +47,9 @@ import org.opengis.geometry.primitive.PrimitiveFactory;
 import org.opengis.geometry.primitive.Ring;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.coordinate.CoordManager;
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.PrecisionModel;
-import org.locationtech.jts.io.WKTReader;
-
 /**
  * Converts a WKT string to WKTxxx objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class WKTConversion {
@@ -242,9 +240,7 @@ public class WKTConversion {
         ptList.removeIfFirstLastSame();
     }
 
-    /**
-     * Initialise the WKTParser object.
-     */
+    /** Initialise the WKTParser object. */
     private static void initialise() {
         Hints hints = new Hints(Hints.CRS, DefaultGeographicCRS.WGS84);
 
@@ -253,8 +249,8 @@ public class WKTConversion {
         PrimitiveFactory primitiveFactory = GeometryFactoryFinder.getPrimitiveFactory(hints);
         AggregateFactory aggregateFactory = GeometryFactoryFinder.getAggregateFactory(hints);
 
-        wktParser = new WKTParser(geometryFactory, primitiveFactory, positionFactory,
-                aggregateFactory);
+        wktParser =
+                new WKTParser(geometryFactory, primitiveFactory, positionFactory, aggregateFactory);
 
         wktTypeList.add(new WKTType(WKT_POINT, false, 1, "Point", false, false));
         wktTypeList.add(new WKTType(WKT_MULTIPOINT, true, 1, "Point", true, false));
@@ -296,8 +292,9 @@ public class WKTConversion {
                 }
 
                 int index = 0;
-                for (int segmentIndex = 0; segmentIndex < wktGeometry
-                        .getNoOfSegments(); segmentIndex++) {
+                for (int segmentIndex = 0;
+                        segmentIndex < wktGeometry.getNoOfSegments();
+                        segmentIndex++) {
                     List<WKTSegmentList> segmentList = wktGeometry.getSegmentList(segmentIndex);
                     if (segmentList != null) {
                         boolean makeFirstAndLastSame = false;
@@ -410,8 +407,7 @@ public class WKTConversion {
             srid = Integer.valueOf(sridString).intValue();
         }
         org.locationtech.jts.geom.GeometryFactory geometryFactory =
-                new org.locationtech.jts.geom.GeometryFactory(
-                new PrecisionModel(), srid);
+                new org.locationtech.jts.geom.GeometryFactory(new PrecisionModel(), srid);
 
         WKTReader parser = new WKTReader(geometryFactory);
 
@@ -428,5 +424,4 @@ public class WKTConversion {
 
         return shape;
     }
-
 }

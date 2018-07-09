@@ -17,21 +17,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.test.sldcookbook;
 
+import com.sldeditor.test.SLDTestRunner;
 import java.lang.reflect.InvocationTargetException;
-
 import javax.swing.SwingUtilities;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.sldeditor.test.SLDTestRunner;
-
 /**
  * The Class SLDCookbookPoint runs the tests for point slds in the SLD Cookbook.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDCookbookPoint {
@@ -46,12 +42,13 @@ public class SLDCookbookPoint {
      */
     @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
-        SwingUtilities.invokeAndWait(new Runnable() {
-            @Override
-            public void run() {
-                test = new SLDTestRunner();
-            }
-        });
+        SwingUtilities.invokeAndWait(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        test = new SLDTestRunner();
+                    }
+                });
     }
 
     @Test

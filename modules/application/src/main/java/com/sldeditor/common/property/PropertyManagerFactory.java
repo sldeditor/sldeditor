@@ -23,7 +23,7 @@ import java.io.File;
 
 /**
  * Class to create PropertyManagerInterface objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class PropertyManagerFactory {
@@ -34,9 +34,7 @@ public class PropertyManagerFactory {
     /** The singleton instance. */
     private static PropertyManagerInterface instance = null;
 
-    /**
-     * Private default constructor.
-     */
+    /** Private default constructor. */
     private PropertyManagerFactory() {
         // Does nothing
     }
@@ -55,9 +53,7 @@ public class PropertyManagerFactory {
         return instance;
     }
 
-    /**
-     * Destroy instance.
-     */
+    /** Destroy instance. */
     public static synchronized void destroyInstance() {
         instance = null;
     }

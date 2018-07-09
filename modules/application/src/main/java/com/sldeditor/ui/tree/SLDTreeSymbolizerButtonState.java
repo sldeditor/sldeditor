@@ -7,10 +7,9 @@
 
 package com.sldeditor.ui.tree;
 
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
-
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
 
 /**
  * The Class SLDTreeSymbolizerButtonState.
@@ -36,9 +35,7 @@ public class SLDTreeSymbolizerButtonState {
         overallEnableSymbolizersOverride = false;
     }
 
-    /**
-     * Show symbolizer buttons.
-     */
+    /** Show symbolizer buttons. */
     public void showSymbolizerButtons() {
         overallEnableSymbolizersOverride = true;
     }
@@ -130,8 +127,9 @@ public class SLDTreeSymbolizerButtonState {
         if (overallEnableSymbolizersOverride) {
             if (obj instanceof RasterSymbolizer) {
                 RasterSymbolizer raster = (RasterSymbolizer) obj;
-                enabled = (raster.getImageOutline() == null)
-                        && (geometryType == GeometryTypeEnum.RASTER);
+                enabled =
+                        (raster.getImageOutline() == null)
+                                && (geometryType == GeometryTypeEnum.RASTER);
             }
         }
         return enabled;
@@ -149,11 +147,11 @@ public class SLDTreeSymbolizerButtonState {
         if (overallEnableSymbolizersOverride) {
             if (obj instanceof RasterSymbolizer) {
                 RasterSymbolizer raster = (RasterSymbolizer) obj;
-                enabled = (raster.getImageOutline() == null)
-                        && (geometryType == GeometryTypeEnum.RASTER);
+                enabled =
+                        (raster.getImageOutline() == null)
+                                && (geometryType == GeometryTypeEnum.RASTER);
             }
         }
         return enabled;
     }
-
 }

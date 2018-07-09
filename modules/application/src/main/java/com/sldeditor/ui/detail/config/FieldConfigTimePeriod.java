@@ -19,12 +19,21 @@
 
 package com.sldeditor.ui.detail.config;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.undo.UndoActionInterface;
+import com.sldeditor.common.undo.UndoEvent;
+import com.sldeditor.common.undo.UndoInterface;
+import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.filter.v2.function.temporal.Duration;
+import com.sldeditor.filter.v2.function.temporal.TimePeriod;
+import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.widgets.FieldPanel;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -37,34 +46,20 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.DateFormatter;
-
-import org.geotools.temporal.object.DefaultPeriod;
-import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.undo.UndoActionInterface;
-import com.sldeditor.common.undo.UndoEvent;
-import com.sldeditor.common.undo.UndoInterface;
-import com.sldeditor.common.undo.UndoManager;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.temporal.Duration;
-import com.sldeditor.filter.v2.function.temporal.TimePeriod;
-import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.widgets.FieldPanel;
-
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
+import org.geotools.temporal.object.DefaultPeriod;
+import org.opengis.filter.expression.Expression;
 
 /**
- * The Class FieldConfigTimePeriod wraps a time period picker GUI component and an
- *  optional value/attribute/expression drop down,
- * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * 
+ * The Class FieldConfigTimePeriod wraps a time period picker GUI component and an optional
+ * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigTimePeriod extends FieldConfigBase implements UndoActionInterface {
@@ -72,9 +67,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
     /** The old value obj. */
     private TimePeriod oldValueObj = null;
 
-    /**
-     * The Class TimePeriodPanel.
-     */
+    /** The Class TimePeriodPanel. */
     private static class TimePeriodPanel {
         /** The date model. */
         private UtilDateModel dateModel = new UtilDateModel();
@@ -130,11 +123,19 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
          * @return true, if successful
          */
         public boolean areFieldsConfigured() {
-            return ((datePicker != null) && (timePicker != null) && (timeEditor != null)
-                    && (yearSpinner != null) && (monthSpinner != null) && (daySpinner != null)
-                    && (dateCheckbox != null) && (timeCheckbox != null) && (hourSpinner != null)
-                    && (minuteSpinner != null) && (secondSpinner != null)
-                    && (durationRadioButton != null) && (dateRadioButton != null)
+            return ((datePicker != null)
+                    && (timePicker != null)
+                    && (timeEditor != null)
+                    && (yearSpinner != null)
+                    && (monthSpinner != null)
+                    && (daySpinner != null)
+                    && (dateCheckbox != null)
+                    && (timeCheckbox != null)
+                    && (hourSpinner != null)
+                    && (minuteSpinner != null)
+                    && (secondSpinner != null)
+                    && (durationRadioButton != null)
+                    && (dateRadioButton != null)
                     && (panel != null));
         }
     }
@@ -154,22 +155,28 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         super(commonData);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     @Override
     public void createUI() {
 
         if (!start.areFieldsConfigured()) {
             FieldPanel fieldPanel = createFieldPanel(getXPos(), getLabel());
 
-            createUIPanel(fieldPanel, start, 0,
+            createUIPanel(
+                    fieldPanel,
+                    start,
+                    0,
                     Localisation.getString(FieldConfigBase.class, "FieldConfigTimePeriod.from"));
-            createUIPanel(fieldPanel, end, 1,
+            createUIPanel(
+                    fieldPanel,
+                    end,
+                    1,
                     Localisation.getString(FieldConfigBase.class, "FieldConfigTimePeriod.to"));
 
-            Dimension preferredSize = new Dimension((int) fieldPanel.getPreferredSize().getWidth(),
-                    end.panel.getY() + end.panel.getHeight());
+            Dimension preferredSize =
+                    new Dimension(
+                            (int) fieldPanel.getPreferredSize().getWidth(),
+                            end.panel.getY() + end.panel.getHeight());
 
             fieldPanel.setPreferredSize(preferredSize);
             if (!isValueOnly()) {
@@ -198,8 +205,8 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      * @param title the title
      * @return the int
      */
-    private void createUIPanel(FieldPanel fieldPanel, TimePeriodPanel panelData, int index,
-            String title) {
+    private void createUIPanel(
+            FieldPanel fieldPanel, TimePeriodPanel panelData, int index, String title) {
         panelData.panel = new JPanel();
         panelData.panel.setLayout(null);
 
@@ -207,30 +214,35 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
 
         panelData.dateRadioButton = new JRadioButton();
         panelData.dateRadioButton.setBounds(2, getRowY(row), 20, BasePanel.WIDGET_HEIGHT);
-        panelData.dateRadioButton.addActionListener(new ActionListener() {
+        panelData.dateRadioButton.addActionListener(
+                new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateFields(panelData);
-            }
-        });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        updateFields(panelData);
+                    }
+                });
         panelData.panel.add(panelData.dateRadioButton);
         panelData.buttonGroup.add(panelData.dateRadioButton);
 
         JDatePanelImpl datePanel = new JDatePanelImpl(panelData.dateModel);
         panelData.datePicker = new JDatePickerImpl(datePanel);
         int xPos = getXPos();
-        panelData.datePicker.setBounds(xPos + BasePanel.WIDGET_X_START, getRowY(row),
-                BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        panelData.datePicker.setBounds(
+                xPos + BasePanel.WIDGET_X_START,
+                getRowY(row),
+                BasePanel.WIDGET_STANDARD_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(panelData.datePicker);
 
-        panelData.dateModel.addChangeListener(new ChangeListener() {
+        panelData.dateModel.addChangeListener(
+                new ChangeListener() {
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                valueUpdated();
-            }
-        });
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        valueUpdated();
+                    }
+                });
 
         // Time picker
         SpinnerDateModel model = new SpinnerDateModel();
@@ -238,20 +250,23 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         model.setValue(calendar.getTime());
         panelData.timePicker = new JSpinner(model);
         panelData.timePicker.setBounds(
-                panelData.datePicker.getX() + panelData.datePicker.getWidth() + 10, getRowY(row),
-                (int) (BasePanel.WIDGET_STANDARD_WIDTH * 0.75), BasePanel.WIDGET_HEIGHT);
-        panelData.timePicker.addChangeListener(new ChangeListener() {
+                panelData.datePicker.getX() + panelData.datePicker.getWidth() + 10,
+                getRowY(row),
+                (int) (BasePanel.WIDGET_STANDARD_WIDTH * 0.75),
+                BasePanel.WIDGET_HEIGHT);
+        panelData.timePicker.addChangeListener(
+                new ChangeListener() {
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                valueUpdated();
-            }
-        });
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        valueUpdated();
+                    }
+                });
         panelData.panel.add(panelData.timePicker);
         panelData.timeEditor = new JSpinner.DateEditor(panelData.timePicker, "HH:mm:ss");
         panelData.timePicker.setEditor(panelData.timeEditor);
-        DateFormatter formatter = (DateFormatter) panelData.timeEditor.getTextField()
-                .getFormatter();
+        DateFormatter formatter =
+                (DateFormatter) panelData.timeEditor.getTextField().getFormatter();
         formatter.setAllowsInvalid(false);
         formatter.setOverwriteMode(true);
 
@@ -262,38 +277,43 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
 
         panelData.durationRadioButton = new JRadioButton();
         panelData.durationRadioButton.setBounds(2, getRowY(row), 20, BasePanel.WIDGET_HEIGHT);
-        panelData.durationRadioButton.addActionListener(new ActionListener() {
+        panelData.durationRadioButton.addActionListener(
+                new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateFields(panelData);
-            }
-        });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        updateFields(panelData);
+                    }
+                });
 
         panelData.panel.add(panelData.durationRadioButton);
         panelData.buttonGroup.add(panelData.durationRadioButton);
 
-        panelData.dateCheckbox = new JCheckBox(
-                Localisation.getString(FieldConfigBase.class, "FieldConfigTimePeriod.date"));
+        panelData.dateCheckbox =
+                new JCheckBox(
+                        Localisation.getString(
+                                FieldConfigBase.class, "FieldConfigTimePeriod.date"));
         panelData.dateCheckbox.setBounds(20, getRowY(row), 55, BasePanel.WIDGET_HEIGHT);
         panelData.dateCheckbox.setSelected(true);
-        panelData.dateCheckbox.addActionListener(new ActionListener() {
+        panelData.dateCheckbox.addActionListener(
+                new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean enabled = panelData.dateCheckbox.isSelected();
-                panelData.yearSpinner.setEnabled(enabled);
-                panelData.monthSpinner.setEnabled(enabled);
-                panelData.daySpinner.setEnabled(enabled);
-            }
-        });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        boolean enabled = panelData.dateCheckbox.isSelected();
+                        panelData.yearSpinner.setEnabled(enabled);
+                        panelData.monthSpinner.setEnabled(enabled);
+                        panelData.daySpinner.setEnabled(enabled);
+                    }
+                });
         panelData.panel.add(panelData.dateCheckbox);
 
         int x = xPos + BasePanel.WIDGET_X_START - 10;
 
         // Year
-        JLabel yearLbl = new JLabel(
-                Localisation.getField(FieldConfigBase.class, "FieldConfigTimePeriod.year"));
+        JLabel yearLbl =
+                new JLabel(
+                        Localisation.getField(FieldConfigBase.class, "FieldConfigTimePeriod.year"));
         yearLbl.setHorizontalAlignment(SwingConstants.LEADING);
         yearLbl.setBounds(x, getRowY(row), 40, BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(yearLbl);
@@ -304,18 +324,21 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         int spinnerWidth = (int) (BasePanel.WIDGET_STANDARD_WIDTH * 0.4);
         panelData.yearSpinner.setBounds(x, getRowY(row), spinnerWidth, BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(panelData.yearSpinner);
-        panelData.yearSpinner.addChangeListener(new ChangeListener() {
+        panelData.yearSpinner.addChangeListener(
+                new ChangeListener() {
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                valueUpdated();
-            }
-        });
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        valueUpdated();
+                    }
+                });
 
         // Month
         x = x + spinnerWidth + 2;
-        JLabel monthLbl = new JLabel(
-                Localisation.getField(FieldConfigBase.class, "FieldConfigTimePeriod.month"));
+        JLabel monthLbl =
+                new JLabel(
+                        Localisation.getField(
+                                FieldConfigBase.class, "FieldConfigTimePeriod.month"));
         monthLbl.setHorizontalAlignment(SwingConstants.LEADING);
         monthLbl.setBounds(x, getRowY(row), 40, BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(monthLbl);
@@ -324,18 +347,20 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         panelData.monthSpinner = new JSpinner();
         panelData.monthSpinner.setBounds(x, getRowY(row), spinnerWidth, BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(panelData.monthSpinner);
-        panelData.monthSpinner.addChangeListener(new ChangeListener() {
+        panelData.monthSpinner.addChangeListener(
+                new ChangeListener() {
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                valueUpdated();
-            }
-        });
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        valueUpdated();
+                    }
+                });
 
         // Day
         x = x + spinnerWidth + 2;
-        JLabel dayLbl = new JLabel(
-                Localisation.getField(FieldConfigBase.class, "FieldConfigTimePeriod.day"));
+        JLabel dayLbl =
+                new JLabel(
+                        Localisation.getField(FieldConfigBase.class, "FieldConfigTimePeriod.day"));
         dayLbl.setHorizontalAlignment(SwingConstants.LEADING);
         dayLbl.setBounds(x, getRowY(row), 40, BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(dayLbl);
@@ -344,39 +369,45 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         panelData.daySpinner = new JSpinner();
         panelData.daySpinner.setBounds(x, getRowY(row), spinnerWidth, BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(panelData.daySpinner);
-        panelData.daySpinner.addChangeListener(new ChangeListener() {
+        panelData.daySpinner.addChangeListener(
+                new ChangeListener() {
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                valueUpdated();
-            }
-        });
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        valueUpdated();
+                    }
+                });
 
         //
         // Time
         //
         row++;
-        panelData.timeCheckbox = new JCheckBox(
-                Localisation.getString(FieldConfigBase.class, "FieldConfigTimePeriod.time"));
+        panelData.timeCheckbox =
+                new JCheckBox(
+                        Localisation.getString(
+                                FieldConfigBase.class, "FieldConfigTimePeriod.time"));
         panelData.timeCheckbox.setBounds(20, getRowY(row), 55, BasePanel.WIDGET_HEIGHT);
         panelData.timeCheckbox.setSelected(true);
-        panelData.timeCheckbox.addActionListener(new ActionListener() {
+        panelData.timeCheckbox.addActionListener(
+                new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean enabled = panelData.timeCheckbox.isSelected();
-                panelData.hourSpinner.setEnabled(enabled);
-                panelData.minuteSpinner.setEnabled(enabled);
-                panelData.secondSpinner.setEnabled(enabled);
-            }
-        });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        boolean enabled = panelData.timeCheckbox.isSelected();
+                        panelData.hourSpinner.setEnabled(enabled);
+                        panelData.minuteSpinner.setEnabled(enabled);
+                        panelData.secondSpinner.setEnabled(enabled);
+                    }
+                });
         panelData.panel.add(panelData.timeCheckbox);
 
         x = xPos + BasePanel.WIDGET_X_START - 10;
 
         // Hours
-        JLabel hoursLbl = new JLabel(
-                Localisation.getField(FieldConfigBase.class, "FieldConfigTimePeriod.hours"));
+        JLabel hoursLbl =
+                new JLabel(
+                        Localisation.getField(
+                                FieldConfigBase.class, "FieldConfigTimePeriod.hours"));
         hoursLbl.setHorizontalAlignment(SwingConstants.LEADING);
         hoursLbl.setBounds(x, getRowY(row), 40, BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(hoursLbl);
@@ -384,19 +415,22 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         panelData.hourSpinner = new JSpinner();
         x = x + 40;
         panelData.hourSpinner.setBounds(x, getRowY(row), spinnerWidth, BasePanel.WIDGET_HEIGHT);
-        panelData.hourSpinner.addChangeListener(new ChangeListener() {
+        panelData.hourSpinner.addChangeListener(
+                new ChangeListener() {
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                valueUpdated();
-            }
-        });
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        valueUpdated();
+                    }
+                });
         panelData.panel.add(panelData.hourSpinner);
 
         // Minutes
         x = x + spinnerWidth + 2;
-        JLabel minuteLbl = new JLabel(
-                Localisation.getField(FieldConfigBase.class, "FieldConfigTimePeriod.minutes"));
+        JLabel minuteLbl =
+                new JLabel(
+                        Localisation.getField(
+                                FieldConfigBase.class, "FieldConfigTimePeriod.minutes"));
         minuteLbl.setHorizontalAlignment(SwingConstants.LEADING);
         minuteLbl.setBounds(x, getRowY(row), 40, BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(minuteLbl);
@@ -404,19 +438,22 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         x = x + 40;
         panelData.minuteSpinner = new JSpinner();
         panelData.minuteSpinner.setBounds(x, getRowY(row), spinnerWidth, BasePanel.WIDGET_HEIGHT);
-        panelData.minuteSpinner.addChangeListener(new ChangeListener() {
+        panelData.minuteSpinner.addChangeListener(
+                new ChangeListener() {
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                valueUpdated();
-            }
-        });
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        valueUpdated();
+                    }
+                });
         panelData.panel.add(panelData.minuteSpinner);
 
         // Seconds
         x = x + spinnerWidth + 2;
-        JLabel secondLabel = new JLabel(
-                Localisation.getField(FieldConfigBase.class, "FieldConfigTimePeriod.seconds"));
+        JLabel secondLabel =
+                new JLabel(
+                        Localisation.getField(
+                                FieldConfigBase.class, "FieldConfigTimePeriod.seconds"));
         secondLabel.setHorizontalAlignment(SwingConstants.LEADING);
         secondLabel.setBounds(x, getRowY(row), 40, BasePanel.WIDGET_HEIGHT);
         panelData.panel.add(secondLabel);
@@ -424,22 +461,28 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         x = x + 40;
         panelData.secondSpinner = new JSpinner();
         panelData.secondSpinner.setBounds(x, getRowY(row), spinnerWidth, BasePanel.WIDGET_HEIGHT);
-        panelData.secondSpinner.addChangeListener(new ChangeListener() {
+        panelData.secondSpinner.addChangeListener(
+                new ChangeListener() {
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                valueUpdated();
-            }
-        });
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        valueUpdated();
+                    }
+                });
         panelData.panel.add(panelData.secondSpinner);
 
         fieldPanel.add(panelData.panel);
 
-        panelData.panel.setBounds(0, index * ((row * BasePanel.WIDGET_HEIGHT) + 50),
-                BasePanel.FIELD_PANEL_WIDTH, (row + 2) * BasePanel.WIDGET_HEIGHT);
-
-        Dimension preferredSize = new Dimension((int) panelData.panel.getPreferredSize().getWidth(),
+        panelData.panel.setBounds(
+                0,
+                index * ((row * BasePanel.WIDGET_HEIGHT) + 50),
+                BasePanel.FIELD_PANEL_WIDTH,
                 (row + 2) * BasePanel.WIDGET_HEIGHT);
+
+        Dimension preferredSize =
+                new Dimension(
+                        (int) panelData.panel.getPreferredSize().getWidth(),
+                        (row + 2) * BasePanel.WIDGET_HEIGHT);
 
         panelData.panel.setPreferredSize(preferredSize);
 
@@ -453,7 +496,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
@@ -468,7 +511,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -485,7 +528,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -502,7 +545,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -517,12 +560,10 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -539,7 +580,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override

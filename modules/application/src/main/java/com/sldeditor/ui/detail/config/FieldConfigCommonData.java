@@ -39,10 +39,12 @@ public class FieldConfigCommonData {
 
     /**
      * The value only flag:
+     *
      * <ul>
-     * <li>true - do not display a value/attribute/expression drop down list</li>
-     * <li>false- display a value/attribute/expression drop down list</li>
+     *   <li>true - do not display a value/attribute/expression drop down list
+     *   <li>false- display a value/attribute/expression drop down list
      * </ul>
+     *
      * .
      */
     private boolean valueOnly = false;
@@ -62,7 +64,11 @@ public class FieldConfigCommonData {
      * @param valueOnly the value only
      * @param rasterSymbol the raster symbol
      */
-    public FieldConfigCommonData(Class<?> panelId, FieldIdEnum id, String label, boolean valueOnly,
+    public FieldConfigCommonData(
+            Class<?> panelId,
+            FieldIdEnum id,
+            String label,
+            boolean valueOnly,
             boolean rasterSymbol) {
         super();
         this.panelId = panelId;
@@ -82,8 +88,13 @@ public class FieldConfigCommonData {
      * @param rasterSymbol the raster symbol
      * @param optionalCheckbox the optional checkbox
      */
-    public FieldConfigCommonData(Class<?> panelId, FieldIdEnum id, String label, boolean valueOnly,
-            boolean rasterSymbol, boolean optionalCheckbox) {
+    public FieldConfigCommonData(
+            Class<?> panelId,
+            FieldIdEnum id,
+            String label,
+            boolean valueOnly,
+            boolean rasterSymbol,
+            boolean optionalCheckbox) {
         super();
         this.panelId = panelId;
         this.id = id;
@@ -101,8 +112,8 @@ public class FieldConfigCommonData {
      * @param label the label
      * @param valueOnly the value only
      */
-    public FieldConfigCommonData(Class<?> panelId, FieldIdEnum id, String label,
-            boolean valueOnly) {
+    public FieldConfigCommonData(
+            Class<?> panelId, FieldIdEnum id, String label, boolean valueOnly) {
         super();
         this.panelId = panelId;
         this.id = id;

@@ -19,7 +19,7 @@
 
 /**
  * Common file system interfaces.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.filesystem;

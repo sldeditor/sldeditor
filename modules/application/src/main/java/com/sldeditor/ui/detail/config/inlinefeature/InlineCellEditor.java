@@ -19,17 +19,15 @@
 
 package com.sldeditor.ui.detail.config.inlinefeature;
 
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
-
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
-
-import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
-import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog;
 import org.locationtech.jts.geom.Geometry;
 
 /**
@@ -59,7 +57,7 @@ public class InlineCellEditor extends AbstractCellEditor implements TableCellEdi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.CellEditor#getCellEditorValue()
      */
     @Override
@@ -69,13 +67,13 @@ public class InlineCellEditor extends AbstractCellEditor implements TableCellEdi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable,
      * java.lang.Object, boolean, int, int)
      */
     @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
-            int row, int column) {
+    public Component getTableCellEditorComponent(
+            JTable table, Object value, boolean isSelected, int row, int column) {
 
         if ((model != null) && column == model.getGeometryFieldIndex()) {
             WKTDialog wktDialog = new WKTDialog();
@@ -88,8 +86,8 @@ public class InlineCellEditor extends AbstractCellEditor implements TableCellEdi
 
             if (wktDialog.showDialog(geometryString)) {
                 String crsCode = model.getSelectedCRSCode();
-                Geometry geometry = WKTConversion.convertToGeometry(wktDialog.getWKTString(),
-                        crsCode);
+                Geometry geometry =
+                        WKTConversion.convertToGeometry(wktDialog.getWKTString(), crsCode);
 
                 model.updateGeometry(row, geometry);
             }
@@ -103,7 +101,7 @@ public class InlineCellEditor extends AbstractCellEditor implements TableCellEdi
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.AbstractCellEditor#isCellEditable(java.util.EventObject)
      */
     @Override
@@ -116,5 +114,4 @@ public class InlineCellEditor extends AbstractCellEditor implements TableCellEdi
         }
         return false;
     }
-
 }

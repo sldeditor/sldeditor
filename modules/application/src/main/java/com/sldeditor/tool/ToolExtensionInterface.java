@@ -17,18 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.tool;
 
-import java.util.Map;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.data.StyleWrapper;
+import java.util.Map;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The Interface ToolExtensionInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface ToolExtensionInterface {
@@ -46,13 +43,9 @@ public interface ToolExtensionInterface {
      */
     public Map<StyleWrapper, StyledLayerDescriptor> getSelectedItems();
 
-    /**
-     * Select all.
-     */
+    /** Select all. */
     public void selectAll();
 
-    /**
-     * Select none.
-     */
+    /** Select none. */
     public void selectNone();
 }

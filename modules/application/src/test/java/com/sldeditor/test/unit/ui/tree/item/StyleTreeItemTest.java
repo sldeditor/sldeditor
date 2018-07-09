@@ -21,17 +21,16 @@ package com.sldeditor.test.unit.ui.tree.item;
 
 import static org.junit.Assert.assertTrue;
 
-import org.geotools.styling.Style;
-import org.junit.Test;
-
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.tree.SLDTreeTools;
 import com.sldeditor.ui.tree.item.StyleTreeItem;
+import org.geotools.styling.Style;
+import org.junit.Test;
 
 /**
  * The unit test for StyleTreeItem.
- * 
+ *
  * <p>{@link com.sldeditor.ui.tree.item.StyleTreeItem}
  *
  * @author Robert Ward (SCISYS)
@@ -39,47 +38,55 @@ import com.sldeditor.ui.tree.item.StyleTreeItem;
 public class StyleTreeItemTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.item.StyleTreeItem#getTreeString(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.StyleTreeItem#getTreeString(java.lang.Object)}.
      */
     @Test
     public void testGetTreeString() {
         StyleTreeItem item = new StyleTreeItem();
         String actualValue = item.getTreeString(null, null);
-        String expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.style"), "");
+        String expectedValue =
+                String.format(
+                        "%s : %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.style"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Style style = DefaultSymbols.createNewStyle();
 
         actualValue = item.getTreeString(null, style);
-        expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.style"),
-                Localisation.getString(SLDTreeTools.class, "TreeItem.newStyle"));
+        expectedValue =
+                String.format(
+                        "%s : %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.style"),
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.newStyle"));
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         style.setName(null);
         actualValue = item.getTreeString(null, style);
-        expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.style"), "");
+        expectedValue =
+                String.format(
+                        "%s : %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.style"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         String expectedName = "test name";
         style.setName(expectedName);
         actualValue = item.getTreeString(null, style);
-        expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.style"), expectedName);
+        expectedValue =
+                String.format(
+                        "%s : %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.style"), expectedName);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.item.StyleTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.StyleTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode,
+     * java.lang.Object)}.
      */
     @Test
     public void testItemSelected() {
         StyleTreeItem item = new StyleTreeItem();
         item.itemSelected(null, null);
     }
-
 }

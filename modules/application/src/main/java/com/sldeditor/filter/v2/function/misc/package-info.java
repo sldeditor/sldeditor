@@ -18,8 +18,7 @@
  */
 /**
  * Classes to handle the configuration of IsLike and IsNull filter functions.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.filter.v2.function.misc;

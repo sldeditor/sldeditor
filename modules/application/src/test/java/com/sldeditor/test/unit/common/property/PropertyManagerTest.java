@@ -24,28 +24,27 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.property.PropertyManager;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
-
-import com.sldeditor.common.property.PropertyManager;
 
 /**
  * Unit test for PropertyManager.
- * 
+ *
  * <p>{@link com.sldeditor.common.property.PropertyManager}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class PropertyManagerTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String,
+     * java.lang.String)}.
      */
     @Test
     public void testUpdateValueString() {
@@ -66,8 +65,8 @@ public class PropertyManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, boolean)}.
+     * Test method for {@link
+     * com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, boolean)}.
      */
     @Test
     public void testUpdateValueStringBoolean() {
@@ -87,9 +86,7 @@ public class PropertyManagerTest {
         assertEquals(defaultValue, actualResult);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.property.PropertyManager#readConfig()}.
-     */
+    /** Test method for {@link com.sldeditor.common.property.PropertyManager#readConfig()}. */
     @Test
     public void testReadConfig() {
         PropertyManager nullPropertyManager = new PropertyManager();
@@ -155,8 +152,8 @@ public class PropertyManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.property.PropertyManager#getDoubleValue(java.lang.String, double)}.
+     * Test method for {@link
+     * com.sldeditor.common.property.PropertyManager#getDoubleValue(java.lang.String, double)}.
      */
     @Test
     public void testGetDoubleValue() {
@@ -182,8 +179,8 @@ public class PropertyManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.util.List)}.
      */
     @Test
     public void testUpdateValueStringListOfString() {
@@ -207,8 +204,9 @@ public class PropertyManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, int, java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, int,
+     * java.lang.String)}.
      */
     @Test
     public void testUpdateValueStringIntString() {
@@ -236,8 +234,8 @@ public class PropertyManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.awt.Color)}.
+     * Test method for {@link
+     * com.sldeditor.common.property.PropertyManager#updateValue(java.lang.String, java.awt.Color)}.
      */
     @Test
     public void testUpdateValueStringColor() {
@@ -256,5 +254,4 @@ public class PropertyManagerTest {
         actualResult = propertyManager.getColourValue(newKey, defaultValue);
         assertEquals(defaultValue, actualResult);
     }
-
 }

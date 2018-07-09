@@ -19,21 +19,6 @@
 
 package com.sldeditor.ui.sldtext;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
@@ -47,10 +32,22 @@ import com.sldeditor.render.RenderPanelFactory;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * Text area component that displays the SLD as xml.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInterface {
@@ -85,9 +82,7 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
         return instance.makeTextAreaPanel();
     }
 
-    /**
-     * Instantiates a new SLD text area.
-     */
+    /** Instantiates a new SLD text area. */
     private SLDTextArea() {
         // Listen for changes in the SLD
         RenderPanelFactory.addSLDOutputListener(this);
@@ -107,14 +102,20 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
 
         List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
 
-        dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.SLD.name(), "SLD",
-                VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
-        dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.YSLD.name(), "YSLD",
-                VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
+        dataList.add(
+                new ValueComboBoxData(
+                        SLDOutputFormatEnum.SLD.name(),
+                        "SLD",
+                        VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
+        dataList.add(
+                new ValueComboBoxData(
+                        SLDOutputFormatEnum.YSLD.name(),
+                        "YSLD",
+                        VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
 
         /*
          * Code to be uncommented to used when gt-mbstyles becomes a supported module.
-         * 
+         *
          * dataList.add(new ValueComboBoxData(SLDOutputFormatEnum.MAPBOX.name(), "MapBox",
          * VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
          */
@@ -128,17 +129,19 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
         comboBox.setPreferredSize(
                 new Dimension(BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT));
         comboBox.initialiseSingle(dataList);
-        comboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ValueComboBox comboBox = (ValueComboBox) e.getSource();
-                if (comboBox.getSelectedItem() != null) {
+        comboBox.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        ValueComboBox comboBox = (ValueComboBox) e.getSource();
+                        if (comboBox.getSelectedItem() != null) {
 
-                    String name = comboBox.getSelectedValue().getKey();
-                    outputFormat = SLDOutputFormatEnum.valueOf(SLDOutputFormatEnum.class, name);
-                    outputText();
-                }
-            }
-        });
+                            String name = comboBox.getSelectedValue().getKey();
+                            outputFormat =
+                                    SLDOutputFormatEnum.valueOf(SLDOutputFormatEnum.class, name);
+                            outputText();
+                        }
+                    }
+                });
         optionsPanel.add(comboBox);
         sldSourcePanel.add(optionsPanel, BorderLayout.NORTH);
 
@@ -157,7 +160,7 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.output.SLDOutputInterface#updatedSLD(com.sldeditor.common.
      * SLDDataInterface, org.geotools.styling.StyledLayerDescriptor)
      */
@@ -169,9 +172,7 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
         outputText();
     }
 
-    /**
-     * Output text.
-     */
+    /** Output text. */
     private void outputText() {
         SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(outputFormat);
 
@@ -187,7 +188,7 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.datasource.SLDEditorDataUpdateInterface#sldDataUpdated(com.sldeditor.common.
      * SLDDataInterface, boolean)
@@ -200,5 +201,4 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
             comboBox.setSelectValueKey(outputFormat.name());
         }
     }
-
 }

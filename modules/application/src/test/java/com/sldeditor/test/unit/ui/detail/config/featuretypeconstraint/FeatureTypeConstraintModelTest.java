@@ -24,9 +24,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel;
+import com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModelUpdateInterface;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Extent;
 import org.geotools.styling.FeatureTypeConstraint;
@@ -34,14 +37,9 @@ import org.geotools.styling.StyleFactoryImpl;
 import org.junit.Test;
 import org.opengis.filter.Filter;
 
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel;
-import com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModelUpdateInterface;
-
 /**
  * The unit test for FeatureTypeConstraintModel.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel}
  *
  * @author Robert Ward (SCISYS)
@@ -57,8 +55,7 @@ public class FeatureTypeConstraintModelTest {
         }
 
         @Override
-        public void extentUpdated() {
-        }
+        public void extentUpdated() {}
 
         public boolean hasFTCUpdatedBeenCalled() {
             boolean tmp = ftcUpdated;
@@ -68,8 +65,9 @@ public class FeatureTypeConstraintModelTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#isCellEditable(int, int)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#isCellEditable(int,
+     * int)}.
      */
     @Test
     public void testIsCellEditable() {
@@ -79,8 +77,8 @@ public class FeatureTypeConstraintModelTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#getColumnCount()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#getColumnCount()}.
      */
     @Test
     public void testGetColumnCount() {
@@ -90,26 +88,32 @@ public class FeatureTypeConstraintModelTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#getColumnName(int)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#getColumnName(int)}.
      */
     @Test
     public void testGetColumnNameInt() {
         FeatureTypeConstraintModel model = new FeatureTypeConstraintModel(null);
 
-        assertTrue(model.getColumnName(0).compareTo(Localisation.getString(FieldConfigBase.class,
-                "FeatureTypeConstraintModel.name")) == 0);
+        assertTrue(
+                model.getColumnName(0)
+                                .compareTo(
+                                        Localisation.getString(
+                                                FieldConfigBase.class,
+                                                "FeatureTypeConstraintModel.name"))
+                        == 0);
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#getRowCount()}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#getValueAt(int, int)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#addNewEntry()}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#setValueAt(java.lang.Object, int, int)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#getRowCount()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#getValueAt(int,
+     * int)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#addNewEntry()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#setValueAt(java.lang.Object,
+     * int, int)}.
      */
     @Test
     public void testGetValueAt() {
@@ -157,12 +161,12 @@ public class FeatureTypeConstraintModelTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#populate(java.util.List)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#removeEntries(int, int)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#getFeatureTypeConstraint(int)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#populate(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#removeEntries(int,
+     * int)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#getFeatureTypeConstraint(int)}.
      */
     @Test
     public void testPopulate() {
@@ -213,8 +217,8 @@ public class FeatureTypeConstraintModelTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#isFilterColumn(int[])}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModel#isFilterColumn(int[])}.
      */
     @Test
     public void testIsFilterColumn() {
@@ -232,5 +236,4 @@ public class FeatureTypeConstraintModelTest {
         columns[2] = 1;
         assertTrue(model.isFilterColumn(columns));
     }
-
 }

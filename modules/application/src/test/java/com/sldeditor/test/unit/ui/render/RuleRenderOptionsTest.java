@@ -21,13 +21,12 @@ package com.sldeditor.test.unit.ui.render;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.ui.render.RuleRenderOptions;
+import org.junit.Test;
 
 /**
  * The unit test for RuleRenderOptions.
- * 
+ *
  * <p>{@link com.sldeditor.ui.render.RuleRenderOptions}
  *
  * @author Robert Ward (SCISYS)
@@ -39,7 +38,7 @@ public class RuleRenderOptionsTest {
         RuleRenderOptions options = new RuleRenderOptions();
 
         assertTrue(options.isTransformationApplied() == false);
-        
+
         options.setApplyTransformation(true);
         assertTrue(options.isTransformationApplied() == true);
     }

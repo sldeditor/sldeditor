@@ -22,23 +22,20 @@ package com.sldeditor.test.unit.filter.v2.expression;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.vendoroption.VersionData;
-import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
-
 /**
  * Unit test for ExpressionPanelv2 class.
- * 
- * <p>{@link com.sldeditor.filter.v2.expression.ExpressionPanelv2}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.filter.v2.expression.ExpressionPanelv2}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class ExpressionPanelv2Test {
 
@@ -66,7 +63,8 @@ public class ExpressionPanelv2Test {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.expression.ExpressionPanelv2#ExpressionPanelv2(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.expression.ExpressionPanelv2#ExpressionPanelv2(java.util.List)}.
      */
     @Test
     public void testExpressionPanelv2() {
@@ -90,5 +88,4 @@ public class ExpressionPanelv2Test {
         testObj.dataApplied();
         testObj.testSelection();
     }
-
 }

@@ -19,22 +19,6 @@
 
 package com.sldeditor.extension.filesystem.file.sld;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.tree.DefaultTreeModel;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
@@ -47,10 +31,24 @@ import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.tool.ToolManager;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  * Class that handles reading/writing SLD files to the file system.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDFileHandler implements FileHandlerInterface {
@@ -65,7 +63,7 @@ public class SLDFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.FileHandlerInterface#getFileExtension()
      */
     @Override
@@ -75,22 +73,22 @@ public class SLDFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.
      * input.FileSystemInterface, javax.swing.tree.DefaultTreeModel,
      * com.sldeditor.extension.input.file.FileTreeNode)
      */
     @Override
-    public boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel,
-            FileTreeNode node) {
+    public boolean populate(
+            FileSystemInterface inputInterface, DefaultTreeModel treeModel, FileTreeNode node) {
         // Do nothing
         return false;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.
      * input.NodeInterface)
@@ -204,7 +202,7 @@ public class SLDFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.
      * SLDDataInterface)
      */
@@ -233,7 +231,7 @@ public class SLDFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.
      * SLDDataInterface)
@@ -241,8 +239,9 @@ public class SLDFileHandler implements FileHandlerInterface {
     @Override
     public String getSLDName(SLDDataInterface sldData) {
         if (sldData != null) {
-            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames
-                    .addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
+            return sldData.getLayerNameWithOutSuffix()
+                    + ExternalFilenames.addFileExtensionSeparator(
+                            SLDEditorFile.getSLDFileExtension());
         }
 
         return "";
@@ -260,7 +259,7 @@ public class SLDFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.
      * lang.String, java.lang.String)

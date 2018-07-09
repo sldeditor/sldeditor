@@ -18,8 +18,8 @@
  */
 
 /**
- * Allows databases to used as an input to the SLD Editor. 
- * 
+ * Allows databases to used as an input to the SLD Editor.
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.extension.filesystem.database;

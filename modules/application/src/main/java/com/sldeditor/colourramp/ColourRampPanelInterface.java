@@ -20,9 +20,7 @@
 package com.sldeditor.colourramp;
 
 import java.util.List;
-
 import javax.swing.JPanel;
-
 import org.geotools.styling.ColorMap;
 
 /**

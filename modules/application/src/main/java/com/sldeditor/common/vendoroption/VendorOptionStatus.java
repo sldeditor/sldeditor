@@ -19,9 +19,8 @@
 
 package com.sldeditor.common.vendoroption;
 
-import java.util.List;
-
 import com.sldeditor.common.console.ConsoleManager;
+import java.util.List;
 
 /**
  * The Class VendorOptionStatus.
@@ -62,8 +61,9 @@ public class VendorOptionStatus {
                 if (versionData.getVendorOptionType() == NoVendorOption.class) {
                     versionString = vendorOptionName;
                 } else {
-                    versionString = String.format("%s %s", vendorOptionName,
-                            versionData.getVersionString());
+                    versionString =
+                            String.format(
+                                    "%s %s", vendorOptionName, versionData.getVersionString());
                 }
             }
         }
@@ -78,8 +78,9 @@ public class VendorOptionStatus {
      */
     private static String getVendorOptionName(Class<?> vendorOptionType) {
         try {
-            VendorOptionTypeInterface o = (VendorOptionTypeInterface) Class
-                    .forName(vendorOptionType.getName()).newInstance();
+            VendorOptionTypeInterface o =
+                    (VendorOptionTypeInterface)
+                            Class.forName(vendorOptionType.getName()).newInstance();
             return o.getName();
         } catch (InstantiationException e) {
             ConsoleManager.getInstance().exception(VendorOptionStatus.class, e);
@@ -120,15 +121,17 @@ public class VendorOptionStatus {
             if (hasEarliest && !hasLatest) {
                 return String.format("%s %s-", vendorOptionName, earliest.getVersionString());
             } else if (!hasEarliest && hasLatest) {
-                return String.format("%s -%s", vendorOptionName,
-                        versionData.getLatest().getVersionString());
+                return String.format(
+                        "%s -%s", vendorOptionName, versionData.getLatest().getVersionString());
             } else if (hasEarliest && hasLatest) {
-                return String.format("%s %s-%s", vendorOptionName, earliest.getVersionString(),
+                return String.format(
+                        "%s %s-%s",
+                        vendorOptionName,
+                        earliest.getVersionString(),
                         versionData.getLatest().getVersionString());
             }
         }
 
         return vendorOptionName;
     }
-
 }

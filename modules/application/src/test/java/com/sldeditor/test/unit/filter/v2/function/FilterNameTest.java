@@ -22,29 +22,28 @@ package com.sldeditor.test.unit.filter.v2.function;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import org.junit.Test;
 
 /**
  * Unit test for FilterName class.
- * 
- * <p>{@link com.sldeditor.filter.v2.function.FilterName}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.filter.v2.function.FilterName}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class FilterNameTest {
 
     /**
-     * Test method for {@link com.sldeditor.filter.v2.function.FilterName#FilterName(java.lang.String, java.lang.Class)}.
-     * Test method for {@link com.sldeditor.filter.v2.function.FilterName#getFilterName()}.
-     * Test method for {@link com.sldeditor.filter.v2.function.FilterName#getReturnType()}.
-     * Test method for {@link com.sldeditor.filter.v2.function.FilterName#getParameterList()}.
-     * Test method for {@link com.sldeditor.filter.v2.function.FilterName#getParameter(int)}.
-     * Test method for {@link com.sldeditor.filter.v2.function.FilterName#addParameter(com.sldeditor.filter.v2.function.FilterNameParameter)}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.function.FilterName#FilterName(java.lang.String, java.lang.Class)}.
+     * Test method for {@link com.sldeditor.filter.v2.function.FilterName#getFilterName()}. Test
+     * method for {@link com.sldeditor.filter.v2.function.FilterName#getReturnType()}. Test method
+     * for {@link com.sldeditor.filter.v2.function.FilterName#getParameterList()}. Test method for
+     * {@link com.sldeditor.filter.v2.function.FilterName#getParameter(int)}. Test method for {@link
+     * com.sldeditor.filter.v2.function.FilterName#addParameter(com.sldeditor.filter.v2.function.FilterNameParameter)}.
      */
     @Test
     public void testGetFilterName() {
@@ -55,8 +54,8 @@ public class FilterNameTest {
         assertTrue(filterName.compareTo(f.getFilterName()) == 0);
         assertEquals(returnType, f.getReturnType());
 
-        FilterNameParameter p1 = new FilterNameParameter("parameter 1", 
-                ExpressionTypeEnum.LITERAL, Integer.class);
+        FilterNameParameter p1 =
+                new FilterNameParameter("parameter 1", ExpressionTypeEnum.LITERAL, Integer.class);
         f.addParameter(p1);
         assertEquals(1, f.getParameterList().size());
         assertEquals(null, f.getParameter(-1));

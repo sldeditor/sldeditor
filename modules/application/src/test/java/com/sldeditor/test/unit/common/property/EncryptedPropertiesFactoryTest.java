@@ -1,17 +1,15 @@
-
 package com.sldeditor.test.unit.common.property;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
 import com.sldeditor.common.property.EncryptedPropertiesFactory;
+import org.junit.Test;
 
 /**
  * Unit test for EncryptedPropertiesFactory.
- * 
+ *
  * <p>{@link com.sldeditor.common.property.EncryptedPropertiesFactory}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class EncryptedPropertiesFactoryTest {
@@ -23,8 +21,8 @@ public class EncryptedPropertiesFactoryTest {
         String enrypted = EncryptedPropertiesFactory.getInstance().encrypt(expectedString);
 
         enrypted = EncryptedPropertiesFactory.getInstance().encrypt(expectedString);
-        String actualApacheCommonsResult = EncryptedPropertiesFactory.getInstance()
-                .decrypt(enrypted);
+        String actualApacheCommonsResult =
+                EncryptedPropertiesFactory.getInstance().decrypt(enrypted);
         assertEquals(expectedString, actualApacheCommonsResult);
     }
 }

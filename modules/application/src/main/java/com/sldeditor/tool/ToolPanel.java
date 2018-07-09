@@ -19,6 +19,10 @@
 
 package com.sldeditor.tool;
 
+import com.sldeditor.common.NodeInterface;
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.ToolSelectionInterface;
+import com.sldeditor.common.localisation.Localisation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -27,21 +31,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-
 import org.apache.log4j.Logger;
-
-import com.sldeditor.common.NodeInterface;
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.ToolSelectionInterface;
-import com.sldeditor.common.localisation.Localisation;
 
 /**
  * Panel that contains all application tools.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ToolPanel extends JPanel {
@@ -56,7 +53,7 @@ public class ToolPanel extends JPanel {
     public static final int TOOL_PANEL_HEIGHT = 50;
 
     /** The tool map. */
-    private Map<Class<?>, List<ToolInterface>> toolMap = 
+    private Map<Class<?>, List<ToolInterface>> toolMap =
             new HashMap<Class<?>, List<ToolInterface>>();
 
     /** The displayed panels. */
@@ -94,13 +91,14 @@ public class ToolPanel extends JPanel {
         JPanel optionsPanel = new JPanel();
         add(optionsPanel);
 
-        JCheckBox chckbxRecursive = new JCheckBox(
-                Localisation.getString(ToolPanel.class, "ToolPanel.recursive"));
-        chckbxRecursive.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                toolSelection.setRecursiveFlag(chckbxRecursive.isSelected());
-            }
-        });
+        JCheckBox chckbxRecursive =
+                new JCheckBox(Localisation.getString(ToolPanel.class, "ToolPanel.recursive"));
+        chckbxRecursive.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        toolSelection.setRecursiveFlag(chckbxRecursive.isSelected());
+                    }
+                });
         optionsPanel.add(chckbxRecursive);
         this.setPreferredSize(new Dimension(50, EMPTY_TOOL_PANEL_HEIGHT));
     }
@@ -112,8 +110,10 @@ public class ToolPanel extends JPanel {
      * @param nodeTypeList the node type list
      * @param sldDataList the new selected items
      */
-    public synchronized void setSelectedItems(List<Class<?>> uniqueNodeTypeList,
-            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
+    public synchronized void setSelectedItems(
+            List<Class<?>> uniqueNodeTypeList,
+            List<NodeInterface> nodeTypeList,
+            List<SLDDataInterface> sldDataList) {
         List<ToolInterface> consolidatedToolList = new ArrayList<ToolInterface>();
 
         if (nodeTypeList != null) {

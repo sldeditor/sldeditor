@@ -19,17 +19,15 @@
 
 package com.sldeditor.rendertransformation;
 
+import com.sldeditor.rendertransformation.types.RenderTransformValueFactory;
+import com.sldeditor.ui.detail.config.transform.ParameterFunctionUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.geotools.process.function.ProcessFunction;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 import org.opengis.parameter.Parameter;
-
-import com.sldeditor.rendertransformation.types.RenderTransformValueFactory;
-import com.sldeditor.ui.detail.config.transform.ParameterFunctionUtils;
 
 /**
  * Class that provides the built in process functions present in GeoTools.
@@ -48,8 +46,8 @@ public class BuiltInProcessFunction {
      * @param selectedProcessFunctionData the selected process function data
      * @return the list
      */
-    public List<ProcessFunctionParameterValue> extractParameters(FunctionName functionName,
-            ProcessFunction selectedProcessFunctionData) {
+    public List<ProcessFunctionParameterValue> extractParameters(
+            FunctionName functionName, ProcessFunction selectedProcessFunctionData) {
 
         List<ProcessFunctionParameterValue> valueList =
                 new ArrayList<ProcessFunctionParameterValue>();
@@ -70,14 +68,14 @@ public class BuiltInProcessFunction {
         // Now populate any parameter values we have
         if (selectedProcessFunctionData != null) {
             for (Expression parameter : selectedProcessFunctionData.getParameters()) {
-                List<Expression> parameterList = ParameterFunctionUtils
-                        .getExpressionList(parameter);
+                List<Expression> parameterList =
+                        ParameterFunctionUtils.getExpressionList(parameter);
 
                 if ((parameterList != null) && !parameterList.isEmpty()) {
                     Expression paramName = parameterList.get(0);
 
-                    ProcessFunctionParameterValue value = findParameterValue(valueList,
-                            paramName.toString());
+                    ProcessFunctionParameterValue value =
+                            findParameterValue(valueList, paramName.toString());
 
                     if ((parameterList.size() > 1) && (value != null)) {
                         Expression paramValue = parameterList.get(1);
@@ -117,14 +115,16 @@ public class BuiltInProcessFunction {
      * @param parameter the parameter
      * @param value the value
      */
-    private void populateParameterDefinition(Parameter<?> parameter,
-            ProcessFunctionParameterValue value) {
+    private void populateParameterDefinition(
+            Parameter<?> parameter, ProcessFunctionParameterValue value) {
         if (parameter != null) {
             value.name = parameter.getName();
             value.type = parameter.getType();
             if (parameter.getType().isEnum()) {
-                value.objectValue = valueFactory.getEnum(parameter.getType(),
-                        Arrays.asList(parameter.getType().getEnumConstants()));
+                value.objectValue =
+                        valueFactory.getEnum(
+                                parameter.getType(),
+                                Arrays.asList(parameter.getType().getEnumConstants()));
 
                 if (parameter.getDefaultValue() != null) {
                     value.objectValue.setDefaultValue(parameter.getDefaultValue().toString());

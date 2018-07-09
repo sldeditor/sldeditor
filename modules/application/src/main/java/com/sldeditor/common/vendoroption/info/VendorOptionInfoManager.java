@@ -19,14 +19,13 @@
 
 package com.sldeditor.common.vendoroption.info;
 
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.sldeditor.common.vendoroption.VendorOptionManager;
-import com.sldeditor.common.vendoroption.VersionData;
-import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 
 /**
  * The Class VendorOptionInfoManager.
@@ -38,9 +37,7 @@ public class VendorOptionInfoManager {
     /** The singleton instance. */
     private static VendorOptionInfoManager instance = null;
 
-    /**
-     * The Class InstanceData.
-     */
+    /** The Class InstanceData. */
     class InstanceData {
         /** The info model. */
         private VendorOptionInfoModel infoModel = null;
@@ -59,11 +56,8 @@ public class VendorOptionInfoManager {
     private List<VendorOptionFactoryInterface> voFactoryList =
             new ArrayList<VendorOptionFactoryInterface>();
 
-    /**
-     * Instantiates a new vendor option info manager.
-     */
-    private VendorOptionInfoManager() {
-    }
+    /** Instantiates a new vendor option info manager. */
+    private VendorOptionInfoManager() {}
 
     /**
      * Gets the single instance of VendorOptionInfoManager.

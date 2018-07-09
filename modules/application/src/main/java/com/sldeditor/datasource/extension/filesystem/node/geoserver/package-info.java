@@ -18,7 +18,7 @@
  */
 /**
  * GeoServer file system tree nodes.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource.extension.filesystem.node.geoserver;

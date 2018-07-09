@@ -93,7 +93,7 @@ public class VendorOptionInfo implements Comparable<VendorOptionInfo> {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
@@ -112,7 +112,7 @@ public class VendorOptionInfo implements Comparable<VendorOptionInfo> {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -127,7 +127,7 @@ public class VendorOptionInfo implements Comparable<VendorOptionInfo> {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

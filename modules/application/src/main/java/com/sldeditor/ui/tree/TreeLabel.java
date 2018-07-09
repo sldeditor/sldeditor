@@ -22,7 +22,6 @@ package com.sldeditor.ui.tree;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
@@ -39,10 +38,9 @@ import javax.swing.plaf.ColorUIResource;
  * with extraneous information. Therefore, we use this "wrapper" implementation of TreeCellRenderer
  * to convert nodes from Component objects to useful String values before passing those String
  * values on to the default renderer.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
-
 public class TreeLabel extends JLabel {
 
     /** The Constant serialVersionUID. */
@@ -54,15 +52,12 @@ public class TreeLabel extends JLabel {
     /** The has focus. */
     boolean hasFocus;
 
-    /**
-     * Instantiates a new tree label.
-     */
-    public TreeLabel() {
-    }
+    /** Instantiates a new tree label. */
+    public TreeLabel() {}
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.JComponent#setBackground(java.awt.Color)
      */
     public void setBackground(Color color) {
@@ -74,7 +69,7 @@ public class TreeLabel extends JLabel {
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.JComponent#paint(java.awt.Graphics)
      */
     public void paint(Graphics g) {
@@ -105,7 +100,7 @@ public class TreeLabel extends JLabel {
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.JComponent#getPreferredSize()
      */
     public Dimension getPreferredSize() {

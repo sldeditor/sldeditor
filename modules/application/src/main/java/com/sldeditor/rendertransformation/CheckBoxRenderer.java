@@ -20,7 +20,6 @@
 package com.sldeditor.rendertransformation;
 
 import java.awt.Component;
-
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -63,8 +62,8 @@ public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
      * @param column the column
      * @return the table cell renderer component
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-            boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(
+            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 
         ProcessFunctionParameterValue valueObj = tableModel.getValue(row);
 

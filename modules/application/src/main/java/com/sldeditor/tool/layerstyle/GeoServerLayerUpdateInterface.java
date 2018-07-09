@@ -19,16 +19,15 @@
 
 package com.sldeditor.tool.layerstyle;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.StyleWrapper;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Interface GeoServerLayerUpdateInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface GeoServerLayerUpdateInterface {
@@ -47,5 +46,4 @@ public interface GeoServerLayerUpdateInterface {
      * @param layerList the list of layers with updated styles
      */
     void updateLayerStyle(List<GeoServerLayer> layerList);
-
 }

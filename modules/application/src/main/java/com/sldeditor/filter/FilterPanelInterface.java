@@ -64,5 +64,4 @@ public interface FilterPanelInterface {
      * @return the filter
      */
     public Filter getFilter();
-
 }

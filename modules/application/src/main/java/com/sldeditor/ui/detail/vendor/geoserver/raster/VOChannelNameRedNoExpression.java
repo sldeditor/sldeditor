@@ -23,7 +23,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * Class to handle the getting and setting of red raster channel names using strings
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VOChannelNameRedNoExpression extends VOChannelNameNoExpression {

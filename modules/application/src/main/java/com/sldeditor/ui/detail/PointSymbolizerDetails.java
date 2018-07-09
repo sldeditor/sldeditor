@@ -19,12 +19,6 @@
 
 package com.sldeditor.ui.detail;
 
-import java.util.List;
-
-import org.geotools.styling.PointSymbolizer;
-import org.geotools.styling.Symbolizer;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
@@ -32,10 +26,14 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.List;
+import org.geotools.styling.PointSymbolizer;
+import org.geotools.styling.Symbolizer;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class PointSymbolizerDetails allows a user to configure point symbolizer data in a panel.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class PointSymbolizerDetails extends StandardPanel
@@ -44,17 +42,13 @@ public class PointSymbolizerDetails extends StandardPanel
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public PointSymbolizerDetails() {
         super(PointSymbolizerDetails.class);
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
 
         readConfigFile(null, getClass(), this, "Point.xml");
@@ -62,7 +56,7 @@ public class PointSymbolizerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
@@ -78,22 +72,21 @@ public class PointSymbolizerDetails extends StandardPanel
         updateSymbol();
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
             StandardData standardData = getStandardData();
 
             Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
 
-            PointSymbolizer pointSymbolizer = (PointSymbolizer) SelectedSymbol.getInstance()
-                    .getSymbolizer();
+            PointSymbolizer pointSymbolizer =
+                    (PointSymbolizer) SelectedSymbol.getInstance().getSymbolizer();
 
             if (pointSymbolizer != null) {
                 pointSymbolizer.setName(standardData.name);
                 pointSymbolizer.setDescription(standardData.description);
-                pointSymbolizer.setUnitOfMeasure((standardData.unit != null) ? standardData.unit.getUnit() : null);
+                pointSymbolizer.setUnitOfMeasure(
+                        (standardData.unit != null) ? standardData.unit.getUnit() : null);
                 pointSymbolizer.setGeometry(geometryField);
 
                 this.fireUpdateSymbol();
@@ -103,7 +96,7 @@ public class PointSymbolizerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldIdEnum)
      */
     @Override
@@ -113,7 +106,7 @@ public class PointSymbolizerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.BasePanel#addRenderer(com.sldeditor.render.iface.RenderSymbolInterface)
      */
     @Override
@@ -123,7 +116,7 @@ public class PointSymbolizerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -133,7 +126,7 @@ public class PointSymbolizerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -143,7 +136,7 @@ public class PointSymbolizerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -153,12 +146,12 @@ public class PointSymbolizerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // No vendor options
     }
 }

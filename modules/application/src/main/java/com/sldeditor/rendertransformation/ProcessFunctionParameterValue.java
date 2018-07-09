@@ -21,16 +21,11 @@ package com.sldeditor.rendertransformation;
 
 import com.sldeditor.rendertransformation.types.RenderTransformValueInterface;
 
-/**
- * Class that encapsulates process function parameter values.
- */
+/** Class that encapsulates process function parameter values. */
 public class ProcessFunctionParameterValue {
 
-    /**
-     * Default constructor.
-     */
-    public ProcessFunctionParameterValue() {
-    }
+    /** Default constructor. */
+    public ProcessFunctionParameterValue() {}
 
     /**
      * Instantiates a new value.

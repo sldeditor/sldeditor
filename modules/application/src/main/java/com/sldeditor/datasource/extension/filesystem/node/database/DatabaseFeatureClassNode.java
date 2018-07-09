@@ -19,19 +19,17 @@
 
 package com.sldeditor.datasource.extension.filesystem.node.database;
 
-import java.awt.datatransfer.DataFlavor;
-
-import javax.swing.Icon;
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
+import java.awt.datatransfer.DataFlavor;
+import javax.swing.Icon;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * File system tree node representing a databaswe feature class.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DatabaseFeatureClassNode extends DefaultMutableTreeNode implements NodeInterface {
@@ -55,8 +53,8 @@ public class DatabaseFeatureClassNode extends DefaultMutableTreeNode implements 
      * @param connectData the connect data
      * @param featureClass the feature class
      */
-    public DatabaseFeatureClassNode(FileSystemInterface handler, DatabaseConnection connectData,
-            String featureClass) {
+    public DatabaseFeatureClassNode(
+            FileSystemInterface handler, DatabaseConnection connectData, String featureClass) {
         super(featureClass);
         this.handler = handler;
         this.featureClass = featureClass;
@@ -83,7 +81,7 @@ public class DatabaseFeatureClassNode extends DefaultMutableTreeNode implements 
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
@@ -93,7 +91,7 @@ public class DatabaseFeatureClassNode extends DefaultMutableTreeNode implements 
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override
@@ -113,7 +111,7 @@ public class DatabaseFeatureClassNode extends DefaultMutableTreeNode implements 
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.NodeInterface#getIcon()
      */
     @Override

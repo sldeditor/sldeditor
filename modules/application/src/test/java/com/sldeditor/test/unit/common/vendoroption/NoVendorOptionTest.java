@@ -22,23 +22,19 @@ package com.sldeditor.test.unit.common.vendoroption;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Test;
-
 import com.sldeditor.common.vendoroption.NoVendorOption;
+import org.junit.Test;
 
 /**
  * Unit test for NoVendorOption.
- * 
- * <p>{@link com.sldeditor.common.vendoroption.NoVendorOption}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.common.vendoroption.NoVendorOption}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class NoVendorOptionTest {
 
-    /**
-     * Test method for {@link com.sldeditor.common.vendoroption.NoVendorOption#getName()}.
-     */
+    /** Test method for {@link com.sldeditor.common.vendoroption.NoVendorOption#getName()}. */
     @Test
     public void testGetName() {
         NoVendorOption vendorOption = new NoVendorOption();
@@ -47,7 +43,8 @@ public class NoVendorOptionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.NoVendorOption#getVersionStringList()}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.NoVendorOption#getVersionStringList()}.
      */
     @Test
     public void testGetVersionStringList() {
@@ -57,7 +54,8 @@ public class NoVendorOptionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.NoVendorOption#addVersion(com.sldeditor.common.vendoroption.VersionData)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.NoVendorOption#addVersion(com.sldeditor.common.vendoroption.VersionData)}.
      */
     @Test
     public void testAddVersion() {
@@ -68,12 +66,13 @@ public class NoVendorOptionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.NoVendorOption#getVersion(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.NoVendorOption#getVersion(java.lang.String)}.
      */
     @Test
     public void testGetVersion() {
         NoVendorOption vendorOption = new NoVendorOption();
-        
+
         assertNull(vendorOption.getVersion(null));
     }
 
@@ -83,8 +82,7 @@ public class NoVendorOptionTest {
     @Test
     public void testGetVersionList() {
         NoVendorOption vendorOption = new NoVendorOption();
-        
+
         assertNull(vendorOption.getVersionList());
     }
-
 }

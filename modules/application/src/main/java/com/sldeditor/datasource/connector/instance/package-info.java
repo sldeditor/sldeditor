@@ -18,7 +18,7 @@
  */
 /**
  * Package containing the different data source connectors implemented.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource.connector.instance;

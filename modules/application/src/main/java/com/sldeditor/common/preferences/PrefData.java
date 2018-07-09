@@ -19,16 +19,15 @@
 
 package com.sldeditor.common.preferences;
 
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VersionData;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sldeditor.common.vendoroption.VendorOptionManager;
-import com.sldeditor.common.vendoroption.VersionData;
-
 /**
  * Class that encapsulates user preference data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class PrefData implements Cloneable {
@@ -57,9 +56,7 @@ public class PrefData implements Cloneable {
     /** The check app version on start up. */
     private boolean checkAppVersionOnStartUp = true;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public PrefData() {
         vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
     }
@@ -71,7 +68,7 @@ public class PrefData implements Cloneable {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#clone()
      */
     @Override
@@ -223,7 +220,7 @@ public class PrefData implements Cloneable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -243,7 +240,7 @@ public class PrefData implements Cloneable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

@@ -19,25 +19,23 @@
 
 package com.sldeditor.ui.detail.config;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.styling.ColorMap;
-import org.geotools.styling.FeatureTypeConstraint;
-import org.geotools.styling.Font;
-import org.geotools.styling.UserLayer;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.geotools.styling.ColorMap;
+import org.geotools.styling.FeatureTypeConstraint;
+import org.geotools.styling.Font;
+import org.geotools.styling.UserLayer;
+import org.opengis.filter.expression.Expression;
 
 /**
- * The Class FieldConfigPopulation handles the population and extraction of data from fields</li>.
+ * The Class FieldConfigPopulation handles the population and extraction of data from fields.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -47,7 +45,8 @@ public class FieldConfigPopulation {
     private GraphicPanelFieldManager fieldConfigManager = null;
 
     /** The map to hold the original values of a text field. */
-    private Map<FieldConfigValuePopulateInterface, String> valueMap = new HashMap<FieldConfigValuePopulateInterface, String>();
+    private Map<FieldConfigValuePopulateInterface, String> valueMap =
+            new HashMap<FieldConfigValuePopulateInterface, String>();
 
     /** The tree data updated flag. */
     private boolean treeDataUpdated = false;
@@ -142,8 +141,8 @@ public class FieldConfigPopulation {
      * @param fieldId the field id
      * @param ftcList the ftc list
      */
-    public void populateFieldTypeConstraint(FieldIdEnum fieldId,
-            List<FeatureTypeConstraint> ftcList) {
+    public void populateFieldTypeConstraint(
+            FieldIdEnum fieldId, List<FeatureTypeConstraint> ftcList) {
         if (fieldConfigManager == null) {
             return;
         }
@@ -184,9 +183,14 @@ public class FieldConfigPopulation {
             ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
             storeOriginalData(fieldConfig);
         } else {
-            ConsoleManager.getInstance().error(this, String.format("populateTextField - %s : %s",
-                    Localisation.getString(StandardPanel.class, "StandardPanel.unknownField"),
-                    fieldId));
+            ConsoleManager.getInstance()
+                    .error(
+                            this,
+                            String.format(
+                                    "populateTextField - %s : %s",
+                                    Localisation.getString(
+                                            StandardPanel.class, "StandardPanel.unknownField"),
+                                    fieldId));
         }
     }
 
@@ -204,9 +208,14 @@ public class FieldConfigPopulation {
         if (fieldConfig != null) {
             ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
         } else {
-            ConsoleManager.getInstance().error(this, String.format("populateUserLayer - %s : %s",
-                    Localisation.getString(StandardPanel.class, "StandardPanel.unknownField"),
-                    fieldId));
+            ConsoleManager.getInstance()
+                    .error(
+                            this,
+                            String.format(
+                                    "populateUserLayer - %s : %s",
+                                    Localisation.getString(
+                                            StandardPanel.class, "StandardPanel.unknownField"),
+                                    fieldId));
         }
     }
 
@@ -266,9 +275,14 @@ public class FieldConfigPopulation {
         if (fieldConfig != null) {
             fieldConfig.populate(value);
         } else {
-            ConsoleManager.getInstance().error(this, String.format("populateField - %s : %s",
-                    Localisation.getString(StandardPanel.class, "StandardPanel.unknownField"),
-                    fieldId));
+            ConsoleManager.getInstance()
+                    .error(
+                            this,
+                            String.format(
+                                    "populateField - %s : %s",
+                                    Localisation.getString(
+                                            StandardPanel.class, "StandardPanel.unknownField"),
+                                    fieldId));
         }
     }
 
@@ -448,9 +462,7 @@ public class FieldConfigPopulation {
         return treeDataUpdated;
     }
 
-    /**
-     * Reset tree data updated.
-     */
+    /** Reset tree data updated. */
     public void resetTreeDataUpdated() {
         this.treeDataUpdated = false;
     }

@@ -19,23 +19,21 @@
 
 package com.sldeditor.datasource.extension.filesystem.node;
 
+import com.sldeditor.common.NodeInterface;
+import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
+import com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
-import com.sldeditor.common.NodeInterface;
-import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
-import com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData;
-
 /**
  * Class that allows nodes to be dragged and dropped within the file system tree.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class TransferableDataItem extends DefaultMutableTreeNode implements Transferable {
@@ -46,11 +44,8 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
     /** The data. */
     private TransferredData data;
 
-    /**
-     * Default constructor.
-     */
-    public TransferableDataItem() {
-    }
+    /** Default constructor. */
+    public TransferableDataItem() {}
 
     /**
      * Instantiates a new transferable data item.
@@ -87,7 +82,7 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
      */
     public TransferableDataItem(NodeInterface destinationTreeNode, TreePath path) {
         if ((destinationTreeNode != null) && (path != null)) {
-            Map<NodeInterface, TreePath> selectedData = 
+            Map<NodeInterface, TreePath> selectedData =
                     new LinkedHashMap<NodeInterface, TreePath>();
 
             selectedData.put(destinationTreeNode, path);
@@ -98,7 +93,7 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.datatransfer.Transferable#getTransferDataFlavors()
      */
     public DataFlavor[] getTransferDataFlavors() {
@@ -107,7 +102,7 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.datatransfer.Transferable#getTransferData(java.awt.datatransfer.DataFlavor)
      */
     public Object getTransferData(DataFlavor flavor)
@@ -117,7 +112,7 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.datatransfer.Transferable#isDataFlavorSupported(java.awt.datatransfer.DataFlavor)
      */
     public boolean isDataFlavorSupported(DataFlavor flavor) {

@@ -22,30 +22,30 @@ package com.sldeditor.test.unit.datasource.extension.filesystem.node.geoserver;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Test;
-
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerOverallNode;
+import org.junit.Test;
 
 /**
  * Unit test for GeoServerOverallNode class.
- * 
- * <p>{@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerOverallNode}
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerOverallNode}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class GeoServerOverallNodeTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerOverallNode#GeoServerOverallNode(com.sldeditor.common.filesystem.FileSystemInterface)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerOverallNode#GeoServerOverallNode(com.sldeditor.common.filesystem.FileSystemInterface)}.
      */
     @Test
     public void testGeoServerLayerNode() {
         FileSystemInterface fileHandler = new DummyFileSystemInput();
 
         GeoServerOverallNode node = new GeoServerOverallNode(fileHandler);
-        
+
         assertEquals(fileHandler, node.getHandler());
         assertEquals(BuiltInDataFlavour.GEOSERVER_OVERALL_DATAITEM_FLAVOUR, node.getDataFlavour());
 

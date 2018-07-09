@@ -22,8 +22,6 @@ package com.sldeditor.test.unit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Test;
-
 import com.sldeditor.TreeSelectionData;
 import com.sldeditor.common.xml.ui.SelectedTreeItemEnum;
 import com.sldeditor.ui.detail.LineSymbolizerDetails;
@@ -34,20 +32,20 @@ import com.sldeditor.ui.detail.PolygonSymbolizerDetails;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.TextSymbolizerDetails;
+import org.junit.Test;
 
 /**
  * Unit test for TreeSelectionData class.
- * 
- * <p>{@link com.sldeditor.TreeSelectionData}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.TreeSelectionData}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class TreeSelectionDataTest {
 
     /**
-     * Test method for {@link com.sldeditor.TreeSelectionData#getLayerIndex()}.
-     * Test method for {@link com.sldeditor.TreeSelectionData#setLayerIndex(int)}.
+     * Test method for {@link com.sldeditor.TreeSelectionData#getLayerIndex()}. Test method for
+     * {@link com.sldeditor.TreeSelectionData#setLayerIndex(int)}.
      */
     @Test
     public void testGetLayerIndex() {
@@ -60,8 +58,8 @@ public class TreeSelectionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.TreeSelectionData#getStyleIndex()}.
-     * Test method for {@link com.sldeditor.TreeSelectionData#setStyleIndex(int)}.
+     * Test method for {@link com.sldeditor.TreeSelectionData#getStyleIndex()}. Test method for
+     * {@link com.sldeditor.TreeSelectionData#setStyleIndex(int)}.
      */
     @Test
     public void testGetStyleIndex() {
@@ -73,10 +71,9 @@ public class TreeSelectionDataTest {
         assertEquals(actual, data.getStyleIndex());
     }
 
-
     /**
-     * Test method for {@link com.sldeditor.TreeSelectionData#getFeatureTypeStyleIndex()}.
-     * Test method for {@link com.sldeditor.TreeSelectionData#setFeatureTypeStyleIndex(int)}.
+     * Test method for {@link com.sldeditor.TreeSelectionData#getFeatureTypeStyleIndex()}. Test
+     * method for {@link com.sldeditor.TreeSelectionData#setFeatureTypeStyleIndex(int)}.
      */
     @Test
     public void testGetFeatureTypeStyleIndex() {
@@ -89,8 +86,8 @@ public class TreeSelectionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.TreeSelectionData#getRuleIndex()}.
-     * Test method for {@link com.sldeditor.TreeSelectionData#setRuleIndex(int)}.
+     * Test method for {@link com.sldeditor.TreeSelectionData#getRuleIndex()}. Test method for
+     * {@link com.sldeditor.TreeSelectionData#setRuleIndex(int)}.
      */
     @Test
     public void testGetRuleIndex() {
@@ -103,8 +100,8 @@ public class TreeSelectionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.TreeSelectionData#getSymbolizerIndex()}.
-     * Test method for {@link com.sldeditor.TreeSelectionData#setSymbolizerIndex(int)}.
+     * Test method for {@link com.sldeditor.TreeSelectionData#getSymbolizerIndex()}. Test method for
+     * {@link com.sldeditor.TreeSelectionData#setSymbolizerIndex(int)}.
      */
     @Test
     public void testGetSymbolizerIndex() {
@@ -117,8 +114,8 @@ public class TreeSelectionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.TreeSelectionData#getSymbolizerDetailIndex()}.
-     * Test method for {@link com.sldeditor.TreeSelectionData#setSymbolizerDetailIndex(int)}.
+     * Test method for {@link com.sldeditor.TreeSelectionData#getSymbolizerDetailIndex()}. Test
+     * method for {@link com.sldeditor.TreeSelectionData#setSymbolizerDetailIndex(int)}.
      */
     @Test
     public void testGetSymbolizerDetailIndex() {
@@ -130,9 +127,7 @@ public class TreeSelectionDataTest {
         assertEquals(actual, data.getSymbolizerDetailIndex());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.TreeSelectionData#getSelection()}.
-     */
+    /** Test method for {@link com.sldeditor.TreeSelectionData#getSelection()}. */
     @Test
     public void testGetSelection() {
         TreeSelectionData data = new TreeSelectionData();
@@ -174,14 +169,14 @@ public class TreeSelectionDataTest {
 
         data.setSelectedPanel(StrokeDetails.class);
         assertEquals(SelectedTreeItemEnum.STROKE, data.getSelection());
-        
+
         data.setSelectedPanel(String.class);
         assertEquals(SelectedTreeItemEnum.UNKNOWN, data.getSelection());
     }
 
     /**
-     * Test method for {@link com.sldeditor.TreeSelectionData#getSelectedPanel()}.
-     * Test method for {@link com.sldeditor.TreeSelectionData#setSelectedPanel(java.lang.Class)}.
+     * Test method for {@link com.sldeditor.TreeSelectionData#getSelectedPanel()}. Test method for
+     * {@link com.sldeditor.TreeSelectionData#setSelectedPanel(java.lang.Class)}.
      */
     @Test
     public void testGetSelectedPanel() {
@@ -192,5 +187,4 @@ public class TreeSelectionDataTest {
         data.setSelectedPanel(actual);
         assertEquals(actual, data.getSelectedPanel());
     }
-
 }

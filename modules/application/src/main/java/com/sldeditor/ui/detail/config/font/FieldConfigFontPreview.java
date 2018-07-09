@@ -19,14 +19,6 @@
 
 package com.sldeditor.ui.detail.config.font;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
-import org.geotools.styling.Font;
-import org.geotools.styling.StyleBuilder;
-import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Literal;
-
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -34,14 +26,20 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.widgets.FieldPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import org.geotools.styling.Font;
+import org.geotools.styling.StyleBuilder;
+import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Literal;
 
 /**
  * The Class FieldConfigFontPreview wraps a text field GUI component showing a font preview.
- * 
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigFontPreview extends FieldConfigBase implements UndoActionInterface {
@@ -56,18 +54,20 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
     private static final double DEFAULT_FONT_SIZE = 12.0;
 
     /** The Constant sampleText. */
-    private static final String sampleText = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
-            + "abcdefghijklmnopqrstuvwxyz\n" + "0123456789\n"
-            + "The quick brown fox jumped over the lazy dog";
+    private static final String sampleText =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+                    + "abcdefghijklmnopqrstuvwxyz\n"
+                    + "0123456789\n"
+                    + "The quick brown fox jumped over the lazy dog";
 
     /** The Constant sampleTextLines. */
     private static final int sampleTextLines = 4;
 
     /** The Constant styles. */
-    private static final String[] styles = { "Normal", "Italic" };
+    private static final String[] styles = {"Normal", "Italic"};
 
     /** The Constant weights. */
-    private static final String[] weights = { "Normal", "Bold" };
+    private static final String[] weights = {"Normal", "Bold"};
 
     /**
      * Instantiates a new field config string.
@@ -78,12 +78,10 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
         super(commonData);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -123,7 +121,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
@@ -138,7 +136,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -155,7 +153,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -170,7 +168,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -178,12 +176,10 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
         return true;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -268,8 +264,10 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
         if ((textField != null) && (font != null)) {
             if (font.getFamily().isEmpty()) {
                 textField.setText("");
-            } else if (font.getFamily().isEmpty() || (font.getStyle() == null)
-                    || (font.getWeight() == null) || (font.getSize() == null)) {
+            } else if (font.getFamily().isEmpty()
+                    || (font.getStyle() == null)
+                    || (font.getWeight() == null)
+                    || (font.getSize() == null)) {
                 textField.setText("");
             } else {
                 textField.setText(sampleText);
@@ -364,7 +362,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override

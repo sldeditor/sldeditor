@@ -19,7 +19,7 @@
 
 /**
  * Package handling the value/attribute/expression ui.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.attribute;

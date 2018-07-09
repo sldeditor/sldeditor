@@ -19,9 +19,9 @@
 
 package com.sldeditor.ui.widgets;
 
+import com.sldeditor.ui.iface.SpinnerNotifyInterface;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
@@ -30,12 +30,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.DefaultFormatter;
 
-import com.sldeditor.ui.iface.SpinnerNotifyInterface;
-
 /**
- * Component that extends a JSpinner allowing the entry of floating point 
- * numbers and is configured from an xml file.
- * 
+ * Component that extends a JSpinner allowing the entry of floating point numbers and is configured
+ * from an xml file.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DecimalSpinner extends JSpinner {
@@ -55,9 +53,7 @@ public class DecimalSpinner extends JSpinner {
     /** The min is zero. */
     private boolean minIsZero = false;
 
-    /**
-     * Instantiates a new decimal spinner with default values.
-     */
+    /** Instantiates a new decimal spinner with default values. */
     public DecimalSpinner() {
         createUI(0.0, null, null, DEFAULT_STEPSIZE, DEFAULT_NO_OF_DECIMAL_PLACES);
     }
@@ -83,7 +79,11 @@ public class DecimalSpinner extends JSpinner {
      * @param stepSize the step size
      * @param noOfDecimalPlaces the no of decimal places
      */
-    private void createUI(Double initialValue, Double min, Double max, Double stepSize,
+    private void createUI(
+            Double initialValue,
+            Double min,
+            Double max,
+            Double stepSize,
             double noOfDecimalPlaces) {
         SpinnerNumberModel model = new SpinnerNumberModel(initialValue, min, max, stepSize);
         setModel(model);
@@ -95,29 +95,30 @@ public class DecimalSpinner extends JSpinner {
         final JFormattedTextField field = (JFormattedTextField) editor.getTextField();
         DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
         formatter.setCommitsOnValidEdit(true);
-        addChangeListener(new ChangeListener() {
-            private double oldValue = Double.MAX_VALUE;
+        addChangeListener(
+                new ChangeListener() {
+                    private double oldValue = Double.MAX_VALUE;
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
 
-                Double doubleValue = DecimalSpinner.this.getDoubleValue();
+                        Double doubleValue = DecimalSpinner.this.getDoubleValue();
 
-                if (doubleValue != oldValue) {
-                    double oldValueCopy = oldValue;
+                        if (doubleValue != oldValue) {
+                            double oldValueCopy = oldValue;
 
-                    oldValue = doubleValue;
-                    if (minIsZero) {
-                        if (doubleValue < 0.0) {
-                            doubleValue = 0.0;
-                            field.setValue(doubleValue);
+                            oldValue = doubleValue;
+                            if (minIsZero) {
+                                if (doubleValue < 0.0) {
+                                    doubleValue = 0.0;
+                                    field.setValue(doubleValue);
+                                }
+                            }
+
+                            notifyListeners(oldValueCopy, doubleValue);
                         }
                     }
-
-                    notifyListeners(oldValueCopy, doubleValue);
-                }
-            }
-        });
+                });
     }
 
     /**

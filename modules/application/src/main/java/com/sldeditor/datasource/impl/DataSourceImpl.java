@@ -19,13 +19,24 @@
 
 package com.sldeditor.datasource.impl;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.DataSourcePropertiesInterface;
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.datasource.DataSourceInterface;
+import com.sldeditor.datasource.DataSourceUpdatedInterface;
+import com.sldeditor.datasource.SLDEditorFileInterface;
+import com.sldeditor.datasource.attribute.AllowedAttributeTypes;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
+import com.sldeditor.datasource.attribute.DataSourceAttributeList;
+import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
+import com.sldeditor.datasource.checks.CheckAttributeInterface;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.DataAccessFactory;
@@ -43,31 +54,16 @@ import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.feature.type.Name;
 import org.opengis.feature.type.PropertyDescriptor;
 
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.DataSourcePropertiesInterface;
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.datasource.DataSourceInterface;
-import com.sldeditor.datasource.DataSourceUpdatedInterface;
-import com.sldeditor.datasource.SLDEditorFileInterface;
-import com.sldeditor.datasource.attribute.AllowedAttributeTypes;
-import com.sldeditor.datasource.attribute.DataSourceAttributeData;
-import com.sldeditor.datasource.attribute.DataSourceAttributeList;
-import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
-import com.sldeditor.datasource.checks.CheckAttributeInterface;
-
 /**
- * Class that represents data sources for an SLD symbol. Provides functionality to read and update its schema. Handles the following:
- * 
- * <p>
- * - example data
- * 
- * <p>
- * - external data (e.g shape file, tiff)
- * 
- * <p>
- * - user layer inline data
- * 
+ * Class that represents data sources for an SLD symbol. Provides functionality to read and update
+ * its schema. Handles the following:
+ *
+ * <p>- example data
+ *
+ * <p>- external data (e.g shape file, tiff)
+ *
+ * <p>- user layer inline data
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DataSourceImpl implements DataSourceInterface {
@@ -79,7 +75,8 @@ public class DataSourceImpl implements DataSourceInterface {
     private static Logger logger = Logger.getLogger(DataSourceImpl.class);
 
     /** The listener list. */
-    private List<DataSourceUpdatedInterface> listenerList = new ArrayList<DataSourceUpdatedInterface>();
+    private List<DataSourceUpdatedInterface> listenerList =
+            new ArrayList<DataSourceUpdatedInterface>();
 
     /** The data source info. */
     private DataSourceInfo dataSourceInfo = new DataSourceInfo();
@@ -111,9 +108,7 @@ public class DataSourceImpl implements DataSourceInterface {
     /** The inline data source. */
     private CreateDataSourceInterface inlineDataSource = null;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public DataSourceImpl() {
         populateAvailableDataStores();
     }
@@ -126,7 +121,8 @@ public class DataSourceImpl implements DataSourceInterface {
      * @param inlineDataSource the inline data source
      */
     @Override
-    public void setDataSourceCreation(CreateDataSourceInterface internalDataSource,
+    public void setDataSourceCreation(
+            CreateDataSourceInterface internalDataSource,
             CreateDataSourceInterface externalDataSource,
             CreateDataSourceInterface inlineDataSource) {
         this.internalDataSource = internalDataSource;
@@ -170,7 +166,9 @@ public class DataSourceImpl implements DataSourceInterface {
      * @param checkList the check list
      */
     @Override
-    public void connect(String typeName, SLDEditorFileInterface editorFile,
+    public void connect(
+            String typeName,
+            SLDEditorFileInterface editorFile,
             List<CheckAttributeInterface> checkList) {
         logger.debug("connect : " + typeName);
         reset();
@@ -206,16 +204,14 @@ public class DataSourceImpl implements DataSourceInterface {
         }
     }
 
-    /**
-     * Create inline data sources.
-     */
+    /** Create inline data sources. */
     private void createUserLayerDataSources() {
         logger.debug("createUserLayerDataSources");
         if (inlineDataSource == null) {
             ConsoleManager.getInstance().error(this, "No inline data source creation object set");
         } else {
-            userLayerDataSourceInfo = inlineDataSource.connect(null, null,
-                    this.editorFileInterface);
+            userLayerDataSourceInfo =
+                    inlineDataSource.connect(null, null, this.editorFileInterface);
 
             if (userLayerDataSourceInfo != null) {
                 for (DataSourceInfo dsInfo : userLayerDataSourceInfo) {
@@ -239,8 +235,8 @@ public class DataSourceImpl implements DataSourceInterface {
         if (externalDataSource == null) {
             ConsoleManager.getInstance().error(this, "No external data source creation object set");
         } else {
-            List<DataSourceInfo> dataSourceInfoList = externalDataSource.connect(typeName, null,
-                    this.editorFileInterface);
+            List<DataSourceInfo> dataSourceInfoList =
+                    externalDataSource.connect(typeName, null, this.editorFileInterface);
             if ((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1)) {
                 dataSourceInfo = dataSourceInfoList.get(0);
 
@@ -263,9 +259,7 @@ public class DataSourceImpl implements DataSourceInterface {
         }
     }
 
-    /**
-     * Populates the list of available data stores that can be connected to.
-     */
+    /** Populates the list of available data stores that can be connected to. */
     private void populateAvailableDataStores() {
         DataAccessFactory fac = null;
 
@@ -281,9 +275,7 @@ public class DataSourceImpl implements DataSourceInterface {
         }
     }
 
-    /**
-     * Unload data store.
-     */
+    /** Unload data store. */
     private void unloadDataStore() {
         if (dataSourceInfo != null) {
             // Tell any listeners that the data store is about to be disposed of
@@ -304,7 +296,7 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.impl.DataSourceInterface#getFeatureSource()
      */
     @Override
@@ -321,14 +313,14 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.impl.DataSourceInterface#getExampleFeatureSource()
      */
     @Override
     public FeatureSource<SimpleFeatureType, SimpleFeature> getExampleFeatureSource() {
         if (exampleDataSourceInfo != null) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> features = exampleDataSourceInfo
-                    .getFeatures();
+            FeatureSource<SimpleFeatureType, SimpleFeature> features =
+                    exampleDataSourceInfo.getFeatures();
 
             return features;
         }
@@ -343,7 +335,7 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.impl.DataSourceInterface#getAttributes(java.lang.Class)
      */
     @Override
@@ -365,7 +357,7 @@ public class DataSourceImpl implements DataSourceInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceInterface#getAllAttributes()
      */
     @Override
@@ -392,12 +384,13 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceInterface#getGeometryType()
      */
     @Override
     public GeometryTypeEnum getGeometryType() {
-        return (dataSourceInfo != null) ? dataSourceInfo.getGeometryType()
+        return (dataSourceInfo != null)
+                ? dataSourceInfo.getGeometryType()
                 : GeometryTypeEnum.UNKNOWN;
     }
 
@@ -408,7 +401,7 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceInterface#updateAttributes(com.sldeditor.render.iface. RenderAttributeDataInterface)
      */
     @Override
@@ -443,11 +436,12 @@ public class DataSourceImpl implements DataSourceInterface {
                             fieldType = value.getClass();
                         }
 
-                        Object value = CreateSampleData.getFieldTypeValue(i, fieldName, fieldType,
-                                attributes.get(i));
+                        Object value =
+                                CreateSampleData.getFieldTypeValue(
+                                        i, fieldName, fieldType, attributes.get(i));
 
-                        DataSourceAttributeData data = new DataSourceAttributeData(fieldName,
-                                fieldType, value);
+                        DataSourceAttributeData data =
+                                new DataSourceAttributeData(fieldName, fieldType, value);
 
                         valueMap.add(data);
                     }
@@ -460,12 +454,10 @@ public class DataSourceImpl implements DataSourceInterface {
         attributeData.setData(valueMap);
     }
 
-    /**
-     * Reset.
-     */
+    /** Reset. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceInterface#reset()
      */
     @Override
@@ -481,9 +473,7 @@ public class DataSourceImpl implements DataSourceInterface {
         }
     }
 
-    /**
-     * Open without data source.
-     */
+    /** Open without data source. */
     private void openWithoutDataSource() {
         logger.debug("openWithoutDataSource");
 
@@ -496,9 +486,7 @@ public class DataSourceImpl implements DataSourceInterface {
         }
     }
 
-    /**
-     * Creates the internal data source.
-     */
+    /** Creates the internal data source. */
     private void createInternalDataSource() {
         logger.debug("createInternalDataSource");
 
@@ -509,8 +497,11 @@ public class DataSourceImpl implements DataSourceInterface {
             int attempt = 0;
             boolean retry = true;
             while (retry && (attempt < MAX_RETRIES)) {
-                List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(null,
-                        dataSourceInfo.getGeometryFieldName(), this.editorFileInterface);
+                List<DataSourceInfo> dataSourceInfoList =
+                        internalDataSource.connect(
+                                null,
+                                dataSourceInfo.getGeometryFieldName(),
+                                this.editorFileInterface);
                 if ((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1)) {
                     dataSourceInfo = dataSourceInfoList.get(0);
                 }
@@ -527,17 +518,17 @@ public class DataSourceImpl implements DataSourceInterface {
         }
     }
 
-    /**
-     * Creates the example data source.
-     */
+    /** Creates the example data source. */
     private void createExampleDataSource() {
         if (internalDataSource == null) {
             ConsoleManager.getInstance().error(this, "No internal data source creation object set");
         } else {
             logger.debug("Example data source:");
-            List<DataSourceInfo> dataSourceInfoList = internalDataSource.connect(
-                    dataSourceInfo.getTypeName(), dataSourceInfo.getGeometryFieldName(),
-                    this.editorFileInterface);
+            List<DataSourceInfo> dataSourceInfoList =
+                    internalDataSource.connect(
+                            dataSourceInfo.getTypeName(),
+                            dataSourceInfo.getGeometryFieldName(),
+                            this.editorFileInterface);
 
             if ((dataSourceInfoList != null) && (dataSourceInfoList.size() == 1)) {
                 exampleDataSourceInfo = dataSourceInfoList.get(0);
@@ -545,12 +536,10 @@ public class DataSourceImpl implements DataSourceInterface {
         }
     }
 
-    /**
-     * Notify data source loaded.
-     */
+    /** Notify data source loaded. */
     private void notifyDataSourceLoaded() {
-        List<DataSourceUpdatedInterface> copyListenerList = new ArrayList<DataSourceUpdatedInterface>(
-                listenerList);
+        List<DataSourceUpdatedInterface> copyListenerList =
+                new ArrayList<DataSourceUpdatedInterface>(listenerList);
         GeometryTypeEnum geometryType = getGeometryType();
         for (DataSourceUpdatedInterface listener : copyListenerList) {
             listener.dataSourceLoaded(geometryType, this.connectedToDataSourceFlag);
@@ -563,8 +552,8 @@ public class DataSourceImpl implements DataSourceInterface {
      * @param dataStore the data store to be unloaded
      */
     private void notifyDataSourceAboutToUnloaded(DataStore dataStore) {
-        List<DataSourceUpdatedInterface> copyListenerList = new ArrayList<DataSourceUpdatedInterface>(
-                listenerList);
+        List<DataSourceUpdatedInterface> copyListenerList =
+                new ArrayList<DataSourceUpdatedInterface>(listenerList);
         for (DataSourceUpdatedInterface listener : copyListenerList) {
             listener.dataSourceAboutToUnloaded(dataStore);
         }
@@ -577,7 +566,7 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceInterface#getDataConnectorProperties()
      */
     @Override
@@ -592,7 +581,7 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceInterface#getAvailableDataStoreList()
      */
     @Override
@@ -607,7 +596,7 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceInterface#updateFields(com.sldeditor.render.iface. RenderAttributeDataInterface)
      */
     @Override
@@ -685,14 +674,16 @@ public class DataSourceImpl implements DataSourceInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceInterface#getUserLayerFeatureSource()
      */
     @Override
     // CHECKSTYLE:OFF
-    public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
+    public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>
+            getUserLayerFeatureSource() {
         // CHECKSTYLE:ON
-        Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> map = new HashMap<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>();
+        Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> map =
+                new HashMap<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>();
 
         for (DataSourceInfo dsInfo : userLayerDataSourceInfo) {
             FeatureSource<SimpleFeatureType, SimpleFeature> features = dsInfo.getFeatures();
@@ -703,9 +694,7 @@ public class DataSourceImpl implements DataSourceInterface {
         return map;
     }
 
-    /**
-     * Recreate inline data sources for user layers.
-     */
+    /** Recreate inline data sources for user layers. */
     @Override
     public void updateUserLayers() {
         createUserLayerDataSources();
@@ -715,13 +704,13 @@ public class DataSourceImpl implements DataSourceInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String, java.lang.Class)
      */
     @Override
     public void updateFieldType(String fieldName, Class<?> dataType) {
-        List<DataSourceAttributeData> fieldList = this.editorFileInterface.getSLDData()
-                .getFieldList();
+        List<DataSourceAttributeData> fieldList =
+                this.editorFileInterface.getSLDData().getFieldList();
         for (DataSourceAttributeData field : fieldList) {
             if (field.getName().compareTo(fieldName) == 0) {
                 field.setType(dataType);
@@ -731,7 +720,7 @@ public class DataSourceImpl implements DataSourceInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceInterface#getGeometryFieldName()
      */
     @Override

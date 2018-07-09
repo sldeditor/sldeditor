@@ -21,7 +21,7 @@ package com.sldeditor.common;
 
 /**
  * The Interface PopulatingInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface PopulatingInterface {
@@ -39,5 +39,4 @@ public interface PopulatingInterface {
      * @param populating the new populating
      */
     void setPopulating(boolean populating);
-
 }

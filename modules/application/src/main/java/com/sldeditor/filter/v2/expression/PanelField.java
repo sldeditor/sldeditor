@@ -19,14 +19,13 @@
 
 package com.sldeditor.filter.v2.expression;
 
-import java.util.List;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.rendertransformation.types.RenderTransformValueFactory;
 import com.sldeditor.rendertransformation.types.RenderTransformValueInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import java.util.List;
 
 /**
  * The Class PanelField.
@@ -44,8 +43,11 @@ public class PanelField {
      * @param enumList the enumerated list values
      * @return the field
      */
-    public static FieldConfigBase getField(Class<?> classType, String valueTextLocalisation,
-            Class<?> nodeType, List<String> enumList) {
+    public static FieldConfigBase getField(
+            Class<?> classType,
+            String valueTextLocalisation,
+            Class<?> nodeType,
+            List<String> enumList) {
         FieldConfigBase fieldConfig = null;
 
         RenderTransformValueInterface value = null;
@@ -58,8 +60,8 @@ public class PanelField {
         if (value != null) {
             String valueText = Localisation.getString(classType, valueTextLocalisation);
             FieldIdEnum fieldId = FieldIdEnum.FUNCTION;
-            FieldConfigCommonData commonData = new FieldConfigCommonData(null, fieldId, valueText,
-                    true);
+            FieldConfigCommonData commonData =
+                    new FieldConfigCommonData(null, fieldId, valueText, true);
 
             fieldConfig = value.getField(commonData);
         } else {

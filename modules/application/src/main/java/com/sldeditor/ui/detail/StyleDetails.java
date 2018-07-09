@@ -19,22 +19,20 @@
 
 package com.sldeditor.ui.detail;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.styling.Style;
-import org.geotools.styling.Symbolizer;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.styling.Style;
+import org.geotools.styling.Symbolizer;
 
 /**
  * The Class StyleDetails allows a user to configure style data in a panel.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class StyleDetails extends StandardPanel
@@ -43,17 +41,13 @@ public class StyleDetails extends StandardPanel
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public StyleDetails() {
         super(StyleDetails.class);
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFile(null, getClass(), this, "StyleDetails.xml");
     }
@@ -65,7 +59,7 @@ public class StyleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
@@ -76,8 +70,8 @@ public class StyleDetails extends StandardPanel
 
             populateStandardData(style);
             if (style != null) {
-                fieldConfigVisitor.populateBooleanField(FieldIdEnum.DEFAULT_STYLE,
-                        style.isDefault());
+                fieldConfigVisitor.populateBooleanField(
+                        FieldIdEnum.DEFAULT_STYLE, style.isDefault());
             }
         }
     }
@@ -89,7 +83,7 @@ public class StyleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldIdEnum)
      */
     @Override
@@ -97,9 +91,7 @@ public class StyleDetails extends StandardPanel
         updateSymbol();
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
             StandardData standardData = getStandardData();
@@ -115,8 +107,15 @@ public class StyleDetails extends StandardPanel
                 }
 
                 Symbolizer defaultSymbolizer = null;
-                Style newStyle = (Style) getStyleFactory().style(standardData.name,
-                        standardData.description, isDefault, newFTSList, defaultSymbolizer);
+                Style newStyle =
+                        (Style)
+                                getStyleFactory()
+                                        .style(
+                                                standardData.name,
+                                                standardData.description,
+                                                isDefault,
+                                                newFTSList,
+                                                defaultSymbolizer);
 
                 SelectedSymbol.getInstance().replaceStyle(newStyle);
 
@@ -132,7 +131,7 @@ public class StyleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -147,7 +146,7 @@ public class StyleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -157,7 +156,7 @@ public class StyleDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -167,12 +166,12 @@ public class StyleDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // No vendor options
     }
 }

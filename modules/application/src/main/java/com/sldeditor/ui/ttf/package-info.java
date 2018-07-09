@@ -19,7 +19,7 @@
 
 /**
  * Dialog that allows the selection of symbols in TrueType fonts.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.ttf;

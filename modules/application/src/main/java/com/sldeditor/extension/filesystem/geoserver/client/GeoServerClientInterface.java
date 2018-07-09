@@ -19,16 +19,15 @@
 
 package com.sldeditor.extension.filesystem.geoserver.client;
 
-import java.util.List;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgressInterface;
+import java.util.List;
 
 /**
  * The Interface GeoServerClientInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface GeoServerClientInterface {
@@ -41,9 +40,7 @@ public interface GeoServerClientInterface {
      */
     void initialise(GeoServerReadProgressInterface parent, GeoServerConnection connection);
 
-    /**
-     * Retrieve data from GeoServer.
-     */
+    /** Retrieve data from GeoServer. */
     void retrieveData();
 
     /**
@@ -69,9 +66,7 @@ public interface GeoServerClientInterface {
      */
     boolean connect();
 
-    /**
-     * Disconnect.
-     */
+    /** Disconnect. */
     void disconnect();
 
     /**

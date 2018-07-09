@@ -19,15 +19,13 @@
 
 package com.sldeditor.ui.tree.item;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.data.SelectedSymbol;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * Class that display StyledLayerDescriptor data within the sld tree structure.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class StyledLayerDescriptorTreeItem implements SLDTreeItemInterface {
@@ -37,7 +35,7 @@ public class StyledLayerDescriptorTreeItem implements SLDTreeItemInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -47,7 +45,7 @@ public class StyledLayerDescriptorTreeItem implements SLDTreeItemInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeItemInterface#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -55,5 +53,4 @@ public class StyledLayerDescriptorTreeItem implements SLDTreeItemInterface {
         StyledLayerDescriptor sld = (StyledLayerDescriptor) userObject;
         SelectedSymbol.getInstance().setSld(sld);
     }
-
 }

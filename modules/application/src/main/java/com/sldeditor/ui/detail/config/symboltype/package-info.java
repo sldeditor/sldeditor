@@ -17,10 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Package contains the fields that appear when selected in the {@link com.sldeditor.ui.detail.config.FieldConfigSymbolType}.
- * <p>
- * Fields are created by the {@link com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory}.
- * 
+ * Package contains the fields that appear when selected in the {@link
+ * com.sldeditor.ui.detail.config.FieldConfigSymbolType}.
+ *
+ * <p>Fields are created by the {@link com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory}.
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.config.symboltype;

@@ -18,7 +18,7 @@
  */
 /**
  * Package containing the common application code.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common;

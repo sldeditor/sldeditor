@@ -19,22 +19,21 @@
 
 package com.sldeditor.ui.detail;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Class that manages all the field information so that if other panels or the
- *  test class require access to specific field data they can get it.
- * 
+ * Class that manages all the field information so that if other panels or the test class require
+ * access to specific field data they can get it.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class GraphicPanelFieldManager {
@@ -81,14 +80,14 @@ public class GraphicPanelFieldManager {
      */
     public void add(GraphicPanelFieldManager fieldConfigManager) {
         if (fieldConfigManager != null) {
-            Map<FieldIdEnum, FieldConfigBase> componentMapToAdd = fieldConfigManager.fieldConfigMap
-                    .get(fieldConfigManager.panelId);
-            Map<FieldIdEnum, FieldConfigBase> componentMap = this.fieldConfigMap
-                    .get(fieldConfigManager.panelId);
+            Map<FieldIdEnum, FieldConfigBase> componentMapToAdd =
+                    fieldConfigManager.fieldConfigMap.get(fieldConfigManager.panelId);
+            Map<FieldIdEnum, FieldConfigBase> componentMap =
+                    this.fieldConfigMap.get(fieldConfigManager.panelId);
 
             if (componentMap == null) {
-                Map<FieldIdEnum, FieldConfigBase> value = fieldConfigManager.fieldConfigMap
-                        .get(fieldConfigManager.panelId);
+                Map<FieldIdEnum, FieldConfigBase> value =
+                        fieldConfigManager.fieldConfigMap.get(fieldConfigManager.panelId);
                 this.fieldConfigMap.put(fieldConfigManager.panelId, value);
             } else {
                 for (FieldIdEnum fieldId : componentMapToAdd.keySet()) {
@@ -99,14 +98,14 @@ public class GraphicPanelFieldManager {
             }
 
             // Add groups
-            Map<GroupIdEnum, GroupConfigInterface> groupMapToAdd = fieldConfigManager.groupMap
-                    .get(fieldConfigManager.panelId);
-            Map<GroupIdEnum, GroupConfigInterface> thisGroupMap = this.groupMap
-                    .get(fieldConfigManager.panelId);
+            Map<GroupIdEnum, GroupConfigInterface> groupMapToAdd =
+                    fieldConfigManager.groupMap.get(fieldConfigManager.panelId);
+            Map<GroupIdEnum, GroupConfigInterface> thisGroupMap =
+                    this.groupMap.get(fieldConfigManager.panelId);
 
             if (thisGroupMap == null) {
-                Map<GroupIdEnum, GroupConfigInterface> value = fieldConfigManager.groupMap
-                        .get(fieldConfigManager.panelId);
+                Map<GroupIdEnum, GroupConfigInterface> value =
+                        fieldConfigManager.groupMap.get(fieldConfigManager.panelId);
                 this.groupMap.put(fieldConfigManager.panelId, value);
             } else {
                 for (GroupIdEnum groupId : groupMapToAdd.keySet()) {
@@ -190,8 +189,6 @@ public class GraphicPanelFieldManager {
         }
         return FieldIdEnum.UNKNOWN;
     }
-
-
 
     /**
      * Gets the component id.

@@ -24,14 +24,12 @@ import java.io.Serializable;
 
 /**
  * Class that contains data describing the type of data the node represents.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDDataFlavour extends DataFlavor implements Serializable {
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public SLDDataFlavour() {
         super();
     }
@@ -81,7 +79,7 @@ public class SLDDataFlavour extends DataFlavor implements Serializable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.datatransfer.DataFlavor#hashCode()
      */
     @Override
@@ -91,7 +89,7 @@ public class SLDDataFlavour extends DataFlavor implements Serializable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.datatransfer.DataFlavor#equals(java.awt.datatransfer.DataFlavor)
      */
     @Override

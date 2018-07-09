@@ -24,14 +24,12 @@ import com.sldeditor.common.preferences.PrefManager;
 
 /**
  * User interface to the user preferences.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class PrefManagerUI {
 
-    /**
-     * Show preferences panel.
-     */
+    /** Show preferences panel. */
     public static void showPrefPanel() {
         PrefPanel panel = new PrefPanel();
 

@@ -19,27 +19,6 @@
 
 package com.sldeditor.filter.v2.function;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.measure.Unit;
-
-import org.apache.log4j.Logger;
-import org.geotools.filter.function.Classifier;
-import org.geotools.filter.function.DefaultFunctionFactory;
-import org.geotools.filter.function.RangedClassifier;
-import org.opengis.filter.Filter;
-import org.opengis.filter.capability.FunctionName;
-import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Function;
-import org.opengis.filter.expression.Literal;
-import org.opengis.parameter.Parameter;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -93,11 +72,29 @@ import com.sldeditor.ui.detail.config.FieldConfigMapUnits;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.measure.Unit;
+import org.apache.log4j.Logger;
+import org.geotools.filter.function.Classifier;
+import org.geotools.filter.function.DefaultFunctionFactory;
+import org.geotools.filter.function.RangedClassifier;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.MultiPoint;
 import org.locationtech.jts.geom.Point;
+import org.opengis.filter.Filter;
+import org.opengis.filter.capability.FunctionName;
+import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
+import org.opengis.filter.expression.Literal;
+import org.opengis.parameter.Parameter;
 
 /**
  * The Class FilterManager.
@@ -126,10 +123,12 @@ public class FilterManager implements FilterNameInterface {
     private Map<String, FilterName> functionNameMap = new HashMap<String, FilterName>();
 
     /** The filter map. */
-    private Map<String, FilterConfigInterface> filterMap = new HashMap<String, FilterConfigInterface>();
+    private Map<String, FilterConfigInterface> filterMap =
+            new HashMap<String, FilterConfigInterface>();
 
     /** The filter type map. */
-    private Map<Class<?>, FilterConfigInterface> filterTypeMap = new HashMap<Class<?>, FilterConfigInterface>();
+    private Map<Class<?>, FilterConfigInterface> filterTypeMap =
+            new HashMap<Class<?>, FilterConfigInterface>();
 
     /** The function factory. */
     private DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
@@ -150,16 +149,12 @@ public class FilterManager implements FilterNameInterface {
         return instance;
     }
 
-    /**
-     * Instantiates a new filter manager.
-     */
+    /** Instantiates a new filter manager. */
     private FilterManager() {
         initialise();
     }
 
-    /**
-     * Initialise.
-     */
+    /** Initialise. */
     private void initialise() {
         List<FilterConfigInterface> filterConfigList = getFilterConfigList();
 
@@ -200,25 +195,39 @@ public class FilterManager implements FilterNameInterface {
         }
 
         // CHECKSTYLE:OFF
-        Class<?>[] allowedNumberTypes = { Number.class, Double.class, Float.class, Integer.class,
-                Long.class };
-        Class<?>[] allowedDoubleTypes = { Number.class, Double.class, Float.class, Integer.class,
-                Long.class };
-        Class<?>[] allowedFloatTypes = { Number.class, Double.class, Float.class, Integer.class,
-                Long.class };
-        Class<?>[] allowedIntegerTypes = { Number.class, Double.class, Float.class, Integer.class,
-                Long.class };
-        Class<?>[] allowedLongTypes = { Number.class, Double.class, Float.class, Integer.class,
-                Long.class };
-        Class<?>[] allowedBooleanTypes = { Boolean.class };
-        Class<?>[] allowedStringTypes = { String.class };
-        Class<?>[] allowedGeometryTypes = { Geometry.class, LineString.class, Point.class,
-                MultiPoint.class, LinearRing.class };
-        Class<?>[] allowedDateTypes = { Date.class };
-        Class<?>[] allowedClassifierTypes = { RangedClassifier.class, Classifier.class };
-        Class<?>[] allowedUnitTypes = { Unit.class };
-        Class<?>[] allowedComparableTypes = { Number.class, Double.class, Float.class,
-                Integer.class, Long.class, Date.class, String.class, Boolean.class };
+        Class<?>[] allowedNumberTypes = {
+            Number.class, Double.class, Float.class, Integer.class, Long.class
+        };
+        Class<?>[] allowedDoubleTypes = {
+            Number.class, Double.class, Float.class, Integer.class, Long.class
+        };
+        Class<?>[] allowedFloatTypes = {
+            Number.class, Double.class, Float.class, Integer.class, Long.class
+        };
+        Class<?>[] allowedIntegerTypes = {
+            Number.class, Double.class, Float.class, Integer.class, Long.class
+        };
+        Class<?>[] allowedLongTypes = {
+            Number.class, Double.class, Float.class, Integer.class, Long.class
+        };
+        Class<?>[] allowedBooleanTypes = {Boolean.class};
+        Class<?>[] allowedStringTypes = {String.class};
+        Class<?>[] allowedGeometryTypes = {
+            Geometry.class, LineString.class, Point.class, MultiPoint.class, LinearRing.class
+        };
+        Class<?>[] allowedDateTypes = {Date.class};
+        Class<?>[] allowedClassifierTypes = {RangedClassifier.class, Classifier.class};
+        Class<?>[] allowedUnitTypes = {Unit.class};
+        Class<?>[] allowedComparableTypes = {
+            Number.class,
+            Double.class,
+            Float.class,
+            Integer.class,
+            Long.class,
+            Date.class,
+            String.class,
+            Boolean.class
+        };
         // CHECKSTYLE:ON
 
         populateAllowedTypes(Number.class, allowedNumberTypes);
@@ -319,8 +328,8 @@ public class FilterManager implements FilterNameInterface {
 
         List<Expression> parameters = null;
         Literal fallback = null;
-        Function function = functionFactory.function(functionName.getFunctionName(), parameters,
-                fallback);
+        Function function =
+                functionFactory.function(functionName.getFunctionName(), parameters, fallback);
 
         return function;
     }
@@ -333,8 +342,8 @@ public class FilterManager implements FilterNameInterface {
      * @return the list of ui components to display
      */
     @Override
-    public List<GroupConfigInterface> convertParameters(Class<?> panelId,
-            FunctionName functionName) {
+    public List<GroupConfigInterface> convertParameters(
+            Class<?> panelId, FunctionName functionName) {
         List<GroupConfigInterface> groupConfigList = new ArrayList<GroupConfigInterface>();
 
         if (functionName != null) {
@@ -368,8 +377,8 @@ public class FilterManager implements FilterNameInterface {
                 funcPrototypeStringBuilder.append(type.getSimpleName());
 
                 FieldConfigBase fieldConfig = null;
-                FieldConfigCommonData commonData = new FieldConfigCommonData(panelId, id, label,
-                        valueOnly);
+                FieldConfigCommonData commonData =
+                        new FieldConfigCommonData(panelId, id, label, valueOnly);
                 if (type == java.lang.Number.class) {
                     fieldConfig = new FieldConfigDouble(commonData);
                 } else if (type == Double.class) {
@@ -405,9 +414,12 @@ public class FilterManager implements FilterNameInterface {
                 } else if (type == Color.class) {
                     fieldConfig = new FieldConfigColour(commonData);
                 } else {
-                    ConsoleManager.getInstance().error(this,
-                            Localisation.getField(ExpressionPanelv2.class, "FilterManager.error1")
-                                    + type.getName());
+                    ConsoleManager.getInstance()
+                            .error(
+                                    this,
+                                    Localisation.getField(
+                                                    ExpressionPanelv2.class, "FilterManager.error1")
+                                            + type.getName());
                 }
 
                 groupConfig.addField(fieldConfig);

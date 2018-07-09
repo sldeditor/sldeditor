@@ -36,7 +36,7 @@ class DummyUndo implements UndoStateInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.undo.UndoStateInterface#updateUndoRedoState(boolean, boolean)
      */
     @Override

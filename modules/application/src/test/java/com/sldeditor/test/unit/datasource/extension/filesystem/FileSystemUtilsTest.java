@@ -22,17 +22,15 @@ package com.sldeditor.test.unit.datasource.extension.filesystem;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
-
-import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
 
 /**
  * The unit test for FileSystemUtils.
- * 
+ *
  * <p>{@link com.sldeditor.datasource.extension.filesystem.FileSystemUtils}
  *
  * @author Robert Ward (SCISYS)
@@ -42,22 +40,22 @@ public class FileSystemUtilsTest {
     @Test
     public void test() {
 
-        assertFalse(FileSystemUtils.isFileExtensionSupported(null,  null));
+        assertFalse(FileSystemUtils.isFileExtensionSupported(null, null));
 
         File f = new File(getClass().getSimpleName() + ".tst");
 
         List<String> fileExtensionList = new ArrayList<String>();
 
-        assertFalse(FileSystemUtils.isFileExtensionSupported(f,  fileExtensionList));
+        assertFalse(FileSystemUtils.isFileExtensionSupported(f, fileExtensionList));
 
         fileExtensionList.add("abc");
         fileExtensionList.add("xyz");
         fileExtensionList.add("def");
 
-        assertFalse(FileSystemUtils.isFileExtensionSupported(f,  fileExtensionList));
+        assertFalse(FileSystemUtils.isFileExtensionSupported(f, fileExtensionList));
 
         fileExtensionList.add("tst");
 
-        assertTrue(FileSystemUtils.isFileExtensionSupported(f,  fileExtensionList));
+        assertTrue(FileSystemUtils.isFileExtensionSupported(f, fileExtensionList));
     }
 }

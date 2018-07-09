@@ -19,7 +19,7 @@
 
 /**
  * Displays map using edit SLD.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.map;

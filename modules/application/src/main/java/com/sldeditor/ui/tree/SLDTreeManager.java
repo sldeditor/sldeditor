@@ -19,10 +19,9 @@
 
 package com.sldeditor.ui.tree;
 
+import com.sldeditor.datasource.RenderSymbolInterface;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.sldeditor.datasource.RenderSymbolInterface;
 
 /**
  * The Class SLDTreeManager.

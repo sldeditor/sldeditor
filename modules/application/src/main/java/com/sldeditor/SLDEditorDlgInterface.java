@@ -43,5 +43,4 @@ public interface SLDEditorDlgInterface {
      * @return true, if successful
      */
     boolean reload(JFrame frame);
-
 }

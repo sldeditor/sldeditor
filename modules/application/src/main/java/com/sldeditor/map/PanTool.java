@@ -16,9 +16,9 @@
  */
 
 /*
- * Duplicate of org.geotools.swing.tool.PanTool but removes 
+ * Duplicate of org.geotools.swing.tool.PanTool but removes
  * restriction of calling the moveImage call with JMapPane
- * 
+ *
  */
 
 package com.sldeditor.map;
@@ -26,19 +26,16 @@ package com.sldeditor.map;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Toolkit;
-
 import javax.swing.ImageIcon;
-
 import org.geotools.swing.event.MapMouseEvent;
 import org.geotools.swing.locale.LocaleUtils;
 import org.geotools.swing.tool.CursorTool;
 
 /**
  * A cursor tool to pan the map pane display.
- * 
+ *
  * @author Michael Bedward
  * @since 2.6
- *
  * @source $URL$
  * @version $Id$
  */
@@ -65,9 +62,7 @@ public class PanTool extends CursorTool {
 
     boolean panning;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public PanTool() {
         Toolkit tk = Toolkit.getDefaultToolkit();
         ImageIcon imgIcon = new ImageIcon(getClass().getResource(CURSOR_IMAGE));
@@ -79,7 +74,7 @@ public class PanTool extends CursorTool {
     /**
      * Respond to a mouse button press event from the map mapPane. This may signal the start of a
      * mouse drag. Records the event's window position.
-     * 
+     *
      * @param ev the mouse event
      */
     @Override
@@ -90,7 +85,7 @@ public class PanTool extends CursorTool {
 
     /**
      * Respond to a mouse dragged event. Calls {@link org.geotools.swing.MapPane#moveImage()}
-     * 
+     *
      * @param ev the mouse event
      */
     @Override
@@ -105,9 +100,9 @@ public class PanTool extends CursorTool {
     }
 
     /**
-     * If this button release is the end of a mouse dragged event,
-     * requests the map mapPane to repaint the display.
-     * 
+     * If this button release is the end of a mouse dragged event, requests the map mapPane to
+     * repaint the display.
+     *
      * @param ev the mouse event
      */
     @Override
@@ -115,17 +110,15 @@ public class PanTool extends CursorTool {
         panning = false;
     }
 
-    /**
-     * Get the mouse cursor for this tool.
-     */
+    /** Get the mouse cursor for this tool. */
     @Override
     public Cursor getCursor() {
         return cursor;
     }
 
     /**
-     * Returns false to indicate that this tool does not draw a
-     * box on the map display when the mouse is being dragged.
+     * Returns false to indicate that this tool does not draw a box on the map display when the
+     * mouse is being dragged.
      */
     @Override
     public boolean drawDragBox() {

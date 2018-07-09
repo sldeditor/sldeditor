@@ -19,13 +19,16 @@
 
 package com.sldeditor.tool.layerstyle;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.data.GeoServerLayer;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.localisation.Localisation;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -35,14 +38,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.data.GeoServerLayer;
-import com.sldeditor.common.data.StyleWrapper;
-import com.sldeditor.common.localisation.Localisation;
-
 /**
  * Dialog allows a GeoServer layer style to be updated.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleInterface {
@@ -64,13 +62,12 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
     /** The model. */
     private LayerStyleModel dataModel = new LayerStyleModel();
 
-    /**
-     * Instantiates a new update layer style dialog.
-     */
+    /** Instantiates a new update layer style dialog. */
     public ConfigureLayerStyleDialog() {
         setResizable(true);
-        setTitle(Localisation.getString(ConfigureLayerStyleDialog.class,
-                "ConfigureLayerStyleDialog.title"));
+        setTitle(
+                Localisation.getString(
+                        ConfigureLayerStyleDialog.class, "ConfigureLayerStyleDialog.title"));
         setModalityType(ModalityType.APPLICATION_MODAL);
         setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
         setModal(true);
@@ -81,9 +78,7 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
         Controller.getInstance().centreDialog(this);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         JPanel panel = new JPanel();
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -94,36 +89,37 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
         dataModel.setColumnRenderer(table.getColumnModel());
 
         ListSelectionModel selectionModel = table.getSelectionModel();
-        selectionModel.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (e.getValueIsAdjusting()) {
-                    return;
-                }
-
-                // Get selected rows and find the selected style.
-                // If the selected layers all don't use the same style
-                // then set to null
-                int[] selectedRows = table.getSelectedRows();
-
-                StyleWrapper selectedLayerStyle = null;
-                boolean isUniqueStyle = true;
-
-                for (int index = 0; index < selectedRows.length; index++) {
-                    GeoServerLayer layer = dataModel.getLayer(selectedRows[index]);
-
-                    if (selectedLayerStyle == null) {
-                        selectedLayerStyle = layer.getStyle();
-                    } else if (isUniqueStyle) {
-                        if (selectedLayerStyle.compareTo(layer.getStyle()) != 0) {
-                            isUniqueStyle = false;
+        selectionModel.addListSelectionListener(
+                new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+                        if (e.getValueIsAdjusting()) {
+                            return;
                         }
-                    }
-                }
 
-                geoServerStyleTree.select(isUniqueStyle ? selectedLayerStyle : null);
-            }
-        });
+                        // Get selected rows and find the selected style.
+                        // If the selected layers all don't use the same style
+                        // then set to null
+                        int[] selectedRows = table.getSelectedRows();
+
+                        StyleWrapper selectedLayerStyle = null;
+                        boolean isUniqueStyle = true;
+
+                        for (int index = 0; index < selectedRows.length; index++) {
+                            GeoServerLayer layer = dataModel.getLayer(selectedRows[index]);
+
+                            if (selectedLayerStyle == null) {
+                                selectedLayerStyle = layer.getStyle();
+                            } else if (isUniqueStyle) {
+                                if (selectedLayerStyle.compareTo(layer.getStyle()) != 0) {
+                                    isUniqueStyle = false;
+                                }
+                            }
+                        }
+
+                        geoServerStyleTree.select(isUniqueStyle ? selectedLayerStyle : null);
+                    }
+                });
 
         JScrollPane scrollPane = new JScrollPane(table);
         panel.add(scrollPane, BorderLayout.CENTER);
@@ -136,30 +132,33 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
         flowLayout.setAlignment(FlowLayout.TRAILING);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton btnOk = new JButton(
-                Localisation.getString(ConfigureLayerStyleDialog.class, "common.ok"));
-        btnOk.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                okButtonPressed = false;
+        JButton btnOk =
+                new JButton(Localisation.getString(ConfigureLayerStyleDialog.class, "common.ok"));
+        btnOk.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        okButtonPressed = false;
 
-                updatedLayerList = dataModel.getUpdatedLayers();
+                        updatedLayerList = dataModel.getUpdatedLayers();
 
-                if (!updatedLayerList.isEmpty()) {
-                    okButtonPressed = true;
-                }
-                setVisible(false);
-            }
-        });
+                        if (!updatedLayerList.isEmpty()) {
+                            okButtonPressed = true;
+                        }
+                        setVisible(false);
+                    }
+                });
         buttonPanel.add(btnOk);
 
-        JButton btnCancel = new JButton(
-                Localisation.getString(ConfigureLayerStyleDialog.class, "common.cancel"));
-        btnCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                okButtonPressed = false;
-                setVisible(false);
-            }
-        });
+        JButton btnCancel =
+                new JButton(
+                        Localisation.getString(ConfigureLayerStyleDialog.class, "common.cancel"));
+        btnCancel.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        okButtonPressed = false;
+                        setVisible(false);
+                    }
+                });
         buttonPanel.add(btnCancel);
 
         geoServerStyleTree = new GeoServerStyleTree(this);
@@ -173,8 +172,8 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
      * @param layerList the layer list
      * @return true, if successful
      */
-    public boolean populate(Map<String, List<StyleWrapper>> styleMap,
-            List<GeoServerLayer> layerList) {
+    public boolean populate(
+            Map<String, List<StyleWrapper>> styleMap, List<GeoServerLayer> layerList) {
         dataModel.populate(styleMap, layerList);
         dataModel.fireTableDataChanged();
 
@@ -212,5 +211,4 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
 
         dataModel.updateStyle(selectedRows, styleWrapper);
     }
-
 }

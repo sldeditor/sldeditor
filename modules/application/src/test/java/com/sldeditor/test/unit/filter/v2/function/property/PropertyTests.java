@@ -23,15 +23,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.BinaryComparisonAbstract;
-import org.junit.Test;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.property.IsBetween;
 import com.sldeditor.filter.v2.function.property.IsEqualTo;
@@ -40,19 +31,24 @@ import com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo;
 import com.sldeditor.filter.v2.function.property.IsLessThan;
 import com.sldeditor.filter.v2.function.property.IsLessThanEqualTo;
 import com.sldeditor.filter.v2.function.property.IsNotEqualTo;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.BinaryComparisonAbstract;
+import org.junit.Test;
+import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Expression;
 
 /**
- * Unit test for the following classes:
- * {@link com.sldeditor.filter.v2.function.property.IsBetween}.
- * {@link com.sldeditor.filter.v2.function.property.IsEqualTo}.
- * {@link com.sldeditor.filter.v2.function.property.IsGreaterThan}.
- * {@link com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo}.
- * {@link com.sldeditor.filter.v2.function.property.IsLessThan}.
- * {@link com.sldeditor.filter.v2.function.property.IsLessThanEqualTo}.
- * {@link com.sldeditor.filter.v2.function.property.IsNotEqualTo}.
- * 
- * @author Robert Ward (SCISYS)
+ * Unit test for the following classes: {@link com.sldeditor.filter.v2.function.property.IsBetween}.
+ * {@link com.sldeditor.filter.v2.function.property.IsEqualTo}. {@link
+ * com.sldeditor.filter.v2.function.property.IsGreaterThan}. {@link
+ * com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo}. {@link
+ * com.sldeditor.filter.v2.function.property.IsLessThan}. {@link
+ * com.sldeditor.filter.v2.function.property.IsLessThanEqualTo}. {@link
+ * com.sldeditor.filter.v2.function.property.IsNotEqualTo}.
  *
+ * @author Robert Ward (SCISYS)
  */
 public class PropertyTests {
 
@@ -60,8 +56,8 @@ public class PropertyTests {
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /**
-     * Unit test for the following class:
-     * {@link com.sldeditor.filter.v2.function.property.IsEqualTo}.
+     * Unit test for the following class: {@link
+     * com.sldeditor.filter.v2.function.property.IsEqualTo}.
      */
     @Test
     public void testIsEqualTo() {
@@ -69,8 +65,8 @@ public class PropertyTests {
     }
 
     /**
-     * Unit test for the following class:
-     * {@link com.sldeditor.filter.v2.function.property.IsGreaterThan}.
+     * Unit test for the following class: {@link
+     * com.sldeditor.filter.v2.function.property.IsGreaterThan}.
      */
     @Test
     public void testIsGreaterThan() {
@@ -78,8 +74,8 @@ public class PropertyTests {
     }
 
     /**
-     * Unit test for the following class:
-     * {@link com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo}.
+     * Unit test for the following class: {@link
+     * com.sldeditor.filter.v2.function.property.IsGreaterThanEqualTo}.
      */
     @Test
     public void testIsGreaterThanEqualTo() {
@@ -87,8 +83,8 @@ public class PropertyTests {
     }
 
     /**
-     * Unit test for the following class:
-     * {@link com.sldeditor.filter.v2.function.property.IsLessThan}.
+     * Unit test for the following class: {@link
+     * com.sldeditor.filter.v2.function.property.IsLessThan}.
      */
     @Test
     public void testIsLessThan() {
@@ -96,8 +92,8 @@ public class PropertyTests {
     }
 
     /**
-     * Unit test for the following class:
-     * {@link com.sldeditor.filter.v2.function.property.IsLessThanEqualTo}.
+     * Unit test for the following class: {@link
+     * com.sldeditor.filter.v2.function.property.IsLessThanEqualTo}.
      */
     @Test
     public void testIsLessThanEqualTo() {
@@ -105,8 +101,8 @@ public class PropertyTests {
     }
 
     /**
-     * Unit test for the following class:
-     * {@link com.sldeditor.filter.v2.function.property.IsNotEqualTo}.
+     * Unit test for the following class: {@link
+     * com.sldeditor.filter.v2.function.property.IsNotEqualTo}.
      */
     @Test
     public void testIsNotEqualTo() {
@@ -114,8 +110,8 @@ public class PropertyTests {
     }
 
     /**
-     * Unit test for the following class:
-     * {@link com.sldeditor.filter.v2.function.property.IsBetween}.
+     * Unit test for the following class: {@link
+     * com.sldeditor.filter.v2.function.property.IsBetween}.
      */
     @Test
     public void testIsBetween() {
@@ -132,7 +128,8 @@ public class PropertyTests {
         assertNotNull(objUnderTest.createFilter());
         assertNull(objUnderTest.createLogicFilter(null));
 
-        BinaryComparisonAbstract filter = (BinaryComparisonAbstract)objUnderTest.createFilter(null);
+        BinaryComparisonAbstract filter =
+                (BinaryComparisonAbstract) objUnderTest.createFilter(null);
         assertNull(filter.getExpression1());
         assertNull(filter.getExpression2());
 

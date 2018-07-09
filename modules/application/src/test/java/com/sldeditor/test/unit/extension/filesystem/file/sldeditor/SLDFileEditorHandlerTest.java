@@ -25,6 +25,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
+import com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,27 +37,20 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.Test;
-
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.data.SLDData;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
-import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
-import com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler;
 
 /**
  * Unit test for SLDEditorFileHandler class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class SLDFileEditorHandlerTest {
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler#getFileExtensionList()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler#getFileExtensionList()}.
      */
     @Test
     public void testGetFileExtension() {
@@ -60,7 +58,10 @@ public class SLDFileEditorHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface, javax.swing.tree.DefaultTreeModel, com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface,
+     * javax.swing.tree.DefaultTreeModel,
+     * com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
      */
     @Test
     public void testPopulate() {
@@ -68,7 +69,8 @@ public class SLDFileEditorHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContents() {
@@ -111,10 +113,10 @@ public class SLDFileEditorHandlerTest {
 
             assertEquals(1, actualSldDataList.size());
 
-            FileTreeNode editorFileTreeNode = new FileTreeNode(sldEditorFile.getParentFile(),
-                    sldEditorFile.getName());
-            List<SLDDataInterface> actualSldDataList2 = editorFileHandler2
-                    .getSLDContents(editorFileTreeNode);
+            FileTreeNode editorFileTreeNode =
+                    new FileTreeNode(sldEditorFile.getParentFile(), sldEditorFile.getName());
+            List<SLDDataInterface> actualSldDataList2 =
+                    editorFileHandler2.getSLDContents(editorFileTreeNode);
             assertEquals(1, actualSldDataList2.size());
 
             sldEditorFile.delete();
@@ -129,5 +131,4 @@ public class SLDFileEditorHandlerTest {
             fail(e.getMessage());
         }
     }
-
 }

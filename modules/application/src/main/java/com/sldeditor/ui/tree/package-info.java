@@ -19,7 +19,7 @@
 
 /**
  * The sld structure tree user interface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.tree;

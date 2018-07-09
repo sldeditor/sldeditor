@@ -22,13 +22,12 @@ package com.sldeditor.test.unit.ui.detail.config.base;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.ui.detail.config.base.CurrentFieldState;
+import org.junit.Test;
 
 /**
  * The unit test for CurrentFieldState.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.base.CurrentFieldState}
  *
  * @author Robert Ward (SCISYS)
@@ -36,7 +35,8 @@ import com.sldeditor.ui.detail.config.base.CurrentFieldState;
 public class CurrentFieldStateTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.base.CurrentFieldState#getFieldEnabledState()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.base.CurrentFieldState#getFieldEnabledState()}.
      */
     @Test
     public void testGetFieldEnabledState() {
@@ -67,5 +67,4 @@ public class CurrentFieldStateTest {
         obj.setFieldEnabled(false);
         assertFalse(obj.getFieldEnabledState());
     }
-
 }

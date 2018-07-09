@@ -22,9 +22,7 @@ package com.sldeditor.test.unit.helper;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
 
-/**
- * The Class SLDEditorDataUpdateInterfaceTestHelper.
- */
+/** The Class SLDEditorDataUpdateInterfaceTestHelper. */
 public class SLDEditorDataUpdateInterfaceTestHelper implements SLDEditorDataUpdateInterface {
 
     /** The method reached. */
@@ -36,9 +34,7 @@ public class SLDEditorDataUpdateInterfaceTestHelper implements SLDEditorDataUpda
     /** The data edited flag. */
     public boolean sldDataUpdated_dataEditedFlag = false;
 
-    /**
-     * Reset.
-     */
+    /** Reset. */
     public void reset() {
         sldDataUpdated_methodReached = false;
         sldDataUpdated_sldData = null;
@@ -57,5 +53,4 @@ public class SLDEditorDataUpdateInterfaceTestHelper implements SLDEditorDataUpda
         sldDataUpdated_sldData = sldData;
         sldDataUpdated_dataEditedFlag = dataEditedFlag;
     }
-
 }

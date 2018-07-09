@@ -19,6 +19,22 @@
 
 package com.sldeditor.tool.savesld;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.NodeInterface;
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SLDExternalImages;
+import com.sldeditor.common.data.SLDUtils;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.output.SLDWriterInterface;
+import com.sldeditor.common.output.impl.SLDWriterFactory;
+import com.sldeditor.common.utils.ExternalFilenames;
+import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
+import com.sldeditor.tool.ToolButton;
+import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -36,38 +52,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import org.apache.log4j.Logger;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.util.URLs;
 
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.NodeInterface;
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.SLDExternalImages;
-import com.sldeditor.common.data.SLDUtils;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.output.SLDWriterInterface;
-import com.sldeditor.common.output.impl.SLDWriterFactory;
-import com.sldeditor.common.utils.ExternalFilenames;
-import com.sldeditor.datasource.SLDEditorFile;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
-import com.sldeditor.tool.ToolButton;
-import com.sldeditor.tool.ToolInterface;
-import com.sldeditor.tool.ToolPanel;
-
 /**
  * Tool which given a list of SLD objects saves them to SLD files.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SaveSLDTool implements ToolInterface {
@@ -90,16 +87,14 @@ public class SaveSLDTool implements ToolInterface {
     /** The sld data list. */
     private List<SLDDataInterface> sldDataList;
 
-    /**
-     * Instantiates a new save sld tool.
-     */
+    /** Instantiates a new save sld tool. */
     public SaveSLDTool() {
         createUI();
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#getPanel()
      */
     @Override
@@ -109,12 +104,12 @@ public class SaveSLDTool implements ToolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList,
-            List<SLDDataInterface> sldDataList) {
+    public void setSelectedItems(
+            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
         this.sldDataList = sldDataList;
 
         if (saveAllSLD != null) {
@@ -122,47 +117,53 @@ public class SaveSLDTool implements ToolInterface {
         }
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         groupPanel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) groupPanel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        groupPanel.setBorder(BorderFactory
-                .createTitledBorder(Localisation.getString(SaveSLDTool.class, "SaveSLDTool.save")));
+        groupPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        Localisation.getString(SaveSLDTool.class, "SaveSLDTool.save")));
 
-        saveAllSLD = new ToolButton(Localisation.getString(SaveSLDTool.class, "SaveSLDTool.sld"),
-                "tool/savesld.png");
+        saveAllSLD =
+                new ToolButton(
+                        Localisation.getString(SaveSLDTool.class, "SaveSLDTool.sld"),
+                        "tool/savesld.png");
         saveAllSLD.setEnabled(false);
-        saveAllSLD.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser chooser = new JFileChooser();
-                chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.setDialogTitle(
-                        Localisation.getString(SaveSLDTool.class, "SaveSLDTool.destinationFolder"));
-                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        saveAllSLD.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        JFileChooser chooser = new JFileChooser();
+                        chooser.setCurrentDirectory(new java.io.File("."));
+                        chooser.setDialogTitle(
+                                Localisation.getString(
+                                        SaveSLDTool.class, "SaveSLDTool.destinationFolder"));
+                        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-                //
-                // Disable the "All files" option.
-                //
-                chooser.setAcceptAllFileFilterUsed(false);
+                        //
+                        // Disable the "All files" option.
+                        //
+                        chooser.setAcceptAllFileFilterUsed(false);
 
-                // Save external images option
-                JPanel accessory = new JPanel();
-                JCheckBox isOpenBox = new JCheckBox(Localisation.getString(SaveSLDTool.class,
-                        "SaveSLDTool.saveExternalImages"));
-                accessory.setLayout(new BorderLayout());
-                accessory.add(isOpenBox, BorderLayout.CENTER);
-                chooser.setAccessory(accessory);
+                        // Save external images option
+                        JPanel accessory = new JPanel();
+                        JCheckBox isOpenBox =
+                                new JCheckBox(
+                                        Localisation.getString(
+                                                SaveSLDTool.class,
+                                                "SaveSLDTool.saveExternalImages"));
+                        accessory.setLayout(new BorderLayout());
+                        accessory.add(isOpenBox, BorderLayout.CENTER);
+                        chooser.setAccessory(accessory);
 
-                if (chooser.showSaveDialog(saveAllSLD) == JFileChooser.APPROVE_OPTION) {
+                        if (chooser.showSaveDialog(saveAllSLD) == JFileChooser.APPROVE_OPTION) {
 
-                    saveAllSLDToFolder(chooser.getSelectedFile(), isOpenBox.isSelected());
-                }
-            }
-        });
+                            saveAllSLDToFolder(chooser.getSelectedFile(), isOpenBox.isSelected());
+                        }
+                    }
+                });
 
         groupPanel.add(saveAllSLD);
         saveAllSLD.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
@@ -193,13 +194,18 @@ public class SaveSLDTool implements ToolInterface {
             if (sld != null) {
                 String sldString = sldWriter.encodeSLD(sldData.getResourceLocator(), sld);
 
-                String sldFilename = layerName + ExternalFilenames
-                        .addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
+                String sldFilename =
+                        layerName
+                                + ExternalFilenames.addFileExtensionSeparator(
+                                        SLDEditorFile.getSLDFileExtension());
                 File fileToSave = new File(destinationFolder, sldFilename);
 
-                ConsoleManager.getInstance().information(this,
-                        Localisation.getField(SaveSLDTool.class, "SaveSLDTool.savingSLDr") + " "
-                                + layerName);
+                ConsoleManager.getInstance()
+                        .information(
+                                this,
+                                Localisation.getField(SaveSLDTool.class, "SaveSLDTool.savingSLDr")
+                                        + " "
+                                        + layerName);
                 BufferedWriter out;
                 try {
                     out = new BufferedWriter(new FileWriter(fileToSave));
@@ -211,8 +217,8 @@ public class SaveSLDTool implements ToolInterface {
 
                 // Save external images if requested
                 if (saveExternalResources) {
-                    List<String> externalImageList = SLDExternalImages
-                            .getExternalImages(sldData.getResourceLocator(), sld);
+                    List<String> externalImageList =
+                            SLDExternalImages.getExternalImages(sldData.getResourceLocator(), sld);
 
                     for (String externalImage : externalImageList) {
                         File output = new File(destinationFolder, externalImage);
@@ -223,9 +229,11 @@ public class SaveSLDTool implements ToolInterface {
                         if (!parentFolder.exists()) {
                             if (output.getParentFile().mkdirs()) {
                                 ConsoleManager.getInstance()
-                                        .error(this,
-                                                Localisation.getField(SaveSLDTool.class,
-                                                        "SaveSLDTool.error1")
+                                        .error(
+                                                this,
+                                                Localisation.getField(
+                                                                SaveSLDTool.class,
+                                                                "SaveSLDTool.error1")
                                                         + output.getAbsolutePath());
                             }
                         }
@@ -235,38 +243,43 @@ public class SaveSLDTool implements ToolInterface {
 
                             if (output.exists()) {
                                 if (!yesToAll) {
-                                    Object[] options = { "Yes to All", "Yes", "No" };
-                                    int n = JOptionPane.showOptionDialog(
-                                            Controller.getInstance().getFrame(),
-                                            "Overwrite destination file?\n"
-                                                    + output.getAbsolutePath(),
-                                            "Desintation file exists",
-                                            JOptionPane.YES_NO_CANCEL_OPTION,
-                                            JOptionPane.QUESTION_MESSAGE, null, options,
-                                            options[2]);
+                                    Object[] options = {"Yes to All", "Yes", "No"};
+                                    int n =
+                                            JOptionPane.showOptionDialog(
+                                                    Controller.getInstance().getFrame(),
+                                                    "Overwrite destination file?\n"
+                                                            + output.getAbsolutePath(),
+                                                    "Desintation file exists",
+                                                    JOptionPane.YES_NO_CANCEL_OPTION,
+                                                    JOptionPane.QUESTION_MESSAGE,
+                                                    null,
+                                                    options,
+                                                    options[2]);
 
                                     switch (n) {
-                                    case 0:
-                                        yesToAll = true;
-                                        break;
-                                    case 1:
-                                        break;
-                                    case 2:
-                                    default:
-                                        writeOutputFile = false;
-                                        break;
+                                        case 0:
+                                            yesToAll = true;
+                                            break;
+                                        case 1:
+                                            break;
+                                        case 2:
+                                        default:
+                                            writeOutputFile = false;
+                                            break;
                                     }
                                 }
                             }
 
                             if (writeOutputFile) {
                                 try {
-                                    URL input = URLs.extendUrl(sldData.getResourceLocator(), externalImage);
+                                    URL input =
+                                            URLs.extendUrl(
+                                                    sldData.getResourceLocator(), externalImage);
                                     URLConnection connection = input.openConnection();
 
                                     InputStream inputStream = connection.getInputStream();
-                                    BufferedReader in = new BufferedReader(
-                                            new InputStreamReader(inputStream));
+                                    BufferedReader in =
+                                            new BufferedReader(new InputStreamReader(inputStream));
 
                                     byte[] buffer = new byte[BUFFER_SIZE];
                                     int n = -1;
@@ -277,10 +290,14 @@ public class SaveSLDTool implements ToolInterface {
                                     }
                                     in.close();
                                     outputStream.close();
-                                    ConsoleManager.getInstance().information(this,
-                                            Localisation.getField(SaveSLDTool.class,
-                                                    "SaveSLDTool.savingExternalImage") + " "
-                                                    + externalImage);
+                                    ConsoleManager.getInstance()
+                                            .information(
+                                                    this,
+                                                    Localisation.getField(
+                                                                    SaveSLDTool.class,
+                                                                    "SaveSLDTool.savingExternalImage")
+                                                            + " "
+                                                            + externalImage);
                                 } catch (MalformedURLException e) {
                                     ConsoleManager.getInstance().exception(this, e);
                                 } catch (IOException e) {
@@ -296,7 +313,7 @@ public class SaveSLDTool implements ToolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#getToolName()
      */
     @Override
@@ -306,11 +323,13 @@ public class SaveSLDTool implements ToolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#supports(java.util.List, java.util.List)
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+    public boolean supports(
+            List<Class<?>> uniqueNodeTypeList,
+            List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
         for (NodeInterface node : nodeTypeList) {
             if (node instanceof FileTreeNode) {

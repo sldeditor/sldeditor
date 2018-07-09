@@ -65,7 +65,7 @@ public class VendorOptionPresent implements Comparable<VendorOptionPresent> {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
@@ -83,7 +83,7 @@ public class VendorOptionPresent implements Comparable<VendorOptionPresent> {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -97,7 +97,7 @@ public class VendorOptionPresent implements Comparable<VendorOptionPresent> {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

@@ -10,6 +10,13 @@ package com.sldeditor.test.unit.ui.detail;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.PolygonFillDetails;
+import com.sldeditor.ui.detail.config.FieldConfigDouble;
+import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
@@ -23,17 +30,9 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.PolygonFillDetails;
-import com.sldeditor.ui.detail.config.FieldConfigDouble;
-import com.sldeditor.ui.detail.config.FieldConfigSlider;
-
 /**
  * The unit test for PolygonFillDetailsTest.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.PolygonFillDetailsTest}
  *
  * @author Robert Ward (SCISYS)
@@ -41,14 +40,15 @@ import com.sldeditor.ui.detail.config.FieldConfigSlider;
 public class PolygonFillDetailsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.PolygonFillDetailsTest#PolygonFillDetailsTest(java.lang.Class, com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.PolygonFillDetailsTest#PolygonFillDetailsTest(java.lang.Class,
+     * com.sldeditor.filter.v2.function.FunctionNameInterface)}.
      */
     @Test
     public void testFillDetailsPolygon() {
-        StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-                .getStyleFactory();
+        StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
-        
+
         PolygonFillDetails panel = new PolygonFillDetails();
         panel.populate(null);
 
@@ -91,8 +91,8 @@ public class PolygonFillDetailsTest {
         FieldConfigDouble angleField = (FieldConfigDouble) fieldDataManager.get(FieldIdEnum.ANGLE);
         angleField.populateField(expectedAngle);
 
-        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager
-                .get(FieldIdEnum.OVERALL_OPACITY);
+        FieldConfigSlider opacityField =
+                (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OVERALL_OPACITY);
         double opacity = 0.15;
         opacityField.populateField(opacity);
 
@@ -111,7 +111,7 @@ public class PolygonFillDetailsTest {
         assertTrue(Math.abs(actualValue - 0.0) < 0.01);
         actualValue = opacityField.getDoubleValue();
         assertTrue(Math.abs(actualValue - 1.0) < 0.01);
-        
+
         // Increase the coverage, set the fill
         Fill fill = styleFactory.createFill(ff.literal("#123456"));
         Graphic graphic = styleFactory.createDefaultGraphic();

@@ -17,12 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.undo;
 
 /**
  * The Interface UndoActionInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface UndoActionInterface {

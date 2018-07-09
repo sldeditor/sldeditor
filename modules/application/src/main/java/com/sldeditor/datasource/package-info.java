@@ -18,7 +18,7 @@
  */
 /**
  * Package to handle the accessing data sources and extract schema information.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource;

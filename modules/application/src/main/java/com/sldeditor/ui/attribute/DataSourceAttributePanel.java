@@ -19,31 +19,28 @@
 
 package com.sldeditor.ui.attribute;
 
+import com.sldeditor.common.undo.UndoActionInterface;
+import com.sldeditor.common.undo.UndoEvent;
+import com.sldeditor.common.undo.UndoInterface;
+import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.datasource.DataSourceInterface;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import org.geotools.feature.NameImpl;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.function.PropertyExistsFunction;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.undo.UndoActionInterface;
-import com.sldeditor.common.undo.UndoEvent;
-import com.sldeditor.common.undo.UndoInterface;
-import com.sldeditor.common.undo.UndoManager;
-import com.sldeditor.datasource.DataSourceInterface;
-
 /**
  * Panel to be able to edit DataSourceAttribute objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DataSourceAttributePanel extends JPanel implements UndoActionInterface {
@@ -103,20 +100,26 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
         add(attributeComboBox, BorderLayout.CENTER);
 
         populateAttributeComboBox();
-        attributeComboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        attributeComboBox.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
 
-                if (isAttributeComboBoxPopulated()) {
-                    String newValueObj = (String) attributeComboBox.getSelectedItem();
-                    UndoManager.getInstance().addUndoEvent(new UndoEvent(thisObj,
-                            "DataSourceAttribute", oldValueObj, newValueObj));
+                        if (isAttributeComboBoxPopulated()) {
+                            String newValueObj = (String) attributeComboBox.getSelectedItem();
+                            UndoManager.getInstance()
+                                    .addUndoEvent(
+                                            new UndoEvent(
+                                                    thisObj,
+                                                    "DataSourceAttribute",
+                                                    oldValueObj,
+                                                    newValueObj));
 
-                    if (parentObj != null) {
-                        parentObj.updateSymbol();
+                            if (parentObj != null) {
+                                parentObj.updateSymbol();
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
     }
 
     /**
@@ -140,15 +143,13 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
         }
     }
 
-    /**
-     * Populate attribute combo box.
-     */
+    /** Populate attribute combo box. */
     private void populateAttributeComboBox() {
         if (attributeComboBox != null) {
             setPopulatingComboBox(true);
-            //CHECKSTYLE:OFF
+            // CHECKSTYLE:OFF
             Object selectedItem = model.getSelectedItem();
-            //CHECKSTYLE:ON
+            // CHECKSTYLE:ON
             model.removeAllElements();
             model.addElement("");
 
@@ -230,8 +231,9 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
         } else if (expression instanceof AttributeExpressionImpl) {
             propertyName = ((AttributeExpressionImpl) expression).getPropertyName();
         } else if (expression instanceof LiteralExpressionImpl) {
-            propertyName = AttributeUtils
-                    .extract((String) ((LiteralExpressionImpl) expression).getValue());
+            propertyName =
+                    AttributeUtils.extract(
+                            (String) ((LiteralExpressionImpl) expression).getValue());
         }
 
         if (propertyName != null) {
@@ -268,7 +270,7 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
@@ -285,7 +287,7 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override

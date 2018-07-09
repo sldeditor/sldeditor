@@ -105,12 +105,17 @@ public class CurrentFieldState {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return "CurrentFieldState [groupEnabledFlag=" + groupEnabledFlag + ", groupSelectedFlag="
-                + groupSelectedFlag + ", fieldEnabledFlag=" + fieldEnabledFlag + "]";
+        return "CurrentFieldState [groupEnabledFlag="
+                + groupEnabledFlag
+                + ", groupSelectedFlag="
+                + groupSelectedFlag
+                + ", fieldEnabledFlag="
+                + fieldEnabledFlag
+                + "]";
     }
 }

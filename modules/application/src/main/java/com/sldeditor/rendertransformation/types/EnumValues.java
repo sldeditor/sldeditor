@@ -19,19 +19,17 @@
 
 package com.sldeditor.rendertransformation.types;
 
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 
 /**
  * The Class EnumValues.
@@ -71,7 +69,7 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.lang.Object)
      */
     @Override
@@ -81,7 +79,7 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
 
     /**
      * Populate.
-     * 
+     *
      * @param enumList the enum list
      */
     public void populate(List<?> enumList) {
@@ -97,7 +95,7 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.BaseValue#populateSymbolType(com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig)
      */
     protected void populateSymbolType(SymbolTypeConfig symbolTypeConfig) {
@@ -109,7 +107,7 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getExpression()
      */
     @Override
@@ -122,7 +120,7 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.Object)
      */
     @Override
@@ -145,7 +143,7 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -155,7 +153,7 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -165,7 +163,7 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

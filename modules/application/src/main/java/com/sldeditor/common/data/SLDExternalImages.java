@@ -22,7 +22,6 @@ package com.sldeditor.common.data;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
 import org.geotools.styling.LineSymbolizer;
@@ -86,8 +85,10 @@ public class SLDExternalImages {
      * @param externalImageList the external image list
      * @param process the process
      */
-    private static void externalGraphicSymbolVisitor(URL resourceLocator,
-            StyledLayerDescriptor sld, List<String> externalImageList,
+    private static void externalGraphicSymbolVisitor(
+            URL resourceLocator,
+            StyledLayerDescriptor sld,
+            List<String> externalImageList,
             ProcessGraphicSymbolInterface process) {
         if (sld == null) {
             return;
@@ -116,23 +117,30 @@ public class SLDExternalImages {
                                     PointSymbolizer point = (PointSymbolizer) symbolizer;
 
                                     if (point.getGraphic() != null) {
-                                        process.processGraphicalSymbol(resourceLocator,
+                                        process.processGraphicalSymbol(
+                                                resourceLocator,
                                                 point.getGraphic().graphicalSymbols(),
                                                 externalImageList);
                                     }
                                 } else if (symbolizer instanceof LineSymbolizer) {
                                     LineSymbolizer line = (LineSymbolizer) symbolizer;
 
-                                    updateStroke(resourceLocator, line.getStroke(),
+                                    updateStroke(
+                                            resourceLocator,
+                                            line.getStroke(),
                                             externalImageList,
                                             process);
                                 } else if (symbolizer instanceof PolygonSymbolizer) {
                                     PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
 
-                                    updateStroke(resourceLocator, polygon.getStroke(),
+                                    updateStroke(
+                                            resourceLocator,
+                                            polygon.getStroke(),
                                             externalImageList,
                                             process);
-                                    updateFill(resourceLocator, polygon.getFill(),
+                                    updateFill(
+                                            resourceLocator,
+                                            polygon.getFill(),
                                             externalImageList,
                                             process);
                                 }
@@ -151,11 +159,15 @@ public class SLDExternalImages {
      * @param fill the fill
      * @param externalImageList the external image list
      */
-    private static void updateFill(URL resourceLocator, Fill fill, List<String> externalImageList,
+    private static void updateFill(
+            URL resourceLocator,
+            Fill fill,
+            List<String> externalImageList,
             ProcessGraphicSymbolInterface process) {
         if (fill != null) {
             if (fill.getGraphicFill() != null) {
-                process.processGraphicalSymbol(resourceLocator, 
+                process.processGraphicalSymbol(
+                        resourceLocator,
                         fill.getGraphicFill().graphicalSymbols(),
                         externalImageList);
             }
@@ -169,22 +181,25 @@ public class SLDExternalImages {
      * @param stroke the stroke
      * @param externalImageList the external image list
      */
-    private static void updateStroke(URL resourceLocator, Stroke stroke,
+    private static void updateStroke(
+            URL resourceLocator,
+            Stroke stroke,
             List<String> externalImageList,
             ProcessGraphicSymbolInterface process) {
         if (stroke != null) {
             if (stroke.getGraphicFill() != null) {
-                process.processGraphicalSymbol(resourceLocator,
+                process.processGraphicalSymbol(
+                        resourceLocator,
                         stroke.getGraphicFill().graphicalSymbols(),
                         externalImageList);
             }
 
             if (stroke.getGraphicStroke() != null) {
-                process.processGraphicalSymbol(resourceLocator, 
+                process.processGraphicalSymbol(
+                        resourceLocator,
                         stroke.getGraphicStroke().graphicalSymbols(),
                         externalImageList);
             }
         }
     }
-
 }

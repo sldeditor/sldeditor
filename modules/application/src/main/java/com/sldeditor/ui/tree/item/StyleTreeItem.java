@@ -19,28 +19,26 @@
 
 package com.sldeditor.ui.tree.item;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.geotools.styling.Style;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.tree.SLDTreeTools;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.geotools.styling.Style;
 
 /**
  * Class that display Style data within the sld tree structure.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class StyleTreeItem implements SLDTreeItemInterface {
 
     /** The Constant TITLE. */
-    private static final String TITLE = Localisation.getString(SLDTreeTools.class,
-            "TreeItem.style");
+    private static final String TITLE =
+            Localisation.getString(SLDTreeTools.class, "TreeItem.style");
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -58,7 +56,7 @@ public class StyleTreeItem implements SLDTreeItemInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeItemInterface#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -66,5 +64,4 @@ public class StyleTreeItem implements SLDTreeItemInterface {
         Style style = (Style) userObject;
         SelectedSymbol.getInstance().setStyle(style);
     }
-
 }

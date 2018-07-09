@@ -19,20 +19,18 @@
 
 package com.sldeditor.extension;
 
-import java.net.URL;
-import java.util.List;
-
-import javax.swing.JMenu;
-import javax.swing.JPanel;
-
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.ToolSelectionInterface;
 import com.sldeditor.common.preferences.PrefData;
+import java.net.URL;
+import java.util.List;
+import javax.swing.JMenu;
+import javax.swing.JPanel;
 
 /**
  * The Interface ExtensionInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface ExtensionInterface {

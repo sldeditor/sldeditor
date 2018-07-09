@@ -19,16 +19,14 @@
 
 package com.sldeditor.tool;
 
-import java.util.List;
-
-import javax.swing.JPanel;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
+import java.util.List;
+import javax.swing.JPanel;
 
 /**
  * The Interface ToolInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface ToolInterface {
@@ -46,8 +44,8 @@ public interface ToolInterface {
      * @param nodeTypeList the node type list
      * @param sldDataList the new selected items
      */
-    public void setSelectedItems(List<NodeInterface> nodeTypeList,
-            List<SLDDataInterface> sldDataList);
+    public void setSelectedItems(
+            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList);
 
     /**
      * Gets the tool name.
@@ -64,6 +62,8 @@ public interface ToolInterface {
      * @param sldDataList the sld data list
      * @return true, if successful
      */
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+    public boolean supports(
+            List<Class<?>> uniqueNodeTypeList,
+            List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList);
 }

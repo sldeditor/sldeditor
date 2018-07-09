@@ -19,11 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.text;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.styling.TextSymbolizer;
-
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
@@ -34,10 +29,13 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.styling.TextSymbolizer;
 
 /**
  * A factory for creating VendorOptionText objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VendorOptionTextFactory
@@ -54,7 +52,7 @@ public class VendorOptionTextFactory
 
     /** The vendor option geo server label spacing. */
     private VOGeoServerTextSpacing vendorOptionGeoServerLabelSpacing = null;
-    
+
     /** The vendor option list. */
     private List<VendorOptionInterface> vendorOptionList = new ArrayList<VendorOptionInterface>();
 
@@ -95,7 +93,7 @@ public class VendorOptionTextFactory
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
      */
     @Override
@@ -128,8 +126,9 @@ public class VendorOptionTextFactory
      */
     public void updateSymbol(TextSymbolizer textSymbolizer) {
         for (VendorOptionInterface vendorOption : vendorOptionList) {
-            boolean displayVendorOption = VendorOptionManager.getInstance()
-                    .isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
+            boolean displayVendorOption =
+                    VendorOptionManager.getInstance()
+                            .isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
 
             if (displayVendorOption) {
                 vendorOption.updateSymbol(textSymbolizer);
@@ -139,7 +138,7 @@ public class VendorOptionTextFactory
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
@@ -164,7 +163,7 @@ public class VendorOptionTextFactory
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionInfoList()
      */
     @Override
@@ -186,8 +185,8 @@ public class VendorOptionTextFactory
      * @param sldObj the sld obj
      * @param vendorOptionsPresentList the vendor options present list
      */
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         for (VendorOptionInterface vo : vendorOptionList) {
             vo.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
         }

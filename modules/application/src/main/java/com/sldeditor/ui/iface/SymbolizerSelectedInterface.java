@@ -23,7 +23,7 @@ import java.util.Set;
 
 /**
  * The Interface SymbolizerSelectedInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SymbolizerSelectedInterface {

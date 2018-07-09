@@ -19,20 +19,18 @@
 
 package com.sldeditor.rendertransformation.types;
 
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigRange;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import java.util.Arrays;
 import java.util.List;
-
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.jaitools.numeric.Range;
 import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigRange;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 
 /**
  * The Class JAI Tools RangeValues.
@@ -46,15 +44,12 @@ public class JAIToolsRangeValues extends BaseValue implements RenderTransformVal
     @SuppressWarnings("unused")
     private Range value = null;
 
-    /**
-     * Instantiates a new JAI Tools values.
-     */
-    public JAIToolsRangeValues() {
-    }
+    /** Instantiates a new JAI Tools values. */
+    public JAIToolsRangeValues() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.lang.Object)
      */
     @Override
@@ -73,7 +68,7 @@ public class JAIToolsRangeValues extends BaseValue implements RenderTransformVal
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getExpression()
      */
     @Override
@@ -83,7 +78,7 @@ public class JAIToolsRangeValues extends BaseValue implements RenderTransformVal
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.Object)
      */
     @Override
@@ -103,7 +98,7 @@ public class JAIToolsRangeValues extends BaseValue implements RenderTransformVal
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -113,7 +108,7 @@ public class JAIToolsRangeValues extends BaseValue implements RenderTransformVal
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -124,7 +119,7 @@ public class JAIToolsRangeValues extends BaseValue implements RenderTransformVal
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

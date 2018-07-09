@@ -22,18 +22,17 @@ package com.sldeditor.test.unit.ui.detail.config.colourmap;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.utils.ColourUtils;
+import com.sldeditor.ui.detail.config.colourmap.ColourMapData;
 import org.geotools.factory.CommonFactoryFinder;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Divide;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.utils.ColourUtils;
-import com.sldeditor.ui.detail.config.colourmap.ColourMapData;
-
 /**
  * The unit test for ColourMapData.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.colourmap.ColourMapData}
  *
  * @author Robert Ward (SCISYS)
@@ -41,8 +40,8 @@ import com.sldeditor.ui.detail.config.colourmap.ColourMapData;
 public class ColourMapDataTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.colourmap.ColourMapData#ColourMapData()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.colourmap.ColourMapData#ColourMapData()}.
      */
     @Test
     public void testColourMapData() {
@@ -105,5 +104,4 @@ public class ColourMapDataTest {
         actual.update(updateQuantity);
         assertEquals(actual.getQuantity().toString(), String.valueOf(updatedQuantity));
     }
-
 }

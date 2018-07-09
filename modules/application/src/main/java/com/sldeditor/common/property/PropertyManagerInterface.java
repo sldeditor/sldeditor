@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * interface for class implementing property manager.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface PropertyManagerInterface {
@@ -71,9 +71,7 @@ public interface PropertyManagerInterface {
      */
     void updateValue(String key, List<String> stringList);
 
-    /**
-     * Read config.
-     */
+    /** Read config. */
     void readConfig();
 
     /**
@@ -142,5 +140,4 @@ public interface PropertyManagerInterface {
      * @param configPropertiesFile the new property file
      */
     void setPropertyFile(File configPropertiesFile);
-
 }

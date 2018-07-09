@@ -19,12 +19,13 @@
 
 package com.sldeditor.ui.tree;
 
+import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
+import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
+import com.sldeditor.ui.tree.item.TreeItemMap;
 import java.awt.Component;
-
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
-
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.PolygonSymbolizer;
@@ -33,13 +34,7 @@ import org.geotools.styling.Stroke;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 
-import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
-import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
-import com.sldeditor.ui.tree.item.TreeItemMap;
-
-/**
- * The Class ComponentCellRenderer.
- */
+/** The Class ComponentCellRenderer. */
 public class ComponentCellRenderer implements TreeCellRenderer {
 
     /** The renderer we are a wrapper for. */
@@ -58,15 +53,20 @@ public class ComponentCellRenderer implements TreeCellRenderer {
     }
 
     /**
-     * This is the only TreeCellRenderer method.
-     * Compute the string to display, and pass it to the wrapped renderer
-     * (non-Javadoc)
-     * 
-     * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int,
-     * boolean)
+     * This is the only TreeCellRenderer method. Compute the string to display, and pass it to the
+     * wrapped renderer (non-Javadoc)
+     *
+     * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree,
+     *     java.lang.Object, boolean, boolean, boolean, int, boolean)
      */
-    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected,
-            boolean expanded, boolean leaf, int row, boolean hasFocus) {
+    public Component getTreeCellRendererComponent(
+            JTree tree,
+            Object value,
+            boolean selected,
+            boolean expanded,
+            boolean leaf,
+            int row,
+            boolean hasFocus) {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         Object userObject = node.getUserObject();
         Object parentUserObject = null;
@@ -87,8 +87,8 @@ public class ComponentCellRenderer implements TreeCellRenderer {
 
             Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
 
-            boolean selectedItem = SLDTreeLeafFactory.getInstance().isItemSelected(userObject,
-                    symbolizer);
+            boolean selectedItem =
+                    SLDTreeLeafFactory.getInstance().isItemSelected(userObject, symbolizer);
 
             panel.setSelected(selected, hasFocus);
 
@@ -109,20 +109,22 @@ public class ComponentCellRenderer implements TreeCellRenderer {
             }
         }
 
-        return renderer.getTreeCellRendererComponent(tree, name, selected, expanded, leaf, row,
-                hasFocus);
+        return renderer.getTreeCellRendererComponent(
+                tree, name, selected, expanded, leaf, row, hasFocus);
     }
 
     /**
      * Checks if tree node is leaf.
-     * 
+     *
      * <p>Is a leaf if the user object is one of the following:
-     * 
-     * <p><ul>
-     * <li>TextSymbolizer</li>
-     * <li>RasterSymbolizer</li>
-     * <li>Stroke</li>
-     * <li>Fill</li>
+     *
+     * <p>
+     *
+     * <ul>
+     *   <li>TextSymbolizer
+     *   <li>RasterSymbolizer
+     *   <li>Stroke
+     *   <li>Fill
      * </ul>
      *
      * @param parentUserObject the parent user object
@@ -130,23 +132,26 @@ public class ComponentCellRenderer implements TreeCellRenderer {
      * @return true, if is leaf
      */
     public static boolean isLeaf(Object parentUserObject, Object userObject) {
-        boolean leaf = (userObject instanceof TextSymbolizer)
-                || (userObject instanceof RasterSymbolizer) || (userObject instanceof Stroke)
-                || (userObject instanceof Fill);
+        boolean leaf =
+                (userObject instanceof TextSymbolizer)
+                        || (userObject instanceof RasterSymbolizer)
+                        || (userObject instanceof Stroke)
+                        || (userObject instanceof Fill);
         return leaf;
     }
 
     /**
-     * Workout whether to show checkbox in the tree.
-     * Should only appear for PolygonSymbolizer fill and strokes
+     * Workout whether to show checkbox in the tree. Should only appear for PolygonSymbolizer fill
+     * and strokes
      *
      * @param parentUserObject the parent user object
      * @param userObject the user object
      * @return true, if successful
      */
     public static boolean showCheckbox(Object parentUserObject, Object userObject) {
-        boolean showCheckbox = (parentUserObject instanceof PolygonSymbolizer)
-                && ((userObject instanceof Stroke) || (userObject instanceof Fill));
+        boolean showCheckbox =
+                (parentUserObject instanceof PolygonSymbolizer)
+                        && ((userObject instanceof Stroke) || (userObject instanceof Fill));
         return showCheckbox;
     }
 
@@ -167,8 +172,8 @@ public class ComponentCellRenderer implements TreeCellRenderer {
                 ExternalGraphicImpl externalSymbol = (ExternalGraphicImpl) userObject;
                 name = externalSymbol.getFormat();
             } else {
-                SLDTreeItemInterface treeItem = TreeItemMap.getInstance()
-                        .getValue(userObject.getClass());
+                SLDTreeItemInterface treeItem =
+                        TreeItemMap.getInstance().getValue(userObject.getClass());
 
                 if (treeItem != null) {
                     name = treeItem.getTreeString(node, userObject);

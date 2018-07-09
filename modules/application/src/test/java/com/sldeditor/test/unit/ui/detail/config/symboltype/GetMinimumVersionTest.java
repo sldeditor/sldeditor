@@ -21,9 +21,13 @@ package com.sldeditor.test.unit.ui.detail.config.symboltype;
 
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
+import com.sldeditor.ui.detail.PointFillDetails;
+import com.sldeditor.ui.detail.PolygonFillDetails;
+import com.sldeditor.ui.detail.StrokeDetails;
+import com.sldeditor.ui.detail.TextSymbolizerDetails;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
@@ -34,30 +38,21 @@ import org.geotools.styling.TextSymbolizer2;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 
-import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
-import com.sldeditor.ui.detail.PointFillDetails;
-import com.sldeditor.ui.detail.PolygonFillDetails;
-import com.sldeditor.ui.detail.StrokeDetails;
-import com.sldeditor.ui.detail.TextSymbolizerDetails;
-
 /**
  * The unit test for GetMinimumVersion.
- * 
- * <p>
- * {@link com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory}
+ *
+ * <p>{@link com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory}
  *
  * @author Robert Ward (SCISYS)
  */
 public class GetMinimumVersionTest {
 
-    private StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
-    /**
-     * Test method for PointFillDetails
-     */
+    /** Test method for PointFillDetails */
     @Test
     public void testPointGetMinimumVersion() {
         PointFillDetails details = new PointFillDetails();
@@ -78,9 +73,7 @@ public class GetMinimumVersionTest {
         assertTrue(vendorOptionsPresentList.size() == 0);
     }
 
-    /**
-     * Test method for StrokeDetails
-     */
+    /** Test method for StrokeDetails */
     @Test
     public void testStrokeGetMinimumVersion() {
         StrokeDetails details = new StrokeDetails();
@@ -101,9 +94,7 @@ public class GetMinimumVersionTest {
         assertTrue(vendorOptionsPresentList.size() == 0);
     }
 
-    /**
-     * Test method for PolygonFillDetails
-     */
+    /** Test method for PolygonFillDetails */
     @Test
     public void testPolygonFillGetMinimumVersion() {
         PolygonFillDetails details = new PolygonFillDetails();
@@ -124,9 +115,7 @@ public class GetMinimumVersionTest {
         assertTrue(vendorOptionsPresentList.size() == 0);
     }
 
-    /**
-     * Test method for TextSymbolizerDetails
-     */
+    /** Test method for TextSymbolizerDetails */
     @Test
     public void testTextSymbolizer2GetMinimumVersion() {
         TextSymbolizerDetails details = new TextSymbolizerDetails();

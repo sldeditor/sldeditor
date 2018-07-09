@@ -24,36 +24,34 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.tree.leaf.SLDTreeLeafLine;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.LineSymbolizerImpl;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Stroke;
 import org.junit.Test;
 
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.tree.leaf.SLDTreeLeafLine;
-
 /**
  * The unit test for SLDTreeLeafLine
- * 
+ *
  * <p>{@link com.sldeditor.common.tree.leaf.SLDTreeLeafLine}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDTreeLeafLineTest {
 
-    /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafLine#getSymbolizer()}.
-     */
+    /** Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafLine#getSymbolizer()}. */
     @Test
     public void testGetSymbolizer() {
         SLDTreeLeafLine leaf = new SLDTreeLeafLine();
-        
+
         assertEquals(LineSymbolizerImpl.class, leaf.getSymbolizer());
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafLine#hasFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafLine#hasFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testHasFill() {
@@ -62,7 +60,8 @@ public class SLDTreeLeafLineTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafLine#hasStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafLine#hasStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testHasStroke() {
@@ -71,7 +70,8 @@ public class SLDTreeLeafLineTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafLine#getFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafLine#getFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testGetFill() {
@@ -80,24 +80,26 @@ public class SLDTreeLeafLineTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafLine#getStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafLine#getStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testGetStroke() {
         SLDTreeLeafLine leaf = new SLDTreeLeafLine();
         assertNull(leaf.getStroke(null));
-        
+
         PolygonSymbolizer polygonSymbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
         assertNull(leaf.getStroke(polygonSymbolizer));
 
         LineSymbolizer lineSymbolizer = DefaultSymbols.createDefaultLineSymbolizer();
         Stroke stroke = leaf.getStroke(lineSymbolizer);
-        
+
         assertEquals(stroke, lineSymbolizer.getStroke());
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafLine#removeStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafLine#removeStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testRemoveStroke() {
@@ -105,12 +107,13 @@ public class SLDTreeLeafLineTest {
 
         LineSymbolizer lineSymbolizer = DefaultSymbols.createDefaultLineSymbolizer();
         leaf.removeStroke(lineSymbolizer);
-        
+
         assertNull(lineSymbolizer.getStroke());
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafLine#createStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafLine#createStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testCreateStroke() {
@@ -119,30 +122,31 @@ public class SLDTreeLeafLineTest {
         LineSymbolizer lineSymbolizer = DefaultSymbols.createDefaultLineSymbolizer();
         lineSymbolizer.setStroke(null);
         leaf.createStroke(lineSymbolizer);
-        
+
         assertTrue(lineSymbolizer.getStroke() != null);
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafLine#createFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafLine#createFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testCreateFill() {
         SLDTreeLeafLine leaf = new SLDTreeLeafLine();
         leaf.createFill(null);
-        
+
         // Does nothing
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafLine#removeFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafLine#removeFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testRemoveFill() {
         SLDTreeLeafLine leaf = new SLDTreeLeafLine();
         leaf.removeFill(null);
-        
+
         // Does nothing
     }
-
 }

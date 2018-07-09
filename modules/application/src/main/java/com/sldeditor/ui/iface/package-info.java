@@ -19,7 +19,7 @@
 
 /**
  * UI interface files.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.iface;

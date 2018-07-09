@@ -41,5 +41,4 @@ public class FieldConfigMapUnits extends FieldConfigEnum {
 
         readMapUnits.read(commonData.getPanelId(), filename, this);
     }
-
 }

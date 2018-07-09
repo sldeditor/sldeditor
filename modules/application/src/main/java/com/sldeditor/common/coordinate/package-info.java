@@ -18,7 +18,7 @@
  */
 /**
  * Class to make handling coordinates systems easier.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.coordinate;

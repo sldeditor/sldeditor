@@ -19,9 +19,8 @@
 
 package com.sldeditor.ui.panels;
 
-import java.util.List;
-
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
+import java.util.List;
 
 /**
  * The Interface GetMinimumVersionInterface.
@@ -36,7 +35,6 @@ public interface GetMinimumVersionInterface {
      * @param sldObj the sld obj
      * @param vendorOptionsPresentList the vendor options present list
      */
-    void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList);
-
+    void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList);
 }

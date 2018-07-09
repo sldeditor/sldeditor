@@ -23,7 +23,7 @@ import java.nio.file.Path;
 
 /**
  * The Interface FileWatcherUpdateInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface FileWatcherUpdateInterface {

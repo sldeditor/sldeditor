@@ -22,9 +22,7 @@ package com.sldeditor.filter.v2.function;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.measure.Unit;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.function.CategorizeFunction;
 import org.geotools.filter.function.Classifier;
@@ -37,29 +35,31 @@ import org.geotools.filter.function.Collection_MinFunction;
 import org.geotools.filter.function.Collection_NearestFunction;
 import org.geotools.filter.function.Collection_SumFunction;
 import org.geotools.filter.function.Collection_UniqueFunction;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 import org.opengis.parameter.Parameter;
 
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.LineString;
-
-/**
- * The Class FunctionExpressionInterface.
- */
+/** The Class FunctionExpressionInterface. */
 public class FunctionExpressionInterface {
 
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /** The collection function list. */
-    private static List<String> collectionFunctionList = Arrays.asList(
-            Collection_AverageFunction.NAME.getName(), Collection_BoundsFunction.NAME.getName(),
-            Collection_CountFunction.NAME.getName(), Collection_MaxFunction.NAME.getName(),
-            Collection_MedianFunction.NAME.getName(), Collection_MinFunction.NAME.getName(),
-            Collection_NearestFunction.NAME.getName(), Collection_SumFunction.NAME.getName(),
-            Collection_UniqueFunction.NAME.getName());
+    private static List<String> collectionFunctionList =
+            Arrays.asList(
+                    Collection_AverageFunction.NAME.getName(),
+                    Collection_BoundsFunction.NAME.getName(),
+                    Collection_CountFunction.NAME.getName(),
+                    Collection_MaxFunction.NAME.getName(),
+                    Collection_MedianFunction.NAME.getName(),
+                    Collection_MinFunction.NAME.getName(),
+                    Collection_NearestFunction.NAME.getName(),
+                    Collection_SumFunction.NAME.getName(),
+                    Collection_UniqueFunction.NAME.getName());
 
     /**
      * Creates the new function.
@@ -117,11 +117,14 @@ public class FunctionExpressionInterface {
                     parameters.add(null);
                 } else if (type == Class.class) {
                     parameters.add(null);
-                } else if (type.getName().compareToIgnoreCase(
-                        "org.geotools.filter.function.color.AbstractHSLFunction$Method") == 0) {
+                } else if (type.getName()
+                                .compareToIgnoreCase(
+                                        "org.geotools.filter.function.color.AbstractHSLFunction$Method")
+                        == 0) {
                     parameters.add(null);
                 } else if (type.getName()
-                        .compareToIgnoreCase("org.geotools.styling.visitor.RescalingMode") == 0) {
+                                .compareToIgnoreCase("org.geotools.styling.visitor.RescalingMode")
+                        == 0) {
                     parameters.add(ff.literal(0));
                 } else {
                     Object newObj = null;
@@ -138,5 +141,4 @@ public class FunctionExpressionInterface {
             }
         }
     }
-
 }

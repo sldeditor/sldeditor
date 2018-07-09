@@ -23,7 +23,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * Class to handle the getting and setting of green raster channel names using expressions
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VOChannelNameGreenExpression extends VOChannelNameExpression {
@@ -40,5 +40,4 @@ public class VOChannelNameGreenExpression extends VOChannelNameExpression {
     public VOChannelNameGreenExpression(Class<?> panelId, FieldIdEnum fieldId) {
         super(panelId, fieldId);
     }
-
 }

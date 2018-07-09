@@ -21,30 +21,27 @@ package com.sldeditor.test.unit.common.vendoroption.selection;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.selection.VendorOptionMenuUtils;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Unit test for VendorOptionMenuUtils.
- * 
- * <p>{@link com.sldeditor.common.vendoroption.selection.VendorOptionMenuUtils}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.common.vendoroption.selection.VendorOptionMenuUtils}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class VendorOptionMenuUtilsTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionMenuUtils#createMenu(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.selection.VendorOptionMenuUtils#createMenu(java.util.List)}.
      */
     @Test
     public void testCreateMenu() {
@@ -75,8 +72,9 @@ public class VendorOptionMenuUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.selection.VendorOptionMenuUtils#setSelected(com.sldeditor.ui.menucombobox.MenuComboBox, com.sldeditor.common.vendoroption.VersionData)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.selection.VendorOptionMenuUtils#setSelected(com.sldeditor.ui.menucombobox.MenuComboBox,
+     * com.sldeditor.common.vendoroption.VersionData)}.
      */
     @Test
     public void testSetSelected() {
@@ -101,8 +99,7 @@ public class VendorOptionMenuUtilsTest {
         List<ValueComboBoxDataGroup> actual = VendorOptionMenuUtils.createMenu(listVersionData);
 
         VendorOptionMenuUtils.setSelected(null, expectedVersionData1);
-        VendorOptionMenuUtils.setSelected(null,
-                VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
+        VendorOptionMenuUtils.setSelected(
+                null, VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
     }
-
 }

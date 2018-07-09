@@ -23,7 +23,7 @@ import com.sldeditor.common.SLDDataInterface;
 
 /**
  * The Interface SLDEditorDataUpdateInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SLDEditorDataUpdateInterface {

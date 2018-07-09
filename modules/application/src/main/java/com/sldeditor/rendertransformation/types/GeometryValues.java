@@ -19,24 +19,22 @@
 
 package com.sldeditor.rendertransformation.types;
 
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigGeometry;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import java.util.Arrays;
 import java.util.List;
-
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.MathExpressionImpl;
-import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigGeometry;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class GeometryValues.
@@ -48,15 +46,12 @@ public class GeometryValues extends BaseValue implements RenderTransformValueInt
     /** The value. */
     private Geometry value = null;
 
-    /**
-     * Instantiates a new geometry values.
-     */
-    public GeometryValues() {
-    }
+    /** Instantiates a new geometry values. */
+    public GeometryValues() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.lang.Object)
      */
     @Override
@@ -75,7 +70,7 @@ public class GeometryValues extends BaseValue implements RenderTransformValueInt
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getExpression()
      */
     @Override
@@ -91,7 +86,7 @@ public class GeometryValues extends BaseValue implements RenderTransformValueInt
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.Object)
      */
     @Override
@@ -111,18 +106,18 @@ public class GeometryValues extends BaseValue implements RenderTransformValueInt
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
     public List<Class<?>> getType() {
-        return Arrays.asList(Geometry.class, LineString.class, Point.class, Polygon.class,
-                GridCoverage2D.class);
+        return Arrays.asList(
+                Geometry.class, LineString.class, Point.class, Polygon.class, GridCoverage2D.class);
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -132,7 +127,7 @@ public class GeometryValues extends BaseValue implements RenderTransformValueInt
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

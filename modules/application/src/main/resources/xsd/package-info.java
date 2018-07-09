@@ -18,7 +18,7 @@
  */
 /**
  * Package contains all the xsd schemas used to generate classes using JAXB.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package xsd;

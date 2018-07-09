@@ -23,22 +23,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test;
-
 import com.sldeditor.ui.ttf.CharMap4;
+import org.junit.Test;
 
 /**
  * The unit test for CharMap4.
- * 
+ *
  * <p>{@link com.sldeditor.ui.ttf.CharMap4}
  *
  * @author Robert Ward (SCISYS)
  */
 public class CharMap4Test {
 
-    /**
-     * Test method for {@link com.sldeditor.ui.ttf.CharMap4#CharMap4()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.ttf.CharMap4#CharMap4()}. */
     @Test
     public void testCharMap4() {
         CharMap4 testObj = new CharMap4();
@@ -59,13 +56,14 @@ public class CharMap4Test {
         int expectedValue = 42;
         assertNotNull(CharMap4.charToString(expectedValue));
         assertNotNull(CharMap4.unicodeNotation(expectedValue));
-        assertEquals(expectedValue,
+        assertEquals(
+                expectedValue,
                 CharMap4.decodeUnicodeNotation(CharMap4.unicodeNotation(expectedValue)));
 
         for (int i = 0; i < 0x10FFFF + 2; i += 10) {
             assertNotNull(testObj.captionGet(i));
         }
-        
+
         testObj.userKey("GotoEnd");
         testObj.userKey("GotoHome");
         testObj.userKey("LineDown");
@@ -75,5 +73,4 @@ public class CharMap4Test {
         testObj.userKey("ReportShow");
         testObj.userKey("made up");
     }
-
 }

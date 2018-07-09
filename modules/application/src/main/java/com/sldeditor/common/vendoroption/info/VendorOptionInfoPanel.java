@@ -19,9 +19,9 @@
 
 package com.sldeditor.common.vendoroption.info;
 
+import com.sldeditor.common.localisation.Localisation;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,8 +30,6 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import com.sldeditor.common.localisation.Localisation;
 
 /**
  * The Class VendorOptionPanel.
@@ -58,17 +56,21 @@ public class VendorOptionInfoPanel extends JPanel {
      * @param tableModel the table model
      */
     public VendorOptionInfoPanel(VendorOptionInfoModel tableModel) {
-        setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-                Localisation.getString(VendorOptionInfoModel.class, "VendorOptionInfoModel.title"),
-                TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        setBorder(
+                new TitledBorder(
+                        UIManager.getBorder("TitledBorder.border"),
+                        Localisation.getString(
+                                VendorOptionInfoModel.class, "VendorOptionInfoModel.title"),
+                        TitledBorder.LEADING,
+                        TitledBorder.TOP,
+                        null,
+                        null));
         this.model = tableModel;
 
         createUI();
     }
 
-    /**
-     * Creates the UI.
-     */
+    /** Creates the UI. */
     private void createUI() {
         setLayout(new BorderLayout());
 
@@ -78,17 +80,24 @@ public class VendorOptionInfoPanel extends JPanel {
         vendorOptionTable = new JTable();
         scrollPane.setViewportView(vendorOptionTable);
         vendorOptionTable.setModel(model);
-        vendorOptionTable.getColumnModel().getColumn(0)
+        vendorOptionTable
+                .getColumnModel()
+                .getColumn(0)
                 .setCellRenderer(new VendorOptionInfoCellRenderer(model));
-        vendorOptionTable.getColumnModel().getColumn(1)
+        vendorOptionTable
+                .getColumnModel()
+                .getColumn(1)
                 .setCellRenderer(new VendorOptionInfoCellRenderer(model));
-        vendorOptionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        vendorOptionTable
+                .getSelectionModel()
+                .addListSelectionListener(
+                        new ListSelectionListener() {
 
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                displayDescription(vendorOptionTable.getSelectedRow());
-            }
-        });
+                            @Override
+                            public void valueChanged(ListSelectionEvent e) {
+                                displayDescription(vendorOptionTable.getSelectedRow());
+                            }
+                        });
 
         descriptionArea = new JTextArea();
         descriptionArea.setEditable(false);

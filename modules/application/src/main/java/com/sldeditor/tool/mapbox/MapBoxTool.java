@@ -19,23 +19,6 @@
 
 package com.sldeditor.tool.mapbox;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
@@ -52,10 +35,24 @@ import com.sldeditor.tool.GenerateFilename;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.ToolPanel;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * Tool which given a list of SLD objects saves them to SLD files.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class MapBoxTool implements ToolInterface {
@@ -75,16 +72,14 @@ public class MapBoxTool implements ToolInterface {
     /** The sld data list. */
     private List<SLDDataInterface> sldDataList;
 
-    /**
-     * Instantiates a new mapbox tool.
-     */
+    /** Instantiates a new mapbox tool. */
     public MapBoxTool() {
         createUI();
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#getPanel()
      */
     @Override
@@ -94,12 +89,12 @@ public class MapBoxTool implements ToolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList,
-            List<SLDDataInterface> sldDataList) {
+    public void setSelectedItems(
+            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
         this.sldDataList = sldDataList;
 
         if (exportToSLDButton != null) {
@@ -107,8 +102,9 @@ public class MapBoxTool implements ToolInterface {
 
             if (sldDataList != null) {
                 for (SLDDataInterface sldData : sldDataList) {
-                    String fileExtension = ExternalFilenames
-                            .getFileExtension(sldData.getSLDFile().getAbsolutePath());
+                    String fileExtension =
+                            ExternalFilenames.getFileExtension(
+                                    sldData.getSLDFile().getAbsolutePath());
 
                     if (fileExtension.compareTo(MapBoxTool.MAPBOX_FILE_EXTENSION) == 0) {
                         mapBoxFilesCount++;
@@ -119,35 +115,34 @@ public class MapBoxTool implements ToolInterface {
         }
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         groupPanel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) groupPanel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        TitledBorder titledBorder = BorderFactory.createTitledBorder(
-                Localisation.getString(MapBoxTool.class, "MapBoxTool.groupTitle"));
+        TitledBorder titledBorder =
+                BorderFactory.createTitledBorder(
+                        Localisation.getString(MapBoxTool.class, "MapBoxTool.groupTitle"));
         groupPanel.setBorder(titledBorder);
 
         // Export to SLD
-        exportToSLDButton = new ToolButton(
-                Localisation.getString(MapBoxTool.class, "MapBoxTool.exportToSLD"),
-                "tool/exporttosld.png");
+        exportToSLDButton =
+                new ToolButton(
+                        Localisation.getString(MapBoxTool.class, "MapBoxTool.exportToSLD"),
+                        "tool/exporttosld.png");
         exportToSLDButton.setEnabled(false);
-        exportToSLDButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                exportToSLD();
-            }
-        });
+        exportToSLDButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        exportToSLD();
+                    }
+                });
         groupPanel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
         groupPanel.add(exportToSLDButton);
     }
 
-    /**
-     * Export to SLD.
-     */
+    /** Export to SLD. */
     private void exportToSLD() {
         SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD);
 
@@ -161,20 +156,28 @@ public class MapBoxTool implements ToolInterface {
 
                 String destinationFolder = sldData.getSLDFile().getParent();
 
-                File fileToSave = GenerateFilename.findUniqueName(destinationFolder, layerName,
-                        SLDEditorFile.getSLDFileExtension());
+                File fileToSave =
+                        GenerateFilename.findUniqueName(
+                                destinationFolder, layerName, SLDEditorFile.getSLDFileExtension());
 
                 String sldFilename = fileToSave.getName();
                 if (fileToSave.exists()) {
                     ConsoleManager.getInstance()
-                            .error(this,
-                                    Localisation.getField(MapBoxTool.class,
-                                            "MapBoxTool.destinationAlreadyExists") + " "
+                            .error(
+                                    this,
+                                    Localisation.getField(
+                                                    MapBoxTool.class,
+                                                    "MapBoxTool.destinationAlreadyExists")
+                                            + " "
                                             + sldFilename);
                 } else {
-                    ConsoleManager.getInstance().information(this,
-                            Localisation.getField(MapBoxTool.class, "MapBoxTool.exportToSLDMsg")
-                                    + " " + sldFilename);
+                    ConsoleManager.getInstance()
+                            .information(
+                                    this,
+                                    Localisation.getField(
+                                                    MapBoxTool.class, "MapBoxTool.exportToSLDMsg")
+                                            + " "
+                                            + sldFilename);
                     BufferedWriter out;
                     try {
                         out = new BufferedWriter(new FileWriter(fileToSave));
@@ -190,7 +193,7 @@ public class MapBoxTool implements ToolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#getToolName()
      */
     @Override
@@ -200,11 +203,13 @@ public class MapBoxTool implements ToolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#supports(java.util.List, java.util.List)
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+    public boolean supports(
+            List<Class<?>> uniqueNodeTypeList,
+            List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
         if (nodeTypeList == null) {
             return false;
@@ -216,20 +221,23 @@ public class MapBoxTool implements ToolInterface {
 
                 if (fileTreeNode.isDir()) {
                     // Folder
-                    for (int childIndex = 0; childIndex < fileTreeNode
-                            .getChildCount(); childIndex++) {
+                    for (int childIndex = 0;
+                            childIndex < fileTreeNode.getChildCount();
+                            childIndex++) {
                         FileTreeNode f = (FileTreeNode) fileTreeNode.getChildAt(childIndex);
                         if (f.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
-                            String fileExtension = ExternalFilenames
-                                    .getFileExtension(f.getFile().getAbsolutePath());
+                            String fileExtension =
+                                    ExternalFilenames.getFileExtension(
+                                            f.getFile().getAbsolutePath());
                             return (fileExtension.compareTo(MapBoxTool.MAPBOX_FILE_EXTENSION) == 0);
                         }
                     }
                 } else {
                     // Single file
                     if (fileTreeNode.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
-                        String fileExtension = ExternalFilenames
-                                .getFileExtension(fileTreeNode.getFile().getAbsolutePath());
+                        String fileExtension =
+                                ExternalFilenames.getFileExtension(
+                                        fileTreeNode.getFile().getAbsolutePath());
                         return (fileExtension.compareTo(MapBoxTool.MAPBOX_FILE_EXTENSION) == 0);
                     }
                 }

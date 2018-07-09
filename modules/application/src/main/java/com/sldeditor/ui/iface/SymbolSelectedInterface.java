@@ -21,19 +21,14 @@ package com.sldeditor.ui.iface;
 
 /**
  * The Interface SymbolSelectedInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SymbolSelectedInterface {
 
-    /**
-     * Overall selected.
-     */
+    /** Overall selected. */
     public void overallSelected();
 
-    /**
-     * Symbol selected.
-     */
+    /** Symbol selected. */
     public void symbolSelected();
-
 }

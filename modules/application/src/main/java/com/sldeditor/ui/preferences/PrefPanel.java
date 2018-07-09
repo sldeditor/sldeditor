@@ -19,26 +19,6 @@
 
 package com.sldeditor.ui.preferences;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.border.TitledBorder;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.preferences.PrefData;
@@ -52,10 +32,28 @@ import com.sldeditor.common.vendoroption.selection.VersionCellEditor;
 import com.sldeditor.common.vendoroption.selection.VersionCellRenderer;
 import com.sldeditor.help.Help;
 import com.sldeditor.ui.layout.UILayoutFactory;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 
 /**
  * Dialog that displays the user preferences to the user.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class PrefPanel extends JDialog {
@@ -73,7 +71,7 @@ public class PrefPanel extends JDialog {
     private VendorOptionTableModel model = null;
 
     /** The vendor options. */
-    private Map<VendorOptionTypeInterface, String> options = 
+    private Map<VendorOptionTypeInterface, String> options =
             new LinkedHashMap<VendorOptionTypeInterface, String>();
 
     /** The ok button pressed flag. */
@@ -99,9 +97,7 @@ public class PrefPanel extends JDialog {
     /** The populating dialog flag. */
     private boolean populatingDialog = false;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public PrefPanel() {
         setTitle(Localisation.getString(PrefPanel.class, "PrefPanel.title"));
 
@@ -117,24 +113,27 @@ public class PrefPanel extends JDialog {
         // Anti-alias
         JPanel chckbxUseAntiAliasPanel = new JPanel();
         chckbxUseAntiAliasPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-        chckbxUseAntiAlias = new JCheckBox(
-                Localisation.getString(PrefPanel.class, "PrefPanel.useAntiAlias"));
+        chckbxUseAntiAlias =
+                new JCheckBox(Localisation.getString(PrefPanel.class, "PrefPanel.useAntiAlias"));
         chckbxUseAntiAliasPanel.add(chckbxUseAntiAlias);
         panel.add(chckbxUseAntiAliasPanel);
 
         // Save last folder viewed
         JPanel chckbxSetSaveLastFolderViewedPanel = new JPanel();
         chckbxSetSaveLastFolderViewedPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-        chckbxSetSaveLastFolderViewed = new JCheckBox(
-                Localisation.getString(PrefPanel.class, "PrefPanel.saveLastFolderViewed"));
+        chckbxSetSaveLastFolderViewed =
+                new JCheckBox(
+                        Localisation.getString(PrefPanel.class, "PrefPanel.saveLastFolderViewed"));
         chckbxSetSaveLastFolderViewedPanel.add(chckbxSetSaveLastFolderViewed);
         panel.add(chckbxSetSaveLastFolderViewedPanel);
 
         // Check app version on start up
         JPanel chckbxCheckAppVersionOnStartUpPanel = new JPanel();
         chckbxCheckAppVersionOnStartUpPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-        chckbxCheckAppVersionOnStartUp = new JCheckBox(
-                Localisation.getString(PrefPanel.class, "PrefPanel.checkAppVersionOnStartUp"));
+        chckbxCheckAppVersionOnStartUp =
+                new JCheckBox(
+                        Localisation.getString(
+                                PrefPanel.class, "PrefPanel.checkAppVersionOnStartUp"));
         chckbxCheckAppVersionOnStartUpPanel.add(chckbxCheckAppVersionOnStartUp);
         panel.add(chckbxCheckAppVersionOnStartUpPanel);
 
@@ -158,22 +157,29 @@ public class PrefPanel extends JDialog {
 
         panel.add(uiLayoutPanel);
 
-        uiLayoutComboBox.addActionListener(new ActionListener() {
+        uiLayoutComboBox.addActionListener(
+                new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!populatingDialog) {
-                    uiLayoutPanelLabel.setText(
-                            Localisation.getString(PrefPanel.class, "PrefPanel.uiLayoutLabel"));
-                }
-            }
-        });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (!populatingDialog) {
+                            uiLayoutPanelLabel.setText(
+                                    Localisation.getString(
+                                            PrefPanel.class, "PrefPanel.uiLayoutLabel"));
+                        }
+                    }
+                });
 
         // Vendor options
         JPanel panel_1 = new JPanel();
-        panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-                Localisation.getString(PrefPanel.class, "PrefPanel.vendorOptions"),
-                TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel_1.setBorder(
+                new TitledBorder(
+                        UIManager.getBorder("TitledBorder.border"),
+                        Localisation.getString(PrefPanel.class, "PrefPanel.vendorOptions"),
+                        TitledBorder.LEADING,
+                        TitledBorder.TOP,
+                        null,
+                        null));
         panel_1.setLayout(new BorderLayout());
         panel.add(panel_1);
 
@@ -189,8 +195,8 @@ public class PrefPanel extends JDialog {
         vendorOptionTable.getColumnModel().getColumn(1).setCellEditor(new VersionCellEditor(model));
 
         // Vendor option information
-        VendorOptionInfoPanel vendorOptionInfoPanel = VendorOptionInfoManager.getInstance()
-                .getPanel(getClass());
+        VendorOptionInfoPanel vendorOptionInfoPanel =
+                VendorOptionInfoManager.getInstance().getPanel(getClass());
         vendorOptionInfoPanel.setPreferredSize(new Dimension(500, 200));
         panel.add(vendorOptionInfoPanel);
 
@@ -212,27 +218,30 @@ public class PrefPanel extends JDialog {
         buttonPanel.add(panel_3, BorderLayout.WEST);
 
         JButton btnHelp = new JButton(Localisation.getString(PrefPanel.class, "common.help"));
-        btnHelp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Help.getInstance().display(CONTEXT_HELP);
-            }
-        });
+        btnHelp.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        Help.getInstance().display(CONTEXT_HELP);
+                    }
+                });
         panel_3.add(btnHelp);
-        btnCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                okPressed = false;
-                setVisible(false);
-                dispose();
-            }
-        });
-        btnOk.addActionListener(new ActionListener() {
+        btnCancel.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        okPressed = false;
+                        setVisible(false);
+                        dispose();
+                    }
+                });
+        btnOk.addActionListener(
+                new ActionListener() {
 
-            public void actionPerformed(ActionEvent e) {
-                okPressed = true;
-                setVisible(false);
-                dispose();
-            }
-        });
+                    public void actionPerformed(ActionEvent e) {
+                        okPressed = true;
+                        setVisible(false);
+                        dispose();
+                    }
+                });
 
         pack();
 

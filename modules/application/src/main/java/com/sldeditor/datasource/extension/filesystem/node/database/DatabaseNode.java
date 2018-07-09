@@ -19,21 +19,19 @@
 
 package com.sldeditor.datasource.extension.filesystem.node.database;
 
-import java.awt.datatransfer.DataFlavor;
-import java.net.URL;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
+import java.awt.datatransfer.DataFlavor;
+import java.net.URL;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * File system tree node representing a GeoServer node containing either layers or style.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DatabaseNode extends DefaultMutableTreeNode implements NodeInterface {
@@ -75,7 +73,7 @@ public class DatabaseNode extends DefaultMutableTreeNode implements NodeInterfac
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
@@ -85,7 +83,7 @@ public class DatabaseNode extends DefaultMutableTreeNode implements NodeInterfac
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override
@@ -105,7 +103,7 @@ public class DatabaseNode extends DefaultMutableTreeNode implements NodeInterfac
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.NodeInterface#getIcon()
      */
     @Override

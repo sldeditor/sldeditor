@@ -19,18 +19,15 @@
 
 package com.sldeditor.tool.batchupdatefont;
 
-import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-
-import org.geotools.styling.Font;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import org.geotools.styling.Font;
 
 /**
  * The Class FontSizePanel.
@@ -49,15 +46,21 @@ public class FontSizePanel extends JPanel implements UpdateSymbolInterface {
         createUI();
     }
 
-    /**
-     * Creates the UI.
-     */
+    /** Creates the UI. */
     private void createUI() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        value = new FieldConfigInteger(new FieldConfigCommonData(getClass(), FieldIdEnum.FONT_SIZE,
-                Localisation.getField(BatchUpdateFontPanel.class, "BatchUpdateFontPanel.fontSize"),
-                true, false, false));
+        value =
+                new FieldConfigInteger(
+                        new FieldConfigCommonData(
+                                getClass(),
+                                FieldIdEnum.FONT_SIZE,
+                                Localisation.getField(
+                                        BatchUpdateFontPanel.class,
+                                        "BatchUpdateFontPanel.fontSize"),
+                                true,
+                                false,
+                                false));
         value.createUI();
         value.addDataChangedListener(this);
         add(value.getPanel());
@@ -66,12 +69,11 @@ public class FontSizePanel extends JPanel implements UpdateSymbolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.common.xml.ui.FieldIdEnum)
      */
     @Override
-    public void dataChanged(FieldIdEnum changedField) {
-    }
+    public void dataChanged(FieldIdEnum changedField) {}
 
     /**
      * Populate.

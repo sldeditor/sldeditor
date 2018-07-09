@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * The Interface DataSourceAttributeListInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface DataSourceAttributeListInterface {

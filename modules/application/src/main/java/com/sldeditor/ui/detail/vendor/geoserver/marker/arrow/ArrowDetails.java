@@ -19,10 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.arrow;
 
-import java.util.List;
-
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
@@ -32,11 +28,13 @@ import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.List;
+import org.opengis.filter.expression.Expression;
 
 /**
- * The Class ArrowDetails panel contains all the fields to configure
- * an GeoServer vendor option arrow strings.
- * 
+ * The Class ArrowDetails panel contains all the fields to configure an GeoServer vendor option
+ * arrow strings.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ArrowDetails extends StandardPanel
@@ -64,9 +62,7 @@ public class ArrowDetails extends StandardPanel
         revertToDefaultValue();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFileNoScrollPane(null, getClass(), this, PANEL_CONFIG);
     }
@@ -78,7 +74,7 @@ public class ArrowDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -110,7 +106,7 @@ public class ArrowDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -118,9 +114,7 @@ public class ArrowDetails extends StandardPanel
         updateSymbol();
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
             if (parentObj != null) {
@@ -136,7 +130,7 @@ public class ArrowDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -151,7 +145,7 @@ public class ArrowDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -165,21 +159,20 @@ public class ArrowDetails extends StandardPanel
      * @return the expression
      */
     public Expression getExpression() {
-        Expression tValueExpression = fieldConfigVisitor
-                .getExpression(FieldIdEnum.VO_ARROW_THICKNESS);
-        Expression hrExpression = fieldConfigVisitor
-                .getExpression(FieldIdEnum.VO_ARROW_HEIGHT_OVER_WIDTH);
+        Expression tValueExpression =
+                fieldConfigVisitor.getExpression(FieldIdEnum.VO_ARROW_THICKNESS);
+        Expression hrExpression =
+                fieldConfigVisitor.getExpression(FieldIdEnum.VO_ARROW_HEIGHT_OVER_WIDTH);
         Expression abExpression = fieldConfigVisitor.getExpression(FieldIdEnum.VO_ARROW_HEAD);
 
-        Expression expression = getFilterFactory()
-                .literal(ArrowUtils.encode(hrExpression, tValueExpression, abExpression));
+        Expression expression =
+                getFilterFactory()
+                        .literal(ArrowUtils.encode(hrExpression, tValueExpression, abExpression));
 
         return expression;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     public void revertToDefaultValue() {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(null);
 
@@ -192,7 +185,7 @@ public class ArrowDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -202,7 +195,7 @@ public class ArrowDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.JComponent#setEnabled(boolean)
      */
     @Override
@@ -215,12 +208,12 @@ public class ArrowDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // Handled by the FieldConfigArrow
     }
 }

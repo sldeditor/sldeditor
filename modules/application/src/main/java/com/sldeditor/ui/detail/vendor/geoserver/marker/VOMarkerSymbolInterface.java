@@ -19,18 +19,17 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Interface VOMarkerSymbolInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface VOMarkerSymbolInterface {
@@ -51,7 +50,8 @@ public interface VOMarkerSymbolInterface {
      * @param symbolSelectionField the symbol selection field
      * @return the marker symbols
      */
-    public List<FieldState> getMarkerSymbols(Class<?> panelId, 
+    public List<FieldState> getMarkerSymbols(
+            Class<?> panelId,
             ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField);
@@ -62,5 +62,4 @@ public interface VOMarkerSymbolInterface {
      * @return the vendor option info
      */
     public VendorOptionInfo getVendorOptionInfo();
-
 }

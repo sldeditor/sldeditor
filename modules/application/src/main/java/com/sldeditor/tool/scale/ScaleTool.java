@@ -19,14 +19,6 @@
 
 package com.sldeditor.tool.scale;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
@@ -41,13 +33,18 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWor
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.ToolPanel;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  * Tool to contain scale related tools.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ScaleTool implements ToolInterface {
@@ -83,29 +80,31 @@ public class ScaleTool implements ToolInterface {
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         scaleGroupPanel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) scaleGroupPanel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        scaleGroupPanel.setBorder(BorderFactory
-                .createTitledBorder(Localisation.getString(ScaleTool.class, "ScaleTool.scale")));
+        scaleGroupPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        Localisation.getString(ScaleTool.class, "ScaleTool.scale")));
 
-        scaleButton = new ToolButton(Localisation.getString(ScaleTool.class, "ScaleTool.scale"),
-                "tool/scaletool.png");
+        scaleButton =
+                new ToolButton(
+                        Localisation.getString(ScaleTool.class, "ScaleTool.scale"),
+                        "tool/scaletool.png");
         scaleGroupPanel.add(scaleButton);
         scaleButton.setEnabled(false);
-        scaleButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ScaleToolPanel scalePanel = new ScaleToolPanel(application);
+        scaleButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        ScaleToolPanel scalePanel = new ScaleToolPanel(application);
 
-                scalePanel.populate(sldDataList);
-                scalePanel.setVisible(true);
-            }
-        });
+                        scalePanel.populate(sldDataList);
+                        scalePanel.setVisible(true);
+                    }
+                });
         scaleGroupPanel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
@@ -127,12 +126,12 @@ public class ScaleTool implements ToolInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList,
-            List<SLDDataInterface> sldDataList) {
+    public void setSelectedItems(
+            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
         this.sldDataList = sldDataList;
 
         if (scaleButton != null) {
@@ -147,7 +146,7 @@ public class ScaleTool implements ToolInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#getToolName()
      */
     @Override
@@ -164,11 +163,13 @@ public class ScaleTool implements ToolInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#supports(java.util.List, java.util.List)
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+    public boolean supports(
+            List<Class<?>> uniqueNodeTypeList,
+            List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
         for (NodeInterface node : nodeTypeList) {
             if (node instanceof FileTreeNode) {

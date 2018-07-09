@@ -25,22 +25,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.ToolSelectionInterface;
@@ -55,23 +39,33 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerSty
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerInput;
 import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Unit test for GeoServerInput class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class GeoServerInputTest {
 
     /** The config properties file. */
     private File configPropertiesFile = new File("./GeoServerInputTest.properties");
 
-    /**
-     * The Class DummyGeoServerInput.
-     */
+    /** The Class DummyGeoServerInput. */
     class DummyGeoServerInput extends GeoServerInput {
 
         /** The Constant serialVersionUID. */
@@ -94,21 +88,16 @@ public class GeoServerInputTest {
         public void testRemoveStyleFileExtension(StyleWrapper styleWrapper) {
             super.removeStyleFileExtension(styleWrapper);
         }
-
     }
 
-    /**
-     * Called before each test.
-     */
+    /** Called before each test. */
     @Before
     public void beforeEachTest() {
         GeoServerConnectionManager.destroyInstance();
         PropertyManagerFactory.getInstance().setPropertyFile(configPropertiesFile);
     }
 
-    /**
-     * Called after each test.
-     */
+    /** Called after each test. */
     @After
     public void afterEachTest() {
         configPropertiesFile.delete();
@@ -117,8 +106,8 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#GeoServerInput(com.sldeditor.common.ToolSelectionInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#GeoServerInput(com.sldeditor.common.ToolSelectionInterface)}.
      */
     @Test
     public void testGeoServerInput() {
@@ -144,8 +133,8 @@ public class GeoServerInputTest {
             GeoServerConnection connection1 = new GeoServerConnection();
             connection1.setConnectionName("test connection 1");
             StyleWrapper styleWrapper = new StyleWrapper("workspace", "layer1");
-            GeoServerStyleNode styleTreeNode = new GeoServerStyleNode(input, connection1,
-                    styleWrapper);
+            GeoServerStyleNode styleTreeNode =
+                    new GeoServerStyleNode(input, connection1, styleWrapper);
 
             // Try with no known GeoServer connections
             assertNull(input.getSLDContents(styleTreeNode));
@@ -157,8 +146,8 @@ public class GeoServerInputTest {
             connection2.setConnectionName("test connection 2");
             input.addNewConnection(connection2);
 
-            List<SLDDataInterface> sldDataContentsList = input.getSLDContents(styleTreeNode)
-                    .getSldData();
+            List<SLDDataInterface> sldDataContentsList =
+                    input.getSLDContents(styleTreeNode).getSldData();
             assertEquals(1, sldDataContentsList.size());
 
             SLDData sldData = (SLDData) sldDataContentsList.get(0);
@@ -186,8 +175,8 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#treeExpanded(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#treeExpanded(java.lang.Object)}.
      */
     @Test
     public void testTreeExpanded() {
@@ -195,8 +184,9 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#rightMouseButton(java.lang.Object, java.awt.event.MouseEvent)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#rightMouseButton(java.lang.Object,
+     * java.awt.event.MouseEvent)}.
      */
     @Test
     public void testRightMouseButton() {
@@ -204,8 +194,8 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#getNodeTypes()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#getNodeTypes()}.
      */
     @Test
     public void testGetNodeTypes() {
@@ -215,8 +205,8 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#isConnected(com.sldeditor.common.data.GeoServerConnection)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#isConnected(com.sldeditor.common.data.GeoServerConnection)}.
      */
     @Ignore
     @Test
@@ -225,8 +215,8 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#connect(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#connect(java.util.List)}.
      */
     @Test
     public void testConnect() {
@@ -258,8 +248,8 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#disconnect(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#disconnect(java.util.List)}.
      */
     @Test
     public void testDisconnect() {
@@ -292,8 +282,8 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#getStyleMap(com.sldeditor.common.data.GeoServerConnection)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#getStyleMap(com.sldeditor.common.data.GeoServerConnection)}.
      */
     @Test
     public void testGetStyleMap() {
@@ -319,17 +309,19 @@ public class GeoServerInputTest {
 
         Map<String, List<StyleWrapper>> expectedStyleMap =
                 new HashMap<String, List<StyleWrapper>>();
-        //CHECKSTYLE:OFF
-        StyleWrapper[] styleWrappers = { new StyleWrapper("workspace", "style1"),
-                new StyleWrapper("workspace", "style2") };
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:OFF
+        StyleWrapper[] styleWrappers = {
+            new StyleWrapper("workspace", "style1"), new StyleWrapper("workspace", "style2")
+        };
+        // CHECKSTYLE:ON
         expectedStyleMap.put("style1", Arrays.asList(styleWrappers));
-        Map<String, List<GeoServerLayer>> expectedLayerMap = 
+        Map<String, List<GeoServerLayer>> expectedLayerMap =
                 new HashMap<String, List<GeoServerLayer>>();
-        //CHECKSTYLE:OFF
-        GeoServerLayer[] geoServerLayers = { new GeoServerLayer("workspace", "style1"),
-                new GeoServerLayer("workspace", "style2") };
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:OFF
+        GeoServerLayer[] geoServerLayers = {
+            new GeoServerLayer("workspace", "style1"), new GeoServerLayer("workspace", "style2")
+        };
+        // CHECKSTYLE:ON
         expectedLayerMap.put("style1", Arrays.asList(geoServerLayers));
 
         input.populateComplete(connection1, expectedStyleMap, expectedLayerMap);
@@ -339,8 +331,9 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#updateLayerStyle(com.sldeditor.common.data.StyleWrapper, java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#updateLayerStyle(com.sldeditor.common.data.StyleWrapper,
+     * java.util.List)}.
      */
     @Test
     public void testUpdateLayerStyle() {
@@ -359,10 +352,11 @@ public class GeoServerInputTest {
         // Try with null objects
         input.updateLayerStyle(null);
 
-        //CHECKSTYLE:OFF
-        GeoServerLayer[] geoServerLayers = { new GeoServerLayer("workspace", "style1"),
-                new GeoServerLayer("workspace", "style2") };
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:OFF
+        GeoServerLayer[] geoServerLayers = {
+            new GeoServerLayer("workspace", "style1"), new GeoServerLayer("workspace", "style2")
+        };
+        // CHECKSTYLE:ON
         List<GeoServerLayer> layerList = Arrays.asList(geoServerLayers);
         StyleWrapper updatedStyle = new StyleWrapper("workspace", "layer1");
 
@@ -373,8 +367,9 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#updateConnectionDetails(com.sldeditor.common.data.GeoServerConnection, com.sldeditor.common.data.GeoServerConnection)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#updateConnectionDetails(com.sldeditor.common.data.GeoServerConnection,
+     * com.sldeditor.common.data.GeoServerConnection)}.
      */
     @Test
     public void testUpdateConnectionDetails() {
@@ -419,8 +414,8 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#deleteConnections(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#deleteConnections(java.util.List)}.
      */
     @Test
     public void testDeleteConnections() {
@@ -442,17 +437,19 @@ public class GeoServerInputTest {
         // Populate some styles
         Map<String, List<StyleWrapper>> expectedStyleMap =
                 new HashMap<String, List<StyleWrapper>>();
-        //CHECKSTYLE:OFF
-        StyleWrapper[] styleWrappers = { new StyleWrapper("workspace", "style1"),
-                new StyleWrapper("workspace", "style2") };
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:OFF
+        StyleWrapper[] styleWrappers = {
+            new StyleWrapper("workspace", "style1"), new StyleWrapper("workspace", "style2")
+        };
+        // CHECKSTYLE:ON
         expectedStyleMap.put("style1", Arrays.asList(styleWrappers));
-        Map<String, List<GeoServerLayer>> expectedLayerMap = 
+        Map<String, List<GeoServerLayer>> expectedLayerMap =
                 new HashMap<String, List<GeoServerLayer>>();
-        //CHECKSTYLE:OFF
-        GeoServerLayer[] geoServerLayers = { new GeoServerLayer("workspace", "style1"),
-                new GeoServerLayer("workspace", "style2") };
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:OFF
+        GeoServerLayer[] geoServerLayers = {
+            new GeoServerLayer("workspace", "style1"), new GeoServerLayer("workspace", "style2")
+        };
+        // CHECKSTYLE:ON
         expectedLayerMap.put("style1", Arrays.asList(geoServerLayers));
 
         input.populateComplete(connection1, expectedStyleMap, expectedLayerMap);
@@ -475,8 +472,9 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#copyNodes(com.sldeditor.common.NodeInterface, java.util.Map)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#copyNodes(com.sldeditor.common.NodeInterface,
+     * java.util.Map)}.
      */
     @Test
     public void testCopyNodes() {
@@ -509,8 +507,8 @@ public class GeoServerInputTest {
         assertFalse(input.copyNodes(null, null));
 
         // Try with valid parameters
-        GeoServerWorkspaceNode workspaceTreeNode = new GeoServerWorkspaceNode(input, connection1,
-                "test workspace", false);
+        GeoServerWorkspaceNode workspaceTreeNode =
+                new GeoServerWorkspaceNode(input, connection1, "test workspace", false);
 
         // Create test data
         Map<NodeInterface, List<SLDDataInterface>> copyDataMap =
@@ -531,8 +529,9 @@ public class GeoServerInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerInput#deleteNodes(com.sldeditor.common.NodeInterface, java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#deleteNodes(com.sldeditor.common.NodeInterface,
+     * java.util.List)}.
      */
     @Test
     public void testDeleteNodes() {
@@ -565,11 +564,10 @@ public class GeoServerInputTest {
         assertFalse(input.copyNodes(null, null));
 
         // Try with valid parameters
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         GeoServerWorkspaceNode workspaceTreeNode =
-                new GeoServerWorkspaceNode(input, connection1,
-                "test workspace", false);
-        //CHECKSTYLE:ON
+                new GeoServerWorkspaceNode(input, connection1, "test workspace", false);
+        // CHECKSTYLE:ON
 
         // Create test data
         List<SLDDataInterface> sldToDeleteList = new ArrayList<SLDDataInterface>();

@@ -24,16 +24,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.styling.Extent;
-import org.geotools.styling.FeatureTypeConstraint;
-import org.geotools.styling.StyleFactoryImpl;
-import org.junit.Test;
-import org.opengis.filter.Filter;
-
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -41,11 +31,19 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.styling.Extent;
+import org.geotools.styling.FeatureTypeConstraint;
+import org.geotools.styling.StyleFactoryImpl;
+import org.junit.Test;
 import org.locationtech.jts.geom.Geometry;
+import org.opengis.filter.Filter;
 
 /**
  * The unit test for FieldConfigFeatureTypeConstraint.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint}
  *
  * @author Robert Ward (SCISYS)
@@ -53,15 +51,16 @@ import org.locationtech.jts.geom.Geometry;
 public class FieldConfigFeatureTypeConstraintTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#internal_setEnabled(boolean)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#isEnabled()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#internal_setEnabled(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+        FieldConfigFeatureTypeConstraint field =
+                new FieldConfigFeatureTypeConstraint(
+                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         // Field will not have been created
         boolean expectedValue = true;
@@ -81,13 +80,14 @@ public class FieldConfigFeatureTypeConstraintTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#setVisible(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+        FieldConfigFeatureTypeConstraint field =
+                new FieldConfigFeatureTypeConstraint(
+                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -99,21 +99,22 @@ public class FieldConfigFeatureTypeConstraintTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#generateExpression()}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#populateExpression(java.lang.Object)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.util.List)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#populateField(java.util.List)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#getFeatureTypeConstraint()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#generateExpression()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#populateExpression(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#setTestValue(com.sldeditor.ui.detail.config.FieldId,
+     * java.util.List)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#populateField(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#getFeatureTypeConstraint()}.
      */
     @Test
     public void testGenerateExpression() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+        FieldConfigFeatureTypeConstraint field =
+                new FieldConfigFeatureTypeConstraint(
+                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
         List<FeatureTypeConstraint> testValue = null;
         field.populate(null);
         field.setTestValue(FieldIdEnum.UNKNOWN, testValue);
@@ -123,8 +124,8 @@ public class FieldConfigFeatureTypeConstraintTest {
         assertNull(field.getStringValue());
 
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
-        FeatureTypeConstraint expectedValue1 = styleFactory.createFeatureTypeConstraint("Feature",
-                Filter.INCLUDE, new Extent[0]);
+        FeatureTypeConstraint expectedValue1 =
+                styleFactory.createFeatureTypeConstraint("Feature", Filter.INCLUDE, new Extent[0]);
 
         testValue = new ArrayList<FeatureTypeConstraint>();
         testValue.add(expectedValue1);
@@ -138,13 +139,14 @@ public class FieldConfigFeatureTypeConstraintTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#revertToDefaultValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#revertToDefaultValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+        FieldConfigFeatureTypeConstraint field =
+                new FieldConfigFeatureTypeConstraint(
+                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         field.revertToDefaultValue();
         assertTrue(field.getFeatureTypeConstraint().isEmpty());
@@ -155,8 +157,8 @@ public class FieldConfigFeatureTypeConstraintTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
@@ -170,10 +172,12 @@ public class FieldConfigFeatureTypeConstraintTest {
             }
         }
 
-        TestFieldConfigFeatureTypeConstraint field = new TestFieldConfigFeatureTypeConstraint(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", false));
-        FieldConfigFeatureTypeConstraint copy = (FieldConfigFeatureTypeConstraint) field
-                .callCreateCopy(null);
+        TestFieldConfigFeatureTypeConstraint field =
+                new TestFieldConfigFeatureTypeConstraint(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", false));
+        FieldConfigFeatureTypeConstraint copy =
+                (FieldConfigFeatureTypeConstraint) field.callCreateCopy(null);
         assertNull(copy);
 
         copy = (FieldConfigFeatureTypeConstraint) field.callCreateCopy(field);
@@ -183,35 +187,37 @@ public class FieldConfigFeatureTypeConstraintTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#attributeSelection(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+        FieldConfigFeatureTypeConstraint field =
+                new FieldConfigFeatureTypeConstraint(
+                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
         field.attributeSelection(null);
 
         // Does nothing
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+        FieldConfigFeatureTypeConstraint field =
+                new FieldConfigFeatureTypeConstraint(
+                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
 
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
-        FeatureTypeConstraint expectedValue1 = styleFactory.createFeatureTypeConstraint("Feature",
-                Filter.INCLUDE, new Extent[0]);
+        FeatureTypeConstraint expectedValue1 =
+                styleFactory.createFeatureTypeConstraint("Feature", Filter.INCLUDE, new Extent[0]);
 
         List<FeatureTypeConstraint> testValue = new ArrayList<FeatureTypeConstraint>();
 
@@ -219,8 +225,8 @@ public class FieldConfigFeatureTypeConstraintTest {
         field.populateField(testValue);
         assertEquals(expectedValue1, field.getFeatureTypeConstraint().get(0));
 
-        FeatureTypeConstraint expectedValue2 = styleFactory.createFeatureTypeConstraint("Feature2",
-                Filter.INCLUDE, new Extent[0]);
+        FeatureTypeConstraint expectedValue2 =
+                styleFactory.createFeatureTypeConstraint("Feature2", Filter.INCLUDE, new Extent[0]);
         List<FeatureTypeConstraint> testValue2 = new ArrayList<FeatureTypeConstraint>();
         testValue2.add(expectedValue1);
         testValue2.add(expectedValue2);
@@ -241,26 +247,28 @@ public class FieldConfigFeatureTypeConstraintTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#featureTypeConstraintUpdated()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#featureTypeConstraintUpdated()}.
      */
     @Test
     public void testFeatureTypeConstraintUpdated() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+        FieldConfigFeatureTypeConstraint field =
+                new FieldConfigFeatureTypeConstraint(
+                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         field.featureTypeConstraintUpdated();
         // No testing
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#extentUpdated()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#extentUpdated()}.
      */
     @Test
     public void testExtentUpdated() {
-        FieldConfigFeatureTypeConstraint field = new FieldConfigFeatureTypeConstraint(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+        FieldConfigFeatureTypeConstraint field =
+                new FieldConfigFeatureTypeConstraint(
+                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
 
         field.extentUpdated();
 
@@ -268,5 +276,4 @@ public class FieldConfigFeatureTypeConstraintTest {
         field.extentUpdated();
         // No testing
     }
-
 }

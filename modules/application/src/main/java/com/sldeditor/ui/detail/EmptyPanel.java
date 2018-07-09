@@ -19,15 +19,14 @@
 
 package com.sldeditor.ui.detail;
 
-import java.util.List;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
+import java.util.List;
 
 /**
  * The Class EmptyPanel is displayed when no data can be displayed.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class EmptyPanel extends StandardPanel implements PopulateDetailsInterface {
@@ -35,9 +34,7 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Instantiates a new empty panel.
-     */
+    /** Instantiates a new empty panel. */
     public EmptyPanel() {
         super(EmptyPanel.class);
     }
@@ -49,7 +46,7 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
      * SelectedSymbol)
      */
@@ -65,7 +62,7 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -80,7 +77,7 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -90,7 +87,7 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -100,13 +97,13 @@ public class EmptyPanel extends StandardPanel implements PopulateDetailsInterfac
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
      * java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // Do nothing
     }
 }

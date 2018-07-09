@@ -19,15 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle;
 
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.SelectedChannelType;
-import org.geotools.styling.TextSymbolizer;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -43,10 +34,17 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import java.util.List;
+import java.util.Map;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.SelectedChannelType;
+import org.geotools.styling.TextSymbolizer;
 
 /**
  * Class to handle the getting and setting of GeoServer composite vendor option data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerFTSComposite extends StandardPanel
@@ -78,9 +76,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFileNoScrollPane(null, getPanelId(), this, PANEL_CONFIG);
     }
@@ -92,7 +88,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOption()
      */
     @Override
@@ -107,7 +103,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.
      * FieldId)
@@ -126,7 +122,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
      * selectedsymbol.SelectedSymbol)
      */
@@ -142,7 +138,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * TextSymbolizer)
@@ -154,7 +150,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * RasterSymbolizer)
@@ -166,7 +162,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * FeatureTypeStyle)
@@ -183,8 +179,9 @@ public class VOGeoServerFTSComposite extends StandardPanel
         if (compositeString != null) {
             String[] components = compositeString.split(",");
 
-            FieldConfigEnum optionData = (FieldConfigEnum) fieldConfigVisitor
-                    .getFieldConfig(FieldIdEnum.VO_FTS_COMPOSITE_OPTION);
+            FieldConfigEnum optionData =
+                    (FieldConfigEnum)
+                            fieldConfigVisitor.getFieldConfig(FieldIdEnum.VO_FTS_COMPOSITE_OPTION);
             if (optionData.isValidOption(components[0])) {
                 name = components[0];
             }
@@ -212,7 +209,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * PolygonSymbolizer)
@@ -229,7 +226,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -239,7 +236,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.RasterSymbolizer)
@@ -251,7 +248,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.FeatureTypeStyle)
@@ -262,8 +259,8 @@ public class VOGeoServerFTSComposite extends StandardPanel
 
         GroupConfigInterface groupPanel = getGroup(GroupIdEnum.VO_FTS_COMPOSITE);
         if (groupPanel.isPanelEnabled()) {
-            ValueComboBoxData name = fieldConfigVisitor
-                    .getComboBox(FieldIdEnum.VO_FTS_COMPOSITE_OPTION);
+            ValueComboBoxData name =
+                    fieldConfigVisitor.getComboBox(FieldIdEnum.VO_FTS_COMPOSITE_OPTION);
             double opacity = fieldConfigVisitor.getDouble(FieldIdEnum.VO_FTS_COMPOSITE_OPACITY);
 
             StringBuilder composite = new StringBuilder();
@@ -286,7 +283,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.PolygonSymbolizer)
@@ -303,7 +300,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.TextSymbolizer)
@@ -320,7 +317,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getPanel()
      */
     @Override
@@ -335,7 +332,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.
      * ui.iface.UpdateSymbolInterface)
@@ -352,7 +349,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -362,7 +359,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -372,7 +369,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()
      */
     @Override
@@ -382,37 +379,40 @@ public class VOGeoServerFTSComposite extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
         if (vendorOptionInfo == null) {
-            vendorOptionInfo = new VendorOptionInfo(
-                    Localisation.getString(VOGeoServerFTSComposite.class,
-                            "geoserver.composite.title"),
-                    this.getVendorOption(), Localisation.getString(VOGeoServerFTSComposite.class,
-                            "geoserver.composite.description"));
+            vendorOptionInfo =
+                    new VendorOptionInfo(
+                            Localisation.getString(
+                                    VOGeoServerFTSComposite.class, "geoserver.composite.title"),
+                            this.getVendorOption(),
+                            Localisation.getString(
+                                    VOGeoServerFTSComposite.class,
+                                    "geoserver.composite.description"));
         }
         return vendorOptionInfo;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
      * java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         if (sldObj instanceof FeatureTypeStyle) {
             FeatureTypeStyle fts = (FeatureTypeStyle) sldObj;
             Map<String, String> options = fts.getOptions();
 
             if (options.containsKey(FeatureTypeStyle.COMPOSITE)) {
-                VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
-                        getVendorOptionInfo());
+                VendorOptionPresent voPresent =
+                        new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
                 vendorOptionsPresentList.add(voPresent);
             }

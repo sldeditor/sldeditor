@@ -21,11 +21,6 @@ package com.sldeditor.test.unit.common.vendoroption.info;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
@@ -33,44 +28,50 @@ import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoPanel;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Unit test for VendorOptionInfoModel.
- * 
- * <p>{@link com.sldeditor.common.vendoroption.info.VendorOptionInfoManager}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.common.vendoroption.info.VendorOptionInfoManager}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class VendorOptionInfoManagerTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.info.VendorOptionInfoManager#addVendorOptionInfo(com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface)}.
-     * {@link com.sldeditor.common.vendoroption.info.VendorOptionInfoManager#getPanel(java.lang.Class)}.
-     * {@link com.sldeditor.common.vendoroption.info.VendorOptionInfoManager#setSelectedVersion(java.lang.Class, com.sldeditor.common.vendoroption.VersionData)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.info.VendorOptionInfoManager#addVendorOptionInfo(com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface)}.
+     * {@link
+     * com.sldeditor.common.vendoroption.info.VendorOptionInfoManager#getPanel(java.lang.Class)}.
+     * {@link
+     * com.sldeditor.common.vendoroption.info.VendorOptionInfoManager#setSelectedVersion(java.lang.Class,
+     * com.sldeditor.common.vendoroption.VersionData)}.
      */
     @Test
     public void testAddVendorOptionInfo() {
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(null);
-        VendorOptionFactoryInterface f1 = new VendorOptionFactoryInterface() {
+        VendorOptionFactoryInterface f1 =
+                new VendorOptionFactoryInterface() {
 
-            @Override
-            public List<VendorOptionInterface> getVendorOptionList() {
-                return null;
-            }
+                    @Override
+                    public List<VendorOptionInterface> getVendorOptionList() {
+                        return null;
+                    }
 
-            @Override
-            public List<VendorOptionInterface> getVendorOptionList(String className) {
-                return null;
-            }
+                    @Override
+                    public List<VendorOptionInterface> getVendorOptionList(String className) {
+                        return null;
+                    }
 
-            @Override
-            public List<VendorOptionInfo> getVendorOptionInfoList() {
-                List<VendorOptionInfo> list = new ArrayList<VendorOptionInfo>();
-                return list;
-            }
-        };
+                    @Override
+                    public List<VendorOptionInfo> getVendorOptionInfoList() {
+                        List<VendorOptionInfo> list = new ArrayList<VendorOptionInfo>();
+                        return list;
+                    }
+                };
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(f1);
         VendorOptionInfoManager.getInstance().addVendorOptionInfo(f1);
 
@@ -80,11 +81,10 @@ public class VendorOptionInfoManagerTest {
 
         assertTrue(panel1 == panel3);
         assertTrue(panel1 != panel2);
-        
+
         VendorOptionInfoManager.getInstance().setSelectedVersion(null, null);
-        
+
         VersionData versionData = VersionData.decode(GeoServerVendorOption.class, "3.1.4");
         VendorOptionInfoManager.getInstance().setSelectedVersion(String.class, versionData);
     }
-
 }

@@ -19,14 +19,13 @@
 
 package com.sldeditor.ui.reportissue;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.awt.Desktop;
 import java.awt.Desktop.Action;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-
-import com.sldeditor.common.console.ConsoleManager;
 
 /**
  * The Class ReportIssue.
@@ -36,7 +35,8 @@ import com.sldeditor.common.console.ConsoleManager;
 public class ReportIssue {
 
     /** The Constant REPORT_ISSUE_URL. */
-    private static final String REPORT_ISSUE_URL = "https://github.com/robward-scisys/sldeditor/wiki/contributing";
+    private static final String REPORT_ISSUE_URL =
+            "https://github.com/robward-scisys/sldeditor/wiki/contributing";
 
     /** The singleton instance. */
     private static ReportIssue instance = null;
@@ -54,15 +54,10 @@ public class ReportIssue {
         return instance;
     }
 
-    /**
-     * Instantiates a new report issue class.
-     */
-    private ReportIssue() {
-    }
+    /** Instantiates a new report issue class. */
+    private ReportIssue() {}
 
-    /**
-     * Display report issue section.
-     */
+    /** Display report issue section. */
     public void display() {
         URL url = null;
         try {
@@ -82,5 +77,4 @@ public class ReportIssue {
             }
         }
     }
-
 }

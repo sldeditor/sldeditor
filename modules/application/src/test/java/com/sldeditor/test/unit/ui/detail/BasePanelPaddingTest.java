@@ -22,17 +22,14 @@ package com.sldeditor.test.unit.ui.detail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.Dimension;
-
-import javax.swing.Box;
-
-import org.junit.Test;
-
 import com.sldeditor.ui.detail.BasePanelPadding;
+import java.awt.Dimension;
+import javax.swing.Box;
+import org.junit.Test;
 
 /**
  * The unit test for BasePanelPadding.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.BasePanelPadding}
  *
  * @author Robert Ward (SCISYS)
@@ -40,7 +37,8 @@ import com.sldeditor.ui.detail.BasePanelPadding;
 public class BasePanelPaddingTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.BasePanelPadding#BasePanelPadding(javax.swing.Box)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.BasePanelPadding#BasePanelPadding(javax.swing.Box)}.
      */
     @Test
     public void testBasePanelPadding() {
@@ -54,8 +52,8 @@ public class BasePanelPaddingTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.BasePanelPadding#addPadding()}. Test method for
-     * {@link com.sldeditor.ui.detail.BasePanelPadding#removePadding()}.
+     * Test method for {@link com.sldeditor.ui.detail.BasePanelPadding#addPadding()}. Test method
+     * for {@link com.sldeditor.ui.detail.BasePanelPadding#removePadding()}.
      */
     @Test
     public void testAddPadding() {
@@ -74,7 +72,8 @@ public class BasePanelPaddingTest {
         Dimension fillerSize = box.getComponent(0).getPreferredSize();
 
         assertTrue(Math.abs(actualSize.getWidth() - expectedSize.getWidth()) < 0.001);
-        assertEquals((int) (BasePanelPadding.getPanelHeight() - fillerSize.getHeight()),
+        assertEquals(
+                (int) (BasePanelPadding.getPanelHeight() - fillerSize.getHeight()),
                 (int) expectedSize.getHeight());
         p.removePadding();
         assertEquals(0, box.getComponentCount());

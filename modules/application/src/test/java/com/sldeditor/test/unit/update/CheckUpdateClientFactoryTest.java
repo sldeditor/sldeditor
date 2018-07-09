@@ -19,28 +19,23 @@
 
 package com.sldeditor.test.unit.update;
 
-
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test;
-
 import com.sldeditor.update.CheckUpdateClientFactory;
+import org.junit.Test;
 
 /**
  * The unit test for CheckUpdateClientFactory.
- * 
+ *
  * <p>{@link com.sldeditor.update.CheckUpdateClientFactory}
  *
  * @author Robert Ward (SCISYS)
  */
 public class CheckUpdateClientFactoryTest {
 
-    /**
-     * Test method for {@link com.sldeditor.update.CheckUpdateClientFactory#getClient()}.
-     */
+    /** Test method for {@link com.sldeditor.update.CheckUpdateClientFactory#getClient()}. */
     @Test
     public void testGetClient() {
         assertNotNull(CheckUpdateClientFactory.getClient());
     }
-
 }

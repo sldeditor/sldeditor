@@ -19,9 +19,8 @@
 
 package com.sldeditor.filter.v2.expression;
 
-import java.util.List;
-
 import com.sldeditor.common.vendoroption.VersionData;
+import java.util.List;
 
 /**
  * The Interface ExpressionFilterInterface.
@@ -30,9 +29,7 @@ import com.sldeditor.common.vendoroption.VersionData;
  */
 public interface ExpressionFilterInterface {
 
-    /**
-     * Data applied.
-     */
+    /** Data applied. */
     public void dataApplied();
 
     /**

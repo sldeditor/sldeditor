@@ -19,32 +19,30 @@
 
 package com.sldeditor.ui.panels;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.tree.SLDTree;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * The Class MultipleSymbolUI is displayed when multiple symbols are selected.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class MultipleSymbolUI implements SymbolPanelInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.SymbolPanelInterface#addWestPanel()
      */
     @Override
@@ -54,7 +52,7 @@ public class MultipleSymbolUI implements SymbolPanelInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.SymbolPanelInterface#addCentrePanel()
      */
     @Override
@@ -65,8 +63,10 @@ public class MultipleSymbolUI implements SymbolPanelInterface {
         JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new GridBagLayout());
 
-        JLabel label = new JLabel(
-                Localisation.getString(MultipleSymbolUI.class, "MultipleSymbolUI.multipleSymbols"));
+        JLabel label =
+                new JLabel(
+                        Localisation.getString(
+                                MultipleSymbolUI.class, "MultipleSymbolUI.multipleSymbols"));
         label.setFont(new Font("Arial", Font.BOLD, 16));
         labelPanel.add(label);
 
@@ -97,16 +97,15 @@ public class MultipleSymbolUI implements SymbolPanelInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.SymbolPanelInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
-    public void populate(SelectedSymbol selectedSymbol) {
-    }
+    public void populate(SelectedSymbol selectedSymbol) {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.SymbolPanelInterface#addNorthPanel()
      */
     @Override
@@ -116,7 +115,7 @@ public class MultipleSymbolUI implements SymbolPanelInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.SymbolPanelInterface#getFieldDataManager()
      */
     @Override
@@ -126,12 +125,12 @@ public class MultipleSymbolUI implements SymbolPanelInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.SymbolPanelInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // Does nothing
     }
 }

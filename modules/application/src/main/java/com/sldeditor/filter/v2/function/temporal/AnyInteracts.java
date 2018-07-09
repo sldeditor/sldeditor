@@ -19,19 +19,17 @@
 
 package com.sldeditor.filter.v2.function.temporal;
 
-import java.util.Date;
-import java.util.List;
-
-import org.geotools.filter.temporal.AnyInteractsImpl;
-import org.opengis.filter.Filter;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import java.util.Date;
+import java.util.List;
+import org.geotools.filter.temporal.AnyInteractsImpl;
+import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class Ends.
@@ -40,14 +38,10 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class AnyInteracts extends FilterBase implements FilterConfigInterface {
 
-    /**
-     * The Class AnyInteractsExtended.
-     */
+    /** The Class AnyInteractsExtended. */
     public class AnyInteractsExtended extends AnyInteractsImpl implements FilterExtendedInterface {
 
-        /**
-         * Instantiates a new after extended.
-         */
+        /** Instantiates a new after extended. */
         public AnyInteractsExtended() {
             super(null, null);
         }
@@ -64,7 +58,7 @@ public class AnyInteracts extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.lang.Object#toString()
          */
         public String toString() {
@@ -73,7 +67,7 @@ public class AnyInteracts extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -82,9 +76,7 @@ public class AnyInteracts extends FilterBase implements FilterConfigInterface {
         }
     }
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public AnyInteracts(String category) {
         super(category);
     }

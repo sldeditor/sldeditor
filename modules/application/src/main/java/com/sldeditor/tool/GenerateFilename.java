@@ -7,9 +7,8 @@
 
 package com.sldeditor.tool;
 
-import java.io.File;
-
 import com.sldeditor.common.utils.ExternalFilenames;
+import java.io.File;
 
 /**
  * The Class GenerateFilename.
@@ -26,8 +25,8 @@ public class GenerateFilename {
      * @param fileExtension the file extension
      * @return the file
      */
-    public static File findUniqueName(String destinationFolder, String filename,
-            String fileExtension) {
+    public static File findUniqueName(
+            String destinationFolder, String filename, String fileExtension) {
         boolean found = false;
         int count = 0;
         String sldFilename;
@@ -55,5 +54,4 @@ public class GenerateFilename {
         }
         return null;
     }
-
 }

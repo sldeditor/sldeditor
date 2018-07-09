@@ -19,10 +19,9 @@
 
 package com.sldeditor;
 
+import com.sldeditor.common.localisation.Localisation;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-import com.sldeditor.common.localisation.Localisation;
 
 /**
  * The Class SLDEditorDlg.
@@ -33,18 +32,26 @@ public class SLDEditorDlg implements SLDEditorDlgInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.SLDEditorDlgInterface#load(javax.swing.JFrame)
      */
     @Override
     public boolean load(JFrame frame) {
-        Object[] options = { Localisation.getString(SLDEditor.class, "common.discard"),
-                Localisation.getString(SLDEditor.class, "common.cancel") };
+        Object[] options = {
+            Localisation.getString(SLDEditor.class, "common.discard"),
+            Localisation.getString(SLDEditor.class, "common.cancel")
+        };
 
-        int result = JOptionPane.showOptionDialog(frame,
-                Localisation.getString(SLDEditor.class, "SLDEditor.unsavedChanges"),
-                Localisation.getString(SLDEditor.class, "SLDEditor.unsavedChangesTitle"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+        int result =
+                JOptionPane.showOptionDialog(
+                        frame,
+                        Localisation.getString(SLDEditor.class, "SLDEditor.unsavedChanges"),
+                        Localisation.getString(SLDEditor.class, "SLDEditor.unsavedChangesTitle"),
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE,
+                        null,
+                        options,
+                        options[1]);
 
         // If discard option selected then allow the new symbol to be loaded
         return (result == JOptionPane.OK_OPTION);
@@ -52,19 +59,27 @@ public class SLDEditorDlg implements SLDEditorDlgInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.SLDEditorDlgInterface#reload(javax.swing.JFrame)
      */
     @Override
     public boolean reload(JFrame frame) {
-        Object[] options = { Localisation.getString(SLDEditor.class, "common.yes"),
-                Localisation.getString(SLDEditor.class, "common.no") };
+        Object[] options = {
+            Localisation.getString(SLDEditor.class, "common.yes"),
+            Localisation.getString(SLDEditor.class, "common.no")
+        };
 
         int result = JOptionPane.OK_OPTION;
-        result = JOptionPane.showOptionDialog(frame,
-                Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQuery"),
-                Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQueryTitle"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+        result =
+                JOptionPane.showOptionDialog(
+                        frame,
+                        Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQuery"),
+                        Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQueryTitle"),
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE,
+                        null,
+                        options,
+                        options[1]);
         return (result == JOptionPane.OK_OPTION);
     }
 }

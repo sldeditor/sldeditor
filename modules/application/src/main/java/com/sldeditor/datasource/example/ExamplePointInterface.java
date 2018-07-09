@@ -23,7 +23,7 @@ import org.locationtech.jts.geom.Point;
 
 /**
  * The Interface ExamplePointInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface ExamplePointInterface {
@@ -33,5 +33,4 @@ public interface ExamplePointInterface {
      * @return the point
      */
     public abstract Point getPoint();
-
 }

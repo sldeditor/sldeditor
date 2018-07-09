@@ -17,23 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.create;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.sldeditor.create.sld.NewLineSLD;
 import com.sldeditor.create.sld.NewPointSLD;
 import com.sldeditor.create.sld.NewPolygonSLD;
 import com.sldeditor.create.sld.NewRasterSLD;
 import com.sldeditor.create.sld.NewSLDInterface;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A factory for creating NewSLD objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class NewSLDFactory {
@@ -42,11 +40,8 @@ public class NewSLDFactory {
     private static Map<String, NewSLDInterface> availableMap =
             new LinkedHashMap<String, NewSLDInterface>();
 
-    /**
-     * Instantiates a new NewSLDFactory.
-     */
-    public NewSLDFactory() {
-    }
+    /** Instantiates a new NewSLDFactory. */
+    public NewSLDFactory() {}
 
     /**
      * Gets the available New SLD options.

@@ -25,7 +25,8 @@ import com.sldeditor.common.xml.TestValueVisitor;
  *
  * @author Robert Ward (SCISYS)
  */
-public class XMLSetFieldLiteralStringEx extends XMLSetFieldLiteralString implements XMLSetFieldLiteralInterface {
+public class XMLSetFieldLiteralStringEx extends XMLSetFieldLiteralString
+        implements XMLSetFieldLiteralInterface {
 
     /**
      * Method to part of the visitor pattern.
@@ -36,5 +37,5 @@ public class XMLSetFieldLiteralStringEx extends XMLSetFieldLiteralString impleme
     @Override
     public void accept(TestValueVisitor visitor, FieldIdEnum fieldId) {
         visitor.setTestValue(fieldId, this.value);
-      }
+    }
 }

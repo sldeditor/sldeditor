@@ -19,18 +19,6 @@
 
 package com.sldeditor.tool.vector;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Map;
-
-import org.geotools.data.DataStore;
-import org.geotools.data.DataStoreFinder;
-import org.geotools.data.simple.SimpleFeatureSource;
-import org.geotools.styling.StyledLayerDescriptor;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryType;
-
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.connection.DatabaseConnectionManager;
 import com.sldeditor.common.console.ConsoleManager;
@@ -44,6 +32,16 @@ import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.datasource.impl.GeometryTypeMapping;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Map;
+import org.geotools.data.DataStore;
+import org.geotools.data.DataStoreFinder;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.GeometryType;
 
 /**
  * The Class VectorReader.
@@ -92,18 +90,18 @@ public class VectorReader implements VectorReaderInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.vector.VectorReaderInterface#createVectorSLDData(com.sldeditor.common.data.DatabaseConnection, java.lang.String)
      */
     @Override
-    public SLDDataInterface createVectorSLDData(DatabaseConnection databaseConnection,
-            String featureClass) {
+    public SLDDataInterface createVectorSLDData(
+            DatabaseConnection databaseConnection, String featureClass) {
         if ((databaseConnection == null) || (featureClass == null)) {
             return null;
         }
 
-        Map<String, Object> map = DatabaseConnectionManager.getInstance()
-                .getDBConnectionParams(databaseConnection);
+        Map<String, Object> map =
+                DatabaseConnectionManager.getInstance().getDBConnectionParams(databaseConnection);
 
         StyledLayerDescriptor sld = createSLDData(map, featureClass);
         SLDData sldData = null;
@@ -162,17 +160,17 @@ public class VectorReader implements VectorReaderInterface {
             }
 
             switch (geometryTypeEnum) {
-            case POINT:
-                sld = DefaultSymbols.createNewPoint();
-                break;
-            case LINE:
-                sld = DefaultSymbols.createNewLine();
-                break;
-            case POLYGON:
-                sld = DefaultSymbols.createNewPolygon();
-                break;
-            default:
-                break;
+                case POINT:
+                    sld = DefaultSymbols.createNewPoint();
+                    break;
+                case LINE:
+                    sld = DefaultSymbols.createNewLine();
+                    break;
+                case POLYGON:
+                    sld = DefaultSymbols.createNewPolygon();
+                    break;
+                default:
+                    break;
             }
         }
         return sld;

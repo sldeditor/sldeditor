@@ -21,12 +21,12 @@ package com.sldeditor.ui.widgets;
 
 /**
  * The Enum ExpressionTypeEnum.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public enum ExpressionTypeEnum {
 
-    /**  Unknown expression type. */
+    /** Unknown expression type. */
     E_UNKNOWN,
 
     /** Value type. */

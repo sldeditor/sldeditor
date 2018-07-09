@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * Class that represents a WKT segment lists.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class WKTSegmentList {
@@ -144,7 +144,7 @@ public class WKTSegmentList {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -157,7 +157,7 @@ public class WKTSegmentList {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -182,9 +182,7 @@ public class WKTSegmentList {
         return true;
     }
 
-    /**
-     * Removes last point if the first and last point are the same.
-     */
+    /** Removes last point if the first and last point are the same. */
     public void removeIfFirstLastSame() {
 
         if (wktPointList != null) {

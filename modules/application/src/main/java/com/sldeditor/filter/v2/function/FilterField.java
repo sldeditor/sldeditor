@@ -19,17 +19,6 @@
 
 package com.sldeditor.filter.v2.function;
 
-import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JPanel;
-
-import org.opengis.filter.Filter;
-
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -40,10 +29,18 @@ import com.sldeditor.ui.iface.ValueComboBoxDataSelectedInterface;
 import com.sldeditor.ui.menucombobox.MenuComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
+import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JPanel;
+import org.opengis.filter.Filter;
 
 /**
  * Panel to be able to edit FilterField objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FilterField extends JPanel
@@ -59,7 +56,8 @@ public class FilterField extends JPanel
     private MenuComboBox filterComboBox = null;
 
     /** The filter name map. */
-    private Map<String, FilterConfigInterface> filterNameMap = new LinkedHashMap<String, FilterConfigInterface>();
+    private Map<String, FilterConfigInterface> filterNameMap =
+            new LinkedHashMap<String, FilterConfigInterface>();
 
     /** The old value obj. */
     private Object oldValueObj = null;
@@ -108,20 +106,23 @@ public class FilterField extends JPanel
         populateFunctionComboBox();
     }
 
-    /**
-     * Populate function combo box.
-     */
+    /** Populate function combo box. */
     private void populateFunctionComboBox() {
         if (filterComboBox != null) {
 
-            List<ValueComboBoxDataGroup> dataSelectionList = new ArrayList<ValueComboBoxDataGroup>();
+            List<ValueComboBoxDataGroup> dataSelectionList =
+                    new ArrayList<ValueComboBoxDataGroup>();
 
             List<ValueComboBoxData> defaultDataList = new ArrayList<ValueComboBoxData>();
-            defaultDataList.add(new ValueComboBoxData(null, "",
-                    VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
+            defaultDataList.add(
+                    new ValueComboBoxData(
+                            null,
+                            "",
+                            VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
             dataSelectionList.add(new ValueComboBoxDataGroup(defaultDataList));
 
-            Map<String, List<ValueComboBoxData>> map = new HashMap<String, List<ValueComboBoxData>>();
+            Map<String, List<ValueComboBoxData>> map =
+                    new HashMap<String, List<ValueComboBoxData>>();
 
             List<ValueComboBoxData> dataList = null;
 
@@ -136,13 +137,16 @@ public class FilterField extends JPanel
                 String text = filterConfig.getFilterConfiguration().getFilterName();
                 String key = text;
 
-                dataList.add(new ValueComboBoxData(key, text,
-                        VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
+                dataList.add(
+                        new ValueComboBoxData(
+                                key,
+                                text,
+                                VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
             }
 
             for (String category : map.keySet()) {
-                ValueComboBoxDataGroup value = new ValueComboBoxDataGroup(category,
-                        map.get(category), true);
+                ValueComboBoxDataGroup value =
+                        new ValueComboBoxDataGroup(category, map.get(category), true);
                 dataSelectionList.add(value);
             }
 
@@ -181,8 +185,8 @@ public class FilterField extends JPanel
         if (filterConfig == null) {
             filterComboBox.setSelectedDataKey(null);
         } else {
-            filterComboBox
-                    .setSelectedDataKey(filterConfig.getFilterConfiguration().getFilterName());
+            filterComboBox.setSelectedDataKey(
+                    filterConfig.getFilterConfiguration().getFilterName());
         }
     }
 
@@ -193,7 +197,7 @@ public class FilterField extends JPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
@@ -210,7 +214,7 @@ public class FilterField extends JPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override

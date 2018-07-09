@@ -18,7 +18,7 @@
  */
 /**
  * Example geometry implementation used to render the symbol data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource.example.impl;

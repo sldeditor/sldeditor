@@ -19,7 +19,7 @@
 
 /**
  * Classes involved with the menu combobox widget.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.menucombobox;

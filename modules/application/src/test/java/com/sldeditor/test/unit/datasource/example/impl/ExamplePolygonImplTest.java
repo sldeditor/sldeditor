@@ -21,17 +21,15 @@ package com.sldeditor.test.unit.datasource.example.impl;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.datasource.example.impl.ExamplePolygonImpl;
+import org.junit.Test;
 
 /**
  * Unit test for ExamplePolygonImpl class.
- * 
- * <p>{@link com.sldeditor.datasource.example.impl.ExamplePolygonImpl}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.example.impl.ExamplePolygonImpl}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class ExamplePolygonImplTest {
 

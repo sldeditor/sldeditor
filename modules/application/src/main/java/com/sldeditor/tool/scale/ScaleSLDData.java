@@ -19,19 +19,16 @@
 
 package com.sldeditor.tool.scale;
 
-import org.geotools.styling.Rule;
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.utils.ScaleUtil;
 import com.sldeditor.datasource.SLDEditorFile;
+import org.geotools.styling.Rule;
+import org.geotools.styling.StyledLayerDescriptor;
 
-/**
- * Class that encapsulates information about the scales at which a rule is displayed.
- */
+/** Class that encapsulates information about the scales at which a rule is displayed. */
 public class ScaleSLDData {
 
     /** The Constant NOT_SET_VALUE. */
@@ -277,9 +274,7 @@ public class ScaleSLDData {
         this.maximumScaleUpdated = false;
     }
 
-    /**
-     * Revert to original.
-     */
+    /** Revert to original. */
     public void revertToOriginal() {
         this.minScale = this.originalMinScale;
         this.maxScale = this.originalMaxScale;
@@ -349,8 +344,8 @@ public class ScaleSLDData {
 
             if (current.getSLDFile().equals(sldData.getSLDFile())
                     || current.getSLDURL().equals(sldData.getSLDURL())) {
-                Rule currentFule = SLDUtils.findRule(sld, rule,
-                        SelectedSymbol.getInstance().getSld());
+                Rule currentFule =
+                        SLDUtils.findRule(sld, rule, SelectedSymbol.getInstance().getSld());
                 if (currentFule != null) {
                     currentFule.setMinScaleDenominator(minScale);
                     currentFule.setMaxScaleDenominator(maxScale);

@@ -22,7 +22,6 @@ package com.sldeditor.common.preferences;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.AbstractCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
@@ -31,7 +30,7 @@ import javax.swing.table.TableCellRenderer;
 
 /**
  * Class to handle the drawing of check boxes in a JTable.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class CheckBoxCellRenderer extends AbstractCellEditor
@@ -43,30 +42,29 @@ public class CheckBoxCellRenderer extends AbstractCellEditor
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Instantiates a new check box cell renderer.
-     */
+    /** Instantiates a new check box cell renderer. */
     public CheckBoxCellRenderer() {
         super();
 
-        checkBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                fireEditingStopped();
-            }
-        });
+        checkBox.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        fireEditingStopped();
+                    }
+                });
         // centre the checkbox within the cell
         checkBox.setHorizontalAlignment(JCheckBox.CENTER);
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable,
      * java.lang.Object, boolean, boolean, int, int)
      */
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-            boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(
+            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 
         checkBox.setSelected((value != null && ((Boolean) value).booleanValue()));
 
@@ -75,7 +73,7 @@ public class CheckBoxCellRenderer extends AbstractCellEditor
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.CellEditor#getCellEditorValue()
      */
     @Override
@@ -89,13 +87,13 @@ public class CheckBoxCellRenderer extends AbstractCellEditor
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableCellEditor#getTableCellEditorComponent(javax.swing.JTable,
      * java.lang.Object, boolean, int, int)
      */
     @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
-            int row, int column) {
+    public Component getTableCellEditorComponent(
+            JTable table, Object value, boolean isSelected, int row, int column) {
         if (value == null) {
             return checkBox;
         }

@@ -23,7 +23,7 @@ import java.io.Serializable;
 
 /**
  * The Class StyleWrapper identifies a SLD file on GeoServer using the workspace and style name.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Cloneable {
@@ -48,11 +48,8 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
         this.style = style;
     }
 
-    /**
-     * Instantiates a new style wrapper.
-     */
-    public StyleWrapper() {
-    }
+    /** Instantiates a new style wrapper. */
+    public StyleWrapper() {}
 
     /**
      * Instantiates a new style wrapper.
@@ -108,7 +105,7 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
@@ -139,7 +136,7 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override

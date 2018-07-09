@@ -19,14 +19,12 @@
 
 package com.sldeditor.common.vendoroption.minversion;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.table.AbstractTableModel;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 /**
  * The Class VendorOptionPresentModel.
@@ -43,19 +41,19 @@ public class VendorOptionPresentModel extends AbstractTableModel {
     /** The column names. */
     private String[] columnNames = new String[2];
 
-    /**
-     * Instantiates a new vendor option present model.
-     */
+    /** Instantiates a new vendor option present model. */
     public VendorOptionPresentModel() {
-        columnNames[0] = Localisation.getString(VendorOptionPresentModel.class,
-                "VendorOptionPresentModel.name");
-        columnNames[1] = Localisation.getString(VendorOptionPresentModel.class,
-                "VendorOptionPresentModel.version");
+        columnNames[0] =
+                Localisation.getString(
+                        VendorOptionPresentModel.class, "VendorOptionPresentModel.name");
+        columnNames[1] =
+                Localisation.getString(
+                        VendorOptionPresentModel.class, "VendorOptionPresentModel.version");
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getRowCount()
      */
     @Override
@@ -68,7 +66,7 @@ public class VendorOptionPresentModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     @Override
@@ -78,7 +76,7 @@ public class VendorOptionPresentModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.AbstractTableModel#getColumnName(int)
      */
     @Override
@@ -88,7 +86,7 @@ public class VendorOptionPresentModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
@@ -98,12 +96,12 @@ public class VendorOptionPresentModel extends AbstractTableModel {
             VendorOptionInfo info = voPresent.getVendorOptionInfo();
 
             switch (columnIndex) {
-            case 0:
-                return info.getName();
-            case 1:
-                return info.getVersionString();
-            default:
-                break;
+                case 0:
+                    return info.getName();
+                case 1:
+                    return info.getVersionString();
+                default:
+                    break;
             }
         }
         return null;
@@ -127,13 +125,12 @@ public class VendorOptionPresentModel extends AbstractTableModel {
      */
     public List<VersionData> getMinimum() {
         List<VersionData> minimum = new ArrayList<VersionData>();
-        VendorOptionPresent voPresent = vendorOptionsPresentList
-                .get(vendorOptionsPresentList.size() - 1);
+        VendorOptionPresent voPresent =
+                vendorOptionsPresentList.get(vendorOptionsPresentList.size() - 1);
 
         VersionData data = voPresent.getVendorOptionInfo().getVersionData().getEarliest();
         minimum.add(data);
 
         return minimum;
     }
-
 }

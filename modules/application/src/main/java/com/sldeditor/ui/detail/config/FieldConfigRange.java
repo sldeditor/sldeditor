@@ -19,17 +19,6 @@
 
 package com.sldeditor.ui.detail.config;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
-import org.jaitools.numeric.Range;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
@@ -39,24 +28,30 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.iface.SpinnerNotifyInterface;
 import com.sldeditor.ui.widgets.DecimalSpinner;
 import com.sldeditor.ui.widgets.FieldPanel;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import org.jaitools.numeric.Range;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class FieldConfigRange wraps a spinner GUI component and an optional
  * value/attribute/expression drop down,
- * 
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigRange extends FieldConfigBase implements UndoActionInterface {
 
     Class<?> rangeClass;
 
-    /**
-     * The Class RangeData.
-     */
+    /** The Class RangeData. */
     class RangeData {
         /** The spinner. */
         private DecimalSpinner spinner = null;
@@ -106,12 +101,10 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
         this.rangeClass = rangeClass;
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -121,13 +114,23 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
             int xPos = getXPos();
             FieldPanel fieldPanel = createFieldPanel(xPos, "");
 
-            createRow(fieldPanel, xPos, 0, startRange,
+            createRow(
+                    fieldPanel,
+                    xPos,
+                    0,
+                    startRange,
                     Localisation.getField(FieldConfigBase.class, "FieldConfigRange.minValue"));
-            createRow(fieldPanel, xPos, BasePanel.WIDGET_HEIGHT, endRange,
+            createRow(
+                    fieldPanel,
+                    xPos,
+                    BasePanel.WIDGET_HEIGHT,
+                    endRange,
                     Localisation.getField(FieldConfigBase.class, "FieldConfigRange.maxValue"));
 
-            Dimension preferredSize = new Dimension((int) fieldPanel.getPreferredSize().getWidth(),
-                    endRange.spinner.getY() + endRange.spinner.getHeight());
+            Dimension preferredSize =
+                    new Dimension(
+                            (int) fieldPanel.getPreferredSize().getWidth(),
+                            endRange.spinner.getY() + endRange.spinner.getHeight());
 
             fieldPanel.setPreferredSize(preferredSize);
 
@@ -144,13 +147,17 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      * @param rangeConfig the range config
      * @param label the label
      */
-    private void createRow(FieldPanel fieldPanel, int xPos, int y, RangeData rangeConfig,
-            String label) {
+    private void createRow(
+            FieldPanel fieldPanel, int xPos, int y, RangeData rangeConfig, String label) {
         final UndoActionInterface parentObj = this;
 
         if (configurationSet) {
-            rangeConfig.spinner = new DecimalSpinner(rangeConfig.minValue, rangeConfig.maxValue,
-                    rangeConfig.stepSize, rangeConfig.noOfDecimalPlaces);
+            rangeConfig.spinner =
+                    new DecimalSpinner(
+                            rangeConfig.minValue,
+                            rangeConfig.maxValue,
+                            rangeConfig.stepSize,
+                            rangeConfig.noOfDecimalPlaces);
         } else {
             rangeConfig.spinner = new DecimalSpinner();
         }
@@ -159,30 +166,38 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
         lbl.setBounds(xPos, y, BasePanel.LABEL_WIDTH, BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(lbl);
 
-        rangeConfig.spinner.setBounds(xPos + BasePanel.WIDGET_X_START, y,
-                BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        rangeConfig.spinner.setBounds(
+                xPos + BasePanel.WIDGET_X_START,
+                y,
+                BasePanel.WIDGET_STANDARD_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(rangeConfig.spinner);
 
-        rangeConfig.includedCheckBox = new JCheckBox(
-                Localisation.getString(FieldConfigBase.class, "FieldConfigRange.included"));
-        rangeConfig.includedCheckBox.addActionListener(new ActionListener() {
+        rangeConfig.includedCheckBox =
+                new JCheckBox(
+                        Localisation.getString(FieldConfigBase.class, "FieldConfigRange.included"));
+        rangeConfig.includedCheckBox.addActionListener(
+                new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                uiInteraction(parentObj);
-            }
-        });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        uiInteraction(parentObj);
+                    }
+                });
         rangeConfig.includedCheckBox.setBounds(
-                rangeConfig.spinner.getX() + rangeConfig.spinner.getWidth() + 5, y,
-                BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+                rangeConfig.spinner.getX() + rangeConfig.spinner.getWidth() + 5,
+                y,
+                BasePanel.WIDGET_STANDARD_WIDTH,
+                BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(rangeConfig.includedCheckBox);
 
-        rangeConfig.spinner.registerObserver(new SpinnerNotifyInterface() {
-            @Override
-            public void notify(double oldValue, double newValue) {
-                uiInteraction(parentObj);
-            }
-        });
+        rangeConfig.spinner.registerObserver(
+                new SpinnerNotifyInterface() {
+                    @Override
+                    public void notify(double oldValue, double newValue) {
+                        uiInteraction(parentObj);
+                    }
+                });
     }
 
     /**
@@ -192,7 +207,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
@@ -208,7 +223,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -235,7 +250,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
     @SuppressWarnings("rawtypes")
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -246,9 +261,13 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
         if (this.rangeClass == Range.class) {
             expression = getFilterFactory().literal(range);
         } else if (this.rangeClass == it.geosolutions.jaiext.range.Range.class) {
-            it.geosolutions.jaiext.range.Range r = it.geosolutions.jaiext.range.RangeFactory.create(
-                    range.getMin().doubleValue(), range.isMinIncluded(),
-                    range.getMax().doubleValue(), range.isMaxIncluded(), false);
+            it.geosolutions.jaiext.range.Range r =
+                    it.geosolutions.jaiext.range.RangeFactory.create(
+                            range.getMin().doubleValue(),
+                            range.isMinIncluded(),
+                            range.getMax().doubleValue(),
+                            range.isMaxIncluded(),
+                            false);
             expression = getFilterFactory().literal(r);
         }
 
@@ -262,7 +281,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -277,12 +296,10 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -298,7 +315,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
     @SuppressWarnings("rawtypes")
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -310,8 +327,12 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
         } else if (objValue instanceof it.geosolutions.jaiext.range.Range) {
             it.geosolutions.jaiext.range.Range tmp = (it.geosolutions.jaiext.range.Range) objValue;
 
-            newValue = Range.create(tmp.getMin().doubleValue(), tmp.isMinIncluded(),
-                    tmp.getMax().doubleValue(), tmp.isMaxIncluded());
+            newValue =
+                    Range.create(
+                            tmp.getMin().doubleValue(),
+                            tmp.isMinIncluded(),
+                            tmp.getMax().doubleValue(),
+                            tmp.isMaxIncluded());
         }
 
         populateField(newValue);
@@ -334,7 +355,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#getStringValue()
      */
     @Override
@@ -452,8 +473,10 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
             copy = new FieldConfigRange(fieldConfigBase.getCommonData(), this.rangeClass);
 
             FieldConfigRange doubleFieldConfig = (FieldConfigRange) fieldConfigBase;
-            copy.setConfig(doubleFieldConfig.startRange.minValue,
-                    doubleFieldConfig.startRange.maxValue, doubleFieldConfig.startRange.stepSize,
+            copy.setConfig(
+                    doubleFieldConfig.startRange.minValue,
+                    doubleFieldConfig.startRange.maxValue,
+                    doubleFieldConfig.startRange.stepSize,
                     doubleFieldConfig.startRange.noOfDecimalPlaces);
             copy.setDefaultValue(this.defaultValue);
         }
@@ -468,8 +491,8 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      * @param stepSize the step size
      * @param noOfDecimalPlaces the no of decimal places
      */
-    public void setConfig(double minValue, double maxValue, double stepSize,
-            int noOfDecimalPlaces) {
+    public void setConfig(
+            double minValue, double maxValue, double stepSize, int noOfDecimalPlaces) {
         startRange.minValue = minValue;
         startRange.maxValue = maxValue;
         startRange.stepSize = stepSize;

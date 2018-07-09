@@ -24,7 +24,7 @@ import com.sldeditor.ui.render.RuleRenderOptions;
 
 /**
  * The Interface RenderSymbolInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface RenderSymbolInterface extends DataSourceUpdatedInterface {
@@ -36,9 +36,7 @@ public interface RenderSymbolInterface extends DataSourceUpdatedInterface {
      */
     public void addSLDOutputListener(SLDOutputInterface sldOutput);
 
-    /**
-     * Render symbol.
-     */
+    /** Render symbol. */
     public void renderSymbol();
 
     /**

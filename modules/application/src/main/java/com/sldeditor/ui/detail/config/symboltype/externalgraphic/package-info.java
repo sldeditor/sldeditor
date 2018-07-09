@@ -18,7 +18,7 @@
  */
 /**
  * Classes to handle external graphic data entry.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.config.symboltype.externalgraphic;

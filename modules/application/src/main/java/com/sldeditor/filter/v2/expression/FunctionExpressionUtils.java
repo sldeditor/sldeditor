@@ -21,15 +21,14 @@ package com.sldeditor.filter.v2.expression;
 
 import java.util.Iterator;
 import java.util.List;
-
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.function.Collection_UniqueFunction;
 import org.opengis.filter.expression.Expression;
 
 /**
  * The Class FunctionExpressionUtils.
- * 
- * Handles the functions that inherit from org.geotools.filter.FunctionExpressionImpl interface
+ *
+ * <p>Handles the functions that inherit from org.geotools.filter.FunctionExpressionImpl interface
  */
 public class FunctionExpressionUtils {
 
@@ -46,8 +45,8 @@ public class FunctionExpressionUtils {
         List<org.opengis.filter.expression.Expression> params = expression.getParameters();
         if (params != null) {
             org.opengis.filter.expression.Expression exp;
-            for (Iterator<org.opengis.filter.expression.Expression> it = params.iterator(); it
-                    .hasNext();) {
+            for (Iterator<org.opengis.filter.expression.Expression> it = params.iterator();
+                    it.hasNext(); ) {
                 exp = it.next();
                 sb.append("[");
                 sb.append(exp);

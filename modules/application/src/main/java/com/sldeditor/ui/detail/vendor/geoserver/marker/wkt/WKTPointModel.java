@@ -21,12 +21,11 @@ package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
 
 /**
  * Table model that allows the getting and setting of WKTPoint objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class WKTPointModel extends AbstractTableModel {
@@ -49,9 +48,7 @@ public class WKTPointModel extends AbstractTableModel {
     /** The ensure first and last points are the same. */
     private boolean ensureFirstAndLastPointsAreTheSame = false;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public WKTPointModel() {
         columnList.add("X");
         columnList.add("Y");
@@ -65,7 +62,7 @@ public class WKTPointModel extends AbstractTableModel {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.AbstractTableModel#getColumnName(int)
      */
     public String getColumnName(int col) {
@@ -81,7 +78,7 @@ public class WKTPointModel extends AbstractTableModel {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
      */
     public boolean isCellEditable(int row, int col) {
@@ -95,7 +92,7 @@ public class WKTPointModel extends AbstractTableModel {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getRowCount()
      */
     @Override
@@ -110,7 +107,7 @@ public class WKTPointModel extends AbstractTableModel {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     @Override
@@ -127,7 +124,7 @@ public class WKTPointModel extends AbstractTableModel {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
@@ -139,18 +136,18 @@ public class WKTPointModel extends AbstractTableModel {
         WKTPoint data = pointList.get(rowIndex);
 
         switch (columnIndex) {
-        case X_COLUMN_ID:
-            return data.getX();
-        case Y_COLUMN_ID:
-            return data.getY();
-        default:
-            return null;
+            case X_COLUMN_ID:
+                return data.getX();
+            case Y_COLUMN_ID:
+                return data.getY();
+            default:
+                return null;
         }
     }
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
      */
     public void setValueAt(Object value, int row, int col) {
@@ -161,22 +158,20 @@ public class WKTPointModel extends AbstractTableModel {
         if (value instanceof String) {
             WKTPoint data = pointList.get(row);
             switch (col) {
-            case X_COLUMN_ID:
-                data.setX(Double.valueOf((String) value));
-                break;
-            case Y_COLUMN_ID:
-                data.setY(Double.valueOf((String) value));
-                break;
-            default:
-                break;
+                case X_COLUMN_ID:
+                    data.setX(Double.valueOf((String) value));
+                    break;
+                case Y_COLUMN_ID:
+                    data.setY(Double.valueOf((String) value));
+                    break;
+                default:
+                    break;
             }
             fireTableCellUpdated(row, col);
         }
     }
 
-    /**
-     * Adds the new field.
-     */
+    /** Adds the new field. */
     public void addNewPoint() {
         pointList.add(new WKTPoint());
 
@@ -213,9 +208,7 @@ public class WKTPointModel extends AbstractTableModel {
         this.fireTableDataChanged();
     }
 
-    /**
-     * Clear all the data from the model.
-     */
+    /** Clear all the data from the model. */
     public void clear() {
         pointList.clear();
         this.fireTableDataChanged();

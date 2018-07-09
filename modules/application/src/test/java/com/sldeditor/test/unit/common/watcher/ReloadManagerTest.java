@@ -21,26 +21,23 @@ package com.sldeditor.test.unit.common.watcher;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
-import java.nio.file.Path;
-
-import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.watcher.ReloadManager;
+import java.io.File;
+import java.nio.file.Path;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Unit test for ReloadManager.
- * 
- * <p>{@link com.sldeditor.common.watcher.ReloadManager}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.common.watcher.ReloadManager}
+ *
+ * @author Robert Ward (SCISYS)
  */
 @Ignore
 public class ReloadManagerTest {
@@ -50,25 +47,23 @@ public class ReloadManagerTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.common.LoadSLDInterface#emptySLD()
          */
         @Override
-        public void emptySLD() {
-        }
+        public void emptySLD() {}
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.common.LoadSLDInterface#preLoad()
          */
         @Override
-        public void preLoad() {
-        }
+        public void preLoad() {}
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.common.LoadSLDInterface#loadSLDString(com.sldeditor.common.filesystem.
          * SelectedFiles)
          */
@@ -79,7 +74,7 @@ public class ReloadManagerTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.common.LoadSLDInterface#readSLDFile(java.io.File)
          */
         @Override
@@ -89,26 +84,25 @@ public class ReloadManagerTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.common.LoadSLDInterface#reloadSLDFile()
          */
         @Override
         public void reloadSLDFile() {
             reloadCallbackCalled++;
         }
-
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.watcher.ReloadManager#fileAdded(java.nio.file.Path)}. Test method
-     * for {@link com.sldeditor.common.watcher.ReloadManager#fileModified(java.nio.file.Path)}. Test
-     * method for
-     * {@link com.sldeditor.common.watcher.ReloadManager#fileDeleted(java.nio.file.Path)}. Test
-     * method for
-     * {@link com.sldeditor.common.watcher.ReloadManager#sldDataUpdated(com.sldeditor.common.SLDDataInterface, boolean)}.
-     * Test method for
-     * {@link com.sldeditor.common.watcher.ReloadManager#addListener(com.sldeditor.common.LoadSLDInterface)}.
+     * Test method for {@link
+     * com.sldeditor.common.watcher.ReloadManager#fileAdded(java.nio.file.Path)}. Test method for
+     * {@link com.sldeditor.common.watcher.ReloadManager#fileModified(java.nio.file.Path)}. Test
+     * method for {@link
+     * com.sldeditor.common.watcher.ReloadManager#fileDeleted(java.nio.file.Path)}. Test method for
+     * {@link
+     * com.sldeditor.common.watcher.ReloadManager#sldDataUpdated(com.sldeditor.common.SLDDataInterface,
+     * boolean)}. Test method for {@link
+     * com.sldeditor.common.watcher.ReloadManager#addListener(com.sldeditor.common.LoadSLDInterface)}.
      */
     @Test
     public void testReloadFile() {

@@ -19,14 +19,6 @@
 
 package com.sldeditor.ui.panels;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JPanel;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.datasource.RenderSymbolInterface;
@@ -40,11 +32,17 @@ import com.sldeditor.ui.legend.LegendManager;
 import com.sldeditor.ui.tree.SLDTree;
 import com.sldeditor.ui.tree.SLDTreeManager;
 import com.sldeditor.ui.tree.SLDTreeTools;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JPanel;
 
 /**
- * The Class SingleSymbolUI, coordinates creating all the necessary
- * SLD symbol panels to view/edit a single SLD file.
- * 
+ * The Class SingleSymbolUI, coordinates creating all the necessary SLD symbol panels to view/edit a
+ * single SLD file.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SingleSymbolUI implements SymbolPanelInterface {
@@ -60,7 +58,7 @@ public class SingleSymbolUI implements SymbolPanelInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.SymbolPanelInterface#addWestPanel()
      */
     @Override
@@ -70,7 +68,7 @@ public class SingleSymbolUI implements SymbolPanelInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.SymbolPanelInterface#addCentrePanel()
      */
     @Override
@@ -110,8 +108,8 @@ public class SingleSymbolUI implements SymbolPanelInterface {
         JPanel symbolPanel = new JPanel();
         symbolPanel.setLayout(new GridLayout(2, 1));
 
-        RenderSymbolInterface renderSymbol = RenderPanelFactory
-                .getRenderer(SingleSymbolUI.class.getName());
+        RenderSymbolInterface renderSymbol =
+                RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName());
 
         symbolPanel.add((Component) renderSymbol);
 
@@ -151,8 +149,8 @@ public class SingleSymbolUI implements SymbolPanelInterface {
         if (rendererList == null) {
             rendererList = new ArrayList<RenderSymbolInterface>();
 
-            RenderSymbolInterface renderer = RenderPanelFactory
-                    .getRenderer(SingleSymbolUI.class.getName());
+            RenderSymbolInterface renderer =
+                    RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName());
             rendererList.add(renderer);
         }
         return rendererList;
@@ -160,7 +158,7 @@ public class SingleSymbolUI implements SymbolPanelInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.SymbolPanelInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
@@ -176,7 +174,7 @@ public class SingleSymbolUI implements SymbolPanelInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.SymbolPanelInterface#addNorthPanel()
      */
     @Override
@@ -186,7 +184,7 @@ public class SingleSymbolUI implements SymbolPanelInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.SymbolPanelInterface#getFieldDataManager()
      */
     @Override
@@ -206,8 +204,8 @@ public class SingleSymbolUI implements SymbolPanelInterface {
      * @param vendorOptionsPresentList the vendor options present list
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         panelSymbolizerDetails.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }
 

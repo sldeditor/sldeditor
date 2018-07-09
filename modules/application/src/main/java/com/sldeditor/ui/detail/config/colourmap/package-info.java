@@ -18,8 +18,7 @@
  */
 /**
  * Package contains the classes to allow the configuration of a raster colour map.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.config.colourmap;

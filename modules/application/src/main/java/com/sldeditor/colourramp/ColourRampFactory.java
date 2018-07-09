@@ -19,13 +19,12 @@
 
 package com.sldeditor.colourramp;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.colourramp.ramp.ColourRampPanel;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.ui.ColourRampPresets;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A factory for creating ColourRamp objects.
@@ -41,17 +40,19 @@ public class ColourRampFactory {
     private static final String OUTPUT_SCHEMA_RESOURCE = "/xsd/colourramp.xsd";
 
     /** The colour ramp map. */
-    private static Map<ColourRampPanelInterface, List<ColourRamp>> colourRampMap = 
+    private static Map<ColourRampPanelInterface, List<ColourRamp>> colourRampMap =
             new HashMap<ColourRampPanelInterface, List<ColourRamp>>();
 
-    /**
-     * Populate.
-     */
+    /** Populate. */
     private static void populate() {
         if (colourRampMap.isEmpty()) {
-            ColourRampPresets colourRampXML = (ColourRampPresets) ParseXML.parseFile("",
-                    ColourRampFactory.COLOUR_RAMP_XML, OUTPUT_SCHEMA_RESOURCE,
-                    ColourRampPresets.class);
+            ColourRampPresets colourRampXML =
+                    (ColourRampPresets)
+                            ParseXML.parseFile(
+                                    "",
+                                    ColourRampFactory.COLOUR_RAMP_XML,
+                                    OUTPUT_SCHEMA_RESOURCE,
+                                    ColourRampPresets.class);
 
             ColourRampPanel panel = new ColourRampPanel(colourRampXML.getTwoColourRampList());
 

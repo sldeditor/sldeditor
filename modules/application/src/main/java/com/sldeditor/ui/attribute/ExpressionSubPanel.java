@@ -19,28 +19,25 @@
 
 package com.sldeditor.ui.attribute;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import org.geotools.filter.text.cql2.CQL;
-import org.geotools.filter.text.cql2.CQLException;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.filter.ExpressionPanelFactory;
 import com.sldeditor.filter.ExpressionPanelInterface;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import org.geotools.filter.text.cql2.CQL;
+import org.geotools.filter.text.cql2.CQLException;
+import org.opengis.filter.expression.Expression;
 
 /**
  * Panel that allows a user to specify an expression as an SLD attribute.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
@@ -78,41 +75,45 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
     public ExpressionSubPanel(SubPanelUpdatedInterface parentObj, Class<?> expectedDataType) {
         setLayout(new BorderLayout(0, 0));
 
-        btnEditExpression = new JButton(
-                Localisation.getString(ExpressionSubPanel.class, "ExpressionSubPanel.edit"));
+        btnEditExpression =
+                new JButton(
+                        Localisation.getString(
+                                ExpressionSubPanel.class, "ExpressionSubPanel.edit"));
         expressionTextField = new JTextField();
 
-        btnEditExpression.addActionListener(new ActionListener() {
+        btnEditExpression.addActionListener(
+                new ActionListener() {
 
-            public void actionPerformed(ActionEvent e) {
-                ExpressionPanelInterface expressionPanel = ExpressionPanelFactory
-                        .getExpressionPanel(null);
+                    public void actionPerformed(ActionEvent e) {
+                        ExpressionPanelInterface expressionPanel =
+                                ExpressionPanelFactory.getExpressionPanel(null);
 
-                expressionPanel.configure(
-                        Localisation.getString(ExpressionSubPanel.class,
-                                "ExpressionSubPanel.dialogTitle"),
-                        expectedDataType, SelectedSymbol.getInstance().isRasterSymbol());
+                        expressionPanel.configure(
+                                Localisation.getString(
+                                        ExpressionSubPanel.class, "ExpressionSubPanel.dialogTitle"),
+                                expectedDataType,
+                                SelectedSymbol.getInstance().isRasterSymbol());
 
-                expressionPanel.populate(storedExpression);
+                        expressionPanel.populate(storedExpression);
 
-                if (expressionPanel.showDialog()) {
-                    Expression expression = expressionPanel.getExpression();
+                        if (expressionPanel.showDialog()) {
+                            Expression expression = expressionPanel.getExpression();
 
-                    populateExpression(expression);
+                            populateExpression(expression);
 
-                    if (parentObj != null) {
-                        parentObj.updateSymbol();
+                            if (parentObj != null) {
+                                parentObj.updateSymbol();
+                            }
+
+                            // String expressionString = expressionPanel.getExpressionString();
+                            //
+                            // if(expressionString != null)
+                            // {
+                            // createExpression(expressionString);
+                            // }
+                        }
                     }
-
-                    // String expressionString = expressionPanel.getExpressionString();
-                    //
-                    // if(expressionString != null)
-                    // {
-                    // createExpression(expressionString);
-                    // }
-                }
-            }
-        });
+                });
         add(btnEditExpression, BorderLayout.WEST);
 
         add(expressionTextField, BorderLayout.CENTER);

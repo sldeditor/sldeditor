@@ -19,30 +19,28 @@
 
 package com.sldeditor.filter.v2.function;
 
+import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterAll;
+import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.geotools.filter.function.Classifier;
 import org.geotools.filter.function.DefaultFunctionFactory;
 import org.geotools.filter.function.RangedClassifier;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.opengis.filter.capability.FunctionName;
-import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Function;
-import org.opengis.filter.expression.Literal;
-
-import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterAll;
-import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.MultiPoint;
 import org.locationtech.jts.geom.Point;
+import org.opengis.filter.capability.FunctionName;
+import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
+import org.opengis.filter.expression.Literal;
 
 /**
  * The Class FunctionManager.
@@ -79,16 +77,12 @@ public class FunctionManager implements FunctionNameInterface {
         return instance;
     }
 
-    /**
-     * Instantiates a new function manager.
-     */
+    /** Instantiates a new function manager. */
     public FunctionManager() {
         initialise();
     }
 
-    /**
-     * Initialise.
-     */
+    /** Initialise. */
     private void initialise() {
         functionNameList = functionFactory.getFunctionNames();
         List<Class<?>> classList = new ArrayList<Class<?>>();
@@ -104,10 +98,15 @@ public class FunctionManager implements FunctionNameInterface {
                 if (!classList.contains(function.getArguments().get(index).getType())) {
                     classList.add(function.getArguments().get(index).getType());
                 }
-                logger.debug("\t" + function.getArgumentNames().get(index) + "\t"
-                        + function.getArguments().get(index).getType().getName() + "\t\t"
-                        + function.getArguments().get(index).getMinOccurs() + "\t"
-                        + function.getArguments().get(index).getMaxOccurs());
+                logger.debug(
+                        "\t"
+                                + function.getArgumentNames().get(index)
+                                + "\t"
+                                + function.getArguments().get(index).getType().getName()
+                                + "\t\t"
+                                + function.getArguments().get(index).getMinOccurs()
+                                + "\t"
+                                + function.getArguments().get(index).getMaxOccurs());
             }
 
             if (!classList.contains(function.getReturn().getType())) {
@@ -122,28 +121,55 @@ public class FunctionManager implements FunctionNameInterface {
         }
 
         // CHECKSTYLE:OFF
-        Class<?>[] allowedNumberTypes = { Number.class, Double.class, Float.class, Integer.class,
-                Long.class, Object.class };
-        Class<?>[] allowedDoubleTypes = { Number.class, Double.class, Float.class, Integer.class,
-                Long.class, Object.class };
-        Class<?>[] allowedFloatTypes = { Number.class, Double.class, Float.class, Integer.class,
-                Long.class, Object.class };
-        Class<?>[] allowedIntegerTypes = { Number.class, Double.class, Float.class, Integer.class,
-                Long.class, Object.class };
-        Class<?>[] allowedLongTypes = { Number.class, Double.class, Float.class, Integer.class,
-                Long.class, Object.class };
-        Class<?>[] allowedBooleanTypes = { Boolean.class, Object.class };
-        Class<?>[] allowedStringTypes = { String.class, Object.class };
-        Class<?>[] allowedGeometryTypes = { Geometry.class, LineString.class, Point.class,
-                MultiPoint.class, LinearRing.class, Object.class };
-        Class<?>[] allowedDateTypes = { Date.class, Object.class };
-        Class<?>[] allowedClassifierTypes = { RangedClassifier.class, Classifier.class,
-                Object.class };
-        Class<?>[] allowedBBoxTypes = { ReferencedEnvelope.class, Geometry.class };
-        Class<?>[] allowedObjectTypes = { Number.class, Double.class, Float.class, Integer.class,
-                Long.class, Boolean.class, String.class, Date.class, Geometry.class,
-                LineString.class, Point.class, MultiPoint.class, LinearRing.class,
-                RangedClassifier.class, Classifier.class, ReferencedEnvelope.class, Object.class };
+        Class<?>[] allowedNumberTypes = {
+            Number.class, Double.class, Float.class, Integer.class, Long.class, Object.class
+        };
+        Class<?>[] allowedDoubleTypes = {
+            Number.class, Double.class, Float.class, Integer.class, Long.class, Object.class
+        };
+        Class<?>[] allowedFloatTypes = {
+            Number.class, Double.class, Float.class, Integer.class, Long.class, Object.class
+        };
+        Class<?>[] allowedIntegerTypes = {
+            Number.class, Double.class, Float.class, Integer.class, Long.class, Object.class
+        };
+        Class<?>[] allowedLongTypes = {
+            Number.class, Double.class, Float.class, Integer.class, Long.class, Object.class
+        };
+        Class<?>[] allowedBooleanTypes = {Boolean.class, Object.class};
+        Class<?>[] allowedStringTypes = {String.class, Object.class};
+        Class<?>[] allowedGeometryTypes = {
+            Geometry.class,
+            LineString.class,
+            Point.class,
+            MultiPoint.class,
+            LinearRing.class,
+            Object.class
+        };
+        Class<?>[] allowedDateTypes = {Date.class, Object.class};
+        Class<?>[] allowedClassifierTypes = {
+            RangedClassifier.class, Classifier.class, Object.class
+        };
+        Class<?>[] allowedBBoxTypes = {ReferencedEnvelope.class, Geometry.class};
+        Class<?>[] allowedObjectTypes = {
+            Number.class,
+            Double.class,
+            Float.class,
+            Integer.class,
+            Long.class,
+            Boolean.class,
+            String.class,
+            Date.class,
+            Geometry.class,
+            LineString.class,
+            Point.class,
+            MultiPoint.class,
+            LinearRing.class,
+            RangedClassifier.class,
+            Classifier.class,
+            ReferencedEnvelope.class,
+            Object.class
+        };
         // CHECKSTYLE:ON
 
         populateAllowedTypes(Number.class, allowedNumberTypes);
@@ -171,15 +197,16 @@ public class FunctionManager implements FunctionNameInterface {
     }
 
     /**
-     * Gets the function name list for the given parameter type A expectedType of null returns all functions.
+     * Gets the function name list for the given parameter type A expectedType of null returns all
+     * functions.
      *
      * @param expectedType the expected type, restrict functions with this return type
      * @param functionNameFilterList the function name filter list
      * @return the function name list
      */
     @Override
-    public List<FunctionName> getFunctionNameList(Class<?> expectedType,
-            List<FunctionNameFilterInterface> functionNameFilterList) {
+    public List<FunctionName> getFunctionNameList(
+            Class<?> expectedType, List<FunctionNameFilterInterface> functionNameFilterList) {
         if (expectedType == null) {
             return functionNameList;
         }
@@ -212,8 +239,8 @@ public class FunctionManager implements FunctionNameInterface {
      * @param functionNameFilterList the function name filter list
      * @return true, if successful
      */
-    private boolean matchesFilter(FunctionName functionName,
-            List<FunctionNameFilterInterface> functionNameFilterList) {
+    private boolean matchesFilter(
+            FunctionName functionName, List<FunctionNameFilterInterface> functionNameFilterList) {
         for (FunctionNameFilterInterface filter : functionNameFilterList) {
             if (filter.accept(functionName)) {
                 return true;
@@ -239,8 +266,8 @@ public class FunctionManager implements FunctionNameInterface {
 
         FunctionExpressionInterface.createNewFunction(functionName, parameters);
 
-        Function function = functionFactory.function(functionName.getFunctionName(), parameters,
-                fallback);
+        Function function =
+                functionFactory.function(functionName.getFunctionName(), parameters, fallback);
 
         return function;
     }
@@ -254,7 +281,7 @@ public class FunctionManager implements FunctionNameInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.filter.v2.function.FunctionNameInterface#createExpression(org.opengis.filter.capability.FunctionName, java.util.List)
      */
     @Override
@@ -264,8 +291,8 @@ public class FunctionManager implements FunctionNameInterface {
         }
 
         Literal fallback = null;
-        Function function = functionFactory.function(functionName.getFunctionName(), argumentList,
-                fallback);
+        Function function =
+                functionFactory.function(functionName.getFunctionName(), argumentList, fallback);
 
         return function;
     }
@@ -303,5 +330,4 @@ public class FunctionManager implements FunctionNameInterface {
 
         return function;
     }
-
 }

@@ -19,18 +19,6 @@
 
 package com.sldeditor.datasource.extension.filesystem.node;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.data.GeoServerConnection;
@@ -38,10 +26,20 @@ import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerOverallNode;
 import com.sldeditor.extension.filesystem.FileSystemExtension;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
 /**
  * Manages the access between the file system tree and the nodes.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FileSystemNodeManager {
@@ -52,11 +50,8 @@ public class FileSystemNodeManager {
     /** The tree model. */
     private static DefaultTreeModel treeModel;
 
-    /**
-     * Private default constructor.
-     */
-    private FileSystemNodeManager() {
-    }
+    /** Private default constructor. */
+    private FileSystemNodeManager() {}
 
     /**
      * Instantiates a new file system node manager.
@@ -95,8 +90,8 @@ public class FileSystemNodeManager {
      * @param nodeStr the node str
      * @return the default mutable tree node
      */
-    private static DefaultMutableTreeNode searchNode(boolean isRoot,
-            DefaultMutableTreeNode rootNode, String nodeStr) {
+    private static DefaultMutableTreeNode searchNode(
+            boolean isRoot, DefaultMutableTreeNode rootNode, String nodeStr) {
         DefaultMutableTreeNode node = null;
         @SuppressWarnings("rawtypes")
         Enumeration e = rootNode.breadthFirstEnumeration();
@@ -148,8 +143,8 @@ public class FileSystemNodeManager {
      */
     public static void nodeAdded(DefaultMutableTreeNode parentNode, int index) {
         if (fileSystemTreeComponent != null) {
-            ((DefaultTreeModel) fileSystemTreeComponent.getModel()).nodesWereInserted(parentNode,
-                    new int[] { index });
+            ((DefaultTreeModel) fileSystemTreeComponent.getModel())
+                    .nodesWereInserted(parentNode, new int[] {index});
         }
     }
 
@@ -160,11 +155,14 @@ public class FileSystemNodeManager {
      * @param index the index
      * @param nodeRemoved the node removed
      */
-    public static void nodeRemoved(DefaultMutableTreeNode parentNode, int index,
-            DefaultMutableTreeNode nodeRemoved) {
+    public static void nodeRemoved(
+            DefaultMutableTreeNode parentNode, int index, DefaultMutableTreeNode nodeRemoved) {
         if (fileSystemTreeComponent != null) {
-            ((DefaultTreeModel) fileSystemTreeComponent.getModel()).nodesWereRemoved(parentNode,
-                    new int[] { index }, new DefaultMutableTreeNode[] { nodeRemoved });
+            ((DefaultTreeModel) fileSystemTreeComponent.getModel())
+                    .nodesWereRemoved(
+                            parentNode,
+                            new int[] {index},
+                            new DefaultMutableTreeNode[] {nodeRemoved});
         }
     }
 
@@ -203,8 +201,8 @@ public class FileSystemNodeManager {
      * @param showInTree the show in tree
      * @return the tree path
      */
-    private static DefaultMutableTreeNode getTreePath(GeoServerConnection connectionData,
-            boolean showInTree) {
+    private static DefaultMutableTreeNode getTreePath(
+            GeoServerConnection connectionData, boolean showInTree) {
         if (treeModel == null) {
             return null;
         }
@@ -253,8 +251,8 @@ public class FileSystemNodeManager {
      * @param showInTree the show in tree
      * @return the tree path
      */
-    private static DefaultMutableTreeNode getTreePath(String overallNodeName,
-            DatabaseConnection connectionData, boolean showInTree) {
+    private static DefaultMutableTreeNode getTreePath(
+            String overallNodeName, DatabaseConnection connectionData, boolean showInTree) {
         if (treeModel == null) {
             return null;
         }
@@ -377,8 +375,11 @@ public class FileSystemNodeManager {
                     return node;
                 }
             } else {
-                ConsoleManager.getInstance().error(FileSystemNodeManager.class,
-                        "Failed to find parent path for folder : " + folder.getAbsolutePath());
+                ConsoleManager.getInstance()
+                        .error(
+                                FileSystemNodeManager.class,
+                                "Failed to find parent path for folder : "
+                                        + folder.getAbsolutePath());
             }
         }
 

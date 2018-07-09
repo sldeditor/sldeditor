@@ -21,16 +21,15 @@ package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.arrow;
 
 import static org.junit.Assert.assertEquals;
 
+import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils;
 import org.geotools.factory.CommonFactoryFinder;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils;
-
 /**
  * The unit test for ArrowUtils.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils}
  *
  * @author Robert Ward (SCISYS)
@@ -38,7 +37,8 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils;
 public class ArrowUtilsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils#getArrowPrefix()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils#getArrowPrefix()}.
      */
     @Test
     public void testGetArrowPrefix() {
@@ -46,25 +46,31 @@ public class ArrowUtilsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils#encode(org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils#encode(org.opengis.filter.expression.Expression,
+     * org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression)}.
      */
     @Test
     public void testEncode() {
         FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
-        assertEquals("extshape://arrow?hr=1.2&t=0.34&ab=0.56",
+        assertEquals(
+                "extshape://arrow?hr=1.2&t=0.34&ab=0.56",
                 ArrowUtils.encode(ff.literal(1.2), ff.literal(0.34), ff.literal(0.56)));
-        assertEquals("extshape://arrow?hr=2.0&t=0.34&ab=0.56",
+        assertEquals(
+                "extshape://arrow?hr=2.0&t=0.34&ab=0.56",
                 ArrowUtils.encode(null, ff.literal(0.34), ff.literal(0.56)));
-        assertEquals("extshape://arrow?hr=1.2&t=0.2&ab=0.56",
+        assertEquals(
+                "extshape://arrow?hr=1.2&t=0.2&ab=0.56",
                 ArrowUtils.encode(ff.literal(1.2), null, ff.literal(0.56)));
-        assertEquals("extshape://arrow?hr=1.2&t=0.34&ab=0.5",
+        assertEquals(
+                "extshape://arrow?hr=1.2&t=0.34&ab=0.5",
                 ArrowUtils.encode(ff.literal(1.2), ff.literal(0.34), null));
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils#decodeArrowThickness(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils#decodeArrowThickness(java.lang.String)}.
      */
     @Test
     public void testDecodeArrowThickness() {
@@ -93,5 +99,4 @@ public class ArrowUtilsTest {
         actual = ArrowUtils.decodeHeadBaseRatio("abcdefg");
         assertEquals("0.5", actual.toString());
     }
-
 }

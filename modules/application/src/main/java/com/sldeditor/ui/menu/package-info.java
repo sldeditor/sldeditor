@@ -19,7 +19,7 @@
 
 /**
  * Application menu package.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.menu;

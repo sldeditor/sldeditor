@@ -19,19 +19,16 @@
 
 package com.sldeditor.ui.detail.config.featuretypeconstraint;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Extent;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.StyleFactoryImpl;
 import org.opengis.filter.Filter;
-
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
 
 /**
  * The Class FeatureTypeConstraintModel.
@@ -62,8 +59,8 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
     private FeatureTypeConstraintModelUpdateInterface parentObj = null;
 
     /** The style factory. */
-    private StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /**
      * Instantiates a new feature type constraint model.
@@ -81,7 +78,7 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getRowCount()
      */
     @Override
@@ -91,7 +88,7 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     @Override
@@ -112,7 +109,7 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
@@ -128,26 +125,25 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
         FeatureTypeConstraint ftc = ftcList.get(rowIndex);
 
         switch (columnIndex) {
-        case COL_NAME:
-            return ftc.getFeatureTypeName();
-        case COL_FILTER:
-            if (ftc.getFilter() != null) {
-                return ftc.getFilter().toString();
-            }
-            break;
-        default:
-            break;
+            case COL_NAME:
+                return ftc.getFeatureTypeName();
+            case COL_FILTER:
+                if (ftc.getFilter() != null) {
+                    return ftc.getFilter().toString();
+                }
+                break;
+            default:
+                break;
         }
         return null;
     }
 
-    /**
-     * Adds the new entry.
-     */
+    /** Adds the new entry. */
     public void addNewEntry() {
 
-        FeatureTypeConstraint ftc = styleFactory.createFeatureTypeConstraint(DEFAULT_NAME,
-                Filter.INCLUDE, new Extent[0]);
+        FeatureTypeConstraint ftc =
+                styleFactory.createFeatureTypeConstraint(
+                        DEFAULT_NAME, Filter.INCLUDE, new Extent[0]);
         ftcList.add(ftc);
 
         this.fireTableDataChanged();
@@ -164,7 +160,8 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
      * @param maxSelectionIndex the max selection index
      */
     public void removeEntries(int minSelectionIndex, int maxSelectionIndex) {
-        if ((minSelectionIndex < 0) || (maxSelectionIndex < minSelectionIndex)
+        if ((minSelectionIndex < 0)
+                || (maxSelectionIndex < minSelectionIndex)
                 || (maxSelectionIndex >= ftcList.size())) {
             return;
         }
@@ -214,15 +211,16 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
         FeatureTypeConstraint ftc = ftcList.get(rowIndex);
 
         switch (columnIndex) {
-        case COL_NAME: {
-            String name = (String) aValue;
-            ftc.setFeatureTypeName(name);
-        }
-            break;
-        case COL_FILTER:
-            break;
-        default:
-            break;
+            case COL_NAME:
+                {
+                    String name = (String) aValue;
+                    ftc.setFeatureTypeName(name);
+                }
+                break;
+            case COL_FILTER:
+                break;
+            default:
+                break;
         }
 
         this.fireTableDataChanged();
@@ -242,8 +240,9 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
 
         if (ftcList != null) {
             for (FeatureTypeConstraint ftc : ftcList) {
-                FeatureTypeConstraint newFTC = styleFactory.createFeatureTypeConstraint(
-                        ftc.getFeatureTypeName(), ftc.getFilter(), new Extent[0]);
+                FeatureTypeConstraint newFTC =
+                        styleFactory.createFeatureTypeConstraint(
+                                ftc.getFeatureTypeName(), ftc.getFilter(), new Extent[0]);
 
                 this.ftcList.add(newFTC);
             }
@@ -291,5 +290,4 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
         }
         return false;
     }
-
 }

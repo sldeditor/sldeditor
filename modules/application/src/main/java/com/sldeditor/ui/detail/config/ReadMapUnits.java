@@ -19,10 +19,6 @@
 
 package com.sldeditor.ui.detail.config;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -39,13 +35,16 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueList;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.defaults.ConfigDefaultFactory;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Class ReadMapUnits reads a XML configuration of map unit field configuration structures and
  * instantiates and populates the relevant objects.
- * 
+ *
  * <p>Configuration files exist at src/main/resources/ui/*
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ReadMapUnits implements PanelConfigInterface {
@@ -56,9 +55,7 @@ public class ReadMapUnits implements PanelConfigInterface {
     /** The panel title. */
     private String panelTitle;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public ReadMapUnits() {
         // Force it so that standard fields are always loaded
         Localisation.preload(ReadPanelConfig.class);
@@ -72,10 +69,10 @@ public class ReadMapUnits implements PanelConfigInterface {
      * @param fieldConfigMapUnits the field config map units
      * @return true, if successful
      */
-    public boolean read(Class<?> panelId, String resourceString,
-            FieldConfigMapUnits fieldConfigMapUnits) {
-        MapUnits mapUnits = (MapUnits) ParseXML.parseUIFile(resourceString, SCHEMA_RESOURCE,
-                MapUnits.class);
+    public boolean read(
+            Class<?> panelId, String resourceString, FieldConfigMapUnits fieldConfigMapUnits) {
+        MapUnits mapUnits =
+                (MapUnits) ParseXML.parseUIFile(resourceString, SCHEMA_RESOURCE, MapUnits.class);
 
         if (mapUnits == null) {
             return false;
@@ -94,11 +91,11 @@ public class ReadMapUnits implements PanelConfigInterface {
         if (xmlFieldConfig instanceof XMLFieldConfigEnum) {
             String defaultValue = xmlFieldConfig.getDefault();
 
-            XMLFieldConfigEnumValueList valueList = ((XMLFieldConfigEnum) xmlFieldConfig)
-                    .getValueList();
+            XMLFieldConfigEnumValueList valueList =
+                    ((XMLFieldConfigEnum) xmlFieldConfig).getValueList();
 
-            List<SymbolTypeConfig> configList = readValueListConfig(localisationClass, panelId,
-                    valueList);
+            List<SymbolTypeConfig> configList =
+                    readValueListConfig(localisationClass, panelId, valueList);
 
             fieldConfigMapUnits.addConfig(configList);
 
@@ -138,8 +135,8 @@ public class ReadMapUnits implements PanelConfigInterface {
      * @param valueList the xml value obj
      * @return the list
      */
-    private List<SymbolTypeConfig> readValueListConfig(Class<?> localisationClass, Class<?> panelId,
-            XMLFieldConfigEnumValueList valueList) {
+    private List<SymbolTypeConfig> readValueListConfig(
+            Class<?> localisationClass, Class<?> panelId, XMLFieldConfigEnumValueList valueList) {
         List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
 
         for (XMLFieldConfigEnumValue valueObj : valueList.getValue()) {
@@ -158,8 +155,8 @@ public class ReadMapUnits implements PanelConfigInterface {
      * @param valueObj the value obj
      * @return the symbol type config
      */
-    public static SymbolTypeConfig parseSymbolTypeConfig(Class<?> localisationClass,
-            Class<?> panelId, XMLFieldConfigEnumValue valueObj) {
+    public static SymbolTypeConfig parseSymbolTypeConfig(
+            Class<?> localisationClass, Class<?> panelId, XMLFieldConfigEnumValue valueObj) {
         SymbolTypeConfig config = new SymbolTypeConfig(panelId);
 
         String groupName = valueObj.getGroupName();
@@ -171,8 +168,8 @@ public class ReadMapUnits implements PanelConfigInterface {
         config.setSeparateGroup(isSeparateGroup);
 
         for (XMLFieldConfigEnumValueItem itemObj : valueObj.getItem()) {
-            config.addOption(itemObj.getId(),
-                    getLocalisedText(localisationClass, itemObj.getLabel()));
+            config.addOption(
+                    itemObj.getId(), getLocalisedText(localisationClass, itemObj.getLabel()));
         }
 
         FieldList fieldList = valueObj.getFieldList();
@@ -224,5 +221,4 @@ public class ReadMapUnits implements PanelConfigInterface {
     public Map<FieldIdEnum, Object> getDefaultFieldMap() {
         return null;
     }
-
 }

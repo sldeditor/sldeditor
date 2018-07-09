@@ -19,21 +19,6 @@
 
 package com.sldeditor.ui.detail.config.base;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.Box;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -43,17 +28,28 @@ import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.Box;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 /**
  * The Class GroupConfig represents the configuration for a group of fields.
- * 
- * <p>
- * An optional check box can be configured to enable/disable all the fields in the group.
- * 
+ *
+ * <p>An optional check box can be configured to enable/disable all the fields in the group.
+ *
  * @author Robert Ward (SCISYS)
  */
-public class GroupConfig
-        implements GroupConfigInterface, UndoActionInterface {
+public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
 
     /** The Constant FULL_WIDTH. */
     public static final int FULL_WIDTH = BasePanel.FIELD_PANEL_WIDTH;
@@ -91,12 +87,8 @@ public class GroupConfig
     /** The group title. */
     private JLabel groupTitle = null;
 
-    /**
-     * Instantiates a new group config.
-     */
-    public GroupConfig()
-    {
-    }
+    /** Instantiates a new group config. */
+    public GroupConfig() {}
 
     /**
      * Gets the id.
@@ -105,7 +97,7 @@ public class GroupConfig
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.base.GroupConfigInterface#getId()
      */
     @Override
@@ -129,7 +121,7 @@ public class GroupConfig
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#getLabel()
      */
     @Override
@@ -153,7 +145,7 @@ public class GroupConfig
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#isShowLabel()
      */
     @Override
@@ -231,22 +223,28 @@ public class GroupConfig
                 component = groupCheckbox;
                 groupCheckbox.setBounds(0, 0, FULL_WIDTH, BasePanel.WIDGET_HEIGHT);
 
-                groupCheckbox.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        enableSubGroups(groupCheckbox.isSelected());
+                groupCheckbox.addActionListener(
+                        new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                enableSubGroups(groupCheckbox.isSelected());
 
-                        boolean isSelected = groupCheckbox.isSelected();
-                        Boolean oldValueObj = Boolean.valueOf(!isSelected);
-                        Boolean newValueObj = Boolean.valueOf(isSelected);
+                                boolean isSelected = groupCheckbox.isSelected();
+                                Boolean oldValueObj = Boolean.valueOf(!isSelected);
+                                Boolean newValueObj = Boolean.valueOf(isSelected);
 
-                        UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj,
-                                "Group : " + getId(), oldValueObj, newValueObj));
+                                UndoManager.getInstance()
+                                        .addUndoEvent(
+                                                new UndoEvent(
+                                                        parentObj,
+                                                        "Group : " + getId(),
+                                                        oldValueObj,
+                                                        newValueObj));
 
-                        if (parent != null) {
-                            parent.dataChanged(FieldIdEnum.UNKNOWN);
-                        }
-                    }
-                });
+                                if (parent != null) {
+                                    parent.dataChanged(FieldIdEnum.UNKNOWN);
+                                }
+                            }
+                        });
             } else {
                 groupTitle = new JLabel(getLabel());
                 groupTitle.setBounds(0, 0, FULL_WIDTH, BasePanel.WIDGET_HEIGHT);
@@ -295,7 +293,7 @@ public class GroupConfig
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#enable(boolean)
      */
     @Override
@@ -333,7 +331,7 @@ public class GroupConfig
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#isPanelEnabled()
      */
     @Override
@@ -394,9 +392,7 @@ public class GroupConfig
         }
     }
 
-    /**
-     * Removes the components from ui.
-     */
+    /** Removes the components from ui. */
     public void removeFromUI() {
         for (Component component : componentList) {
             this.parentBox.remove(component);
@@ -416,7 +412,7 @@ public class GroupConfig
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -426,7 +422,7 @@ public class GroupConfig
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.base.GroupConfigInterface#setGroupStateOverride(boolean)
      */
     @Override
@@ -443,9 +439,7 @@ public class GroupConfig
         setValueGroupState();
     }
 
-    /**
-     * Sets the value group state.
-     */
+    /** Sets the value group state. */
     private void setValueGroupState() {
         boolean isSelected = true;
 

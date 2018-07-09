@@ -19,13 +19,11 @@
 
 package com.sldeditor.filter.v2.envvar.dialog;
 
+import com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-
-import com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface;
 
 /**
  * The Class EnvVarComboBoxModel.
@@ -44,9 +42,7 @@ public class EnvVarComboBoxModel extends AbstractListModel<Class<?>>
     /** The selected item. */
     private Class<?> selectedItem = null;
 
-    /**
-     * Instantiates a new env var combo box model.
-     */
+    /** Instantiates a new env var combo box model. */
     public EnvVarComboBoxModel(EnvironmentManagerInterface envVarMgr) {
         if (envVarMgr != null) {
             list = envVarMgr.getEnvVarTypeList();
@@ -93,5 +89,4 @@ public class EnvVarComboBoxModel extends AbstractListModel<Class<?>>
     public Object getSelectedItem() {
         return selectedItem;
     }
-
 }

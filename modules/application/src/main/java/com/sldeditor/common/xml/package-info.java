@@ -18,7 +18,7 @@
  */
 /**
  * Packages contain the JAXB generated classes to read/write XML.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.xml;

@@ -19,16 +19,14 @@
 
 package com.sldeditor.common.vendoroption.info;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.swing.table.AbstractTableModel;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.NoVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 /**
  * The Class VendorOptionInfoModel.
@@ -49,19 +47,18 @@ public class VendorOptionInfoModel extends AbstractTableModel {
     /** The selected version. */
     private VersionData selectedVersion = null;
 
-    /**
-     * Instantiates a new vendor option info model.
-     */
+    /** Instantiates a new vendor option info model. */
     public VendorOptionInfoModel() {
-        columnNames[0] = Localisation.getString(VendorOptionInfoModel.class,
-                "VendorOptionInfoModel.name");
-        columnNames[1] = Localisation.getString(VendorOptionInfoModel.class,
-                "VendorOptionInfoModel.version");
+        columnNames[0] =
+                Localisation.getString(VendorOptionInfoModel.class, "VendorOptionInfoModel.name");
+        columnNames[1] =
+                Localisation.getString(
+                        VendorOptionInfoModel.class, "VendorOptionInfoModel.version");
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getRowCount()
      */
     @Override
@@ -71,7 +68,7 @@ public class VendorOptionInfoModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     @Override
@@ -81,7 +78,7 @@ public class VendorOptionInfoModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
@@ -90,12 +87,12 @@ public class VendorOptionInfoModel extends AbstractTableModel {
             VendorOptionInfo info = infoList.get(rowIndex);
 
             switch (columnIndex) {
-            case 0:
-                return info.getName();
-            case 1:
-                return info.getVersionString();
-            default:
-                break;
+                case 0:
+                    return info.getName();
+                case 1:
+                    return info.getVersionString();
+                default:
+                    break;
             }
         }
         return null;
@@ -103,7 +100,7 @@ public class VendorOptionInfoModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.AbstractTableModel#getColumnName(int)
      */
     @Override
@@ -113,7 +110,7 @@ public class VendorOptionInfoModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
      */
     @Override
@@ -165,8 +162,8 @@ public class VendorOptionInfoModel extends AbstractTableModel {
                 return false;
             }
 
-            return selectedVersion.inRange(vendorOptionVersion.getEarliest(),
-                    vendorOptionVersion.getLatest());
+            return selectedVersion.inRange(
+                    vendorOptionVersion.getEarliest(), vendorOptionVersion.getLatest());
         }
         return false;
     }

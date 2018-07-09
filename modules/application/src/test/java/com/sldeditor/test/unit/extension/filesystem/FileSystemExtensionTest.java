@@ -25,22 +25,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
-import org.junit.Test;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.RecursiveUpdateInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -59,25 +43,34 @@ import com.sldeditor.extension.ExtensionFactory;
 import com.sldeditor.extension.filesystem.FileSystemExtension;
 import com.sldeditor.extension.filesystem.FileSystemExtensionFactory;
 import com.sldeditor.tool.ToolInterface;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import org.junit.Test;
 
 /**
  * Unit test for FileSystemExtension class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.FileSystemExtension}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.FileSystemExtension}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class FileSystemExtensionTest {
 
-    /**
-     * The Class DummyToolMgr.
-     */
+    /** The Class DummyToolMgr. */
     class DummyToolMgr implements ToolSelectionInterface {
         @Override
-        public void setSelectedItems(List<NodeInterface> nodeTypeList,
-                List<SLDDataInterface> sldDataList) {
-        }
+        public void setSelectedItems(
+                List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {}
 
         @Override
         public JPanel getPanel() {
@@ -85,8 +78,7 @@ public class FileSystemExtensionTest {
         }
 
         @Override
-        public void refreshSelection() {
-        }
+        public void refreshSelection() {}
 
         @Override
         public SLDEditorInterface getApplication() {
@@ -94,12 +86,11 @@ public class FileSystemExtensionTest {
         }
 
         @Override
-        public void registerTool(Class<?> nodeType, ToolInterface toolToRegister) {
-        }
+        public void registerTool(Class<?> nodeType, ToolInterface toolToRegister) {}
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.common.ToolSelectionInterface#isRecursiveFlag()
          */
         @Override
@@ -109,28 +100,24 @@ public class FileSystemExtensionTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.common.ToolSelectionInterface#setRecursiveFlag(boolean)
          */
         @Override
-        public void setRecursiveFlag(boolean recursiveFlag) {
-        }
+        public void setRecursiveFlag(boolean recursiveFlag) {}
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see
          * com.sldeditor.common.ToolSelectionInterface#addRecursiveListener(com.sldeditor.common.
          * RecursiveUpdateInterface)
          */
         @Override
-        public void addRecursiveListener(RecursiveUpdateInterface recursiveUpdate) {
-        }
+        public void addRecursiveListener(RecursiveUpdateInterface recursiveUpdate) {}
     }
 
-    /**
-     * The Class DummyExtension.
-     */
+    /** The Class DummyExtension. */
     class DummyExtension implements FileSystemInterface {
 
         /** The Constant serialVersionUID. */
@@ -144,8 +131,8 @@ public class FileSystemExtensionTest {
          * @param rootNode the root node
          */
         @Override
-        public void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode) {
-        }
+        public void populate(
+                FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode) {}
 
         /**
          * Tree expanded.
@@ -166,8 +153,7 @@ public class FileSystemExtensionTest {
          * @param e the e
          */
         @Override
-        public void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e) {
-        }
+        public void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e) {}
 
         /**
          * Gets the SLD contents.
@@ -224,7 +210,8 @@ public class FileSystemExtensionTest {
          * @return true, if successful
          */
         @Override
-        public boolean copyNodes(NodeInterface destinationTreeNode,
+        public boolean copyNodes(
+                NodeInterface destinationTreeNode,
                 Map<NodeInterface, List<SLDDataInterface>> droppedDataMap) {
             return false;
         }
@@ -236,8 +223,7 @@ public class FileSystemExtensionTest {
          * @param sldDataList the sld data list
          */
         @Override
-        public void deleteNodes(NodeInterface nodeToTransfer, List<SLDDataInterface> sldDataList) {
-        }
+        public void deleteNodes(NodeInterface nodeToTransfer, List<SLDDataInterface> sldDataList) {}
 
         /**
          * Gets the destination text.
@@ -252,8 +238,9 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#initialise(com.sldeditor.common.LoadSLDInterface, com.sldeditor.common.ToolSelectionInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.FileSystemExtension#initialise(com.sldeditor.common.LoadSLDInterface,
+     * com.sldeditor.common.ToolSelectionInterface)}.
      */
     @Test
     public void testInitialise() {
@@ -269,8 +256,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#setArguments(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.FileSystemExtension#setArguments(java.util.List)}.
      */
     @Test
     public void testSetArguments() {
@@ -345,8 +332,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#getExtensionArgPrefix()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.FileSystemExtension#getExtensionArgPrefix()}.
      */
     @Test
     public void testGetExtensionArgPrefix() {
@@ -378,8 +365,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#createMenus(javax.swing.JMenu)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.FileSystemExtension#createMenus(javax.swing.JMenu)}.
      */
     @Test
     public void testCreateMenus() {
@@ -410,9 +397,7 @@ public class FileSystemExtensionTest {
         assertTrue(fsExt.getTooltip() != null);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtension#getName()}.
-     */
+    /** Test method for {@link com.sldeditor.extension.filesystem.FileSystemExtension#getName()}. */
     @Test
     public void testGetName() {
         FileSystemExtension fsExt = new FileSystemExtension();
@@ -427,8 +412,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#open(java.net.URL)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.FileSystemExtension#open(java.net.URL)}.
      */
     @Test
     public void testOpen() {
@@ -467,8 +452,8 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#save(com.sldeditor.common.SLDDataInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.FileSystemExtension#save(com.sldeditor.common.SLDDataInterface)}.
      */
     @Test
     public void testSave() {
@@ -487,8 +472,9 @@ public class FileSystemExtensionTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.FileSystemExtension#updateForPreferences(PrefData, List String)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.FileSystemExtension#updateForPreferences(PrefData, List
+     * String)}.
      */
     @Test
     public void testUpdateForPreferences() {
@@ -521,8 +507,13 @@ public class FileSystemExtensionTest {
         prefData.setLastFolderViewed(lastFolderViewed);
         fsExt.updateForPreferences(prefData, actualArgList);
         assertEquals(1, actualArgList.size());
-        String expected = String.format("%s.%s.%s=%s", ExtensionFactory.EXTENSION_PREFIX,
-                fsExt.getExtensionArgPrefix(), "folder", lastFolderViewed);
+        String expected =
+                String.format(
+                        "%s.%s.%s=%s",
+                        ExtensionFactory.EXTENSION_PREFIX,
+                        fsExt.getExtensionArgPrefix(),
+                        "folder",
+                        lastFolderViewed);
         assertEquals(expected, actualArgList.get(0));
 
         // Set up with 'save last folder view' set to true but with GeoServer
@@ -531,20 +522,30 @@ public class FileSystemExtensionTest {
         prefData.setLastViewedKey(lastViewedKey);
         fsExt.updateForPreferences(prefData, actualArgList);
         assertEquals(1, actualArgList.size());
-        expected = String.format("%s.%s.%s=%s", ExtensionFactory.EXTENSION_PREFIX,
-                fsExt.getExtensionArgPrefix(), "geoserver", lastFolderViewed);
+        expected =
+                String.format(
+                        "%s.%s.%s=%s",
+                        ExtensionFactory.EXTENSION_PREFIX,
+                        fsExt.getExtensionArgPrefix(),
+                        "geoserver",
+                        lastFolderViewed);
         assertEquals(expected, actualArgList.get(0));
 
         // Try and replace existing argument
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         String previous = lastFolderViewed;
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
         lastFolderViewed = "new folder";
         prefData.setLastFolderViewed(lastFolderViewed);
         fsExt.updateForPreferences(prefData, actualArgList);
         assertEquals(1, actualArgList.size());
-        expected = String.format("%s.%s.%s=%s", ExtensionFactory.EXTENSION_PREFIX,
-                fsExt.getExtensionArgPrefix(), "geoserver", previous);
+        expected =
+                String.format(
+                        "%s.%s.%s=%s",
+                        ExtensionFactory.EXTENSION_PREFIX,
+                        fsExt.getExtensionArgPrefix(),
+                        "geoserver",
+                        previous);
         assertEquals(expected, actualArgList.get(0));
     }
 }

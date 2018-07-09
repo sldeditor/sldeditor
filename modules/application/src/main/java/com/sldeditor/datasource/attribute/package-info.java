@@ -18,7 +18,7 @@
  */
 /**
  * Handles storing data source attributes and notifying of any changes.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource.attribute;

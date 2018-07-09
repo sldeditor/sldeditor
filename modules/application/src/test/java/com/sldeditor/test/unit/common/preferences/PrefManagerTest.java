@@ -24,16 +24,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.Color;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.Test;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.preferences.PrefData;
@@ -46,12 +36,20 @@ import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import java.awt.Color;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.junit.Test;
 
 /**
  * Unit test for PrefManager.
- * 
+ *
  * <p>{@link com.sldeditor.common.preferences.PrefManager}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class PrefManagerTest {
@@ -60,8 +58,7 @@ public class PrefManagerTest {
         public Map<String, String> fieldValueMap = new HashMap<String, String>();
 
         @Override
-        public void readConfig() {
-        }
+        public void readConfig() {}
 
         @Override
         public double getDoubleValue(String field, double defaultValue) {
@@ -172,9 +169,16 @@ public class PrefManagerTest {
 
         @Override
         public void updateValue(String key, Color backgroundColour) {
-            String value = String.format("%03d%s%03d%s%03d%s%03d", backgroundColour.getRed(), '.',
-                    backgroundColour.getGreen(), '.', backgroundColour.getBlue(), '.',
-                    backgroundColour.getAlpha());
+            String value =
+                    String.format(
+                            "%03d%s%03d%s%03d%s%03d",
+                            backgroundColour.getRed(),
+                            '.',
+                            backgroundColour.getGreen(),
+                            '.',
+                            backgroundColour.getBlue(),
+                            '.',
+                            backgroundColour.getAlpha());
 
             updateValue(key, value);
         }
@@ -203,12 +207,11 @@ public class PrefManagerTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.common.property.PropertyManagerInterface#setPropertyFile(java.io.File)
          */
         @Override
-        public void setPropertyFile(File configPropertiesFile) {
-        }
+        public void setPropertyFile(File configPropertiesFile) {}
 
         @Override
         public List<String> getMultipleValues(String key) {
@@ -216,9 +219,7 @@ public class PrefManagerTest {
         }
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefManager#useAntiAlias()}.
-     */
+    /** Test method for {@link com.sldeditor.common.preferences.PrefManager#useAntiAlias()}. */
     @Test
     public void testPrefData() {
         PrefData prefData = new PrefData();
@@ -235,14 +236,15 @@ public class PrefManagerTest {
 
         PrefManager.getInstance().setPrefData(prefData);
 
-        assertEquals(backgroundColour,
-                PrefManager.getInstance().getPrefData().getBackgroundColour());
+        assertEquals(
+                backgroundColour, PrefManager.getInstance().getPrefData().getBackgroundColour());
         assertEquals(uiLayoutClass, PrefManager.getInstance().getPrefData().getUiLayoutClass());
         assertEquals(true, PrefManager.getInstance().getPrefData().isUseAntiAlias());
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefManager#initialise(com.sldeditor.common.property.PropertyManagerInterface)}.
+     * Test method for {@link
+     * com.sldeditor.common.preferences.PrefManager#initialise(com.sldeditor.common.property.PropertyManagerInterface)}.
      */
     @Test
     public void testInitialise() {
@@ -268,7 +270,8 @@ public class PrefManagerTest {
         Color newBackgroundColour = Color.RED;
         prefData.setBackgroundColour(newBackgroundColour);
         PrefManager.getInstance().setPrefData(prefData);
-        assertEquals(newBackgroundColour,
+        assertEquals(
+                newBackgroundColour,
                 propertyManager.getColourValue("SldEditor.backgroundColour", null));
 
         boolean newAntiAlias = false;
@@ -282,8 +285,8 @@ public class PrefManagerTest {
         assertEquals(newLayoutClass, propertyManager.getStringValue("SldEditor.uilayout", null));
 
         List<VersionData> newVendorOptionList = new ArrayList<VersionData>();
-        newVendorOptionList
-                .add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
+        newVendorOptionList.add(
+                VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
 
         prefData.setVendorOptionVersionList(newVendorOptionList);
         PrefManager.getInstance().setPrefData(prefData);
@@ -295,8 +298,9 @@ public class PrefManagerTest {
         for (VersionData versionData : newVendorOptionList) {
             encodelist.add(versionData.getEncodedString());
         }
-        assertTrue(PrefManager.cmpList(encodelist,
-                propertyManager.getStringListValue("SldEditor.vendorOptions")));
+        assertTrue(
+                PrefManager.cmpList(
+                        encodelist, propertyManager.getStringListValue("SldEditor.vendorOptions")));
 
         PrefManager.initialise(null);
     }
@@ -362,9 +366,7 @@ public class PrefManagerTest {
         assertEquals(expectedGeoServerName, actualPrefData.getLastFolderViewed());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefManager#finish()}.
-     */
+    /** Test method for {@link com.sldeditor.common.preferences.PrefManager#finish()}. */
     @Test
     public void testFinish() {
         PrefManager.initialise(null);
@@ -400,8 +402,10 @@ public class PrefManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefManager#undoAction(com.sldeditor.common.undo.UndoInterface)}. Test method for
-     * {@link com.sldeditor.common.preferences.PrefManager#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.common.preferences.PrefManager#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.common.preferences.PrefManager#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
@@ -451,5 +455,4 @@ public class PrefManagerTest {
         PrefManager.getInstance().redoAction(null);
         PrefManager.getInstance().redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
     }
-
 }

@@ -18,7 +18,7 @@
  */
 /**
  * Ui for user preferences.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.preferences;

@@ -7,15 +7,13 @@
 
 /**
  * Author: Domenico Monaco, Yong Mook Kim
- *  
- * Source: https://gist.github.com/kiuz/816e24aa787c2d102dd0
- *  
- * License: GNU v2 2014
  *
- * Fork / Learned: http://www.mkyong.com/java/how-to-detect-os-in-java-systemgetpropertyosname/
+ * <p>Source: https://gist.github.com/kiuz/816e24aa787c2d102dd0
  *
+ * <p>License: GNU v2 2014
+ *
+ * <p>Fork / Learned: http://www.mkyong.com/java/how-to-detect-os-in-java-systemgetpropertyosname/
  */
-
 package com.sldeditor.common.utils;
 
 /**
@@ -104,5 +102,4 @@ public class OSValidator {
             return "err";
         }
     }
-
 }

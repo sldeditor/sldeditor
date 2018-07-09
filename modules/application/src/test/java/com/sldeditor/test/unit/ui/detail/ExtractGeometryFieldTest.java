@@ -22,20 +22,19 @@ package com.sldeditor.test.unit.ui.detail;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Test;
-import org.locationtech.jts.geom.Geometry;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ExtractGeometryField;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldConfigPopulation;
+import org.junit.Test;
+import org.locationtech.jts.geom.Geometry;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The unit test for ExtractGeometryField.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.ExtractGeometryField}
  *
  * @author Robert Ward (SCISYS)
@@ -43,7 +42,8 @@ import com.sldeditor.ui.detail.config.FieldConfigPopulation;
 public class ExtractGeometryFieldTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.ExtractGeometryField#getGeometryField(com.sldeditor.ui.detail.config.FieldConfigPopulation)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.ExtractGeometryField#getGeometryField(com.sldeditor.ui.detail.config.FieldConfigPopulation)}.
      */
     @Test
     public void testGetGeometryField() {
@@ -53,8 +53,10 @@ public class ExtractGeometryFieldTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(Geometry.class);
 
-        FieldConfigGeometry geometryField = new FieldConfigGeometry(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true), "button");
+        FieldConfigGeometry geometryField =
+                new FieldConfigGeometry(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true),
+                        "button");
         geometryField.createUI();
         fieldConfigManager.add(fieldId, geometryField);
 
@@ -71,16 +73,15 @@ public class ExtractGeometryFieldTest {
         geometryField.populateField("");
         actualExpression = ExtractGeometryField.getGeometryField(obj);
         assertNull(actualExpression);
-        
+
         // Try invalid geometry field name
         geometryField.populateField("    ");
         actualExpression = ExtractGeometryField.getGeometryField(obj);
         assertNull(actualExpression);
-        
+
         // Try when there is no geometry field
         obj = new FieldConfigPopulation(fieldConfigManager);
         actualExpression = ExtractGeometryField.getGeometryField(obj);
         assertNull(actualExpression);
     }
-
 }

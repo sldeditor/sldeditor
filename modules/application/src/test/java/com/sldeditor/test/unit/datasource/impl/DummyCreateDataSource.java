@@ -19,11 +19,10 @@
 
 package com.sldeditor.test.unit.datasource.impl;
 
-import java.util.List;
-
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.impl.CreateDataSourceInterface;
 import com.sldeditor.datasource.impl.DataSourceInfo;
+import java.util.List;
 
 /**
  * The Class DummyCreateDataSource.
@@ -36,9 +35,8 @@ public class DummyCreateDataSource implements CreateDataSourceInterface {
      * @see com.sldeditor.datasource.impl.CreateDataSourceInterface#connect(java.lang.String, java.lang.String, com.sldeditor.datasource.SLDEditorFileInterface)
      */
     @Override
-    public List<DataSourceInfo> connect(String typeName, String geometryFieldName,
-            SLDEditorFileInterface editorFile) {
+    public List<DataSourceInfo> connect(
+            String typeName, String geometryFieldName, SLDEditorFileInterface editorFile) {
         return null;
     }
-
 }

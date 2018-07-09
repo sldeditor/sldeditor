@@ -19,13 +19,12 @@
 
 package com.sldeditor.extension.filesystem.database;
 
-import java.util.List;
-
 import com.sldeditor.common.data.DatabaseConnection;
+import java.util.List;
 
 /**
  * The Interface DatabaseParseCompleteInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface DatabaseParseCompleteInterface {
@@ -37,5 +36,4 @@ public interface DatabaseParseCompleteInterface {
      * @param featureClassList the feature class list
      */
     void populateComplete(DatabaseConnection connection, List<String> featureClassList);
-
 }

@@ -34,5 +34,4 @@ public enum ConsoleDataEnum {
     EXCEPTION,
     /** The warning. */
     WARNING
-
 }

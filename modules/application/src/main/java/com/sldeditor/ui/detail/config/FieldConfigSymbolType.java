@@ -19,17 +19,6 @@
 
 package com.sldeditor.ui.detail.config;
 
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JPanel;
-
-import org.apache.log4j.Logger;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
@@ -46,31 +35,40 @@ import com.sldeditor.ui.menucombobox.MenuComboBox;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JPanel;
+import org.apache.log4j.Logger;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class FieldConfigSymbolType allows a user to select a symbol from a list. Depending on the
  * symbol selected further field data can be configured in the {@link #containingPanel}.
- * 
+ *
  * <p>The field wraps:
+ *
  * <ul>
- * <li>a drop down GUI component ({@link com.sldeditor.ui.menucombobox.MenuComboBox})</li>
- * <li>an optional value/attribute/expression drop down,
- * ({@link com.sldeditor.ui.attribute.AttributeSelection})</li>
+ *   <li>a drop down GUI component ({@link com.sldeditor.ui.menucombobox.MenuComboBox})
+ *   <li>an optional value/attribute/expression drop down, ({@link
+ *       com.sldeditor.ui.attribute.AttributeSelection})
  * </ul>
- * 
- * <p>The {@link #containingPanel} is a CardLayout. Fields are added to the class using the
- * {@link #addField} method. A field provides symbol types to be added to the MenuComboBox and a
- * panel to be displayed if the symbol type is selected.
- * 
+ *
+ * <p>The {@link #containingPanel} is a CardLayout. Fields are added to the class using the {@link
+ * #addField} method. A field provides symbol types to be added to the MenuComboBox and a panel to
+ * be displayed if the symbol type is selected.
+ *
  * <p>The symbols present in the list depend on the symbolizer being edited and the vendor options
  * allowed by the user.
- * 
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * <p><img src="./doc-files/symboltypefield.png" />
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigSymbolType extends FieldConfigBase
@@ -80,13 +78,10 @@ public class FieldConfigSymbolType extends FieldConfigBase
     private JPanel containingPanel = null;
 
     /** The vendor option map. */
-    private Map<Class<?>, VendorOptionVersion> vendorOptionMap = 
+    private Map<Class<?>, VendorOptionVersion> vendorOptionMap =
             new HashMap<Class<?>, VendorOptionVersion>();
 
-    /**
-     * The field configuration map.
-     * Key is panel id string the field appears on.
-     */
+    /** The field configuration map. Key is panel id string the field appears on. */
     private Map<Class<?>, FieldConfigBase> fieldConfigMap =
             new HashMap<Class<?>, FieldConfigBase>();
 
@@ -111,16 +106,17 @@ public class FieldConfigSymbolType extends FieldConfigBase
         super(commonData);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     @Override
     public void createUI() {
         if (comboBox == null) {
             int xPos = getXPos();
 
             comboBox = new MenuComboBox(this);
-            comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+            comboBox.setBounds(
+                    xPos + BasePanel.WIDGET_X_START,
+                    0,
+                    BasePanel.WIDGET_STANDARD_WIDTH,
                     BasePanel.WIDGET_HEIGHT);
 
             // Register for changes in vendor option selections
@@ -136,8 +132,8 @@ public class FieldConfigSymbolType extends FieldConfigBase
             // Create
             containingPanel = new JPanel();
             containingPanel.setLayout(new CardLayout());
-            containingPanel.setBounds(0, 0, BasePanel.WIDGET_STANDARD_WIDTH,
-                    BasePanel.WIDGET_HEIGHT * 3);
+            containingPanel.setBounds(
+                    0, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT * 3);
 
             addCustomPanel(containingPanel);
         }
@@ -155,8 +151,10 @@ public class FieldConfigSymbolType extends FieldConfigBase
             VendorOptionVersion vendorOption = symbolType.getVendorOption();
 
             if (fieldConfig == null) {
-                ConsoleManager.getInstance().error(this,
-                        "FieldConfigSymbolType.addPanel passed a field config as null");
+                ConsoleManager.getInstance()
+                        .error(
+                                this,
+                                "FieldConfigSymbolType.addPanel passed a field config as null");
             } else {
                 // Add to card layout
                 containingPanel.add(fieldConfig.getPanel(), panelId.getName());
@@ -176,7 +174,8 @@ public class FieldConfigSymbolType extends FieldConfigBase
      * @param symbolSelectedListener the symbol selected listener
      * @param dataSelectionList the data selection list
      */
-    public void populate(MultiOptionSelectedInterface symbolSelectedListener,
+    public void populate(
+            MultiOptionSelectedInterface symbolSelectedListener,
             List<ValueComboBoxDataGroup> dataSelectionList) {
         this.symbolSelectedListener = symbolSelectedListener;
 
@@ -226,7 +225,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
@@ -242,7 +241,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -259,7 +258,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -273,8 +272,10 @@ public class FieldConfigSymbolType extends FieldConfigBase
                 FieldConfigBase fieldConfig = fieldConfigMap.get(data.getPanelId());
 
                 if (fieldConfig == null) {
-                    ConsoleManager.getInstance().error(this,
-                            "Failed to find field for :" + data.getPanelId().getName());
+                    ConsoleManager.getInstance()
+                            .error(
+                                    this,
+                                    "Failed to find field for :" + data.getPanelId().getName());
                 } else {
                     expression = fieldConfig.getExpression();
 
@@ -297,7 +298,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -312,12 +313,10 @@ public class FieldConfigSymbolType extends FieldConfigBase
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -332,7 +331,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -362,7 +361,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#getStringValue()
      */
     @Override
@@ -381,7 +380,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
@@ -402,7 +401,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
@@ -423,7 +422,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.menucombobox.ValueComboBoxDataSelectedInterface#optionSelected(com.sldeditor
      * .ui.ValueComboBoxData)
@@ -443,8 +442,11 @@ public class FieldConfigSymbolType extends FieldConfigBase
             FieldConfigBase fieldConfig = fieldConfigMap.get(selectedData.getPanelId());
 
             if (fieldConfig == null) {
-                ConsoleManager.getInstance().error(this,
-                        "Failed to find field config for panel id :" + selectedData.getPanelId());
+                ConsoleManager.getInstance()
+                        .error(
+                                this,
+                                "Failed to find field config for panel id :"
+                                        + selectedData.getPanelId());
             } else {
                 fieldConfig.justSelected();
 
@@ -454,8 +456,8 @@ public class FieldConfigSymbolType extends FieldConfigBase
                 if (p.isPreferredSizeSet()) {
                     preferredSize = p.getPreferredSize();
                 } else {
-                    preferredSize = new Dimension(BasePanel.FIELD_PANEL_WIDTH,
-                            BasePanel.WIDGET_HEIGHT);
+                    preferredSize =
+                            new Dimension(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT);
                 }
                 containingPanel.setPreferredSize(preferredSize);
 
@@ -469,11 +471,12 @@ public class FieldConfigSymbolType extends FieldConfigBase
                 oldValueObj = new String(newValueObj);
 
                 if (symbolSelectedListener != null) {
-                    logger.debug(String.format("Field %s selected %s", getFieldId(),
-                            selectedData.getKey()));
+                    logger.debug(
+                            String.format(
+                                    "Field %s selected %s", getFieldId(), selectedData.getKey()));
 
-                    symbolSelectedListener.optionSelected(selectedData.getPanelId(),
-                            selectedData.getKey());
+                    symbolSelectedListener.optionSelected(
+                            selectedData.getPanelId(), selectedData.getKey());
                 } else {
                     valueUpdated();
                 }

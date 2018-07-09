@@ -21,14 +21,13 @@ package com.sldeditor.test.unit.common.console;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
 import com.sldeditor.common.console.ConsoleData;
 import com.sldeditor.common.console.ConsoleDataEnum;
+import org.junit.Test;
 
 /**
  * The unit test for ConsoleData.
- * 
+ *
  * <p>{@link com.sldeditor.common.console.ConsoleData}
  *
  * @author Robert Ward (SCISYS)
@@ -36,7 +35,8 @@ import com.sldeditor.common.console.ConsoleDataEnum;
 public class ConsoleDataTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.console.ConsoleData#ConsoleData(java.lang.String, com.sldeditor.common.console.ConsoleDataEnum)}.
+     * Test method for {@link com.sldeditor.common.console.ConsoleData#ConsoleData(java.lang.String,
+     * com.sldeditor.common.console.ConsoleDataEnum)}.
      */
     @Test
     public void testConsoleData() {
@@ -47,5 +47,4 @@ public class ConsoleDataTest {
         assertEquals(expectedType, data.getType());
         assertEquals(expectedMessage, data.toString());
     }
-
 }

@@ -21,16 +21,13 @@ package com.sldeditor.test.unit.ui.detail.config.sortby;
 
 import static org.junit.Assert.assertEquals;
 
+import com.sldeditor.ui.detail.config.sortby.SortByPanel;
+import com.sldeditor.ui.detail.config.sortby.SortByUpdateInterface;
 import java.awt.BorderLayout;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JDialog;
-
 import org.junit.Test;
-
-import com.sldeditor.ui.detail.config.sortby.SortByPanel;
-import com.sldeditor.ui.detail.config.sortby.SortByUpdateInterface;
 
 /**
  * The Class SortByPanelTest.
@@ -56,7 +53,7 @@ public class SortByPanelTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.ui.detail.config.sortby.SortByPanel#moveDestinationDown()
          */
         @Override
@@ -66,7 +63,7 @@ public class SortByPanelTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.ui.detail.config.sortby.SortByPanel#moveDestinationUp()
          */
         @Override
@@ -76,7 +73,7 @@ public class SortByPanelTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.ui.detail.config.sortby.SortByPanel#moveDestinationToSource()
          */
         @Override
@@ -86,7 +83,7 @@ public class SortByPanelTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.ui.detail.config.sortby.SortByPanel#moveSrcToDestination()
          */
         @Override
@@ -96,7 +93,7 @@ public class SortByPanelTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.ui.detail.config.sortby.SortByPanel#destinationSelected()
          */
         @Override
@@ -106,7 +103,7 @@ public class SortByPanelTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.ui.detail.config.sortby.SortByPanel#sourceSelected()
          */
         @Override
@@ -116,7 +113,7 @@ public class SortByPanelTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.ui.detail.config.sortby.SortByPanel#selectDestination(int[])
          */
         @Override
@@ -126,7 +123,7 @@ public class SortByPanelTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.ui.detail.config.sortby.SortByPanel#selectSource(int[])
          */
         @Override
@@ -150,7 +147,6 @@ public class SortByPanelTest {
         public void populateFieldNames(List<String> fieldList) {
             super.populateFieldNames(fieldList);
         }
-
     }
 
     class TestSortByUpdate implements SortByUpdateInterface {
@@ -159,7 +155,7 @@ public class SortByPanelTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.ui.detail.config.sortby.SortByUpdateInterface#sortByUpdated(java.lang.
          * String)
          */
@@ -168,12 +164,9 @@ public class SortByPanelTest {
             text = sortByString;
             System.out.println(sortByString);
         }
-
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.sortby.SortByPanel#SortByPanel()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.detail.config.sortby.SortByPanel#SortByPanel()}. */
     @Test
     public void testSortByPanel() {
         TestSortByUpdate output = new TestSortByUpdate();
@@ -238,5 +231,4 @@ public class SortByPanelTest {
         // If the next is uncommented the unit test stops being unattended
         // dialog.setVisible(true);
     }
-
 }

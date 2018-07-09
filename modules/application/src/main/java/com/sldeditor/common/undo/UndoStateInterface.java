@@ -21,7 +21,7 @@ package com.sldeditor.common.undo;
 
 /**
  * The Interface UndoStateInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface UndoStateInterface {

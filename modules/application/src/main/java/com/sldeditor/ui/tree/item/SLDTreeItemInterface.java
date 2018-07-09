@@ -23,7 +23,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * The Interface SLDTreeItemInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SLDTreeItemInterface {

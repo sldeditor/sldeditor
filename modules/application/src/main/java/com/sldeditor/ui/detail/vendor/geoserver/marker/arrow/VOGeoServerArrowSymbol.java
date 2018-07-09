@@ -19,10 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.arrow;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
@@ -30,12 +26,15 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class to handle the getting and setting of GeoServer marker arrow shape vendor option data.
- * 
+ *
  * <p>Sets the &gt;WellKnownName&lt; string, extra fields needed.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
@@ -43,26 +42,30 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
     /** The arrow shape. */
     private FieldConfigArrow arrowShape = null;
 
-    /**
-     * Instantiates a new VOGeoServerArrowSymbol.
-     */
-    public VOGeoServerArrowSymbol() {
-    }
+    /** Instantiates a new VOGeoServerArrowSymbol. */
+    public VOGeoServerArrowSymbol() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
      */
     @Override
-    public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+    public List<FieldState> getMarkerSymbols(
+            Class<?> panelId,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
 
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
-        arrowShape = new FieldConfigArrow(
-                new FieldConfigCommonData(FieldConfigArrow.class, FieldIdEnum.VO_ARROW, "", true),
-                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        arrowShape =
+                new FieldConfigArrow(
+                        new FieldConfigCommonData(
+                                FieldConfigArrow.class, FieldIdEnum.VO_ARROW, "", true),
+                        fillFieldConfig,
+                        strokeFieldConfig,
+                        symbolSelectionField);
 
         fieldStateList.add(arrowShape);
         return fieldStateList;
@@ -70,7 +73,7 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getFieldMap()
      */
     @Override
@@ -80,7 +83,7 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
      */
     @Override

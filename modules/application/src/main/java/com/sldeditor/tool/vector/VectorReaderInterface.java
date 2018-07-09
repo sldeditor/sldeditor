@@ -19,10 +19,9 @@
 
 package com.sldeditor.tool.vector;
 
-import java.io.File;
-
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.DatabaseConnection;
+import java.io.File;
 
 /**
  * The Interface VectorReaderInterface.
@@ -46,6 +45,6 @@ public interface VectorReaderInterface {
      * @param featureClass the feature class
      * @return the SLD data interface
      */
-    SLDDataInterface createVectorSLDData(DatabaseConnection databaseConnection,
-            String featureClass);
+    SLDDataInterface createVectorSLDData(
+            DatabaseConnection databaseConnection, String featureClass);
 }

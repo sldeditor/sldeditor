@@ -21,19 +21,16 @@ package com.sldeditor.test.unit.common.console;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Color;
-
-import javax.swing.JLabel;
-
-import org.junit.Test;
-
 import com.sldeditor.common.console.ConsoleCellRenderer;
 import com.sldeditor.common.console.ConsoleData;
 import com.sldeditor.common.console.ConsoleDataEnum;
+import java.awt.Color;
+import javax.swing.JLabel;
+import org.junit.Test;
 
 /**
  * The unit test for ConsoleCellRenderer.
- * 
+ *
  * <p>{@link com.sldeditor.common.console.ConsoleCellRenderer}
  *
  * @author Robert Ward (SCISYS)
@@ -41,8 +38,9 @@ import com.sldeditor.common.console.ConsoleDataEnum;
 public class ConsoleCellRendererTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.console.ConsoleCellRenderer#getListCellRendererComponent(javax.swing.JList, com.sldeditor.common.console.ConsoleData, int, boolean, boolean)}.
+     * Test method for {@link
+     * com.sldeditor.common.console.ConsoleCellRenderer#getListCellRendererComponent(javax.swing.JList,
+     * com.sldeditor.common.console.ConsoleData, int, boolean, boolean)}.
      */
     @Test
     public void testGetListCellRendererComponent() {
@@ -65,5 +63,4 @@ public class ConsoleCellRendererTest {
         assertEquals(expectedMessage, label.getText());
         assertEquals(Color.BLACK, label.getForeground());
     }
-
 }

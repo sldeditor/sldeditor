@@ -19,17 +19,6 @@
 
 package com.sldeditor.ui.detail.config.symboltype;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.styling.Fill;
-import org.geotools.styling.Graphic;
-import org.opengis.filter.expression.Expression;
-import org.opengis.style.GraphicFill;
-import org.opengis.style.GraphicalSymbol;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
@@ -45,11 +34,20 @@ import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.geotools.styling.Fill;
+import org.geotools.styling.Graphic;
+import org.opengis.filter.expression.Expression;
+import org.opengis.style.GraphicFill;
+import org.opengis.style.GraphicalSymbol;
 
 /**
- * The base class FieldState provides functionality to support methods needed
- * for fields that appear in the FieldConfigSymbolType field.
- * 
+ * The base class FieldState provides functionality to support methods needed for fields that appear
+ * in the FieldConfigSymbolType field.
+ *
  * @author Robert Ward (SCISYS)
  */
 public abstract class FieldState extends FieldConfigBase {
@@ -78,8 +76,11 @@ public abstract class FieldState extends FieldConfigBase {
      * @param commonData the common data
      * @param resourceFile the resource file
      */
-    protected FieldState(FieldConfigCommonData commonData, String resourceFile,
-            ColourFieldConfig fillFieldConfig, ColourFieldConfig strokeFieldConfig,
+    protected FieldState(
+            FieldConfigCommonData commonData,
+            String resourceFile,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField) {
         super(commonData);
         this.resourceFile = resourceFile;
@@ -117,9 +118,12 @@ public abstract class FieldState extends FieldConfigBase {
      * @param graphic the graphic
      * @param symbol the new value
      */
-    public abstract void setValue(Class<?> symbolizerType,
-            GraphicPanelFieldManager fieldConfigManager, FieldConfigSymbolType multiOptionPanel,
-            Graphic graphic, GraphicalSymbol symbol);
+    public abstract void setValue(
+            Class<?> symbolizerType,
+            GraphicPanelFieldManager fieldConfigManager,
+            FieldConfigSymbolType multiOptionPanel,
+            Graphic graphic,
+            GraphicalSymbol symbol);
 
     /**
      * Gets the value.
@@ -130,8 +134,11 @@ public abstract class FieldState extends FieldConfigBase {
      * @param strokeEnabled the stroke enabled
      * @return the value
      */
-    public abstract List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
-            Expression symbolType, boolean fillEnabled, boolean strokeEnabled);
+    public abstract List<GraphicalSymbol> getValue(
+            GraphicPanelFieldManager fieldConfigManager,
+            Expression symbolType,
+            boolean fillEnabled,
+            boolean strokeEnabled);
 
     /**
      * Populate symbol list.
@@ -143,8 +150,8 @@ public abstract class FieldState extends FieldConfigBase {
         List<SymbolTypeConfig> configList = getFieldMap().get(panelDetails);
 
         if (configList == null) {
-            ConsoleManager.getInstance().error(this,
-                    "No config for panel details class : " + panelDetails.getName());
+            ConsoleManager.getInstance()
+                    .error(this, "No config for panel details class : " + panelDetails.getName());
         } else {
             if (localSymbolList == null) {
                 localSymbolList = new ArrayList<ValueComboBoxData>();
@@ -156,13 +163,18 @@ public abstract class FieldState extends FieldConfigBase {
                 List<ValueComboBoxData> groupSymbolList = new ArrayList<ValueComboBoxData>();
 
                 for (String key : config.getKeyOrderList()) {
-                    ValueComboBoxData data = new ValueComboBoxData(key, config.getTitle(key),
-                            this.getVendorOption(), config.getPanelId());
+                    ValueComboBoxData data =
+                            new ValueComboBoxData(
+                                    key,
+                                    config.getTitle(key),
+                                    this.getVendorOption(),
+                                    config.getPanelId());
                     groupSymbolList.add(data);
                 }
 
-                symbolList.add(new ValueComboBoxDataGroup(config.getGroupName(), groupSymbolList,
-                        config.isSeparateGroup()));
+                symbolList.add(
+                        new ValueComboBoxDataGroup(
+                                config.getGroupName(), groupSymbolList, config.isSeparateGroup()));
 
                 localSymbolList.addAll(groupSymbolList);
             }
@@ -199,8 +211,8 @@ public abstract class FieldState extends FieldConfigBase {
      * @param fieldConfigManager the field config manager
      * @return the fill
      */
-    public abstract Fill getFill(GraphicFill graphicFill,
-            GraphicPanelFieldManager fieldConfigManager);
+    public abstract Fill getFill(
+            GraphicFill graphicFill, GraphicPanelFieldManager fieldConfigManager);
 
     /**
      * Gets the base panel interface.
@@ -225,8 +237,8 @@ public abstract class FieldState extends FieldConfigBase {
                 }
             }
         } else {
-            ConsoleManager.getInstance().error(this,
-                    "No config for panel details class : " + panelDetails.getName());
+            ConsoleManager.getInstance()
+                    .error(this, "No config for panel details class : " + panelDetails.getName());
         }
     }
 
@@ -246,8 +258,8 @@ public abstract class FieldState extends FieldConfigBase {
      * @param sldObj the sld obj
      * @param vendorOptionsPresentList the vendor options present list
      */
-    public abstract void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList);
+    public abstract void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList);
 
     /**
      * Returns true if the class can handle the graphical symbol.
@@ -289,5 +301,4 @@ public abstract class FieldState extends FieldConfigBase {
      * @return the vendor option info
      */
     public abstract VendorOptionInfo getVendorOptionInfo();
-
 }

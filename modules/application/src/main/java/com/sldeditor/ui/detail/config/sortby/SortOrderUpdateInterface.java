@@ -26,8 +26,6 @@ package com.sldeditor.ui.detail.config.sortby;
  */
 public interface SortOrderUpdateInterface {
 
-    /**
-     * Sort order updated.
-     */
+    /** Sort order updated. */
     void sortOrderUpdated();
 }

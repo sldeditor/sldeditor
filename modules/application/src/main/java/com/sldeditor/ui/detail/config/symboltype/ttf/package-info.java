@@ -18,7 +18,7 @@
  */
 /**
  * Classes to handle true type font data entry.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.config.symboltype.ttf;

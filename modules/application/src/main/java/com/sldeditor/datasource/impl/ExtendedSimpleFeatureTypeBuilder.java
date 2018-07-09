@@ -8,7 +8,6 @@
 package com.sldeditor.datasource.impl;
 
 import java.util.logging.Logger;
-
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.locationtech.jts.geom.Geometry;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -17,11 +16,10 @@ import org.opengis.feature.type.FeatureTypeFactory;
 import org.opengis.feature.type.GeometryType;
 
 /**
- * The Class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder so
- * that a AttributeDescriptor object can be created. This then allows
- * it be added using SimpleFeatureTypeBuilder.add( int index, AttributeDescriptor descriptor ).
- * The GeoTools class suggests use of this method is
- * discouraged it allows the order of the fields to be preserved.
+ * The Class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder so that a
+ * AttributeDescriptor object can be created. This then allows it be added using
+ * SimpleFeatureTypeBuilder.add( int index, AttributeDescriptor descriptor ). The GeoTools class
+ * suggests use of this method is discouraged it allows the order of the fields to be preserved.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -30,11 +28,8 @@ public class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder {
     /** The logger. */
     static Logger LOGGER = org.geotools.util.logging.Logging.getLogger("org.geotools.feature");
 
-    /**
-     * Instantiates a new extended simple feature type builder.
-     */
-    public ExtendedSimpleFeatureTypeBuilder() {
-    }
+    /** Instantiates a new extended simple feature type builder. */
+    public ExtendedSimpleFeatureTypeBuilder() {}
 
     /**
      * Instantiates a new extended simple feature type builder.
@@ -71,8 +66,10 @@ public class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder {
             // if no crs was set, set to defaultCRS
             if (!attributeBuilder.isCRSSet()) {
                 if (defaultCrs == null && !defaultCrsSet) {
-                    LOGGER.fine("Creating " + name
-                            + " with null CoordinateReferenceSystem - did you mean to setCRS?");
+                    LOGGER.fine(
+                            "Creating "
+                                    + name
+                                    + " with null CoordinateReferenceSystem - did you mean to setCRS?");
                 }
                 attributeBuilder.setCRS(defaultCrs);
             }
@@ -86,5 +83,4 @@ public class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder {
 
         return (descriptor);
     }
-
 }

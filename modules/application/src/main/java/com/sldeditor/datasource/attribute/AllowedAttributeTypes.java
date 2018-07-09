@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.filter.function.Classifier;
 import org.geotools.filter.function.RangedClassifier;
@@ -39,12 +38,13 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 
 /**
- * The Class AllowedAttributeTypes determines whether for a data source
- * field can be used for a variable type.
- * 
- * <p>For example if a data source field type was an integer then if a sld attribute
- * type is a double then it is a match.
- * The field could be used in the attribute drop down list for an sld attribute.
+ * The Class AllowedAttributeTypes determines whether for a data source field can be used for a
+ * variable type.
+ *
+ * <p>For example if a data source field type was an integer then if a sld attribute type is a
+ * double then it is a match. The field could be used in the attribute drop down list for an sld
+ * attribute.
+ *
  * <table border="1">
  * <tr>
  * <td>Data Source Type</td>
@@ -63,39 +63,53 @@ import org.locationtech.jts.geom.Polygon;
  * <td>String</td>
  * </tr>
  * </table>
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class AllowedAttributeTypes {
 
     /** The allowed class type map. */
-    private static Map<Class<?>, List<Class<?>>> allowedClassTypeMap = 
+    private static Map<Class<?>, List<Class<?>>> allowedClassTypeMap =
             new HashMap<Class<?>, List<Class<?>>>();
 
-    /**
-     * Initialise.
-     */
+    /** Initialise. */
     private static void initialise() {
-        List<Class<?>> doubleList = new ArrayList<Class<?>>(
-                Arrays.asList(Integer.class, Long.class, Double.class, Float.class, Object.class));
-        List<Class<?>> integerList = new ArrayList<Class<?>>(
-                Arrays.asList(Integer.class, Long.class, Object.class));
+        List<Class<?>> doubleList =
+                new ArrayList<Class<?>>(
+                        Arrays.asList(
+                                Integer.class,
+                                Long.class,
+                                Double.class,
+                                Float.class,
+                                Object.class));
+        List<Class<?>> integerList =
+                new ArrayList<Class<?>>(Arrays.asList(Integer.class, Long.class, Object.class));
         List<Class<?>> stringList = new ArrayList<Class<?>>(Arrays.asList(String.class));
-        List<Class<?>> geometryList = new ArrayList<Class<?>>(
-                Arrays.asList(Point.class, LineString.class, Polygon.class, MultiPolygon.class,
-                        MultiPoint.class, MultiLineString.class, GridCoverage2D.class, Object.class));
-        List<Class<?>> lineStringList = new ArrayList<Class<?>>(
-                Arrays.asList(LineString.class, MultiLineString.class, Object.class));
-        List<Class<?>> pointList = new ArrayList<Class<?>>(
-                Arrays.asList(Point.class, MultiPoint.class, Object.class));
+        List<Class<?>> geometryList =
+                new ArrayList<Class<?>>(
+                        Arrays.asList(
+                                Point.class,
+                                LineString.class,
+                                Polygon.class,
+                                MultiPolygon.class,
+                                MultiPoint.class,
+                                MultiLineString.class,
+                                GridCoverage2D.class,
+                                Object.class));
+        List<Class<?>> lineStringList =
+                new ArrayList<Class<?>>(
+                        Arrays.asList(LineString.class, MultiLineString.class, Object.class));
+        List<Class<?>> pointList =
+                new ArrayList<Class<?>>(Arrays.asList(Point.class, MultiPoint.class, Object.class));
         List<Class<?>> linearRingList = new ArrayList<Class<?>>(Arrays.asList(LinearRing.class));
-        List<Class<?>> rangedClassifierList = new ArrayList<Class<?>>(
-                Arrays.asList(RangedClassifier.class, Object.class));
-        List<Class<?>> classifierList = new ArrayList<Class<?>>(Arrays.asList(Classifier.class, Object.class));
-        List<Class<?>> rasterGeometryList = new ArrayList<Class<?>>(
-                Arrays.asList(GridCoverage2D.class, Object.class));
-        List<Class<?>> referencedEnvelopeList = new ArrayList<Class<?>>(
-                Arrays.asList(ReferencedEnvelope.class, Object.class));
+        List<Class<?>> rangedClassifierList =
+                new ArrayList<Class<?>>(Arrays.asList(RangedClassifier.class, Object.class));
+        List<Class<?>> classifierList =
+                new ArrayList<Class<?>>(Arrays.asList(Classifier.class, Object.class));
+        List<Class<?>> rasterGeometryList =
+                new ArrayList<Class<?>>(Arrays.asList(GridCoverage2D.class, Object.class));
+        List<Class<?>> referencedEnvelopeList =
+                new ArrayList<Class<?>>(Arrays.asList(ReferencedEnvelope.class, Object.class));
 
         allowedClassTypeMap.put(String.class, stringList);
         allowedClassTypeMap.put(Double.class, doubleList);

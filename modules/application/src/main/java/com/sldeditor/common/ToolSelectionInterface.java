@@ -19,15 +19,13 @@
 
 package com.sldeditor.common;
 
-import java.util.List;
-
-import javax.swing.JPanel;
-
 import com.sldeditor.tool.ToolInterface;
+import java.util.List;
+import javax.swing.JPanel;
 
 /**
  * The Interface ToolSelectionInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface ToolSelectionInterface {
@@ -47,9 +45,7 @@ public interface ToolSelectionInterface {
      */
     JPanel getPanel();
 
-    /**
-     * Refresh selection.
-     */
+    /** Refresh selection. */
     void refreshSelection();
 
     /**
@@ -87,5 +83,4 @@ public interface ToolSelectionInterface {
      * @param recursiveUpdate the recursive update
      */
     void addRecursiveListener(RecursiveUpdateInterface recursiveUpdate);
-
 }

@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Allows GeoServer to used as an input to the SLD Editor. 
- * 
+ * Allows GeoServer to used as an input to the SLD Editor.
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.extension.filesystem.geoserver;

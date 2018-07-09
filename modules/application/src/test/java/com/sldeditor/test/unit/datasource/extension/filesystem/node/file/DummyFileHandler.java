@@ -19,22 +19,20 @@
 
 package com.sldeditor.test.unit.datasource.extension.filesystem.node.file;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.Icon;
-import javax.swing.tree.DefaultTreeModel;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.Icon;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  * The Class DummyFileHandler.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DummyFileHandler implements FileHandlerInterface {
@@ -61,8 +59,8 @@ public class DummyFileHandler implements FileHandlerInterface {
      * @return true, if successful
      */
     @Override
-    public boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel,
-            FileTreeNode node) {
+    public boolean populate(
+            FileSystemInterface inputInterface, DefaultTreeModel treeModel, FileTreeNode node) {
         return false;
     }
 
@@ -122,7 +120,7 @@ public class DummyFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.
      * lang.String, java.lang.String)
@@ -131,5 +129,4 @@ public class DummyFileHandler implements FileHandlerInterface {
     public Icon getIcon(String path, String filename) {
         return null;
     }
-
 }

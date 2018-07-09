@@ -19,34 +19,29 @@
 
 package com.sldeditor.ui.tree.item;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.geotools.styling.Symbolizer;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.tree.SLDTreeTools;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.geotools.styling.Symbolizer;
 
 /**
  * Class that display stroke data within the sld tree structure.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class StrokeTreeItem implements SLDTreeItemInterface {
 
     /** The Constant TITLE. */
-    private static final String TITLE = Localisation.getString(SLDTreeTools.class,
-            "TreeItem.stroke");
+    private static final String TITLE =
+            Localisation.getString(SLDTreeTools.class, "TreeItem.stroke");
 
-    /**
-     * Instantiates a new stroke tree item.
-     */
-    public StrokeTreeItem() {
-    }
+    /** Instantiates a new stroke tree item. */
+    public StrokeTreeItem() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -56,7 +51,7 @@ public class StrokeTreeItem implements SLDTreeItemInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeItemInterface#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override

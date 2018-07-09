@@ -19,15 +19,13 @@
 
 package com.sldeditor.extension.filesystem.geoserver;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-
 import com.sldeditor.common.DataTypeEnum;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerWPSClient;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerWPSClientInterface;
-
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 import net.opengis.wps10.ProcessBriefType;
 
 /**
@@ -64,8 +62,8 @@ public class RenderTransformationManager {
 
         client.getCapabilities();
 
-        List<ProcessBriefType> functionList = client
-                .getRenderTransformations(DataTypeEnum.E_VECTOR);
+        List<ProcessBriefType> functionList =
+                client.getRenderTransformations(DataTypeEnum.E_VECTOR);
 
         functionList = client.getRenderTransformations(DataTypeEnum.E_RASTER);
 
@@ -90,5 +88,4 @@ public class RenderTransformationManager {
             e.printStackTrace();
         }
     }
-
 }

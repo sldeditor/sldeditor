@@ -25,8 +25,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.SLDTreeUpdatedInterface;
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
@@ -49,13 +51,9 @@ import org.opengis.filter.FilterFactory;
 import org.opengis.style.GraphicalSymbol;
 import org.opengis.style.Stroke;
 
-import com.sldeditor.common.data.SLDTreeUpdatedInterface;
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-
 /**
  * The unit test for SelectedSymbol.
- * 
+ *
  * <p>{@link com.sldeditor.common.data.SelectedSymbol}
  *
  * @author Robert Ward (SCISYS)
@@ -82,7 +80,6 @@ public class SelectedSymbolTest {
         public void leafSelected() {
             // Does nothing for this unit test
         }
-
     }
 
     @Test
@@ -90,14 +87,14 @@ public class SelectedSymbolTest {
         SelectedSymbol.destroyInstance();
         SelectedSymbol instance = SelectedSymbol.getInstance();
 
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         Rule rule = DefaultSymbols.createNewRule();
         FeatureTypeStyle fts = DefaultSymbols.createNewFeatureTypeStyle();
         Style style = DefaultSymbols.createNewStyle();
         NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
         StyledLayerDescriptor sld = DefaultSymbols.createNewSLD();
         PolygonSymbolizer symbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
 
         instance.createNewSLD(sld);
 
@@ -184,8 +181,8 @@ public class SelectedSymbolTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.data.SelectedSymbol#getSymbolList(org.opengis.style.GraphicalSymbol)}.
+     * Test method for {@link
+     * com.sldeditor.common.data.SelectedSymbol#getSymbolList(org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testGetSymbolList() {
@@ -204,22 +201,20 @@ public class SelectedSymbolTest {
         assertEquals(symbolToAdd, symbolList.get(0));
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.data.SelectedSymbol#getGraphic()}.
-     */
+    /** Test method for {@link com.sldeditor.common.data.SelectedSymbol#getGraphic()}. */
     @Test
     public void testGetGraphic() {
         SelectedSymbol.destroyInstance();
         SelectedSymbol instance = SelectedSymbol.getInstance();
 
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         Rule rule = DefaultSymbols.createNewRule();
         FeatureTypeStyle fts = DefaultSymbols.createNewFeatureTypeStyle();
         Style style = DefaultSymbols.createNewStyle();
         NamedLayer namedLayer = DefaultSymbols.createNewNamedLayer();
         StyledLayerDescriptor sld = DefaultSymbols.createNewSLD();
         PolygonSymbolizer symbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
 
         instance.createNewSLD(sld);
 
@@ -273,16 +268,15 @@ public class SelectedSymbolTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.data.SelectedSymbol#setTreeUpdateListener(com.sldeditor.common.data.SLDTreeUpdatedInterface)}.
+     * Test method for {@link
+     * com.sldeditor.common.data.SelectedSymbol#setTreeUpdateListener(com.sldeditor.common.data.SLDTreeUpdatedInterface)}.
      */
     @Test
-    public void testSetTreeUpdateListener() {
-    }
+    public void testSetTreeUpdateListener() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.data.SelectedSymbol#removeRule(org.geotools.styling.Rule)}.
+     * Test method for {@link
+     * com.sldeditor.common.data.SelectedSymbol#removeRule(org.geotools.styling.Rule)}.
      */
     @Test
     public void testReplacment() {
@@ -354,8 +348,8 @@ public class SelectedSymbolTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.data.SelectedSymbol#removeFeatureTypeStyle(org.geotools.styling.FeatureTypeStyle)}.
+     * Test method for {@link
+     * com.sldeditor.common.data.SelectedSymbol#removeFeatureTypeStyle(org.geotools.styling.FeatureTypeStyle)}.
      */
     @Test
     public void testRemove() {

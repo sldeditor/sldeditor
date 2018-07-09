@@ -35,7 +35,7 @@ public interface ColourRampUpdateInterface {
      * @param data the data
      */
     void colourRampUpdate(ColourRampData data);
-    
+
     /**
      * Gets the colour map model.
      *

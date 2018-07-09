@@ -22,7 +22,6 @@ package com.sldeditor.filter.v2.expression;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.function.CategorizeFunction;
 import org.geotools.filter.function.EqualIntervalFunction;
@@ -43,8 +42,8 @@ import org.opengis.filter.expression.Function;
 
 /**
  * The Class FunctionInterfaceUtils.
- * 
- * Handles the functions that inherit from org.geotools.filter.function.Function interface
+ *
+ * <p>Handles the functions that inherit from org.geotools.filter.function.Function interface
  */
 public class FunctionInterfaceUtils {
 
@@ -58,8 +57,8 @@ public class FunctionInterfaceUtils {
      * @param index the index
      * @param expression the expression
      */
-    public static void handleFunctionInterface(ExpressionNode parentNode, int index,
-            Expression expression) {
+    public static void handleFunctionInterface(
+            ExpressionNode parentNode, int index, Expression expression) {
         Function function = (Function) parentNode.getExpression();
 
         List<Expression> parameterList = new ArrayList<Expression>();
@@ -82,8 +81,8 @@ public class FunctionInterfaceUtils {
             parentNode.setExpression(
                     new CategorizeFunction(parameterList, function.getFallbackValue()));
         } else if (parentNode.getExpression() instanceof RecodeFunction) {
-            parentNode
-                    .setExpression(new RecodeFunction(parameterList, function.getFallbackValue()));
+            parentNode.setExpression(
+                    new RecodeFunction(parameterList, function.getFallbackValue()));
         } else if (parentNode.getExpression() instanceof StringTemplateFunction) {
             parentNode.setExpression(
                     new StringTemplateFunction(parameterList, function.getFallbackValue()));
@@ -133,8 +132,8 @@ public class FunctionInterfaceUtils {
 
             return recodeFunction;
         } else if (newExpression instanceof StringTemplateFunction) {
-            StringTemplateFunction stringTemplateFunction = new StringTemplateFunction(params,
-                    null);
+            StringTemplateFunction stringTemplateFunction =
+                    new StringTemplateFunction(params, null);
 
             return stringTemplateFunction;
         }
@@ -154,8 +153,8 @@ public class FunctionInterfaceUtils {
         List<org.opengis.filter.expression.Expression> params = expression.getParameters();
         if (params != null) {
             org.opengis.filter.expression.Expression exp;
-            for (Iterator<org.opengis.filter.expression.Expression> it = params.iterator(); it
-                    .hasNext();) {
+            for (Iterator<org.opengis.filter.expression.Expression> it = params.iterator();
+                    it.hasNext(); ) {
                 exp = it.next();
                 sb.append("[");
                 sb.append(exp);

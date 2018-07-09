@@ -19,13 +19,16 @@
 
 package com.sldeditor.ui.detail.config.colourmap;
 
+import com.sldeditor.colourramp.ramp.ColourRampData;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.utils.ColourUtils;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
@@ -33,12 +36,6 @@ import org.geotools.styling.ColorMapEntryImpl;
 import org.geotools.styling.ColorMapImpl;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.colourramp.ramp.ColourRampData;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.utils.ColourUtils;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
 
 /**
  * The Class ColourMapModel.
@@ -124,18 +121,18 @@ public class ColourMapModel extends AbstractTableModel {
         ColourMapData colourMapData = colourMapList.get(rowIndex);
 
         switch (columnIndex) {
-        case COL_NUMBER:
-            return (rowIndex + 1);
-        case COL_LABEL:
-            return colourMapData.getLabel();
-        case COL_COLOUR:
-            return colourMapData.getColourString();
-        case COL_OPACITY:
-            return colourMapData.getOpacity();
-        case COL_QUANTITY:
-            return colourMapData.getQuantity();
-        default:
-            break;
+            case COL_NUMBER:
+                return (rowIndex + 1);
+            case COL_LABEL:
+                return colourMapData.getLabel();
+            case COL_COLOUR:
+                return colourMapData.getColourString();
+            case COL_OPACITY:
+                return colourMapData.getOpacity();
+            case COL_QUANTITY:
+                return colourMapData.getQuantity();
+            default:
+                break;
         }
         return null;
     }
@@ -194,7 +191,8 @@ public class ColourMapModel extends AbstractTableModel {
      * @param table the new cell renderer
      */
     public void setCellRenderer(JTable table) {
-        table.getColumnModel().getColumn(COL_COLOUR)
+        table.getColumnModel()
+                .getColumn(COL_COLOUR)
                 .setCellRenderer(new ColourTableCellRenderer(this));
     }
 
@@ -210,9 +208,7 @@ public class ColourMapModel extends AbstractTableModel {
         return colourMapData.getColour();
     }
 
-    /**
-     * Adds a new colour map entry.
-     */
+    /** Adds a new colour map entry. */
     public void addNewEntry() {
         ColourMapData data = new ColourMapData();
 
@@ -303,8 +299,9 @@ public class ColourMapModel extends AbstractTableModel {
     public void updateColourRamp(ColourRampData data) {
         if (data != null) {
             for (ColourMapData row : colourMapList) {
-                Expression colour = data.getColourRamp().getColour(data, row.getQuantity(),
-                        data.reverseColours());
+                Expression colour =
+                        data.getColourRamp()
+                                .getColour(data, row.getQuantity(), data.reverseColours());
 
                 row.setColour(colour);
             }

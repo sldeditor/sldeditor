@@ -21,14 +21,14 @@ package com.sldeditor.ui.detail.config.base.defaults;
 
 /**
  * Class for configuration file default (string) default values.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DefaultDefault extends DefaultBase {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#accepts(java.lang.String)
      */
     @Override
@@ -38,12 +38,11 @@ public class DefaultDefault extends DefaultBase {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#getValue(java.lang.String)
      */
     @Override
     public Object getValue(String defaultValue) {
         return defaultValue;
     }
-
 }

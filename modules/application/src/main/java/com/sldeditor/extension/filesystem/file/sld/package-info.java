@@ -18,7 +18,7 @@
  */
 /**
  * Allows sld files to be loaded.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.extension.filesystem.file.sld;

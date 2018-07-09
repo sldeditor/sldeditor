@@ -21,22 +21,21 @@ package com.sldeditor.test.unit.filter;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test;
-
 import com.sldeditor.filter.ExpressionPanelFactory;
+import org.junit.Test;
 
 /**
  * Unit test for ExpressionPanelFactory class.
- * 
- * <p>{@link com.sldeditor.filter.ExpressionPanelFactory}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.filter.ExpressionPanelFactory}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class ExpressionPanelFactoryTest {
 
     /**
-     * Test method for {@link com.sldeditor.filter.ExpressionPanelFactory#getFilterPanel(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.filter.ExpressionPanelFactory#getFilterPanel(java.lang.String)}.
      */
     @Test
     public void testGetFilterPanel() {
@@ -44,7 +43,8 @@ public class ExpressionPanelFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.ExpressionPanelFactory#getExpressionPanel(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.filter.ExpressionPanelFactory#getExpressionPanel(java.lang.String)}.
      */
     @Test
     public void testGetExpressionPanel() {
@@ -52,7 +52,8 @@ public class ExpressionPanelFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.ExpressionPanelFactory#useAntiAliasUpdated(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.filter.ExpressionPanelFactory#useAntiAliasUpdated(boolean)}.
      */
     @Test
     public void testUseAntiAliasUpdated() {
@@ -60,7 +61,8 @@ public class ExpressionPanelFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.ExpressionPanelFactory#vendorOptionsUpdated(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.filter.ExpressionPanelFactory#vendorOptionsUpdated(java.util.List)}.
      */
     @Test
     public void testVendorOptionsUpdated() {
@@ -68,11 +70,11 @@ public class ExpressionPanelFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.filter.ExpressionPanelFactory#backgroundColourUpdate(java.awt.Color)}.
+     * Test method for {@link
+     * com.sldeditor.filter.ExpressionPanelFactory#backgroundColourUpdate(java.awt.Color)}.
      */
     @Test
     public void testBackgroundColourUpdate() {
         // Do nothing
     }
-
 }

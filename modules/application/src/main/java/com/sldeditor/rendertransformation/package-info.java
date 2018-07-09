@@ -19,7 +19,7 @@
 
 /**
  * Dialogs to configure render transformations.
- *  
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.rendertransformation;

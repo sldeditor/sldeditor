@@ -19,14 +19,12 @@
 
 package com.sldeditor.filter.v2.envvar.dialog;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.table.DefaultTableModel;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.filter.v2.envvar.EnvVar;
 import com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * The Class EnvVarModel.
@@ -134,14 +132,14 @@ public class EnvVarModel extends DefaultTableModel {
         EnvVar envVar = dataList.get(row);
 
         switch (column) {
-        case COL_NAME:
-            return envVar.getName();
-        case COL_TYPE:
-            return envVar.getType();
-        case COL_VALUE:
-            return envVar.getValue();
-        default:
-            break;
+            case COL_NAME:
+                return envVar.getName();
+            case COL_TYPE:
+                return envVar.getType();
+            case COL_VALUE:
+                return envVar.getValue();
+            default:
+                break;
         }
         return null;
     }
@@ -158,26 +156,25 @@ public class EnvVarModel extends DefaultTableModel {
         EnvVar envVar = dataList.get(row);
 
         switch (column) {
-        case COL_NAME: {
-            String nameValue = (String) aValue;
-            nameValue = nameValue.replace(" ", "_");
-            envVar.setName(nameValue);
-        }
-            break;
-        case COL_TYPE:
-            envVar.setType((Class<?>) aValue);
-            break;
-        case COL_VALUE:
-            envVar.setValue(aValue);
-            break;
-        default:
-            break;
+            case COL_NAME:
+                {
+                    String nameValue = (String) aValue;
+                    nameValue = nameValue.replace(" ", "_");
+                    envVar.setName(nameValue);
+                }
+                break;
+            case COL_TYPE:
+                envVar.setType((Class<?>) aValue);
+                break;
+            case COL_VALUE:
+                envVar.setValue(aValue);
+                break;
+            default:
+                break;
         }
     }
 
-    /**
-     * Populate.
-     */
+    /** Populate. */
     public void populate() {
         if (this.envMgr != null) {
             dataList = this.envMgr.getEnvVarList();
@@ -215,9 +212,7 @@ public class EnvVarModel extends DefaultTableModel {
         }
     }
 
-    /**
-     * Adds the new variable.
-     */
+    /** Adds the new variable. */
     public void addNewVariable() {
         EnvVar envVar = this.envMgr.addNewEnvVar("NewEnvVar", String.class, null);
 
@@ -256,9 +251,7 @@ public class EnvVarModel extends DefaultTableModel {
         return dataList.get(rowIndex);
     }
 
-    /**
-     * Update env var manager.
-     */
+    /** Update env var manager. */
     public void updateEnvVarManager() {
         if (this.envMgr != null) {
             this.envMgr.update(dataList);

@@ -22,12 +22,6 @@ package com.sldeditor.test.unit.extension.filesystem.geoserver;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.Test;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.StyleWrapper;
@@ -35,14 +29,17 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNod
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerOverallNode;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerParseCompleteInterface;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.junit.Test;
 
 /**
  * Unit test for GeoServerReadProgress class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class GeoServerReadProgressTest {
 
@@ -50,17 +47,18 @@ public class GeoServerReadProgressTest {
         public boolean completed = false;
 
         @Override
-        public void populateComplete(GeoServerConnection connection,
+        public void populateComplete(
+                GeoServerConnection connection,
                 Map<String, List<StyleWrapper>> styleMap,
                 Map<String, List<GeoServerLayer>> layerMap) {
             completed = true;
         }
-
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress#GeoServerReadProgress(com.sldeditor.common.filesystem.FileSystemInterface, com.sldeditor.extension.filesystem.geoserver.GeoServerParseCompleteInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress#GeoServerReadProgress(com.sldeditor.common.filesystem.FileSystemInterface,
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerParseCompleteInterface)}.
      */
     @Test
     public void testGeoServerReadProgress() {
@@ -112,8 +110,9 @@ public class GeoServerReadProgressTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress#removeNode(com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode, java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress#removeNode(com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode,
+     * java.lang.String)}.
      */
     @Test
     public void testRemoveNode() {
@@ -129,8 +128,8 @@ public class GeoServerReadProgressTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress#disconnect(com.sldeditor.common.data.GeoServerConnection)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress#disconnect(com.sldeditor.common.data.GeoServerConnection)}.
      */
     @Test
     public void testDisconnect() {
@@ -149,8 +148,8 @@ public class GeoServerReadProgressTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress#deleteConnection(com.sldeditor.common.data.GeoServerConnection)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress#deleteConnection(com.sldeditor.common.data.GeoServerConnection)}.
      */
     @Test
     public void testDeleteConnection() {
@@ -169,8 +168,9 @@ public class GeoServerReadProgressTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress#updateConnection(com.sldeditor.common.data.GeoServerConnection, com.sldeditor.common.data.GeoServerConnection)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress#updateConnection(com.sldeditor.common.data.GeoServerConnection,
+     * com.sldeditor.common.data.GeoServerConnection)}.
      */
     @Test
     public void testUpdateConnection() {
@@ -192,5 +192,4 @@ public class GeoServerReadProgressTest {
         newConnectionDetails.setConnectionName("updated test connection 1");
         progress.updateConnection(connection, newConnectionDetails);
     }
-
 }

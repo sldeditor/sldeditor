@@ -21,19 +21,17 @@ package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.wkt;
 
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint;
+import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.geometry.DirectPosition2D;
 import org.junit.Test;
 import org.opengis.geometry.DirectPosition;
 
-import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint;
-import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList;
-
 /**
  * The unit test for WKTSegmentList.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList}
  *
  * @author Robert Ward (SCISYS)
@@ -41,11 +39,16 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList;
 public class WKTSegmentListTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList#getWktPointList(boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList#setWktPointList(java.util.List)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList#addPoint(com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList#getWKTString()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList#getWKTString(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList#getWktPointList(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList#setWktPointList(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList#addPoint(com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList#getWKTString()}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList#getWKTString(boolean)}.
      */
     @Test
     public void testGetWktPointList() {

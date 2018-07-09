@@ -19,20 +19,6 @@
 
 package com.sldeditor.ui.detail.config.symboltype.externalgraphic;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.styling.ExternalGraphic;
-import org.geotools.styling.ExternalGraphicImpl;
-import org.geotools.styling.Fill;
-import org.geotools.styling.Graphic;
-import org.opengis.filter.expression.Expression;
-import org.opengis.style.GraphicFill;
-import org.opengis.style.GraphicalSymbol;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -49,19 +35,31 @@ import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.geotools.styling.ExternalGraphic;
+import org.geotools.styling.ExternalGraphicImpl;
+import org.geotools.styling.Fill;
+import org.geotools.styling.Graphic;
+import org.opengis.filter.expression.Expression;
+import org.opengis.style.GraphicFill;
+import org.opengis.style.GraphicalSymbol;
 
 /**
  * The Class FieldConfigFilename wraps a text field GUI component and an optional
  * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * 
+ *
  * <p>A button when clicked on displays a file dialog, the full path is written to the text field.
- * 
+ *
  * <p>The field allows external images e.g. png, jpg, svg to be specified.
- * 
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigFilename extends FieldState implements ExternalGraphicUpdateInterface {
@@ -90,18 +88,23 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigFilename(FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig,
+    public FieldConfigFilename(
+            FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
+        super(
+                commonData,
+                SYMBOLTYPE_FIELD_STATE_RESOURCE,
+                fillFieldConfig,
+                strokeFieldConfig,
                 symbolSelectionField);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -126,7 +129,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
@@ -142,7 +145,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -159,7 +162,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -179,7 +182,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -187,12 +190,10 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
         return true;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -209,7 +210,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -251,8 +252,12 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @param symbol the symbol
      */
     @Override
-    public void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol) {
+    public void setValue(
+            Class<?> symbolizerType,
+            GraphicPanelFieldManager fieldConfigManager,
+            FieldConfigSymbolType multiOptionPanel,
+            Graphic graphic,
+            GraphicalSymbol symbol) {
         if (symbol instanceof ExternalGraphicImpl) {
             ExternalGraphicImpl markerSymbol = (ExternalGraphicImpl) symbol;
 
@@ -281,8 +286,11 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @return the value
      */
     @Override
-    public List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
-            Expression symbolType, boolean fillEnabled, boolean strokeEnabled) {
+    public List<GraphicalSymbol> getValue(
+            GraphicPanelFieldManager fieldConfigManager,
+            Expression symbolType,
+            boolean fillEnabled,
+            boolean strokeEnabled) {
         List<GraphicalSymbol> symbols = null;
         if (externalGraphicPanel != null) {
             ExternalGraphic extGraphic = externalGraphicPanel.getSymbol();
@@ -391,9 +399,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
         return externalGraphicPanel.getExpression().toString();
     }
 
-    /**
-     * External graphic value updated.
-     */
+    /** External graphic value updated. */
     @Override
     public void externalGraphicValueUpdated() {
         setCachedExpression(generateExpression());
@@ -440,9 +446,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
         checkSymbolIsValid();
     }
 
-    /**
-     * Check symbol is valid.
-     */
+    /** Check symbol is valid. */
     public void checkSymbolIsValid() {
         // Mark symbol as valid/invalid
         boolean valid = false;
@@ -464,8 +468,12 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
         FieldConfigFilename copy = null;
 
         if (fieldConfigBase != null) {
-            copy = new FieldConfigFilename(fieldConfigBase.getCommonData(), fillFieldConfig,
-                    strokeFieldConfig, symbolSelectionField);
+            copy =
+                    new FieldConfigFilename(
+                            fieldConfigBase.getCommonData(),
+                            fillFieldConfig,
+                            strokeFieldConfig,
+                            symbolSelectionField);
         }
         return copy;
     }
@@ -484,7 +492,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(
      * java.util.Map)
@@ -497,7 +505,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
      */
     @Override
@@ -507,19 +515,19 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object,
      * java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // Strict SLD
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
      */
     @Override

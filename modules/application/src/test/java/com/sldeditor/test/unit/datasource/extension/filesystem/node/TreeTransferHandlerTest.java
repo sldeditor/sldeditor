@@ -22,25 +22,22 @@ package com.sldeditor.test.unit.datasource.extension.filesystem.node;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import javax.swing.TransferHandler;
-
-import org.junit.Test;
-
 import com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler;
+import javax.swing.TransferHandler;
+import org.junit.Test;
 
 /**
  * Unit test for TreeTransferHandler.
- * 
- * <p>{@link com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class TreeTransferHandlerTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#createTransferable(javax.swing.JComponent)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#createTransferable(javax.swing.JComponent)}.
      */
     @Test
     public void testCreateTransferableJComponent() {
@@ -50,8 +47,9 @@ public class TreeTransferHandlerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#exportDone(javax.swing.JComponent, java.awt.datatransfer.Transferable, int)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#exportDone(javax.swing.JComponent,
+     * java.awt.datatransfer.Transferable, int)}.
      */
     @Test
     public void testExportDoneJComponentTransferableInt() {
@@ -59,8 +57,8 @@ public class TreeTransferHandlerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#getSourceActions(javax.swing.JComponent)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#getSourceActions(javax.swing.JComponent)}.
      */
     @Test
     public void testGetSourceActionsJComponent() {
@@ -68,8 +66,9 @@ public class TreeTransferHandlerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#importData(javax.swing.JComponent, java.awt.datatransfer.Transferable)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#importData(javax.swing.JComponent,
+     * java.awt.datatransfer.Transferable)}.
      */
     @Test
     public void testImportDataJComponentTransferable() {
@@ -77,8 +76,8 @@ public class TreeTransferHandlerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#isDragging()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#isDragging()}.
      */
     @Test
     public void testIsDragging() {
@@ -86,12 +85,11 @@ public class TreeTransferHandlerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#canImport(javax.swing.TransferHandler.TransferSupport)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler#canImport(javax.swing.TransferHandler.TransferSupport)}.
      */
     @Test
     public void testCanImportTransferSupport() {
         // fail("Not yet implemented");
     }
-
 }

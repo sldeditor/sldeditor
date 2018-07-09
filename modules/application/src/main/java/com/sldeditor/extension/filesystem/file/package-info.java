@@ -18,7 +18,7 @@
  */
 /**
  * Allows files to be displayed/copied in the file system
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.extension.filesystem.file;

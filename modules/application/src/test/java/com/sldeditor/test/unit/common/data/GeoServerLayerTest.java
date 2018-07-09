@@ -22,15 +22,14 @@ package com.sldeditor.test.unit.common.data;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.StyleWrapper;
+import org.junit.Test;
 
 /**
  * The unit test for GeoServerLayer.
- * 
+ *
  * <p>{@link com.sldeditor.common.data.GeoServerLayer}
  *
  * @author Robert Ward (SCISYS)
@@ -38,8 +37,9 @@ import com.sldeditor.common.data.StyleWrapper;
 public class GeoServerLayerTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#getLayerWorkspace()}.
-     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#setLayerWorkspace(java.lang.String)}.
+     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#getLayerWorkspace()}. Test
+     * method for {@link
+     * com.sldeditor.common.data.GeoServerLayer#setLayerWorkspace(java.lang.String)}.
      */
     @Test
     public void testGetLayerWorkspace() {
@@ -52,8 +52,8 @@ public class GeoServerLayerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#getLayerName()}.
-     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#setLayerName(java.lang.String)}.
+     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#getLayerName()}. Test method
+     * for {@link com.sldeditor.common.data.GeoServerLayer#setLayerName(java.lang.String)}.
      */
     @Test
     public void testGetLayerName() {
@@ -66,8 +66,9 @@ public class GeoServerLayerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#getStyle()}.
-     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#setStyle(com.sldeditor.common.data.StyleWrapper)}.
+     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#getStyle()}. Test method for
+     * {@link
+     * com.sldeditor.common.data.GeoServerLayer#setStyle(com.sldeditor.common.data.StyleWrapper)}.
      */
     @Test
     public void testGetStyle() {
@@ -81,8 +82,9 @@ public class GeoServerLayerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#getStyleString()}.
-     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#setDefaultWorkspaceName(java.lang.String)}.
+     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#getStyleString()}. Test
+     * method for {@link
+     * com.sldeditor.common.data.GeoServerLayer#setDefaultWorkspaceName(java.lang.String)}.
      */
     @Test
     public void testGetStyleString() {
@@ -115,8 +117,9 @@ public class GeoServerLayerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#getConnection()}.
-     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#setConnection(com.sldeditor.common.data.GeoServerConnection)}.
+     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#getConnection()}. Test method
+     * for {@link
+     * com.sldeditor.common.data.GeoServerLayer#setConnection(com.sldeditor.common.data.GeoServerConnection)}.
      */
     @Test
     public void testGetConnection() {
@@ -127,9 +130,7 @@ public class GeoServerLayerTest {
         assertEquals(connection, layer.getConnection());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerLayer#GeoServerLayer()}.
-     */
+    /** Test method for {@link com.sldeditor.common.data.GeoServerLayer#GeoServerLayer()}. */
     @Test
     public void testGeoServerLayer() {
         String layerWorkspace = "workspace";

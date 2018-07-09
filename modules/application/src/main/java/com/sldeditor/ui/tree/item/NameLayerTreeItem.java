@@ -19,29 +19,27 @@
 
 package com.sldeditor.ui.tree.item;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.geotools.styling.NamedLayerImpl;
-import org.geotools.styling.StyledLayer;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.tree.SLDTreeTools;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.geotools.styling.NamedLayerImpl;
+import org.geotools.styling.StyledLayer;
 
 /**
  * Class that display NamedLayer data within the sld tree structure.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class NameLayerTreeItem implements SLDTreeItemInterface {
 
     /** The Constant TITLE. */
-    private static final String TITLE = Localisation.getString(SLDTreeTools.class,
-            "TreeItem.namedlayer");
+    private static final String TITLE =
+            Localisation.getString(SLDTreeTools.class, "TreeItem.namedlayer");
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -60,7 +58,7 @@ public class NameLayerTreeItem implements SLDTreeItemInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -68,5 +66,4 @@ public class NameLayerTreeItem implements SLDTreeItemInterface {
         StyledLayer styledLayer = (StyledLayer) userObject;
         SelectedSymbol.getInstance().setStyledLayer(styledLayer);
     }
-
 }

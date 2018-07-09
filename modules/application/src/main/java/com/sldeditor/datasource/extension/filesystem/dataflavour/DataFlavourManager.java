@@ -19,16 +19,6 @@
 
 package com.sldeditor.datasource.extension.filesystem.dataflavour;
 
-import java.awt.datatransfer.DataFlavor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.TransferHandler;
-import javax.swing.tree.DefaultTreeModel;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
@@ -37,43 +27,51 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerHeadingNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleHeadingNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
+import java.awt.datatransfer.DataFlavor;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.TransferHandler;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
- * Class that contains the supported data flavours, which allow the
- * dragging and dropping of nodes within the file system tree.
- * 
+ * Class that contains the supported data flavours, which allow the dragging and dropping of nodes
+ * within the file system tree.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DataFlavourManager {
 
     /** The Constant GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR. */
-    public static final SLDDataFlavour GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR = new SLDDataFlavour(
-            GeoServerWorkspaceNode.class, GeoServerWorkspaceNode.class.getName());
+    public static final SLDDataFlavour GEOSERVER_WORKSPACE_DATAITEM_FLAVOUR =
+            new SLDDataFlavour(
+                    GeoServerWorkspaceNode.class, GeoServerWorkspaceNode.class.getName());
 
     /** The Constant GEOSERVER_HEADING_STYLE_FLAVOUR. */
-    public static final SLDDataFlavour GEOSERVER_HEADING_STYLE_FLAVOUR = new SLDDataFlavour(
-            GeoServerStyleHeadingNode.class, GeoServerStyleHeadingNode.class.getName());
+    public static final SLDDataFlavour GEOSERVER_HEADING_STYLE_FLAVOUR =
+            new SLDDataFlavour(
+                    GeoServerStyleHeadingNode.class, GeoServerStyleHeadingNode.class.getName());
 
     /** The Constant GEOSERVER_HEADING_LAYER_FLAVOUR. */
-    public static final SLDDataFlavour GEOSERVER_HEADING_LAYER_FLAVOUR = new SLDDataFlavour(
-            GeoServerLayerHeadingNode.class, GeoServerLayerHeadingNode.class.getName());
+    public static final SLDDataFlavour GEOSERVER_HEADING_LAYER_FLAVOUR =
+            new SLDDataFlavour(
+                    GeoServerLayerHeadingNode.class, GeoServerLayerHeadingNode.class.getName());
 
     /** The Constant FOLDER_DATAITEM_FLAVOR. */
-    public static final SLDDataFlavour FOLDER_DATAITEM_FLAVOR = new SLDDataFlavour(
-            FileTreeNode.class, "Folder");
+    public static final SLDDataFlavour FOLDER_DATAITEM_FLAVOR =
+            new SLDDataFlavour(FileTreeNode.class, "Folder");
 
     /** The data flavour array. */
     private static DataFlavor[] dataFlavourArray = null;
 
     /** The supported map. */
-    private static Map<DataFlavor, List<DataFlavor>> supportedMap = 
+    private static Map<DataFlavor, List<DataFlavor>> supportedMap =
             new HashMap<DataFlavor, List<DataFlavor>>();
 
-    /**
-     * Private default constructor.
-     */
-    private DataFlavourManager() {
-    }
+    /** Private default constructor. */
+    private DataFlavourManager() {}
 
     /**
      * Gets the data flavour array.
@@ -109,9 +107,7 @@ public class DataFlavourManager {
         return false;
     }
 
-    /**
-     * Populate supported map.
-     */
+    /** Populate supported map. */
     private static void populateSupportedMap() {
         List<String> classNameList = new ArrayList<String>();
         classNameList.add(BuiltInDataFlavour.class.getName());
@@ -122,8 +118,8 @@ public class DataFlavourManager {
 
         for (String className : classNameList) {
             try {
-                DataFlavourInterface obj = (DataFlavourInterface) Class.forName(className)
-                        .newInstance();
+                DataFlavourInterface obj =
+                        (DataFlavourInterface) Class.forName(className).newInstance();
                 obj.populate(dataFlavourList, destinationFolderList, destinationGeoServerList);
             } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
                 ConsoleManager.getInstance().exception(DataFlavourManager.class, e);
@@ -176,15 +172,15 @@ public class DataFlavourManager {
             return false;
         }
 
-        Map<NodeInterface, List<SLDDataInterface>> map = 
+        Map<NodeInterface, List<SLDDataInterface>> map =
                 new LinkedHashMap<NodeInterface, List<SLDDataInterface>>();
 
         for (int index = 0; index < transferredData.getDataListSize(); index++) {
-            NodeInterface nodeToTransfer = (NodeInterface) transferredData.getTreePath(index)
-                    .getLastPathComponent();
+            NodeInterface nodeToTransfer =
+                    (NodeInterface) transferredData.getTreePath(index).getLastPathComponent();
 
-            SelectedFiles selectedFiles = nodeToTransfer.getHandler()
-                    .getSLDContents(nodeToTransfer);
+            SelectedFiles selectedFiles =
+                    nodeToTransfer.getHandler().getSLDContents(nodeToTransfer);
 
             map.put(nodeToTransfer, selectedFiles.getSldData());
         }
@@ -204,10 +200,10 @@ public class DataFlavourManager {
         }
 
         for (int index = 0; index < transferredData.getDataListSize(); index++) {
-            NodeInterface nodeToTransfer = (NodeInterface) transferredData.getTreePath(index)
-                    .getLastPathComponent();
-            SelectedFiles selectedFiles = nodeToTransfer.getHandler()
-                    .getSLDContents(nodeToTransfer);
+            NodeInterface nodeToTransfer =
+                    (NodeInterface) transferredData.getTreePath(index).getLastPathComponent();
+            SelectedFiles selectedFiles =
+                    nodeToTransfer.getHandler().getSLDContents(nodeToTransfer);
 
             nodeToTransfer.getHandler().deleteNodes(nodeToTransfer, selectedFiles.getSldData());
         }
@@ -220,8 +216,8 @@ public class DataFlavourManager {
      * @param transferredData the transferred data
      * @param action the action
      */
-    public static void displayMessages(NodeInterface destinationTreeNode,
-            TransferredData transferredData, int action) {
+    public static void displayMessages(
+            NodeInterface destinationTreeNode, TransferredData transferredData, int action) {
         if ((destinationTreeNode == null) || (transferredData == null)) {
             return;
         }
@@ -233,19 +229,22 @@ public class DataFlavourManager {
             actionString = "Copied";
         }
 
-        String destinationString = destinationTreeNode.getHandler()
-                .getDestinationText(destinationTreeNode);
+        String destinationString =
+                destinationTreeNode.getHandler().getDestinationText(destinationTreeNode);
         for (int index = 0; index < transferredData.getDataListSize(); index++) {
-            NodeInterface nodeToTransfer = (NodeInterface) transferredData.getTreePath(index)
-                    .getLastPathComponent();
-            SelectedFiles selectedFiles = nodeToTransfer.getHandler()
-                    .getSLDContents(nodeToTransfer);
+            NodeInterface nodeToTransfer =
+                    (NodeInterface) transferredData.getTreePath(index).getLastPathComponent();
+            SelectedFiles selectedFiles =
+                    nodeToTransfer.getHandler().getSLDContents(nodeToTransfer);
 
             for (SLDDataInterface sldData : selectedFiles.getSldData()) {
-                ConsoleManager.getInstance().information(DataFlavourManager.class, String.format(
-                        "%s %s -> %s", actionString, sldData.getLayerName(), destinationString));
+                ConsoleManager.getInstance()
+                        .information(
+                                DataFlavourManager.class,
+                                String.format(
+                                        "%s %s -> %s",
+                                        actionString, sldData.getLayerName(), destinationString));
             }
         }
     }
-
 }

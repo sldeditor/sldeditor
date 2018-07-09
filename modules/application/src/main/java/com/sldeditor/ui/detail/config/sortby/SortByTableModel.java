@@ -19,19 +19,16 @@
 
 package com.sldeditor.ui.detail.config.sortby;
 
+import com.sldeditor.common.localisation.Localisation;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.SortByImpl;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.sort.SortBy;
 import org.opengis.filter.sort.SortOrder;
-
-import com.sldeditor.common.localisation.Localisation;
 
 /**
  * The Class SortByTableModel.
@@ -75,7 +72,7 @@ public class SortByTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.DefaultTableModel#getRowCount()
      */
     @Override
@@ -88,7 +85,7 @@ public class SortByTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.DefaultTableModel#getColumnCount()
      */
     @Override
@@ -98,7 +95,7 @@ public class SortByTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.DefaultTableModel#getColumnName(int)
      */
     @Override
@@ -108,7 +105,7 @@ public class SortByTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.DefaultTableModel#isCellEditable(int, int)
      */
     @Override
@@ -118,7 +115,7 @@ public class SortByTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.DefaultTableModel#getValueAt(int, int)
      */
     @Override
@@ -126,12 +123,12 @@ public class SortByTableModel extends AbstractTableModel {
         SortBy obj = dataList.get(row);
 
         switch (column) {
-        case 0:
-            return obj.getPropertyName().getPropertyName();
-        case COL_SORT_ORDER:
-            return isAscendingSortOrder(obj);
-        default:
-            break;
+            case 0:
+                return obj.getPropertyName().getPropertyName();
+            case COL_SORT_ORDER:
+                return isAscendingSortOrder(obj);
+            default:
+                break;
         }
         return null;
     }
@@ -148,7 +145,7 @@ public class SortByTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.DefaultTableModel#setValueAt(java.lang.Object, int, int)
      */
     @Override
@@ -156,40 +153,42 @@ public class SortByTableModel extends AbstractTableModel {
         SortBy obj = dataList.get(row);
 
         switch (column) {
-        case 0:
-            break;
-        case COL_SORT_ORDER: {
-            Boolean b = (Boolean) aValue;
+            case 0:
+                break;
+            case COL_SORT_ORDER:
+                {
+                    Boolean b = (Boolean) aValue;
 
-            SortOrder sortOrder = b.booleanValue() ? SortOrder.ASCENDING : SortOrder.DESCENDING;
-            ((SortByImpl) obj).setSortOrder(sortOrder);
+                    SortOrder sortOrder =
+                            b.booleanValue() ? SortOrder.ASCENDING : SortOrder.DESCENDING;
+                    ((SortByImpl) obj).setSortOrder(sortOrder);
 
-            fireTableCellUpdated(row, column);
+                    fireTableCellUpdated(row, column);
 
-            if (parentObj != null) {
-                parentObj.sortOrderUpdated();
-            }
-            break;
-        }
-        default:
-            break;
+                    if (parentObj != null) {
+                        parentObj.sortOrderUpdated();
+                    }
+                    break;
+                }
+            default:
+                break;
         }
     }
 
     /*
      * Returns a class representing the datatype of the data stored in that column (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
      */
     @Override
     public Class<?> getColumnClass(int column) {
         switch (column) {
-        case 0:
-            return String.class;
-        case COL_SORT_ORDER:
-            return Boolean.class;
-        default:
-            return Object.class;
+            case 0:
+                return String.class;
+            case COL_SORT_ORDER:
+                return Boolean.class;
+            default:
+                return Object.class;
         }
     }
 
@@ -265,8 +264,11 @@ public class SortByTableModel extends AbstractTableModel {
         List<String> list = new ArrayList<String>();
 
         for (SortBy sortBy : dataList) {
-            String string = String.format("%s %s", sortBy.getPropertyName().getPropertyName(),
-                    sortBy.getSortOrder().identifier().substring(0, 1));
+            String string =
+                    String.format(
+                            "%s %s",
+                            sortBy.getPropertyName().getPropertyName(),
+                            sortBy.getSortOrder().identifier().substring(0, 1));
             list.add(string);
         }
 

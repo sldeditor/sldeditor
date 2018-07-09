@@ -19,10 +19,14 @@
 
 package com.sldeditor.common.vendoroption.minversion;
 
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Rule;
@@ -31,12 +35,6 @@ import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.UserLayerImpl;
-
-import com.sldeditor.common.vendoroption.VendorOptionManager;
-import com.sldeditor.common.vendoroption.VendorOptionVersion;
-import com.sldeditor.common.vendoroption.VersionData;
-import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
-import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 
 /**
  * The Class MinimumVersion.
@@ -49,12 +47,12 @@ public class MinimumVersion {
     private GetMinimumVersionInterface uiMgr = null;
 
     /** The vendor options present list. */
-    private List<VendorOptionPresent> vendorOptionsPresentList = 
+    private List<VendorOptionPresent> vendorOptionsPresentList =
             new ArrayList<VendorOptionPresent>();
 
     /** The default vendor option version. */
-    private VendorOptionVersion defaultVendorOptionVersion = VendorOptionManager.getInstance()
-            .getDefaultVendorOptionVersion();
+    private VendorOptionVersion defaultVendorOptionVersion =
+            VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
 
     /**
      * Instantiates a new minimum version.
@@ -103,13 +101,13 @@ public class MinimumVersion {
                                 parentObj = fts;
 
                                 for (Rule rule : fts.rules()) {
-                                    uiMgr.getMinimumVersion(parentObj, rule,
-                                            vendorOptionsPresentList);
+                                    uiMgr.getMinimumVersion(
+                                            parentObj, rule, vendorOptionsPresentList);
                                     parentObj = rule;
 
                                     for (Symbolizer symbolizer : rule.symbolizers()) {
-                                        uiMgr.getMinimumVersion(parentObj, symbolizer,
-                                                vendorOptionsPresentList);
+                                        uiMgr.getMinimumVersion(
+                                                parentObj, symbolizer, vendorOptionsPresentList);
                                     }
                                 }
                             }
@@ -122,9 +120,7 @@ public class MinimumVersion {
         removeStrictSLD();
     }
 
-    /**
-     * Removes the strict SLD.
-     */
+    /** Removes the strict SLD. */
     private void removeStrictSLD() {
         List<VendorOptionPresent> newList = new ArrayList<VendorOptionPresent>();
 
@@ -159,8 +155,8 @@ public class MinimumVersion {
         if (vendorOptionsPresentList.isEmpty()) {
             list = userDefaultVendorOption;
         } else {
-            VendorOptionPresent lastVendorOption = vendorOptionsPresentList
-                    .get(vendorOptionsPresentList.size() - 1);
+            VendorOptionPresent lastVendorOption =
+                    vendorOptionsPresentList.get(vendorOptionsPresentList.size() - 1);
             VendorOptionInfo vendorOptionInfo = lastVendorOption.getVendorOptionInfo();
             VersionData earliestReadFromSymbol = vendorOptionInfo.getVersionData().getEarliest();
             list.add(findLatest(earliestReadFromSymbol, userDefaultVendorOption));
@@ -170,22 +166,23 @@ public class MinimumVersion {
     }
 
     /**
-     * Find latest version data between the vendor option version read 
-     * from the symbol and the user default.
+     * Find latest version data between the vendor option version read from the symbol and the user
+     * default.
      *
      * @param earliestReadFromSymbol the earliest read from symbol
      * @param userDefaultVendorOptionList the user default vendor option
      * @return the version data
      */
-    protected VersionData findLatest(VersionData earliestReadFromSymbol,
-            List<VersionData> userDefaultVendorOptionList) {
+    protected VersionData findLatest(
+            VersionData earliestReadFromSymbol, List<VersionData> userDefaultVendorOptionList) {
         // Sort the list, the latest will be last
         Collections.sort(userDefaultVendorOptionList);
 
-        VersionData latestUserDefault = userDefaultVendorOptionList
-                .get(userDefaultVendorOptionList.size() - 1);
+        VersionData latestUserDefault =
+                userDefaultVendorOptionList.get(userDefaultVendorOptionList.size() - 1);
 
-        return (earliestReadFromSymbol.compareTo(latestUserDefault) == -1) ? latestUserDefault
+        return (earliestReadFromSymbol.compareTo(latestUserDefault) == -1)
+                ? latestUserDefault
                 : earliestReadFromSymbol;
     }
 }

@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Package handling data flavours to allow nodes to be dragged and dropped
- * within the file system tree.
- * 
+ * Package handling data flavours to allow nodes to be dragged and dropped within the file system
+ * tree.
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource.extension.filesystem.dataflavour;

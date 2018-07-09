@@ -21,17 +21,15 @@ package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.wkt;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.util.List;
-
-import org.junit.Test;
-
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * The unit test for WKTDialog.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog}
  *
  * @author Robert Ward (SCISYS)
@@ -51,58 +49,42 @@ public class WKTDialogTest {
             populate(text);
         }
 
-        /**
-         * Geometry type updated.
-         */
+        /** Geometry type updated. */
         public void testGeometryTypeUpdated() {
             geometryTypeUpdated();
         }
 
-        /**
-         * Reload.
-         */
+        /** Reload. */
         public void testReload() {
             reload();
         }
 
-        /**
-         * Adds the segment.
-         */
+        /** Adds the segment. */
         public void testAddSegment() {
             addSegment();
         }
 
-        /**
-         * Removes the segment.
-         */
+        /** Removes the segment. */
         public void testRemoveSegment() {
             removeSegment();
         }
 
-        /**
-         * Adds the point.
-         */
+        /** Adds the point. */
         public void testAddPoint() {
             addPoint();
         }
 
-        /**
-         * Removes the point.
-         */
+        /** Removes the point. */
         public void testRemovePoint() {
             removePoint();
         }
 
-        /**
-         * Adds the multi shape.
-         */
+        /** Adds the multi shape. */
         public void testAddMultiShape() {
             addMultiShape();
         }
 
-        /**
-         * Removes the multi shape.
-         */
+        /** Removes the multi shape. */
         public void testRemoveMultiShape() {
             removeMultiShape();
         }
@@ -118,8 +100,8 @@ public class WKTDialogTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog#WKTDialog()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog#WKTDialog()}.
      */
     @Test
     public void testWKTDialog() {
@@ -143,5 +125,4 @@ public class WKTDialogTest {
         dlg.testAddMultiShape();
         dlg.testRemoveMultiShape();
     }
-
 }

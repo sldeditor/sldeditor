@@ -23,23 +23,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.ui.legend.option.LegendOptionData;
 import java.awt.Color;
 import java.awt.Font;
-
 import javax.swing.JLabel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.sldeditor.ui.legend.option.LegendOptionData;
-
 /**
  * The unit test for LegendOptionData.
- * 
+ *
  * <p>{@link com.sldeditor.ui.legend.option.LegendOptionData}
  *
  * @author Robert Ward (SCISYS)
@@ -75,8 +72,9 @@ public class LegendOptionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#isMaintainAspectRatio()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setMaintainAspectRatio(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.legend.option.LegendOptionData#isMaintainAspectRatio()}. Test method for
+     * {@link com.sldeditor.ui.legend.option.LegendOptionData#setMaintainAspectRatio(boolean)}.
      */
     @Test
     public void testMaintainAspectRatio() {
@@ -92,8 +90,8 @@ public class LegendOptionDataTest {
         assertEquals(expectedWidth, data.getImageWidth());
         assertEquals(expectedheight, data.getImageHeight());
 
-        expectedWidth ++;
-        expectedheight ++;
+        expectedWidth++;
+        expectedheight++;
         data.setImageWidth(expectedWidth);
         data.setImageHeight(expectedheight);
         assertEquals(expectedWidth, data.getImageWidth());
@@ -111,8 +109,8 @@ public class LegendOptionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#getDpi()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setDpi(int)}.
+     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#getDpi()}. Test method
+     * for {@link com.sldeditor.ui.legend.option.LegendOptionData#setDpi(int)}.
      */
     @Test
     public void testDpi() {
@@ -125,8 +123,9 @@ public class LegendOptionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#getBackgroundColour()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setBackgroundColour(java.awt.Color)}.
+     * Test method for {@link
+     * com.sldeditor.ui.legend.option.LegendOptionData#getBackgroundColour()}. Test method for
+     * {@link com.sldeditor.ui.legend.option.LegendOptionData#setBackgroundColour(java.awt.Color)}.
      */
     @Test
     public void testBackgroundColour() {
@@ -139,8 +138,8 @@ public class LegendOptionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#isShowLabels()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setShowLabels(boolean)}.
+     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#isShowLabels()}. Test
+     * method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setShowLabels(boolean)}.
      */
     @Test
     public void testLabels() {
@@ -154,8 +153,8 @@ public class LegendOptionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#getImageSize()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setImageSize(int)}.
+     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#getImageSize()}. Test
+     * method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setImageSize(int)}.
      */
     @Test
     public void testImageSize() {
@@ -169,7 +168,8 @@ public class LegendOptionDataTest {
 
     /**
      * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#splitSymbolizers()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setSplitSymbolizers(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.legend.option.LegendOptionData#setSplitSymbolizers(boolean)}.
      */
     @Test
     public void testSplitSymbolizers() {
@@ -183,8 +183,8 @@ public class LegendOptionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#isShowTitle()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setShowTitle(boolean)}.
+     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#isShowTitle()}. Test
+     * method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setShowTitle(boolean)}.
      */
     @Test
     public void testShowTitle() {
@@ -198,8 +198,9 @@ public class LegendOptionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#getLabelFont()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setLabelFont(java.awt.Font)}.
+     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#getLabelFont()}. Test
+     * method for {@link
+     * com.sldeditor.ui.legend.option.LegendOptionData#setLabelFont(java.awt.Font)}.
      */
     @Test
     public void testLabelFont() {
@@ -213,7 +214,8 @@ public class LegendOptionDataTest {
 
     /**
      * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#getLabelFontColour()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setLabelFontColour(java.awt.Color)}.
+     * Test method for {@link
+     * com.sldeditor.ui.legend.option.LegendOptionData#setLabelFontColour(java.awt.Color)}.
      */
     @Test
     public void testLabelFontColour() {
@@ -227,7 +229,8 @@ public class LegendOptionDataTest {
 
     /**
      * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#getBorderColour()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setBorderColour(java.awt.Color)}.
+     * Test method for {@link
+     * com.sldeditor.ui.legend.option.LegendOptionData#setBorderColour(java.awt.Color)}.
      */
     @Test
     public void testBorderColour() {
@@ -241,7 +244,8 @@ public class LegendOptionDataTest {
 
     /**
      * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#isFontAntiAliasing()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setFontAntiAliasing(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.legend.option.LegendOptionData#setFontAntiAliasing(boolean)}.
      */
     @Test
     public void testFontAntiAliasing() {
@@ -255,8 +259,8 @@ public class LegendOptionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#isBorder()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setBorder(boolean)}.
+     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#isBorder()}. Test
+     * method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setBorder(boolean)}.
      */
     @Test
     public void testBorder() {
@@ -271,7 +275,8 @@ public class LegendOptionDataTest {
 
     /**
      * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#isBandInformation()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setBandInformation(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.legend.option.LegendOptionData#setBandInformation(boolean)}.
      */
     @Test
     public void testBandInformation() {
@@ -285,8 +290,8 @@ public class LegendOptionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#isTransparent()}.
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setTransparent(boolean)}.
+     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#isTransparent()}. Test
+     * method for {@link com.sldeditor.ui.legend.option.LegendOptionData#setTransparent(boolean)}.
      */
     @Test
     public void testTransparent() {
@@ -300,7 +305,9 @@ public class LegendOptionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#encodeXML(org.w3c.dom.Document, org.w3c.dom.Element, java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.legend.option.LegendOptionData#encodeXML(org.w3c.dom.Document,
+     * org.w3c.dom.Element, java.lang.String)}.
      */
     @Test
     public void testEncodeXML() {
@@ -334,7 +341,9 @@ public class LegendOptionDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.legend.option.LegendOptionData#decodeXML(org.w3c.dom.Document, java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.legend.option.LegendOptionData#decodeXML(org.w3c.dom.Document,
+     * java.lang.String)}.
      */
     @Test
     public void testDecodeXML() {
@@ -350,7 +359,5 @@ public class LegendOptionDataTest {
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
-
     }
-
 }

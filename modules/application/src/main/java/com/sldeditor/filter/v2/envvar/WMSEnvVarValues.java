@@ -37,11 +37,8 @@ public class WMSEnvVarValues {
     /** The map bounds. */
     private ReferencedEnvelope mapBounds = null;
 
-    /**
-     * Instantiates a new WMS env var values.
-     */
-    public WMSEnvVarValues() {
-    }
+    /** Instantiates a new WMS env var values. */
+    public WMSEnvVarValues() {}
 
     /**
      * Gets the image width.
@@ -96,5 +93,4 @@ public class WMSEnvVarValues {
     public void setMapBounds(ReferencedEnvelope mapBounds) {
         this.mapBounds = mapBounds;
     }
-
 }

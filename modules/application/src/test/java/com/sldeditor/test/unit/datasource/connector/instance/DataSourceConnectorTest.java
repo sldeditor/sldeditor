@@ -24,27 +24,25 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.Test;
-
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.impl.DataSourceProperties;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.Test;
 
 /**
  * Unit test for DataSourceConnector class.
- * 
- * <p>{@link com.sldeditor.datasource.connector.instance.DataSourceConnector}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.connector.instance.DataSourceConnector}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DataSourceConnectorTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#getDisplayName()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnector#getDisplayName()}.
      */
     @Test
     public void testGetDisplayName() {
@@ -54,7 +52,8 @@ public class DataSourceConnectorTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#getPanel()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnector#getPanel()}.
      */
     @Test
     public void testGetPanel() {
@@ -64,7 +63,8 @@ public class DataSourceConnectorTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#accept(java.util.Map)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnector#accept(java.util.Map)}.
      */
     @Test
     public void testAccept() {
@@ -91,7 +91,8 @@ public class DataSourceConnectorTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#getDataSourceProperties(java.util.Map)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnector#getDataSourceProperties(java.util.Map)}.
      */
     @Test
     public void testGetDataSourceProperties() {
@@ -104,8 +105,8 @@ public class DataSourceConnectorTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#populate(com.sldeditor.DataSourcePropertiesInterface)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnector#populate(com.sldeditor.DataSourcePropertiesInterface)}.
      */
     @Test
     public void testPopulate() {
@@ -116,7 +117,8 @@ public class DataSourceConnectorTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#isEmpty()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnector#isEmpty()}.
      */
     @Test
     public void testIsEmpty() {
@@ -126,8 +128,8 @@ public class DataSourceConnectorTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.connector.instance.DataSourceConnector#getConnectionProperties(com.sldeditor.DataSourcePropertiesInterface)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnector#getConnectionProperties(com.sldeditor.DataSourcePropertiesInterface)}.
      */
     @Test
     public void testGetConnectionProperties() {
@@ -146,5 +148,4 @@ public class DataSourceConnectorTest {
         dataSource.setPropertyMap(expectedPropertyMap);
         assertEquals(expectedPropertyMap, dsc.getConnectionProperties(dataSource));
     }
-
 }

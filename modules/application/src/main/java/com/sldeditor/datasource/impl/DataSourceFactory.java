@@ -29,7 +29,7 @@ import com.sldeditor.datasource.example.impl.ExamplePolygonImplIOM;
 
 /**
  * A factory for creating DataSource objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DataSourceFactory {
@@ -55,9 +55,7 @@ public class DataSourceFactory {
     /** The inline data source. */
     private static CreateDataSourceInterface inlineDataSource = new CreateInlineDataSource();
 
-    /**
-     * Reset.
-     */
+    /** Reset. */
     public static void reset() {
         dataSource = null;
     }
@@ -72,14 +70,14 @@ public class DataSourceFactory {
         if (override != null) {
             if ((dataSource == null) || override.getClass() != dataSource.getClass()) {
                 dataSource = override;
-                dataSource.setDataSourceCreation(internalDataSource, externalDataSource,
-                        inlineDataSource);
+                dataSource.setDataSourceCreation(
+                        internalDataSource, externalDataSource, inlineDataSource);
             }
         } else {
             if (dataSource == null) {
                 dataSource = new DataSourceImpl();
-                dataSource.setDataSourceCreation(internalDataSource, externalDataSource,
-                        inlineDataSource);
+                dataSource.setDataSourceCreation(
+                        internalDataSource, externalDataSource, inlineDataSource);
             }
         }
         return dataSource;

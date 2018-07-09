@@ -38,9 +38,7 @@ public class TextFieldPropertyChange extends JTextField {
     /** The Constant TEXT_PROPERTY, property changed. */
     public static final String TEXT_PROPERTY = "text";
 
-    /**
-     * Instantiates a new text field.
-     */
+    /** Instantiates a new text field. */
     public TextFieldPropertyChange() {
         this(0);
     }
@@ -55,9 +53,7 @@ public class TextFieldPropertyChange extends JTextField {
         this.setDocument(new UpdatedDocument());
     }
 
-    /**
-     * The Class UpdatedDocument.
-     */
+    /** The Class UpdatedDocument. */
     private class UpdatedDocument extends PlainDocument {
 
         /** The Constant serialVersionUID. */
@@ -68,16 +64,16 @@ public class TextFieldPropertyChange extends JTextField {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see javax.swing.text.AbstractDocument#replace(int, int, java.lang.String,
          * javax.swing.text.AttributeSet)
          */
         @Override
         public void replace(int offset, int length, String text, AttributeSet attrs)
                 throws BadLocationException {
-            //CHECKSTYLE:OFF
+            // CHECKSTYLE:OFF
             String oldValue = TextFieldPropertyChange.this.getText();
-            //CHECKSTYLE:ON
+            // CHECKSTYLE:ON
             this.ignoreEvents = true;
             super.replace(offset, length, text, attrs);
             this.ignoreEvents = false;
@@ -89,7 +85,7 @@ public class TextFieldPropertyChange extends JTextField {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see javax.swing.text.AbstractDocument#remove(int, int)
          */
         @Override

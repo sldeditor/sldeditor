@@ -21,13 +21,12 @@ package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
 /**
  * ComboBoxModel used to view and set the WKT type.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 @SuppressWarnings("rawtypes")

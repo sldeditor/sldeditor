@@ -21,7 +21,7 @@ package com.sldeditor.ui.detail.config.base.defaults;
 
 /**
  * Class for configuration file boolean default values.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DefaultBoolean extends DefaultBase {
@@ -34,7 +34,7 @@ public class DefaultBoolean extends DefaultBase {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#accepts(java.lang.String)
      */
     @Override
@@ -53,7 +53,7 @@ public class DefaultBoolean extends DefaultBase {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.base.defaults.DefaultBase#getValue(java.lang.String)
      */
     @Override
@@ -64,5 +64,4 @@ public class DefaultBoolean extends DefaultBase {
 
         return Boolean.FALSE;
     }
-
 }

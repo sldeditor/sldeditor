@@ -19,17 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb;
 
-import java.util.List;
-
-import org.geotools.filter.AttributeExpressionImpl;
-import org.geotools.filter.ConstantExpression;
-import org.geotools.filter.LiteralExpressionImpl;
-import org.geotools.styling.MarkImpl;
-import org.geotools.styling.PointSymbolizerImpl;
-import org.opengis.filter.expression.Expression;
-import org.opengis.style.GraphicalSymbol;
-import org.opengis.style.Symbolizer;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
@@ -46,18 +35,27 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import java.util.List;
+import org.geotools.filter.AttributeExpressionImpl;
+import org.geotools.filter.ConstantExpression;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.geotools.styling.MarkImpl;
+import org.geotools.styling.PointSymbolizerImpl;
+import org.opengis.filter.expression.Expression;
+import org.opengis.style.GraphicalSymbol;
+import org.opengis.style.Symbolizer;
 
 /**
- * The Class WindBarbDetails panel contains all the fields to configure the
- * GeoServer vendor option for displaying weather wind barbs.
- * 
+ * The Class WindBarbDetails panel contains all the fields to configure the GeoServer vendor option
+ * for displaying weather wind barbs.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class WindBarbDetails extends StandardPanel
         implements PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant PANEL_CONFIG. */
-    private static final String PANEL_CONFIG = 
+    private static final String PANEL_CONFIG =
             "symbol/marker/windbarb/PanelConfig_WindBarbSymbol.xml";
 
     /** The Constant HEMISPHERE_S. */
@@ -84,9 +82,7 @@ public class WindBarbDetails extends StandardPanel
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFileNoScrollPane(null, getClass(), this, PANEL_CONFIG);
     }
@@ -98,7 +94,7 @@ public class WindBarbDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -152,8 +148,8 @@ public class WindBarbDetails extends StandardPanel
                 // Invalid
                 return;
             }
-            String windSpeed = wellKnownName.substring(startSpeedOpenBracket + 1,
-                    endSpeedCloseBracket);
+            String windSpeed =
+                    wellKnownName.substring(startSpeedOpenBracket + 1, endSpeedCloseBracket);
 
             int startUnitsOpenBracket = wellKnownName.indexOf("[");
             int endUnitsOpenBracket = wellKnownName.indexOf("]");
@@ -174,14 +170,14 @@ public class WindBarbDetails extends StandardPanel
             }
             boolean isNorthernHemisphere = !wellKnownName.endsWith(HEMISPHERE_S);
             fieldConfigVisitor.populateField(FieldIdEnum.WINDBARB_WINDSPEED, windSpeedExpression);
-            fieldConfigVisitor.populateBooleanField(FieldIdEnum.WINDBARB_NORTHERN_HEMISPHERE,
-                    isNorthernHemisphere);
-            
-            String windSpeedUnits = wellKnownName.substring(startUnitsOpenBracket + 1,
-                    endUnitsOpenBracket);
+            fieldConfigVisitor.populateBooleanField(
+                    FieldIdEnum.WINDBARB_NORTHERN_HEMISPHERE, isNorthernHemisphere);
 
-            fieldConfigVisitor.populateComboBoxField(FieldIdEnum.WINDBARB_WINDSPEED_UNITS,
-                    windSpeedUnits);
+            String windSpeedUnits =
+                    wellKnownName.substring(startUnitsOpenBracket + 1, endUnitsOpenBracket);
+
+            fieldConfigVisitor.populateComboBoxField(
+                    FieldIdEnum.WINDBARB_WINDSPEED_UNITS, windSpeedUnits);
         }
     }
 
@@ -192,7 +188,7 @@ public class WindBarbDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -200,23 +196,21 @@ public class WindBarbDetails extends StandardPanel
         updateSymbol();
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
-            ValueComboBoxData windSpeedUnits = fieldConfigVisitor
-                    .getComboBox(FieldIdEnum.WINDBARB_WINDSPEED_UNITS);
-            Expression windSpeedExpression = fieldConfigVisitor
-                    .getExpression(FieldIdEnum.WINDBARB_WINDSPEED);
-            boolean inNorthernHemisphere = fieldConfigVisitor
-                    .getBoolean(FieldIdEnum.WINDBARB_NORTHERN_HEMISPHERE);
+            ValueComboBoxData windSpeedUnits =
+                    fieldConfigVisitor.getComboBox(FieldIdEnum.WINDBARB_WINDSPEED_UNITS);
+            Expression windSpeedExpression =
+                    fieldConfigVisitor.getExpression(FieldIdEnum.WINDBARB_WINDSPEED);
+            boolean inNorthernHemisphere =
+                    fieldConfigVisitor.getBoolean(FieldIdEnum.WINDBARB_NORTHERN_HEMISPHERE);
             Object windSpeed = null;
 
             if (windSpeedExpression == null) {
                 windSpeed = Integer.valueOf(0);
             } else if (windSpeedExpression instanceof LiteralExpressionImpl) {
-                LiteralExpressionImpl literalExpression = 
+                LiteralExpressionImpl literalExpression =
                         (LiteralExpressionImpl) windSpeedExpression;
                 windSpeed = literalExpression.getValue();
             } else if (windSpeedExpression instanceof ConstantExpression) {
@@ -224,19 +218,25 @@ public class WindBarbDetails extends StandardPanel
 
                 windSpeed = constantExpression.getValue();
             } else if (windSpeedExpression instanceof AttributeExpressionImpl) {
-                AttributeExpressionImpl attributeExpression = 
+                AttributeExpressionImpl attributeExpression =
                         (AttributeExpressionImpl) windSpeedExpression;
 
-                windSpeed = String.format("<ogc:PropertyName>%s</ogc:PropertyName>",
-                        attributeExpression.getPropertyName());
+                windSpeed =
+                        String.format(
+                                "<ogc:PropertyName>%s</ogc:PropertyName>",
+                                attributeExpression.getPropertyName());
                 ;
             } else {
-                ConsoleManager.getInstance().error(this,
-                        Localisation.getField(WindBarbDetails.class, "WindBarb.windspeedError1")
-                                + windSpeedExpression.getClass().getName());
+                ConsoleManager.getInstance()
+                        .error(
+                                this,
+                                Localisation.getField(
+                                                WindBarbDetails.class, "WindBarb.windspeedError1")
+                                        + windSpeedExpression.getClass().getName());
             }
-            String url = String.format("windbarbs://default(%s)[%s]", windSpeed,
-                    windSpeedUnits.getKey());
+            String url =
+                    String.format(
+                            "windbarbs://default(%s)[%s]", windSpeed, windSpeedUnits.getKey());
 
             if (!inNorthernHemisphere) {
                 url = url + HEMISPHERE_S;
@@ -256,7 +256,7 @@ public class WindBarbDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -271,7 +271,7 @@ public class WindBarbDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -295,9 +295,7 @@ public class WindBarbDetails extends StandardPanel
         return windBarbsExpression;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     public void revertToDefaultValue() {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(null);
 
@@ -322,7 +320,7 @@ public class WindBarbDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -332,13 +330,12 @@ public class WindBarbDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // Do nothing
     }
-
 }

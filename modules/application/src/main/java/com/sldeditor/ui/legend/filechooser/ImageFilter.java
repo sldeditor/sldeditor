@@ -53,12 +53,11 @@ package com.sldeditor.ui.legend.filechooser;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.filechooser.FileFilter;
 
 /**
  * Image file filter class, allows gif, jpg, tiff, or png files.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ImageFilter extends FileFilter {
@@ -77,7 +76,7 @@ public class ImageFilter extends FileFilter {
 
     /**
      * Accept all directories and all gif, jpg, tiff, or png files.
-     * 
+     *
      * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
      */
     public boolean accept(File f) {
@@ -99,7 +98,7 @@ public class ImageFilter extends FileFilter {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.filechooser.FileFilter#getDescription()
      */
     public String getDescription() {

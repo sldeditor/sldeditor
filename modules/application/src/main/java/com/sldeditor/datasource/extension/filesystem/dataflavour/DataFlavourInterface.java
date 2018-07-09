@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * The Interface DataFlavourInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface DataFlavourInterface {
@@ -36,7 +36,8 @@ public interface DataFlavourInterface {
      * @param destinationFolderList the destination folder list
      * @param destinationGeoServerList the destination geo server list
      */
-    void populate(List<DataFlavor> dataFlavourList, List<DataFlavor> destinationFolderList,
+    void populate(
+            List<DataFlavor> dataFlavourList,
+            List<DataFlavor> destinationFolderList,
             List<DataFlavor> destinationGeoServerList);
-
 }

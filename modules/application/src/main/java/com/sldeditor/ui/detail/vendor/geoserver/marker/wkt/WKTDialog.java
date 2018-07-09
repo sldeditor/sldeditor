@@ -1,6 +1,7 @@
-
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.localisation.Localisation;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,13 +11,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,14 +29,9 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.localisation.Localisation;
-
-import javax.swing.JLabel;
-
 /**
  * Dialog to allow the user to view/edit WKT data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class WKTDialog extends JDialog {
@@ -100,9 +96,7 @@ public class WKTDialog extends JDialog {
     /** The reload button. */
     private JButton btnReload;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public WKTDialog() {
         super(Controller.getInstance().getFrame());
         setTitle(Localisation.getString(WKTDialog.class, "WKTDialog.title"));
@@ -114,9 +108,7 @@ public class WKTDialog extends JDialog {
         Controller.getInstance().centreDialog(this);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     @SuppressWarnings("unchecked")
     private void createUI() {
         JPanel wktSelectionPanel = new JPanel();
@@ -124,11 +116,12 @@ public class WKTDialog extends JDialog {
 
         model = new WKTTypeComboBoxModel(WKTConversion.getWKTTypeData());
         geometryTypeComboBox = new JComboBox<WKTType>(model);
-        geometryTypeComboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                geometryTypeUpdated();
-            }
-        });
+        geometryTypeComboBox.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        geometryTypeUpdated();
+                    }
+                });
         wktSelectionPanel.add(geometryTypeComboBox);
 
         JPanel buttonPanel = new JPanel();
@@ -137,21 +130,23 @@ public class WKTDialog extends JDialog {
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
         JButton btnOk = new JButton(Localisation.getString(WKTDialog.class, "common.ok"));
-        btnOk.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                okButtonPressed = true;
-                setVisible(false);
-            }
-        });
+        btnOk.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        okButtonPressed = true;
+                        setVisible(false);
+                    }
+                });
         buttonPanel.add(btnOk);
 
         JButton btnCancel = new JButton(Localisation.getString(WKTDialog.class, "common.cancel"));
-        btnCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                okButtonPressed = false;
-                setVisible(false);
-            }
-        });
+        btnCancel.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        okButtonPressed = false;
+                        setVisible(false);
+                    }
+                });
         buttonPanel.add(btnCancel);
 
         JPanel mainPanel = new JPanel();
@@ -197,34 +192,36 @@ public class WKTDialog extends JDialog {
         wktTextArea = new JTextArea();
         wktTextArea.setRows(5);
         wktTextArea.setEditable(true);
-        wktTextArea.addKeyListener(new KeyListener() {
+        wktTextArea.addKeyListener(
+                new KeyListener() {
 
-            @Override
-            public void keyTyped(KeyEvent e) {
-                btnReload.setEnabled(true);
-            }
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        btnReload.setEnabled(true);
+                    }
 
-            @Override
-            public void keyPressed(KeyEvent e) {
-                // Do nothing
-            }
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        // Do nothing
+                    }
 
-            @Override
-            public void keyReleased(KeyEvent e) {
-                // Do nothing
-            }
-        });
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                        // Do nothing
+                    }
+                });
         textAreaScrollPane.setViewportView(wktTextArea);
 
         JPanel textAreaButtonPanel = new JPanel();
         stringPanel.add(textAreaButtonPanel, BorderLayout.EAST);
 
         btnReload = new JButton(Localisation.getString(WKTDialog.class, "WKTDialog.reload"));
-        btnReload.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                reload();
-            }
-        });
+        btnReload.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        reload();
+                    }
+                });
         textAreaButtonPanel.add(btnReload);
 
         this.setSize(520, 365);
@@ -262,43 +259,44 @@ public class WKTDialog extends JDialog {
 
         segmentList = new JList<String>();
         segmentList.setModel(segmentListModel);
-        segmentList.addListSelectionListener(new ListSelectionListener() {
-            /**
-             * Value changed.
-             *
-             * @param e the e
-             */
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    int selectedIndex = segmentList.getSelectedIndex();
+        segmentList.addListSelectionListener(
+                new ListSelectionListener() {
+                    /**
+                     * Value changed.
+                     *
+                     * @param e the e
+                     */
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+                        if (!e.getValueIsAdjusting()) {
+                            int selectedIndex = segmentList.getSelectedIndex();
 
-                    if (wktGeometry.getNoOfSegments() == 1) {
-                        if (selectedIndex >= 0) {
-                            tablePointModel
-                                    .populate(wktGeometry.getSegmentList(0).get(selectedIndex));
-                        }
-                    } else {
-                        int multiSelectedIndex = multiList.getSelectedIndex();
-                        if (selectedIndex < 0) {
-                            selectedIndex = 0;
-                        }
+                            if (wktGeometry.getNoOfSegments() == 1) {
+                                if (selectedIndex >= 0) {
+                                    tablePointModel.populate(
+                                            wktGeometry.getSegmentList(0).get(selectedIndex));
+                                }
+                            } else {
+                                int multiSelectedIndex = multiList.getSelectedIndex();
+                                if (selectedIndex < 0) {
+                                    selectedIndex = 0;
+                                }
 
-                        WKTSegmentList wktPointList = null;
-                        List<WKTSegmentList> segmentList2 = wktGeometry
-                                .getSegmentList(multiSelectedIndex);
-                        if ((segmentList2 != null) && (selectedIndex >= 0)
-                                && (selectedIndex < segmentList2.size())) {
-                            wktPointList = segmentList2.get(selectedIndex);
+                                WKTSegmentList wktPointList = null;
+                                List<WKTSegmentList> segmentList2 =
+                                        wktGeometry.getSegmentList(multiSelectedIndex);
+                                if ((segmentList2 != null)
+                                        && (selectedIndex >= 0)
+                                        && (selectedIndex < segmentList2.size())) {
+                                    wktPointList = segmentList2.get(selectedIndex);
+                                }
+                                tablePointModel.populate(wktPointList);
+                            }
+
+                            updateSegmentButtons();
                         }
-                        tablePointModel.populate(wktPointList);
                     }
-
-                    updateSegmentButtons();
-                }
-            }
-
-        });
+                });
         segmentScrollPane.setViewportView(segmentList);
 
         JPanel segmentButtonPanel = new JPanel();
@@ -310,22 +308,24 @@ public class WKTDialog extends JDialog {
         // Add segment button
         //
         addSegmentButton = new JButton("+");
-        addSegmentButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addSegment();
-            }
-        });
+        addSegmentButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addSegment();
+                    }
+                });
         segmentButtonPanel.add(addSegmentButton);
 
         //
         // Remove segment button
         //
         removeSegmentButton = new JButton("-");
-        removeSegmentButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeSegment();
-            }
-        });
+        removeSegmentButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        removeSegment();
+                    }
+                });
         segmentButtonPanel.add(removeSegmentButton);
 
         JLabel lblSegment = new JLabel("Segment");
@@ -348,23 +348,25 @@ public class WKTDialog extends JDialog {
 
         table = new JTable();
         table.setModel(tablePointModel);
-        tablePointModel.addTableModelListener(new TableModelListener() {
+        tablePointModel.addTableModelListener(
+                new TableModelListener() {
 
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                updatePointButtons();
-                updateWKTString();
-            }
-        });
+                    @Override
+                    public void tableChanged(TableModelEvent e) {
+                        updatePointButtons();
+                        updateWKTString();
+                    }
+                });
 
         // Handle table selection changes
         ListSelectionModel selectionModel = table.getSelectionModel();
 
-        selectionModel.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                updatePointButtons();
-            }
-        });
+        selectionModel.addListSelectionListener(
+                new ListSelectionListener() {
+                    public void valueChanged(ListSelectionEvent e) {
+                        updatePointButtons();
+                    }
+                });
 
         scrollPanePoint.setViewportView(table);
 
@@ -378,19 +380,21 @@ public class WKTDialog extends JDialog {
         //
 
         addPointButton = new JButton("+");
-        addPointButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addPoint();
-            }
-        });
+        addPointButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addPoint();
+                    }
+                });
         pointButtonPanel.add(addPointButton);
 
         removePointButton = new JButton("-");
-        removePointButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removePoint();
-            }
-        });
+        removePointButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        removePoint();
+                    }
+                });
         pointButtonPanel.add(removePointButton);
 
         JLabel lblCoordinates = new JLabel("Coordinates");
@@ -413,23 +417,24 @@ public class WKTDialog extends JDialog {
 
         multiList = new JList<String>();
         multiList.setModel(multiListModel);
-        multiList.addListSelectionListener(new ListSelectionListener() {
-            /**
-             * Value changed.
-             *
-             * @param e the e
-             */
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    int selectedIndex = multiList.getSelectedIndex();
+        multiList.addListSelectionListener(
+                new ListSelectionListener() {
+                    /**
+                     * Value changed.
+                     *
+                     * @param e the e
+                     */
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+                        if (!e.getValueIsAdjusting()) {
+                            int selectedIndex = multiList.getSelectedIndex();
 
-                    if (selectedIndex >= 0) {
-                        populateSegmentList(selectedIndex);
+                            if (selectedIndex >= 0) {
+                                populateSegmentList(selectedIndex);
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
         scrollPanelMulti.setViewportView(multiList);
 
         JPanel multiButtonPanel = new JPanel();
@@ -441,22 +446,24 @@ public class WKTDialog extends JDialog {
         // Add multi shape button
         //
         addMultiButton = new JButton("+");
-        addMultiButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addMultiShape();
-            }
-        });
+        addMultiButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addMultiShape();
+                    }
+                });
         multiButtonPanel.add(addMultiButton);
 
         //
         // Remove multi shape button
         //
         removeMultiButton = new JButton("-");
-        removeMultiButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeMultiShape();
-            }
-        });
+        removeMultiButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        removeMultiShape();
+                    }
+                });
         multiButtonPanel.add(removeMultiButton);
 
         JLabel lblShape = new JLabel("Shape");
@@ -536,8 +543,9 @@ public class WKTDialog extends JDialog {
      */
     private void populateSegmentList(int index) {
         segmentListModel.clear();
-        for (int segmentIndex = 0; segmentIndex < wktGeometry.getSegmentList(index)
-                .size(); segmentIndex++) {
+        for (int segmentIndex = 0;
+                segmentIndex < wktGeometry.getSegmentList(index).size();
+                segmentIndex++) {
             segmentListModel.addElement(wktGeometry.getSegmentName(segmentIndex));
         }
 
@@ -546,9 +554,7 @@ public class WKTDialog extends JDialog {
         }
     }
 
-    /**
-     * Populate multi shape list.
-     */
+    /** Populate multi shape list. */
     private void populateMultiShapeList() {
         multiListModel.clear();
         segmentListModel.clear();
@@ -558,9 +564,7 @@ public class WKTDialog extends JDialog {
         multiList.setSelectedIndex(0);
     }
 
-    /**
-     * Update segment buttons.
-     */
+    /** Update segment buttons. */
     private void updateSegmentButtons() {
 
         boolean enabled = false;
@@ -580,17 +584,15 @@ public class WKTDialog extends JDialog {
         removeSegmentButton.setEnabled(!segmentList.isSelectionEmpty());
     }
 
-    /**
-     * Update point buttons.
-     */
+    /** Update point buttons. */
     private void updatePointButtons() {
         WKTType wktType = (WKTType) geometryTypeComboBox.getSelectedItem();
 
         boolean enablePointButtons = false;
 
         if (wktType != null) {
-            enablePointButtons = (wktType.getNumOfPoints() < 0)
-                    && (tablePointModel.getRowCount() > 0);
+            enablePointButtons =
+                    (wktType.getNumOfPoints() < 0) && (tablePointModel.getRowCount() > 0);
         }
 
         addPointButton.setEnabled(enablePointButtons);
@@ -602,9 +604,7 @@ public class WKTDialog extends JDialog {
         removePointButton.setEnabled(enablePointButtons);
     }
 
-    /**
-     * Update wkt string in the text area.
-     */
+    /** Update wkt string in the text area. */
     private void updateWKTString() {
         String wktString = WKTConversion.generateWKTString(wktGeometry, true);
 
@@ -668,9 +668,7 @@ public class WKTDialog extends JDialog {
         updatePointButtons();
     }
 
-    /**
-     * Geometry type updated.
-     */
+    /** Geometry type updated. */
     protected void geometryTypeUpdated() {
         WKTType wktType = (WKTType) geometryTypeComboBox.getSelectedItem();
 
@@ -679,18 +677,14 @@ public class WKTDialog extends JDialog {
         updateUI(wktType);
     }
 
-    /**
-     * Reload.
-     */
+    /** Reload. */
     protected void reload() {
         String wktString = wktTextArea.getText();
 
         populate(wktString);
     }
 
-    /**
-     * Adds the segment.
-     */
+    /** Adds the segment. */
     protected void addSegment() {
         int index = 0;
         if (wktGeometry.getGeometryType().canHaveMultipleShapes()) {
@@ -706,9 +700,7 @@ public class WKTDialog extends JDialog {
         updateWKTString();
     }
 
-    /**
-     * Removes the segment.
-     */
+    /** Removes the segment. */
     protected void removeSegment() {
         int multiShapeIndex = 0;
         if (wktGeometry.getGeometryType().canHaveMultipleShapes()) {
@@ -731,24 +723,18 @@ public class WKTDialog extends JDialog {
         updateWKTString();
     }
 
-    /**
-     * Adds the point.
-     */
+    /** Adds the point. */
     protected void addPoint() {
         tablePointModel.addNewPoint();
     }
 
-    /**
-     * Removes the point.
-     */
+    /** Removes the point. */
     protected void removePoint() {
         int selectedIndex = segmentList.getSelectedIndex();
         tablePointModel.removePoint(selectedIndex);
     }
 
-    /**
-     * Adds the multi shape.
-     */
+    /** Adds the multi shape. */
     protected void addMultiShape() {
         if (wktGeometry.getGeometryType().canHaveMultipleShapes()) {
             int index = wktGeometry.addNewShape();
@@ -762,9 +748,7 @@ public class WKTDialog extends JDialog {
         }
     }
 
-    /**
-     * Removes the multi shape.
-     */
+    /** Removes the multi shape. */
     protected void removeMultiShape() {
         int selectedIndex = multiList.getSelectedIndex();
         wktGeometry.removeShape(selectedIndex);

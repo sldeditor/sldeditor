@@ -19,22 +19,19 @@
 
 package com.sldeditor.rendertransformation.types;
 
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.media.jai.KernelJAI;
-
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 
 /**
  * The Class KernelJAIValues.
@@ -49,29 +46,25 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
     /** The value. */
     private KernelJAI value = null;
 
-    /**
-     * Instantiates a new kernel JAI values.
-     */
+    /** Instantiates a new kernel JAI values. */
     public KernelJAIValues() {
         populateKernelKAI();
     }
 
-    /**
-     * Populate interpolation map.
-     */
+    /** Populate interpolation map. */
     private static synchronized void populateKernelKAI() {
         if (kernelJAIMap == null) {
             kernelJAIMap = new HashMap<KernelJAI, String>();
-            kernelJAIMap.put(KernelJAI.GRADIENT_MASK_SOBEL_HORIZONTAL,
-                    "GRADIENT_MASK_SOBEL_HORIZONTAL");
-            kernelJAIMap.put(KernelJAI.GRADIENT_MASK_SOBEL_VERTICAL,
-                    "GRADIENT_MASK_SOBEL_VERTICAL");
+            kernelJAIMap.put(
+                    KernelJAI.GRADIENT_MASK_SOBEL_HORIZONTAL, "GRADIENT_MASK_SOBEL_HORIZONTAL");
+            kernelJAIMap.put(
+                    KernelJAI.GRADIENT_MASK_SOBEL_VERTICAL, "GRADIENT_MASK_SOBEL_VERTICAL");
         }
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.lang.Object)
      */
     @Override
@@ -92,7 +85,7 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getExpression()
      */
     @Override
@@ -105,7 +98,7 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.Object)
      */
     @Override
@@ -125,7 +118,7 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -135,7 +128,7 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -145,7 +138,7 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

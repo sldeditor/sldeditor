@@ -19,21 +19,19 @@
 
 package com.sldeditor.filter.v2.function.geometry;
 
-import java.util.List;
-
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.spatial.DWithinImpl;
-import org.locationtech.jts.geom.Geometry;
-import org.opengis.filter.Filter;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import java.util.List;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.spatial.DWithinImpl;
+import org.locationtech.jts.geom.Geometry;
+import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class DWithin.
@@ -44,14 +42,10 @@ public class DWithin extends FilterBase implements FilterConfigInterface {
 
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
-    /**
-     * The Class DWithinExtended.
-     */
+    /** The Class DWithinExtended. */
     public class DWithinExtended extends DWithinImpl implements FilterExtendedInterface {
 
-        /**
-         * Instantiates a new d within extended.
-         */
+        /** Instantiates a new d within extended. */
         public DWithinExtended() {
             super(null, null);
         }
@@ -64,8 +58,11 @@ public class DWithin extends FilterBase implements FilterConfigInterface {
          * @param distanceExp the distance exp
          * @param unitsExp the units exp
          */
-        public DWithinExtended(Expression expression1, Expression expression2,
-                Expression distanceExp, Expression unitsExp) {
+        public DWithinExtended(
+                Expression expression1,
+                Expression expression2,
+                Expression distanceExp,
+                Expression unitsExp) {
             super(expression1, expression2);
 
             double distance = Double.parseDouble(distanceExp.toString());
@@ -75,7 +72,7 @@ public class DWithin extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.geotools.filter.CartesianDistanceFilter#toString()
          */
         public String toString() {
@@ -94,13 +91,17 @@ public class DWithin extends FilterBase implements FilterConfigInterface {
                 return "[ " + leftGeometry.toString() + operator + "null" + distStr + " ]";
             }
 
-            return "[ " + leftGeometry.toString() + operator + rightGeometry.toString() + distStr
+            return "[ "
+                    + leftGeometry.toString()
+                    + operator
+                    + rightGeometry.toString()
+                    + distStr
                     + " ]";
         }
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -109,9 +110,7 @@ public class DWithin extends FilterBase implements FilterConfigInterface {
         }
     }
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public DWithin(String category) {
         super(category);
     }
@@ -126,8 +125,9 @@ public class DWithin extends FilterBase implements FilterConfigInterface {
         FilterName filterName = new FilterName("DWithin", Boolean.class);
         filterName.addParameter(
                 new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Geometry.class));
-        filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION,
-                Geometry.class));
+        filterName.addParameter(
+                new FilterNameParameter(
+                        "expression", ExpressionTypeEnum.EXPRESSION, Geometry.class));
         filterName.addParameter(
                 new FilterNameParameter("distance", ExpressionTypeEnum.EXPRESSION, Double.class));
         filterName.addParameter(
@@ -167,17 +167,21 @@ public class DWithin extends FilterBase implements FilterConfigInterface {
 
         DWithinImpl filter = null;
 
-        if ((parameterList == null) || ((parameterList.size() != 2) && (parameterList.size() != 4))) {
+        if ((parameterList == null)
+                || ((parameterList.size() != 2) && (parameterList.size() != 4))) {
             filter = new DWithinExtended();
         } else {
-            
-            if(parameterList.size() == 2)
-            {
+
+            if (parameterList.size() == 2) {
                 parameterList.add(ff.literal(0.0));
                 parameterList.add(ff.literal(""));
             }
-            filter = new DWithinExtended(parameterList.get(0), parameterList.get(1),
-                    parameterList.get(2), parameterList.get(3));
+            filter =
+                    new DWithinExtended(
+                            parameterList.get(0),
+                            parameterList.get(1),
+                            parameterList.get(2),
+                            parameterList.get(3));
         }
 
         return filter;

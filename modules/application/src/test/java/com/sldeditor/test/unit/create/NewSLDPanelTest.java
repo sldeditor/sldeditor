@@ -22,19 +22,16 @@ package com.sldeditor.test.unit.create;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.create.NewSLDPanel;
 import java.util.List;
-
 import javax.swing.ComboBoxModel;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.create.NewSLDPanel;
-
 /**
  * The Class NewSLDPanelTest.
- * 
+ *
  * <p>Set to @Ignore currently because it takes focus away from the user when the unit test is run
  *
  * @author Robert Ward (SCISYS)
@@ -42,16 +39,12 @@ import com.sldeditor.create.NewSLDPanel;
 @Ignore
 public class NewSLDPanelTest {
 
-    /**
-     * The Class TestNewSLDPanel.
-     */
+    /** The Class TestNewSLDPanel. */
     class TestNewSLDPanel extends NewSLDPanel {
         /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
-        /**
-         * Instantiates a new test new sld panel.
-         */
+        /** Instantiates a new test new sld panel. */
         public TestNewSLDPanel() {
             super();
         }
@@ -74,46 +67,42 @@ public class NewSLDPanelTest {
             return comboBoxNewSLD.getModel();
         }
 
-        /**
-         * Ok button.
-         */
+        /** Ok button. */
         public void okButton() {
-            Thread one = new Thread() {
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
-                        okButtonPressed();
-                    } catch (InterruptedException v) {
-                        System.out.println(v);
-                    }
-                }
-            };
+            Thread one =
+                    new Thread() {
+                        public void run() {
+                            try {
+                                Thread.sleep(1000);
+                                okButtonPressed();
+                            } catch (InterruptedException v) {
+                                System.out.println(v);
+                            }
+                        }
+                    };
 
             one.start();
         }
 
-        /**
-         * Cancel button.
-         */
+        /** Cancel button. */
         public void cancelButton() {
-            Thread one = new Thread() {
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
-                        cancelButtonPressed();
-                    } catch (InterruptedException v) {
-                        System.out.println(v);
-                    }
-                }
-            };
+            Thread one =
+                    new Thread() {
+                        public void run() {
+                            try {
+                                Thread.sleep(1000);
+                                cancelButtonPressed();
+                            } catch (InterruptedException v) {
+                                System.out.println(v);
+                            }
+                        }
+                    };
 
             one.start();
         }
     }
 
-    /**
-     * Test.
-     */
+    /** Test. */
     @Test
     public void test() {
         TestNewSLDPanel panel = new TestNewSLDPanel();
@@ -132,5 +121,4 @@ public class NewSLDPanelTest {
             assertEquals(panel.getData().getElementAt(index), sldData.get(0).getLayerName());
         }
     }
-
 }

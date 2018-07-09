@@ -19,14 +19,13 @@
 
 package com.sldeditor.datasource.extension.filesystem;
 
+import com.sldeditor.common.data.GeoServerConnection;
 import java.util.List;
 
-import com.sldeditor.common.data.GeoServerConnection;
-
 /**
- * The Interface GeoServerConnectUpdateInterface allows information about
- * GeoServer connections to be transferred.
- * 
+ * The Interface GeoServerConnectUpdateInterface allows information about GeoServer connections to
+ * be transferred.
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface GeoServerConnectUpdateInterface {
@@ -51,7 +50,8 @@ public interface GeoServerConnectUpdateInterface {
      * @param originalConnectionDetails the original connection details
      * @param newConnectionDetails the new connection details
      */
-    void updateConnectionDetails(GeoServerConnection originalConnectionDetails,
+    void updateConnectionDetails(
+            GeoServerConnection originalConnectionDetails,
             GeoServerConnection newConnectionDetails);
 
     /**

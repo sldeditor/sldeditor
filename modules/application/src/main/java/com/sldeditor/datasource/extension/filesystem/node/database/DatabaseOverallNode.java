@@ -17,23 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.datasource.extension.filesystem.node.database;
-
-import java.awt.datatransfer.DataFlavor;
-import java.net.URL;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
+import java.awt.datatransfer.DataFlavor;
+import java.net.URL;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * File system tree node representing a database server.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DatabaseOverallNode extends DefaultMutableTreeNode implements NodeInterface {
@@ -66,7 +63,7 @@ public class DatabaseOverallNode extends DefaultMutableTreeNode implements NodeI
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
@@ -76,7 +73,7 @@ public class DatabaseOverallNode extends DefaultMutableTreeNode implements NodeI
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override
@@ -96,7 +93,7 @@ public class DatabaseOverallNode extends DefaultMutableTreeNode implements NodeI
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.NodeInterface#getIcon()
      */
     @Override

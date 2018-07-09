@@ -19,9 +19,9 @@
 
 package com.sldeditor.ui.legend.option;
 
+import com.sldeditor.common.utils.ColourUtils;
 import java.awt.Color;
 import java.awt.Font;
-
 import org.geoserver.wms.legendgraphic.LegendUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,11 +29,9 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.sldeditor.common.utils.ColourUtils;
-
 /**
  * Class encapsulating legend configuration data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class LegendOptionData {
@@ -478,8 +476,8 @@ public class LegendOptionData {
      * @param elementName the element name
      * @param value the value
      */
-    private void createElement(Document doc, Element parentElement, String elementName,
-            boolean value) {
+    private void createElement(
+            Document doc, Element parentElement, String elementName, boolean value) {
         Element element = doc.createElement(elementName);
         element.appendChild(doc.createTextNode(Boolean.toString(value)));
 
@@ -509,8 +507,8 @@ public class LegendOptionData {
      * @param elementName the element name
      * @param value the value
      */
-    private void createElement(Document doc, Element parentElement, String elementName,
-            Color value) {
+    private void createElement(
+            Document doc, Element parentElement, String elementName, Color value) {
         Element element = doc.createElement(elementName);
         element.appendChild(doc.createTextNode(ColourUtils.fromColour(value)));
 
@@ -525,8 +523,8 @@ public class LegendOptionData {
      * @param elementName the element name
      * @param value the value
      */
-    private void createElement(Document doc, Element parentElement, String elementName,
-            Font value) {
+    private void createElement(
+            Document doc, Element parentElement, String elementName, Font value) {
         Element element = doc.createElement(elementName);
         element.setAttribute(FONT_SIZE, Integer.toString(value.getSize()));
         element.setAttribute(FONT_STYLE, Integer.toString(value.getStyle()));
@@ -564,35 +562,35 @@ public class LegendOptionData {
                         } else if (nodeName.compareToIgnoreCase(IMAGE_SIZE) == 0) {
                             legendOptionData.setImageSize(decodeIntElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(MAINTAIN_ASPECT_RATIO) == 0) {
-                            legendOptionData
-                                    .setMaintainAspectRatio(decodeBooleanElement(document, child));
+                            legendOptionData.setMaintainAspectRatio(
+                                    decodeBooleanElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(SHOW_LABELS) == 0) {
                             legendOptionData.setShowLabels(decodeBooleanElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(SHOW_TITLE) == 0) {
                             legendOptionData.setShowTitle(decodeBooleanElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(SPLIT_SYMBOLIZERS) == 0) {
-                            legendOptionData
-                                    .setSplitSymbolizers(decodeBooleanElement(document, child));
+                            legendOptionData.setSplitSymbolizers(
+                                    decodeBooleanElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(FONT_ANTI_ALIASING) == 0) {
-                            legendOptionData
-                                    .setFontAntiAliasing(decodeBooleanElement(document, child));
+                            legendOptionData.setFontAntiAliasing(
+                                    decodeBooleanElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(SHOW_BORDER) == 0) {
                             legendOptionData.setBorder(decodeBooleanElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(BAND_INFORMATION) == 0) {
-                            legendOptionData
-                                    .setBandInformation(decodeBooleanElement(document, child));
+                            legendOptionData.setBandInformation(
+                                    decodeBooleanElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(BACKGROUND_TRANSPARENT) == 0) {
                             legendOptionData.setTransparent(decodeBooleanElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(LABEL_FONT) == 0) {
                             legendOptionData.setLabelFont(decodeFontElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(LABEL_FONT_COLOUR) == 0) {
-                            legendOptionData
-                                    .setLabelFontColour(decodeColourElement(document, child));
+                            legendOptionData.setLabelFontColour(
+                                    decodeColourElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(BORDER_COLOUR) == 0) {
                             legendOptionData.setBorderColour(decodeColourElement(document, child));
                         } else if (nodeName.compareToIgnoreCase(BACKGROUND_COLOUR) == 0) {
-                            legendOptionData
-                                    .setBackgroundColour(decodeColourElement(document, child));
+                            legendOptionData.setBackgroundColour(
+                                    decodeColourElement(document, child));
                         }
                     }
                     child = child.getNextSibling();

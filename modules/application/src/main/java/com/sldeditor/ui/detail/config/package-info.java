@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Package contains the field configuration objects read from configuration file,
- * the present the GUI components to the user to edit SLD symbol data.
- * 
+ * Package contains the field configuration objects read from configuration file, the present the
+ * GUI components to the user to edit SLD symbol data.
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.config;

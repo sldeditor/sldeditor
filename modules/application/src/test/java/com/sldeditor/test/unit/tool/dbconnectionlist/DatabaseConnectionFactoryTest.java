@@ -23,24 +23,21 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import com.sldeditor.common.data.DatabaseConnection;
+import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.geotools.data.teradata.TeradataDataStoreFactory;
 import org.junit.Test;
 
-import com.sldeditor.common.data.DatabaseConnection;
-import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
-
 /**
  * Unit test for DatabaseConnectionFactory class.
- * 
- * <p>{@link com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DatabaseConnectionFactoryTest {
 
@@ -103,21 +100,21 @@ public class DatabaseConnectionFactoryTest {
             if (!externalDrivers.contains(name)) {
                 System.out.println(name);
 
-                DatabaseConnection databaseConnection = DatabaseConnectionFactory
-                        .getNewConnection(name);
+                DatabaseConnection databaseConnection =
+                        DatabaseConnectionFactory.getNewConnection(name);
 
                 assertNotNull(databaseConnection);
                 databaseConnection.setConnectionDataMap(new HashMap<String, String>());
                 System.out.println(databaseConnection.getConnectionName());
 
-                DatabaseConnection databaseConnection2 = DatabaseConnectionFactory
-                        .getNewConnection(databaseConnection);
+                DatabaseConnection databaseConnection2 =
+                        DatabaseConnectionFactory.getNewConnection(databaseConnection);
                 assertNotNull(databaseConnection2);
             }
         }
 
-        DatabaseConnection databaseConnection3 = DatabaseConnectionFactory
-                .getConnection("test.gpkg");
+        DatabaseConnection databaseConnection3 =
+                DatabaseConnectionFactory.getConnection("test.gpkg");
         assertNotNull(databaseConnection3);
     }
 
@@ -136,9 +133,9 @@ public class DatabaseConnectionFactoryTest {
         localConnectionDataMap.put("test", "a.db");
         assertNull(DatabaseConnectionFactory.decodeString(localConnectionDataMap));
 
-        localConnectionDataMap.put(DatabaseConnectionFactory.DATABASE_TYPE_KEY,
+        localConnectionDataMap.put(
+                DatabaseConnectionFactory.DATABASE_TYPE_KEY,
                 (String) TeradataDataStoreFactory.DBTYPE.sample);
         assertNotNull(DatabaseConnectionFactory.decodeString(localConnectionDataMap));
     }
-
 }

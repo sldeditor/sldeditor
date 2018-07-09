@@ -24,9 +24,12 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.filter.v2.function.FilterConfigInterface;
+import com.sldeditor.filter.v2.function.misc.IsLike;
+import com.sldeditor.filter.v2.function.misc.IsLike.IsLikeExtended;
+import com.sldeditor.filter.v2.function.misc.IsNull;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.CompareFilterImpl;
 import org.geotools.filter.text.cql2.CQL;
@@ -35,36 +38,27 @@ import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.filter.v2.function.FilterConfigInterface;
-import com.sldeditor.filter.v2.function.misc.IsLike;
-import com.sldeditor.filter.v2.function.misc.IsLike.IsLikeExtended;
-import com.sldeditor.filter.v2.function.misc.IsNull;
-
 /**
- * Unit test for the following classes:
- * {@link com.sldeditor.filter.v2.function.misc.IsLike}
- * {@link com.sldeditor.filter.v2.function.misc.IsNull}
- * 
- * @author Robert Ward (SCISYS)
+ * Unit test for the following classes: {@link com.sldeditor.filter.v2.function.misc.IsLike} {@link
+ * com.sldeditor.filter.v2.function.misc.IsNull}
  *
+ * @author Robert Ward (SCISYS)
  */
 public class MiscTests {
 
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
     private String category = "Test category";
 
-    /**
-     * {@link com.sldeditor.filter.v2.function.misc.IsLike}.
-     */
+    /** {@link com.sldeditor.filter.v2.function.misc.IsLike}. */
     @Test
     public void testIsLikeClass() {
         FilterConfigInterface objUnderTest = new IsLike(category);
-        
+
         assertNotNull(objUnderTest.getFilterConfiguration());
         assertNotNull(objUnderTest.createFilter());
         assertNull(objUnderTest.createLogicFilter(null));
 
-        IsLikeExtended filter = (IsLikeExtended)objUnderTest.createFilter(null);
+        IsLikeExtended filter = (IsLikeExtended) objUnderTest.createFilter(null);
         assertNull(filter.getLiteral());
         assertNull(filter.getExpression());
 
@@ -92,13 +86,11 @@ public class MiscTests {
         System.out.println(filter.toString());
     }
 
-    /**
-     * {@link com.sldeditor.filter.v2.function.misc.IsNull}.
-     */
+    /** {@link com.sldeditor.filter.v2.function.misc.IsNull}. */
     @Test
     public void testIsNullClass() {
         FilterConfigInterface objUnderTest = new IsNull(category);
-        
+
         assertNotNull(objUnderTest.getFilterConfiguration());
         assertNotNull(objUnderTest.createFilter());
         assertNull(objUnderTest.createLogicFilter(null));

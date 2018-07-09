@@ -25,28 +25,27 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
 import com.sldeditor.datasource.config.DataSourceAttributeModel;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Unit test for DataSourceAttributeModel class.
- * 
- * <p>{@link com.sldeditor.datasource.config.DataSourceAttributeModel}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.config.DataSourceAttributeModel}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DataSourceAttributeModelTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#isCellEditable(int, int)}.
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#setConnectedToDataSource(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.config.DataSourceAttributeModel#isCellEditable(int, int)}. Test
+     * method for {@link
+     * com.sldeditor.datasource.config.DataSourceAttributeModel#setConnectedToDataSource(boolean)}.
      */
     @Test
     public void testIsCellEditable() {
@@ -63,11 +62,14 @@ public class DataSourceAttributeModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#populate(java.util.List)}.
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#getValueAt(int, int)}.
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#setValueAt(java.lang.Object, int, int)}.
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#retrieveData()}.
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#getAttributeData()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.config.DataSourceAttributeModel#populate(java.util.List)}. Test
+     * method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#getValueAt(int,
+     * int)}. Test method for {@link
+     * com.sldeditor.datasource.config.DataSourceAttributeModel#setValueAt(java.lang.Object, int,
+     * int)}. Test method for {@link
+     * com.sldeditor.datasource.config.DataSourceAttributeModel#retrieveData()}. Test method for
+     * {@link com.sldeditor.datasource.config.DataSourceAttributeModel#getAttributeData()}.
      */
     @Test
     public void testPopulate() {
@@ -101,13 +103,13 @@ public class DataSourceAttributeModelTest {
         assertNull(model.getValueAt(-1, 0));
         assertNull(model.getValueAt(attributeList.size(), 0));
 
-        assertTrue(expectedName1.compareTo(((String)model.getValueAt(0, 0))) == 0);
-        String actualType = (String)model.getValueAt(0, 1);
+        assertTrue(expectedName1.compareTo(((String) model.getValueAt(0, 0))) == 0);
+        String actualType = (String) model.getValueAt(0, 1);
         assertTrue(expectedType1.getSimpleName().compareTo(actualType) == 0);
         assertEquals(expectedValue1, model.getValueAt(0, 2));
 
-        assertTrue(expectedName2.compareTo(((String)model.getValueAt(1, 0))) == 0);
-        actualType = (String)model.getValueAt(1, 1);
+        assertTrue(expectedName2.compareTo(((String) model.getValueAt(1, 0))) == 0);
+        actualType = (String) model.getValueAt(1, 1);
         assertTrue(expectedType2.getSimpleName().compareTo(actualType) == 0);
         assertEquals(expectedValue2, model.getValueAt(1, 2));
 
@@ -124,9 +126,9 @@ public class DataSourceAttributeModelTest {
         Class<?> expectedType3 = String.class;
 
         model.setValueAt(expectedName3, 0, 0);
-        assertTrue(expectedName3.compareTo(((String)model.getValueAt(0, 0))) == 0);
+        assertTrue(expectedName3.compareTo(((String) model.getValueAt(0, 0))) == 0);
         model.setValueAt(expectedType3.getSimpleName(), 1, 1);
-        actualType = (String)model.getValueAt(1, 1);
+        actualType = (String) model.getValueAt(1, 1);
         assertTrue(expectedType3.getSimpleName().compareTo(actualType) == 0);
         Object expectedValue3 = String.valueOf(42);
         model.setValueAt(expectedValue3, 1, 2);
@@ -148,15 +150,16 @@ public class DataSourceAttributeModelTest {
         assertTrue(expectedName3.compareTo(actualAttributeList.get(0).getName()) == 0);
         assertEquals(expectedType3, actualAttributeList.get(1).getType());
         assertEquals(expectedValue3, actualAttributeList.get(1).getValue());
-        
+
         // Try and set an unknown type
         model.setValueAt(DataSourceAttributeModel.class.getSimpleName(), 0, 1);
         assertNull(model.getValueAt(0, 1));
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#getColumnCount()}.
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#getColumnName(int)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.config.DataSourceAttributeModel#getColumnCount()}. Test method for
+     * {@link com.sldeditor.datasource.config.DataSourceAttributeModel#getColumnName(int)}.
      */
     @Test
     public void testGetColumnCount() {
@@ -174,7 +177,8 @@ public class DataSourceAttributeModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#getTypeData()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.config.DataSourceAttributeModel#getTypeData()}.
      */
     @Test
     public void testGetTypeData() {
@@ -183,8 +187,9 @@ public class DataSourceAttributeModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#addNewField()}.
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#removeFields(int[])}.
+     * Test method for {@link
+     * com.sldeditor.datasource.config.DataSourceAttributeModel#addNewField()}. Test method for
+     * {@link com.sldeditor.datasource.config.DataSourceAttributeModel#removeFields(int[])}.
      */
     @Test
     public void testAddNewField() {
@@ -210,7 +215,8 @@ public class DataSourceAttributeModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.config.DataSourceAttributeModel#addNewField()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.config.DataSourceAttributeModel#addNewField()}.
      */
     @Test
     public void testTimestampField() {
@@ -224,6 +230,5 @@ public class DataSourceAttributeModelTest {
 
         Object actualResult = model.getValueAt(0, 1);
         assertNotNull(actualResult);
-        
     }
 }

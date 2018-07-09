@@ -26,21 +26,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.data.DataStore;
-import org.geotools.data.FeatureSource;
-import org.geotools.feature.type.GeometryDescriptorImpl;
-import org.geotools.styling.UserLayer;
-import org.junit.Test;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.PropertyDescriptor;
-
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
@@ -51,14 +36,26 @@ import com.sldeditor.datasource.impl.CreateInlineDataSource;
 import com.sldeditor.datasource.impl.CreateInternalDataSource;
 import com.sldeditor.datasource.impl.DataSourceImpl;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import org.geotools.data.DataStore;
+import org.geotools.data.FeatureSource;
+import org.geotools.feature.type.GeometryDescriptorImpl;
+import org.geotools.styling.UserLayer;
+import org.junit.Test;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.PropertyDescriptor;
 
 /**
  * Unit test for DataSourceImpl.
- * 
- * <p>{@link com.sldeditor.datasource.impl.DataSourceImpl()}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.impl.DataSourceImpl()}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DataSourceImplTest {
 
@@ -70,8 +67,8 @@ public class DataSourceImplTest {
         private boolean hasBeenCalled = false;
 
         @Override
-        public void dataSourceLoaded(GeometryTypeEnum geometryType,
-                boolean isConnectedToDataSourceFlag) {
+        public void dataSourceLoaded(
+                GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag) {
             this.geometryType = geometryType;
             this.isConnectedToDataSourceFlag = isConnectedToDataSourceFlag;
             this.hasBeenCalled = true;
@@ -86,7 +83,7 @@ public class DataSourceImplTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.
          * geotools.data.DataStore)
          */
@@ -98,8 +95,8 @@ public class DataSourceImplTest {
 
     /**
      * Test method for {@link com.sldeditor.datasource.impl.DataSourceImpl#connect()}. Test method
-     * for
-     * {@link com.sldeditor.datasource.impl.DataSourceImpl#addListener(com.sldeditor.datasource.DataSourceUpdatedInterface)}.
+     * for {@link
+     * com.sldeditor.datasource.impl.DataSourceImpl#addListener(com.sldeditor.datasource.DataSourceUpdatedInterface)}.
      */
     @Test
     public void testConnectToInternalDataSource() {
@@ -150,8 +147,8 @@ public class DataSourceImplTest {
         assertEquals(2, ds.getAttributes(String.class).size());
 
         // Add new field
-        DataSourceAttributeData dataSourceField = new DataSourceAttributeData("bearing",
-                Double.class, null);
+        DataSourceAttributeData dataSourceField =
+                new DataSourceAttributeData("bearing", Double.class, null);
         ds.addField(dataSourceField);
         assertTrue(ds.getAttributes(Double.class).size() == 2);
 
@@ -187,8 +184,8 @@ public class DataSourceImplTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.impl.DataSourceImpl#getAvailableDataStoreList()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceImpl#getAvailableDataStoreList()}.
      */
     @Test
     public void testGetAvailableDataStoreList() {
@@ -198,9 +195,7 @@ public class DataSourceImplTest {
         System.out.println(ds.getAvailableDataStoreList());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceImpl#connect()}.
-     */
+    /** Test method for {@link com.sldeditor.datasource.impl.DataSourceImpl#connect()}. */
     @Test
     public void testConnectToExternalDataSource() {
         DataSourceImpl ds = new DataSourceImpl();
@@ -247,8 +242,8 @@ public class DataSourceImplTest {
         assertEquals(1, ds.getAttributes(String.class).size());
 
         // Add new field - shouldn't work because connections to external data sources are fixed
-        DataSourceAttributeData dataSourceField = new DataSourceAttributeData("bearing",
-                Double.class, null);
+        DataSourceAttributeData dataSourceField =
+                new DataSourceAttributeData("bearing", Double.class, null);
         ds.addField(dataSourceField);
         assertTrue(ds.getAttributes(Double.class).size() == 1);
 
@@ -278,9 +273,7 @@ public class DataSourceImplTest {
         assertFalse(dataSourceUpdateListener.isConnectedToDataSourceFlag);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceImpl#connect()}.
-     */
+    /** Test method for {@link com.sldeditor.datasource.impl.DataSourceImpl#connect()}. */
     @Test
     public void testConnectToInlineDataSource() {
         DataSourceImpl ds = new DataSourceImpl();
@@ -306,8 +299,8 @@ public class DataSourceImplTest {
         FeatureSource<SimpleFeatureType, SimpleFeature> exampleLayer = ds.getExampleFeatureSource();
         assertNull(exampleLayer);
 
-        Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> userLayerMap = ds
-                .getUserLayerFeatureSource();
+        Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> userLayerMap =
+                ds.getUserLayerFeatureSource();
         assertEquals(1, userLayerMap.size());
 
         assertFalse(dataSourceUpdateListener.hasBeenCalled());

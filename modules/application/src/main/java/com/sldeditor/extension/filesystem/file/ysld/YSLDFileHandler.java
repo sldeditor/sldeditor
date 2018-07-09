@@ -19,25 +19,6 @@
 
 package com.sldeditor.extension.filesystem.file.ysld;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.tree.DefaultTreeModel;
-
-import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.ysld.Ysld;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
@@ -52,10 +33,26 @@ import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.tree.DefaultTreeModel;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.ysld.Ysld;
 
 /**
  * Class that handles reading/writing YSLD files to the file system.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class YSLDFileHandler implements FileHandlerInterface {
@@ -80,7 +77,7 @@ public class YSLDFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.FileHandlerInterface#getFileExtension()
      */
     @Override
@@ -90,20 +87,20 @@ public class YSLDFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.input.FileSystemInterface,
      * javax.swing.tree.DefaultTreeModel, com.sldeditor.extension.input.file.FileTreeNode)
      */
     @Override
-    public boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel,
-            FileTreeNode node) {
+    public boolean populate(
+            FileSystemInterface inputInterface, DefaultTreeModel treeModel, FileTreeNode node) {
         // Do nothing
         return false;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.input.NodeInterface)
      */
     @Override
@@ -205,7 +202,7 @@ public class YSLDFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
@@ -223,8 +220,9 @@ public class YSLDFileHandler implements FileHandlerInterface {
         BufferedWriter out;
         try {
             out = new BufferedWriter(new FileWriter(fileToSave));
-            String contents = ysldWriter.encodeSLD(sldData.getResourceLocator(),
-                    SelectedSymbol.getInstance().getSld());
+            String contents =
+                    ysldWriter.encodeSLD(
+                            sldData.getResourceLocator(), SelectedSymbol.getInstance().getSld());
             out.write(contents);
             out.close();
         } catch (IOException e) {
@@ -238,7 +236,7 @@ public class YSLDFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
@@ -262,7 +260,7 @@ public class YSLDFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
      */
     @Override

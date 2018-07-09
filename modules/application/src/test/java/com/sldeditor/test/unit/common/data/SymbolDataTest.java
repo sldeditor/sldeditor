@@ -22,6 +22,8 @@ package com.sldeditor.test.unit.common.data;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import com.sldeditor.common.data.SymbolData;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.NamedLayer;
@@ -29,12 +31,9 @@ import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.junit.Test;
 
-import com.sldeditor.common.data.SymbolData;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-
 /**
  * The unit test for SymbolData.
- * 
+ *
  * <p>{@link com.sldeditor.common.data.SymbolData}
  *
  * @author Robert Ward (SCISYS)
@@ -93,10 +92,12 @@ public class SymbolDataTest {
         assertEquals(newSymbolData.getRule(), symbolData.getRule());
         assertEquals(newSymbolData.getSelectedFTSIndex(), symbolData.getSelectedFTSIndex());
         assertEquals(newSymbolData.getSelectedRuleIndex(), symbolData.getSelectedRuleIndex());
-        assertEquals(newSymbolData.getSelectedStyledLayerIndex(),
+        assertEquals(
+                newSymbolData.getSelectedStyledLayerIndex(),
                 symbolData.getSelectedStyledLayerIndex());
         assertEquals(newSymbolData.getSelectedStyleIndex(), symbolData.getSelectedStyleIndex());
-        assertEquals(newSymbolData.getSelectedSymbolizerIndex(),
+        assertEquals(
+                newSymbolData.getSelectedSymbolizerIndex(),
                 symbolData.getSelectedSymbolizerIndex());
     }
 
@@ -199,5 +200,4 @@ public class SymbolDataTest {
         symbolData.incrementSelectedStyleIndex();
         assertEquals(2, symbolData.getSelectedStyleIndex());
     }
-
 }

@@ -20,13 +20,12 @@
 package com.sldeditor.common;
 
 import java.util.Map;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
  * The Interface DataSourcePropertiesInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface DataSourcePropertiesInterface {
@@ -66,9 +65,7 @@ public interface DataSourcePropertiesInterface {
      */
     DataSourceConnectorInterface getDataSourceConnector();
 
-    /**
-     * Populate.
-     */
+    /** Populate. */
     void populate();
 
     /**
@@ -121,5 +118,4 @@ public interface DataSourcePropertiesInterface {
      * @return the debug connection string
      */
     String getDebugConnectionString();
-
 }

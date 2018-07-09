@@ -1,25 +1,20 @@
-/**
- * 
- */
-
+/** */
 package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.datasource.impl.NamespaceHelper;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.sldeditor.datasource.impl.NamespaceHelper;
-
 /**
  * The unit test for NamespaceHelper.
- * 
+ *
  * <p>{@link com.sldeditor.datasource.impl.NamespaceHelper}
  *
  * @author Robert Ward (SCISYS)
@@ -27,9 +22,11 @@ import com.sldeditor.datasource.impl.NamespaceHelper;
 public class NamespaceHelperTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.NamespaceHelper#NamespaceHelper(org.w3c.dom.Node)}.
-     * Test method for {@link com.sldeditor.datasource.impl.NamespaceHelper#isElement(java.lang.String, java.lang.String)}.
-     * Test method for {@link com.sldeditor.datasource.impl.NamespaceHelper#encode(java.lang.String, java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.NamespaceHelper#NamespaceHelper(org.w3c.dom.Node)}. Test method
+     * for {@link com.sldeditor.datasource.impl.NamespaceHelper#isElement(java.lang.String,
+     * java.lang.String)}. Test method for {@link
+     * com.sldeditor.datasource.impl.NamespaceHelper#encode(java.lang.String, java.lang.String)}.
      * Test method for {@link com.sldeditor.datasource.impl.NamespaceHelper#getFullElement()}.
      */
     @Test
@@ -72,17 +69,19 @@ public class NamespaceHelperTest {
         assertTrue(actualValue.compareTo(expectedElement) == 0);
 
         // Try NamespaceHelper.isElement
-        assertFalse(namespace.isElement((String)null, null));
+        assertFalse(namespace.isElement((String) null, null));
         assertFalse(namespace.isElement(components[0], null));
-        assertFalse(namespace.isElement((String)null, components[1]));
+        assertFalse(namespace.isElement((String) null, components[1]));
         assertTrue(namespace.isElement(components[0], components[1]));
         assertFalse(namespace.isElement(components[1], components[0]));
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.NamespaceHelper#NamespaceHelper(org.w3c.dom.Node)}.
-     * Test method for {@link com.sldeditor.datasource.impl.NamespaceHelper#isElement(java.lang.String, java.lang.String)}.
-     * Test method for {@link com.sldeditor.datasource.impl.NamespaceHelper#encode(java.lang.String, java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.NamespaceHelper#NamespaceHelper(org.w3c.dom.Node)}. Test method
+     * for {@link com.sldeditor.datasource.impl.NamespaceHelper#isElement(java.lang.String,
+     * java.lang.String)}. Test method for {@link
+     * com.sldeditor.datasource.impl.NamespaceHelper#encode(java.lang.String, java.lang.String)}.
      * Test method for {@link com.sldeditor.datasource.impl.NamespaceHelper#getFullElement()}.
      */
     @Test
@@ -121,8 +120,8 @@ public class NamespaceHelperTest {
         assertTrue(actualValue.compareTo(expectedElement) == 0);
 
         // Try NamespaceHelper.isElement
-        assertFalse(namespace.isElement((String)null, null));
-        assertFalse(namespace.isElement((String)null, expectedElement));
+        assertFalse(namespace.isElement((String) null, null));
+        assertFalse(namespace.isElement((String) null, expectedElement));
         assertTrue(namespace.isElement("", expectedElement));
     }
 }

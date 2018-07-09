@@ -19,16 +19,6 @@
 
 package com.sldeditor.ui.detail;
 
-import java.util.List;
-
-import org.geotools.styling.FeatureTypeConstraint;
-import org.geotools.styling.RemoteOWS;
-import org.geotools.styling.RemoteOWSImpl;
-import org.geotools.styling.Style;
-import org.geotools.styling.StyledLayer;
-import org.geotools.styling.UserLayer;
-import org.geotools.styling.UserLayerImpl;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
@@ -42,10 +32,18 @@ import com.sldeditor.ui.detail.config.base.OptionGroup;
 import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.List;
+import org.geotools.styling.FeatureTypeConstraint;
+import org.geotools.styling.RemoteOWS;
+import org.geotools.styling.RemoteOWSImpl;
+import org.geotools.styling.Style;
+import org.geotools.styling.StyledLayer;
+import org.geotools.styling.UserLayer;
+import org.geotools.styling.UserLayerImpl;
 
 /**
  * The Class UserLayerDetails allows a user to configure user layer data in a panel.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class UserLayerDetails extends StandardPanel
@@ -54,25 +52,21 @@ public class UserLayerDetails extends StandardPanel
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public UserLayerDetails() {
         super(UserLayerDetails.class);
 
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFile(null, getClass(), this, "UserLayer.xml");
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -108,10 +102,10 @@ public class UserLayerDetails extends StandardPanel
                             service = remoteOWS.getService();
                             onlineResource = remoteOWS.getOnlineResource();
                         }
-                        fieldConfigVisitor.populateTextField(FieldIdEnum.REMOTE_OWS_SERVICE,
-                                service);
-                        fieldConfigVisitor.populateTextField(FieldIdEnum.REMOTE_OWS_ONLINERESOURCE,
-                                onlineResource);
+                        fieldConfigVisitor.populateTextField(
+                                FieldIdEnum.REMOTE_OWS_SERVICE, service);
+                        fieldConfigVisitor.populateTextField(
+                                FieldIdEnum.REMOTE_OWS_ONLINERESOURCE, onlineResource);
                     } else {
                         userLayerSourceGroup.setOption(GroupIdEnum.INLINE_FEATURE_OPTION);
 
@@ -125,7 +119,7 @@ public class UserLayerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -145,8 +139,9 @@ public class UserLayerDetails extends StandardPanel
             userLayer.setName(name);
 
             // Feature type constraints
-            List<FeatureTypeConstraint> ftcList = fieldConfigVisitor
-                    .getFeatureTypeConstraint(FieldIdEnum.LAYER_FEATURE_CONSTRAINTS);
+            List<FeatureTypeConstraint> ftcList =
+                    fieldConfigVisitor.getFeatureTypeConstraint(
+                            FieldIdEnum.LAYER_FEATURE_CONSTRAINTS);
             if ((ftcList != null) && !ftcList.isEmpty()) {
                 FeatureTypeConstraint[] ftcArray = new FeatureTypeConstraint[ftcList.size()];
                 userLayer.setLayerFeatureConstraints(ftcList.toArray(ftcArray));
@@ -159,29 +154,34 @@ public class UserLayerDetails extends StandardPanel
 
                 OptionGroup selectedOption = userLayerSourceGroup.getSelectedOptionGroup();
                 switch (selectedOption.getId()) {
-                case REMOTE_OWS_OPTION: {
-                    RemoteOWS remoteOWS = new RemoteOWSImpl();
+                    case REMOTE_OWS_OPTION:
+                        {
+                            RemoteOWS remoteOWS = new RemoteOWSImpl();
 
-                    String service = fieldConfigVisitor.getText(FieldIdEnum.REMOTE_OWS_SERVICE);
-                    remoteOWS.setService(service);
+                            String service =
+                                    fieldConfigVisitor.getText(FieldIdEnum.REMOTE_OWS_SERVICE);
+                            remoteOWS.setService(service);
 
-                    String onlineResource = fieldConfigVisitor
-                            .getText(FieldIdEnum.REMOTE_OWS_ONLINERESOURCE);
-                    remoteOWS.setOnlineResource(onlineResource);
+                            String onlineResource =
+                                    fieldConfigVisitor.getText(
+                                            FieldIdEnum.REMOTE_OWS_ONLINERESOURCE);
+                            remoteOWS.setOnlineResource(onlineResource);
 
-                    userLayer.setRemoteOWS(remoteOWS);
-                }
-                    break;
-                case INLINE_FEATURE_OPTION: {
-                    String inlineFeatures = fieldConfigVisitor.getText(FieldIdEnum.INLINE_FEATURE);
+                            userLayer.setRemoteOWS(remoteOWS);
+                        }
+                        break;
+                    case INLINE_FEATURE_OPTION:
+                        {
+                            String inlineFeatures =
+                                    fieldConfigVisitor.getText(FieldIdEnum.INLINE_FEATURE);
 
-                    if ((inlineFeatures != null) && (!inlineFeatures.isEmpty())) {
-                        InlineFeatureUtils.setInlineFeatures(userLayer, inlineFeatures);
-                    }
-                }
-                    break;
-                default:
-                    break;
+                            if ((inlineFeatures != null) && (!inlineFeatures.isEmpty())) {
+                                InlineFeatureUtils.setInlineFeatures(userLayer, inlineFeatures);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -212,7 +212,7 @@ public class UserLayerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -222,7 +222,7 @@ public class UserLayerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -232,7 +232,7 @@ public class UserLayerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -242,12 +242,12 @@ public class UserLayerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // No vendor options
     }
 }

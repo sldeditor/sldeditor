@@ -19,8 +19,7 @@
 
 /**
  * Allows YSLD files to be read/written.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.extension.filesystem.file.mapbox;

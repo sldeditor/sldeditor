@@ -26,34 +26,30 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.styling.ExternalGraphicImpl;
-import org.geotools.styling.StyleFactoryImpl;
-import org.junit.Test;
-
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicUpdateInterface;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.styling.ExternalGraphicImpl;
+import org.geotools.styling.StyleFactoryImpl;
+import org.junit.Test;
 
 /**
  * The unit test for ExternalGraphicDetails.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails}
  *
  * @author Robert Ward (SCISYS)
  */
 public class ExternalGraphicDetailsTest {
 
-    /**
-     * The Class TestExternalGraphicDetails.
-     */
+    /** The Class TestExternalGraphicDetails. */
     class TestExternalGraphicDetails extends ExternalGraphicDetails {
 
         /** The Constant serialVersionUID. */
@@ -78,9 +74,7 @@ public class ExternalGraphicDetailsTest {
         }
     }
 
-    /**
-     * The Class DummyExternalGraphicUpdate.
-     */
+    /** The Class DummyExternalGraphicUpdate. */
     class DummyExternalGraphicUpdate implements ExternalGraphicUpdateInterface {
 
         /** The data changed called. */
@@ -99,7 +93,7 @@ public class ExternalGraphicDetailsTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see
          * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicUpdateInterface#
          * externalGraphicValueUpdated()
@@ -111,8 +105,8 @@ public class ExternalGraphicDetailsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#setEnabled(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#setEnabled(boolean)}.
      */
     @Test
     public void testSetEnabled() {
@@ -127,8 +121,8 @@ public class ExternalGraphicDetailsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
      */
     @Test
     public void testPopulate() {
@@ -138,8 +132,8 @@ public class ExternalGraphicDetailsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#populateExpression(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#populateExpression(java.lang.String)}.
      */
     @Test
     public void testPopulateExpression() {
@@ -159,16 +153,15 @@ public class ExternalGraphicDetailsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#dataChanged(com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#dataChanged(com.sldeditor.common.xml.ui.FieldIdEnum)}.
      */
     @Test
-    public void testDataChanged() {
-    }
+    public void testDataChanged() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#getFieldDataManager()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#getFieldDataManager()}.
      */
     @Test
     public void testGetFieldDataManager() {
@@ -178,8 +171,8 @@ public class ExternalGraphicDetailsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#isDataPresent()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#isDataPresent()}.
      */
     @Test
     public void testIsDataPresent() {
@@ -188,8 +181,8 @@ public class ExternalGraphicDetailsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#revertToDefaultValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#revertToDefaultValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
@@ -198,10 +191,10 @@ public class ExternalGraphicDetailsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#setValue(org.geotools.styling.ExternalGraphicImpl)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#getSymbol()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#setValue(org.geotools.styling.ExternalGraphicImpl)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#getSymbol()}.
      */
     @Test
     public void testSetValueExternalGraphicImpl() {
@@ -218,8 +211,9 @@ public class ExternalGraphicDetailsTest {
         URL expectedURL = null;
         try {
             expectedURL = new File(expectedString).toURI().toURL();
-            externalGraphic = (ExternalGraphicImpl) styleFactory.createExternalGraphic(expectedURL,
-                    "image/png");
+            externalGraphic =
+                    (ExternalGraphicImpl)
+                            styleFactory.createExternalGraphic(expectedURL, "image/png");
         } catch (MalformedURLException e) {
             e.printStackTrace();
             fail();
@@ -236,14 +230,16 @@ public class ExternalGraphicDetailsTest {
         assertTrue(callback.isCalled());
 
         expectedString = "http://example.com/test.png";
-        externalGraphic = (ExternalGraphicImpl) styleFactory.createExternalGraphic(expectedString,
-                "image/png");
+        externalGraphic =
+                (ExternalGraphicImpl)
+                        styleFactory.createExternalGraphic(expectedString, "image/png");
         assertFalse(callback.isCalled());
         panel.setValue(externalGraphic);
         actual = (ExternalGraphicImpl) panel.getSymbol();
         assertTrue(callback.isCalled());
         try {
-            assertEquals(externalGraphic.getLocation().toExternalForm(),
+            assertEquals(
+                    externalGraphic.getLocation().toExternalForm(),
                     actual.getLocation().toExternalForm());
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -252,8 +248,8 @@ public class ExternalGraphicDetailsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#setValue(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#setValue(java.lang.String)}.
      */
     @Test
     public void testSetValueString() {
@@ -275,12 +271,12 @@ public class ExternalGraphicDetailsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#buttonPressed(java.awt.Component)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#buttonPressed(java.awt.Component)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testButtonPressed() {
@@ -318,8 +314,8 @@ public class ExternalGraphicDetailsTest {
         assertEquals(RelativePath.convert(expectedURL2, true), panel.getExpression().toString());
 
         // As if user has entered data directly into field
-        FieldConfigString field = (FieldConfigString) panel.getFieldDataManager()
-                .get(FieldIdEnum.EXTERNAL_GRAPHIC);
+        FieldConfigString field =
+                (FieldConfigString) panel.getFieldDataManager().get(FieldIdEnum.EXTERNAL_GRAPHIC);
         expectedString = "a/test2.png";
         field.populateField(expectedString);
         assertTrue(callback.isCalled());
@@ -343,13 +339,12 @@ public class ExternalGraphicDetailsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#preLoadSymbol()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.ExternalGraphicDetails#preLoadSymbol()}.
      */
     @Test
     public void testPreLoadSymbol() {
         ExternalGraphicDetails panel = new ExternalGraphicDetails(null);
         panel.preLoadSymbol();
     }
-
 }

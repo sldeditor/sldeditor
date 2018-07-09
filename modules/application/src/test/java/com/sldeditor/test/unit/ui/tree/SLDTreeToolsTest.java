@@ -24,11 +24,19 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.TreeSelectionData;
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.output.SLDOutputInterface;
+import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.datasource.RenderSymbolInterface;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import com.sldeditor.ui.detail.TextSymbolizerDetails;
+import com.sldeditor.ui.render.RuleRenderOptions;
+import com.sldeditor.ui.tree.SLDTree;
+import com.sldeditor.ui.tree.SLDTreeTools;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import org.geotools.data.DataStore;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyleImpl;
@@ -47,40 +55,25 @@ import org.geotools.styling.UserLayer;
 import org.geotools.styling.UserLayerImpl;
 import org.junit.Test;
 
-import com.sldeditor.TreeSelectionData;
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.output.SLDOutputInterface;
-import com.sldeditor.common.undo.UndoManager;
-import com.sldeditor.datasource.RenderSymbolInterface;
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
-import com.sldeditor.ui.detail.TextSymbolizerDetails;
-import com.sldeditor.ui.render.RuleRenderOptions;
-import com.sldeditor.ui.tree.SLDTree;
-import com.sldeditor.ui.tree.SLDTreeTools;
-
 /**
  * The unit test for SLDTreeTools.
- * 
+ *
  * <p>{@link com.sldeditor.ui.tree.SLDTreeTools}
  *
  * @author Robert Ward (SCISYS)
  */
 public class SLDTreeToolsTest {
 
-    /**
-     * The Class TestRenderSymbolInterface.
-     */
+    /** The Class TestRenderSymbolInterface. */
     class TestRenderSymbolInterface implements RenderSymbolInterface {
         private boolean renderSymbolCalled = false;
 
         @Override
-        public void dataSourceLoaded(GeometryTypeEnum geometryType,
-                boolean isConnectedToDataSourceFlag) {
-        }
+        public void dataSourceLoaded(
+                GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag) {}
 
         @Override
-        public void addSLDOutputListener(SLDOutputInterface sldOutput) {
-        }
+        public void addSLDOutputListener(SLDOutputInterface sldOutput) {}
 
         @Override
         public void renderSymbol() {
@@ -107,7 +100,7 @@ public class SLDTreeToolsTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.
          * geotools.data.DataStore)
          */
@@ -139,8 +132,9 @@ public class SLDTreeToolsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.SLDTreeTools#SLDTreeTools(com.sldeditor.ui.tree.UpdateTreeStructureInterface, javax.swing.JTree, java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeTools#SLDTreeTools(com.sldeditor.ui.tree.UpdateTreeStructureInterface,
+     * javax.swing.JTree, java.util.List)}.
      */
     @Test
     public void testSLDTreeTools() {
@@ -161,9 +155,7 @@ public class SLDTreeToolsTest {
         treeTools.removeItem();
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewThing()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewThing()}. */
     @Test
     public void testAddNewThingNamedLayer() {
 
@@ -231,22 +223,22 @@ public class SLDTreeToolsTest {
 
         // Undo last add of rule to feature type style
         UndoManager.getInstance().undo();
-        DefaultMutableTreeNode featureTypeStyleNode = (DefaultMutableTreeNode) sldTree.getRootNode()
-                .getChildAt(0).getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode featureTypeStyleNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(FeatureTypeStyleImpl.class, featureTypeStyleNode.getUserObject().getClass());
         assertEquals(0, featureTypeStyleNode.getChildCount());
 
         // Undo last add of rule to feature type style
         UndoManager.getInstance().redo();
-        featureTypeStyleNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        featureTypeStyleNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(FeatureTypeStyleImpl.class, featureTypeStyleNode.getUserObject().getClass());
         assertEquals(1, featureTypeStyleNode.getChildCount());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewThing()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewThing()}. */
     @Test
     public void testAddNewThingUserLayer() {
 
@@ -314,22 +306,22 @@ public class SLDTreeToolsTest {
 
         // Undo last add of rule to feature type style
         UndoManager.getInstance().undo();
-        DefaultMutableTreeNode featureTypeStyleNode = (DefaultMutableTreeNode) sldTree.getRootNode()
-                .getChildAt(0).getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode featureTypeStyleNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(FeatureTypeStyleImpl.class, featureTypeStyleNode.getUserObject().getClass());
         assertEquals(0, featureTypeStyleNode.getChildCount());
 
         // Undo last add of rule to feature type style
         UndoManager.getInstance().redo();
-        featureTypeStyleNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        featureTypeStyleNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(FeatureTypeStyleImpl.class, featureTypeStyleNode.getUserObject().getClass());
         assertEquals(1, featureTypeStyleNode.getChildCount());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewMarker()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewMarker()}. */
     @Test
     public void testAddNewMarker() {
         SLDTreeTools treeTools = new SLDTreeTools();
@@ -353,8 +345,9 @@ public class SLDTreeToolsTest {
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
         // Make sure we have a rule selected
-        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 
@@ -364,9 +357,7 @@ public class SLDTreeToolsTest {
         assertEquals(PointSymbolizerImpl.class, marker.getUserObject().getClass());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addRaster()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addRaster()}. */
     @Test
     public void testAddRaster() {
         SLDTreeTools treeTools = new SLDTreeTools();
@@ -390,8 +381,9 @@ public class SLDTreeToolsTest {
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
         // Make sure we have a rule selected
-        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 
@@ -401,9 +393,7 @@ public class SLDTreeToolsTest {
         assertEquals(RasterSymbolizerImpl.class, rasterNode.getUserObject().getClass());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewText()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewText()}. */
     @Test
     public void testAddNewText() {
         SLDTreeTools treeTools = new SLDTreeTools();
@@ -427,8 +417,9 @@ public class SLDTreeToolsTest {
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
         // Make sure we have a rule selected
-        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 
@@ -438,9 +429,7 @@ public class SLDTreeToolsTest {
         assertEquals(TextSymbolizerImpl.class, textNode.getUserObject().getClass());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewLine()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewLine()}. */
     @Test
     public void testAddNewLine() {
         SLDTreeTools treeTools = new SLDTreeTools();
@@ -464,8 +453,9 @@ public class SLDTreeToolsTest {
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
         // Make sure we have a rule selected
-        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 
@@ -475,9 +465,7 @@ public class SLDTreeToolsTest {
         assertEquals(LineSymbolizerImpl.class, lineNode.getUserObject().getClass());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewPolygon()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewPolygon()}. */
     @Test
     public void testAddNewPolygon() {
         SLDTreeTools treeTools = new SLDTreeTools();
@@ -501,8 +489,9 @@ public class SLDTreeToolsTest {
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
         // Make sure we have a rule selected
-        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 
@@ -512,9 +501,7 @@ public class SLDTreeToolsTest {
         assertEquals(PolygonSymbolizerImpl.class, polygonNode.getUserObject().getClass());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewImageOutlinePolygon()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewImageOutlinePolygon()}. */
     @Test
     public void testAddNewImageOutlinePolygon() {
         SLDTreeTools treeTools = new SLDTreeTools();
@@ -538,8 +525,9 @@ public class SLDTreeToolsTest {
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
         // Make sure we have a rule selected
-        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 
@@ -553,9 +541,7 @@ public class SLDTreeToolsTest {
         assertEquals(PolygonSymbolizerImpl.class, imageOutlineNode.getUserObject().getClass());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewImageOutlineLine()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#addNewImageOutlineLine()}. */
     @Test
     public void testAddNewImageOutlineLine() {
         SLDTreeTools treeTools = new SLDTreeTools();
@@ -579,8 +565,9 @@ public class SLDTreeToolsTest {
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
         // Make sure we have a rule selected
-        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 
@@ -595,8 +582,8 @@ public class SLDTreeToolsTest {
     }
 
     /**
-     * Check NamedLayers Test method for
-     * {@link com.sldeditor.ui.tree.SLDTreeTools#moveItem(boolean)}.
+     * Check NamedLayers Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeTools#moveItem(boolean)}.
      */
     @Test
     public void testMoveItemNamedLayer() {
@@ -641,8 +628,8 @@ public class SLDTreeToolsTest {
         treeTools.moveItem(true);
         assertTrue(renderSymbol.hasRenderSymbolBeenCalled());
 
-        DefaultMutableTreeNode testNode = (DefaultMutableTreeNode) sldTree.getRootNode()
-                .getChildAt(0);
+        DefaultMutableTreeNode testNode =
+                (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0);
         NamedLayerImpl testNamedLayer = (NamedLayerImpl) testNode.getUserObject();
         assertTrue(testNamedLayer.getName().compareTo(expectedNamedLayer2) == 0);
 
@@ -710,8 +697,8 @@ public class SLDTreeToolsTest {
         treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
-        DefaultMutableTreeNode style1Node = (DefaultMutableTreeNode) rootNode.getChildAt(0)
-                .getChildAt(0);
+        DefaultMutableTreeNode style1Node =
+                (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0);
         StyleImpl style1 = (StyleImpl) style1Node.getUserObject();
         String expectedStyle1 = "style 1";
         style1.setName(expectedStyle1);
@@ -722,8 +709,8 @@ public class SLDTreeToolsTest {
 
         treeTools.addNewThing(null);
 
-        DefaultMutableTreeNode style2Node = (DefaultMutableTreeNode) rootNode.getChildAt(0)
-                .getChildAt(1);
+        DefaultMutableTreeNode style2Node =
+                (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(1);
         StyleImpl style2 = (StyleImpl) style2Node.getUserObject();
         String expectedStyle2 = "style 2";
         style2.setName(expectedStyle2);
@@ -737,8 +724,8 @@ public class SLDTreeToolsTest {
         // Move style 2 so that they are reversed
         treeTools.moveItem(true);
 
-        DefaultMutableTreeNode testNode = (DefaultMutableTreeNode) sldTree.getRootNode()
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode testNode =
+                (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0);
         StyleImpl testStyle = (StyleImpl) testNode.getUserObject();
         assertTrue(testStyle.getName().compareTo(expectedStyle2) == 0);
 
@@ -784,8 +771,8 @@ public class SLDTreeToolsTest {
     }
 
     /**
-     * Check Feature Type Styles Test method for
-     * {@link com.sldeditor.ui.tree.SLDTreeTools#moveItem(boolean)}.
+     * Check Feature Type Styles Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeTools#moveItem(boolean)}.
      */
     @Test
     public void testMoveItemFeatureTypeStyles() {
@@ -807,10 +794,10 @@ public class SLDTreeToolsTest {
         treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
-        DefaultMutableTreeNode featureTypeStyle1Node = (DefaultMutableTreeNode) rootNode
-                .getChildAt(0).getChildAt(0).getChildAt(0);
-        FeatureTypeStyleImpl featureTypeStyle1 = (FeatureTypeStyleImpl) featureTypeStyle1Node
-                .getUserObject();
+        DefaultMutableTreeNode featureTypeStyle1Node =
+                (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(0);
+        FeatureTypeStyleImpl featureTypeStyle1 =
+                (FeatureTypeStyleImpl) featureTypeStyle1Node.getUserObject();
         String expectedFeatureTypeStyle1 = "feature type style 1";
         featureTypeStyle1.setName(expectedFeatureTypeStyle1);
 
@@ -821,10 +808,10 @@ public class SLDTreeToolsTest {
 
         treeTools.addNewThing(null);
 
-        DefaultMutableTreeNode featureTypeStyle2Node = (DefaultMutableTreeNode) rootNode
-                .getChildAt(0).getChildAt(0).getChildAt(1);
-        FeatureTypeStyleImpl featureTypeStyle2 = (FeatureTypeStyleImpl) featureTypeStyle2Node
-                .getUserObject();
+        DefaultMutableTreeNode featureTypeStyle2Node =
+                (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(1);
+        FeatureTypeStyleImpl featureTypeStyle2 =
+                (FeatureTypeStyleImpl) featureTypeStyle2Node.getUserObject();
         String expectedFeatureTypeStyle2 = "feature type style 2";
         featureTypeStyle2.setName(expectedFeatureTypeStyle2);
 
@@ -838,8 +825,9 @@ public class SLDTreeToolsTest {
         // Move style 2 so that they are reversed
         treeTools.moveItem(true);
 
-        DefaultMutableTreeNode testNode = (DefaultMutableTreeNode) sldTree.getRootNode()
-                .getChildAt(0).getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(0);
         FeatureTypeStyleImpl testStyle = (FeatureTypeStyleImpl) testNode.getUserObject();
         assertTrue(testStyle.getName().compareTo(expectedFeatureTypeStyle2) == 0);
 
@@ -849,8 +837,9 @@ public class SLDTreeToolsTest {
         sldTree.selectTreeItem(data);
         treeTools.moveItem(true);
 
-        testNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0);
+        testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(0);
         testStyle = (FeatureTypeStyleImpl) testNode.getUserObject();
         assertTrue(testStyle.getName().compareTo(expectedFeatureTypeStyle2) == 0);
 
@@ -859,8 +848,9 @@ public class SLDTreeToolsTest {
         sldTree.selectTreeItem(data);
         treeTools.moveItem(false);
 
-        testNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(1);
+        testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(1);
         testStyle = (FeatureTypeStyleImpl) testNode.getUserObject();
         assertTrue(testStyle.getName().compareTo(expectedFeatureTypeStyle2) == 0);
 
@@ -869,29 +859,30 @@ public class SLDTreeToolsTest {
         sldTree.selectTreeItem(data);
         treeTools.moveItem(false);
 
-        testNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(1);
+        testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(1);
         testStyle = (FeatureTypeStyleImpl) testNode.getUserObject();
         assertTrue(testStyle.getName().compareTo(expectedFeatureTypeStyle2) == 0);
 
         // Undo the last valid move
         UndoManager.getInstance().undo();
-        testNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0);
+        testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(0);
         testStyle = (FeatureTypeStyleImpl) testNode.getUserObject();
         assertTrue(testStyle.getName().compareTo(expectedFeatureTypeStyle2) == 0);
 
         // Redo the last valid move
         UndoManager.getInstance().redo();
-        testNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(1);
+        testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode().getChildAt(0).getChildAt(0).getChildAt(1);
         testStyle = (FeatureTypeStyleImpl) testNode.getUserObject();
         assertTrue(testStyle.getName().compareTo(expectedFeatureTypeStyle2) == 0);
     }
 
-    /**
-     * Check Rules Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#moveItem(boolean)}.
-     */
+    /** Check Rules Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#moveItem(boolean)}. */
     @Test
     public void testMoveItemRules() {
         SLDTreeTools treeTools = new SLDTreeTools();
@@ -913,8 +904,9 @@ public class SLDTreeToolsTest {
         treeTools.addNewThing(null);
 
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
-        DefaultMutableTreeNode rule1Node = (DefaultMutableTreeNode) rootNode.getChildAt(0)
-                .getChildAt(0).getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode rule1Node =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         RuleImpl rule1 = (RuleImpl) rule1Node.getUserObject();
         String expectedRule1 = "rule 1";
         rule1.setName(expectedRule1);
@@ -927,8 +919,9 @@ public class SLDTreeToolsTest {
 
         treeTools.addNewThing(null);
 
-        DefaultMutableTreeNode rule2Node = (DefaultMutableTreeNode) rootNode.getChildAt(0)
-                .getChildAt(0).getChildAt(0).getChildAt(1);
+        DefaultMutableTreeNode rule2Node =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(1);
         RuleImpl rule2 = (RuleImpl) rule2Node.getUserObject();
         String expectedRule2 = "rule 2";
         rule2.setName(expectedRule2);
@@ -944,8 +937,13 @@ public class SLDTreeToolsTest {
         // Move style 2 so that they are reversed
         treeTools.moveItem(true);
 
-        DefaultMutableTreeNode testNode = (DefaultMutableTreeNode) sldTree.getRootNode()
-                .getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0);
         RuleImpl testRule = (RuleImpl) testNode.getUserObject();
         assertTrue(testRule.getName().compareTo(expectedRule2) == 0);
 
@@ -955,8 +953,13 @@ public class SLDTreeToolsTest {
         sldTree.selectTreeItem(data);
         treeTools.moveItem(true);
 
-        testNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0);
         testRule = (RuleImpl) testNode.getUserObject();
         assertTrue(testRule.getName().compareTo(expectedRule2) == 0);
 
@@ -965,8 +968,13 @@ public class SLDTreeToolsTest {
         sldTree.selectTreeItem(data);
         treeTools.moveItem(false);
 
-        testNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(1);
+        testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(1);
         testRule = (RuleImpl) testNode.getUserObject();
         assertTrue(testRule.getName().compareTo(expectedRule2) == 0);
 
@@ -975,29 +983,42 @@ public class SLDTreeToolsTest {
         sldTree.selectTreeItem(data);
         treeTools.moveItem(false);
 
-        testNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(1);
+        testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(1);
         testRule = (RuleImpl) testNode.getUserObject();
         assertTrue(testRule.getName().compareTo(expectedRule2) == 0);
 
         // Undo the last valid move
         UndoManager.getInstance().undo();
-        testNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0);
         testRule = (RuleImpl) testNode.getUserObject();
         assertTrue(testRule.getName().compareTo(expectedRule2) == 0);
 
         // Redo the last valid move
         UndoManager.getInstance().redo();
-        testNode = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(1);
+        testNode =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(1);
         testRule = (RuleImpl) testNode.getUserObject();
         assertTrue(testRule.getName().compareTo(expectedRule2) == 0);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#moveItem(boolean)}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#moveItem(boolean)}. */
     @Test
     public void testMoveItemSymbolizer() {
         SLDTreeTools treeTools = new SLDTreeTools();
@@ -1021,8 +1042,9 @@ public class SLDTreeToolsTest {
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
         // Make sure we have a rule selected
-        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 
@@ -1046,8 +1068,13 @@ public class SLDTreeToolsTest {
         // The last text symbolizer is selected as it was the last added
         treeTools.moveItem(true);
         // Tree has been repopulated so the root node has changed so get hold of rule node again
-        rule = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        rule =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0);
 
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(0);
         assertEquals(PolygonSymbolizerImpl.class, symbolizer.getUserObject().getClass());
@@ -1075,8 +1102,13 @@ public class SLDTreeToolsTest {
         treeTools.moveItem(true);
 
         // Tree has been repopulated so the root node has changed so get hold of rule node again
-        rule = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        rule =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0);
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(0);
         assertEquals(TextSymbolizerImpl.class, symbolizer.getUserObject().getClass());
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(1);
@@ -1092,8 +1124,13 @@ public class SLDTreeToolsTest {
         treeTools.moveItem(true);
 
         // Tree has been repopulated so the root node has changed so get hold of rule node again
-        rule = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        rule =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0);
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(0);
         assertEquals(TextSymbolizerImpl.class, symbolizer.getUserObject().getClass());
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(1);
@@ -1115,8 +1152,13 @@ public class SLDTreeToolsTest {
         treeTools.moveItem(false);
 
         // Tree has been repopulated so the root node has changed so get hold of rule node again
-        rule = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        rule =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0);
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(0);
         assertEquals(PolygonSymbolizerImpl.class, symbolizer.getUserObject().getClass());
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(1);
@@ -1131,8 +1173,13 @@ public class SLDTreeToolsTest {
         treeTools.moveItem(false);
 
         // Tree has been repopulated so the root node has changed so get hold of rule node again
-        rule = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        rule =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0);
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(0);
         assertEquals(PolygonSymbolizerImpl.class, symbolizer.getUserObject().getClass());
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(1);
@@ -1146,8 +1193,13 @@ public class SLDTreeToolsTest {
         UndoManager.getInstance().undo();
 
         // Tree has been repopulated so the root node has changed so get hold of rule node again
-        rule = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        rule =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0);
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(0);
         assertEquals(PolygonSymbolizerImpl.class, symbolizer.getUserObject().getClass());
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(1);
@@ -1160,8 +1212,13 @@ public class SLDTreeToolsTest {
         // Redo the last valid move
         UndoManager.getInstance().redo();
         // Tree has been repopulated so the root node has changed so get hold of rule node again
-        rule = (DefaultMutableTreeNode) sldTree.getRootNode().getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        rule =
+                (DefaultMutableTreeNode)
+                        sldTree.getRootNode()
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0)
+                                .getChildAt(0);
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(0);
         assertEquals(PolygonSymbolizerImpl.class, symbolizer.getUserObject().getClass());
         symbolizer = (DefaultMutableTreeNode) rule.getChildAt(1);
@@ -1172,9 +1229,7 @@ public class SLDTreeToolsTest {
         assertEquals(TextSymbolizerImpl.class, symbolizer.getUserObject().getClass());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#getButtonPanel()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#getButtonPanel()}. */
     @Test
     public void testGetButtonPanel() {
         SLDTreeTools treeTools = new SLDTreeTools();
@@ -1186,8 +1241,9 @@ public class SLDTreeToolsTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.SLDTreeTools#setButtonState(javax.swing.tree.DefaultMutableTreeNode, javax.swing.tree.DefaultMutableTreeNode, com.sldeditor.datasource.impl.GeometryTypeEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeTools#setButtonState(javax.swing.tree.DefaultMutableTreeNode,
+     * javax.swing.tree.DefaultMutableTreeNode, com.sldeditor.datasource.impl.GeometryTypeEnum)}.
      */
     @Test
     public void testSetButtonState() {
@@ -1198,9 +1254,7 @@ public class SLDTreeToolsTest {
         treeTools.setButtonState(null, null, null);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#removeItem()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.tree.SLDTreeTools#removeItem()}. */
     @Test
     public void testRemoveItem() {
         SLDTreeTools treeTools = new SLDTreeTools();
@@ -1227,39 +1281,42 @@ public class SLDTreeToolsTest {
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
         // Make sure we have a rule selected
-        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 
         treeTools.addNewText();
 
-        rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(0)
-                .getChildAt(0);
+        rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(1, rule.getChildCount());
 
         // The selected item (text symbolizer) is removed
         treeTools.removeItem();
         assertTrue(renderSymbol.hasRenderSymbolBeenCalled());
-        rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(0)
-                .getChildAt(0);
+        rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 
         // The selected item (rule) is removed
         treeTools.removeItem();
         assertTrue(renderSymbol.hasRenderSymbolBeenCalled());
-        DefaultMutableTreeNode featureTypeStyle = (DefaultMutableTreeNode) rootNode.getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode featureTypeStyle =
+                (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(FeatureTypeStyleImpl.class, featureTypeStyle.getUserObject().getClass());
         assertEquals(0, featureTypeStyle.getChildCount());
 
         // The selected item (style) is removed
         treeTools.removeItem();
         assertTrue(renderSymbol.hasRenderSymbolBeenCalled());
-        DefaultMutableTreeNode style = (DefaultMutableTreeNode) rootNode.getChildAt(0)
-                .getChildAt(0);
+        DefaultMutableTreeNode style =
+                (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0);
         assertEquals(StyleImpl.class, style.getUserObject().getClass());
         assertEquals(0, style.getChildCount());
 
@@ -1307,8 +1364,9 @@ public class SLDTreeToolsTest {
         DefaultMutableTreeNode rootNode = sldTree.getRootNode();
 
         // Make sure we have a rule selected
-        DefaultMutableTreeNode rule = (DefaultMutableTreeNode) rootNode.getChildAt(0).getChildAt(0)
-                .getChildAt(0).getChildAt(0);
+        DefaultMutableTreeNode rule =
+                (DefaultMutableTreeNode)
+                        rootNode.getChildAt(0).getChildAt(0).getChildAt(0).getChildAt(0);
         assertEquals(RuleImpl.class, rule.getUserObject().getClass());
         assertEquals(0, rule.getChildCount());
 

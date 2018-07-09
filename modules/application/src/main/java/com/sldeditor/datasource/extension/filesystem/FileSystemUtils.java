@@ -19,10 +19,9 @@
 
 package com.sldeditor.datasource.extension.filesystem;
 
+import com.sldeditor.common.utils.ExternalFilenames;
 import java.io.File;
 import java.util.List;
-
-import com.sldeditor.common.utils.ExternalFilenames;
 
 /**
  * The Class FileSystemUtils.
@@ -52,5 +51,4 @@ public class FileSystemUtils {
         }
         return false;
     }
-
 }

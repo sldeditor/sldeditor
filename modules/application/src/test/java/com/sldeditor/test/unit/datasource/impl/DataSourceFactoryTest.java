@@ -22,18 +22,6 @@ package com.sldeditor.test.unit.datasource.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
-import org.geotools.data.FeatureSource;
-import org.geotools.styling.UserLayer;
-import org.junit.Test;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.PropertyDescriptor;
-
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
@@ -50,14 +38,23 @@ import com.sldeditor.datasource.example.impl.ExamplePolygonImplIOM;
 import com.sldeditor.datasource.impl.CreateDataSourceInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
+import org.geotools.data.FeatureSource;
+import org.geotools.styling.UserLayer;
+import org.junit.Test;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.PropertyDescriptor;
 
 /**
  * Unit test for DataSourceFactory.
- * 
- * <p>{@link com.sldeditor.datasource.impl.DataSourceFactory}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.impl.DataSourceFactory}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DataSourceFactoryTest {
 
@@ -65,17 +62,16 @@ public class DataSourceFactoryTest {
         public GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
 
         @Override
-        public void addListener(DataSourceUpdatedInterface listener) {
-        }
+        public void addListener(DataSourceUpdatedInterface listener) {}
 
         @Override
-        public void connect(String typeName, SLDEditorFileInterface editorFile,
-                List<CheckAttributeInterface> checkList) {
-        }
+        public void connect(
+                String typeName,
+                SLDEditorFileInterface editorFile,
+                List<CheckAttributeInterface> checkList) {}
 
         @Override
-        public void reset() {
-        }
+        public void reset() {}
 
         @Override
         public FeatureSource<SimpleFeatureType, SimpleFeature> getFeatureSource() {
@@ -93,8 +89,7 @@ public class DataSourceFactoryTest {
         }
 
         @Override
-        public void readAttributes(DataSourceAttributeListInterface attributeData) {
-        }
+        public void readAttributes(DataSourceAttributeListInterface attributeData) {}
 
         @Override
         public DataSourcePropertiesInterface getDataConnectorProperties() {
@@ -107,18 +102,16 @@ public class DataSourceFactoryTest {
         }
 
         @Override
-        public void updateFields(DataSourceAttributeListInterface attributeData) {
-        }
+        public void updateFields(DataSourceAttributeListInterface attributeData) {}
 
         @Override
-        public void addField(DataSourceAttributeData dataSourceField) {
-        }
+        public void addField(DataSourceAttributeData dataSourceField) {}
 
         @Override
-        public void setDataSourceCreation(CreateDataSourceInterface internalDataSource,
+        public void setDataSourceCreation(
+                CreateDataSourceInterface internalDataSource,
                 CreateDataSourceInterface externalDataSource,
-                CreateDataSourceInterface inlineDataSource) {
-        }
+                CreateDataSourceInterface inlineDataSource) {}
 
         @Override
         public Collection<PropertyDescriptor> getPropertyDescriptorList() {
@@ -126,8 +119,7 @@ public class DataSourceFactoryTest {
         }
 
         @Override
-        public void removeListener(DataSourceUpdatedInterface listener) {
-        }
+        public void removeListener(DataSourceUpdatedInterface listener) {}
 
         @Override
         public AbstractGridCoverage2DReader getGridCoverageReader() {
@@ -140,29 +132,28 @@ public class DataSourceFactoryTest {
         }
 
         @Override
-        //CHECKSTYLE:OFF
-        public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource() {
+        // CHECKSTYLE:OFF
+        public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>
+                getUserLayerFeatureSource() {
             return null;
         }
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
 
         @Override
-        public void updateUserLayers() {
-        }
+        public void updateUserLayers() {}
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String,
          * java.lang.Class)
          */
         @Override
-        public void updateFieldType(String fieldName, Class<?> dataType) {
-        }
+        public void updateFieldType(String fieldName, Class<?> dataType) {}
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.datasource.DataSourceInterface#getGeometryFieldName()
          */
         @Override
@@ -180,9 +171,9 @@ public class DataSourceFactoryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.impl.DataSourceFactory#createDataSource(java.lang.String)}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceFactory#getDataSource()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceFactory#createDataSource(java.lang.String)}. Test
+     * method for {@link com.sldeditor.datasource.impl.DataSourceFactory#getDataSource()}.
      */
     @Test
     public void testCreateDataSource() {
@@ -193,8 +184,8 @@ public class DataSourceFactoryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.impl.DataSourceFactory#createExamplePolygon(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceFactory#createExamplePolygon(java.lang.String)}.
      */
     @Test
     public void testCreateExamplePolygon() {
@@ -204,8 +195,8 @@ public class DataSourceFactoryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.impl.DataSourceFactory#createExampleLine(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceFactory#createExampleLine(java.lang.Object)}.
      */
     @Test
     public void testCreateExampleLine() {
@@ -215,8 +206,8 @@ public class DataSourceFactoryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.impl.DataSourceFactory#createExamplePoint(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceFactory#createExamplePoint(java.lang.Object)}.
      */
     @Test
     public void testCreateExamplePoint() {

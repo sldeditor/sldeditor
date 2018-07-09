@@ -19,18 +19,16 @@
 
 package com.sldeditor.tool;
 
-import java.net.URL;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ParseXML;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 /**
- * The Class ToolButton, overloads a JButton but allows the button text to
- * set as a tooltip and the resource string as the button icon.
+ * The Class ToolButton, overloads a JButton but allows the button text to set as a tooltip and the
+ * resource string as the button icon.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -78,9 +76,11 @@ public class ToolButton extends JButton {
         URL url = ToolButton.class.getClassLoader().getResource(resourceString);
 
         if (url == null) {
-            ConsoleManager.getInstance().error(ToolButton.class,
-                    Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
-                            + resourceString);
+            ConsoleManager.getInstance()
+                    .error(
+                            ToolButton.class,
+                            Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
+                                    + resourceString);
             return null;
         } else {
             return new ImageIcon(url);

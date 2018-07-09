@@ -19,20 +19,18 @@
 
 package com.sldeditor.common.data;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
-
 import org.geotools.metadata.iso.citation.OnLineResourceImpl;
 import org.geotools.styling.ExternalGraphic;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.opengis.style.GraphicalSymbol;
-
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath;
 
 /**
  * The Class UpdateGraphicalSymbol.
@@ -43,17 +41,19 @@ public class UpdateGraphicalSymbol implements ProcessGraphicSymbolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.data.ProcessGraphicSymbolInterface#processGraphicalSymbol(java.net.URL, java.util.List, java.util.List)
      */
     @Override
-    public void processGraphicalSymbol(URL resourceLocator,
-            List<GraphicalSymbol> graphicalSymbolList, List<String> externalImageList) {
+    public void processGraphicalSymbol(
+            URL resourceLocator,
+            List<GraphicalSymbol> graphicalSymbolList,
+            List<String> externalImageList) {
         for (GraphicalSymbol symbol : graphicalSymbolList) {
             if (symbol instanceof ExternalGraphic) {
                 ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) symbol;
-                OnLineResourceImpl onlineResource = (OnLineResourceImpl) externalGraphic
-                        .getOnlineResource();
+                OnLineResourceImpl onlineResource =
+                        (OnLineResourceImpl) externalGraphic.getOnlineResource();
 
                 String currentValue = null;
                 URL currentValueURL = null;

@@ -19,11 +19,6 @@
 
 package com.sldeditor.test.unit.datasource.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
@@ -31,6 +26,9 @@ import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The Class DummyInternalSLDFile2.
@@ -47,24 +45,32 @@ public class DummyInternalSLDFile2 implements SLDEditorFileInterface {
 
     private List<String> expectedGeometryFieldList = new ArrayList<String>();
 
-    /**
-     * Instantiates a new dummy internal SLD file 2.
-     */
+    /** Instantiates a new dummy internal SLD file 2. */
     public DummyInternalSLDFile2() {
-        String sldContents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-                + "<sld:StyledLayerDescriptor xmlns=\"http://www.opengis.net/sld\" xmlns:sld=\"http://www.opengis.net/sld\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" version=\"1.0.0\">"
-                + "  <sld:NamedLayer>" + "    <sld:Name>Simple polygon</sld:Name>"
-                + "    <sld:UserStyle>" + "      <sld:Name>Default Styler</sld:Name>"
-                + "      <sld:Title>SLD Cook Book: Simple polygon</sld:Title>"
-                + "      <sld:FeatureTypeStyle>" + "        <sld:Name>name</sld:Name>"
-                + "        <sld:Rule>" + "          <sld:PolygonSymbolizer>"
-                + "            <sld:Geometry>"
-                + "              <ogc:PropertyName>qwerty</ogc:PropertyName>"
-                + "            </sld:Geometry>" + "            <sld:Fill>"
-                + "              <sld:CssParameter name=\"fill\">#000080</sld:CssParameter>"
-                + "            </sld:Fill>" + "          </sld:PolygonSymbolizer>"
-                + "        </sld:Rule>" + "      </sld:FeatureTypeStyle>" + "    </sld:UserStyle>"
-                + "  </sld:NamedLayer>" + "</sld:StyledLayerDescriptor>";
+        String sldContents =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                        + "<sld:StyledLayerDescriptor xmlns=\"http://www.opengis.net/sld\" xmlns:sld=\"http://www.opengis.net/sld\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" version=\"1.0.0\">"
+                        + "  <sld:NamedLayer>"
+                        + "    <sld:Name>Simple polygon</sld:Name>"
+                        + "    <sld:UserStyle>"
+                        + "      <sld:Name>Default Styler</sld:Name>"
+                        + "      <sld:Title>SLD Cook Book: Simple polygon</sld:Title>"
+                        + "      <sld:FeatureTypeStyle>"
+                        + "        <sld:Name>name</sld:Name>"
+                        + "        <sld:Rule>"
+                        + "          <sld:PolygonSymbolizer>"
+                        + "            <sld:Geometry>"
+                        + "              <ogc:PropertyName>qwerty</ogc:PropertyName>"
+                        + "            </sld:Geometry>"
+                        + "            <sld:Fill>"
+                        + "              <sld:CssParameter name=\"fill\">#000080</sld:CssParameter>"
+                        + "            </sld:Fill>"
+                        + "          </sld:PolygonSymbolizer>"
+                        + "        </sld:Rule>"
+                        + "      </sld:FeatureTypeStyle>"
+                        + "    </sld:UserStyle>"
+                        + "  </sld:NamedLayer>"
+                        + "</sld:StyledLayerDescriptor>";
 
         sldData = new SLDData(new StyleWrapper(null, "test.sld"), sldContents);
         sldData.setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());

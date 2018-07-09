@@ -21,20 +21,17 @@ package com.sldeditor.test.unit.common.vendoroption;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
-
-import org.junit.Test;
-
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VersionData;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Unit test for GeoServerVendorOption.
- * 
- * <p>{@link com.sldeditor.common.vendoroption.GeoServerVendorOption}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.common.vendoroption.GeoServerVendorOption}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class GeoServerVendorOptionTest {
 
@@ -44,15 +41,18 @@ public class GeoServerVendorOptionTest {
     @Test
     public void testGetName() {
         GeoServerVendorOption vendorOption = new GeoServerVendorOption();
-        
+
         assertEquals("GeoServer", vendorOption.getName());
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.GeoServerVendorOption#getVersionStringList()}.
-     * Test method for {@link com.sldeditor.common.vendoroption.GeoServerVendorOption#addVersion(com.sldeditor.common.vendoroption.VersionData)}.
-     * Test method for {@link com.sldeditor.common.vendoroption.GeoServerVendorOption#getVersion(java.lang.String)}.
-     * Test method for {@link com.sldeditor.common.vendoroption.GeoServerVendorOption#getVersionList()}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.GeoServerVendorOption#getVersionStringList()}. Test method
+     * for {@link
+     * com.sldeditor.common.vendoroption.GeoServerVendorOption#addVersion(com.sldeditor.common.vendoroption.VersionData)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.GeoServerVendorOption#getVersion(java.lang.String)}. Test
+     * method for {@link com.sldeditor.common.vendoroption.GeoServerVendorOption#getVersionList()}.
      */
     @Test
     public void testGetVersionStringList() {
@@ -75,7 +75,7 @@ public class GeoServerVendorOptionTest {
         vendorOption.addVersion(versionData2);
         assertEquals(2, vendorOption.getVersionStringList().size());
         assertEquals(2, vendorOption.getVersionList().size());
-        
+
         List<VersionData> voList = vendorOption.getVersionList();
         assertEquals(versionData1, voList.get(0));
         assertEquals(versionData2, voList.get(1));
@@ -84,5 +84,4 @@ public class GeoServerVendorOptionTest {
         assertEquals(versionData1.getVersionString(), voStringList.get(0));
         assertEquals(versionData2.getVersionString(), voStringList.get(1));
     }
-
 }

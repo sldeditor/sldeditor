@@ -19,23 +19,21 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver;
 
+import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
+import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import java.util.List;
-
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.SelectedChannelType;
 import org.geotools.styling.TextSymbolizer;
 
-import com.sldeditor.common.vendoroption.VendorOptionVersion;
-import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
-import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
-import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.iface.UpdateSymbolInterface;
-
 /**
  * The Interface VendorOptionInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface VendorOptionInterface {
@@ -88,7 +86,7 @@ public interface VendorOptionInterface {
      * @param polygonSymbolizer the polygon symbolizer
      */
     public void updateSymbol(PolygonSymbolizer polygonSymbolizer);
-    
+
     /**
      * Update symbol for a text symbolizer.
      *
@@ -152,6 +150,6 @@ public interface VendorOptionInterface {
      * @param sldObj the sld obj
      * @param vendorOptionsPresentList the vendor options present list
      */
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList);
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList);
 }

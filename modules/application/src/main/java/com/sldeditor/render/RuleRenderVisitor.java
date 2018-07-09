@@ -19,6 +19,7 @@
 
 package com.sldeditor.render;
 
+import com.sldeditor.ui.render.RuleRenderOptions;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.FeatureTypeStyleImpl;
 import org.geotools.styling.Graphic;
@@ -37,11 +38,9 @@ import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 import org.opengis.filter.Filter;
 import org.opengis.style.Description;
 
-import com.sldeditor.ui.render.RuleRenderOptions;
-
 /**
  * Visitor class to decide whether to draw part of the SLD symbol.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class RuleRenderVisitor extends DuplicatingStyleVisitor {
@@ -69,7 +68,10 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      * @param symbolizerIndex the symbolizer index
      * @param options the options
      */
-    public RuleRenderVisitor(FeatureTypeStyle featureTypeStyle, Rule rule, int symbolizerIndex,
+    public RuleRenderVisitor(
+            FeatureTypeStyle featureTypeStyle,
+            Rule rule,
+            int symbolizerIndex,
             RuleRenderOptions options) {
         this.ftsToRender = featureTypeStyle;
         this.ruleToRender = rule;
@@ -84,7 +86,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.Rule)
      */
     @SuppressWarnings("deprecation")
@@ -140,7 +142,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.
      * FeatureTypeStyle)
      */
@@ -206,9 +208,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      *
      * @param style the style
      */
-    //CHECKSTYLE:OFF
+    // CHECKSTYLE:OFF
     @SuppressWarnings("deprecation")
-    //CHECKSTYLE:ON
+    // CHECKSTYLE:ON
     @Override
     public void visit(Style style) {
         Style copy = null;
@@ -249,8 +251,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
 
     /**
      * (non-Javadoc)
-     * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PointSymbolizer)
+     *
+     * @see
+     *     org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PointSymbolizer)
      */
     public void visit(PointSymbolizer ps) {
         PointSymbolizer copy = sf.getDefaultPointSymbolizer();
@@ -271,8 +274,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
 
     /**
      * (non-Javadoc)
-     * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.LineSymbolizer)
+     *
+     * @see
+     *     org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.LineSymbolizer)
      */
     public void visit(LineSymbolizer line) {
         LineSymbolizer copy = sf.getDefaultLineSymbolizer();
@@ -293,8 +297,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
 
     /**
      * (non-Javadoc)
-     * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PolygonSymbolizer)
+     *
+     * @see
+     *     org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PolygonSymbolizer)
      */
     public void visit(PolygonSymbolizer poly) {
         PolygonSymbolizer copy = sf.createPolygonSymbolizer();
@@ -315,8 +320,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
 
     /**
      * (non-Javadoc)
-     * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.TextSymbolizer)
+     *
+     * @see
+     *     org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.TextSymbolizer)
      */
     public void visit(TextSymbolizer text) {
         TextSymbolizer copy = sf.createTextSymbolizer();
@@ -374,9 +380,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     /* (non-Javadoc)
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.RasterSymbolizer)
      */
-    //CHECKSTYLE:OFF
+    // CHECKSTYLE:OFF
     public void visit(RasterSymbolizer raster) {
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
         RasterSymbolizer copy = sf.createRasterSymbolizer();
         copy.setChannelSelection(copy(raster.getChannelSelection()));
         copy.setColorMap(copy(raster.getColorMap()));

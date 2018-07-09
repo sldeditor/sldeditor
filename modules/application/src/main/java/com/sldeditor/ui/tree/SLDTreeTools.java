@@ -19,6 +19,20 @@
 
 package com.sldeditor.ui.tree;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.output.SLDWriterInterface;
+import com.sldeditor.common.output.impl.SLDWriterFactory;
+import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
+import com.sldeditor.common.undo.UndoEvent;
+import com.sldeditor.common.undo.UndoManager;
+import com.sldeditor.common.xml.ParseXML;
+import com.sldeditor.datasource.RenderSymbolInterface;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +41,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,7 +50,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.NamedLayer;
@@ -53,24 +65,9 @@ import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.UserLayer;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.output.SLDWriterInterface;
-import com.sldeditor.common.output.impl.SLDWriterFactory;
-import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
-import com.sldeditor.common.undo.UndoEvent;
-import com.sldeditor.common.undo.UndoManager;
-import com.sldeditor.common.xml.ParseXML;
-import com.sldeditor.datasource.RenderSymbolInterface;
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
-import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.tree.item.SLDTreeItemInterface;
-
 /**
  * The component that displays the structure of the SLD as a tree.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDTreeTools {
@@ -88,7 +85,7 @@ public class SLDTreeTools {
     private DefaultTreeModel treeModel = null;
 
     /** The tree item map. */
-    protected static Map<Class<?>, SLDTreeItemInterface> treeItemMap = 
+    protected static Map<Class<?>, SLDTreeItemInterface> treeItemMap =
             new HashMap<Class<?>, SLDTreeItemInterface>();
 
     /** The node map. */
@@ -155,9 +152,7 @@ public class SLDTreeTools {
     /** The symbolizer button state. */
     private SLDTreeSymbolizerButtonState symbolizerButtonState = new SLDTreeSymbolizerButtonState();
 
-    /**
-     * Instantiates a new SLD tree tool class.
-     */
+    /** Instantiates a new SLD tree tool class. */
     public SLDTreeTools() {
         createUI();
     }
@@ -170,17 +165,18 @@ public class SLDTreeTools {
      * @param treeModel the tree model
      * @param renderList the render list
      */
-    public void configure(UpdateTreeStructureInterface sldTree, JTree symbolTree,
-            DefaultTreeModel treeModel, List<RenderSymbolInterface> renderList) {
+    public void configure(
+            UpdateTreeStructureInterface sldTree,
+            JTree symbolTree,
+            DefaultTreeModel treeModel,
+            List<RenderSymbolInterface> renderList) {
         this.sldTree = sldTree;
         this.symbolTree = symbolTree;
         this.treeModel = treeModel;
         this.renderList = renderList;
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
 
         buttonPanel = new JPanel();
@@ -188,145 +184,160 @@ public class SLDTreeTools {
         buttonPanel.setPreferredSize(new Dimension(PANEL_WIDTH, BasePanel.WIDGET_HEIGHT));
         btnAddButton = new JButton("");
         btnAddButton.setIcon(getResourceIcon("button/add.png"));
-        btnAddButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewThing(null);
-            }
-        });
+        btnAddButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addNewThing(null);
+                    }
+                });
         buttonPanel.add(btnAddButton);
 
-        btnAddNamedLayerButton = new JButton(
-                Localisation.getString(SLDTreeTools.class, "SLDTreeTools.named"));
+        btnAddNamedLayerButton =
+                new JButton(Localisation.getString(SLDTreeTools.class, "SLDTreeTools.named"));
         btnAddNamedLayerButton.setIcon(getResourceIcon("button/add.png"));
-        btnAddNamedLayerButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewThing(NamedLayer.class);
-            }
-        });
+        btnAddNamedLayerButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addNewThing(NamedLayer.class);
+                    }
+                });
         buttonPanel.add(btnAddNamedLayerButton);
 
-        btnAddUserLayerButton = new JButton(
-                Localisation.getString(SLDTreeTools.class, "SLDTreeTools.user"));
+        btnAddUserLayerButton =
+                new JButton(Localisation.getString(SLDTreeTools.class, "SLDTreeTools.user"));
         btnAddUserLayerButton.setIcon(getResourceIcon("button/add.png"));
-        btnAddUserLayerButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewThing(UserLayer.class);
-            }
-        });
+        btnAddUserLayerButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addNewThing(UserLayer.class);
+                    }
+                });
         buttonPanel.add(btnAddUserLayerButton);
 
         btnNewMarker = new JButton();
         btnNewMarker.setIcon(getResourceIcon("button/point.png"));
-        btnNewMarker.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewMarker();
-            }
-        });
+        btnNewMarker.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addNewMarker();
+                    }
+                });
 
         buttonPanel.add(btnNewMarker);
 
         btnNewLine = new JButton();
         btnNewLine.setIcon(getResourceIcon("button/line.png"));
-        btnNewLine.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewLine();
-            }
-        });
+        btnNewLine.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addNewLine();
+                    }
+                });
         buttonPanel.add(btnNewLine);
 
         btnNewImageOutlineLine = new JButton();
         btnNewImageOutlineLine.setIcon(getResourceIcon("button/imageoutline_line.png"));
-        btnNewImageOutlineLine.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewImageOutlineLine();
-            }
-        });
+        btnNewImageOutlineLine.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addNewImageOutlineLine();
+                    }
+                });
         buttonPanel.add(btnNewImageOutlineLine);
 
         btnNewPolygon = new JButton();
         btnNewPolygon.setIcon(getResourceIcon("button/polygon.png"));
-        btnNewPolygon.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewPolygon();
-            }
-        });
+        btnNewPolygon.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addNewPolygon();
+                    }
+                });
         buttonPanel.add(btnNewPolygon);
 
         btnNewImageOutlinePolygon = new JButton();
         btnNewImageOutlinePolygon.setIcon(getResourceIcon("button/imageoutline_polygon.png"));
-        btnNewImageOutlinePolygon.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewImageOutlinePolygon();
-            }
-        });
+        btnNewImageOutlinePolygon.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addNewImageOutlinePolygon();
+                    }
+                });
         buttonPanel.add(btnNewImageOutlinePolygon);
 
         btnNewText = new JButton();
         btnNewText.setIcon(getResourceIcon("button/text.png"));
-        btnNewText.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewText();
-            }
-        });
+        btnNewText.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addNewText();
+                    }
+                });
         buttonPanel.add(btnNewText);
 
         btnNewRaster = new JButton();
         btnNewRaster.setIcon(getResourceIcon("button/raster.png"));
-        btnNewRaster.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addNewRaster();
-            }
-        });
+        btnNewRaster.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addNewRaster();
+                    }
+                });
         buttonPanel.add(btnNewRaster);
 
         btnRemoveMarker = new JButton();
         btnRemoveMarker.setIcon(getResourceIcon("button/delete.png"));
         btnRemoveMarker.setEnabled(true);
-        btnRemoveMarker.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeItem();
-            }
-        });
+        btnRemoveMarker.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        removeItem();
+                    }
+                });
         buttonPanel.add(btnRemoveMarker);
 
         btnMoveUp = new JButton();
         btnMoveUp.setIcon(getResourceIcon("button/up.png"));
         btnMoveUp.setEnabled(false);
-        btnMoveUp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moveItemUp();
-            }
-        });
+        btnMoveUp.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        moveItemUp();
+                    }
+                });
         buttonPanel.add(btnMoveUp);
 
         btnMoveDown = new JButton();
         btnMoveDown.setIcon(getResourceIcon("button/down.png"));
         btnMoveDown.setEnabled(false);
-        btnMoveDown.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moveItemDown();
-            }
-        });
+        btnMoveDown.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        moveItemDown();
+                    }
+                });
         buttonPanel.add(btnMoveDown);
 
         btnSourceArrowButton = new JButton();
         btnSourceArrowButton.setIcon(getResourceIcon("button/srcArrow.png"));
         btnSourceArrowButton.setEnabled(true);
-        btnSourceArrowButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addSourceArrow();
-            }
-        });
+        btnSourceArrowButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addSourceArrow();
+                    }
+                });
         buttonPanel.add(btnSourceArrowButton);
 
         btnDestArrowButton = new JButton();
         btnDestArrowButton.setIcon(getResourceIcon("button/destArrow.png"));
         btnDestArrowButton.setEnabled(true);
-        btnDestArrowButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addDestArrow();
-            }
-        });
+        btnDestArrowButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addDestArrow();
+                    }
+                });
         buttonPanel.add(btnDestArrowButton);
     }
 
@@ -340,18 +351,18 @@ public class SLDTreeTools {
         URL url = SLDTreeTools.class.getClassLoader().getResource(resourceString);
 
         if (url == null) {
-            ConsoleManager.getInstance().error(SLDTreeTools.class,
-                    Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
-                            + resourceString);
+            ConsoleManager.getInstance()
+                    .error(
+                            SLDTreeTools.class,
+                            Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
+                                    + resourceString);
             return null;
         } else {
             return new ImageIcon(url);
         }
     }
 
-    /**
-     * Removes the item.
-     */
+    /** Removes the item. */
     public void removeItem() {
         if (symbolTree == null) {
             return;
@@ -366,10 +377,9 @@ public class SLDTreeTools {
         DefaultMutableTreeNode lastNode = (DefaultMutableTreeNode) path.getLastPathComponent();
         Object obj = lastNode.getUserObject();
 
-        //CHECKSTYLE:OFF
-        Object oldValueObj = 
-                sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:OFF
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
+        // CHECKSTYLE:ON
 
         if (obj instanceof NamedLayer) {
             SelectedSymbol.getInstance().removeUserNamedLayer((NamedLayer) obj);
@@ -390,8 +400,9 @@ public class SLDTreeTools {
             DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) lastNode.getParent();
             if (parentNode != null) {
                 if (parentNode.getUserObject() instanceof RasterSymbolizer) {
-                    SelectedSymbol.getInstance().removeRasterImageOutline(
-                            (RasterSymbolizer) parentNode.getUserObject());
+                    SelectedSymbol.getInstance()
+                            .removeRasterImageOutline(
+                                    (RasterSymbolizer) parentNode.getUserObject());
                 } else {
                     SelectedSymbol.getInstance().removeSymbolizer((Symbolizer) obj);
                 }
@@ -412,8 +423,13 @@ public class SLDTreeTools {
 
         Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(),
-                getClass().getName(), oldValueObj, newValueObj));
+        UndoManager.getInstance()
+                .addUndoEvent(
+                        new UndoEvent(
+                                sldTree.getUndoObject(),
+                                getClass().getName(),
+                                oldValueObj,
+                                newValueObj));
     }
 
     /**
@@ -547,8 +563,13 @@ public class SLDTreeTools {
             // Store current state of the SLD after the add
             Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(),
-                    getClass().getName(), oldValueObj, newValueObj));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    sldTree.getUndoObject(),
+                                    getClass().getName(),
+                                    oldValueObj,
+                                    newValueObj));
         }
     }
 
@@ -592,9 +613,7 @@ public class SLDTreeTools {
         return rootNode;
     }
 
-    /**
-     * Adds the new marker symbolizer.
-     */
+    /** Adds the new marker symbolizer. */
     public void addNewMarker() {
         if (symbolTree == null) {
             return;
@@ -612,8 +631,8 @@ public class SLDTreeTools {
 
         // Select the item just added
         if (newNode != null) {
-            sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getFill(newPointSymbolizer),
-                    true);
+            sldTree.addObject(
+                    newNode, SLDTreeLeafFactory.getInstance().getFill(newPointSymbolizer), true);
 
             SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
 
@@ -624,14 +643,17 @@ public class SLDTreeTools {
             // Store current state of the SLD after the add
             Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(),
-                    getClass().getName(), oldValueObj, newValueObj));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    sldTree.getUndoObject(),
+                                    getClass().getName(),
+                                    oldValueObj,
+                                    newValueObj));
         }
     }
 
-    /**
-     * Adds the new raster symbolizer.
-     */
+    /** Adds the new raster symbolizer. */
     public void addNewRaster() {
         if (symbolTree == null) {
             return;
@@ -656,14 +678,17 @@ public class SLDTreeTools {
             // Store current state of the SLD after the add
             Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(),
-                    getClass().getName(), oldValueObj, newValueObj));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    sldTree.getUndoObject(),
+                                    getClass().getName(),
+                                    oldValueObj,
+                                    newValueObj));
         }
     }
 
-    /**
-     * Adds the destination arrow.
-     */
+    /** Adds the destination arrow. */
     public void addDestArrow() {
         addArrow(false);
     }
@@ -688,8 +713,8 @@ public class SLDTreeTools {
 
         // Select the item just added
         if (newNode != null) {
-            sldTree.addObject(newNode, SLDTreeLeafFactory.getInstance().getFill(pointSymbolizer),
-                    true);
+            sldTree.addObject(
+                    newNode, SLDTreeLeafFactory.getInstance().getFill(pointSymbolizer), true);
 
             SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
 
@@ -703,21 +728,22 @@ public class SLDTreeTools {
             // Store current state of the SLD after the add
             Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(),
-                    getClass().getName(), oldValueObj, newValueObj));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    sldTree.getUndoObject(),
+                                    getClass().getName(),
+                                    oldValueObj,
+                                    newValueObj));
         }
     }
 
-    /**
-     * Adds the source arrow.
-     */
+    /** Adds the source arrow. */
     public void addSourceArrow() {
         addArrow(true);
     }
 
-    /**
-     * Adds the new text symbolizer.
-     */
+    /** Adds the new text symbolizer. */
     public void addNewText() {
         if (symbolTree == null) {
             return;
@@ -743,14 +769,17 @@ public class SLDTreeTools {
             // Store current state of the SLD after the add
             Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(),
-                    getClass().getName(), oldValueObj, newValueObj));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    sldTree.getUndoObject(),
+                                    getClass().getName(),
+                                    oldValueObj,
+                                    newValueObj));
         }
     }
 
-    /**
-     * Adds the new line symbolizer.
-     */
+    /** Adds the new line symbolizer. */
     public void addNewLine() {
         if (symbolTree == null) {
             return;
@@ -766,8 +795,8 @@ public class SLDTreeTools {
         DefaultMutableTreeNode newNode = sldTree.addObject(ruleNode, newLineSymbolizer, true);
 
         if (newNode != null) {
-            sldTree.addObject(newNode,
-                    SLDTreeLeafFactory.getInstance().getStroke(newLineSymbolizer), true);
+            sldTree.addObject(
+                    newNode, SLDTreeLeafFactory.getInstance().getStroke(newLineSymbolizer), true);
 
             SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
 
@@ -779,14 +808,17 @@ public class SLDTreeTools {
             // Store current state of the SLD after the add
             Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(),
-                    getClass().getName(), oldValueObj, newValueObj));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    sldTree.getUndoObject(),
+                                    getClass().getName(),
+                                    oldValueObj,
+                                    newValueObj));
         }
     }
 
-    /**
-     * Adds the new image outline line symbolizer.
-     */
+    /** Adds the new image outline line symbolizer. */
     public void addNewImageOutlineLine() {
         if (symbolTree == null) {
             return;
@@ -802,8 +834,8 @@ public class SLDTreeTools {
         DefaultMutableTreeNode newNode = sldTree.addObject(ruleNode, newLineSymbolizer, true);
 
         if (newNode != null) {
-            sldTree.addObject(newNode,
-                    SLDTreeLeafFactory.getInstance().getStroke(newLineSymbolizer), true);
+            sldTree.addObject(
+                    newNode, SLDTreeLeafFactory.getInstance().getStroke(newLineSymbolizer), true);
 
             SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
 
@@ -815,14 +847,17 @@ public class SLDTreeTools {
             // Store current state of the SLD after the add
             Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(),
-                    getClass().getName(), oldValueObj, newValueObj));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    sldTree.getUndoObject(),
+                                    getClass().getName(),
+                                    oldValueObj,
+                                    newValueObj));
         }
     }
 
-    /**
-     * Adds the new polygon symbolizer.
-     */
+    /** Adds the new polygon symbolizer. */
     public void addNewPolygon() {
         if (symbolTree == null) {
             return;
@@ -838,10 +873,12 @@ public class SLDTreeTools {
         DefaultMutableTreeNode newNode = sldTree.addObject(ruleNode, newPolygonSymbolizer, true);
 
         if (newNode != null) {
-            sldTree.addObject(newNode,
-                    SLDTreeLeafFactory.getInstance().getFill(newPolygonSymbolizer), true);
-            sldTree.addObject(newNode,
-                    SLDTreeLeafFactory.getInstance().getStroke(newPolygonSymbolizer), true);
+            sldTree.addObject(
+                    newNode, SLDTreeLeafFactory.getInstance().getFill(newPolygonSymbolizer), true);
+            sldTree.addObject(
+                    newNode,
+                    SLDTreeLeafFactory.getInstance().getStroke(newPolygonSymbolizer),
+                    true);
 
             SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
 
@@ -853,14 +890,17 @@ public class SLDTreeTools {
             // Store current state of the SLD after the add
             Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(),
-                    getClass().getName(), oldValueObj, newValueObj));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    sldTree.getUndoObject(),
+                                    getClass().getName(),
+                                    oldValueObj,
+                                    newValueObj));
         }
     }
 
-    /**
-     * Adds the new image outline polygon symbolizer.
-     */
+    /** Adds the new image outline polygon symbolizer. */
     public void addNewImageOutlinePolygon() {
         if (symbolTree == null) {
             return;
@@ -876,10 +916,12 @@ public class SLDTreeTools {
         DefaultMutableTreeNode newNode = sldTree.addObject(rasterNode, newPolygonSymbolizer, true);
 
         if (newNode != null) {
-            sldTree.addObject(newNode,
-                    SLDTreeLeafFactory.getInstance().getFill(newPolygonSymbolizer), true);
-            sldTree.addObject(newNode,
-                    SLDTreeLeafFactory.getInstance().getStroke(newPolygonSymbolizer), true);
+            sldTree.addObject(
+                    newNode, SLDTreeLeafFactory.getInstance().getFill(newPolygonSymbolizer), true);
+            sldTree.addObject(
+                    newNode,
+                    SLDTreeLeafFactory.getInstance().getStroke(newPolygonSymbolizer),
+                    true);
 
             SLDTreeManager.getInstance().rebuildTree((SLDTree) sldTree);
 
@@ -891,21 +933,22 @@ public class SLDTreeTools {
             // Store current state of the SLD after the add
             Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-            UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(),
-                    getClass().getName(), oldValueObj, newValueObj));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    sldTree.getUndoObject(),
+                                    getClass().getName(),
+                                    oldValueObj,
+                                    newValueObj));
         }
     }
 
-    /**
-     * Move item down.
-     */
+    /** Move item down. */
     private void moveItemDown() {
         moveItem(false);
     }
 
-    /**
-     * Move item up.
-     */
+    /** Move item up. */
     private void moveItemUp() {
         moveItem(true);
     }
@@ -960,14 +1003,13 @@ public class SLDTreeTools {
         int direction = moveUp ? -1 : 1;
 
         // Store current state of the SLD before the move
-        //CHECKSTYLE:OFF
-        Object oldValueObj =
-                sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:OFF
+        Object oldValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
+        // CHECKSTYLE:ON
 
         if (obj instanceof StyledLayer) {
             StyledLayerDescriptor sld = (StyledLayerDescriptor) parentObj;
-            // NamedLayerImpl.equals() doesn't work in the way I 
+            // NamedLayerImpl.equals() doesn't work in the way I
             // want it to, so indexOf() does not work
             boolean found = false;
             int index = 0;
@@ -1076,8 +1118,13 @@ public class SLDTreeTools {
         // Store current state of the SLD after the move
         Object newValueObj = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(sldTree.getUndoObject(),
-                getClass().getName(), oldValueObj, newValueObj));
+        UndoManager.getInstance()
+                .addUndoEvent(
+                        new UndoEvent(
+                                sldTree.getUndoObject(),
+                                getClass().getName(),
+                                oldValueObj,
+                                newValueObj));
     }
 
     /**
@@ -1096,8 +1143,10 @@ public class SLDTreeTools {
      * @param selectedNode the new button state
      * @param currentGeometryType the current geometry type
      */
-    public void setButtonState(DefaultMutableTreeNode parentNode,
-            DefaultMutableTreeNode selectedNode, GeometryTypeEnum currentGeometryType) {
+    public void setButtonState(
+            DefaultMutableTreeNode parentNode,
+            DefaultMutableTreeNode selectedNode,
+            GeometryTypeEnum currentGeometryType) {
         boolean addButtonEnabled = true;
         boolean removeButtonEnabled = true;
         boolean addNamedLayerButtonEnabled = false;
@@ -1137,8 +1186,8 @@ public class SLDTreeTools {
                         NamedLayerImpl namedLayer = (NamedLayerImpl) parentObj;
                         hasMoreThan1Item = namedLayer.styles().size() > 1;
                         isFirstSelected = (obj == namedLayer.styles().get(0));
-                        isLastSelected = (obj == namedLayer.styles()
-                                .get(namedLayer.styles().size() - 1));
+                        isLastSelected =
+                                (obj == namedLayer.styles().get(namedLayer.styles().size() - 1));
                     }
                 }
             } else if (obj instanceof FeatureTypeStyle) {
@@ -1146,8 +1195,10 @@ public class SLDTreeTools {
                     Style style = (Style) parentObj;
                     hasMoreThan1Item = style.featureTypeStyles().size() > 1;
                     isFirstSelected = (obj == style.featureTypeStyles().get(0));
-                    isLastSelected = (obj == style.featureTypeStyles()
-                            .get(style.featureTypeStyles().size() - 1));
+                    isLastSelected =
+                            (obj
+                                    == style.featureTypeStyles()
+                                            .get(style.featureTypeStyles().size() - 1));
                 }
             } else if (obj instanceof Rule) {
                 symbolizerButtonState.showSymbolizerButtons();
@@ -1168,8 +1219,8 @@ public class SLDTreeTools {
                         Rule rule = (Rule) parentObj;
                         hasMoreThan1Item = rule.symbolizers().size() > 1;
                         isFirstSelected = (obj == rule.symbolizers().get(0));
-                        isLastSelected = (obj == rule.symbolizers()
-                                .get(rule.symbolizers().size() - 1));
+                        isLastSelected =
+                                (obj == rule.symbolizers().get(rule.symbolizers().size() - 1));
                     }
                 }
 
@@ -1186,17 +1237,18 @@ public class SLDTreeTools {
         btnAddButton.setVisible(addButtonEnabled);
 
         // All symbolizer types are allowed be added to an SLD
-        boolean allSymbolizer = symbolizerButtonState.isMarkerVisible(parentObj, obj)
-                || symbolizerButtonState.isLineVisible(parentObj, obj)
-                || symbolizerButtonState.isPolygonVisible(parentObj, obj)
-                || symbolizerButtonState.isRasterVisible(parentObj, obj);
+        boolean allSymbolizer =
+                symbolizerButtonState.isMarkerVisible(parentObj, obj)
+                        || symbolizerButtonState.isLineVisible(parentObj, obj)
+                        || symbolizerButtonState.isPolygonVisible(parentObj, obj)
+                        || symbolizerButtonState.isRasterVisible(parentObj, obj);
         btnNewMarker.setVisible(allSymbolizer);
         btnNewLine.setVisible(allSymbolizer);
-        btnNewImageOutlineLine
-                .setVisible(symbolizerButtonState.isImageOutlineLineVisible(parentObj, obj));
+        btnNewImageOutlineLine.setVisible(
+                symbolizerButtonState.isImageOutlineLineVisible(parentObj, obj));
         btnNewPolygon.setVisible(allSymbolizer);
-        btnNewImageOutlinePolygon
-                .setVisible(symbolizerButtonState.isImageOutlinePolygonVisible(parentObj, obj));
+        btnNewImageOutlinePolygon.setVisible(
+                symbolizerButtonState.isImageOutlinePolygonVisible(parentObj, obj));
         btnNewRaster.setVisible(allSymbolizer);
         btnNewText.setVisible(symbolizerButtonState.isTextVisible(parentObj, obj));
 

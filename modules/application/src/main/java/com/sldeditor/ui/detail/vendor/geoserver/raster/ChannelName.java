@@ -19,17 +19,15 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
-import java.util.List;
-
-import org.geotools.styling.SelectedChannelType;
-
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
+import java.util.List;
+import org.geotools.styling.SelectedChannelType;
 
 /**
  * The Class ChannelName.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 class ChannelName {
@@ -38,12 +36,13 @@ class ChannelName {
     public static String GREEN = "Green";
     public static String BLUE = "Blue";
     public static String GREY = "Grey";
-    
+
     /** The panel config expression. */
     private String panelConfigExpression = "symbol/raster/PanelConfig_ChannelName%sExpression.xml";
 
     /** The panel config no expression. */
-    private String panelConfigNoExpression = "symbol/raster/PanelConfig_ChannelName%sNoExpression.xml";
+    private String panelConfigNoExpression =
+            "symbol/raster/PanelConfig_ChannelName%sNoExpression.xml";
 
     /** The raster channel name string. */
     private VOChannelNameNoExpression rasterChannelNameString = null;
@@ -58,7 +57,9 @@ class ChannelName {
      * @param noExpression the no expression
      * @param colourName the colour name
      */
-    public ChannelName(VOChannelNameExpression expression, VOChannelNameNoExpression noExpression,
+    public ChannelName(
+            VOChannelNameExpression expression,
+            VOChannelNameNoExpression noExpression,
             String colourName) {
         rasterChannelNameExpression = expression;
         rasterChannelNameString = noExpression;
@@ -83,13 +84,14 @@ class ChannelName {
      * @param vendorOptionVersionsList the vendor option versions list
      * @param channelType the channel type
      */
-    public void populate(List<VersionData> vendorOptionVersionsList,
-            SelectedChannelType channelType) {
-        if (VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList,
-                rasterChannelNameString.getVendorOption())) {
+    public void populate(
+            List<VersionData> vendorOptionVersionsList, SelectedChannelType channelType) {
+        if (VendorOptionManager.getInstance()
+                .isAllowed(vendorOptionVersionsList, rasterChannelNameString.getVendorOption())) {
             rasterChannelNameString.populate(channelType);
-        } else if (VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList,
-                rasterChannelNameExpression.getVendorOption())) {
+        } else if (VendorOptionManager.getInstance()
+                .isAllowed(
+                        vendorOptionVersionsList, rasterChannelNameExpression.getVendorOption())) {
             rasterChannelNameExpression.populate(channelType);
         }
     }
@@ -100,13 +102,14 @@ class ChannelName {
      * @param vendorOptioúnVersionsList the vendor option versions list
      * @param channelType the channel type
      */
-    public void update(List<VersionData> vendorOptionVersionsList,
-            SelectedChannelType channelType) {
-        if (VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList,
-                rasterChannelNameString.getVendorOption())) {
+    public void update(
+            List<VersionData> vendorOptionVersionsList, SelectedChannelType channelType) {
+        if (VendorOptionManager.getInstance()
+                .isAllowed(vendorOptionVersionsList, rasterChannelNameString.getVendorOption())) {
             rasterChannelNameString.updateSymbol(channelType);
-        } else if (VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList,
-                rasterChannelNameExpression.getVendorOption())) {
+        } else if (VendorOptionManager.getInstance()
+                .isAllowed(
+                        vendorOptionVersionsList, rasterChannelNameExpression.getVendorOption())) {
             rasterChannelNameExpression.updateSymbol(channelType);
         }
     }

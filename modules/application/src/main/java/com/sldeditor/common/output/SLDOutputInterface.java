@@ -17,16 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.output;
 
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.SLDDataInterface;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The Interface SLDOutputInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SLDOutputInterface {

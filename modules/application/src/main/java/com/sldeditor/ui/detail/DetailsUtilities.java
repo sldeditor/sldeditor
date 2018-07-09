@@ -26,15 +26,15 @@ import org.geotools.styling.Displacement;
 import org.opengis.filter.expression.Expression;
 
 /**
- * The Class DetailsUtilities provides utility methods to check if the following
- *  objects are the same:
- * 
+ * The Class DetailsUtilities provides utility methods to check if the following objects are the
+ * same:
+ *
  * <p>- Displacement
- * 
+ *
  * <p>- Anchor point
  *
- * <p>GeoTools objects can't compare expressions if are of different types even 
- * though the values may be the same.
+ * <p>GeoTools objects can't compare expressions if are of different types even though the values
+ * may be the same.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -49,9 +49,10 @@ public class DetailsUtilities {
      */
     public static boolean isSame(Displacement defaultDisplacement, Displacement displacement) {
         if ((defaultDisplacement != null) && (displacement != null)) {
-            return areDoubleValuesSame(defaultDisplacement.getDisplacementX(),
-                    displacement.getDisplacementX())
-                    && areDoubleValuesSame(defaultDisplacement.getDisplacementY(),
+            return areDoubleValuesSame(
+                            defaultDisplacement.getDisplacementX(), displacement.getDisplacementX())
+                    && areDoubleValuesSame(
+                            defaultDisplacement.getDisplacementY(),
                             displacement.getDisplacementY());
         }
         return false;
@@ -66,10 +67,10 @@ public class DetailsUtilities {
      */
     public static boolean isSame(AnchorPoint defaultAnchorPoint, AnchorPoint anchorPoint) {
         if ((defaultAnchorPoint != null) && (anchorPoint != null)) {
-            return areDoubleValuesSame(defaultAnchorPoint.getAnchorPointX(),
-                    anchorPoint.getAnchorPointX())
-                    && areDoubleValuesSame(defaultAnchorPoint.getAnchorPointY(),
-                            anchorPoint.getAnchorPointY());
+            return areDoubleValuesSame(
+                            defaultAnchorPoint.getAnchorPointX(), anchorPoint.getAnchorPointX())
+                    && areDoubleValuesSame(
+                            defaultAnchorPoint.getAnchorPointY(), anchorPoint.getAnchorPointY());
         }
         return false;
     }
@@ -114,5 +115,4 @@ public class DetailsUtilities {
 
         return 0.0;
     }
-
 }

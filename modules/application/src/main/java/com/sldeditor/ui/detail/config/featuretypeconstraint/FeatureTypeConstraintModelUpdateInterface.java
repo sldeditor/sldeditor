@@ -26,13 +26,9 @@ package com.sldeditor.ui.detail.config.featuretypeconstraint;
  */
 public interface FeatureTypeConstraintModelUpdateInterface {
 
-    /**
-     * Feature type constraint updated.
-     */
+    /** Feature type constraint updated. */
     void featureTypeConstraintUpdated();
-    
-    /**
-     * Extent updated.
-     */
+
+    /** Extent updated. */
     void extentUpdated();
 }

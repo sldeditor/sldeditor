@@ -21,7 +21,6 @@ package com.sldeditor.common.console;
 
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -38,28 +37,31 @@ public class ConsoleCellRenderer extends JLabel implements ListCellRenderer<Cons
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
      */
     @Override
-    public Component getListCellRendererComponent(JList<? extends ConsoleData> list,
-            ConsoleData value, int index, boolean isSelected, boolean cellHasFocus) {
+    public Component getListCellRendererComponent(
+            JList<? extends ConsoleData> list,
+            ConsoleData value,
+            int index,
+            boolean isSelected,
+            boolean cellHasFocus) {
         setText(value.getMessage());
 
         Color textColour = null;
         switch (value.getType()) {
-        case ERROR:
-        case EXCEPTION:
-            textColour = Color.RED;
-            break;
-        case INFORMATION:
-        default:
-            textColour = Color.BLACK;
-            break;
+            case ERROR:
+            case EXCEPTION:
+                textColour = Color.RED;
+                break;
+            case INFORMATION:
+            default:
+                textColour = Color.BLACK;
+                break;
         }
         setForeground(textColour);
 
         return this;
     }
-
 }

@@ -19,29 +19,27 @@
 
 package com.sldeditor.ui.tree.item;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.geotools.styling.StyledLayer;
-import org.geotools.styling.UserLayerImpl;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.tree.SLDTreeTools;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.geotools.styling.StyledLayer;
+import org.geotools.styling.UserLayerImpl;
 
 /**
  * Class that display UserLayer data within the sld tree structure.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class UserLayerTreeItem implements SLDTreeItemInterface {
 
     /** The Constant TITLE. */
-    private static final String TITLE = Localisation.getString(SLDTreeTools.class,
-            "TreeItem.userlayer");
+    private static final String TITLE =
+            Localisation.getString(SLDTreeTools.class, "TreeItem.userlayer");
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -59,7 +57,7 @@ public class UserLayerTreeItem implements SLDTreeItemInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -67,5 +65,4 @@ public class UserLayerTreeItem implements SLDTreeItemInterface {
         StyledLayer styledLayer = (StyledLayer) userObject;
         SelectedSymbol.getInstance().setStyledLayer(styledLayer);
     }
-
 }

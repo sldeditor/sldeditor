@@ -22,21 +22,19 @@ package com.sldeditor.test.unit.rendertransformation;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import com.sldeditor.common.connection.GeoServerConnectionManagerInterface;
+import com.sldeditor.rendertransformation.RenderTransformationDialog;
 import org.geotools.process.function.ProcessFunction;
 import org.geotools.process.function.ProcessFunctionFactory;
 import org.junit.Test;
 import org.opengis.filter.capability.FunctionName;
 
-import com.sldeditor.common.connection.GeoServerConnectionManagerInterface;
-import com.sldeditor.rendertransformation.RenderTransformationDialog;
-
 /**
  * Unit test for RenderTransformationDialog class.
- * 
- * <p>{@link com.sldeditor.rendertransformation.RenderTransformationDialog}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.rendertransformation.RenderTransformationDialog}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class RenderTransformationDialogTest {
 
@@ -70,8 +68,8 @@ public class RenderTransformationDialogTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.rendertransformation.RenderTransformationDialog#RenderTransformationDialog(com.sldeditor.common.connection.GeoServerConnectionManagerInterface)}.
+     * Test method for {@link
+     * com.sldeditor.rendertransformation.RenderTransformationDialog#RenderTransformationDialog(com.sldeditor.common.connection.GeoServerConnectionManagerInterface)}.
      */
     @Test
     public void testRenderTransformationDialog() {
@@ -89,5 +87,4 @@ public class RenderTransformationDialogTest {
         assertNotNull(actualResult);
         testObj.test_internal_showDialog(actualResult);
     }
-
 }

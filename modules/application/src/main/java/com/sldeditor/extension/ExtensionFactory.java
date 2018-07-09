@@ -19,16 +19,15 @@
 
 package com.sldeditor.extension;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.extension.filesystem.FileSystemExtension;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A factory for creating Extension objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ExtensionFactory {
@@ -52,15 +51,13 @@ public class ExtensionFactory {
         return extensionList;
     }
 
-    /**
-     * Populate extension list.
-     */
+    /** Populate extension list. */
     private static void populate() {
         String className = FileSystemExtension.class.getName();
 
         try {
-            ExtensionInterface extension = (ExtensionInterface) Class.forName(className)
-                    .newInstance();
+            ExtensionInterface extension =
+                    (ExtensionInterface) Class.forName(className).newInstance();
             extensionList.add(extension);
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             ConsoleManager.getInstance().exception(ExtensionFactory.class, e);
@@ -74,8 +71,8 @@ public class ExtensionFactory {
      * @param extensionArgList the extension arg list
      * @return the arguments
      */
-    public static List<String> getArguments(ExtensionInterface extension,
-            List<String> extensionArgList) {
+    public static List<String> getArguments(
+            ExtensionInterface extension, List<String> extensionArgList) {
         List<String> specificExtensionArgList = new ArrayList<String>();
 
         if (extensionArgList != null) {
@@ -83,8 +80,9 @@ public class ExtensionFactory {
                 String[] components = extensionArg.split("\\.");
 
                 if (components.length >= 2) {
-                    if ((components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0) && (components[1]
-                            .compareToIgnoreCase(extension.getExtensionArgPrefix()) == 0)) {
+                    if ((components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0)
+                            && (components[1].compareToIgnoreCase(extension.getExtensionArgPrefix())
+                                    == 0)) {
                         StringBuilder sb = new StringBuilder();
 
                         for (int index = 2; index < components.length; index++) {
@@ -120,7 +118,6 @@ public class ExtensionFactory {
                     extensionArgList.add(extensionArg);
                 }
             }
-
         }
         return extensionArgList;
     }

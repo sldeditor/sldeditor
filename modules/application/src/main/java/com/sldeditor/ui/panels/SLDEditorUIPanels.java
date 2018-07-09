@@ -19,15 +19,6 @@
 
 package com.sldeditor.ui.panels;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionUI;
@@ -35,22 +26,29 @@ import com.sldeditor.datasource.config.DataSourceConfigPanel;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.iface.SymbolPanelInterface;
 import com.sldeditor.ui.tree.SLDTree;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 /**
  * The Class SLDEditorUIPanels contains references to the panels to display for.:
- * 
+ *
  * <p>- no symbols selected
- * 
+ *
  * <p>- one symbol selected
- * 
+ *
  * <p>- multiple symbols selected
- * 
+ *
  * <p>Also contains references for the following panels:
- * 
+ *
  * <p>- DataSourceConfigPanel
- * 
+ *
  * <p>- Panel layout for the SLD viewing/editing component
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDEditorUIPanels implements GetMinimumVersionInterface {
@@ -76,7 +74,7 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
     private NoSymbolUI noSymbolUI;
 
     /** The ui symbol map. */
-    private Map<String, SymbolPanelInterface> uiSymbolMap = 
+    private Map<String, SymbolPanelInterface> uiSymbolMap =
             new HashMap<String, SymbolPanelInterface>();
 
     /** The ui legend map. */
@@ -101,9 +99,7 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
     /** The vendor option UI. */
     private VendorOptionUI vendorOptionUI = null;
 
-    /**
-     * Instantiates a new SLD editor ui manager.
-     */
+    /** Instantiates a new SLD editor ui manager. */
     public SLDEditorUIPanels() {
         singleSymbolUI = new SingleSymbolUI();
         uiSymbolMap.put(SINGLE_SYMBOL, singleSymbolUI);
@@ -269,12 +265,12 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.panels.GetMinimumVersionInterface#getMinimumVersion(java.lang.Object, java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         singleSymbolUI.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }
 
@@ -300,5 +296,4 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
     public void refreshPanel(Class<?> parent, Class<?> panelClass) {
         singleSymbolUI.refreshPanel(parent, panelClass);
     }
-
 }

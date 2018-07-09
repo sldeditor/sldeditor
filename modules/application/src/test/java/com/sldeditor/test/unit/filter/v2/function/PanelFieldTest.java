@@ -21,15 +21,6 @@ package com.sldeditor.test.unit.filter.v2.function;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.measure.Unit;
-
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.junit.Test;
-
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.expression.PanelField;
 import com.sldeditor.filter.v2.expression.TypeManager;
@@ -42,21 +33,27 @@ import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.detail.config.FieldConfigMapUnits;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.FieldConfigString;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.measure.Unit;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.junit.Test;
 import org.locationtech.jts.geom.Geometry;
 
 /**
  * Unit test for PanelField class.
- * 
- * <p>{@link com.sldeditor.filter.v2.expression.PanelField}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.filter.v2.expression.PanelField}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class PanelFieldTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.filter.v2.expression.PanelField#getField(java.lang.Class, java.lang.String, java.lang.Class, java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.expression.PanelField#getField(java.lang.Class, java.lang.String,
+     * java.lang.Class, java.util.List)}.
      */
     @Test
     public void testGetField() {
@@ -76,8 +73,8 @@ public class PanelFieldTest {
         expectedValueMap.put(Unit.class, FieldConfigMapUnits.class);
 
         for (Class<?> nodeType : expectedValueMap.keySet()) {
-            FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation,
-                    nodeType, null);
+            FieldConfigPopulate fieldConfig =
+                    PanelField.getField(classType, valueTextLocalisation, nodeType, null);
 
             Class<?> expected = expectedValueMap.get(nodeType);
             Class<?> actual = (fieldConfig == null) ? null : fieldConfig.getClass();
@@ -86,8 +83,8 @@ public class PanelFieldTest {
 
         // Special case
         // Number.class
-        FieldConfigPopulate fieldConfig = PanelField.getField(classType, valueTextLocalisation,
-                Number.class, null);
+        FieldConfigPopulate fieldConfig =
+                PanelField.getField(classType, valueTextLocalisation, Number.class, null);
         Class<?> expected = FieldConfigInteger.class;
         Class<?> actual = fieldConfig.getClass();
         assertEquals(Number.class.getName(), expected, actual);
@@ -115,5 +112,4 @@ public class PanelFieldTest {
 
         TypeManager.getInstance().reset();
     }
-
 }

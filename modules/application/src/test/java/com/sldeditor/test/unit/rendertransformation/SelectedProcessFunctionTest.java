@@ -24,16 +24,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.rendertransformation.SelectedProcessFunction;
 import java.math.BigInteger;
 import java.util.List;
-
-import org.eclipse.emf.common.util.EList;
-import org.geotools.process.function.ProcessFunctionFactory;
-import org.junit.Test;
-import org.opengis.filter.capability.FunctionName;
-
-import com.sldeditor.rendertransformation.SelectedProcessFunction;
-
 import net.opengis.ows11.CodeType;
 import net.opengis.ows11.DomainMetadataType;
 import net.opengis.ows11.LanguageStringType;
@@ -43,20 +36,24 @@ import net.opengis.wps10.InputDescriptionType;
 import net.opengis.wps10.LiteralInputType;
 import net.opengis.wps10.ProcessDescriptionType;
 import net.opengis.wps10.impl.Wps10FactoryImpl;
+import org.eclipse.emf.common.util.EList;
+import org.geotools.process.function.ProcessFunctionFactory;
+import org.junit.Test;
+import org.opengis.filter.capability.FunctionName;
 
 /**
  * Unit test for SelectedProcessFunction class.
- * 
- * <p>{@link com.sldeditor.rendertransformation.SelectedProcessFunction}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.rendertransformation.SelectedProcessFunction}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class SelectedProcessFunctionTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.rendertransformation.SelectedProcessFunction#setBuiltInProcessFunction(org.opengis.filter.capability.FunctionName, org.geotools.process.function.ProcessFunction)}.
+     * Test method for {@link
+     * com.sldeditor.rendertransformation.SelectedProcessFunction#setBuiltInProcessFunction(org.opengis.filter.capability.FunctionName,
+     * org.geotools.process.function.ProcessFunction)}.
      */
     @Test
     public void testSetBuiltInProcessFunction() {
@@ -78,10 +75,10 @@ public class SelectedProcessFunctionTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.rendertransformation.SelectedProcessFunction#setSelectedCustomFunction(net.opengis.wps10.ProcessDescriptionType)}.
+     * Test method for {@link
+     * com.sldeditor.rendertransformation.SelectedProcessFunction#setSelectedCustomFunction(net.opengis.wps10.ProcessDescriptionType)}.
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Test
     public void testSetSelectedCustomFunction() {
         ProcessDescriptionType process = Wps10FactoryImpl.init().createProcessDescriptionType();
@@ -91,9 +88,8 @@ public class SelectedProcessFunctionTest {
         codeType.setValue(expectedFunctionName);
         process.setIdentifier(codeType);
 
-
-        InputDescriptionType inputDescription = Wps10FactoryImpl.init()
-                .createInputDescriptionType();
+        InputDescriptionType inputDescription =
+                Wps10FactoryImpl.init().createInputDescriptionType();
 
         CodeType codeType2 = Ows11FactoryImpl.init().createCodeType();
         codeType2.setValue("dummyParameter");
@@ -129,8 +125,8 @@ public class SelectedProcessFunctionTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.rendertransformation.SelectedProcessFunction#extractLocalFunctionName(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.rendertransformation.SelectedProcessFunction#extractLocalFunctionName(java.lang.String)}.
      */
     @Test
     public void testExtractLocalFunctionName() {
@@ -147,5 +143,4 @@ public class SelectedProcessFunctionTest {
         result = SelectedProcessFunction.extractLocalFunctionName(expected3);
         assertTrue(expected3.compareTo(result) == 0);
     }
-
 }

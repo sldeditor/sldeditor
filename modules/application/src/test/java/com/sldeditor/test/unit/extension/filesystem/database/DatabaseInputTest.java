@@ -14,20 +14,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
-import org.geotools.geopkg.GeoPkgDataStoreFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.connection.DatabaseConnectionManager;
 import com.sldeditor.common.data.DatabaseConnection;
@@ -38,36 +24,42 @@ import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatu
 import com.sldeditor.extension.filesystem.database.DatabaseInput;
 import com.sldeditor.tool.ToolManager;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import org.geotools.geopkg.GeoPkgDataStoreFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Unit test for DatabaseInput class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.database.DatabaseInput}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.database.DatabaseInput}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DatabaseInputTest {
 
     /** The config properties file. */
     private File configPropertiesFile = new File("./DatabaseInputTest.properties");
 
-    /**
-     * Called before each test.
-     */
+    /** Called before each test. */
     @Before
     public void beforeEachTest() {
         DatabaseConnectionManager.destroyInstance();
         PropertyManagerFactory.getInstance().setPropertyFile(configPropertiesFile);
     }
 
-    /**
-     * Called after each test.
-     */
+    /** Called after each test. */
     @After
     public void afterEachTest() {
         configPropertiesFile.delete();
-        
+
         File f = new File("test.gpkg");
         f.delete();
         f = new File("test2.gpkg");
@@ -75,7 +67,8 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.database.DatabaseInput#DatabaseInput(com.sldeditor.common.ToolSelectionInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#DatabaseInput(com.sldeditor.common.ToolSelectionInterface)}.
      */
     @Test
     public void testDatabaseInput() {
@@ -97,8 +90,8 @@ public class DatabaseInputTest {
 
             DatabaseConnection connection1 = DatabaseConnectionFactory.createGeoPackage();
             String featureClassName = "test feature class";
-            DatabaseFeatureClassNode fcTreeNode = new DatabaseFeatureClassNode(input, connection1,
-                    featureClassName);
+            DatabaseFeatureClassNode fcTreeNode =
+                    new DatabaseFeatureClassNode(input, connection1, featureClassName);
             Map<String, String> connectionDataMap = new HashMap<String, String>();
             connectionDataMap.put(GeoPkgDataStoreFactory.DATABASE.key, "test.gpkg");
             connection1.setConnectionDataMap(connectionDataMap);
@@ -117,8 +110,8 @@ public class DatabaseInputTest {
             input.addNewConnection(connection2);
             input.addNewConnection(null);
 
-            List<SLDDataInterface> sldDataContentsList = input.getSLDContents(fcTreeNode)
-                    .getSldData();
+            List<SLDDataInterface> sldDataContentsList =
+                    input.getSLDContents(fcTreeNode).getSldData();
             assertEquals(0, sldDataContentsList.size());
 
             // Try saving a null object
@@ -133,22 +126,23 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.database.DatabaseInput#readPropertyFile()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#readPropertyFile()}.
      */
     @Test
-    public void testReadPropertyFile() {
-    }
+    public void testReadPropertyFile() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.database.DatabaseInput#populate(com.sldeditor.datasource.extension.filesystem.node.FSTree, javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#populate(com.sldeditor.datasource.extension.filesystem.node.FSTree,
+     * javax.swing.tree.DefaultTreeModel, javax.swing.tree.DefaultMutableTreeNode)}.
      */
     @Test
-    public void testPopulate() {
-    }
+    public void testPopulate() {}
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.database.DatabaseInput#treeExpanded(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#treeExpanded(java.lang.Object)}.
      */
     @Test
     public void testTreeExpanded() {
@@ -158,8 +152,9 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.database.DatabaseInput#rightMouseButton(javax.swing.JPopupMenu, java.lang.Object, java.awt.event.MouseEvent)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#rightMouseButton(javax.swing.JPopupMenu,
+     * java.lang.Object, java.awt.event.MouseEvent)}.
      */
     @Test
     public void testRightMouseButton() {
@@ -168,7 +163,8 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.database.DatabaseInput#getNodeTypes()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#getNodeTypes()}.
      */
     @Test
     public void testGetNodeTypes() {
@@ -178,7 +174,8 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.database.DatabaseInput#connect(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#connect(java.util.List)}.
      */
     @Test
     public void testConnect() {
@@ -216,7 +213,8 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.database.DatabaseInput#disconnect(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#disconnect(java.util.List)}.
      */
     @Test
     public void testDisconnect() {
@@ -252,24 +250,24 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.database.DatabaseInput#populateComplete(com.sldeditor.common.data.DatabaseConnection, java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#populateComplete(com.sldeditor.common.data.DatabaseConnection,
+     * java.util.List)}.
      */
     @Test
-    public void testPopulateComplete() {
-    }
+    public void testPopulateComplete() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.database.DatabaseInput#addNewConnection(com.sldeditor.common.data.DatabaseConnection)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#addNewConnection(com.sldeditor.common.data.DatabaseConnection)}.
      */
     @Test
-    public void testAddNewConnection() {
-    }
+    public void testAddNewConnection() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.database.DatabaseInput#updateConnectionDetails(com.sldeditor.common.data.DatabaseConnection, com.sldeditor.common.data.DatabaseConnection)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#updateConnectionDetails(com.sldeditor.common.data.DatabaseConnection,
+     * com.sldeditor.common.data.DatabaseConnection)}.
      */
     @Test
     public void testUpdateConnectionDetails() {
@@ -307,7 +305,8 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.database.DatabaseInput#deleteConnections(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#deleteConnections(java.util.List)}.
      */
     @Test
     public void testDeleteConnections() {
@@ -352,7 +351,9 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.database.DatabaseInput#copyNodes(com.sldeditor.common.NodeInterface, java.util.Map)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#copyNodes(com.sldeditor.common.NodeInterface,
+     * java.util.Map)}.
      */
     @Test
     public void testCopyNodes() {
@@ -361,8 +362,9 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.database.DatabaseInput#deleteNodes(com.sldeditor.common.NodeInterface, java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#deleteNodes(com.sldeditor.common.NodeInterface,
+     * java.util.List)}.
      */
     @Test
     public void testDeleteNodes() {
@@ -372,7 +374,8 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.database.DatabaseInput#getDestinationText(com.sldeditor.common.NodeInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#getDestinationText(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetDestinationText() {
@@ -382,8 +385,9 @@ public class DatabaseInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.database.DatabaseInput#setFolder(com.sldeditor.common.data.DatabaseConnection, boolean)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.database.DatabaseInput#setFolder(com.sldeditor.common.data.DatabaseConnection,
+     * boolean)}.
      */
     @Test
     public void testSetFolder() {
@@ -396,5 +400,4 @@ public class DatabaseInputTest {
         connection1.setConnectionDataMap(connectionDataMap);
         input.setFolder(connection1, true);
     }
-
 }

@@ -22,24 +22,25 @@ package com.sldeditor.test.unit.datasource.extension.filesystem.node.geoserver;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Test;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
+import org.junit.Test;
 
 /**
  * Unit test for GeoServerNode class.
- * 
- * <p>{@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode}
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class GeoServerNodeTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerNode#GeoServerLayerNode(com.sldeditor.common.filesystem.FileSystemInterface, com.sldeditor.common.data.GeoServerLayer)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerNode#GeoServerLayerNode(com.sldeditor.common.filesystem.FileSystemInterface,
+     * com.sldeditor.common.data.GeoServerLayer)}.
      */
     @Test
     public void testGeoServerLayerNode() {
@@ -50,7 +51,7 @@ public class GeoServerNodeTest {
         connection.setUserName("test user name");
 
         GeoServerNode node = new GeoServerNode(fileHandler, connection);
-        
+
         assertEquals(connection, node.getConnection());
         assertEquals(fileHandler, node.getHandler());
         assertEquals(BuiltInDataFlavour.GEOSERVER_DATAITEM_FLAVOUR, node.getDataFlavour());

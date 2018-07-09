@@ -19,9 +19,23 @@
 
 package com.sldeditor.ui.detail;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.base.CurrentFieldState;
+import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory;
+import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
+import com.sldeditor.ui.detail.vendor.geoserver.fill.VendorOptionFillFactory;
+import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
+import com.sldeditor.ui.iface.PopulateDetailsInterface;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import java.util.List;
 import java.util.Map;
-
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.AnchorPointImpl;
@@ -38,22 +52,6 @@ import org.geotools.styling.Symbolizer;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
-
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.base.CurrentFieldState;
-import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory;
-import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
-import com.sldeditor.ui.detail.vendor.geoserver.fill.VendorOptionFillFactory;
-import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
-import com.sldeditor.ui.iface.PopulateDetailsInterface;
-import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
  * The Class PolygonFillDetails.
@@ -90,20 +88,26 @@ public class PolygonFillDetails extends StandardPanel
     /** The symbolizer. */
     private Symbolizer symbolizer = null;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public PolygonFillDetails() {
         super(PolygonFillDetails.class);
 
         setUpdateSymbolListener(this);
 
-        symbolTypeFactory = new SymbolTypeFactory(PolygonFillDetails.class,
-                new ColourFieldConfig(GroupIdEnum.FILL, FieldIdEnum.FILL_COLOUR,
-                        FieldIdEnum.POLYGON_FILL_OPACITY, FieldIdEnum.STROKE_WIDTH),
-                new ColourFieldConfig(GroupIdEnum.STROKE, FieldIdEnum.STROKE_FILL_COLOUR,
-                        FieldIdEnum.POLYGON_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
-                FieldIdEnum.SYMBOL_TYPE);
+        symbolTypeFactory =
+                new SymbolTypeFactory(
+                        PolygonFillDetails.class,
+                        new ColourFieldConfig(
+                                GroupIdEnum.FILL,
+                                FieldIdEnum.FILL_COLOUR,
+                                FieldIdEnum.POLYGON_FILL_OPACITY,
+                                FieldIdEnum.STROKE_WIDTH),
+                        new ColourFieldConfig(
+                                GroupIdEnum.STROKE,
+                                FieldIdEnum.STROKE_FILL_COLOUR,
+                                FieldIdEnum.POLYGON_STROKE_OPACITY,
+                                FieldIdEnum.STROKE_FILL_WIDTH),
+                        FieldIdEnum.SYMBOL_TYPE);
 
         fieldEnableState = symbolTypeFactory.getFieldOverrides(PolygonFillDetails.class);
 
@@ -159,7 +163,7 @@ public class PolygonFillDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -218,8 +222,8 @@ public class PolygonFillDetails extends StandardPanel
                 if (fill == null) {
                     symbolTypeFactory.setNoFill(this.fieldConfigManager);
                 } else {
-                    symbolTypeFactory.setSolidFill(this.fieldConfigManager, expFillColour,
-                            expOpacity);
+                    symbolTypeFactory.setSolidFill(
+                            this.fieldConfigManager, expFillColour, expOpacity);
                 }
             } else {
                 expSize = graphic.getSize();
@@ -254,8 +258,8 @@ public class PolygonFillDetails extends StandardPanel
 
                 if (!graphicalSymbolList.isEmpty()) {
                     GraphicalSymbol symbol = graphicalSymbolList.get(0);
-                    symbolTypeFactory.setValue(PolygonSymbolizer.class, this.fieldConfigManager,
-                            graphic, symbol);
+                    symbolTypeFactory.setValue(
+                            PolygonSymbolizer.class, this.fieldConfigManager, graphic, symbol);
                 }
             }
         }
@@ -279,9 +283,7 @@ public class PolygonFillDetails extends StandardPanel
         updateSymbol();
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
             if (symbolizer instanceof PolygonSymbolizer) {
@@ -290,8 +292,8 @@ public class PolygonFillDetails extends StandardPanel
                 GraphicFill graphicFill = getGraphicFill();
                 Fill fill = symbolTypeFactory.getFill(graphicFill, this.fieldConfigManager);
 
-                Expression expOpacity = fieldConfigVisitor
-                        .getExpression(FieldIdEnum.OVERALL_OPACITY);
+                Expression expOpacity =
+                        fieldConfigVisitor.getExpression(FieldIdEnum.OVERALL_OPACITY);
 
                 // If field is not enabled it returns null
                 if ((fill != null) && (expOpacity != null)) {
@@ -333,9 +335,14 @@ public class PolygonFillDetails extends StandardPanel
         GroupConfigInterface anchorPointPanel = getGroup(GroupIdEnum.ANCHORPOINT);
 
         if (anchorPointPanel.isPanelEnabled()) {
-            anchorPoint = (AnchorPoint) getStyleFactory().anchorPoint(
-                    fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_H),
-                    fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_V));
+            anchorPoint =
+                    (AnchorPoint)
+                            getStyleFactory()
+                                    .anchorPoint(
+                                            fieldConfigVisitor.getExpression(
+                                                    FieldIdEnum.ANCHOR_POINT_H),
+                                            fieldConfigVisitor.getExpression(
+                                                    FieldIdEnum.ANCHOR_POINT_V));
 
             // Ignore the anchor point if it is the same as the
             // default so it doesn't appear in the SLD
@@ -351,9 +358,11 @@ public class PolygonFillDetails extends StandardPanel
         GroupConfigInterface displacementPanel = getGroup(GroupIdEnum.DISPLACEMENT);
 
         if (displacementPanel.isPanelEnabled()) {
-            displacement = getStyleFactory().displacement(
-                    fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
-                    fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
+            displacement =
+                    getStyleFactory()
+                            .displacement(
+                                    fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_X),
+                                    fieldConfigVisitor.getExpression(FieldIdEnum.DISPLACEMENT_Y));
 
             // Ignore the displacement if it is the same as the default so
             // it doesn't appear in the SLD
@@ -362,11 +371,17 @@ public class PolygonFillDetails extends StandardPanel
             }
         }
 
-        List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(this.fieldConfigManager,
-                symbolType, hasFill, hasStroke, selectedFillPanelId);
+        List<GraphicalSymbol> symbols =
+                symbolTypeFactory.getValue(
+                        this.fieldConfigManager,
+                        symbolType,
+                        hasFill,
+                        hasStroke,
+                        selectedFillPanelId);
 
-        GraphicFill graphicFill = getStyleFactory().graphicFill(symbols, opacity, size, rotation,
-                anchorPoint, displacement);
+        GraphicFill graphicFill =
+                getStyleFactory()
+                        .graphicFill(symbols, opacity, size, rotation, anchorPoint, displacement);
 
         return graphicFill;
     }
@@ -392,8 +407,8 @@ public class PolygonFillDetails extends StandardPanel
                 LiteralExpressionImpl l = (LiteralExpressionImpl) expression;
                 Double d = (Double) l.getValue();
                 if (d <= 0.0) {
-                    fieldConfigVisitor.populateField(FieldIdEnum.SIZE,
-                            getFilterFactory().literal(1));
+                    fieldConfigVisitor.populateField(
+                            FieldIdEnum.SIZE, getFilterFactory().literal(1));
                 }
             }
         }
@@ -408,23 +423,23 @@ public class PolygonFillDetails extends StandardPanel
      * @param selectedItem the selected item
      */
     private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem) {
-        Map<GroupIdEnum, Boolean> groupList = fieldEnableState.getGroupIdList(panelId.getName(),
-                selectedItem);
+        Map<GroupIdEnum, Boolean> groupList =
+                fieldEnableState.getGroupIdList(panelId.getName(), selectedItem);
 
         for (GroupIdEnum groupId : groupList.keySet()) {
             boolean groupEnabled = groupList.get(groupId);
-            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(),
-                    groupId);
+            GroupConfigInterface groupConfig =
+                    fieldConfigManager.getGroup(this.getClass(), groupId);
             if (groupConfig != null) {
                 groupConfig.setGroupStateOverride(groupEnabled);
             } else {
-                ConsoleManager.getInstance().error(this,
-                        "Failed to find group : " + groupId.toString());
+                ConsoleManager.getInstance()
+                        .error(this, "Failed to find group : " + groupId.toString());
             }
         }
 
-        Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(),
-                selectedItem);
+        Map<FieldIdEnum, Boolean> fieldList =
+                fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
 
         for (FieldIdEnum fieldId : fieldList.keySet()) {
             boolean fieldEnabled = fieldList.get(fieldId);
@@ -434,8 +449,8 @@ public class PolygonFillDetails extends StandardPanel
                 fieldState.setFieldEnabled(fieldEnabled);
                 fieldConfig.setFieldState(fieldState);
             } else {
-                ConsoleManager.getInstance().error(this,
-                        "Failed to find field : " + fieldId.toString());
+                ConsoleManager.getInstance()
+                        .error(this, "Failed to find field : " + fieldId.toString());
             }
         }
     }
@@ -447,7 +462,7 @@ public class PolygonFillDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -466,7 +481,7 @@ public class PolygonFillDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -476,7 +491,7 @@ public class PolygonFillDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -486,12 +501,12 @@ public class PolygonFillDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         symbolTypeFactory.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
         vendorOptionFillFactory.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }

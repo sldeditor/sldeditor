@@ -58,8 +58,9 @@ public class AttributeUtils {
         String extractedValue = value;
 
         if (isAttribute(value)) {
-            extractedValue = value.substring(ATTRIBUTE_START.length(),
-                    value.length() - ATTRIBUTE_END.length());
+            extractedValue =
+                    value.substring(
+                            ATTRIBUTE_START.length(), value.length() - ATTRIBUTE_END.length());
         }
         return extractedValue;
     }

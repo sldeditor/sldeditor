@@ -19,7 +19,7 @@
 
 /**
  * Package to manage the GeoServer connections
- *  
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.connection;

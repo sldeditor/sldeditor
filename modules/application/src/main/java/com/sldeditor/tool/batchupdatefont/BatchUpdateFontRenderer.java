@@ -21,14 +21,11 @@ package com.sldeditor.tool.batchupdatefont;
 
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-/**
- * Table cell renderer for highlighting which cell values have been updated.
- */
+/** Table cell renderer for highlighting which cell values have been updated. */
 public class BatchUpdateFontRenderer extends DefaultTableCellRenderer {
 
     /** The Constant serialVersionUID. */
@@ -46,11 +43,13 @@ public class BatchUpdateFontRenderer extends DefaultTableCellRenderer {
      * @return the table cell renderer component
      */
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-            boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(
+            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         // Cells are by default rendered as a JLabel.
-        JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected,
-                hasFocus, row, column);
+        JLabel label =
+                (JLabel)
+                        super.getTableCellRendererComponent(
+                                table, value, isSelected, hasFocus, row, column);
 
         // Get the status for the current row.
         BatchUpdateFontModel tableModel = (BatchUpdateFontModel) table.getModel();
@@ -73,5 +72,4 @@ public class BatchUpdateFontRenderer extends DefaultTableCellRenderer {
         // Return the JLabel which renders the cell.
         return label;
     }
-
 }

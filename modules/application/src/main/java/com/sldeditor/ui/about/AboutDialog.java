@@ -19,6 +19,10 @@
 
 package com.sldeditor.ui.about;
 
+import com.sldeditor.AppSplashScreen;
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.localisation.Localisation;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,31 +40,22 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import org.geotools.factory.GeoTools;
-
-import com.sldeditor.AppSplashScreen;
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.localisation.Localisation;
 
 /**
  * The About dialog class.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class AboutDialog extends JDialog {
 
-    /**
-     * The Class TextPosition.
-     */
+    /** The Class TextPosition. */
     class TextPosition {
         /** The text string. */
         private String textString;
@@ -102,16 +97,12 @@ public class AboutDialog extends JDialog {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Instantiates a new about dialog.
-     */
+    /** Instantiates a new about dialog. */
     public AboutDialog() {
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         setResizable(false);
         setTitle(Localisation.getString(AboutDialog.class, "AboutDialog.title"));
@@ -122,11 +113,12 @@ public class AboutDialog extends JDialog {
 
         JButton close = new JButton(Localisation.getString(AboutDialog.class, "AboutDialog.close"));
         panel.add(close);
-        close.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                dispose();
-            }
-        });
+        close.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        dispose();
+                    }
+                });
 
         URL url = AppSplashScreen.getSplashImageURL();
 
@@ -163,11 +155,15 @@ public class AboutDialog extends JDialog {
         textList.add(new TextPosition(AppSplashScreen.getVersionString(), textPosition));
 
         // GeoTools version string
-        Point p = new Point((int) textPosition.getX(),
-                (int) (textPosition.getY() + AppSplashScreen.getFont().getSize2D()));
-        String geoToolsVersionString = String.format("%s GeoTools %s",
-                Localisation.getString(AboutDialog.class, "AboutDialog.basedOn"),
-                GeoTools.getVersion().toString());
+        Point p =
+                new Point(
+                        (int) textPosition.getX(),
+                        (int) (textPosition.getY() + AppSplashScreen.getFont().getSize2D()));
+        String geoToolsVersionString =
+                String.format(
+                        "%s GeoTools %s",
+                        Localisation.getString(AboutDialog.class, "AboutDialog.basedOn"),
+                        GeoTools.getVersion().toString());
         textList.add(new TextPosition(geoToolsVersionString, p));
 
         return textList;
@@ -188,8 +184,8 @@ public class AboutDialog extends JDialog {
         Font font = AppSplashScreen.getFont();
 
         g2.setFont(font);
-        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2.setRenderingHint(
+                RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.black);
 
         for (TextPosition obj : textList) {

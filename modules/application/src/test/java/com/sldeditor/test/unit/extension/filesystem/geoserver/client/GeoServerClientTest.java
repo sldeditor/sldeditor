@@ -25,18 +25,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.styling.StyledLayer;
-import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.SLDData;
@@ -46,14 +34,23 @@ import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgressInterface;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import org.geotools.styling.StyledLayer;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Unit test for GeoServerClient class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class GeoServerClientTest {
 
@@ -80,8 +77,10 @@ public class GeoServerClientTest {
         }
 
         @Override
-        public void readStylesComplete(GeoServerConnection connection,
-                Map<String, List<StyleWrapper>> styleMap, boolean partialRefresh) {
+        public void readStylesComplete(
+                GeoServerConnection connection,
+                Map<String, List<StyleWrapper>> styleMap,
+                boolean partialRefresh) {
             System.out.println("All layers read");
             stylesComplete = true;
         }
@@ -93,8 +92,8 @@ public class GeoServerClientTest {
         }
 
         @Override
-        public void readLayersComplete(GeoServerConnection connection,
-                Map<String, List<GeoServerLayer>> layerMap) {
+        public void readLayersComplete(
+                GeoServerConnection connection, Map<String, List<GeoServerLayer>> layerMap) {
 
             System.out.println("All styles read");
             layersComplete = true;
@@ -128,12 +127,12 @@ public class GeoServerClientTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#GeoServerClient()}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#isConnected()}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#getConnection()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#GeoServerClient()}. Test
+     * method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#isConnected()}. Test
+     * method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#getConnection()}.
      */
     @Test
     public void testGeoServerClient() {
@@ -145,10 +144,10 @@ public class GeoServerClientTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#initialise(com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgressInterface, com.sldeditor.common.data.GeoServerConnection)}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#connect()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#initialise(com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgressInterface,
+     * com.sldeditor.common.data.GeoServerConnection)}. Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#connect()}.
      */
     @Test
     public void testInitialiseWithInvalidConnection() {
@@ -170,27 +169,27 @@ public class GeoServerClientTest {
 
     /**
      * Only works if a default GeoServer instance is running
-     * 
-     * <p>Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#initialise(com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgressInterface, com.sldeditor.common.data.GeoServerConnection)}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#retrieveData()}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#connect()}. Test
-     * method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#getStyle(com.sldeditor.common.data.StyleWrapper)}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#getStyle(com.sldeditor.common.data.StyleWrapper)}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#uploadSLD(com.sldeditor.common.data.StyleWrapper, java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#getWorkspaceList()}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#refreshWorkspace(java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#deleteStyle(com.sldeditor.common.data.StyleWrapper)}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#disconnect()}.
+     *
+     * <p>Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#initialise(com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgressInterface,
+     * com.sldeditor.common.data.GeoServerConnection)}. Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#retrieveData()}. Test
+     * method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#connect()}. Test method
+     * for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#getStyle(com.sldeditor.common.data.StyleWrapper)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#getStyle(com.sldeditor.common.data.StyleWrapper)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#uploadSLD(com.sldeditor.common.data.StyleWrapper,
+     * java.lang.String)}. Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#getWorkspaceList()}. Test
+     * method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#refreshWorkspace(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#deleteStyle(com.sldeditor.common.data.StyleWrapper)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#disconnect()}.
      */
     @Ignore
     @Test
@@ -220,9 +219,9 @@ public class GeoServerClientTest {
 
         assertTrue(progress.hasFinished());
 
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         int actualNoOfStyles = progress.styleTotal;
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
 
         // Retrieve style
         StyleWrapper styleWrapper = new StyleWrapper(client.getDefaultWorkspaceName(), "point");
@@ -293,8 +292,11 @@ public class GeoServerClientTest {
         // Tidy up - delete all styles created
         //
         for (StyleWrapper styleToDelete : stylesToDeleteList) {
-            System.out.println("Deleting style : " + styleToDelete.getWorkspace() + "/"
-                    + styleToDelete.getStyle());
+            System.out.println(
+                    "Deleting style : "
+                            + styleToDelete.getWorkspace()
+                            + "/"
+                            + styleToDelete.getStyle());
             assertTrue(client.deleteStyle(styleToDelete));
         }
         assertFalse(client.deleteStyle(null));
@@ -317,10 +319,10 @@ public class GeoServerClientTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#isDefaultWorkspace(java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#getDefaultWorkspaceName()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#isDefaultWorkspace(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#getDefaultWorkspaceName()}.
      */
     @Test
     public void testIsDefaultWorkspace() {
@@ -335,13 +337,13 @@ public class GeoServerClientTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#updateLayerStyles(com.sldeditor.common.data.GeoServerLayer, com.sldeditor.common.data.StyleWrapper)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#updateLayerStyles(com.sldeditor.common.data.GeoServerLayer,
+     * com.sldeditor.common.data.StyleWrapper)}.
      */
     @Test
     public void testUpdateLayerStyles() {
         GeoServerClient client = new GeoServerClient();
         assertFalse(client.updateLayerStyles(null));
     }
-
 }

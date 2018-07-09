@@ -19,8 +19,6 @@
 
 package com.sldeditor.ui.detail.config.sortby;
 
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
@@ -31,15 +29,16 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.widgets.FieldPanel;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class FieldConfigSortBy provides feature type style sort by functionality and an optional
  * value/attribute/expression drop down,
- * 
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigSortBy extends FieldConfigBase
@@ -63,12 +62,10 @@ public class FieldConfigSortBy extends FieldConfigBase
         super(commonData);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -76,8 +73,8 @@ public class FieldConfigSortBy extends FieldConfigBase
         if (sortbyPanel == null) {
             sortbyPanel = new SortByPanel(this, NO_OF_ROWS);
             int xPos = getXPos();
-            FieldPanel fieldPanel = createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS,
-                    getLabel());
+            FieldPanel fieldPanel =
+                    createFieldPanel(xPos, BasePanel.WIDGET_HEIGHT * NO_OF_ROWS, getLabel());
             fieldPanel.add(sortbyPanel);
         }
     }
@@ -89,7 +86,7 @@ public class FieldConfigSortBy extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
@@ -105,7 +102,7 @@ public class FieldConfigSortBy extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -122,7 +119,7 @@ public class FieldConfigSortBy extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -142,7 +139,7 @@ public class FieldConfigSortBy extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -157,12 +154,10 @@ public class FieldConfigSortBy extends FieldConfigBase
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -177,7 +172,7 @@ public class FieldConfigSortBy extends FieldConfigBase
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -309,7 +304,7 @@ public class FieldConfigSortBy extends FieldConfigBase
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.config.sortby.SortByUpdateInterface#sortByUpdated(java.lang.String)
      */
@@ -317,13 +312,14 @@ public class FieldConfigSortBy extends FieldConfigBase
     public void sortByUpdated(String sortByString) {
         if (!Controller.getInstance().isPopulating()) {
 
-            UndoManager.getInstance().addUndoEvent(
-                    new UndoEvent(this, getFieldId(), oldValueObj, new String(sortByString)));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    this, getFieldId(), oldValueObj, new String(sortByString)));
 
             oldValueObj = new String(sortByString);
 
             valueUpdated();
         }
     }
-
 }

@@ -19,9 +19,8 @@
 
 package com.sldeditor.tool.layerstyle;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import com.sldeditor.common.data.StyleWrapper;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * The Class LayerStyleNode.

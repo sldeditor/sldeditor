@@ -19,20 +19,18 @@
 
 package com.sldeditor.datasource.extension.filesystem.node.geoserver;
 
-import java.awt.datatransfer.DataFlavor;
-
-import javax.swing.Icon;
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
+import java.awt.datatransfer.DataFlavor;
+import javax.swing.Icon;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * File system tree node representing a GeoServer style.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerStyleNode extends DefaultMutableTreeNode implements NodeInterface {
@@ -56,8 +54,8 @@ public class GeoServerStyleNode extends DefaultMutableTreeNode implements NodeIn
      * @param connectData the connect data
      * @param style the style
      */
-    public GeoServerStyleNode(FileSystemInterface handler, GeoServerConnection connectData,
-            StyleWrapper style) {
+    public GeoServerStyleNode(
+            FileSystemInterface handler, GeoServerConnection connectData, StyleWrapper style) {
         super(style.getStyle());
         this.handler = handler;
         this.style = style;
@@ -84,7 +82,7 @@ public class GeoServerStyleNode extends DefaultMutableTreeNode implements NodeIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
@@ -94,7 +92,7 @@ public class GeoServerStyleNode extends DefaultMutableTreeNode implements NodeIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override

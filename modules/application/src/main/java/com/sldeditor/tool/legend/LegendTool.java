@@ -19,22 +19,6 @@
 
 package com.sldeditor.tool.legend;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-
-import org.apache.log4j.Logger;
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDUtils;
@@ -49,11 +33,24 @@ import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.ToolPanel;
 import com.sldeditor.tool.html.ExportHTML;
 import com.sldeditor.ui.legend.LegendManager;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import org.apache.log4j.Logger;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * Groups all the legend tools together.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class LegendTool implements ToolInterface {
@@ -83,73 +80,77 @@ public class LegendTool implements ToolInterface {
     @SuppressWarnings("unused")
     private DataSourceAttributeListInterface attributeData = new DataSourceAttributeList();
 
-    /**
-     * Instantiates a new legend tool.
-     */
+    /** Instantiates a new legend tool. */
     public LegendTool() {
         super();
 
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         legendPanel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) legendPanel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        legendPanel.setBorder(BorderFactory
-                .createTitledBorder(Localisation.getString(LegendTool.class, "LegendTool.legend")));
+        legendPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        Localisation.getString(LegendTool.class, "LegendTool.legend")));
 
-        saveAllLegend = new ToolButton(
-                Localisation.getString(LegendTool.class, "LegendTool.legend"),
-                "tool/savealllegend.png");
+        saveAllLegend =
+                new ToolButton(
+                        Localisation.getString(LegendTool.class, "LegendTool.legend"),
+                        "tool/savealllegend.png");
         legendPanel.add(saveAllLegend);
         saveAllLegend.setEnabled(false);
-        saveAllLegend.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser chooser = new JFileChooser();
-                File currentDir = new File(".");
-                chooser.setCurrentDirectory(currentDir);
-                chooser.setDialogTitle(
-                        Localisation.getString(LegendTool.class, "LegendTool.destinationFolder"));
-                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        saveAllLegend.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JFileChooser chooser = new JFileChooser();
+                        File currentDir = new File(".");
+                        chooser.setCurrentDirectory(currentDir);
+                        chooser.setDialogTitle(
+                                Localisation.getString(
+                                        LegendTool.class, "LegendTool.destinationFolder"));
+                        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-                // Disable the "All files" option.
-                chooser.setAcceptAllFileFilterUsed(false);
+                        // Disable the "All files" option.
+                        chooser.setAcceptAllFileFilterUsed(false);
 
-                if (chooser.showSaveDialog(saveAllLegend) == JFileChooser.APPROVE_OPTION) {
-                    saveAllLegendToFolder(chooser.getSelectedFile());
-                }
-            }
-        });
+                        if (chooser.showSaveDialog(saveAllLegend) == JFileChooser.APPROVE_OPTION) {
+                            saveAllLegendToFolder(chooser.getSelectedFile());
+                        }
+                    }
+                });
 
-        exportAllHTML = new ToolButton(Localisation.getString(LegendTool.class, "LegendTool.html"),
-                "tool/legendhtml.png");
+        exportAllHTML =
+                new ToolButton(
+                        Localisation.getString(LegendTool.class, "LegendTool.html"),
+                        "tool/legendhtml.png");
         legendPanel.add(exportAllHTML);
         exportAllHTML.setEnabled(false);
-        exportAllHTML.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser chooser = new JFileChooser();
-                chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.setDialogTitle(Localisation.getString(LegendTool.class,
-                        "LegendTool.htmlDestinationFolder"));
-                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                //
-                // Disable the "All files" option.
-                //
-                chooser.setAcceptAllFileFilterUsed(false);
-                //
-                if (chooser.showSaveDialog(exportAllHTML) == JFileChooser.APPROVE_OPTION) {
+        exportAllHTML.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JFileChooser chooser = new JFileChooser();
+                        chooser.setCurrentDirectory(new java.io.File("."));
+                        chooser.setDialogTitle(
+                                Localisation.getString(
+                                        LegendTool.class, "LegendTool.htmlDestinationFolder"));
+                        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                        //
+                        // Disable the "All files" option.
+                        //
+                        chooser.setAcceptAllFileFilterUsed(false);
+                        //
+                        if (chooser.showSaveDialog(exportAllHTML) == JFileChooser.APPROVE_OPTION) {
 
-                    saveAllHTMLToFolder(chooser.getSelectedFile());
-                }
-            }
-        });
+                            saveAllHTMLToFolder(chooser.getSelectedFile());
+                        }
+                    }
+                });
         legendPanel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
@@ -203,20 +204,21 @@ public class LegendTool implements ToolInterface {
 
                 List<String> filenameList = new ArrayList<String>();
 
-                LegendManager.getInstance().saveLegendImage(sld, destinationFolder, layerName,
-                        heading, filename, filenameList);
+                LegendManager.getInstance()
+                        .saveLegendImage(
+                                sld, destinationFolder, layerName, heading, filename, filenameList);
             }
         }
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList,
-            List<SLDDataInterface> sldDataList) {
+    public void setSelectedItems(
+            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
         this.sldDataList = sldDataList;
 
         if (saveAllLegend != null) {
@@ -230,7 +232,7 @@ public class LegendTool implements ToolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#getToolName()
      */
     @Override
@@ -240,11 +242,13 @@ public class LegendTool implements ToolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#supports(java.util.List, java.util.List)
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+    public boolean supports(
+            List<Class<?>> uniqueNodeTypeList,
+            List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
         for (NodeInterface node : nodeTypeList) {
             if (node instanceof FileTreeNode) {

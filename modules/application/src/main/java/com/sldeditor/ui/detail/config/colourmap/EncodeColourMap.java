@@ -19,12 +19,10 @@
 
 package com.sldeditor.ui.detail.config.colourmap;
 
+import com.sldeditor.common.xml.ui.XMLColourMapEntry;
 import java.util.List;
-
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntry;
-
-import com.sldeditor.common.xml.ui.XMLColourMapEntry;
 
 /**
  * The Class EncodeColourMap.
@@ -85,5 +83,4 @@ public class EncodeColourMap {
 
         return sb.toString();
     }
-
 }

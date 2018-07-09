@@ -18,7 +18,7 @@
  */
 /**
  * GeoServer client manager.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.extension.filesystem.geoserver.client;

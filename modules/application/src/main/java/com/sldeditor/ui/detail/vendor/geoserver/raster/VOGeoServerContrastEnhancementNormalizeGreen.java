@@ -19,16 +19,15 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ContrastEnhancement;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.SelectedChannelType;
-
-import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 
 /**
  * The Class VOGeoServerContrastEnhancementNormalizeGreen.
@@ -51,22 +50,26 @@ public class VOGeoServerContrastEnhancementNormalizeGreen
      * @param panelId the panel id
      * @param parentPanel the parent panel
      */
-    public VOGeoServerContrastEnhancementNormalizeGreen(Class<?> panelId,
-            RasterSymbolizerDetails parentPanel) {
-        super(panelId, PANEL_CONFIG, parentPanel, FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_GREEN,
+    public VOGeoServerContrastEnhancementNormalizeGreen(
+            Class<?> panelId, RasterSymbolizerDetails parentPanel) {
+        super(
+                panelId,
+                PANEL_CONFIG,
+                parentPanel,
+                FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_GREEN,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MIN_VALUE_GREEN,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MAX_VALUE_GREEN);
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(com.sldeditor.common.xml.ui.
      * GroupIdEnum, org.geotools.styling.ChannelSelection)
      */
     @Override
-    protected ContrastEnhancement getContrastEnhancement(GroupIdEnum id,
-            ChannelSelection channelSelection) {
+    protected ContrastEnhancement getContrastEnhancement(
+            GroupIdEnum id, ChannelSelection channelSelection) {
         if (id == GroupIdEnum.RASTER_RGB_CHANNEL_OPTION) {
             SelectedChannelType[] channelTypes = channelSelection.getRGBChannels();
 
@@ -77,7 +80,7 @@ public class VOGeoServerContrastEnhancementNormalizeGreen
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(org.geotools.styling.
      * RasterSymbolizer)
      */
@@ -111,7 +114,7 @@ public class VOGeoServerContrastEnhancementNormalizeGreen
     @Override
     public void populate(FeatureTypeStyle featureTypeStyle) {
         // TODO Auto-generated method stub
-        
+
     }
 
     /* (non-Javadoc)
@@ -120,6 +123,6 @@ public class VOGeoServerContrastEnhancementNormalizeGreen
     @Override
     public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
         // TODO Auto-generated method stub
-        
+
     }
 }

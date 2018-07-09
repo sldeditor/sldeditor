@@ -13,7 +13,6 @@ package com.sldeditor.common.output;
  * @author Robert Ward (SCISYS)
  */
 public enum SLDOutputFormatEnum {
-
     SLD,
     YSLD,
     MAPBOX

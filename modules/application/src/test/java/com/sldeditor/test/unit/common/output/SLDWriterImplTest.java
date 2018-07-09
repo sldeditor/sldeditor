@@ -22,26 +22,27 @@ package com.sldeditor.test.unit.common.output;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Test;
-
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.output.impl.SLDWriterImpl;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.junit.Test;
 
 /**
  * The unit test for SLDWriterImpl.
- * 
+ *
  * <p>{@link com.sldeditor.common.output.impl.SLDWriterImpl}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDWriterImplTest {
 
-    private String expectedSld = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><StyledLayerDescriptor version=\"1.0.0\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns=\"http://www.opengis.net/sld\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">  <NamedLayer><Name>Simple Point</Name><UserStyle><Title>SLD Cook Book: Simple Point</Title><FeatureTypeStyle><Rule><PointSymbolizer><Graphic><Mark><WellKnownName>circle</WellKnownName><Fill><CssParameter name=\"fill\">#FF0000</CssParameter></Fill></Mark><Size>6</Size></Graphic></PointSymbolizer></Rule></FeatureTypeStyle></UserStyle></NamedLayer></StyledLayerDescriptor>";
+    private String expectedSld =
+            "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><StyledLayerDescriptor version=\"1.0.0\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns=\"http://www.opengis.net/sld\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">  <NamedLayer><Name>Simple Point</Name><UserStyle><Title>SLD Cook Book: Simple Point</Title><FeatureTypeStyle><Rule><PointSymbolizer><Graphic><Mark><WellKnownName>circle</WellKnownName><Fill><CssParameter name=\"fill\">#FF0000</CssParameter></Fill></Mark><Size>6</Size></Graphic></PointSymbolizer></Rule></FeatureTypeStyle></UserStyle></NamedLayer></StyledLayerDescriptor>";
 
     /**
-     * Test method for {@link com.sldeditor.common.output.impl.SLDWriterImpl#encodeSLD(org.geotools.styling.StyledLayerDescriptor)}.
+     * Test method for {@link
+     * com.sldeditor.common.output.impl.SLDWriterImpl#encodeSLD(org.geotools.styling.StyledLayerDescriptor)}.
      */
     @Test
     public void testEncodeSLD() {

@@ -21,7 +21,7 @@ package com.sldeditor.datasource.attribute;
 
 /**
  * Class that encapsulates data about data source attributes : name, type, value.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DataSourceAttributeData implements Cloneable {
@@ -50,7 +50,7 @@ public class DataSourceAttributeData implements Cloneable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#clone()
      */
     @Override
@@ -128,7 +128,7 @@ public class DataSourceAttributeData implements Cloneable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -143,7 +143,7 @@ public class DataSourceAttributeData implements Cloneable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

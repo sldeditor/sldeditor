@@ -19,19 +19,17 @@
 
 package com.sldeditor.filter.v2.function.property;
 
-import java.util.List;
-
-import org.geotools.filter.IsLessThenOrEqualToImpl;
-import org.geotools.filter.LiteralExpressionImpl;
-import org.opengis.filter.Filter;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import java.util.List;
+import org.geotools.filter.IsLessThenOrEqualToImpl;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class IsLessThan.
@@ -40,15 +38,11 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsLessThanEqualTo extends FilterBase implements FilterConfigInterface {
 
-    /**
-     * The Class IsLessThanOrEqualToExtended.
-     */
+    /** The Class IsLessThanOrEqualToExtended. */
     public class IsLessThanOrEqualToExtended extends IsLessThenOrEqualToImpl
             implements FilterExtendedInterface {
 
-        /**
-         * Instantiates a new checks if is less than or equal to extended.
-         */
+        /** Instantiates a new checks if is less than or equal to extended. */
         public IsLessThanOrEqualToExtended() {
             super(null, null);
         }
@@ -60,14 +54,14 @@ public class IsLessThanEqualTo extends FilterBase implements FilterConfigInterfa
          * @param expression2 the expression 2
          * @param matchCase the match case
          */
-        public IsLessThanOrEqualToExtended(Expression expression1, Expression expression2,
-                boolean matchCase) {
+        public IsLessThanOrEqualToExtended(
+                Expression expression1, Expression expression2, boolean matchCase) {
             super(expression1, expression2, matchCase);
         }
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -76,9 +70,7 @@ public class IsLessThanEqualTo extends FilterBase implements FilterConfigInterfa
         }
     }
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public IsLessThanEqualTo(String category) {
         super(category);
     }
@@ -136,8 +128,11 @@ public class IsLessThanEqualTo extends FilterBase implements FilterConfigInterfa
         } else {
             LiteralExpressionImpl matchCase = (LiteralExpressionImpl) parameterList.get(2);
 
-            filter = new IsLessThanOrEqualToExtended(parameterList.get(0), parameterList.get(1),
-                    (Boolean) matchCase.getValue());
+            filter =
+                    new IsLessThanOrEqualToExtended(
+                            parameterList.get(0),
+                            parameterList.get(1),
+                            (Boolean) matchCase.getValue());
         }
 
         return filter;

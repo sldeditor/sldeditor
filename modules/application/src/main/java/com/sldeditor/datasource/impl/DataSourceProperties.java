@@ -19,25 +19,23 @@
 
 package com.sldeditor.datasource.impl;
 
+import com.sldeditor.common.DataSourceConnectorInterface;
+import com.sldeditor.common.DataSourcePropertiesInterface;
+import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.sldeditor.common.DataSourceConnectorInterface;
-import com.sldeditor.common.DataSourcePropertiesInterface;
-import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
-
 /**
  * Class that encapsulates the properties of a data source, includes data source connection details.
- * 
+ *
  * <p>Can read and write it self to a string.
- * 
+ *
  * <p>Passwords are encoded.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DataSourceProperties implements DataSourcePropertiesInterface {
@@ -112,9 +110,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
         return dsc;
     }
 
-    /**
-     * Populate.
-     */
+    /** Populate. */
     @Override
     public void populate() {
         if (dsc != null) {

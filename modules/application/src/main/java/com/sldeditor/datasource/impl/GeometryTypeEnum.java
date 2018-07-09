@@ -21,7 +21,7 @@ package com.sldeditor.datasource.impl;
 
 /**
  * The Enum GeometryTypeEnum, represents the geometry type of the loaded symbol.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public enum GeometryTypeEnum {
@@ -37,7 +37,7 @@ public enum GeometryTypeEnum {
 
     /** A polygon. */
     POLYGON,
-    
+
     /** A raster. */
     RASTER
 }

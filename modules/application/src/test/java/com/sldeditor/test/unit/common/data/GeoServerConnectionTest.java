@@ -22,16 +22,14 @@ package com.sldeditor.test.unit.common.data;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.data.GeoServerConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import org.junit.Test;
-
-import com.sldeditor.common.data.GeoServerConnection;
 
 /**
  * The unit test for GeoServerConnection.
- * 
+ *
  * <p>{@link com.sldeditor.common.data.GeoServerConnection}
  *
  * @author Robert Ward (SCISYS)
@@ -51,8 +49,8 @@ public class GeoServerConnectionTest {
     private URL url = null;
 
     /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#getUrl()}.
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#setUrl(java.net.URL)}.
+     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#getUrl()}. Test method
+     * for {@link com.sldeditor.common.data.GeoServerConnection#setUrl(java.net.URL)}.
      */
     @Test
     public void testGetUrl() {
@@ -71,8 +69,9 @@ public class GeoServerConnectionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#getUserName()}.
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#setUserName(java.lang.String)}.
+     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#getUserName()}. Test
+     * method for {@link
+     * com.sldeditor.common.data.GeoServerConnection#setUserName(java.lang.String)}.
      */
     @Test
     public void testGetUserName() {
@@ -84,8 +83,9 @@ public class GeoServerConnectionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#getPassword()}.
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#setPassword(java.lang.String)}.
+     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#getPassword()}. Test
+     * method for {@link
+     * com.sldeditor.common.data.GeoServerConnection#setPassword(java.lang.String)}.
      */
     @Test
     public void testGetPassword() {
@@ -98,7 +98,8 @@ public class GeoServerConnectionTest {
 
     /**
      * Test method for {@link com.sldeditor.common.data.GeoServerConnection#getConnectionName()}.
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#setConnectionName(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.common.data.GeoServerConnection#setConnectionName(java.lang.String)}.
      */
     @Test
     public void testGetConnectionName() {
@@ -110,13 +111,14 @@ public class GeoServerConnectionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#compareTo(com.sldeditor.common.data.GeoServerConnection)}.
+     * Test method for {@link
+     * com.sldeditor.common.data.GeoServerConnection#compareTo(com.sldeditor.common.data.GeoServerConnection)}.
      */
     @Test
     public void testCompareTo() {
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         GeoServerConnection connection1 = getTestData();
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
 
         GeoServerConnection connection2 = new GeoServerConnection();
         connection2.setConnectionName(connectionName);
@@ -141,7 +143,8 @@ public class GeoServerConnectionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#update(com.sldeditor.common.data.GeoServerConnection)}.
+     * Test method for {@link
+     * com.sldeditor.common.data.GeoServerConnection#update(com.sldeditor.common.data.GeoServerConnection)}.
      */
     @Test
     public void testUpdate() {
@@ -156,9 +159,7 @@ public class GeoServerConnectionTest {
         assertEquals(connection1.getUrl().toExternalForm(), connection2.getUrl().toExternalForm());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#duplicate()}.
-     */
+    /** Test method for {@link com.sldeditor.common.data.GeoServerConnection#duplicate()}. */
     @Test
     public void testDuplicate() {
         GeoServerConnection connection1 = getTestData();
@@ -193,8 +194,9 @@ public class GeoServerConnectionTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#encodeAsString()}.
-     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#GeoServerConnection(java.lang.String)}.
+     * Test method for {@link com.sldeditor.common.data.GeoServerConnection#encodeAsString()}. Test
+     * method for {@link
+     * com.sldeditor.common.data.GeoServerConnection#GeoServerConnection(java.lang.String)}.
      */
     @Test
     public void testEncodeAsString() {
@@ -209,5 +211,4 @@ public class GeoServerConnectionTest {
         assertEquals(connection1.getUserName(), connection2.getUserName());
         assertEquals(connection1.getUrl().toExternalForm(), connection2.getUrl().toExternalForm());
     }
-
 }

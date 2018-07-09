@@ -24,27 +24,25 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.Test;
-
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.Test;
 
 /**
  * Unit test for DataSourceConnectorEmpty class.
- * 
- * <p>{@link com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DataSourceConnectorEmptyTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#getDisplayName()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#getDisplayName()}.
      */
     @Test
     public void testGetDisplayName() {
@@ -54,7 +52,8 @@ public class DataSourceConnectorEmptyTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#getPanel()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#getPanel()}.
      */
     @Test
     public void testGetPanel() {
@@ -64,21 +63,23 @@ public class DataSourceConnectorEmptyTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#accept(java.util.Map)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#accept(java.util.Map)}.
      */
     @Test
     public void testAccept() {
         DataSourceConnectorEmpty dsc = new DataSourceConnectorEmpty();
 
-        assertNull(dsc.accept((String)null));
-        assertFalse(dsc.accept((Map<String, Object>)null));
+        assertNull(dsc.accept((String) null));
+        assertFalse(dsc.accept((Map<String, Object>) null));
 
         Map<String, Object> propertyMap = new HashMap<String, Object>();
         assertFalse(dsc.accept(propertyMap));
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#getDataSourceProperties(java.util.Map)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#getDataSourceProperties(java.util.Map)}.
      */
     @Test
     public void testGetDataSourceProperties() {
@@ -91,7 +92,8 @@ public class DataSourceConnectorEmptyTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#populate(com.sldeditor.DataSourcePropertiesInterface)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#populate(com.sldeditor.DataSourcePropertiesInterface)}.
      */
     @Test
     public void testPopulate() {
@@ -102,7 +104,8 @@ public class DataSourceConnectorEmptyTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#isEmpty()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#isEmpty()}.
      */
     @Test
     public void testIsEmpty() {
@@ -112,19 +115,19 @@ public class DataSourceConnectorEmptyTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#getConnectionProperties(com.sldeditor.DataSourcePropertiesInterface)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty#getConnectionProperties(com.sldeditor.DataSourcePropertiesInterface)}.
      */
     @Test
     public void testGetConnectionProperties() {
         DataSourceConnectorEmpty dsc = new DataSourceConnectorEmpty();
 
         assertNull(dsc.getConnectionProperties(null));
-        
+
         DataSourcePropertiesInterface noDataSource = DataSourceConnectorFactory.getNoDataSource();
-        
+
         Map<String, String> expectedPropertyMap = new HashMap<String, String>();
 
         assertEquals(expectedPropertyMap, dsc.getConnectionProperties(noDataSource));
     }
-
 }

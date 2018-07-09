@@ -21,23 +21,19 @@ package com.sldeditor.test.unit.datasource.example.impl;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.datasource.example.impl.ExamplePointImpl;
+import org.junit.Test;
 
 /**
  * Unit test for ExamplePointImpl class.
- * 
- * <p>{@link com.sldeditor.datasource.example.impl.ExamplePointImpl}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.example.impl.ExamplePointImpl}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class ExamplePointImplTest {
 
-    /**
-     * Test method for {@link com.sldeditor.datasource.example.impl.ExamplePointImpl#getLine()}.
-     */
+    /** Test method for {@link com.sldeditor.datasource.example.impl.ExamplePointImpl#getLine()}. */
     @Test
     public void testExample() {
         ExamplePointImpl example = new ExamplePointImpl();

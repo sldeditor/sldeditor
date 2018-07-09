@@ -19,16 +19,14 @@
 
 package com.sldeditor.common.vendoroption.selection;
 
+import com.sldeditor.common.vendoroption.VersionData;
 import java.awt.Component;
-
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.sldeditor.common.vendoroption.VersionData;
-
 /**
  * Table cell editor that allows the viewing of vendor option data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VersionCellRenderer extends DefaultTableCellRenderer {
@@ -38,11 +36,13 @@ public class VersionCellRenderer extends DefaultTableCellRenderer {
 
     /**
      * (non-Javadoc)
-     * 
-     * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+     *
+     * @see
+     *     javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(javax.swing.JTable,
+     *     java.lang.Object, boolean, boolean, int, int)
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-            boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(
+            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         if (value instanceof VersionData) {
             VersionData versonData = (VersionData) value;
             setText(versonData.getVersionString());
@@ -56,5 +56,4 @@ public class VersionCellRenderer extends DefaultTableCellRenderer {
 
         return this;
     }
-
 }

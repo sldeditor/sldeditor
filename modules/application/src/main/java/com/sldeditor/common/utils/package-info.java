@@ -19,7 +19,7 @@
 
 /**
  * Utility classes.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.utils;

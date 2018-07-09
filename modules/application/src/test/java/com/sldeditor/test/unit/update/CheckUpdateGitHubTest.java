@@ -25,33 +25,27 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.update.CheckUpdateGitHub;
+import com.sldeditor.update.UpdateData;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.sldeditor.update.CheckUpdateGitHub;
-import com.sldeditor.update.UpdateData;
-
 /**
  * The unit test for CheckUpdateGitHub.
- * 
+ *
  * <p>{@link com.sldeditor.update.CheckUpdateGitHub}
  *
  * @author Robert Ward (SCISYS)
  */
 public class CheckUpdateGitHubTest {
 
-    /**
-     * The Class TestCheckUpdateGitHub.
-     */
+    /** The Class TestCheckUpdateGitHub. */
     class TestCheckUpdateGitHub extends CheckUpdateGitHub {
 
-        /**
-         * Instantiates a new test check update git hub.
-         */
+        /** Instantiates a new test check update git hub. */
         TestCheckUpdateGitHub() {
             super();
         }
@@ -77,9 +71,7 @@ public class CheckUpdateGitHubTest {
         }
     }
 
-    /**
-     * Test method for {@link com.sldeditor.update.CheckUpdateGitHub#getLatest()}.
-     */
+    /** Test method for {@link com.sldeditor.update.CheckUpdateGitHub#getLatest()}. */
     @Ignore
     @Test
     public void testGetLatest() {
@@ -88,16 +80,16 @@ public class CheckUpdateGitHubTest {
         assertNull(obj.getLatest());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.update.CheckUpdateGitHub#check(java.lang.String)}.
-     */
+    /** Test method for {@link com.sldeditor.update.CheckUpdateGitHub#check(java.lang.String)}. */
     @Test
     public void testCheck() {
 
         String testFile = "/update/github.json";
 
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(CheckUpdateGitHubTest.class.getResourceAsStream(testFile)));
+        BufferedReader reader =
+                new BufferedReader(
+                        new InputStreamReader(
+                                CheckUpdateGitHubTest.class.getResourceAsStream(testFile)));
         StringBuilder out = new StringBuilder();
         String line;
         try {
@@ -117,18 +109,14 @@ public class CheckUpdateGitHubTest {
         assertNotNull(updateData.getDescription());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.update.CheckUpdateGitHub#getDownloadURL()}.
-     */
+    /** Test method for {@link com.sldeditor.update.CheckUpdateGitHub#getDownloadURL()}. */
     @Test
     public void testGetDownloadURL() {
         CheckUpdateGitHub obj = new CheckUpdateGitHub();
         assertNotNull(obj.getDownloadURL());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.update.CheckUpdateGitHub#readDataFromURL(String)}.
-     */
+    /** Test method for {@link com.sldeditor.update.CheckUpdateGitHub#readDataFromURL(String)}. */
     @Test
     public void testReadDataFromURL() {
         TestCheckUpdateGitHub obj = new TestCheckUpdateGitHub();

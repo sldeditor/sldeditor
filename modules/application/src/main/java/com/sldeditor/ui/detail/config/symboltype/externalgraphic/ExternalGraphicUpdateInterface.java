@@ -22,13 +22,11 @@ package com.sldeditor.ui.detail.config.symboltype.externalgraphic;
 /**
  * The Interface ExternalGraphicUpdateInterface allows classes to register for notifications when
  * external graphic field values are updated.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface ExternalGraphicUpdateInterface {
 
-    /**
-     * Value updated.
-     */
+    /** Value updated. */
     void externalGraphicValueUpdated();
 }

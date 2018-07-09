@@ -19,21 +19,19 @@
 
 package com.sldeditor.datasource.extension.filesystem.node.geoserver;
 
-import java.awt.datatransfer.DataFlavor;
-import java.net.URL;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
+import java.awt.datatransfer.DataFlavor;
+import java.net.URL;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * File system tree node representing a GeoServer workspace.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerWorkspaceNode extends DefaultMutableTreeNode implements NodeInterface {
@@ -67,8 +65,11 @@ public class GeoServerWorkspaceNode extends DefaultMutableTreeNode implements No
      * @param workspaceName the workspace name
      * @param isStyle the is style
      */
-    public GeoServerWorkspaceNode(FileSystemInterface handler, GeoServerConnection connection,
-            String workspaceName, boolean isStyle) {
+    public GeoServerWorkspaceNode(
+            FileSystemInterface handler,
+            GeoServerConnection connection,
+            String workspaceName,
+            boolean isStyle) {
         super(workspaceName);
 
         this.handler = handler;
@@ -84,7 +85,7 @@ public class GeoServerWorkspaceNode extends DefaultMutableTreeNode implements No
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
@@ -99,7 +100,7 @@ public class GeoServerWorkspaceNode extends DefaultMutableTreeNode implements No
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override

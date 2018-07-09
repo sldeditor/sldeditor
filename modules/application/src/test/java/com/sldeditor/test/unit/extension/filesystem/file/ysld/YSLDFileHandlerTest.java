@@ -25,6 +25,12 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler;
+import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,28 +38,20 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.Test;
-
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.data.SLDData;
-import com.sldeditor.common.data.StyleWrapper;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
-import com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler;
-import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
 
 /**
  * Unit test for YSLDFileHandler class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.file.sld.YSLDFileHandler}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.file.sld.YSLDFileHandler}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class YSLDFileHandlerTest {
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#getFileExtensionList()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#getFileExtensionList()}.
      */
     @Test
     public void testGetFileExtension() {
@@ -61,7 +59,10 @@ public class YSLDFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface, javax.swing.tree.DefaultTreeModel, com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface,
+     * javax.swing.tree.DefaultTreeModel,
+     * com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
      */
     @Test
     public void testPopulate() {
@@ -69,8 +70,8 @@ public class YSLDFileHandlerTest {
     }
 
     /**
-     * Single file
-     * Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * Single file Test method for {@link
+     * com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContentsFile() {
@@ -119,8 +120,8 @@ public class YSLDFileHandlerTest {
     }
 
     /**
-     * Is data source
-     * Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#isDataSource()}.
+     * Is data source Test method for {@link
+     * com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#isDataSource()}.
      */
     @Test
     public void testIsDataSource() {
@@ -129,8 +130,9 @@ public class YSLDFileHandlerTest {
 
     /**
      * Check SLD name
-     * 
-     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     *
+     * <p>Test method for {@link
+     * com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDName() {
@@ -145,8 +147,9 @@ public class YSLDFileHandlerTest {
 
     /**
      * Supply a folder name and retrieve all the ysld files in it
-     * 
-     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     *
+     * <p>Test method for {@link
+     * com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContentsFolder() {

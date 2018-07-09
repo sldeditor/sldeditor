@@ -19,8 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.extshape;
 
-import java.util.List;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
@@ -28,6 +26,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
+import java.util.List;
 
 /**
  * The Class FieldConfigMarkerExtShape.
@@ -37,7 +36,7 @@ import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
 public class FieldConfigMarkerExtShape extends FieldConfigMarker {
 
     /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE. */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = 
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE =
             "symbol/marker/extshape/SymbolTypeFieldState_ExtShape.xml";
 
     /** The vendor option info. */
@@ -51,21 +50,27 @@ public class FieldConfigMarkerExtShape extends FieldConfigMarker {
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigMarkerExtShape(FieldConfigCommonData commonData,
-            ColourFieldConfig fillFieldConfig, ColourFieldConfig strokeFieldConfig,
+    public FieldConfigMarkerExtShape(
+            FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField) {
-        super(SYMBOLTYPE_FIELD_STATE_RESOURCE, commonData, fillFieldConfig, strokeFieldConfig,
+        super(
+                SYMBOLTYPE_FIELD_STATE_RESOURCE,
+                commonData,
+                fillFieldConfig,
+                strokeFieldConfig,
                 symbolSelectionField);
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
         vendorOptionsPresentList.add(voPresent);
@@ -73,17 +78,20 @@ public class FieldConfigMarkerExtShape extends FieldConfigMarker {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
         if (vendorOptionInfo == null) {
-            vendorOptionInfo = new VendorOptionInfo("extshape://", getVendorOption(),
-                    Localisation.getString(VOGeoServerExtShapeSymbol.class,
-                            "VOGeoServerExtShapeSymbol.description"));
+            vendorOptionInfo =
+                    new VendorOptionInfo(
+                            "extshape://",
+                            getVendorOption(),
+                            Localisation.getString(
+                                    VOGeoServerExtShapeSymbol.class,
+                                    "VOGeoServerExtShapeSymbol.description"));
         }
         return vendorOptionInfo;
     }
-
 }

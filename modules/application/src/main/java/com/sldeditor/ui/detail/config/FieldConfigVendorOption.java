@@ -19,17 +19,14 @@
 
 package com.sldeditor.ui.detail.config;
 
-import java.util.List;
-
-import javax.swing.Box;
-
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
+import java.util.List;
+import javax.swing.Box;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class FieldConfigVendorOption.
@@ -57,8 +54,8 @@ public class FieldConfigVendorOption extends FieldConfigBase
      * @param commonData the common data
      * @param veList the ve list
      */
-    public FieldConfigVendorOption(FieldConfigCommonData commonData,
-            List<VendorOptionInterface> veList) {
+    public FieldConfigVendorOption(
+            FieldConfigCommonData commonData, List<VendorOptionInterface> veList) {
         super(commonData);
 
         this.veList = veList;
@@ -66,12 +63,10 @@ public class FieldConfigVendorOption extends FieldConfigBase
         VendorOptionManager.getInstance().addVendorOptionListener(this);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -94,7 +89,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(
      * java.util.List)
@@ -117,8 +112,10 @@ public class FieldConfigVendorOption extends FieldConfigBase
     private void updateVendorOptionPanels(List<VersionData> vendorOptionVersionsList) {
         if (veList != null) {
             for (VendorOptionInterface vendorOption : veList) {
-                boolean displayVendorOption = VendorOptionManager.getInstance()
-                        .isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
+                boolean displayVendorOption =
+                        VendorOptionManager.getInstance()
+                                .isAllowed(
+                                        vendorOptionVersionsList, vendorOption.getVendorOption());
 
                 BasePanel extensionPanel = vendorOption.getPanel();
                 if (extensionPanel != null) {
@@ -142,7 +139,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
@@ -153,7 +150,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigValuePopulateInterface#getStringValue()
      */
     @Override
@@ -163,7 +160,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -173,7 +170,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setVisible(boolean)
      */
     @Override
@@ -183,7 +180,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -193,7 +190,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -203,7 +200,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -213,7 +210,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -223,7 +220,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.config.FieldConfigBase#createCopy(com.sldeditor.ui.detail.config.
      * FieldConfigBase)
@@ -238,5 +235,4 @@ public class FieldConfigVendorOption extends FieldConfigBase
         }
         return copy;
     }
-
 }

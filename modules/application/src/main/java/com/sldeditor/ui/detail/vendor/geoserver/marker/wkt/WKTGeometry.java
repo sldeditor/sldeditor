@@ -19,14 +19,13 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
+import com.sldeditor.common.localisation.Localisation;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sldeditor.common.localisation.Localisation;
-
 /**
  * Class that represents a WKT geometry.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class WKTGeometry {
@@ -208,7 +207,8 @@ public class WKTGeometry {
      */
     public String getSegmentName(int index) {
         if (geometryType.canHaveMultipleShapes()) {
-            return String.format("%s %d",
+            return String.format(
+                    "%s %d",
                     Localisation.getString(WKTDialog.class, "WKTDialog.partShape"), index + 1);
         } else {
             return String.format("%s %d", geometryType.getListItem(), index + 1);
@@ -226,7 +226,7 @@ public class WKTGeometry {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -241,7 +241,7 @@ public class WKTGeometry {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -275,5 +275,4 @@ public class WKTGeometry {
         }
         return true;
     }
-
 }

@@ -19,16 +19,14 @@
 
 package com.sldeditor.tool.layerstyle;
 
+import com.sldeditor.common.data.GeoServerLayer;
+import com.sldeditor.common.data.StyleWrapper;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumnModel;
-
-import com.sldeditor.common.data.GeoServerLayer;
-import com.sldeditor.common.data.StyleWrapper;
 
 /**
  * The Class LayerStyleModel.
@@ -47,7 +45,7 @@ public class LayerStyleModel extends AbstractTableModel {
     private static final int COL_STYLE = 2;
 
     /** The column headings. */
-    private String[] columnHeadings = { "Workspace", "Layer", "Style" };
+    private String[] columnHeadings = {"Workspace", "Layer", "Style"};
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -109,14 +107,14 @@ public class LayerStyleModel extends AbstractTableModel {
             StyleWrapper style = layer.getStyle();
 
             switch (columnIndex) {
-            case COL_WORKSPACE:
-                return layer.getLayerWorkspace();
-            case COL_LAYER:
-                return layer.getLayerName();
-            case COL_STYLE:
-                return getStyleName(style);
-            default:
-                break;
+                case COL_WORKSPACE:
+                    return layer.getLayerWorkspace();
+                case COL_LAYER:
+                    return layer.getLayerName();
+                case COL_STYLE:
+                    return getStyleName(style);
+                default:
+                    break;
             }
         }
         return null;

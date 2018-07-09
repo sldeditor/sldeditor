@@ -23,24 +23,22 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.awt.datatransfer.DataFlavor;
-
-import org.junit.Test;
-
 import com.sldeditor.datasource.extension.filesystem.dataflavour.SLDDataFlavour;
+import java.awt.datatransfer.DataFlavor;
+import org.junit.Test;
 
 /**
  * Unit test for SLDDataFlavour class.
- * 
- * <p>{@link com.sldeditor.datasource.extension.filesystem.dataflavour.SLDDataFlavour}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.extension.filesystem.dataflavour.SLDDataFlavour}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class SLDDataFlavourTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.dataflavour.SLDDataFlavour#SLDDataFlavour()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.dataflavour.SLDDataFlavour#SLDDataFlavour()}.
      */
     @Test
     public void testSLDDataFlavour() {
@@ -85,6 +83,4 @@ public class SLDDataFlavourTest {
         assertTrue(actual3a.equals(actual3));
         assertFalse(actual3b.equals(actual3));
     }
-
-
 }

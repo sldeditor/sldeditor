@@ -23,20 +23,18 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.tool.batchupdatefont.MultipleFont;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Font;
 import org.geotools.styling.StyleFactoryImpl;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 
-import com.sldeditor.tool.batchupdatefont.MultipleFont;
-
 /**
  * The unit test for MultipleFont.
- * 
+ *
  * <p>{@link com.sldeditor.tool.batchupdatefont.MultipleFont}
  *
  * @author Robert Ward (SCISYS)
@@ -44,7 +42,8 @@ import com.sldeditor.tool.batchupdatefont.MultipleFont;
 public class MultipleFontTest {
 
     /**
-     * Test method for {@link com.sldeditor.tool.batchupdatefont.MultipleFont#parseList(java.util.List)}. Test method for
+     * Test method for {@link
+     * com.sldeditor.tool.batchupdatefont.MultipleFont#parseList(java.util.List)}. Test method for
      * {@link com.sldeditor.tool.batchupdatefont.MultipleFont#getFont()}.
      */
     @Test
@@ -63,9 +62,12 @@ public class MultipleFontTest {
         String originalFontStyle = "normal";
         String originalFontWeight = "normal";
         int originalFontSize = 24;
-        Font font = styleFactory.createFont(ff.literal(originalFontname),
-                ff.literal(originalFontStyle), ff.literal(originalFontWeight),
-                ff.literal(originalFontSize));
+        Font font =
+                styleFactory.createFont(
+                        ff.literal(originalFontname),
+                        ff.literal(originalFontStyle),
+                        ff.literal(originalFontWeight),
+                        ff.literal(originalFontSize));
 
         entries.add(font);
 
@@ -82,8 +84,12 @@ public class MultipleFontTest {
         String newFontWeight = "bold";
         int newFontSize = 25;
 
-        Font font2 = styleFactory.createFont(ff.literal(newFontname), ff.literal(newFontStyle),
-                ff.literal(newFontWeight), ff.literal(newFontSize));
+        Font font2 =
+                styleFactory.createFont(
+                        ff.literal(newFontname),
+                        ff.literal(newFontStyle),
+                        ff.literal(newFontWeight),
+                        ff.literal(newFontSize));
 
         entries.add(font2);
         testObj.parseList(entries);
@@ -96,9 +102,12 @@ public class MultipleFontTest {
         // Change family, style, weight and size
         entries.clear();
         entries.add(font);
-        Font font3 = styleFactory.createFont(ff.literal(originalFontname),
-                ff.literal(originalFontStyle), ff.literal(originalFontWeight),
-                ff.literal(originalFontSize));
+        Font font3 =
+                styleFactory.createFont(
+                        ff.literal(originalFontname),
+                        ff.literal(originalFontStyle),
+                        ff.literal(originalFontWeight),
+                        ff.literal(originalFontSize));
         entries.add(font3);
         testObj.parseList(entries);
         actualFont = testObj.getFont();
@@ -107,5 +116,4 @@ public class MultipleFontTest {
         assertNotNull(actualFont.getWeight());
         assertTrue(!actualFont.getFamily().isEmpty());
     }
-
 }

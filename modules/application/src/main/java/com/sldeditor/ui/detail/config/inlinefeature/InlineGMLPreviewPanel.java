@@ -19,14 +19,12 @@
 
 package com.sldeditor.ui.detail.config.inlinefeature;
 
+import com.sldeditor.ui.detail.BasePanel;
 import java.awt.BorderLayout;
 import java.awt.Font;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
-import com.sldeditor.ui.detail.BasePanel;
 
 /**
  * The Class InlineGMLPreviewPanel.

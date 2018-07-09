@@ -21,24 +21,23 @@ package com.sldeditor.test.unit.tool.dbconnectionlist;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test;
-
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnector;
+import org.junit.Test;
 
 /**
  * Unit test for DatabaseConnector class.
- * 
- * <p>{@link com.sldeditor.tool.dbconnectionlist.DatabaseConnector}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.tool.dbconnectionlist.DatabaseConnector}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DatabaseConnectorTest {
 
     /**
-     * Test method for {@link com.sldeditor.tool.dbconnectionlist.DatabaseConnector#DatabaseConnector()}.
+     * Test method for {@link
+     * com.sldeditor.tool.dbconnectionlist.DatabaseConnector#DatabaseConnector()}.
      */
     @Test
     public void testDatabaseConnector() {
@@ -53,5 +52,4 @@ public class DatabaseConnectorTest {
         assertNotNull(connection2);
         assertNotNull(testObj.getPanel());
     }
-
 }

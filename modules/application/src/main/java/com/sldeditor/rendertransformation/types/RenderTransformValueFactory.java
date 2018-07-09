@@ -19,13 +19,11 @@
 
 package com.sldeditor.rendertransformation.types;
 
+import com.sldeditor.rendertransformation.ProcessFunctionParameterValue;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.sldeditor.rendertransformation.ProcessFunctionParameterValue;
-
 import net.opengis.ows11.impl.ValueTypeImpl;
 import net.opengis.wps10.LiteralInputType;
 
@@ -37,7 +35,7 @@ import net.opengis.wps10.LiteralInputType;
 public class RenderTransformValueFactory {
 
     /** The value list. */
-    private Map<Class<?>, RenderTransformValueInterface> valueList = 
+    private Map<Class<?>, RenderTransformValueInterface> valueList =
             new HashMap<Class<?>, RenderTransformValueInterface>();
 
     /** The instance. */
@@ -56,16 +54,12 @@ public class RenderTransformValueFactory {
         return instance;
     }
 
-    /**
-     * Instantiates a new render transform value factory.
-     */
+    /** Instantiates a new render transform value factory. */
     private RenderTransformValueFactory() {
         populate();
     }
 
-    /**
-     * Populate.
-     */
+    /** Populate. */
     private void populate() {
         internal_populate(new InterpolationValues());
         internal_populate(new CoordinateReferenceSystemValues());
@@ -109,8 +103,9 @@ public class RenderTransformValueFactory {
     public RenderTransformValueInterface getValue(Class<?> classToFind) {
         RenderTransformValueInterface value = valueList.get(classToFind);
         if (value == null) {
-            System.err.println("Failed to find object for :"
-                    + ((classToFind != null) ? classToFind.getName() : "null"));
+            System.err.println(
+                    "Failed to find object for :"
+                            + ((classToFind != null) ? classToFind.getName() : "null"));
             return null;
         }
         return value.createInstance();
@@ -139,8 +134,8 @@ public class RenderTransformValueFactory {
      * @param value the value
      * @param literal the literal
      */
-    public void getValueCustomProcess(ProcessFunctionParameterValue value,
-            LiteralInputType literal) {
+    public void getValueCustomProcess(
+            ProcessFunctionParameterValue value, LiteralInputType literal) {
         if (literal != null) {
             String defaultValue = literal.getDefaultValue();
             if (literal.getDataType() != null) {

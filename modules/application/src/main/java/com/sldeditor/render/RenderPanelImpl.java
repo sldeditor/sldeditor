@@ -19,45 +19,6 @@
 
 package com.sldeditor.render;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.LayoutManager;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import si.uom.NonSI;
-import javax.measure.Unit;
-import javax.swing.JPanel;
-
-import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
-import org.geotools.data.DataStore;
-import org.geotools.data.FeatureSource;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.map.FeatureLayer;
-import org.geotools.map.GridReaderLayer;
-import org.geotools.map.Layer;
-import org.geotools.map.MapContent;
-import org.geotools.map.MapViewport;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.geotools.renderer.GTRenderer;
-import org.geotools.renderer.label.LabelCacheImpl;
-import org.geotools.renderer.lite.StreamingRenderer;
-import org.geotools.resources.CRSUtilities;
-import org.geotools.styling.Style;
-import org.geotools.styling.StyledLayerDescriptor;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
@@ -78,14 +39,53 @@ import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
 import com.sldeditor.filter.v2.envvar.WMSEnvVarValues;
 import com.sldeditor.ui.render.RuleRenderOptions;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.LayoutManager;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.measure.Unit;
+import javax.swing.JPanel;
+import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
+import org.geotools.data.DataStore;
+import org.geotools.data.FeatureSource;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.map.FeatureLayer;
+import org.geotools.map.GridReaderLayer;
+import org.geotools.map.Layer;
+import org.geotools.map.MapContent;
+import org.geotools.map.MapViewport;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.geotools.renderer.GTRenderer;
+import org.geotools.renderer.label.LabelCacheImpl;
+import org.geotools.renderer.lite.StreamingRenderer;
+import org.geotools.resources.CRSUtilities;
+import org.geotools.styling.Style;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import si.uom.NonSI;
 
 /**
  * Panel in which the rendered symbol is drawn.
  *
  * @author Robert Ward (SCISYS)
  */
-public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, PrefUpdateInterface,
-        DataSourceUpdatedInterface, VendorOptionUpdateInterface {
+public class RenderPanelImpl extends JPanel
+        implements RenderSymbolInterface,
+                PrefUpdateInterface,
+                DataSourceUpdatedInterface,
+                VendorOptionUpdateInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -108,12 +108,12 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
     private static final double BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE = 0.001;
 
     /** The Constant NO_DATA_SOURCE. */
-    private static final String NO_DATA_SOURCE = Localisation.getString(RenderPanelImpl.class,
-            "RenderPanelImpl.noDataSource");
+    private static final String NO_DATA_SOURCE =
+            Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.noDataSource");
 
     /** The Constant INVALID_SYMBOL_STRING. */
-    private static final String INVALID_SYMBOL_STRING = Localisation
-            .getString(RenderPanelImpl.class, "RenderPanelImpl.invalidSymbol");
+    private static final String INVALID_SYMBOL_STRING =
+            Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.invalidSymbol");
 
     /** The Constant DPI. */
     private static final int DPI = 96;
@@ -166,9 +166,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
     /** The vendor option string. */
     private String vendorOptionString = "";
 
-    /**
-     * Instantiates a new render panel.
-     */
+    /** Instantiates a new render panel. */
     public RenderPanelImpl() {
 
         setBounds(0, 0, ST_WIDTH, ST_HEIGHT);
@@ -244,12 +242,10 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         g.drawRect(0, 0, width - 1, height - 1);
     }
 
-    /**
-     * Render symbol.
-     */
+    /** Render symbol. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.marker.iface.RenderSymbolInterface#renderSymbol()
      */
     @Override
@@ -290,17 +286,17 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
             Rectangle imageSize = new Rectangle(0, 0, this.getWidth(), this.getHeight());
 
             switch (geometryType) {
-            case RASTER:
-                renderRasterMap(imageSize, style, DPI);
-                break;
-            case POINT:
-            case LINE:
-            case POLYGON:
-                renderVectorMap(featureList, imageSize, style, DPI);
-                break;
-            default:
-                validSymbol = false;
-                break;
+                case RASTER:
+                    renderRasterMap(imageSize, style, DPI);
+                    break;
+                case POINT:
+                case LINE:
+                case POLYGON:
+                    renderVectorMap(featureList, imageSize, style, DPI);
+                    break;
+                default:
+                    validSymbol = false;
+                    break;
             }
 
             repaint();
@@ -346,13 +342,16 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
 
             renderer.setRendererHints(hints);
             renderer.setMapContent(map);
-            BufferedImage image = new BufferedImage(imageSize.width, imageSize.height,
-                    BufferedImage.TYPE_INT_ARGB);
+            BufferedImage image =
+                    new BufferedImage(
+                            imageSize.width, imageSize.height, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
 
             if (useAntiAlias) {
-                graphics.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON));
+                graphics.setRenderingHints(
+                        new RenderingHints(
+                                RenderingHints.KEY_ANTIALIASING,
+                                RenderingHints.VALUE_ANTIALIAS_ON));
             }
 
             try {
@@ -363,7 +362,8 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
                     graphics.setFont(font);
                     graphics.drawString(
                             Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.error1"),
-                            10, y - 14);
+                            10,
+                            y - 14);
                 } else {
                     if (rasterLayer != null) {
                         ReferencedEnvelope bounds = rasterLayer.getBounds();
@@ -388,8 +388,11 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
      * @param style the style
      * @param dpi the dpi
      */
-    private void renderVectorMap(FeatureSource<SimpleFeatureType, SimpleFeature> features,
-            Rectangle imageSize, Style style, int dpi) {
+    private void renderVectorMap(
+            FeatureSource<SimpleFeatureType, SimpleFeature> features,
+            Rectangle imageSize,
+            Style style,
+            int dpi) {
         List<Layer> layerList = new ArrayList<Layer>();
         if (style != null) {
             FeatureLayer featureLayer = new FeatureLayer(features, style);
@@ -437,25 +440,30 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
             }
 
             if (bounds != null) {
-                Unit<?> unit = CRSUtilities
-                        .getUnit(bounds.getCoordinateReferenceSystem().getCoordinateSystem());
+                Unit<?> unit =
+                        CRSUtilities.getUnit(
+                                bounds.getCoordinateReferenceSystem().getCoordinateSystem());
 
                 double width;
                 double height;
                 if (unit == NonSI.DEGREE_ANGLE) {
-                    width = (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE)
-                            ? BOUNDINGBOX_BUFFER_MIN_ANGLE
-                            : (bounds.getWidth() * BOUNDINGBOX_BUFFER_ANGLE);
-                    height = (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE)
-                            ? BOUNDINGBOX_BUFFER_MIN_ANGLE
-                            : (bounds.getHeight() * BOUNDINGBOX_BUFFER_ANGLE);
+                    width =
+                            (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE)
+                                    ? BOUNDINGBOX_BUFFER_MIN_ANGLE
+                                    : (bounds.getWidth() * BOUNDINGBOX_BUFFER_ANGLE);
+                    height =
+                            (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE)
+                                    ? BOUNDINGBOX_BUFFER_MIN_ANGLE
+                                    : (bounds.getHeight() * BOUNDINGBOX_BUFFER_ANGLE);
                 } else {
-                    width = (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR)
-                            ? BOUNDINGBOX_BUFFER_MIN_LINEAR
-                            : (bounds.getWidth() * BOUNDINGBOX_BUFFER_LINEAR);
-                    height = (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR)
-                            ? BOUNDINGBOX_BUFFER_MIN_LINEAR
-                            : (bounds.getHeight() * BOUNDINGBOX_BUFFER_LINEAR);
+                    width =
+                            (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR)
+                                    ? BOUNDINGBOX_BUFFER_MIN_LINEAR
+                                    : (bounds.getWidth() * BOUNDINGBOX_BUFFER_LINEAR);
+                    height =
+                            (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR)
+                                    ? BOUNDINGBOX_BUFFER_MIN_LINEAR
+                                    : (bounds.getHeight() * BOUNDINGBOX_BUFFER_LINEAR);
                 }
 
                 bounds.expandBy(width, height);
@@ -475,8 +483,12 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
      * @param hasGeometry the has geometry
      * @param dpi the dpi
      */
-    private void internal_renderMap(List<Layer> layers, ReferencedEnvelope bounds,
-            Rectangle imageSize, boolean hasGeometry, int dpi) {
+    private void internal_renderMap(
+            List<Layer> layers,
+            ReferencedEnvelope bounds,
+            Rectangle imageSize,
+            boolean hasGeometry,
+            int dpi) {
         MapContent map = new MapContent();
         map.addLayers(layers);
         try {
@@ -489,13 +501,16 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
 
             renderer.setRendererHints(hints);
             renderer.setMapContent(map);
-            BufferedImage image = new BufferedImage(imageSize.width, imageSize.height,
-                    BufferedImage.TYPE_INT_ARGB);
+            BufferedImage image =
+                    new BufferedImage(
+                            imageSize.width, imageSize.height, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
 
             if (useAntiAlias) {
-                graphics.setRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON));
+                graphics.setRenderingHints(
+                        new RenderingHints(
+                                RenderingHints.KEY_ANTIALIASING,
+                                RenderingHints.VALUE_ANTIALIAS_ON));
             }
 
             try {
@@ -506,7 +521,8 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
                     graphics.setFont(font);
                     graphics.drawString(
                             Localisation.getString(RenderPanelImpl.class, "RenderPanelImpl.error1"),
-                            10, y - 14);
+                            10,
+                            y - 14);
                 } else {
                     renderer.paint(graphics, imageSize, bounds);
 
@@ -520,9 +536,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
         }
     }
 
-    /**
-     * Creates the feature.
-     */
+    /** Creates the feature. */
     private void createFeature() {
 
         if (geometryType == GeometryTypeEnum.UNKNOWN) {
@@ -538,7 +552,6 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
             }
         }
     }
-
 
     /**
      * Adds the sld output listener.
@@ -557,7 +570,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.preferences.PrefUpdateInterface#useAntiAliasUpdated(boolean)
      */
     @Override
@@ -575,12 +588,12 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType,
-            boolean isConnectedToDataSourceFlag) {
+    public void dataSourceLoaded(
+            GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag) {
         this.geometryType = geometryType;
 
         if (dataLoaded) {
@@ -611,7 +624,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override
@@ -630,7 +643,7 @@ public class RenderPanelImpl extends JPanel implements RenderSymbolInterface, Pr
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override

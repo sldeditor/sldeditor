@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Package allows example data to be specified for rnedering the symbols. 
- * 
+ * Package allows example data to be specified for rnedering the symbols.
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource.example;

@@ -19,13 +19,16 @@
 
 package com.sldeditor.tool.connectionlist;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.data.GeoServerConnection;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.detail.BasePanel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -36,14 +39,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.data.GeoServerConnection;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.ui.detail.BasePanel;
-
 /**
  * The panel to allow a user to enter data GeoServer connection details.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ConnectorDetailsPanel extends JPanel {
@@ -93,10 +91,16 @@ public class ConnectorDetailsPanel extends JPanel {
 
         JPanel connectionPanel = new JPanel();
         panel.add(connectionPanel, BorderLayout.CENTER);
-        connectionPanel.setBorder(new TitledBorder(null,
-                Localisation.getString(ConnectorDetailsPanel.class,
-                        "ConnectorDetailsPanel.connectionDetail"),
-                TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        connectionPanel.setBorder(
+                new TitledBorder(
+                        null,
+                        Localisation.getString(
+                                ConnectorDetailsPanel.class,
+                                "ConnectorDetailsPanel.connectionDetail"),
+                        TitledBorder.LEADING,
+                        TitledBorder.TOP,
+                        null,
+                        null));
 
         connectionPanel.setLayout(new BoxLayout(connectionPanel, BoxLayout.PAGE_AXIS));
 
@@ -104,57 +108,71 @@ public class ConnectorDetailsPanel extends JPanel {
         // Name
         //
         textFieldName = new JTextField();
-        createTextField(connectionPanel,
+        createTextField(
+                connectionPanel,
                 Localisation.getField(ConnectorDetailsPanel.class, "ConnectorDetailsPanel.name"),
-                textFieldName, 150);
+                textFieldName,
+                150);
 
         //
         // URL
         //
         textFieldURL = new JTextField();
-        createTextField(connectionPanel,
+        createTextField(
+                connectionPanel,
                 Localisation.getField(ConnectorDetailsPanel.class, "ConnectorDetailsPanel.url"),
-                textFieldURL, 250);
+                textFieldURL,
+                250);
 
         //
         // Username
         //
         textFieldUsername = new JTextField();
-        createTextField(connectionPanel, Localisation.getField(ConnectorDetailsPanel.class,
-                "ConnectorDetailsPanel.userName"), textFieldUsername, 150);
+        createTextField(
+                connectionPanel,
+                Localisation.getField(
+                        ConnectorDetailsPanel.class, "ConnectorDetailsPanel.userName"),
+                textFieldUsername,
+                150);
 
         //
         // Password
         //
         textFieldPassword = new JPasswordField();
-        createTextField(connectionPanel, Localisation.getField(ConnectorDetailsPanel.class,
-                "ConnectorDetailsPanel.password"), textFieldPassword, 150);
+        createTextField(
+                connectionPanel,
+                Localisation.getField(
+                        ConnectorDetailsPanel.class, "ConnectorDetailsPanel.password"),
+                textFieldPassword,
+                150);
 
         JPanel panelOkCancel = new JPanel();
         panel.add(panelOkCancel, BorderLayout.SOUTH);
         FlowLayout flPanelOkCancel = (FlowLayout) panelOkCancel.getLayout();
         flPanelOkCancel.setAlignment(FlowLayout.TRAILING);
 
-        JButton btnOk = new JButton(
-                Localisation.getString(ConnectorDetailsPanel.class, "common.ok"));
-        btnOk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ok = true;
-                frame.setVisible(false);
-            }
-        });
+        JButton btnOk =
+                new JButton(Localisation.getString(ConnectorDetailsPanel.class, "common.ok"));
+        btnOk.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ok = true;
+                        frame.setVisible(false);
+                    }
+                });
         panelOkCancel.add(btnOk);
 
-        JButton btnCancel = new JButton(
-                Localisation.getString(ConnectorDetailsPanel.class, "common.cancel"));
-        btnCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ok = false;
-                frame.setVisible(false);
-            }
-        });
+        JButton btnCancel =
+                new JButton(Localisation.getString(ConnectorDetailsPanel.class, "common.cancel"));
+        btnCancel.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ok = false;
+                        frame.setVisible(false);
+                    }
+                });
         panelOkCancel.add(btnCancel);
     }
 
@@ -166,8 +184,8 @@ public class ConnectorDetailsPanel extends JPanel {
      * @param textField the text field
      * @param fieldWidth the field width
      */
-    private void createTextField(JPanel parentPanel, String label, JTextField textField,
-            int fieldWidth) {
+    private void createTextField(
+            JPanel parentPanel, String label, JTextField textField, int fieldWidth) {
         JPanel panel = new JPanel();
         panel.setLayout(null);
         parentPanel.add(panel);
@@ -177,8 +195,8 @@ public class ConnectorDetailsPanel extends JPanel {
         lblName.setBounds(LABEL_X_START, 0, LABEL_WIDTH, FIELD_HEIGHT);
         panel.add(lblName);
 
-        textField.setBounds(LABEL_X_START + LABEL_WIDTH + FIELD_X_OFFSET, 0, fieldWidth,
-                FIELD_HEIGHT);
+        textField.setBounds(
+                LABEL_X_START + LABEL_WIDTH + FIELD_X_OFFSET, 0, fieldWidth, FIELD_HEIGHT);
         textField.setColumns(30);
         panel.add(textField);
     }
@@ -190,11 +208,14 @@ public class ConnectorDetailsPanel extends JPanel {
      * @param connectionDetails the connection details
      * @return the connector details panel
      */
-    public static GeoServerConnection showDialog(JDialog parentPanel,
-            GeoServerConnection connectionDetails) {
-        JDialog dialog = new JDialog(parentPanel,
-                Localisation.getString(ConnectorDetailsPanel.class, "ConnectorDetailsPanel.title"),
-                true);
+    public static GeoServerConnection showDialog(
+            JDialog parentPanel, GeoServerConnection connectionDetails) {
+        JDialog dialog =
+                new JDialog(
+                        parentPanel,
+                        Localisation.getString(
+                                ConnectorDetailsPanel.class, "ConnectorDetailsPanel.title"),
+                        true);
         dialog.setResizable(false);
 
         ConnectorDetailsPanel panel = new ConnectorDetailsPanel(dialog);

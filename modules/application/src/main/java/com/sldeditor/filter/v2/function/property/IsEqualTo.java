@@ -19,19 +19,17 @@
 
 package com.sldeditor.filter.v2.function.property;
 
-import java.util.List;
-
-import org.geotools.filter.IsEqualsToImpl;
-import org.geotools.filter.LiteralExpressionImpl;
-import org.opengis.filter.Filter;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import java.util.List;
+import org.geotools.filter.IsEqualsToImpl;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class IsEqualTo.
@@ -40,14 +38,10 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsEqualTo extends FilterBase implements FilterConfigInterface {
 
-    /**
-     * The Class IsEqualToExtended.
-     */
+    /** The Class IsEqualToExtended. */
     public class IsEqualToExtended extends IsEqualsToImpl implements FilterExtendedInterface {
 
-        /**
-         * Instantiates a new checks if is equal to extended.
-         */
+        /** Instantiates a new checks if is equal to extended. */
         public IsEqualToExtended() {
             super(null, null);
         }
@@ -59,14 +53,14 @@ public class IsEqualTo extends FilterBase implements FilterConfigInterface {
          * @param expression2 the expression 2
          * @param matchCase the match case
          */
-        public IsEqualToExtended(Expression expression1, Expression expression2,
-                boolean matchCase) {
+        public IsEqualToExtended(
+                Expression expression1, Expression expression2, boolean matchCase) {
             super(expression1, expression2, matchCase);
         }
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -75,9 +69,7 @@ public class IsEqualTo extends FilterBase implements FilterConfigInterface {
         }
     }
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public IsEqualTo(String category) {
         super(category);
     }
@@ -135,8 +127,11 @@ public class IsEqualTo extends FilterBase implements FilterConfigInterface {
         } else {
             LiteralExpressionImpl matchCase = (LiteralExpressionImpl) parameterList.get(2);
 
-            filter = new IsEqualToExtended(parameterList.get(0), parameterList.get(1),
-                    (Boolean) matchCase.getValue());
+            filter =
+                    new IsEqualToExtended(
+                            parameterList.get(0),
+                            parameterList.get(1),
+                            (Boolean) matchCase.getValue());
         }
         return filter;
     }

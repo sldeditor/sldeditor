@@ -19,30 +19,27 @@
 
 package com.sldeditor.ui.widgets;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.utils.ColourUtils;
+import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.iface.ColourNotifyInterface;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
-
 import org.geotools.filter.LiteralExpressionImpl;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.utils.ColourUtils;
-import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.iface.ColourNotifyInterface;
-
 /**
  * A JButton displaying a selected colour, clicking on the button displays a colour editor.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ColourButton extends JButton {
@@ -58,29 +55,31 @@ public class ColourButton extends JButton {
 
     private BufferedImage image = null;
 
-    /**
-     * Instantiates a new colour button.
-     */
+    /** Instantiates a new colour button. */
     public ColourButton() {
         final JComponent parent = this;
 
-        image = new BufferedImage(BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT,
-                BufferedImage.TYPE_INT_ARGB);
+        image =
+                new BufferedImage(
+                        BasePanel.WIDGET_STANDARD_WIDTH,
+                        BasePanel.WIDGET_HEIGHT,
+                        BufferedImage.TYPE_INT_ARGB);
         this.setIcon(new ImageIcon(image));
-        addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
 
-                Color newColour = JColorChooser.showDialog(parent, "Pick color", colour);
+                        Color newColour = JColorChooser.showDialog(parent, "Pick color", colour);
 
-                if (newColour != null) {
-                    colour = newColour;
+                        if (newColour != null) {
+                            colour = newColour;
 
-                    displayColour();
+                            displayColour();
 
-                    notifyListeners();
-                }
-            }
-        });
+                            notifyListeners();
+                        }
+                    }
+                });
     }
 
     /**
@@ -132,14 +131,16 @@ public class ColourButton extends JButton {
                 ConsoleManager.getInstance().error(this, "Unknown number format");
             }
         }
-        colour = new Color(tmpColour.getRed() / 255.0f, tmpColour.getGreen() / 255.0f,
-                tmpColour.getBlue() / 255.0f, alpha);
+        colour =
+                new Color(
+                        tmpColour.getRed() / 255.0f,
+                        tmpColour.getGreen() / 255.0f,
+                        tmpColour.getBlue() / 255.0f,
+                        alpha);
         displayColour();
     }
 
-    /**
-     * Display colour.
-     */
+    /** Display colour. */
     private void displayColour() {
 
         Graphics2D g2 = image.createGraphics();
@@ -167,7 +168,8 @@ public class ColourButton extends JButton {
      * @return the colour
      */
     public static Color hex2Rgb(String colourStr) {
-        return new Color(Integer.valueOf(colourStr.substring(1, 3), 16),
+        return new Color(
+                Integer.valueOf(colourStr.substring(1, 3), 16),
                 Integer.valueOf(colourStr.substring(3, 5), 16),
                 Integer.valueOf(colourStr.substring(5, 7), 16));
     }
@@ -181,9 +183,7 @@ public class ColourButton extends JButton {
         observers.add(observer);
     }
 
-    /**
-     * Notify listeners.
-     */
+    /** Notify listeners. */
     public void notifyListeners() {
         String colourString = getColourString();
         double opacity = getColourOpacity();

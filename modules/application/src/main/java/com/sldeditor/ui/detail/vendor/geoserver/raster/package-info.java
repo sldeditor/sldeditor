@@ -19,7 +19,7 @@
 
 /**
  * Raster GeoServer vendor options.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.vendor.geoserver.raster;

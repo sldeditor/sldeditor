@@ -19,16 +19,14 @@
 
 package com.sldeditor.rendertransformation;
 
+import com.sldeditor.filter.ExpressionPanelFactory;
+import com.sldeditor.filter.ExpressionPanelInterface;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
-
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
-
-import com.sldeditor.filter.ExpressionPanelFactory;
-import com.sldeditor.filter.ExpressionPanelInterface;
 
 /**
  * Table model editor used to edit expressions.
@@ -95,8 +93,8 @@ public class ExpressionEditor extends AbstractCellEditor implements TableCellEdi
      * @return the table cell editor component
      */
     @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
-            int row, int column) {
+    public Component getTableCellEditorComponent(
+            JTable table, Object value, boolean isSelected, int row, int column) {
 
         return null;
     }

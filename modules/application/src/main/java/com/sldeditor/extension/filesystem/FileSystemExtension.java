@@ -19,33 +19,6 @@
 
 package com.sldeditor.extension.filesystem;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.JMenu;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeExpansionListener;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-
-import org.apache.log4j.Logger;
-
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.RecursiveUpdateInterface;
@@ -64,17 +37,41 @@ import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
 import com.sldeditor.extension.ExtensionFactory;
 import com.sldeditor.extension.ExtensionInterface;
 import com.sldeditor.extension.filesystem.file.FileSystemInput;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JMenu;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeExpansionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+import org.apache.log4j.Logger;
 
 /**
  * Application extension that presents a file system to the user.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FileSystemExtension
         implements ExtensionInterface, FileSelectionInterface, RecursiveUpdateInterface {
     /** The Constant ROOT_NODE. */
-    public static final String ROOT_NODE = Localisation.getString(FileSystemExtension.class,
-            "FileSystemExtension.root");
+    public static final String ROOT_NODE =
+            Localisation.getString(FileSystemExtension.class, "FileSystemExtension.root");
 
     /** The Constant FOLDER_ARG. */
     private static final String FOLDER_ARG = "folder";
@@ -163,84 +160,88 @@ public class FileSystemExtension
         tree.setDragEnabled(true);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
 
-        tree.addMouseListener(new MouseListener() {
+        tree.addMouseListener(
+                new MouseListener() {
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (SwingUtilities.isRightMouseButton(e)) {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if (SwingUtilities.isRightMouseButton(e)) {
 
-                    int row = tree.getClosestRowForLocation(e.getX(), e.getY());
-                    tree.setSelectionRow(row);
+                            int row = tree.getClosestRowForLocation(e.getX(), e.getY());
+                            tree.setSelectionRow(row);
 
-                    Object selectedItem = tree.getLastSelectedPathComponent();
+                            Object selectedItem = tree.getLastSelectedPathComponent();
 
-                    Thread t1 = new Thread(new Runnable() {
-                        public void run() {
+                            Thread t1 =
+                                    new Thread(
+                                            new Runnable() {
+                                                public void run() {
 
-                            JPopupMenu popupMenu = new JPopupMenu();
+                                                    JPopupMenu popupMenu = new JPopupMenu();
 
-                            for (FileSystemInterface extension : extensionList) {
-                                extension.rightMouseButton(popupMenu, selectedItem, e);
-                            }
+                                                    for (FileSystemInterface extension :
+                                                            extensionList) {
+                                                        extension.rightMouseButton(
+                                                                popupMenu, selectedItem, e);
+                                                    }
 
-                            if ((popupMenu.getComponentCount() > 0) && (e != null)) {
-                                popupMenu.show(e.getComponent(), e.getX(), e.getY());
-                            }
+                                                    if ((popupMenu.getComponentCount() > 0)
+                                                            && (e != null)) {
+                                                        popupMenu.show(
+                                                                e.getComponent(),
+                                                                e.getX(),
+                                                                e.getY());
+                                                    }
+                                                }
+                                            });
+                            t1.start();
                         }
-                    });
-                    t1.start();
-                }
-            }
+                    }
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
+                    @Override
+                    public void mousePressed(MouseEvent e) {}
 
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
+                    @Override
+                    public void mouseReleased(MouseEvent e) {}
 
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
+                    @Override
+                    public void mouseEntered(MouseEvent e) {}
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-
-        });
+                    @Override
+                    public void mouseExited(MouseEvent e) {}
+                });
 
         // Listen for Tree Selection Events
-        tree.addTreeExpansionListener(new TreeExpansionListener() {
+        tree.addTreeExpansionListener(
+                new TreeExpansionListener() {
 
-            /*
-             * (non-Javadoc)
-             * 
-             * @see javax.swing.event.TreeExpansionListener#treeExpanded(javax.swing.event.TreeExpansionEvent)
-             */
-            public void treeExpanded(TreeExpansionEvent evt) {
-                TreePath path = evt.getPath();
+                    /*
+                     * (non-Javadoc)
+                     *
+                     * @see javax.swing.event.TreeExpansionListener#treeExpanded(javax.swing.event.TreeExpansionEvent)
+                     */
+                    public void treeExpanded(TreeExpansionEvent evt) {
+                        TreePath path = evt.getPath();
 
-                Object selectedItem = path.getLastPathComponent();
+                        Object selectedItem = path.getLastPathComponent();
 
-                for (FileSystemInterface extension : extensionList) {
-                    if (extension.treeExpanded(selectedItem)) {
-                        ((DefaultTreeModel) tree.getModel())
-                                .nodeStructureChanged((TreeNode) selectedItem);
+                        for (FileSystemInterface extension : extensionList) {
+                            if (extension.treeExpanded(selectedItem)) {
+                                ((DefaultTreeModel) tree.getModel())
+                                        .nodeStructureChanged((TreeNode) selectedItem);
+                            }
+                        }
                     }
-                }
-            }
 
-            /*
-             * (non-Javadoc)
-             * 
-             * @see javax.swing.event.TreeExpansionListener#treeCollapsed(javax.swing.event.TreeExpansionEvent)
-             */
-            public void treeCollapsed(TreeExpansionEvent evt) {
-                // Nothing to do
-            }
-
-        });
+                    /*
+                     * (non-Javadoc)
+                     *
+                     * @see javax.swing.event.TreeExpansionListener#treeCollapsed(javax.swing.event.TreeExpansionEvent)
+                     */
+                    public void treeCollapsed(TreeExpansionEvent evt) {
+                        // Nothing to do
+                    }
+                });
 
         // Tree selection listener
         tree.setTreeSelection(this);
@@ -305,8 +306,8 @@ public class FileSystemExtension
                         combinedFiles.setDataSource(selectedFiles.isDataSource());
                         combinedFiles.setFolderName(selectedFiles.getFolderName());
                         combinedFiles.setConnectionData(selectedFiles.getConnectionData());
-                        combinedFiles
-                                .setIsFolder(combinedFiles.isFolder() | selectedFiles.isFolder());
+                        combinedFiles.setIsFolder(
+                                combinedFiles.isFolder() | selectedFiles.isFolder());
 
                         List<SLDDataInterface> handlerDataList = selectedFiles.getSldData();
                         if (handlerDataList != null) {
@@ -328,7 +329,7 @@ public class FileSystemExtension
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.batch.ExtensionInterface#setArguments(java.util.List)
      */
     @Override
@@ -362,32 +363,41 @@ public class FileSystemExtension
                                 }
                             } else {
                                 ConsoleManager.getInstance()
-                                        .error(this,
-                                                Localisation.getField(getClass(),
-                                                        "FileSystemExtension.folderDoesNotExist")
+                                        .error(
+                                                this,
+                                                Localisation.getField(
+                                                                getClass(),
+                                                                "FileSystemExtension.folderDoesNotExist")
                                                         + value);
                             }
                         }
                     } else if (field.compareToIgnoreCase(GEOSERVER_ARG) == 0) {
                         // It wasn't a folder, check to see if it is a GeoServer connection
-                        GeoServerConnection connectionData = GeoServerConnectionManager
-                                .getInstance().getConnection(value);
+                        GeoServerConnection connectionData =
+                                GeoServerConnectionManager.getInstance().getConnection(value);
                         if (connectionData != null) {
-                            FileSystemExtensionFactory.getGeoServerInput().setFolder(connectionData,
-                                    true);
+                            FileSystemExtensionFactory.getGeoServerInput()
+                                    .setFolder(connectionData, true);
                             acceptArgument = arg;
                         } else {
                             // Don't recognise the string
                             ConsoleManager.getInstance()
-                                    .error(this,
-                                            Localisation.getField(getClass(),
-                                                    "FileSystemExtension.geoServerDoesNotExist")
+                                    .error(
+                                            this,
+                                            Localisation.getField(
+                                                            getClass(),
+                                                            "FileSystemExtension.geoServerDoesNotExist")
                                                     + value);
                         }
                     } else {
                         // Don't recognise the string
-                        ConsoleManager.getInstance().error(this, Localisation.getField(getClass(),
-                                "FileSystemExtension.unknownStartUp") + value);
+                        ConsoleManager.getInstance()
+                                .error(
+                                        this,
+                                        Localisation.getField(
+                                                        getClass(),
+                                                        "FileSystemExtension.unknownStartUp")
+                                                + value);
                     }
                 }
             }
@@ -404,7 +414,7 @@ public class FileSystemExtension
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.batch.ExtensionInterface#getExtensionArgPrefix()
      */
     @Override
@@ -429,7 +439,7 @@ public class FileSystemExtension
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.batch.ExtensionInterface#createMenus(javax.swing.JMenu)
      */
     @Override
@@ -444,7 +454,7 @@ public class FileSystemExtension
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.batch.ExtensionInterface#getTooltip()
      */
     @Override
@@ -459,7 +469,7 @@ public class FileSystemExtension
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.batch.ExtensionInterface#getName()
      */
     @Override
@@ -475,7 +485,7 @@ public class FileSystemExtension
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.batch.ExtensionInterface#open(java.lang.String)
      */
     @Override
@@ -503,7 +513,7 @@ public class FileSystemExtension
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.ExtensionInterface#save(java.net.URL, com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
@@ -528,7 +538,7 @@ public class FileSystemExtension
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.ExtensionInterface#updateForPreferences(com.sldeditor.common.preferences.PrefData, java.util.List)
      */
     @Override
@@ -538,11 +548,16 @@ public class FileSystemExtension
                 String folderName = prefData.getLastFolderViewed();
 
                 if (folderName != null) {
-                    String suffix = (prefData
-                            .getLastViewedKey() == PrefDataLastViewedEnum.GEOSERVER) ? GEOSERVER_ARG
+                    String suffix =
+                            (prefData.getLastViewedKey() == PrefDataLastViewedEnum.GEOSERVER)
+                                    ? GEOSERVER_ARG
                                     : FOLDER_ARG;
-                    String prefix = String.format("%s.%s.%s=", ExtensionFactory.EXTENSION_PREFIX,
-                            getExtensionArgPrefix(), suffix);
+                    String prefix =
+                            String.format(
+                                    "%s.%s.%s=",
+                                    ExtensionFactory.EXTENSION_PREFIX,
+                                    getExtensionArgPrefix(),
+                                    suffix);
 
                     // Check to see if the argument already exists
                     boolean found = false;
@@ -565,7 +580,7 @@ public class FileSystemExtension
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.RecursiveUpdateInterface#recursiveValuesUpdated(boolean)
      */
     @Override

@@ -19,7 +19,7 @@
 
 /**
  * Package containing all tools.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.tool;

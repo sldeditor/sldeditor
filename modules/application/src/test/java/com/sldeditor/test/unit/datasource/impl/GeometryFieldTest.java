@@ -1,18 +1,14 @@
-/**
- * 
- */
-
+/** */
 package com.sldeditor.test.unit.datasource.impl;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.datasource.impl.GeometryField;
+import org.junit.Test;
 
 /**
  * The unit test for GeometryField.
- * 
+ *
  * <p>{@link com.sldeditor.datasource.impl.GeometryField}
  *
  * @author Robert Ward (SCISYS)
@@ -20,9 +16,9 @@ import com.sldeditor.datasource.impl.GeometryField;
 public class GeometryFieldTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.GeometryField#GeometryField()}.
-     * Test method for {@link com.sldeditor.datasource.impl.GeometryField#reset()}.
-     * Test method for {@link com.sldeditor.datasource.impl.GeometryField#setGeometryFieldName(java.lang.String)}.
+     * Test method for {@link com.sldeditor.datasource.impl.GeometryField#GeometryField()}. Test
+     * method for {@link com.sldeditor.datasource.impl.GeometryField#reset()}. Test method for
+     * {@link com.sldeditor.datasource.impl.GeometryField#setGeometryFieldName(java.lang.String)}.
      * Test method for {@link com.sldeditor.datasource.impl.GeometryField#getGeometryFieldName()}.
      */
     @Test
@@ -40,5 +36,4 @@ public class GeometryFieldTest {
         geometryField.reset();
         assertTrue(geometryField.getGeometryFieldName().compareTo(expecedtDefaultValue) == 0);
     }
-
 }

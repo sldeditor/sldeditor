@@ -19,22 +19,19 @@
 
 package com.sldeditor.create.sld;
 
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.create.NewSLDBase;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * Class to create a new SLD polygon symbol with default values.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class NewPolygonSLD extends NewSLDBase implements NewSLDInterface {
 
-    /**
-     * Instantiates a new new polygon sld.
-     */
+    /** Instantiates a new new polygon sld. */
     public NewPolygonSLD() {
         super(Localisation.getString(NewPolygonSLD.class, "NewPolygonSLD.title"));
     }

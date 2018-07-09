@@ -19,6 +19,23 @@
 
 package com.sldeditor.map;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.coordinate.CoordManager;
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.output.SLDOutputInterface;
+import com.sldeditor.common.preferences.PrefManager;
+import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
+import com.sldeditor.datasource.DataSourceInterface;
+import com.sldeditor.datasource.DataSourceUpdatedInterface;
+import com.sldeditor.datasource.RenderSymbolInterface;
+import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.datasource.StickyDataSourceInterface;
+import com.sldeditor.datasource.impl.DataSourceFactory;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
+import com.sldeditor.filter.v2.envvar.WMSEnvVarValues;
+import com.sldeditor.ui.render.RuleRenderOptions;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -33,7 +50,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -41,7 +57,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
-
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
@@ -65,6 +80,7 @@ import org.geotools.swing.action.ResetAction;
 import org.geotools.swing.action.ZoomInAction;
 import org.geotools.swing.action.ZoomOutAction;
 import org.geotools.swing.control.JMapStatusBar;
+import org.locationtech.jts.geom.Envelope;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.FactoryException;
@@ -73,32 +89,18 @@ import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 import org.opengis.style.Style;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.coordinate.CoordManager;
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.output.SLDOutputInterface;
-import com.sldeditor.common.preferences.PrefManager;
-import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
-import com.sldeditor.datasource.DataSourceInterface;
-import com.sldeditor.datasource.DataSourceUpdatedInterface;
-import com.sldeditor.datasource.RenderSymbolInterface;
-import com.sldeditor.datasource.SLDEditorFile;
-import com.sldeditor.datasource.StickyDataSourceInterface;
-import com.sldeditor.datasource.impl.DataSourceFactory;
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
-import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
-import com.sldeditor.filter.v2.envvar.WMSEnvVarValues;
-import com.sldeditor.ui.render.RuleRenderOptions;
-import org.locationtech.jts.geom.Envelope;
-
 /**
  * Panel to displayed the rendered data source using the current style.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
-public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpdateInterface,
-        DataSourceUpdatedInterface, MouseWheelListener, StickyDataSourceInterface, RenderListener {
+public class MapRender extends JPanel
+        implements RenderSymbolInterface,
+                PrefUpdateInterface,
+                DataSourceUpdatedInterface,
+                MouseWheelListener,
+                StickyDataSourceInterface,
+                RenderListener {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -116,9 +118,10 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     private FeatureSource<SimpleFeatureType, SimpleFeature> featureList = null;
 
     /** The user feature list. */
-    //CHECKSTYLE:OFF
-    private Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> userLayerFeatureListMap = null;
-    //CHECKSTYLE:ON
+    // CHECKSTYLE:OFF
+    private Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>
+            userLayerFeatureListMap = null;
+    // CHECKSTYLE:ON
 
     /** The map pane. */
     private SLDMapPane mapPane = null;
@@ -148,7 +151,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     public static final String TOOLBAR_ZOOMOUT_BUTTON_NAME = "ToolbarZoomOutButton";
 
     /** The Constant TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME. */
-    private static final String TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME = 
+    private static final String TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME =
             "ToolbarStickyDataSourceButton";
 
     /** The click to zoom factor, 1 wheel click is 10% zoom. */
@@ -157,8 +160,9 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     /** The wms env var values. */
     private WMSEnvVarValues wmsEnvVarValues = new WMSEnvVarValues();
 
-    /** The map panel that contains the card layout 
-     * containing map pane and 'no data source' panel. */
+    /**
+     * The map panel that contains the card layout containing map pane and 'no data source' panel.
+     */
     private JPanel mapPanel;
 
     /** The map bounds. */
@@ -173,9 +177,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
     /** The label cache. */
     private SynchronizedLabelCache labelCache = new SynchronizedLabelCache();
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public MapRender() {
         setLayout(new BorderLayout());
 
@@ -260,29 +262,26 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         stickyDataSourceButton.setName(TOOLBAR_STICKY_DATSOURCE_BUTTON_NAME);
 
         final MapRender mapRender = this;
-        stickyDataSourceButton.addActionListener(new ActionListener() {
+        stickyDataSourceButton.addActionListener(
+                new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean sticky = stickyDataSourceButton.isSelected();
-                SLDEditorFile.getInstance().setStickyDataSource(mapRender, sticky);
-            }
-        });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        boolean sticky = stickyDataSourceButton.isSelected();
+                        SLDEditorFile.getInstance().setStickyDataSource(mapRender, sticky);
+                    }
+                });
         toolBar.add(stickyDataSourceButton);
 
         return toolBar;
     }
 
-    /**
-     * Update style.
-     */
+    /** Update style. */
     public void updateStyle() {
         internalRenderStyle();
     }
 
-    /**
-     * Internal render style.
-     */
+    /** Internal render style. */
     private void internalRenderStyle() {
         if (!underTest) {
             if (hasError()) {
@@ -333,16 +332,14 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         }
     }
 
-    /**
-     * Clear label cache.
-     */
+    /** Clear label cache. */
     private void clearLabelCache() {
         labelCache.clear();
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.RenderSymbolInterface#renderSymbol()
      */
     @Override
@@ -363,42 +360,45 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         }
 
         switch (geometryType) {
-        case RASTER: {
-            GridReaderLayer gridLayer = new GridReaderLayer(gridCoverage,
-                    (org.geotools.styling.Style) style);
-            mapContent.addLayer(gridLayer);
-            mapContent.getViewport().setBounds(gridLayer.getBounds());
-            if (gridCoverage != null) {
-                mapPane.setDisplayArea(gridCoverage.getOriginalEnvelope());
-            }
-        }
-            break;
-        case POINT:
-        case LINE:
-        case POLYGON: {
-            FeatureSource<SimpleFeatureType, SimpleFeature> tmpFeatureList = null;
-
-            if (styledLayer instanceof UserLayer) {
-                if (userLayerFeatureListMap != null) {
-                    tmpFeatureList = userLayerFeatureListMap.get(styledLayer);
+            case RASTER:
+                {
+                    GridReaderLayer gridLayer =
+                            new GridReaderLayer(gridCoverage, (org.geotools.styling.Style) style);
+                    mapContent.addLayer(gridLayer);
+                    mapContent.getViewport().setBounds(gridLayer.getBounds());
+                    if (gridCoverage != null) {
+                        mapPane.setDisplayArea(gridCoverage.getOriginalEnvelope());
+                    }
                 }
-            } else {
-                tmpFeatureList = featureList;
-            }
+                break;
+            case POINT:
+            case LINE:
+            case POLYGON:
+                {
+                    FeatureSource<SimpleFeatureType, SimpleFeature> tmpFeatureList = null;
 
-            if (tmpFeatureList != null) {
-                mapContent.addLayer(
-                        new FeatureLayer(tmpFeatureList, (org.geotools.styling.Style) style));
-                try {
-                    mapPane.setDisplayArea(tmpFeatureList.getBounds());
-                } catch (IOException e) {
-                    ConsoleManager.getInstance().exception(this, e);
+                    if (styledLayer instanceof UserLayer) {
+                        if (userLayerFeatureListMap != null) {
+                            tmpFeatureList = userLayerFeatureListMap.get(styledLayer);
+                        }
+                    } else {
+                        tmpFeatureList = featureList;
+                    }
+
+                    if (tmpFeatureList != null) {
+                        mapContent.addLayer(
+                                new FeatureLayer(
+                                        tmpFeatureList, (org.geotools.styling.Style) style));
+                        try {
+                            mapPane.setDisplayArea(tmpFeatureList.getBounds());
+                        } catch (IOException e) {
+                            ConsoleManager.getInstance().exception(this, e);
+                        }
+                    }
                 }
-            }
-        }
-            break;
-        default:
-            break;
+                break;
+            default:
+                break;
         }
 
         wmsEnvVarValues.setMapBounds(mapBounds);
@@ -412,7 +412,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.preferences.PrefUpdateInterface#useAntiAliasUpdated(boolean)
      */
     @Override
@@ -437,8 +437,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
      * @param isConnectedToDataSourceFlag the is connected to data source flag
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType,
-            boolean isConnectedToDataSourceFlag) {
+    public void dataSourceLoaded(
+            GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag) {
 
         this.geometryType = geometryType;
         featureList = DataSourceFactory.getDataSource().getFeatureSource();
@@ -459,9 +459,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         }
     }
 
-    /**
-     * Calculate map bounds.
-     */
+    /** Calculate map bounds. */
     private void calculateMapBounds() {
         List<ReferencedEnvelope> refEnvList = new ArrayList<ReferencedEnvelope>();
 
@@ -533,9 +531,13 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         }
 
         if (targetGeometry != null) {
-            ReferencedEnvelope refEnv = new ReferencedEnvelope(targetGeometry.getMinY(),
-                    targetGeometry.getMaxY(), targetGeometry.getMinX(), targetGeometry.getMaxX(),
-                    wgs84);
+            ReferencedEnvelope refEnv =
+                    new ReferencedEnvelope(
+                            targetGeometry.getMinY(),
+                            targetGeometry.getMaxY(),
+                            targetGeometry.getMinX(),
+                            targetGeometry.getMaxX(),
+                            wgs84);
 
             return refEnv;
         }
@@ -562,22 +564,26 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         mapPane.setDisplayArea((org.opengis.geometry.Envelope) env);
 
         switch (geometryType) {
-        case RASTER: {
-            ReferencedEnvelope refEnv = ReferencedEnvelope.create(env,
-                    gridCoverage.getCoordinateReferenceSystem());
-            wmsEnvVarValues.setMapBounds(refEnv);
-        }
-            break;
-        case POINT:
-        case LINE:
-        case POLYGON: {
-            ReferencedEnvelope refEnv = ReferencedEnvelope.create(env,
-                    featureList.getSchema().getCoordinateReferenceSystem());
-            wmsEnvVarValues.setMapBounds(refEnv);
-        }
-            break;
-        default:
-            break;
+            case RASTER:
+                {
+                    ReferencedEnvelope refEnv =
+                            ReferencedEnvelope.create(
+                                    env, gridCoverage.getCoordinateReferenceSystem());
+                    wmsEnvVarValues.setMapBounds(refEnv);
+                }
+                break;
+            case POINT:
+            case LINE:
+            case POLYGON:
+                {
+                    ReferencedEnvelope refEnv =
+                            ReferencedEnvelope.create(
+                                    env, featureList.getSchema().getCoordinateReferenceSystem());
+                    wmsEnvVarValues.setMapBounds(refEnv);
+                }
+                break;
+            default:
+                break;
         }
 
         EnvironmentVariableManager.getInstance().setWMSEnvVarValues(wmsEnvVarValues);
@@ -589,7 +595,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.RenderSymbolInterface#addSLDOutputListener(com.sldeditor.common.output.SLDOutputInterface)
      */
     @Override
@@ -599,7 +605,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.RenderSymbolInterface#getRuleRenderOptions()
      */
     @Override
@@ -629,8 +635,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new GridBagLayout());
 
-        JLabel label = new JLabel(
-                Localisation.getString(MapRender.class, "MapRender.noDataSource"));
+        JLabel label =
+                new JLabel(Localisation.getString(MapRender.class, "MapRender.noDataSource"));
         label.setFont(new Font("Arial", Font.BOLD, 16));
         labelPanel.add(label);
 
@@ -648,8 +654,8 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
      */
     private SLDMapPane createMapPane() {
         SLDMapPane internal_mapPane = new SLDMapPane();
-        internal_mapPane
-                .setBackground(PrefManager.getInstance().getPrefData().getBackgroundColour());
+        internal_mapPane.setBackground(
+                PrefManager.getInstance().getPrefData().getBackgroundColour());
         internal_mapPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         return internal_mapPane;
@@ -657,7 +663,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override
@@ -678,7 +684,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.StickyDataSourceInterface#stickyDataSourceUpdates(boolean)
      */
     @Override
@@ -690,7 +696,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.geotools.renderer.RenderListener#featureRenderer(org.opengis.feature.simple.SimpleFeature)
      */
     @Override
@@ -700,7 +706,7 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.geotools.renderer.RenderListener#errorOccurred(java.lang.Exception)
      */
     @Override
@@ -710,16 +716,12 @@ public class MapRender extends JPanel implements RenderSymbolInterface, PrefUpda
         setError();
     }
 
-    /**
-     * Sets the error.
-     */
+    /** Sets the error. */
     private void setError() {
         error = true;
     }
 
-    /**
-     * Reset error.
-     */
+    /** Reset error. */
     private void resetError() {
         error = false;
     }

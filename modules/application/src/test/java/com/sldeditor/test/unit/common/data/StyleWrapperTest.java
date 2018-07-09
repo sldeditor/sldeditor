@@ -23,13 +23,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.common.data.StyleWrapper;
+import org.junit.Test;
 
 /**
  * The unit test for StyleWrapper.
- * 
+ *
  * <p>{@link com.sldeditor.common.data.StyleWrapper}
  *
  * @author Robert Ward (SCISYS)
@@ -57,5 +56,4 @@ public class StyleWrapperTest {
         assertTrue(styleWrapper.compareTo(null) != 0);
         assertTrue(styleWrapper.compareTo(clone) == 0);
     }
-
 }

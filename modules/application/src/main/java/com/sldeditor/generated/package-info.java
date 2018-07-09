@@ -18,7 +18,7 @@
  */
 /**
  * Package contains maven generated application version information.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.generated;

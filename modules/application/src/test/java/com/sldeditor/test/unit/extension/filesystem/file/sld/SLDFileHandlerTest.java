@@ -25,6 +25,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,27 +37,20 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.Test;
-
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.data.SLDData;
-import com.sldeditor.common.data.StyleWrapper;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
-import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 
 /**
  * Unit test for SLDFileHandler class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class SLDFileHandlerTest {
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getFileExtensionList()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getFileExtensionList()}.
      */
     @Test
     public void testGetFileExtension() {
@@ -60,7 +58,10 @@ public class SLDFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface, javax.swing.tree.DefaultTreeModel, com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface,
+     * javax.swing.tree.DefaultTreeModel,
+     * com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
      */
     @Test
     public void testPopulate() {
@@ -69,8 +70,9 @@ public class SLDFileHandlerTest {
 
     /**
      * Single file
-     * 
-     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     *
+     * <p>Test method for {@link
+     * com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContentsFile() {
@@ -119,8 +121,9 @@ public class SLDFileHandlerTest {
 
     /**
      * Supply a folder name and retrieve all the sld files in it
-     * 
-     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     *
+     * <p>Test method for {@link
+     * com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContentsFolder() {
@@ -146,13 +149,21 @@ public class SLDFileHandlerTest {
 
             List<SLDDataInterface> sldDataList = handler.getSLDContents(fileTreeNode);
 
-            List<String> expectedLayerNameList = Arrays.asList("point_attribute.sld",
-                    "point_pointasgraphic.sld", "point_pointasgraphichttp.sld",
-                    "point_pointwithdefaultlabel.sld", "point_pointwithrotatedlabel.sld",
-                    "point_pointwithstyledlabel.sld", "point_rotatedsquare.sld",
-                    "point_simplepoint.sld", "point_simplepointwithstroke.sld",
-                    "point_transparenttriangle.sld", "point_zoom.sld", "point_wkt.sld",
-                    "point_pointwithenhancedlabel.sld");
+            List<String> expectedLayerNameList =
+                    Arrays.asList(
+                            "point_attribute.sld",
+                            "point_pointasgraphic.sld",
+                            "point_pointasgraphichttp.sld",
+                            "point_pointwithdefaultlabel.sld",
+                            "point_pointwithrotatedlabel.sld",
+                            "point_pointwithstyledlabel.sld",
+                            "point_rotatedsquare.sld",
+                            "point_simplepoint.sld",
+                            "point_simplepointwithstroke.sld",
+                            "point_transparenttriangle.sld",
+                            "point_zoom.sld",
+                            "point_wkt.sld",
+                            "point_pointwithenhancedlabel.sld");
             assertEquals(expectedLayerNameList.size(), sldDataList.size());
 
             for (SLDDataInterface sldData : sldDataList) {
@@ -169,8 +180,9 @@ public class SLDFileHandlerTest {
 
     /**
      * Check SLD name
-     * 
-     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     *
+     * <p>Test method for {@link
+     * com.sldeditor.extension.filesystem.file.sld.SLDFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDName() {

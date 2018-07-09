@@ -1,13 +1,9 @@
-/**
- * 
- */
-
+/** */
 package com.sldeditor.ui.detail;
-
-import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigPopulation;
+import org.opengis.filter.expression.Expression;
 
 /**
  * Class to extract the geometry field consistently.
@@ -43,7 +39,8 @@ public class ExtractGeometryField {
      * @return true, if valid
      */
     private static boolean validGeometryFieldName(Expression geometryField) {
-        return ((geometryField != null) && (geometryField.toString() != null)
+        return ((geometryField != null)
+                && (geometryField.toString() != null)
                 && !geometryField.toString().trim().isEmpty());
     }
 }

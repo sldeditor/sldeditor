@@ -21,7 +21,7 @@ package com.sldeditor.ui.legend.option;
 
 /**
  * The Interface LegendOptionDataUpdateInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface LegendOptionDataUpdateInterface {

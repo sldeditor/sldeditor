@@ -25,9 +25,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.coordinate.CoordManager;
+import com.sldeditor.filter.v2.envvar.EnvVar;
+import com.sldeditor.filter.v2.envvar.EnvVarUpdateInterface;
+import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
+import com.sldeditor.filter.v2.envvar.WMSEnvVarValues;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.ConstantExpression;
 import org.geotools.geometry.jts.ReferencedEnvelope;
@@ -36,19 +40,12 @@ import org.locationtech.jts.geom.Envelope;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.coordinate.CoordManager;
-import com.sldeditor.filter.v2.envvar.EnvVar;
-import com.sldeditor.filter.v2.envvar.EnvVarUpdateInterface;
-import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
-import com.sldeditor.filter.v2.envvar.WMSEnvVarValues;
-
 /**
  * Unit test for EnvironmentVariableManager class.
- * 
- * <p>{@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class EnvironmentVariableManagerTest {
 
@@ -68,22 +65,21 @@ public class EnvironmentVariableManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#addEnvVarUpdatedListener(com.sldeditor.filter.v2.envvar.EnvVarUpdateInterface)}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#addEnvVarUpdatedListener(com.sldeditor.filter.v2.envvar.EnvVarUpdateInterface)}.
      */
     @Test
-    public void testAddEnvVarUpdatedListener() {
-    }
+    public void testAddEnvVarUpdatedListener() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#getInstance()}. Test method
-     * for
-     * {@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#addNewEnvVar(java.lang.String, java.lang.Class, java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#getEnvVarList()}. Test
-     * method for
-     * {@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#removeEnvVar(com.sldeditor.filter.v2.envvar.EnvVar)}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#getInstance()}. Test method for
+     * {@link
+     * com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#addNewEnvVar(java.lang.String,
+     * java.lang.Class, java.lang.String)}. Test method for {@link
+     * com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#getEnvVarList()}. Test method for
+     * {@link
+     * com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#removeEnvVar(com.sldeditor.filter.v2.envvar.EnvVar)}.
      */
     @Test
     public void testAddNewEnvVar() {
@@ -93,24 +89,28 @@ public class EnvironmentVariableManagerTest {
         EnvironmentVariableManager.getInstance().addEnvVarUpdatedListener(listener);
 
         List<EnvVar> envVarList = EnvironmentVariableManager.getInstance().getEnvVarList();
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         int preloadedCount = envVarList.size();
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
 
-        EnvVar actualValue1 = EnvironmentVariableManager.getInstance()
-                .addNewEnvVar("testAddNewEnvVar1", String.class, "testvalue1");
+        EnvVar actualValue1 =
+                EnvironmentVariableManager.getInstance()
+                        .addNewEnvVar("testAddNewEnvVar1", String.class, "testvalue1");
         assertNotNull(actualValue1);
         assertFalse(listener.hasBeenNotified());
-        EnvVar actualValue2 = EnvironmentVariableManager.getInstance()
-                .addNewEnvVar("testAddNewEnvVar2", Integer.class, "42");
+        EnvVar actualValue2 =
+                EnvironmentVariableManager.getInstance()
+                        .addNewEnvVar("testAddNewEnvVar2", Integer.class, "42");
         assertNotNull(actualValue2);
-        EnvVar actualValue3 = EnvironmentVariableManager.getInstance()
-                .addNewEnvVar("testAddNewEnvVar3", Double.class, "3.141");
+        EnvVar actualValue3 =
+                EnvironmentVariableManager.getInstance()
+                        .addNewEnvVar("testAddNewEnvVar3", Double.class, "3.141");
         assertNotNull(actualValue3);
 
         // Environment variable already exists
-        EnvVar actualValue4 = EnvironmentVariableManager.getInstance()
-                .addNewEnvVar("testAddNewEnvVar2", Boolean.class, "false");
+        EnvVar actualValue4 =
+                EnvironmentVariableManager.getInstance()
+                        .addNewEnvVar("testAddNewEnvVar2", Boolean.class, "false");
         assertNull(actualValue4);
         assertFalse(listener.hasBeenNotified());
 
@@ -130,35 +130,36 @@ public class EnvironmentVariableManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#createExpression(com.sldeditor.filter.v2.envvar.EnvVar)}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#createExpression(com.sldeditor.filter.v2.envvar.EnvVar)}.
      */
     @Test
     public void testCreateExpression() {
-        EnvVar actualValue1 = EnvironmentVariableManager.getInstance()
-                .addNewEnvVar("testAddNewEnvVar1", String.class, "testvalue1");
+        EnvVar actualValue1 =
+                EnvironmentVariableManager.getInstance()
+                        .addNewEnvVar("testAddNewEnvVar1", String.class, "testvalue1");
         assertNotNull(actualValue1);
 
         assertNull(EnvironmentVariableManager.getInstance().createExpression(null));
 
-        Expression expression = EnvironmentVariableManager.getInstance()
-                .createExpression(actualValue1);
+        Expression expression =
+                EnvironmentVariableManager.getInstance().createExpression(actualValue1);
         assertNotNull(expression);
         EnvironmentVariableManager.getInstance().removeEnvVar(actualValue1);
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#update(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#update(java.util.List)}.
      */
     @Test
     public void testUpdate() {
         EnvVarNotification listener = new EnvVarNotification();
         EnvironmentVariableManager.getInstance().addEnvVarUpdatedListener(listener);
         List<EnvVar> envVarList = EnvironmentVariableManager.getInstance().getEnvVarList();
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         int preloadedCount = envVarList.size();
-        //CHECKSTYLE:ON
+        // CHECKSTYLE:ON
 
         assertFalse(listener.hasBeenNotified());
         EnvironmentVariableManager.getInstance().update(null);
@@ -188,8 +189,8 @@ public class EnvironmentVariableManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#getEnvVarTypeList()}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#getEnvVarTypeList()}.
      */
     @Test
     public void testGetEnvVarTypeList() {
@@ -199,8 +200,8 @@ public class EnvironmentVariableManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#getDataType(org.opengis.filter.expression.Expression)}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#getDataType(org.opengis.filter.expression.Expression)}.
      */
     @Test
     public void testGetDataType() {
@@ -218,8 +219,8 @@ public class EnvironmentVariableManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#setWMSEnvVarValues(com.sldeditor.filter.v2.envvar.WMSEnvVarValues)}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#setWMSEnvVarValues(com.sldeditor.filter.v2.envvar.WMSEnvVarValues)}.
      */
     @Test
     public void testSetWMSEnvVarValues() {
@@ -230,8 +231,8 @@ public class EnvironmentVariableManagerTest {
         wmsEnvVar.setImageHeight(42);
         wmsEnvVar.setImageWidth(454);
         Envelope envelope = new Envelope(1.0, 2.0, 50.0, 51.1);
-        ReferencedEnvelope mapBounds = ReferencedEnvelope.create(envelope,
-                CoordManager.getInstance().getWGS84());
+        ReferencedEnvelope mapBounds =
+                ReferencedEnvelope.create(envelope, CoordManager.getInstance().getWGS84());
         wmsEnvVar.setMapBounds(mapBounds);
 
         EnvironmentVariableManager.getInstance().setWMSEnvVarValues(wmsEnvVar);
@@ -241,19 +242,18 @@ public class EnvironmentVariableManagerTest {
         wmsEnvVar2.setImageHeight(69);
         wmsEnvVar2.setImageWidth(123);
         Envelope envelope2 = new Envelope(-1.0, -2.0, 50.0, 51.1);
-        ReferencedEnvelope mapBounds2 = ReferencedEnvelope.create(envelope2,
-                CoordManager.getInstance().getWGS84());
+        ReferencedEnvelope mapBounds2 =
+                ReferencedEnvelope.create(envelope2, CoordManager.getInstance().getWGS84());
         wmsEnvVar2.setMapBounds(mapBounds2);
         EnvironmentVariableManager.getInstance().setWMSEnvVarValues(wmsEnvVar2);
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#showDialog()}.
+     * Test method for {@link
+     * com.sldeditor.filter.v2.envvar.EnvironmentVariableManager#showDialog()}.
      */
     @Test
     public void testShowDialog() {
         // Do nothing
     }
-
 }

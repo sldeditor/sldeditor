@@ -21,9 +21,7 @@ package com.sldeditor.update;
 
 import java.net.URL;
 
-/**
- * The Interface CheckUpdateClientInterface.
- */
+/** The Interface CheckUpdateClientInterface. */
 public interface CheckUpdateClientInterface {
 
     /**
@@ -46,5 +44,4 @@ public interface CheckUpdateClientInterface {
      * @return true, if is destination reached
      */
     boolean isDestinationReached();
-
 }

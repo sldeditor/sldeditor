@@ -21,7 +21,7 @@ package com.sldeditor.ui.detail.config.base.defaults;
 
 /**
  * Base class for configuration file defaults.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public abstract class DefaultBase {
@@ -41,5 +41,4 @@ public abstract class DefaultBase {
      * @return the value
      */
     public abstract Object getValue(String defaultValue);
-
 }

@@ -18,8 +18,9 @@
  */
 /**
  * Contains tests point,line,polygon symbols taken from SLD Cookbook
+ *
  * <p>{@link http://docs.geoserver.org/latest/en/user/styling/sld-cookbook}
- *  
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.test.sldcookbook;

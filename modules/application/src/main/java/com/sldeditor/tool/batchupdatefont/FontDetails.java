@@ -19,20 +19,18 @@
 
 package com.sldeditor.tool.batchupdatefont;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.styling.Font;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.styling.Font;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class TextSymbolizerDetails allows a user to configure text data in a panel.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FontDetails extends StandardPanel implements UpdateSymbolInterface {
@@ -40,18 +38,14 @@ public class FontDetails extends StandardPanel implements UpdateSymbolInterface 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public FontDetails() {
         super(FontDetails.class);
 
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFileNoScrollPane(null, getClass(), this, "Font.xml");
         populate(null);
@@ -100,7 +94,10 @@ public class FontDetails extends StandardPanel implements UpdateSymbolInterface 
      * @param fieldId the field id
      * @param value the value
      */
-    private void populateField(boolean emptyList, boolean showMultipleCheckbox, FieldIdEnum fieldId,
+    private void populateField(
+            boolean emptyList,
+            boolean showMultipleCheckbox,
+            FieldIdEnum fieldId,
             Expression value) {
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
         if (fieldConfig != null) {
@@ -117,9 +114,7 @@ public class FontDetails extends StandardPanel implements UpdateSymbolInterface 
         }
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         //
         // Font
@@ -180,5 +175,4 @@ public class FontDetails extends StandardPanel implements UpdateSymbolInterface 
 
         return font;
     }
-
 }

@@ -18,9 +18,10 @@
  */
 /**
  * The file system extension, provides mechanism to select slds and load them.
- * <p>Further extension mechanism used to extend this extension so source/destination can
- * be file or GeoServer instances..
- * 
+ *
+ * <p>Further extension mechanism used to extend this extension so source/destination can be file or
+ * GeoServer instances..
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.extension.filesystem;

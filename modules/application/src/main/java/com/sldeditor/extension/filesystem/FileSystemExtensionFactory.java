@@ -19,14 +19,13 @@
 
 package com.sldeditor.extension.filesystem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.sldeditor.common.ToolSelectionInterface;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.extension.filesystem.database.DatabaseInput;
 import com.sldeditor.extension.filesystem.file.FileSystemInput;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerInput;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A factory for creating FileSystemExtension objects.

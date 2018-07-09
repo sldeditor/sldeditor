@@ -22,22 +22,23 @@ package com.sldeditor.test.unit.common.undo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Test;
-
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import org.junit.Test;
 
 /**
  * Unit test for UndoEvent class.
- * 
+ *
  * <p>{@link com.sldeditor.common.undo.UndoEvent}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class UndoEventTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.undo.UndoEvent#UndoEvent(com.sldeditor.common.undo.UndoActionInterface, com.sldeditor.common.xml.ui.FieldIdEnum, java.lang.Object, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.common.undo.UndoEvent#UndoEvent(com.sldeditor.common.undo.UndoActionInterface,
+     * com.sldeditor.common.xml.ui.FieldIdEnum, java.lang.Object, java.lang.Object)}.
      */
     @Test
     public void testUndoEvent1() {
@@ -57,20 +58,22 @@ public class UndoEventTest {
         assertNull(parent.undoAction);
 
         undoEvent.doUndo();
-        assertEquals(oldValue, ((UndoEvent)parent.undoAction).getOldValue());
+        assertEquals(oldValue, ((UndoEvent) parent.undoAction).getOldValue());
         assertNull(parent.redoAction);
 
         undoEvent.doRedo();
-        assertEquals(newValue, ((UndoEvent)parent.redoAction).getNewValue());
+        assertEquals(newValue, ((UndoEvent) parent.redoAction).getNewValue());
         assertNull(parent.undoAction);
 
         undoEvent.doUndo();
-        assertEquals(oldValue, ((UndoEvent)parent.undoAction).getOldValue());
+        assertEquals(oldValue, ((UndoEvent) parent.undoAction).getOldValue());
         assertNull(parent.redoAction);
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.undo.UndoEvent#UndoEvent(com.sldeditor.common.undo.UndoActionInterface, java.lang.String, java.lang.Object, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.common.undo.UndoEvent#UndoEvent(com.sldeditor.common.undo.UndoActionInterface,
+     * java.lang.String, java.lang.Object, java.lang.Object)}.
      */
     @Test
     public void testUndoEvent2() {
@@ -90,15 +93,15 @@ public class UndoEventTest {
         assertNull(parent.undoAction);
 
         undoEvent.doUndo();
-        assertEquals(oldValue, ((UndoEvent)parent.undoAction).getOldValue());
+        assertEquals(oldValue, ((UndoEvent) parent.undoAction).getOldValue());
         assertNull(parent.redoAction);
 
         undoEvent.doRedo();
-        assertEquals(newValue, ((UndoEvent)parent.redoAction).getNewValue());
+        assertEquals(newValue, ((UndoEvent) parent.redoAction).getNewValue());
         assertNull(parent.undoAction);
 
         undoEvent.doUndo();
-        assertEquals(oldValue, ((UndoEvent)parent.undoAction).getOldValue());
+        assertEquals(oldValue, ((UndoEvent) parent.undoAction).getOldValue());
         assertNull(parent.redoAction);
     }
 }

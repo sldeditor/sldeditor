@@ -21,19 +21,17 @@ package com.sldeditor.test.unit.ui.preferences;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.ui.preferences.PrefPanel;
+import org.junit.Test;
 
 /**
  * Unit test for PrefPanel class.
- * 
- * <p>{@link com.sldeditor.ui.preferences.PrefPanel}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.ui.preferences.PrefPanel}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class PrefPanelTest {
 
@@ -49,12 +47,11 @@ public class PrefPanelTest {
         void testPopulate(PrefData prefData) {
             populate(prefData);
         }
-
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.preferences.PrefPanel#showDialog(com.sldeditor.common.preferences.PrefData)}.
+     * Test method for {@link
+     * com.sldeditor.ui.preferences.PrefPanel#showDialog(com.sldeditor.common.preferences.PrefData)}.
      */
     @Test
     public void testShowDialog() {
@@ -71,5 +68,4 @@ public class PrefPanelTest {
 
         assertTrue(prefData.equals(actual));
     }
-
 }

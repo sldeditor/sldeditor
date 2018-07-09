@@ -23,7 +23,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * Class to handle the getting and setting of grey raster channel names using strings
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VOChannelNameGreyNoExpression extends VOChannelNameNoExpression {

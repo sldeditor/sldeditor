@@ -19,14 +19,12 @@
 
 package com.sldeditor.ui.detail.config.colourmap;
 
+import com.sldeditor.common.utils.ColourUtils;
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-
-import com.sldeditor.common.utils.ColourUtils;
 
 /**
  * The Class ColourTableCellRenderer.
@@ -62,17 +60,18 @@ public class ColourTableCellRenderer extends DefaultTableCellRenderer {
      * @return the table cell renderer component
      */
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-            boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(
+            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Color colour = colourMapModel.getColour(row);
 
-        JLabel label = (JLabel) super.getTableCellRendererComponent(table,
-                value, isSelected, hasFocus, row, column);
+        JLabel label =
+                (JLabel)
+                        super.getTableCellRendererComponent(
+                                table, value, isSelected, hasFocus, row, column);
 
         label.setBackground(colour);
         label.setForeground(ColourUtils.getTextColour(colour));
 
         return label;
     }
-
 }

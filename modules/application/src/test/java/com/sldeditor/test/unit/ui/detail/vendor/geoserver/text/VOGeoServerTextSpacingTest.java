@@ -22,11 +22,15 @@ package com.sldeditor.test.unit.ui.detail.vendor.geoserver.text;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
+import com.sldeditor.ui.detail.TextSymbolizerDetails;
+import com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Graphic;
@@ -40,25 +44,19 @@ import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Literal;
 
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
-import com.sldeditor.ui.detail.TextSymbolizerDetails;
-import com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing;
-
 /**
  * The unit test for VOGeoServerTextSpacing.
- * 
- * <p>
- * {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing}
+ *
+ * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing}
  *
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerTextSpacingTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacingTest#VOGeoServerTextSpacingTest(java.lang.Class, com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacingTest#VOGeoServerTextSpacingTest(java.lang.Class,
+     * com.sldeditor.filter.v2.function.FunctionNameInterface)}.
      */
     @Test
     public void testVOGeoServerTextSpacingTest() {
@@ -98,8 +96,10 @@ public class VOGeoServerTextSpacingTest {
         // Try with external graphic
         graphic = styleFactory.createDefaultGraphic();
         try {
-            graphic.graphicalSymbols().add(styleFactory
-                    .createExternalGraphic(new File("test.png").toURI().toURL(), "png"));
+            graphic.graphicalSymbols()
+                    .add(
+                            styleFactory.createExternalGraphic(
+                                    new File("test.png").toURI().toURL(), "png"));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -120,8 +120,8 @@ public class VOGeoServerTextSpacingTest {
 
         // Find minimum version with no textSymbolizer2 values set
         vendorOptionsPresentList.clear();
-        testObj.getMinimumVersion(null, styleFactory.createTextSymbolizer(),
-                vendorOptionsPresentList);
+        testObj.getMinimumVersion(
+                null, styleFactory.createTextSymbolizer(), vendorOptionsPresentList);
         assertEquals(0, vendorOptionsPresentList.size());
 
         // Get the code coverage values up
@@ -134,7 +134,7 @@ public class VOGeoServerTextSpacingTest {
         FeatureTypeStyle fts = null;
         testObj.populate(fts);
         testObj.updateSymbol(fts);
-        
+
         RasterSymbolizer raster = null;
         testObj.populate(raster);
         testObj.updateSymbol(raster);
@@ -143,143 +143,136 @@ public class VOGeoServerTextSpacingTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getVendorOption()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getVendorOption()}.
      */
     @Test
-    public void testGetVendorOption() {
-    }
+    public void testGetVendorOption() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#dataChanged(com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#dataChanged(com.sldeditor.common.xml.ui.FieldIdEnum)}.
      */
     @Test
-    public void testDataChanged() {
-    }
+    public void testDataChanged() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#populate(com.sldeditor.common.data.SelectedSymbol)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#populate(com.sldeditor.common.data.SelectedSymbol)}.
      */
     @Test
-    public void testPopulateSelectedSymbol() {
-    }
+    public void testPopulateSelectedSymbol() {}
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#populate(org.geotools.styling.TextSymbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#populate(org.geotools.styling.TextSymbolizer)}.
      */
     @Test
-    public void testPopulateTextSymbolizer() {
-    }
+    public void testPopulateTextSymbolizer() {}
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#populate(org.geotools.styling.RasterSymbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#populate(org.geotools.styling.RasterSymbolizer)}.
      */
     @Test
-    public void testPopulateRasterSymbolizer() {
-    }
+    public void testPopulateRasterSymbolizer() {}
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#populate(org.geotools.styling.FeatureTypeStyle)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#populate(org.geotools.styling.FeatureTypeStyle)}.
      */
     @Test
-    public void testPopulateFeatureTypeStyle() {
-    }
+    public void testPopulateFeatureTypeStyle() {}
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#populate(org.geotools.styling.PolygonSymbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#populate(org.geotools.styling.PolygonSymbolizer)}.
      */
     @Test
-    public void testPopulatePolygonSymbolizer() {
-    }
+    public void testPopulatePolygonSymbolizer() {}
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getFieldDataManager()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getFieldDataManager()}.
      */
     @Test
-    public void testGetFieldDataManager() {
-    }
+    public void testGetFieldDataManager() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#updateSymbol(org.geotools.styling.RasterSymbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#updateSymbol(org.geotools.styling.RasterSymbolizer)}.
      */
     @Test
-    public void testUpdateSymbolRasterSymbolizer() {
-    }
+    public void testUpdateSymbolRasterSymbolizer() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#updateSymbol(org.geotools.styling.PolygonSymbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#updateSymbol(org.geotools.styling.PolygonSymbolizer)}.
      */
     @Test
-    public void testUpdateSymbolPolygonSymbolizer() {
-    }
+    public void testUpdateSymbolPolygonSymbolizer() {}
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#updateSymbol(org.geotools.styling.TextSymbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#updateSymbol(org.geotools.styling.TextSymbolizer)}.
      */
     @Test
-    public void testUpdateSymbolTextSymbolizer() {
-    }
+    public void testUpdateSymbolTextSymbolizer() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#updateSymbol(org.geotools.styling.FeatureTypeStyle)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#updateSymbol(org.geotools.styling.FeatureTypeStyle)}.
      */
     @Test
-    public void testUpdateSymbolFeatureTypeStyle() {
-    }
+    public void testUpdateSymbolFeatureTypeStyle() {}
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getPanel()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getPanel()}.
      */
     @Test
-    public void testGetPanel() {
-    }
+    public void testGetPanel() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#setParentPanel(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#setParentPanel(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
      */
     @Test
-    public void testSetParentPanel() {
-    }
+    public void testSetParentPanel() {}
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#isDataPresent()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#isDataPresent()}.
      */
     @Test
-    public void testIsDataPresent() {
-    }
+    public void testIsDataPresent() {}
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#preLoadSymbol()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#preLoadSymbol()}.
      */
     @Test
-    public void testPreLoadSymbol() {
-    }
+    public void testPreLoadSymbol() {}
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getParentPanel()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getParentPanel()}.
      */
     @Test
-    public void testGetParentPanel() {
-    }
+    public void testGetParentPanel() {}
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getVendorOptionInfo()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getVendorOptionInfo()}.
      */
     @Test
-    public void testGetVendorOptionInfo() {
-    }
+    public void testGetVendorOptionInfo() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getMinimumVersion(java.lang.Object, java.lang.Object, java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSpacing#getMinimumVersion(java.lang.Object,
+     * java.lang.Object, java.util.List)}.
      */
     @Test
-    public void testGetMinimumVersion() {
-    }
-
+    public void testGetMinimumVersion() {}
 }

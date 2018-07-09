@@ -19,25 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.arrow;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.filter.LiteralExpressionImpl;
-import org.geotools.styling.ExternalGraphicImpl;
-import org.geotools.styling.Fill;
-import org.geotools.styling.FillImpl;
-import org.geotools.styling.Graphic;
-import org.geotools.styling.Mark;
-import org.geotools.styling.MarkImpl;
-import org.geotools.styling.Stroke;
-import org.opengis.filter.expression.Expression;
-import org.opengis.style.GraphicFill;
-import org.opengis.style.GraphicalSymbol;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
@@ -55,18 +36,34 @@ import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.geotools.styling.ExternalGraphicImpl;
+import org.geotools.styling.Fill;
+import org.geotools.styling.FillImpl;
+import org.geotools.styling.Graphic;
+import org.geotools.styling.Mark;
+import org.geotools.styling.MarkImpl;
+import org.geotools.styling.Stroke;
+import org.opengis.filter.expression.Expression;
+import org.opengis.style.GraphicFill;
+import org.opengis.style.GraphicalSymbol;
 
 /**
  * The Class FieldConfigArrow wraps a text field GUI component and an optional
- *  value/attribute/expression drop down,
- * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * 
+ * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ *
  * <p>Allows the user to configure a extshape:arrow string.
- * 
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface {
@@ -77,8 +74,10 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     /** The arrow panel. */
     private ArrowDetails arrowPanel = null;
 
-    /** The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable
-     *  field states for the different symbol types. */
+    /**
+     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field
+     * states for the different symbol types.
+     */
     private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE =
             "symbol/marker/arrow/SymbolTypeFieldState_Arrow.xml";
 
@@ -93,16 +92,20 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigArrow(FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig,
+    public FieldConfigArrow(
+            FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
+        super(
+                commonData,
+                SYMBOLTYPE_FIELD_STATE_RESOURCE,
+                fillFieldConfig,
+                strokeFieldConfig,
                 symbolSelectionField);
-
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     @Override
     public void createUI() {
         FieldPanel fieldPanel = createFieldPanel(0, "");
@@ -165,9 +168,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     @Override
     public void revertToDefaultValue() {
         if (arrowPanel != null) {
@@ -182,7 +183,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -227,8 +228,12 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
      * @param symbol the symbol
      */
     @Override
-    public void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol) {
+    public void setValue(
+            Class<?> symbolizerType,
+            GraphicPanelFieldManager fieldConfigManager,
+            FieldConfigSymbolType multiOptionPanel,
+            Graphic graphic,
+            GraphicalSymbol symbol) {
         if ((symbol != null) && (fieldConfigManager != null)) {
             if (symbol instanceof Mark) {
                 MarkImpl markerSymbol = (MarkImpl) symbol;
@@ -270,8 +275,11 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
      * @return the value
      */
     @Override
-    public List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
-            Expression symbolType, boolean fillEnabled, boolean strokeEnabled) {
+    public List<GraphicalSymbol> getValue(
+            GraphicPanelFieldManager fieldConfigManager,
+            Expression symbolType,
+            boolean fillEnabled,
+            boolean strokeEnabled) {
         List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
 
         if (fieldConfigManager != null) {
@@ -299,8 +307,9 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
                         if (field != null) {
                             expStrokeColourOpacity = field.getExpression();
                         }
-                        stroke = getStyleFactory().createStroke(expStrokeColour,
-                                expStrokeColourOpacity);
+                        stroke =
+                                getStyleFactory()
+                                        .createStroke(expStrokeColour, expStrokeColourOpacity);
                     }
 
                     // Fill colour
@@ -337,8 +346,9 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
                         symbolSize = field.getExpression();
                     }
                     Expression rotation = null;
-                    Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill,
-                            symbolSize, rotation);
+                    Mark mark =
+                            getStyleFactory()
+                                    .createMark(wellKnownName, stroke, fill, symbolSize, rotation);
 
                     symbolList.add(mark);
                 }
@@ -445,9 +455,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
         return null;
     }
 
-    /**
-     * Arrow value updated.
-     */
+    /** Arrow value updated. */
     @Override
     public void arrowValueUpdated() {
         setCachedExpression(generateExpression());
@@ -474,8 +482,8 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     }
 
     /**
-     * Method called when the field has been selected from a combo box
-     * and may need to be initialised.
+     * Method called when the field has been selected from a combo box and may need to be
+     * initialised.
      */
     @Override
     public void justSelected() {
@@ -484,9 +492,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
         checkSymbolIsValid();
     }
 
-    /**
-     * Check symbol is valid.
-     */
+    /** Check symbol is valid. */
     public void checkSymbolIsValid() {
         // Mark symbol as valid/invalid
         boolean valid = false;
@@ -508,8 +514,12 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
         FieldConfigArrow copy = null;
 
         if (fieldConfigBase != null) {
-            copy = new FieldConfigArrow(fieldConfigBase.getCommonData(), fillFieldConfig,
-                    strokeFieldConfig, symbolSelectionField);
+            copy =
+                    new FieldConfigArrow(
+                            fieldConfigBase.getCommonData(),
+                            fillFieldConfig,
+                            strokeFieldConfig,
+                            symbolSelectionField);
         }
         return copy;
     }
@@ -528,7 +538,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(java.util.Map)
      */
     @Override
@@ -539,7 +549,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
      */
     @Override
@@ -562,12 +572,12 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
         vendorOptionsPresentList.add(voPresent);
@@ -575,15 +585,19 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
         if (vendorOptionInfo == null) {
-            vendorOptionInfo = new VendorOptionInfo("extshape://arrow", getVendorOptionVersion(),
-                    Localisation.getString(VOGeoServerArrowSymbol.class,
-                            "VOGeoServerArrowSymbol.description"));
+            vendorOptionInfo =
+                    new VendorOptionInfo(
+                            "extshape://arrow",
+                            getVendorOptionVersion(),
+                            Localisation.getString(
+                                    VOGeoServerArrowSymbol.class,
+                                    "VOGeoServerArrowSymbol.description"));
         }
 
         return vendorOptionInfo;

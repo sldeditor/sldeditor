@@ -23,7 +23,7 @@ import java.awt.Color;
 
 /**
  * The Interface PrefUpdateInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface PrefUpdateInterface {
@@ -34,7 +34,7 @@ public interface PrefUpdateInterface {
      * @param value the value
      */
     void useAntiAliasUpdated(boolean value);
-    
+
     /**
      * Background colour update.
      *

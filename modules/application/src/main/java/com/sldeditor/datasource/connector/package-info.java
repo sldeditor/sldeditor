@@ -18,7 +18,7 @@
  */
 /**
  * Data source connector factory package.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource.connector;

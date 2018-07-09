@@ -19,24 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.filter.LiteralExpressionImpl;
-import org.geotools.styling.ExternalGraphicImpl;
-import org.geotools.styling.Fill;
-import org.geotools.styling.Graphic;
-import org.geotools.styling.Mark;
-import org.geotools.styling.MarkImpl;
-import org.geotools.styling.Stroke;
-import org.opengis.filter.expression.Expression;
-import org.opengis.style.GraphicFill;
-import org.opengis.style.GraphicalSymbol;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -53,11 +35,27 @@ import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.geotools.styling.ExternalGraphicImpl;
+import org.geotools.styling.Fill;
+import org.geotools.styling.Graphic;
+import org.geotools.styling.Mark;
+import org.geotools.styling.MarkImpl;
+import org.geotools.styling.Stroke;
+import org.opengis.filter.expression.Expression;
+import org.opengis.style.GraphicFill;
+import org.opengis.style.GraphicalSymbol;
 
 /**
- * The Class FieldConfigWindBarbs is a GeoServer vendor option to
- * display wind barbs, weather symbols.
- * 
+ * The Class FieldConfigWindBarbs is a GeoServer vendor option to display wind barbs, weather
+ * symbols.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateInterface {
@@ -72,10 +70,10 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     private WindBarbDetails windBarbsPanel = null;
 
     /**
-     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable
-     *  field states for the different symbol types.
+     * The Constant SYMBOLTYPE_FIELD_STATE_RESOURCE, file containing the field enable/disable field
+     * states for the different symbol types.
      */
-    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE = 
+    private static final String SYMBOLTYPE_FIELD_STATE_RESOURCE =
             "symbol/marker/windbarb/SymbolTypeFieldState_WindBarb.xml";
 
     private VendorOptionInfo vendorOptionInfo;
@@ -88,18 +86,23 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigWindBarbs(FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig,
+    public FieldConfigWindBarbs(
+            FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
+        super(
+                commonData,
+                SYMBOLTYPE_FIELD_STATE_RESOURCE,
+                fillFieldConfig,
+                strokeFieldConfig,
                 symbolSelectionField);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -122,7 +125,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
@@ -137,7 +140,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -152,7 +155,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -172,7 +175,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -180,12 +183,10 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
         return true;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -202,7 +203,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -244,8 +245,12 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @param symbol the symbol
      */
     @Override
-    public void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol) {
+    public void setValue(
+            Class<?> symbolizerType,
+            GraphicPanelFieldManager fieldConfigManager,
+            FieldConfigSymbolType multiOptionPanel,
+            Graphic graphic,
+            GraphicalSymbol symbol) {
         if (symbol != null) {
             if (symbol instanceof Mark) {
                 MarkImpl markerSymbol = (MarkImpl) symbol;
@@ -271,8 +276,11 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @return the value
      */
     @Override
-    public List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
-            Expression symbolType, boolean fillEnabled, boolean strokeEnabled) {
+    public List<GraphicalSymbol> getValue(
+            GraphicPanelFieldManager fieldConfigManager,
+            Expression symbolType,
+            boolean fillEnabled,
+            boolean strokeEnabled) {
         List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
 
         Expression wellKnownName = null;
@@ -293,8 +301,8 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
                 Fill fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
                 Expression size = null;
                 Expression rotation = null;
-                Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, size,
-                        rotation);
+                Mark mark =
+                        getStyleFactory().createMark(wellKnownName, stroke, fill, size, rotation);
 
                 symbolList.add(mark);
             }
@@ -403,9 +411,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
         return false;
     }
 
-    /**
-     * Wind barb value updated.
-     */
+    /** Wind barb value updated. */
     @Override
     public void windBarbValueUpdated() {
         setCachedExpression(generateExpression());
@@ -417,9 +423,9 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     }
 
     /**
-     * Method called when the field has been selected from a combo 
-     * box and may need to be initialised
-     * 
+     * Method called when the field has been selected from a combo box and may need to be
+     * initialised
+     *
      * <p>Will be be overridden if necessary.
      */
     public void justSelected() {
@@ -452,8 +458,12 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
         FieldConfigWindBarbs copy = null;
 
         if (fieldConfigBase != null) {
-            copy = new FieldConfigWindBarbs(fieldConfigBase.getCommonData(), fillFieldConfig,
-                    strokeFieldConfig, symbolSelectionField);
+            copy =
+                    new FieldConfigWindBarbs(
+                            fieldConfigBase.getCommonData(),
+                            fillFieldConfig,
+                            strokeFieldConfig,
+                            symbolSelectionField);
         }
         return copy;
     }
@@ -472,7 +482,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(java.util.Map)
      */
     @Override
@@ -484,7 +494,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
      */
     @Override
@@ -506,12 +516,12 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
         vendorOptionsPresentList.add(voPresent);
@@ -519,15 +529,19 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
         if (vendorOptionInfo == null) {
-            vendorOptionInfo = new VendorOptionInfo("Windbarbs", getVendorOptionVersion(),
-                    Localisation.getString(WindBarbDetails.class,
-                            "VOGeoServerWindbarbSymbol.description"));
+            vendorOptionInfo =
+                    new VendorOptionInfo(
+                            "Windbarbs",
+                            getVendorOptionVersion(),
+                            Localisation.getString(
+                                    WindBarbDetails.class,
+                                    "VOGeoServerWindbarbSymbol.description"));
         }
         return vendorOptionInfo;
     }

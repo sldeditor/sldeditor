@@ -40,5 +40,4 @@ public class ExpressionTreeModel extends DefaultTreeModel {
     public ExpressionTreeModel(TreeNode root) {
         super(root);
     }
-
 }

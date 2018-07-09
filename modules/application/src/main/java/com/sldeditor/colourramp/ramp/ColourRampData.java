@@ -40,11 +40,8 @@ public class ColourRampData {
     /** The reverse colours flag. */
     private boolean reverseColours = false;
 
-    /**
-     * Instantiates a new colour ramp data.
-     */
-    public ColourRampData() {
-    }
+    /** Instantiates a new colour ramp data. */
+    public ColourRampData() {}
 
     /**
      * Gets the colour ramp.

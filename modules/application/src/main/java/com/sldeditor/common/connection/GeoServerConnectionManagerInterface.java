@@ -19,12 +19,11 @@
 
 package com.sldeditor.common.connection;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Interface GeoServerConnectionManagerInterface.
@@ -40,9 +39,7 @@ public interface GeoServerConnectionManagerInterface {
      */
     List<GeoServerConnection> getConnectionList();
 
-    /**
-     * Update connection list.
-     */
+    /** Update connection list. */
     void updateList();
 
     /**

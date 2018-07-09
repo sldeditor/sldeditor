@@ -12,30 +12,28 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoModel;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Unit test for VendorOptionInfoModel.
- * 
- * <p>{@link com.sldeditor.common.vendoroption.info.VendorOptionInfoModel}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.common.vendoroption.info.VendorOptionInfoModel}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class VendorOptionInfoModelTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.info.VendorOptionInfoModel#isCellEditable(int, int)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.info.VendorOptionInfoModel#isCellEditable(int, int)}.
      */
     @Test
     public void testIsCellEditable() {
@@ -45,7 +43,8 @@ public class VendorOptionInfoModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.info.VendorOptionInfoModel#getColumnCount()}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.info.VendorOptionInfoModel#getColumnCount()}.
      */
     @Test
     public void testGetColumnCount() {
@@ -57,7 +56,8 @@ public class VendorOptionInfoModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.info.VendorOptionInfoModel#addVendorOptionInfo(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.info.VendorOptionInfoModel#addVendorOptionInfo(java.util.List)}.
      */
     @Test
     public void testAddVendorOptionInfo() {
@@ -70,8 +70,9 @@ public class VendorOptionInfoModelTest {
         VersionData versionDataMin = VersionData.decode(getClass(), "2.4.1");
         VersionData versionDataMax = VersionData.decode(getClass(), "2.8.3");
 
-        VendorOptionVersion versionData = new VendorOptionVersion(GeoServerVendorOption.class,
-                versionDataMin, versionDataMax);
+        VendorOptionVersion versionData =
+                new VendorOptionVersion(
+                        GeoServerVendorOption.class, versionDataMin, versionDataMax);
         String description = "test description";
         VendorOptionInfo info = new VendorOptionInfo(name, versionData, description);
 
@@ -85,8 +86,9 @@ public class VendorOptionInfoModelTest {
         VersionData versionDataMin3 = VersionData.decode(getClass(), "2.8.1");
         VersionData versionDataMax3 = VersionData.decode(getClass(), "Latest");
 
-        VendorOptionVersion versionData3 = new VendorOptionVersion(GeoServerVendorOption.class,
-                versionDataMin3, versionDataMax3);
+        VendorOptionVersion versionData3 =
+                new VendorOptionVersion(
+                        GeoServerVendorOption.class, versionDataMin3, versionDataMax3);
         String name3 = "name3";
         String description3 = "test description3";
         vendorOptionInfoList.add(new VendorOptionInfo(name3, versionData3, description3));
@@ -99,9 +101,9 @@ public class VendorOptionInfoModelTest {
         assertNull(model.getValueAt(-1, -1));
         assertNull(model.getValueAt(4, -1));
         assertNull(model.getValueAt(4, 4));
-        assertEquals(name2, model.getValueAt(0,0));
-        assertEquals("Strict SLD", model.getValueAt(0,1));
-        assertEquals("GeoServer 2.4.1-2.8.3", model.getValueAt(1,1));
+        assertEquals(name2, model.getValueAt(0, 0));
+        assertEquals("Strict SLD", model.getValueAt(0, 1));
+        assertEquals("GeoServer 2.4.1-2.8.3", model.getValueAt(1, 1));
 
         // Test get description
         assertNull(model.getDescription(-1));
@@ -117,17 +119,16 @@ public class VendorOptionInfoModelTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.info.VendorOptionInfoModel#setSelectedVersion(com.sldeditor.common.vendoroption.VersionData)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.info.VendorOptionInfoModel#setSelectedVersion(com.sldeditor.common.vendoroption.VersionData)}.
      */
     @Test
-    public void testSetSelectedVersion() {
-    }
+    public void testSetSelectedVersion() {}
 
     /**
-     * Test method for {@link com.sldeditor.common.vendoroption.info.VendorOptionInfoModel#isVendorOptionAvailable(int)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.info.VendorOptionInfoModel#isVendorOptionAvailable(int)}.
      */
     @Test
-    public void testIsVendorOptionAvailable() {
-    }
-
+    public void testIsVendorOptionAvailable() {}
 }

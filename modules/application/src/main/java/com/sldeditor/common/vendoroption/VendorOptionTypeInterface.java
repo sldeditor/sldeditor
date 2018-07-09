@@ -17,14 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.vendoroption;
 
 import java.util.List;
 
 /**
  * The Interface VendorOptionTypeInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface VendorOptionTypeInterface {

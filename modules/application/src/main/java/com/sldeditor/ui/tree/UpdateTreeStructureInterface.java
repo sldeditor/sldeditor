@@ -19,13 +19,12 @@
 
 package com.sldeditor.ui.tree;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import com.sldeditor.common.undo.UndoActionInterface;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * Interface that allows the tree structure to be updated.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface UpdateTreeStructureInterface {
@@ -38,12 +37,10 @@ public interface UpdateTreeStructureInterface {
      * @param shouldBeVisible the should be visible
      * @return the default mutable tree node
      */
-    DefaultMutableTreeNode addObject(DefaultMutableTreeNode parent, Object child,
-            boolean shouldBeVisible);
+    DefaultMutableTreeNode addObject(
+            DefaultMutableTreeNode parent, Object child, boolean shouldBeVisible);
 
-    /**
-     * Populate the tree with the SLD structure.
-     */
+    /** Populate the tree with the SLD structure. */
     void populateSLD();
 
     /**
