@@ -26,8 +26,6 @@ package com.sldeditor.ui.detail.config.colourmap;
  */
 public interface ColourMapModelUpdateInterface {
 
-    /**
-     * Colour map updated.
-     */
+    /** Colour map updated. */
     void colourMapUpdated();
 }

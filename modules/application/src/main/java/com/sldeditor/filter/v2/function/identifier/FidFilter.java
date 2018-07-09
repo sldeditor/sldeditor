@@ -19,22 +19,20 @@
 
 package com.sldeditor.filter.v2.function.identifier;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.geotools.filter.FidFilterImpl;
-import org.geotools.filter.identity.FeatureIdImpl;
-import org.opengis.filter.Filter;
-import org.opengis.filter.expression.Expression;
-import org.opengis.filter.identity.Identifier;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import org.geotools.filter.FidFilterImpl;
+import org.geotools.filter.identity.FeatureIdImpl;
+import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
+import org.opengis.filter.identity.Identifier;
 
 /**
  * The Class FidFilter.
@@ -43,14 +41,10 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class FidFilter extends FilterBase implements FilterConfigInterface {
 
-    /**
-     * The Class FidFilterExtended.
-     */
+    /** The Class FidFilterExtended. */
     public class FidFilterExtended extends FidFilterImpl implements FilterExtendedInterface {
 
-        /**
-         * Instantiates a new fid filter extended.
-         */
+        /** Instantiates a new fid filter extended. */
         public FidFilterExtended() {
             super(new HashSet<Identifier>());
         }
@@ -66,7 +60,7 @@ public class FidFilter extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
@@ -75,7 +69,7 @@ public class FidFilter extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -84,9 +78,7 @@ public class FidFilter extends FilterBase implements FilterConfigInterface {
         }
     }
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public FidFilter(String category) {
         super(category);
     }

@@ -19,7 +19,7 @@
 
 /**
  * Package to handle application preferences.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.preferences;

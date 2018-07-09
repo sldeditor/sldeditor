@@ -1,18 +1,13 @@
-/**
- * 
- */
-
+/** */
 package com.sldeditor.datasource.impl;
 
 import java.util.List;
-
 import org.w3c.dom.Node;
 
 /**
  * Class to help with the decoding of XML elements.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 public class NamespaceHelper {
 

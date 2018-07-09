@@ -22,36 +22,31 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.SLDUtils;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.ui.legend.LegendManager;
+import com.sldeditor.ui.legend.option.LegendOptionData;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import org.apache.commons.io.IOUtils;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.Test;
 
-import com.sldeditor.common.data.SLDData;
-import com.sldeditor.common.data.SLDUtils;
-import com.sldeditor.common.data.StyleWrapper;
-import com.sldeditor.ui.legend.LegendManager;
-import com.sldeditor.ui.legend.option.LegendOptionData;
-
 /**
  * The unit test for LegendManager.
- * 
- * <p>
- * {@link com.sldeditor.ui.legend.LegendManager}
+ *
+ * <p>{@link com.sldeditor.ui.legend.LegendManager}
  *
  * @author Robert Ward (SCISYS)
  */
 public class LegendManagerTest {
 
-    /**
-     * Test create legend styled layer descriptor string string.
-     */
+    /** Test create legend styled layer descriptor string string. */
     @Test
     public void testCreateLegendStyledLayerDescriptorStringString() {
         StyledLayerDescriptor sld = testSLD1();
@@ -69,44 +64,71 @@ public class LegendManagerTest {
      * @return the styled layer descriptor
      */
     private StyledLayerDescriptor testSLD1() {
-        String sldContents = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
-                + "<StyledLayerDescriptor version=\"1.0.0\" "
-                + "    xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" "
-                + "    xmlns=\"http://www.opengis.net/sld\" "
-                + "    xmlns:sld=\"http://www.opengis.net/sld\" "
-                + "    xmlns:ogc=\"http://www.opengis.net/ogc\" "
-                + "    xmlns:gml=\"http://www.opengis.net/gml\" "
-                + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" + "<sld:UserLayer>"
-                + "<sld:Name>Inline</sld:Name>" + "<sld:InlineFeature>" + "  <FeatureCollection>"
-                + "    <featureMember>" + "      <gml:_Feature>" + "        <geometryProperty>"
-                + "          <Polygon>" + "            <outerBoundaryIs>"
-                + "              <LinearRing>"
-                + "              <coordinates>-127,51 -110,51 -110,41 -127,41 -127,51</coordinates>"
-                + "              </LinearRing>" + "            </outerBoundaryIs>"
-                + "          </Polygon>" + "        </geometryProperty>"
-                + "        <title>Pacific NW</title>" + "      </gml:_Feature>"
-                + "    </featureMember>" + "  </FeatureCollection>" + "</sld:InlineFeature>"
-                + "<sld:LayerFeatureConstraints>" + "  <sld:FeatureTypeConstraint/>"
-                + "</sld:LayerFeatureConstraints>" + "<sld:UserStyle>"
-                + "  <sld:Name>Default Styler</sld:Name>" + "  <sld:FeatureTypeStyle>"
-                + "    <sld:Name>name</sld:Name>" + "    <sld:Rule>"
-                + "      <sld:PolygonSymbolizer>" + "        <sld:Stroke>"
-                + "          <sld:CssParameter name=\"stroke\">#FF0000</sld:CssParameter>"
-                + "          <sld:CssParameter name=\"stroke-width\">2</sld:CssParameter>"
-                + "        </sld:Stroke>" + "      </sld:PolygonSymbolizer>"
-                + "      <sld:TextSymbolizer>" + "        <sld:Label>"
-                + "          <ogc:PropertyName>title</ogc:PropertyName>" + "        </sld:Label>"
-                + "        <sld:LabelPlacement>" + "          <sld:PointPlacement>"
-                + "            <sld:AnchorPoint>"
-                + "              <sld:AnchorPointX>0.0</sld:AnchorPointX>"
-                + "              <sld:AnchorPointY>0.5</sld:AnchorPointY>"
-                + "            </sld:AnchorPoint>" + "          </sld:PointPlacement>"
-                + "        </sld:LabelPlacement>" + "        <sld:Fill>"
-                + "          <sld:CssParameter name=\"fill\">#FF0000</sld:CssParameter>"
-                + "        </sld:Fill>" + "      </sld:TextSymbolizer>" + "    </sld:Rule>"
-                + "  </sld:FeatureTypeStyle>" + "</sld:UserStyle>" + "</sld:UserLayer>"
-                + "</StyledLayerDescriptor>";
+        String sldContents =
+                "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                        + "<StyledLayerDescriptor version=\"1.0.0\" "
+                        + "    xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" "
+                        + "    xmlns=\"http://www.opengis.net/sld\" "
+                        + "    xmlns:sld=\"http://www.opengis.net/sld\" "
+                        + "    xmlns:ogc=\"http://www.opengis.net/ogc\" "
+                        + "    xmlns:gml=\"http://www.opengis.net/gml\" "
+                        + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
+                        + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+                        + "<sld:UserLayer>"
+                        + "<sld:Name>Inline</sld:Name>"
+                        + "<sld:InlineFeature>"
+                        + "  <FeatureCollection>"
+                        + "    <featureMember>"
+                        + "      <gml:_Feature>"
+                        + "        <geometryProperty>"
+                        + "          <Polygon>"
+                        + "            <outerBoundaryIs>"
+                        + "              <LinearRing>"
+                        + "              <coordinates>-127,51 -110,51 -110,41 -127,41 -127,51</coordinates>"
+                        + "              </LinearRing>"
+                        + "            </outerBoundaryIs>"
+                        + "          </Polygon>"
+                        + "        </geometryProperty>"
+                        + "        <title>Pacific NW</title>"
+                        + "      </gml:_Feature>"
+                        + "    </featureMember>"
+                        + "  </FeatureCollection>"
+                        + "</sld:InlineFeature>"
+                        + "<sld:LayerFeatureConstraints>"
+                        + "  <sld:FeatureTypeConstraint/>"
+                        + "</sld:LayerFeatureConstraints>"
+                        + "<sld:UserStyle>"
+                        + "  <sld:Name>Default Styler</sld:Name>"
+                        + "  <sld:FeatureTypeStyle>"
+                        + "    <sld:Name>name</sld:Name>"
+                        + "    <sld:Rule>"
+                        + "      <sld:PolygonSymbolizer>"
+                        + "        <sld:Stroke>"
+                        + "          <sld:CssParameter name=\"stroke\">#FF0000</sld:CssParameter>"
+                        + "          <sld:CssParameter name=\"stroke-width\">2</sld:CssParameter>"
+                        + "        </sld:Stroke>"
+                        + "      </sld:PolygonSymbolizer>"
+                        + "      <sld:TextSymbolizer>"
+                        + "        <sld:Label>"
+                        + "          <ogc:PropertyName>title</ogc:PropertyName>"
+                        + "        </sld:Label>"
+                        + "        <sld:LabelPlacement>"
+                        + "          <sld:PointPlacement>"
+                        + "            <sld:AnchorPoint>"
+                        + "              <sld:AnchorPointX>0.0</sld:AnchorPointX>"
+                        + "              <sld:AnchorPointY>0.5</sld:AnchorPointY>"
+                        + "            </sld:AnchorPoint>"
+                        + "          </sld:PointPlacement>"
+                        + "        </sld:LabelPlacement>"
+                        + "        <sld:Fill>"
+                        + "          <sld:CssParameter name=\"fill\">#FF0000</sld:CssParameter>"
+                        + "        </sld:Fill>"
+                        + "      </sld:TextSymbolizer>"
+                        + "    </sld:Rule>"
+                        + "  </sld:FeatureTypeStyle>"
+                        + "</sld:UserStyle>"
+                        + "</sld:UserLayer>"
+                        + "</StyledLayerDescriptor>";
 
         SLDData sldData = new SLDData(new StyleWrapper(null, "test.sld"), sldContents);
 
@@ -120,76 +142,76 @@ public class LegendManagerTest {
      * @return the styled layer descriptor
      */
     private StyledLayerDescriptor testSLD2() {
-        String sldContents = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
-                + "<StyledLayerDescriptor version=\"1.0.0\" "
-                + "    xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" "
-                + "    xmlns=\"http://www.opengis.net/sld\" "
-                + "    xmlns:sld=\"http://www.opengis.net/sld\" "
-                + "    xmlns:ogc=\"http://www.opengis.net/ogc\" "
-                + "    xmlns:gml=\"http://www.opengis.net/gml\" "
-                + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
-                + "<NamedLayer>"
-                + "    <Name>Attribute-based polygon</Name>"
-                + "    <UserStyle>"
-                + "      <Title>SLD Cook Book: Attribute-based polygon</Title>"
-                + "      <FeatureTypeStyle>"
-                + "        <Rule>"
-                + "          <Name>SmallPop</Name>"
-                + "          <Title>Less Than 200,000</Title>"
-                + "          <ogc:Filter>"
-                + "            <ogc:PropertyIsLessThan>"
-                + "              <ogc:PropertyName>pop</ogc:PropertyName>"
-                + "              <ogc:Literal>200000</ogc:Literal>"
-                + "            </ogc:PropertyIsLessThan>"
-                + "          </ogc:Filter>"
-                + "          <PolygonSymbolizer>"
-                + "            <Fill>"
-                + "              <CssParameter name=\"fill\">#66FF66</CssParameter>"
-                + "            </Fill>"
-                + "          </PolygonSymbolizer>"
-                + "        </Rule>"
-                + "        <Rule>"
-                + "          <Name>MediumPop</Name>"
-                + "          <Title>200,000 to 500,000</Title>"
-                + "          <ogc:Filter>"
-                + "            <ogc:And>"
-                + "              <ogc:PropertyIsGreaterThanOrEqualTo>"
-                + "                <ogc:PropertyName>pop</ogc:PropertyName>"
-                + "                <ogc:Literal>200000</ogc:Literal>"
-                + "              </ogc:PropertyIsGreaterThanOrEqualTo>"
-                + "              <ogc:PropertyIsLessThan>"
-                + "                <ogc:PropertyName>pop</ogc:PropertyName>"
-                + "                <ogc:Literal>500000</ogc:Literal>"
-                + "              </ogc:PropertyIsLessThan>"
-                + "            </ogc:And>"
-                + "          </ogc:Filter>"
-                + "          <PolygonSymbolizer>"
-                + "            <Fill>"
-                + "              <CssParameter name=\"fill\">#33CC33</CssParameter>"
-                + "            </Fill>"
-                + "          </PolygonSymbolizer>"
-                + "        </Rule>"
-                + "        <Rule>"
-                + "          <Name>LargePop</Name>"
-                + "          <Title>Greater Than 500,000</Title>"
-                + "          <ogc:Filter>"
-                + "            <ogc:PropertyIsGreaterThan>"
-                + "              <ogc:PropertyName>pop</ogc:PropertyName>"
-                + "              <ogc:Literal>500000</ogc:Literal>"
-                + "            </ogc:PropertyIsGreaterThan>"
-                + "          </ogc:Filter>"
-                + "          <PolygonSymbolizer>"
-                + "            <Fill>"
-                + "              <CssParameter name=\"fill\">#009900</CssParameter>"
-                + "            </Fill>"
-                + "          </PolygonSymbolizer>"
-                + "        </Rule>"
-                + "      </FeatureTypeStyle>"
-                + "    </UserStyle>"
-                + "  </NamedLayer>"
-                + "</StyledLayerDescriptor>"
-;
+        String sldContents =
+                "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                        + "<StyledLayerDescriptor version=\"1.0.0\" "
+                        + "    xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" "
+                        + "    xmlns=\"http://www.opengis.net/sld\" "
+                        + "    xmlns:sld=\"http://www.opengis.net/sld\" "
+                        + "    xmlns:ogc=\"http://www.opengis.net/ogc\" "
+                        + "    xmlns:gml=\"http://www.opengis.net/gml\" "
+                        + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
+                        + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+                        + "<NamedLayer>"
+                        + "    <Name>Attribute-based polygon</Name>"
+                        + "    <UserStyle>"
+                        + "      <Title>SLD Cook Book: Attribute-based polygon</Title>"
+                        + "      <FeatureTypeStyle>"
+                        + "        <Rule>"
+                        + "          <Name>SmallPop</Name>"
+                        + "          <Title>Less Than 200,000</Title>"
+                        + "          <ogc:Filter>"
+                        + "            <ogc:PropertyIsLessThan>"
+                        + "              <ogc:PropertyName>pop</ogc:PropertyName>"
+                        + "              <ogc:Literal>200000</ogc:Literal>"
+                        + "            </ogc:PropertyIsLessThan>"
+                        + "          </ogc:Filter>"
+                        + "          <PolygonSymbolizer>"
+                        + "            <Fill>"
+                        + "              <CssParameter name=\"fill\">#66FF66</CssParameter>"
+                        + "            </Fill>"
+                        + "          </PolygonSymbolizer>"
+                        + "        </Rule>"
+                        + "        <Rule>"
+                        + "          <Name>MediumPop</Name>"
+                        + "          <Title>200,000 to 500,000</Title>"
+                        + "          <ogc:Filter>"
+                        + "            <ogc:And>"
+                        + "              <ogc:PropertyIsGreaterThanOrEqualTo>"
+                        + "                <ogc:PropertyName>pop</ogc:PropertyName>"
+                        + "                <ogc:Literal>200000</ogc:Literal>"
+                        + "              </ogc:PropertyIsGreaterThanOrEqualTo>"
+                        + "              <ogc:PropertyIsLessThan>"
+                        + "                <ogc:PropertyName>pop</ogc:PropertyName>"
+                        + "                <ogc:Literal>500000</ogc:Literal>"
+                        + "              </ogc:PropertyIsLessThan>"
+                        + "            </ogc:And>"
+                        + "          </ogc:Filter>"
+                        + "          <PolygonSymbolizer>"
+                        + "            <Fill>"
+                        + "              <CssParameter name=\"fill\">#33CC33</CssParameter>"
+                        + "            </Fill>"
+                        + "          </PolygonSymbolizer>"
+                        + "        </Rule>"
+                        + "        <Rule>"
+                        + "          <Name>LargePop</Name>"
+                        + "          <Title>Greater Than 500,000</Title>"
+                        + "          <ogc:Filter>"
+                        + "            <ogc:PropertyIsGreaterThan>"
+                        + "              <ogc:PropertyName>pop</ogc:PropertyName>"
+                        + "              <ogc:Literal>500000</ogc:Literal>"
+                        + "            </ogc:PropertyIsGreaterThan>"
+                        + "          </ogc:Filter>"
+                        + "          <PolygonSymbolizer>"
+                        + "            <Fill>"
+                        + "              <CssParameter name=\"fill\">#009900</CssParameter>"
+                        + "            </Fill>"
+                        + "          </PolygonSymbolizer>"
+                        + "        </Rule>"
+                        + "      </FeatureTypeStyle>"
+                        + "    </UserStyle>"
+                        + "  </NamedLayer>"
+                        + "</StyledLayerDescriptor>";
 
         SLDData sldData = new SLDData(new StyleWrapper(null, "test.sld"), sldContents);
 
@@ -206,8 +228,7 @@ public class LegendManagerTest {
      */
     private boolean compareLegendImage(StyledLayerDescriptor sld, String heading) {
 
-        if(sld == null)
-        {
+        if (sld == null) {
             fail("sld == null");
         }
 
@@ -221,12 +242,11 @@ public class LegendManagerTest {
             fail("Failed to create temporary file");
         }
 
-        BufferedImage actualImage = LegendManager.getInstance().createLegend(sld, heading,
-                outputfile.getName());
+        BufferedImage actualImage =
+                LegendManager.getInstance().createLegend(sld, heading, outputfile.getName());
 
-        LegendManager.getInstance().saveLegendImage(actualImage,
-                LegendManager.getLegendImageFormat(),
-                outputfile);
+        LegendManager.getInstance()
+                .saveLegendImage(actualImage, LegendManager.getLegendImageFormat(), outputfile);
 
         outputfile.delete();
 
@@ -278,8 +298,7 @@ public class LegendManagerTest {
     }
 
     @Test
-    public void testSaveLegendImageStyledLayerDescriptorFileStringStringStringListOfString() {
-    }
+    public void testSaveLegendImageStyledLayerDescriptorFileStringStringStringListOfString() {}
 
     @Test
     public void testGetLegendImageFormat() {
@@ -301,5 +320,4 @@ public class LegendManagerTest {
 
         return tempFile;
     }
-
 }

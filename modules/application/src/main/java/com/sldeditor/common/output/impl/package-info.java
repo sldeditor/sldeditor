@@ -19,7 +19,7 @@
 
 /**
  * Classes to output SLD as a string.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.output.impl;

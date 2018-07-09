@@ -19,14 +19,13 @@
 
 package com.sldeditor.datasource.extension.filesystem;
 
+import com.sldeditor.common.data.DatabaseConnection;
 import java.util.List;
 
-import com.sldeditor.common.data.DatabaseConnection;
-
 /**
- * The Interface DatabaseConnectUpdateInterface allows information
- * about database connections to be transferred.
- * 
+ * The Interface DatabaseConnectUpdateInterface allows information about database connections to be
+ * transferred.
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface DatabaseConnectUpdateInterface {
@@ -51,8 +50,8 @@ public interface DatabaseConnectUpdateInterface {
      * @param originalConnectionDetails the original connection details
      * @param newConnectionDetails the new connection details
      */
-    void updateConnectionDetails(DatabaseConnection originalConnectionDetails,
-            DatabaseConnection newConnectionDetails);
+    void updateConnectionDetails(
+            DatabaseConnection originalConnectionDetails, DatabaseConnection newConnectionDetails);
 
     /**
      * Delete connections.

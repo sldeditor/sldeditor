@@ -19,31 +19,31 @@
 
 package com.sldeditor.ui.detail.config.symboltype;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.ui.detail.FieldEnableState;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.ui.detail.FieldEnableState;
-
 /**
  * The Class SymbolTypeConfig contains all the configuration for a symbol type.
- * 
- * <p>A symbol type config consists of one or more option 
- * names which all have the same field enable state.
- * 
+ *
+ * <p>A symbol type config consists of one or more option names which all have the same field enable
+ * state.
+ *
  * <p>For example:
+ *
  * <ul>
- * <li>One SymbolTypeConfig could have an option name of None which
- *  if selected could disable all fields.</li>
- * <li>Another SymbolTypeConfigcould have several option names
- *  e.g. Solid, Cross, which if selected could enable all fields.</li>
+ *   <li>One SymbolTypeConfig could have an option name of None which if selected could disable all
+ *       fields.
+ *   <li>Another SymbolTypeConfigcould have several option names e.g. Solid, Cross, which if
+ *       selected could enable all fields.
  * </ul>
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SymbolTypeConfig {
@@ -51,8 +51,10 @@ public class SymbolTypeConfig {
     /** The group name. */
     private String groupName = Localisation.getString(SymbolTypeConfig.class, "common.notSet");
 
-    /** Flag indicating whether this set of symbol types appears
-     * as a separate menu group in the symbol type drop down. */
+    /**
+     * Flag indicating whether this set of symbol types appears as a separate menu group in the
+     * symbol type drop down.
+     */
     private boolean isSeparateGroup = false;
 
     /** The key order list. */
@@ -91,8 +93,8 @@ public class SymbolTypeConfig {
     }
 
     /**
-     * Gets the optimised field map, contains only the fields that
-     * should be enabled when the option is selected.
+     * Gets the optimised field map, contains only the fields that should be enabled when the option
+     * is selected.
      *
      * @param fieldEnableState the field enable state
      * @param panelName the panel name
@@ -121,8 +123,8 @@ public class SymbolTypeConfig {
     }
 
     /**
-     * Gets the field map, regardless of whether the field is
-     * enabled or disabled when the option is selected.
+     * Gets the field map, regardless of whether the field is enabled or disabled when the option is
+     * selected.
      *
      * @return the field map
      */
@@ -235,5 +237,4 @@ public class SymbolTypeConfig {
     public Class<?> getPanelId() {
         return panelId;
     }
-
 }

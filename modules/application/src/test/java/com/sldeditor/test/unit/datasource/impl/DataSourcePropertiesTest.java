@@ -25,37 +25,38 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.impl.DataSourceProperties;
+import java.util.HashMap;
+import java.util.Map;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * Unit test for DataSourceProperties.
- * 
+ *
  * <p>{@link com.sldeditor.datasource.impl.DataSourceProperties}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DataSourcePropertiesTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#DataSourceProperties(com.sldeditor.DataSourceConnectorInterface)}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#setPropertyMap(java.util.Map)}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#setFilename(java.lang.String)}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#getFilename()}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#getDataSourceConnector()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceProperties#DataSourceProperties(com.sldeditor.DataSourceConnectorInterface)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceProperties#setPropertyMap(java.util.Map)}. Test
+     * method for {@link
+     * com.sldeditor.datasource.impl.DataSourceProperties#setFilename(java.lang.String)}. Test
+     * method for {@link com.sldeditor.datasource.impl.DataSourceProperties#getFilename()}. Test
+     * method for {@link
+     * com.sldeditor.datasource.impl.DataSourceProperties#getDataSourceConnector()}.
      */
     @Test
     public void testDataSourcePropertiesNoConnector() {
@@ -88,9 +89,12 @@ public class DataSourcePropertiesTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#DataSourceProperties(com.sldeditor.DataSourceConnectorInterface)}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#setPropertyMap(java.util.Map)}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#getDataSourceConnector()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceProperties#DataSourceProperties(com.sldeditor.DataSourceConnectorInterface)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceProperties#setPropertyMap(java.util.Map)}. Test
+     * method for {@link
+     * com.sldeditor.datasource.impl.DataSourceProperties#getDataSourceConnector()}.
      */
     @Test
     public void testDataSourcePropertiesWithConnector() {
@@ -113,14 +117,12 @@ public class DataSourcePropertiesTest {
         assertFalse(dsp.isEmpty());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#populate()}.
-     */
+    /** Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#populate()}. */
     @Test
     public void testPopulate() {
         DataSourceProperties dsp = new DataSourceProperties(null);
         dsp.populate();
-        
+
         // Does nothing
         DataSourceConnectorInterface dsc = new DataSourceConnector();
         dsp = new DataSourceProperties(dsc);
@@ -128,8 +130,11 @@ public class DataSourcePropertiesTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#encodeXML(org.w3c.dom.Document, org.w3c.dom.Element, java.lang.String)}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#decodeXML(org.w3c.dom.Document, java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceProperties#encodeXML(org.w3c.dom.Document,
+     * org.w3c.dom.Element, java.lang.String)}. Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceProperties#decodeXML(org.w3c.dom.Document,
+     * java.lang.String)}.
      */
     @Test
     public void testEncodeDecodeXML() {
@@ -172,8 +177,10 @@ public class DataSourcePropertiesTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#encodeFilename(java.lang.String)}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#decodeFilename(java.util.Map)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceProperties#encodeFilename(java.lang.String)}. Test
+     * method for {@link
+     * com.sldeditor.datasource.impl.DataSourceProperties#decodeFilename(java.util.Map)}.
      */
     @Test
     public void testEncodeFilename() {
@@ -186,9 +193,7 @@ public class DataSourcePropertiesTest {
         assertEquals(expectedFilename, actualFilename);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#getPassword()}.
-     */
+    /** Test method for {@link com.sldeditor.datasource.impl.DataSourceProperties#getPassword()}. */
     @Test
     public void testPassword() {
         DataSourceProperties dsp = new DataSourceProperties(null);

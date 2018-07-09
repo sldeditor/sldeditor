@@ -19,10 +19,6 @@
 
 package com.sldeditor.common;
 
-import java.io.File;
-import java.net.URL;
-import java.util.List;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
@@ -30,10 +26,13 @@ import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.filter.v2.envvar.EnvVar;
 import com.sldeditor.ui.legend.option.LegendOptionData;
+import java.io.File;
+import java.net.URL;
+import java.util.List;
 
 /**
  * The Interface SLDDataInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SLDDataInterface {

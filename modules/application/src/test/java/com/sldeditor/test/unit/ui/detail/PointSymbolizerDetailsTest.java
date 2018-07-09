@@ -23,6 +23,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.PointSymbolizerDetails;
+import com.sldeditor.ui.detail.config.FieldConfigString;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.PointSymbolizer;
@@ -31,16 +37,9 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.Test;
 
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.PointSymbolizerDetails;
-import com.sldeditor.ui.detail.config.FieldConfigString;
-
 /**
  * The unit test for PointSymbolizerDetails.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.PointSymbolizerDetails}
  *
  * @author Robert Ward (SCISYS)
@@ -48,7 +47,8 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 public class PointSymbolizerDetailsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.PointSymbolizerDetails#addRenderer(com.sldeditor.datasource.RenderSymbolInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.PointSymbolizerDetails#addRenderer(com.sldeditor.datasource.RenderSymbolInterface)}.
      */
     @Test
     public void testAddRenderer() {
@@ -58,12 +58,15 @@ public class PointSymbolizerDetailsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.PointSymbolizerDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
-     * Test method for {@link com.sldeditor.ui.detail.PointSymbolizerDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.PointSymbolizerDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.PointSymbolizerDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
      * Test method for {@link com.sldeditor.ui.detail.PointSymbolizerDetails#getFieldDataManager()}.
-     * Test method for {@link com.sldeditor.ui.detail.PointSymbolizerDetails#isDataPresent()}.
-     * Test method for {@link com.sldeditor.ui.detail.PointSymbolizerDetails#preLoadSymbol()}.
-     * Test method for {@link com.sldeditor.ui.detail.PointSymbolizerDetails#PointSymbolizerDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link com.sldeditor.ui.detail.PointSymbolizerDetails#isDataPresent()}. Test
+     * method for {@link com.sldeditor.ui.detail.PointSymbolizerDetails#preLoadSymbol()}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.PointSymbolizerDetails#PointSymbolizerDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
      */
     @Test
     public void testPointSymbolizerDetails() {
@@ -109,13 +112,12 @@ public class PointSymbolizerDetailsTest {
 
         panel.dataChanged(null);
 
-        FieldConfigString descriptionField = (FieldConfigString) fieldDataManager
-                .get(FieldIdEnum.DESCRIPTION);
+        FieldConfigString descriptionField =
+                (FieldConfigString) fieldDataManager.get(FieldIdEnum.DESCRIPTION);
         assertNull(descriptionField);
         assertTrue(panel.isDataPresent());
 
         // Reset to default value
         panel.preLoadSymbol();
     }
-
 }

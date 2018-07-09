@@ -18,7 +18,7 @@
  */
 /**
  * Package handling the file system tree and supporting classes.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource.extension.filesystem.node;

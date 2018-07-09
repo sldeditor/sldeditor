@@ -19,13 +19,12 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
-import org.geotools.styling.ChannelSelection;
-import org.geotools.styling.ContrastEnhancement;
-import org.geotools.styling.RasterSymbolizer;
-
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
+import org.geotools.styling.ChannelSelection;
+import org.geotools.styling.ContrastEnhancement;
+import org.geotools.styling.RasterSymbolizer;
 
 /**
  * The Class VOGeoServerContrastEnhancementNormalizeOverall.
@@ -48,29 +47,33 @@ public class VOGeoServerContrastEnhancementNormalizeOverall
      * @param panelId the panel id
      * @param parentPanel the parent panel
      */
-    public VOGeoServerContrastEnhancementNormalizeOverall(Class<?> panelId,
-            RasterSymbolizerDetails parentPanel) {
-        super(panelId, PANEL_CONFIG, parentPanel, FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_OVERALL,
+    public VOGeoServerContrastEnhancementNormalizeOverall(
+            Class<?> panelId, RasterSymbolizerDetails parentPanel) {
+        super(
+                panelId,
+                PANEL_CONFIG,
+                parentPanel,
+                FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_OVERALL,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MIN_VALUE_OVERALL,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MAX_VALUE_OVERALL);
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(com.sldeditor.common.xml.ui.
      * GroupIdEnum, org.geotools.styling.ChannelSelection)
      */
     @Override
-    protected ContrastEnhancement getContrastEnhancement(GroupIdEnum id,
-            ChannelSelection channelSelection) {
+    protected ContrastEnhancement getContrastEnhancement(
+            GroupIdEnum id, ChannelSelection channelSelection) {
         // Does nothing
         return null;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(org.geotools.styling.
      * RasterSymbolizer)
      */
@@ -84,7 +87,7 @@ public class VOGeoServerContrastEnhancementNormalizeOverall
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
      */
     @Override

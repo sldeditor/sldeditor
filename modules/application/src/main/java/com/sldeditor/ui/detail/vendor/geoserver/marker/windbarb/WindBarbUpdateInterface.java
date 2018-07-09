@@ -20,15 +20,13 @@
 package com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb;
 
 /**
- * The Interface WindBarbUpdateInterfacea allows classes to register for notifications when
- * wind barb field values are updated.
- * 
+ * The Interface WindBarbUpdateInterfacea allows classes to register for notifications when wind
+ * barb field values are updated.
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface WindBarbUpdateInterface {
 
-    /**
-     * Value updated.
-     */
+    /** Value updated. */
     void windBarbValueUpdated();
 }

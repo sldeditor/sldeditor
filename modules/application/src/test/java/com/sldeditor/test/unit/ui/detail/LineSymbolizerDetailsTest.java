@@ -23,6 +23,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.LineSymbolizerDetails;
+import com.sldeditor.ui.detail.config.FieldConfigString;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.NamedLayer;
@@ -31,16 +37,9 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.Test;
 
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.LineSymbolizerDetails;
-import com.sldeditor.ui.detail.config.FieldConfigString;
-
 /**
  * The unit test for LineSymbolizerDetails.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.LineSymbolizerDetails}
  *
  * @author Robert Ward (SCISYS)
@@ -48,7 +47,8 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 public class LineSymbolizerDetailsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.LineSymbolizerDetails#addRenderer(com.sldeditor.datasource.RenderSymbolInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.LineSymbolizerDetails#addRenderer(com.sldeditor.datasource.RenderSymbolInterface)}.
      */
     @Test
     public void testAddRenderer() {
@@ -57,12 +57,15 @@ public class LineSymbolizerDetailsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.LineSymbolizerDetails#LineSymbolizerDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.LineSymbolizerDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
-     * Test method for {@link com.sldeditor.ui.detail.LineSymbolizerDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.LineSymbolizerDetails#LineSymbolizerDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.LineSymbolizerDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.LineSymbolizerDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
      * Test method for {@link com.sldeditor.ui.detail.LineSymbolizerDetails#getFieldDataManager()}.
-     * Test method for {@link com.sldeditor.ui.detail.LineSymbolizerDetails#isDataPresent()}.
-     * Test method for {@link com.sldeditor.ui.detail.LineSymbolizerDetails#preLoadSymbol()}.
+     * Test method for {@link com.sldeditor.ui.detail.LineSymbolizerDetails#isDataPresent()}. Test
+     * method for {@link com.sldeditor.ui.detail.LineSymbolizerDetails#preLoadSymbol()}.
      */
     @Test
     public void testLineSymbolizerDetails() {
@@ -114,5 +117,4 @@ public class LineSymbolizerDetailsTest {
         // Reset to default value
         panel.preLoadSymbol();
     }
-
 }

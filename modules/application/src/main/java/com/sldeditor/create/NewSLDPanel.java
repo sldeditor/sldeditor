@@ -19,24 +19,6 @@
 
 package com.sldeditor.create;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
@@ -45,10 +27,25 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.create.sld.NewSLDInterface;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * Dialog to allow the user to create a new SLD symbol.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class NewSLDPanel extends JDialog {
@@ -68,9 +65,7 @@ public class NewSLDPanel extends JDialog {
     /** The sld writer. */
     private SLDWriterInterface sldWriter = null;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public NewSLDPanel() {
         setModal(true);
         setResizable(false);
@@ -80,17 +75,15 @@ public class NewSLDPanel extends JDialog {
         Controller.getInstance().centreDialog(this);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         setTitle(Localisation.getString(NewSLDPanel.class, "NewSLDPanel.title"));
 
         JPanel panel = new JPanel();
         getContentPane().add(panel, BorderLayout.CENTER);
 
-        JLabel lblSldType = new JLabel(
-                Localisation.getField(NewSLDPanel.class, "NewSLDPanel.symbolField"));
+        JLabel lblSldType =
+                new JLabel(Localisation.getField(NewSLDPanel.class, "NewSLDPanel.symbolField"));
         panel.add(lblSldType);
 
         comboBoxNewSLD = new JComboBox<String>();
@@ -112,19 +105,21 @@ public class NewSLDPanel extends JDialog {
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
         JButton btnOk = new JButton(Localisation.getString(NewSLDPanel.class, "common.ok"));
-        btnOk.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                okButtonPressed();
-            }
-        });
+        btnOk.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        okButtonPressed();
+                    }
+                });
         buttonPanel.add(btnOk);
 
         JButton btnCancel = new JButton(Localisation.getString(NewSLDPanel.class, "common.cancel"));
-        btnCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cancelButtonPressed();
-            }
-        });
+        btnCancel.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        cancelButtonPressed();
+                    }
+                });
         buttonPanel.add(btnCancel);
     }
 
@@ -157,17 +152,16 @@ public class NewSLDPanel extends JDialog {
                 sldWriter = SLDWriterFactory.createWriter(null);
             }
 
-            newSLDList.add(new SLDData(new StyleWrapper(selected.getName()),
-                    sldWriter.encodeSLD(null, sld)));
+            newSLDList.add(
+                    new SLDData(
+                            new StyleWrapper(selected.getName()), sldWriter.encodeSLD(null, sld)));
             return newSLDList;
         }
 
         return null;
     }
 
-    /**
-     * Ok button pressed.
-     */
+    /** Ok button pressed. */
     protected void okButtonPressed() {
         String selectedItem = (String) comboBoxNewSLD.getSelectedItem();
 
@@ -179,9 +173,7 @@ public class NewSLDPanel extends JDialog {
         setVisible(false);
     }
 
-    /**
-     * Cancel button pressed.
-     */
+    /** Cancel button pressed. */
     protected void cancelButtonPressed() {
         setVisible(false);
     }

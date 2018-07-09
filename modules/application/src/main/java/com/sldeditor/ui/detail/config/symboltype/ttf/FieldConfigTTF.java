@@ -19,26 +19,6 @@
 
 package com.sldeditor.ui.detail.config.symboltype.ttf;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.filter.LiteralExpressionImpl;
-import org.geotools.styling.ExternalGraphicImpl;
-import org.geotools.styling.Fill;
-import org.geotools.styling.FillImpl;
-import org.geotools.styling.Graphic;
-import org.geotools.styling.LineSymbolizerImpl;
-import org.geotools.styling.Mark;
-import org.geotools.styling.MarkImpl;
-import org.geotools.styling.Stroke;
-import org.opengis.filter.expression.Expression;
-import org.opengis.style.GraphicFill;
-import org.opengis.style.GraphicalSymbol;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -56,19 +36,37 @@ import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.geotools.styling.ExternalGraphicImpl;
+import org.geotools.styling.Fill;
+import org.geotools.styling.FillImpl;
+import org.geotools.styling.Graphic;
+import org.geotools.styling.LineSymbolizerImpl;
+import org.geotools.styling.Mark;
+import org.geotools.styling.MarkImpl;
+import org.geotools.styling.Stroke;
+import org.opengis.filter.expression.Expression;
+import org.opengis.style.GraphicFill;
+import org.opengis.style.GraphicalSymbol;
 
 /**
  * The Class FieldConfigTTF wraps a text field GUI component and an optional
  * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * 
+ *
  * <p>A button when clicked on displays a dialog ({@link com.sldeditor.ui.ttf.CharMap4}) that allows
  * the user to select a character from a TrueType font. When the character is selected the encoded
  * string is written to the text field.
- * 
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
@@ -97,15 +95,20 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the symbol selection field
      */
-    public FieldConfigTTF(FieldConfigCommonData commonData, ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
-        super(commonData, SYMBOLTYPE_FIELD_STATE_RESOURCE, fillFieldConfig, strokeFieldConfig,
+    public FieldConfigTTF(
+            FieldConfigCommonData commonData,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
+        super(
+                commonData,
+                SYMBOLTYPE_FIELD_STATE_RESOURCE,
+                fillFieldConfig,
+                strokeFieldConfig,
                 symbolSelectionField);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     @Override
     public void createUI() {
         if (ttfPanel == null) {
@@ -169,9 +172,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     @Override
     public void revertToDefaultValue() {
         if (ttfPanel != null) {
@@ -186,7 +187,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -228,8 +229,12 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @param symbol the symbol
      */
     @Override
-    public void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager,
-            FieldConfigSymbolType multiOptionPanel, Graphic graphic, GraphicalSymbol symbol) {
+    public void setValue(
+            Class<?> symbolizerType,
+            GraphicPanelFieldManager fieldConfigManager,
+            FieldConfigSymbolType multiOptionPanel,
+            Graphic graphic,
+            GraphicalSymbol symbol) {
         if (symbol == null) {
             return;
         }
@@ -271,8 +276,8 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         }
 
         Class<?> panelId = getCommonData().getPanelId();
-        GroupConfigInterface fillGroup = fieldConfigManager.getGroup(panelId,
-                fillFieldConfig.getGroup());
+        GroupConfigInterface fillGroup =
+                fieldConfigManager.getGroup(panelId, fillFieldConfig.getGroup());
 
         if (fillGroup != null) {
             fillGroup.enable(expFillColour != null);
@@ -302,8 +307,11 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @return the value
      */
     @Override
-    public List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
-            Expression symbolType, boolean fillEnabled, boolean strokeEnabled) {
+    public List<GraphicalSymbol> getValue(
+            GraphicPanelFieldManager fieldConfigManager,
+            Expression symbolType,
+            boolean fillEnabled,
+            boolean strokeEnabled) {
         List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
 
         Expression wellKnownName = null;
@@ -337,8 +345,9 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
                 // Rotation
                 Expression expRotation = null;
 
-                Mark mark = getStyleFactory().createMark(wellKnownName, stroke, fill, expSize,
-                        expRotation);
+                Mark mark =
+                        getStyleFactory()
+                                .createMark(wellKnownName, stroke, fill, expSize, expRotation);
 
                 symbolList.add(mark);
             }
@@ -461,9 +470,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         checkSymbolIsValid();
     }
 
-    /**
-     * Check symbol is valid.
-     */
+    /** Check symbol is valid. */
     public void checkSymbolIsValid() {
         // Mark symbol as valid/invalid
         boolean valid = false;
@@ -474,9 +481,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         SelectedSymbol.getInstance().setValidSymbolMarker(valid);
     }
 
-    /**
-     * TTF field value updated.
-     */
+    /** TTF field value updated. */
     @Override
     public void ttfValueUpdated() {
         setCachedExpression(generateExpression());
@@ -523,8 +528,12 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         FieldConfigTTF copy = null;
 
         if (fieldConfigBase != null) {
-            copy = new FieldConfigTTF(fieldConfigBase.getCommonData(), fillFieldConfig,
-                    strokeFieldConfig, symbolSelectionField);
+            copy =
+                    new FieldConfigTTF(
+                            fieldConfigBase.getCommonData(),
+                            fillFieldConfig,
+                            strokeFieldConfig,
+                            symbolSelectionField);
         }
         return copy;
     }
@@ -543,7 +552,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(
      * java.util.Map)
@@ -556,7 +565,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#isOverallOpacity(java.lang.Class)
      */
     @Override
@@ -566,19 +575,19 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object,
      * java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // Strict SLD
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getVendorOptionInfo()
      */
     @Override

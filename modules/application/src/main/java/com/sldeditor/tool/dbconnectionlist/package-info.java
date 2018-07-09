@@ -19,7 +19,7 @@
 
 /**
  * Package to add/edit/delete the GeoServer connection details.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.tool.dbconnectionlist;

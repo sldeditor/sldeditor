@@ -49,17 +49,15 @@
 
 package com.sldeditor.ui.legend.filechooser;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.ImageIcon;
-
-import com.sldeditor.common.console.ConsoleManager;
 
 /**
  * Image file extension utility methods.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ImageFileExtensionUtils {
@@ -79,9 +77,7 @@ public class ImageFileExtensionUtils {
     /** The description map. */
     private static Map<String, String> descriptionMap = new HashMap<String, String>();
 
-    /**
-     * Populates the description values.
-     */
+    /** Populates the description values. */
     private static void populate() {
         if (descriptionMap.isEmpty()) {
             descriptionMap.put(jpg, "JPEG (*.png)");
@@ -119,8 +115,8 @@ public class ImageFileExtensionUtils {
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            ConsoleManager.getInstance().error(ImageFileExtensionUtils.class,
-                    "Couldn't find file: " + path);
+            ConsoleManager.getInstance()
+                    .error(ImageFileExtensionUtils.class, "Couldn't find file: " + path);
             return null;
         }
     }

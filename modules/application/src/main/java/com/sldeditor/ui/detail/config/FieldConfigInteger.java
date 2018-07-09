@@ -19,8 +19,6 @@
 
 package com.sldeditor.ui.detail.config;
 
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -30,15 +28,16 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.iface.SpinnerNotifyInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.IntegerSpinner;
+import org.opengis.filter.expression.Expression;
 
 /**
- * The Class FieldConfigInteger wraps a spinner GUI component and an
- * optional value/attribute/expression drop down,
- * 
+ * The Class FieldConfigInteger wraps a spinner GUI component and an optional
+ * value/attribute/expression drop down,
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigInteger extends FieldConfigBase implements UndoActionInterface {
@@ -67,12 +66,10 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
         super(commonData);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -84,7 +81,10 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
             FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
             spinner = new IntegerSpinner(minValue, maxValue, stepSize);
-            spinner.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+            spinner.setBounds(
+                    xPos + BasePanel.WIDGET_X_START,
+                    0,
+                    BasePanel.WIDGET_STANDARD_WIDTH,
                     BasePanel.WIDGET_HEIGHT);
             fieldPanel.add(spinner);
 
@@ -93,19 +93,25 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
                         fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
             }
 
-            spinner.registerObserver(new SpinnerNotifyInterface() {
-                @Override
-                public void notify(double oldValue, double newValue) {
+            spinner.registerObserver(
+                    new SpinnerNotifyInterface() {
+                        @Override
+                        public void notify(double oldValue, double newValue) {
 
-                    Integer oldValueObj = Double.valueOf(oldValue).intValue();
-                    Integer newValueObj = Double.valueOf(newValue).intValue();
+                            Integer oldValueObj = Double.valueOf(oldValue).intValue();
+                            Integer newValueObj = Double.valueOf(newValue).intValue();
 
-                    UndoManager.getInstance().addUndoEvent(
-                            new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+                            UndoManager.getInstance()
+                                    .addUndoEvent(
+                                            new UndoEvent(
+                                                    parentObj,
+                                                    getFieldId(),
+                                                    oldValueObj,
+                                                    newValueObj));
 
-                    valueUpdated();
-                }
-            });
+                            valueUpdated();
+                        }
+                    });
         }
     }
 
@@ -116,7 +122,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
@@ -133,7 +139,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -150,7 +156,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -169,7 +175,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -184,12 +190,10 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -204,7 +208,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -346,8 +350,8 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
             copy = new FieldConfigInteger(fieldConfigBase.getCommonData());
 
             FieldConfigInteger intFieldConfig = (FieldConfigInteger) fieldConfigBase;
-            copy.setConfig(intFieldConfig.minValue, intFieldConfig.maxValue,
-                    intFieldConfig.stepSize);
+            copy.setConfig(
+                    intFieldConfig.minValue, intFieldConfig.maxValue, intFieldConfig.stepSize);
             copy.setDefaultValue(intFieldConfig.defaultValue);
         }
         return copy;

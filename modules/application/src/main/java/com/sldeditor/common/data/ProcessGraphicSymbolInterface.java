@@ -21,7 +21,6 @@ package com.sldeditor.common.data;
 
 import java.net.URL;
 import java.util.List;
-
 import org.opengis.style.GraphicalSymbol;
 
 /**
@@ -38,7 +37,8 @@ public interface ProcessGraphicSymbolInterface {
      * @param graphicalSymbolList the graphical symbol list
      * @param externalImageList the external image list
      */
-    void processGraphicalSymbol(URL resourceLocator, List<GraphicalSymbol> graphicalSymbolList,
+    void processGraphicalSymbol(
+            URL resourceLocator,
+            List<GraphicalSymbol> graphicalSymbolList,
             List<String> externalImageList);
-
 }

@@ -36,7 +36,7 @@ import java.util.Properties;
 
 /**
  * Class that manages reading and writing to the SLD Editor config.properties file.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class PropertyManager implements PropertyManagerInterface {
@@ -61,11 +61,8 @@ public class PropertyManager implements PropertyManagerInterface {
     /** The map of property values. */
     private Map<String, String> fieldValueMap = new HashMap<String, String>();
 
-    /**
-     * Default constructor.
-     */
-    public PropertyManager() {
-    }
+    /** Default constructor. */
+    public PropertyManager() {}
 
     /**
      * Sets the property file.
@@ -149,9 +146,16 @@ public class PropertyManager implements PropertyManagerInterface {
      */
     @Override
     public void updateValue(String key, Color backgroundColour) {
-        String value = String.format("%03d%s%03d%s%03d%s%03d", backgroundColour.getRed(), DELIMETER,
-                backgroundColour.getGreen(), DELIMETER, backgroundColour.getBlue(), DELIMETER,
-                backgroundColour.getAlpha());
+        String value =
+                String.format(
+                        "%03d%s%03d%s%03d%s%03d",
+                        backgroundColour.getRed(),
+                        DELIMETER,
+                        backgroundColour.getGreen(),
+                        DELIMETER,
+                        backgroundColour.getBlue(),
+                        DELIMETER,
+                        backgroundColour.getAlpha());
 
         updateValue(key, value);
     }
@@ -170,9 +174,7 @@ public class PropertyManager implements PropertyManagerInterface {
         updateValue(updatedKey, value);
     }
 
-    /**
-     * Write configuration file.
-     */
+    /** Write configuration file. */
     private void writeConfigFile() {
         if (configPropertiesFile != null) {
             try {
@@ -195,9 +197,7 @@ public class PropertyManager implements PropertyManagerInterface {
         }
     }
 
-    /**
-     * Read configuration.
-     */
+    /** Read configuration. */
     @Override
     public void readConfig() {
 
@@ -369,7 +369,7 @@ public class PropertyManager implements PropertyManagerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.property.PropertyManagerInterface#clearValue(java.lang.String)
      */
     @Override

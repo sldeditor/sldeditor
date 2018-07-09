@@ -19,13 +19,12 @@
 
 package com.sldeditor.test.unit.extension.filesystem.geoserver;
 
-import java.util.List;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgressInterface;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
+import java.util.List;
 
 /**
  * The Class DummyGeoServerClient.
@@ -45,8 +44,7 @@ public class DummyGeoServerClient implements GeoServerClientInterface {
     }
 
     @Override
-    public void retrieveData() {
-    }
+    public void retrieveData() {}
 
     @Override
     public String getStyle(StyleWrapper styleWrapper) {
@@ -67,9 +65,7 @@ public class DummyGeoServerClient implements GeoServerClientInterface {
     }
 
     @Override
-    public void disconnect() {
-
-    }
+    public void disconnect() {}
 
     @Override
     public boolean uploadSLD(StyleWrapper styleWrapper, String sldBody) {
@@ -107,8 +103,7 @@ public class DummyGeoServerClient implements GeoServerClientInterface {
     }
 
     @Override
-    public void refreshWorkspace(String workspaceName) {
-    }
+    public void refreshWorkspace(String workspaceName) {}
 
     @Override
     public boolean deleteWorkspace(String workspaceName) {

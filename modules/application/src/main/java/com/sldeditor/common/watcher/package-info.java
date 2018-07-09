@@ -18,7 +18,7 @@
  */
 /**
  * File system watcher to notify input extension when files are added/deleted.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.watcher;

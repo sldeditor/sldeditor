@@ -26,7 +26,7 @@ import org.opengis.style.Symbolizer;
 
 /**
  * The Interface SLDTreeLeafInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SLDTreeLeafInterface {

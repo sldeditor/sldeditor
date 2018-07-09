@@ -19,18 +19,16 @@
 
 package com.sldeditor.common.undo;
 
+import com.sldeditor.common.PopulatingInterface;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
-import com.sldeditor.common.PopulatingInterface;
 
 /**
  * Class that manages the undo/redo framework.
- * 
+ *
  * <p>Implemented as a singleton.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class UndoManager {
@@ -56,9 +54,7 @@ public class UndoManager {
     /** The population check object. */
     private PopulatingInterface populationCheck = null;
 
-    /**
-     * Instantiates a new undo manager.
-     */
+    /** Instantiates a new undo manager. */
     private UndoManager() {
         reset();
     }
@@ -72,9 +68,7 @@ public class UndoManager {
         listenerList.add(listener);
     }
 
-    /**
-     * Reset undo list.
-     */
+    /** Reset undo list. */
     private void reset() {
         currentIndex = 0;
         undoList.clear();
@@ -120,23 +114,17 @@ public class UndoManager {
         }
     }
 
-    /**
-     * File loaded.
-     */
+    /** File loaded. */
     public void fileLoaded() {
         reset();
     }
 
-    /**
-     * File saved.
-     */
+    /** File saved. */
     public void fileSaved() {
         reset();
     }
 
-    /**
-     * Undo.
-     */
+    /** Undo. */
     public void undo() {
         if (currentIndex > 0) {
             currentIndex--;
@@ -153,9 +141,7 @@ public class UndoManager {
         updateMenuItems();
     }
 
-    /**
-     * Redo.
-     */
+    /** Redo. */
     public void redo() {
         if (currentIndex < undoList.size()) {
             UndoInterface undoObject = undoList.get(currentIndex);
@@ -171,15 +157,15 @@ public class UndoManager {
         updateMenuItems();
     }
 
-    /**
-     * Update menu items.
-     */
+    /** Update menu items. */
     private void updateMenuItems() {
         boolean undoAllowed = (currentIndex > 0) && !undoList.isEmpty();
         boolean redoAllowed = (currentIndex < undoList.size());
 
-        logger.debug(String.format("Current index : %d List : %d Undo %s Redo %s", currentIndex,
-                undoList.size(), undoAllowed, redoAllowed));
+        logger.debug(
+                String.format(
+                        "Current index : %d List : %d Undo %s Redo %s",
+                        currentIndex, undoList.size(), undoAllowed, redoAllowed));
         for (UndoStateInterface listener : listenerList) {
             listener.updateUndoRedoState(undoAllowed, redoAllowed);
         }
@@ -218,9 +204,7 @@ public class UndoManager {
         this.populationCheck = populationCheck;
     }
 
-    /**
-     * Destroy instance.
-     */
+    /** Destroy instance. */
     public static void destroyInstance() {
         instance = null;
     }

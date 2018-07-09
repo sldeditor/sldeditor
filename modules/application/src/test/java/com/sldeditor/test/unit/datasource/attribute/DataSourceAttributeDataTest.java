@@ -23,21 +23,22 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
+import org.junit.Test;
 
 /**
  * Unit test for DataSourceAttributeData class.
- * 
- * <p>{@link com.sldeditor.datasource.attribute.DataSourceAttributeData}
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.attribute.DataSourceAttributeData}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DataSourceAttributeDataTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.attribute.DataSourceAttributeData#DataSourceAttributeData(org.opengis.feature.type.Name, java.lang.Class, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.attribute.DataSourceAttributeData#DataSourceAttributeData(org.opengis.feature.type.Name,
+     * java.lang.Class, java.lang.Object)}.
      */
     @Test
     public void testDataSourceAttributeDataNameClassOfQObject() {
@@ -73,7 +74,8 @@ public class DataSourceAttributeDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.attribute.DataSourceAttributeData#DataSourceAttributeData(com.sldeditor.datasource.attribute.DataSourceAttributeData)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.attribute.DataSourceAttributeData#DataSourceAttributeData(com.sldeditor.datasource.attribute.DataSourceAttributeData)}.
      */
     @Test
     public void testDataSourceAttributeDataDataSourceAttributeData() {
@@ -92,7 +94,8 @@ public class DataSourceAttributeDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.attribute.DataSourceAttributeData#setName(org.opengis.feature.type.Name)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.attribute.DataSourceAttributeData#setName(org.opengis.feature.type.Name)}.
      */
     @Test
     public void testSetName() {
@@ -109,7 +112,8 @@ public class DataSourceAttributeDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.attribute.DataSourceAttributeData#setType(java.lang.Class)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.attribute.DataSourceAttributeData#setType(java.lang.Class)}.
      */
     @Test
     public void testSetType() {
@@ -127,7 +131,8 @@ public class DataSourceAttributeDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.attribute.DataSourceAttributeData#setValue(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.attribute.DataSourceAttributeData#setValue(java.lang.Object)}.
      */
     @Test
     public void testSetValue() {
@@ -149,8 +154,8 @@ public class DataSourceAttributeDataTest {
         Class<?> expectedType1 = Integer.class;
         Object expectedValue1 = Integer.valueOf(42);
 
-        DataSourceAttributeData dsa1 = new DataSourceAttributeData(expectedName1, expectedType1,
-                expectedValue1);
+        DataSourceAttributeData dsa1 =
+                new DataSourceAttributeData(expectedName1, expectedType1, expectedValue1);
         DataSourceAttributeData dsa3 =
                 new DataSourceAttributeData(expectedName1, expectedType1, expectedValue1);
 
@@ -163,10 +168,10 @@ public class DataSourceAttributeDataTest {
         Class<?> expectedType2 = Double.class;
         Object expectedValue2 = Integer.valueOf(24);
 
-        DataSourceAttributeData dsa2 = 
+        DataSourceAttributeData dsa2 =
                 new DataSourceAttributeData(expectedName2, expectedType2, expectedValue2);
         assertFalse(dsa1.equals(dsa2));
-        DataSourceAttributeData obj1 = 
+        DataSourceAttributeData obj1 =
                 new DataSourceAttributeData(expectedName1, expectedType2, expectedValue1);
         assertFalse(dsa1.equals(obj1));
         assertFalse(dsa1.equals(new DataSourceAttributeData(expectedName1, null, expectedValue1)));

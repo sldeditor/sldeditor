@@ -19,6 +19,15 @@
 
 package com.sldeditor.filter.v2.expression;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.datasource.DataSourceInterface;
+import com.sldeditor.datasource.DataSourceUpdatedInterface;
+import com.sldeditor.datasource.impl.DataSourceFactory;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import com.sldeditor.filter.ExpressionPanelInterface;
+import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -27,7 +36,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -39,7 +47,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-
 import org.geotools.data.DataStore;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.BinaryComparisonAbstract;
@@ -58,16 +65,6 @@ import org.opengis.filter.PropertyIsNull;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.spatial.BinarySpatialOperator;
 import org.opengis.filter.temporal.BinaryTemporalOperator;
-
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.vendoroption.VersionData;
-import com.sldeditor.datasource.DataSourceInterface;
-import com.sldeditor.datasource.DataSourceUpdatedInterface;
-import com.sldeditor.datasource.impl.DataSourceFactory;
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
-import com.sldeditor.filter.ExpressionPanelInterface;
-import com.sldeditor.filter.v2.function.FilterConfigInterface;
 
 /**
  * The Class ExpressionPanelv2.
@@ -177,8 +174,10 @@ public class ExpressionPanelv2 extends JDialog
     public void configure(String title, Class<?> fieldType, boolean isRasterSymbol) {
         this.fieldType = fieldType;
 
-        setTitle(String.format("%s : %s", title,
-                ((fieldType == null) ? "???" : fieldType.getSimpleName())));
+        setTitle(
+                String.format(
+                        "%s : %s",
+                        title, ((fieldType == null) ? "???" : fieldType.getSimpleName())));
 
         expressionPanel.setDataType(fieldType, isRasterSymbol);
         propertyPanel.setDataType(fieldType);
@@ -187,9 +186,7 @@ public class ExpressionPanelv2 extends JDialog
         textArea.setText("");
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         JPanel treePanel = new JPanel();
         getContentPane().add(treePanel, BorderLayout.WEST);
@@ -202,14 +199,15 @@ public class ExpressionPanelv2 extends JDialog
         model = new ExpressionTreeModel(rootNode);
 
         tree = new JTree(model);
-        tree.addTreeSelectionListener(new TreeSelectionListener() {
+        tree.addTreeSelectionListener(
+                new TreeSelectionListener() {
 
-            public void valueChanged(TreeSelectionEvent e) {
-                selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+                    public void valueChanged(TreeSelectionEvent e) {
+                        selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 
-                treeSelected(selectedNode);
-            }
-        });
+                        treeSelected(selectedNode);
+                    }
+                });
         scrollPane.setViewportView(tree);
 
         dataPanel = new JPanel(new CardLayout());
@@ -234,24 +232,26 @@ public class ExpressionPanelv2 extends JDialog
 
         btnOk = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.ok"));
         btnOk.setEnabled(false);
-        btnOk.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                okButtonPressed = true;
+        btnOk.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        okButtonPressed = true;
 
-                setVisible(false);
-            }
-        });
+                        setVisible(false);
+                    }
+                });
         buttonPanel.add(btnOk);
 
-        JButton btnCancel = new JButton(
-                Localisation.getString(ExpressionPanelv2.class, "common.cancel"));
-        btnCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                okButtonPressed = false;
+        JButton btnCancel =
+                new JButton(Localisation.getString(ExpressionPanelv2.class, "common.cancel"));
+        btnCancel.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        okButtonPressed = false;
 
-                setVisible(false);
-            }
-        });
+                        setVisible(false);
+                    }
+                });
         buttonPanel.add(btnCancel);
 
         JPanel resultPanel = new JPanel();
@@ -313,9 +313,7 @@ public class ExpressionPanelv2 extends JDialog
         }
     }
 
-    /**
-     * Data applied.
-     */
+    /** Data applied. */
     @Override
     public void dataApplied() {
         btnOk.setEnabled(true);
@@ -339,9 +337,7 @@ public class ExpressionPanelv2 extends JDialog
         }
     }
 
-    /**
-     * Display result.
-     */
+    /** Display result. */
     private void displayResult() {
         String result = "";
         if (rootNode instanceof ExpressionNode) {
@@ -418,8 +414,8 @@ public class ExpressionPanelv2 extends JDialog
      * @param noOfExpressions the no of expressions
      * @param parameterFilter the parameter filter
      */
-    private void createExpressionParameterList(FilterNode node, int noOfExpressions,
-            List<Expression> parameterFilter) {
+    private void createExpressionParameterList(
+            FilterNode node, int noOfExpressions, List<Expression> parameterFilter) {
         if (noOfExpressions <= node.getChildCount()) {
             for (int index = 0; index < noOfExpressions; index++) {
                 ExpressionNode expressionNode = (ExpressionNode) node.getChildAt(index);
@@ -484,8 +480,7 @@ public class ExpressionPanelv2 extends JDialog
         } else if (expression instanceof ConcatenateFunction) {
             ConcatenateFunction concatenateExpression = (ConcatenateFunction) expression;
             List<Expression> parameters = new ArrayList<Expression>();
-            for(int index = 0; index < node.getChildCount(); index ++)
-            {
+            for (int index = 0; index < node.getChildCount(); index++) {
                 ExpressionNode expressionNode = (ExpressionNode) node.getChildAt(0);
                 parameters.add(addExpression(expressionNode));
             }
@@ -503,8 +498,8 @@ public class ExpressionPanelv2 extends JDialog
      * @param isConnectedToDataSourceFlag the is connected to data source flag
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType,
-            boolean isConnectedToDataSourceFlag) {
+    public void dataSourceLoaded(
+            GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag) {
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
 
         propertyPanel.dataSourceLoaded(dataSource);
@@ -550,13 +545,13 @@ public class ExpressionPanelv2 extends JDialog
      * @param expressionString the expression string
      */
     @Override
-    public void populate(String expressionString) {
-    }
+    public void populate(String expressionString) {}
 
     /**
      * (non-Javadoc)
-     * 
-     * @see com.sldeditor.filter.ExpressionPanelInterface#populate(org.opengis.filter.expression.Expression)
+     *
+     * @see
+     *     com.sldeditor.filter.ExpressionPanelInterface#populate(org.opengis.filter.expression.Expression)
      */
     @Override
     public void populate(Expression storedExpression) {
@@ -565,7 +560,7 @@ public class ExpressionPanelv2 extends JDialog
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.filter.v2.expression.ExpressionFilterInterface#getVendorOptionList()
      */
     @Override
@@ -575,7 +570,7 @@ public class ExpressionPanelv2 extends JDialog
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override
@@ -613,5 +608,4 @@ public class ExpressionPanelv2 extends JDialog
             cardLayout.show(dataPanel, EMPTY_PANEL);
         }
     }
-
 }

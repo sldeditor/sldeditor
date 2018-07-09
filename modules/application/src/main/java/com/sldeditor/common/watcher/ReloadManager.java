@@ -19,6 +19,10 @@
 
 package com.sldeditor.common.watcher;
 
+import com.sldeditor.common.LoadSLDInterface;
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
+import com.sldeditor.datasource.SLDEditorFile;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -26,19 +30,12 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.sldeditor.common.LoadSLDInterface;
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.datasource.SLDEditorDataUpdateInterface;
-import com.sldeditor.datasource.SLDEditorFile;
-
 /**
- * The Class ReloadManager, class implemented as a singleton.
- * Receives the currently load SLD file when it updates and compares it to all modified
- * files from the FileWatcher. If the currently loaded when is modified and the save flag 
- * hasn't been set then inform the application that the
- * currently loaded file has been modified. Added some protection to prevent multiple
- * file watcher events for the currently loaded file to trigger
- * more than once.
+ * The Class ReloadManager, class implemented as a singleton. Receives the currently load SLD file
+ * when it updates and compares it to all modified files from the FileWatcher. If the currently
+ * loaded when is modified and the save flag hasn't been set then inform the application that the
+ * currently loaded file has been modified. Added some protection to prevent multiple file watcher
+ * events for the currently loaded file to trigger more than once.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -71,9 +68,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
     /** The Constant RELOAD_ENABLED. */
     private static final boolean RELOAD_ENABLED = false;
 
-    /**
-     * Instantiates a new reload manager.
-     */
+    /** Instantiates a new reload manager. */
     private ReloadManager() {
         SLDEditorFile.getInstance().addSLDEditorFileUpdateListener(this);
     }
@@ -93,7 +88,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.watcher.FileWatcherUpdateInterface#fileAdded(java.nio.file.Path)
      */
     @Override
@@ -103,7 +98,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.watcher.FileWatcherUpdateInterface#fileModified(java.nio.file.Path)
      */
     @Override
@@ -111,17 +106,19 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
         if (!underTest) {
             if ((updated != null) && proceed(updated)) {
                 if (startTimeout()) {
-                    timer.schedule(new TimerTask() {
+                    timer.schedule(
+                            new TimerTask() {
 
-                        @Override
-                        public void run() {
-                            timingOutFinished();
+                                @Override
+                                public void run() {
+                                    timingOutFinished();
 
-                            if (listener != null) {
-                                listener.reloadSLDFile();
-                            }
-                        }
-                    }, TIMEOUT);
+                                    if (listener != null) {
+                                        listener.reloadSLDFile();
+                                    }
+                                }
+                            },
+                            TIMEOUT);
                 }
             }
         }
@@ -129,7 +126,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.watcher.FileWatcherUpdateInterface#fileDeleted(java.nio.file.Path)
      */
     @Override
@@ -139,7 +136,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.SLDEditorDataUpdateInterface#sldDataUpdated(com.sldeditor.common.SLDDataInterface, boolean)
      */
     @Override
@@ -191,9 +188,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
         this.currentLoadedFileList = currentLoadedFileList;
     }
 
-    /**
-     * Mark timeout as finished.
-     */
+    /** Mark timeout as finished. */
     private synchronized void timingOutFinished() {
         this.timingOut = false;
     }
@@ -220,9 +215,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
         this.listener = listener;
     }
 
-    /**
-     * Sets the file saved.
-     */
+    /** Sets the file saved. */
     public synchronized void setFileSaved() {
         fileSaved = true;
 
@@ -231,9 +224,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
         }
     }
 
-    /**
-     * Reset file saved flag.
-     */
+    /** Reset file saved flag. */
     public synchronized void reset() {
         for (Path key : this.currentLoadedFileList.keySet()) {
             this.currentLoadedFileList.put(key, false);

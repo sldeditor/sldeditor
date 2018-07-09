@@ -19,19 +19,6 @@
 
 package com.sldeditor.filter.v2.envvar;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.LiteralExpressionImpl;
-import org.geotools.filter.function.EnvFunction;
-import org.opengis.filter.FilterFactory2;
-import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Function;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.envvar.EnvironmentVariables;
@@ -40,6 +27,17 @@ import com.sldeditor.common.xml.envvar.XMLEnvVar;
 import com.sldeditor.common.xml.envvar.XMLEnvVarType;
 import com.sldeditor.common.xml.envvar.XMLEnvVarTypeList;
 import com.sldeditor.filter.v2.envvar.dialog.EnvVarDlg;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.geotools.filter.function.EnvFunction;
+import org.opengis.filter.FilterFactory2;
+import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
 
 /**
  * The Class EnvironmentVariableManager.
@@ -82,15 +80,13 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     private WMSEnvVarValues wmsEnvVarValues = null;
 
     /** The Constant wmsEnvVarList, the list of WMS map environment variable names. */
-    private static final List<String> wmsEnvVarList = Arrays.asList(WMS_BBOX, WMS_HEIGHT,
-            WMS_WIDTH);
+    private static final List<String> wmsEnvVarList =
+            Arrays.asList(WMS_BBOX, WMS_HEIGHT, WMS_WIDTH);
 
     /** The env var updated listener list. */
     private List<EnvVarUpdateInterface> listenerList = new ArrayList<EnvVarUpdateInterface>();
 
-    /**
-     * Instantiates a new environment variable manager.
-     */
+    /** Instantiates a new environment variable manager. */
     private EnvironmentVariableManager() {
         populate();
     }
@@ -107,14 +103,16 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
         }
     }
 
-    /**
-     * Populate object with built in environment variables.
-     */
+    /** Populate object with built in environment variables. */
     private void populate() {
 
-        EnvironmentVariables envVarXML = (EnvironmentVariables) ParseXML.parseFile("",
-                EnvironmentVariableManager.ENV_VAR_XML, OUTPUT_SCHEMA_RESOURCE,
-                EnvironmentVariables.class);
+        EnvironmentVariables envVarXML =
+                (EnvironmentVariables)
+                        ParseXML.parseFile(
+                                "",
+                                EnvironmentVariableManager.ENV_VAR_XML,
+                                OUTPUT_SCHEMA_RESOURCE,
+                                EnvironmentVariables.class);
 
         // Read built in types
         XMLBuiltInEnvVarList xmlBuiltInList = envVarXML.getBuiltInEnvVarList();
@@ -286,7 +284,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface#getDataType(org.opengis.filter.expression.Expression)
      */
     @Override
@@ -302,9 +300,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
         return Object.class;
     }
 
-    /**
-     * Notify rest of the system when environment variable updates occur.
-     */
+    /** Notify rest of the system when environment variable updates occur. */
     private void setEnvironmentVariableValues() {
         EnvFunction.clearGlobalValues();
 
@@ -321,18 +317,14 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
         notifyUpdates();
     }
 
-    /**
-     * Notify rest of application of env var updates.
-     */
+    /** Notify rest of application of env var updates. */
     private void notifyUpdates() {
         for (EnvVarUpdateInterface listener : listenerList) {
             listener.envVarsUpdated(this.envVarList);
         }
     }
 
-    /**
-     * Internal method to set WMS environment variable values.
-     */
+    /** Internal method to set WMS environment variable values. */
     private void internal_setWMSEnvVarValues() {
         if (wmsEnvVarValues == null) {
             return;
@@ -410,9 +402,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
         return envVarDlg.showDialog();
     }
 
-    /**
-     * Destroy instance.
-     */
+    /** Destroy instance. */
     public static void destroyInstance() {
         instance = null;
     }

@@ -20,15 +20,13 @@
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 /**
- * The Interface WKTUpdateInterface allows classes to register for notifications when
- * WKT field values are updated.
- * 
+ * The Interface WKTUpdateInterface allows classes to register for notifications when WKT field
+ * values are updated.
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface WKTUpdateInterface {
 
-    /**
-     * Value updated.
-     */
+    /** Value updated. */
     void wktValueUpdated();
 }

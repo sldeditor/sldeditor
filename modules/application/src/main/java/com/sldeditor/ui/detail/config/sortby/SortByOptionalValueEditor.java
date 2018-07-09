@@ -23,7 +23,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventObject;
-
 import javax.swing.AbstractCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -61,14 +60,17 @@ public class SortByOptionalValueEditor extends AbstractCellEditor implements Tab
         this.tableModel = tableModel;
 
         checkBox.setHorizontalAlignment(JLabel.CENTER);
-        checkBox.addActionListener(new ActionListener() {
+        checkBox.addActionListener(
+                new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tableModel.setValueAt(checkBox.isSelected(), selectedIndex,
-                        SortByTableModel.getSortOrderColumn());
-            }
-        });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        tableModel.setValueAt(
+                                checkBox.isSelected(),
+                                selectedIndex,
+                                SortByTableModel.getSortOrderColumn());
+                    }
+                });
     }
 
     /**
@@ -106,8 +108,8 @@ public class SortByOptionalValueEditor extends AbstractCellEditor implements Tab
      * @return the table cell editor component
      */
     @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
-            int row, int column) {
+    public Component getTableCellEditorComponent(
+            JTable table, Object value, boolean isSelected, int row, int column) {
 
         Boolean currentValue = (Boolean) tableModel.getValueAt(row, column);
 

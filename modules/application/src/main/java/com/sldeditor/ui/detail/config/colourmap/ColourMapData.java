@@ -19,15 +19,13 @@
 
 package com.sldeditor.ui.detail.config.colourmap;
 
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.utils.ColourUtils;
 import java.awt.Color;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.utils.ColourUtils;
 
 /**
  * The Class ColourMapData.
@@ -57,12 +55,8 @@ public class ColourMapData {
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
-    /**
-     * Instantiates a new colour map data.
-     */
-    public ColourMapData() {
-
-    }
+    /** Instantiates a new colour map data. */
+    public ColourMapData() {}
 
     /**
      * Gets the colour.

@@ -17,27 +17,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.filesystem;
 
+import com.sldeditor.common.NodeInterface;
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import java.awt.event.MouseEvent;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import com.sldeditor.common.NodeInterface;
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.datasource.extension.filesystem.node.FSTree;
-
 /**
- * The Interface FileSystemInterface is implemented by nodes that 
- * are displayed in the file system tree.
- * 
+ * The Interface FileSystemInterface is implemented by nodes that are displayed in the file system
+ * tree.
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface FileSystemInterface extends Serializable {
@@ -106,7 +103,8 @@ public interface FileSystemInterface extends Serializable {
      * @param droppedDataMap the dropped data map
      * @return true, if successful
      */
-    boolean copyNodes(NodeInterface destinationTreeNode,
+    boolean copyNodes(
+            NodeInterface destinationTreeNode,
             Map<NodeInterface, List<SLDDataInterface>> droppedDataMap);
 
     /**
@@ -124,5 +122,4 @@ public interface FileSystemInterface extends Serializable {
      * @return the destination text
      */
     String getDestinationText(NodeInterface destinationTreeNode);
-
 }

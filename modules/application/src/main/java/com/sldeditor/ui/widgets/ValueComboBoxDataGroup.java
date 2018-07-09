@@ -19,13 +19,12 @@
 
 package com.sldeditor.ui.widgets;
 
-import java.util.List;
-
 import com.sldeditor.common.localisation.Localisation;
+import java.util.List;
 
 /**
  * Class that encapsulates the a list or group of ValueComboBoxData items.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ValueComboBoxDataGroup {
@@ -58,8 +57,8 @@ public class ValueComboBoxDataGroup {
      * @param dataList the data list
      * @param isSubMenu the is sub menu
      */
-    public ValueComboBoxDataGroup(String groupName, List<ValueComboBoxData> dataList,
-            boolean isSubMenu) {
+    public ValueComboBoxDataGroup(
+            String groupName, List<ValueComboBoxData> dataList, boolean isSubMenu) {
         super();
         this.groupName = groupName;
         this.dataList = dataList;
@@ -92,5 +91,4 @@ public class ValueComboBoxDataGroup {
     public boolean isSubMenu() {
         return isSubMenu;
     }
-
 }

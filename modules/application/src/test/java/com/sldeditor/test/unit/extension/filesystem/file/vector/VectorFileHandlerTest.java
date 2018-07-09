@@ -25,6 +25,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.extension.filesystem.file.vector.VectorFileHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,27 +37,20 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.Test;
-
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.data.SLDData;
-import com.sldeditor.common.data.StyleWrapper;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
-import com.sldeditor.extension.filesystem.file.vector.VectorFileHandler;
 
 /**
  * Unit test for VectorFileHandler class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class VectorFileHandlerTest {
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getFileExtensionList()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getFileExtensionList()}.
      */
     @Test
     public void testGetFileExtension() {
@@ -60,7 +58,8 @@ public class VectorFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#isDataSource()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#isDataSource()}.
      */
     @Test
     public void testIsDataSource() {
@@ -68,7 +67,10 @@ public class VectorFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface, javax.swing.tree.DefaultTreeModel, com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface,
+     * javax.swing.tree.DefaultTreeModel,
+     * com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
      */
     @Test
     public void testPopulate() {
@@ -77,8 +79,9 @@ public class VectorFileHandlerTest {
 
     /**
      * Single file
-     * 
-     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     *
+     * <p>Test method for {@link
+     * com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDContentsFile() {
@@ -135,8 +138,9 @@ public class VectorFileHandlerTest {
 
     /**
      * Supply a folder name and retrieve all the sld files in it
-     * 
-     * <p>Test method for {@link com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     *
+     * <p>Test method for {@link
+     * com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDName() {

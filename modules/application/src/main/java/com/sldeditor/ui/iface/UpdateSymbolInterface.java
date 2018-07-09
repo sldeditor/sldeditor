@@ -23,7 +23,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * The Interface UpdateSymbolInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface UpdateSymbolInterface {

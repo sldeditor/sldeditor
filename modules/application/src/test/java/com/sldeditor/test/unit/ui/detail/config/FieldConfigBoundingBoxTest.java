@@ -25,12 +25,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.junit.Test;
-import org.locationtech.jts.geom.Geometry;
-import org.opengis.filter.expression.Expression;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
@@ -39,10 +33,15 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigBoundingBox;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.junit.Test;
+import org.locationtech.jts.geom.Geometry;
+import org.opengis.filter.expression.Expression;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * The unit test for FieldConfigBoundingBox.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox}
  *
  * @author Robert Ward (SCISYS)
@@ -50,18 +49,20 @@ import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 public class FieldConfigBoundingBoxTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#internal_setEnabled(boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#isEnabled()}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#createUI(javax.swing.Box)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#internal_setEnabled(boolean)}. Test
+     * method for {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#isEnabled()}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#createUI(javax.swing.Box)}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigBoundingBox field = new FieldConfigBoundingBox(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoundingBox field =
+                new FieldConfigBoundingBox(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -80,8 +81,10 @@ public class FieldConfigBoundingBoxTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigBoundingBox field2 = new FieldConfigBoundingBox(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoundingBox field2 =
+                new FieldConfigBoundingBox(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -101,14 +104,16 @@ public class FieldConfigBoundingBoxTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#setVisible(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigBoundingBox field = new FieldConfigBoundingBox(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoundingBox field =
+                new FieldConfigBoundingBox(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -117,18 +122,18 @@ public class FieldConfigBoundingBoxTest {
 
         expectedValue = false;
         field.setVisible(expectedValue);
-
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#generateExpression()}. Test
-     * method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#populateField(org.geotools.geometry.jts.ReferencedEnvelope)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#setTestValue(com.sldeditor.ui.detail.config.FieldId, boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#generateExpression()}. Test method for
+     * {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#populateExpression(java.lang.Object,
+     * org.opengis.filter.expression.Expression)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#populateField(org.geotools.geometry.jts.ReferencedEnvelope)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#setTestValue(com.sldeditor.ui.detail.config.FieldId,
+     * boolean)}.
      */
     @Test
     public void testGenerateExpression() {
@@ -144,8 +149,10 @@ public class FieldConfigBoundingBoxTest {
             }
         }
 
-        TestFieldConfigBoundingBox field = new TestFieldConfigBoundingBox(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        TestFieldConfigBoundingBox field =
+                new TestFieldConfigBoundingBox(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         Expression actualExpression = field.callGenerateExpression();
         assertNotNull(actualExpression);
 
@@ -166,15 +173,17 @@ public class FieldConfigBoundingBoxTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#revertToDefaultValue()}. Test
-     * method for {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#getStringValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#revertToDefaultValue()}. Test method
+     * for {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#getStringValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigBoundingBox field = new FieldConfigBoundingBox(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoundingBox field =
+                new FieldConfigBoundingBox(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.revertToDefaultValue();
         assertNotNull(field.getStringValue());
@@ -186,8 +195,8 @@ public class FieldConfigBoundingBoxTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
@@ -203,8 +212,10 @@ public class FieldConfigBoundingBoxTest {
             }
         }
 
-        TestFieldConfigBoundingBox field = new TestFieldConfigBoundingBox(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        TestFieldConfigBoundingBox field =
+                new TestFieldConfigBoundingBox(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         FieldConfigBoundingBox copy = (FieldConfigBoundingBox) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -215,29 +226,33 @@ public class FieldConfigBoundingBoxTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#attributeSelection(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigBoundingBox field = new FieldConfigBoundingBox(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoundingBox field =
+                new FieldConfigBoundingBox(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         field.attributeSelection(null);
 
         // Does nothing
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
-        FieldConfigBoundingBox field = new FieldConfigBoundingBox(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", false));
+        FieldConfigBoundingBox field =
+                new FieldConfigBoundingBox(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();

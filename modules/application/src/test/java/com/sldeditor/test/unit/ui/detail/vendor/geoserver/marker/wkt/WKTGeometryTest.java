@@ -24,16 +24,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
+import org.junit.Test;
 
 /**
  * The unit test for WKTGeometry.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry}
  *
  * @author Robert Ward (SCISYS)
@@ -41,9 +40,8 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
 public class WKTGeometryTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#isValid()}. Test
-     * method for
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#isValid()}. Test method for
      * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#setValid(boolean)}.
      */
     @Test
@@ -59,10 +57,10 @@ public class WKTGeometryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#getGeometryType()}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#setGeometryType(com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#getGeometryType()}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#setGeometryType(com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType)}.
      */
     @Test
     public void testGetGeometryType() {
@@ -76,14 +74,13 @@ public class WKTGeometryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#addNewSegment()}. Test
-     * method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#addNewSegment(int)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#isEmpty()}. Test
-     * method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#getSegmentList(int)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#addNewSegment()}. Test method
+     * for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#addNewSegment(int)}. Test
+     * method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#isEmpty()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#getSegmentList(int)}.
      */
     @Test
     public void testAddNewSegment() {
@@ -107,12 +104,11 @@ public class WKTGeometryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#addNewShape()}. Test
-     * method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#removeShape(int)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#removeSegment(int, int)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#addNewShape()}. Test method
+     * for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#removeShape(int)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#removeSegment(int, int)}.
      */
     @Test
     public void testAddNewShape() {
@@ -127,8 +123,9 @@ public class WKTGeometryTest {
 
         int expectedIndex = 0;
         String actualValue = g.getMultiShapeName(expectedIndex);
-        assertTrue(actualValue
-                .compareTo(String.format("%s %d", expectedListItem, expectedIndex + 1)) == 0);
+        assertTrue(
+                actualValue.compareTo(String.format("%s %d", expectedListItem, expectedIndex + 1))
+                        == 0);
 
         g.addNewShape();
 
@@ -152,24 +149,30 @@ public class WKTGeometryTest {
         assertEquals(4, actualSize);
 
         actualValue = g.getSegmentName(0);
-        assertTrue(actualValue
-                .compareTo(String.format("%s %d", expectedListItem, expectedIndex + 1)) == 0);
+        assertTrue(
+                actualValue.compareTo(String.format("%s %d", expectedListItem, expectedIndex + 1))
+                        == 0);
 
         wktType = new WKTType("name", false, 5, expectedListItem, true, true);
 
         g.setGeometryType(wktType);
         actualValue = g.getSegmentName(0);
-        assertTrue(actualValue.compareTo(String.format("%s %d",
-                Localisation.getString(WKTDialog.class, "WKTDialog.partShape"),
-                expectedIndex + 1)) == 0);
+        assertTrue(
+                actualValue.compareTo(
+                                String.format(
+                                        "%s %d",
+                                        Localisation.getString(
+                                                WKTDialog.class, "WKTDialog.partShape"),
+                                        expectedIndex + 1))
+                        == 0);
 
         assertNull(g.getSegmentList(-4));
         assertNull(g.getSegmentList(43));
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#hashCode()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#hashCode()}.
      */
     @Test
     public void testHashCode() {
@@ -200,5 +203,4 @@ public class WKTGeometryTest {
         g3.addNewShape();
         assertFalse(g.equals(g3));
     }
-
 }

@@ -19,14 +19,13 @@
 
 package com.sldeditor.ui.detail.config.base;
 
-import javax.swing.Box;
-
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import javax.swing.Box;
 
 /**
  * The Interface GroupConfigInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface GroupConfigInterface {
@@ -73,10 +72,8 @@ public interface GroupConfigInterface {
      * @return true, if is panel enabled
      */
     boolean isPanelEnabled();
-    
-    /**
-     * Removes components from the from ui.
-     */
+
+    /** Removes components from the from ui. */
     void removeFromUI();
 
     /**

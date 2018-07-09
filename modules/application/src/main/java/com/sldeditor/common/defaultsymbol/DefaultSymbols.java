@@ -19,11 +19,14 @@
 
 package com.sldeditor.common.defaultsymbol;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.datasource.DataSourceInterface;
+import com.sldeditor.datasource.impl.DataSourceFactory;
+import com.sldeditor.filter.v2.function.FunctionManager;
+import com.sldeditor.ui.tree.SLDTreeTools;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.measure.Unit;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.function.FilterFunction_endAngle;
 import org.geotools.filter.function.FilterFunction_endPoint;
@@ -56,15 +59,9 @@ import org.opengis.filter.expression.Expression;
 import org.opengis.style.Displacement;
 import org.opengis.style.GraphicalSymbol;
 
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.datasource.DataSourceInterface;
-import com.sldeditor.datasource.impl.DataSourceFactory;
-import com.sldeditor.filter.v2.function.FunctionManager;
-import com.sldeditor.ui.tree.SLDTreeTools;
-
 /**
  * Class of static methods to provide default sld values to the application.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DefaultSymbols {
@@ -100,8 +97,8 @@ public class DefaultSymbols {
     private static final String DEFAULT_FILL_COLOUR = "#0000FF";
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private static StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
@@ -124,11 +121,22 @@ public class DefaultSymbols {
         GraphicalSymbol symbol = styleFactory.mark(ff.literal(DEFAULT_MARKER_SYMBOL), fill, stroke);
 
         symbolList.add(symbol);
-        Graphic graphic = styleFactory.graphic(symbolList, ff.literal(DEFAULT_COLOUR_OPACITY),
-                ff.literal(DEFAULT_MARKER_SYMBOL_SIZE), ff.literal(0.0), anchorPoint, displacement);
-        PointSymbolizer newPointSymbolizer = (PointSymbolizer) styleFactory.pointSymbolizer(
-                Localisation.getString(SLDTreeTools.class, "TreeItem.newMarker"), geometryField,
-                null, null, graphic);
+        Graphic graphic =
+                styleFactory.graphic(
+                        symbolList,
+                        ff.literal(DEFAULT_COLOUR_OPACITY),
+                        ff.literal(DEFAULT_MARKER_SYMBOL_SIZE),
+                        ff.literal(0.0),
+                        anchorPoint,
+                        displacement);
+        PointSymbolizer newPointSymbolizer =
+                (PointSymbolizer)
+                        styleFactory.pointSymbolizer(
+                                Localisation.getString(SLDTreeTools.class, "TreeItem.newMarker"),
+                                geometryField,
+                                null,
+                                null,
+                                graphic);
 
         return newPointSymbolizer;
     }
@@ -153,8 +161,8 @@ public class DefaultSymbols {
         AnchorPoint anchor = null;
         Displacement displacement = null;
 
-        PointPlacement pointPlacement = (PointPlacement) styleFactory.pointPlacement(anchor,
-                displacement, rotation);
+        PointPlacement pointPlacement =
+                (PointPlacement) styleFactory.pointPlacement(anchor, displacement, rotation);
 
         Expression fillColour = ff.literal(DEFAULT_COLOUR);
         Expression fillColourOpacity = ff.literal(1.0);
@@ -170,8 +178,18 @@ public class DefaultSymbols {
         Description description = null;
         Unit<?> unit = null;
 
-        TextSymbolizer newTextSymbolizer = (TextSymbolizer) styleFactory.textSymbolizer(name,
-                geometryField, description, unit, label, font, pointPlacement, halo, fill);
+        TextSymbolizer newTextSymbolizer =
+                (TextSymbolizer)
+                        styleFactory.textSymbolizer(
+                                name,
+                                geometryField,
+                                description,
+                                unit,
+                                label,
+                                font,
+                                pointPlacement,
+                                halo,
+                                fill);
 
         return newTextSymbolizer;
     }
@@ -484,11 +502,15 @@ public class DefaultSymbols {
      * @param isSourceArrow the is source arrow
      * @return the point symbolizer
      */
-    private static PointSymbolizer createArrow(FunctionName angleFunction,
-            FunctionName locationFunction, String markerSymbol, boolean isSourceArrow) {
-        String name = isSourceArrow
-                ? Localisation.getString(SLDTreeTools.class, "TreeItem.sourceArrow")
-                : Localisation.getString(SLDTreeTools.class, "TreeItem.destArrow");
+    private static PointSymbolizer createArrow(
+            FunctionName angleFunction,
+            FunctionName locationFunction,
+            String markerSymbol,
+            boolean isSourceArrow) {
+        String name =
+                isSourceArrow
+                        ? Localisation.getString(SLDTreeTools.class, "TreeItem.sourceArrow")
+                        : Localisation.getString(SLDTreeTools.class, "TreeItem.destArrow");
 
         PointSymbolizer pointSymbolizer = createDefaultPointSymbolizer();
 
@@ -513,8 +535,8 @@ public class DefaultSymbols {
         }
         rotationArgumentList.add(ff.property(geometryFieldName));
 
-        Expression rotation = FunctionManager.getInstance().createExpression(angleFunction,
-                rotationArgumentList);
+        Expression rotation =
+                FunctionManager.getInstance().createExpression(angleFunction, rotationArgumentList);
         if (isSourceArrow) {
             graphic.setRotation(ff.add(ff.literal(DEGREES_180), rotation));
         } else {
@@ -528,8 +550,9 @@ public class DefaultSymbols {
         List<Expression> endPointArgumentList = new ArrayList<Expression>();
         endPointArgumentList.add(ff.property(geometryFieldName));
 
-        Expression geometry = FunctionManager.getInstance().createExpression(locationFunction,
-                endPointArgumentList);
+        Expression geometry =
+                FunctionManager.getInstance()
+                        .createExpression(locationFunction, endPointArgumentList);
         pointSymbolizer.setGeometry(geometry);
 
         return pointSymbolizer;

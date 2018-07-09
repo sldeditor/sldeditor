@@ -17,21 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.vendoroption;
 
 import java.util.List;
 
 /**
  * Class that represents no vendor options, i.e. strict SLD only.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class NoVendorOption implements VendorOptionTypeInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getName()
      */
     @Override
@@ -41,7 +40,7 @@ public class NoVendorOption implements VendorOptionTypeInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersionStringList()
      */
     @Override
@@ -51,7 +50,7 @@ public class NoVendorOption implements VendorOptionTypeInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#addVersion(com.sldeditor.vendoroption.VersionData)
      */
     @Override
@@ -61,7 +60,7 @@ public class NoVendorOption implements VendorOptionTypeInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersion(java.lang.String)
      */
     @Override
@@ -71,7 +70,7 @@ public class NoVendorOption implements VendorOptionTypeInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersionList()
      */
     @Override

@@ -19,23 +19,6 @@
 
 package com.sldeditor.test;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
 import com.sldeditor.TreeSelectionData;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -49,10 +32,24 @@ import com.sldeditor.common.xml.ui.XMLSetFieldLiteralInt;
 import com.sldeditor.common.xml.ui.XMLSetFieldLiteralString;
 import com.sldeditor.common.xml.ui.XMLTestSection;
 import com.sldeditor.common.xml.ui.XMLTestSectionField;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * The Class SLDOutputTest.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDOutputTest {
@@ -73,27 +70,23 @@ public class SLDOutputTest {
             new HashMap<SelectedTreeItemEnum, Map<FieldIdEnum, String>>();
 
     /** The prefix map. */
-    private Map<SelectedTreeItemEnum, String> prefixMap = 
+    private Map<SelectedTreeItemEnum, String> prefixMap =
             new HashMap<SelectedTreeItemEnum, String>();
 
-    /**
-     * Instantiates a new SLD output test.
-     */
+    /** Instantiates a new SLD output test. */
     public SLDOutputTest() {
         initialise();
     }
 
-    /**
-     * Initialise.
-     */
+    /** Initialise. */
     private void initialise() {
 
         String fullPath = "/test/SLDXPath.xml";
 
-        SLDXPath xPath = (SLDXPath) ParseXML.parseFile("", fullPath, OUTPUT_SCHEMA_RESOURCE,
-                SLDXPath.class);
+        SLDXPath xPath =
+                (SLDXPath) ParseXML.parseFile("", fullPath, OUTPUT_SCHEMA_RESOURCE, SLDXPath.class);
 
-        Map<SelectedTreeItemEnum, String> initialPrefixMap = 
+        Map<SelectedTreeItemEnum, String> initialPrefixMap =
                 new HashMap<SelectedTreeItemEnum, String>();
 
         for (XMLTestSection section : xPath.getSection()) {
@@ -110,24 +103,30 @@ public class SLDOutputTest {
         prefixMap.put(SelectedTreeItemEnum.SLD, initialPrefixMap.get(SelectedTreeItemEnum.SLD));
         populatePrefixMap(SelectedTreeItemEnum.LAYER, SelectedTreeItemEnum.SLD, initialPrefixMap);
         populatePrefixMap(SelectedTreeItemEnum.STYLE, SelectedTreeItemEnum.LAYER, initialPrefixMap);
-        populatePrefixMap(SelectedTreeItemEnum.FEATURETYPESTYLE, SelectedTreeItemEnum.STYLE,
+        populatePrefixMap(
+                SelectedTreeItemEnum.FEATURETYPESTYLE,
+                SelectedTreeItemEnum.STYLE,
                 initialPrefixMap);
-        populatePrefixMap(SelectedTreeItemEnum.RULE, SelectedTreeItemEnum.FEATURETYPESTYLE,
+        populatePrefixMap(
+                SelectedTreeItemEnum.RULE, SelectedTreeItemEnum.FEATURETYPESTYLE, initialPrefixMap);
+        populatePrefixMap(
+                SelectedTreeItemEnum.POINT_SYMBOLIZER, SelectedTreeItemEnum.RULE, initialPrefixMap);
+        populatePrefixMap(
+                SelectedTreeItemEnum.LINE_SYMBOLIZER, SelectedTreeItemEnum.RULE, initialPrefixMap);
+        populatePrefixMap(
+                SelectedTreeItemEnum.POLYGON_SYMBOLIZER,
+                SelectedTreeItemEnum.RULE,
                 initialPrefixMap);
-        populatePrefixMap(SelectedTreeItemEnum.POINT_SYMBOLIZER, SelectedTreeItemEnum.RULE,
+        populatePrefixMap(
+                SelectedTreeItemEnum.TEXT_SYMBOLIZER, SelectedTreeItemEnum.RULE, initialPrefixMap);
+        populatePrefixMap(
+                SelectedTreeItemEnum.RASTER_SYMBOLIZER,
+                SelectedTreeItemEnum.RULE,
                 initialPrefixMap);
-        populatePrefixMap(SelectedTreeItemEnum.LINE_SYMBOLIZER, SelectedTreeItemEnum.RULE,
-                initialPrefixMap);
-        populatePrefixMap(SelectedTreeItemEnum.POLYGON_SYMBOLIZER, SelectedTreeItemEnum.RULE,
-                initialPrefixMap);
-        populatePrefixMap(SelectedTreeItemEnum.TEXT_SYMBOLIZER, SelectedTreeItemEnum.RULE,
-                initialPrefixMap);
-        populatePrefixMap(SelectedTreeItemEnum.RASTER_SYMBOLIZER, SelectedTreeItemEnum.RULE,
-                initialPrefixMap);
-        populatePrefixMap(SelectedTreeItemEnum.POINT_FILL, SelectedTreeItemEnum.RULE,
-                initialPrefixMap);
-        populatePrefixMap(SelectedTreeItemEnum.POLYGON_FILL, SelectedTreeItemEnum.RULE,
-                initialPrefixMap);
+        populatePrefixMap(
+                SelectedTreeItemEnum.POINT_FILL, SelectedTreeItemEnum.RULE, initialPrefixMap);
+        populatePrefixMap(
+                SelectedTreeItemEnum.POLYGON_FILL, SelectedTreeItemEnum.RULE, initialPrefixMap);
         populatePrefixMap(SelectedTreeItemEnum.STROKE, SelectedTreeItemEnum.RULE, initialPrefixMap);
     }
 
@@ -138,7 +137,9 @@ public class SLDOutputTest {
      * @param parentItem the parent item
      * @param initialPrefixMap the initial prefix map
      */
-    private void populatePrefixMap(SelectedTreeItemEnum item, SelectedTreeItemEnum parentItem,
+    private void populatePrefixMap(
+            SelectedTreeItemEnum item,
+            SelectedTreeItemEnum parentItem,
             Map<SelectedTreeItemEnum, String> initialPrefixMap) {
         prefixMap.put(item, prefixMap.get(parentItem) + initialPrefixMap.get(item));
     }
@@ -152,8 +153,11 @@ public class SLDOutputTest {
      * @param suffix the suffix
      * @return the string
      */
-    public String getString(String sldContentString, TreeSelectionData selectionData,
-            FieldIdEnum field, String suffix) {
+    public String getString(
+            String sldContentString,
+            TreeSelectionData selectionData,
+            FieldIdEnum field,
+            String suffix) {
         Document doc = getXMLDocument(sldContentString);
 
         String extractedString = null;
@@ -186,31 +190,31 @@ public class SLDOutputTest {
                 String fieldString = sb.toString();
 
                 switch (selection) {
-                case LAYER:
-                    xPathString = getLayerString(selectionData, fieldString);
-                    break;
-                case STYLE:
-                    xPathString = getStyleString(selectionData, fieldString);
-                    break;
-                case POINT_SYMBOLIZER:
-                case LINE_SYMBOLIZER:
-                case POLYGON_SYMBOLIZER:
-                case TEXT_SYMBOLIZER:
-                case RASTER_SYMBOLIZER:
-                    xPathString = getSymbolizerString(selectionData, fieldString);
-                    break;
-                case RULE:
-                    xPathString = getRuleString(selectionData, fieldString);
-                    break;
-                case POINT_FILL:
-                case POLYGON_FILL:
-                    xPathString = getFillString(selectionData, fieldString);
-                    break;
-                case STROKE:
-                    xPathString = getStrokeString(selectionData, fieldString);
-                    break;
-                default:
-                    break;
+                    case LAYER:
+                        xPathString = getLayerString(selectionData, fieldString);
+                        break;
+                    case STYLE:
+                        xPathString = getStyleString(selectionData, fieldString);
+                        break;
+                    case POINT_SYMBOLIZER:
+                    case LINE_SYMBOLIZER:
+                    case POLYGON_SYMBOLIZER:
+                    case TEXT_SYMBOLIZER:
+                    case RASTER_SYMBOLIZER:
+                        xPathString = getSymbolizerString(selectionData, fieldString);
+                        break;
+                    case RULE:
+                        xPathString = getRuleString(selectionData, fieldString);
+                        break;
+                    case POINT_FILL:
+                    case POLYGON_FILL:
+                        xPathString = getFillString(selectionData, fieldString);
+                        break;
+                    case STROKE:
+                        xPathString = getStrokeString(selectionData, fieldString);
+                        break;
+                    default:
+                        break;
                 }
 
                 if (xPathString != null) {
@@ -240,8 +244,11 @@ public class SLDOutputTest {
      */
     private String getStyleString(TreeSelectionData selectionData, String fieldString) {
 
-        String completedString = String.format(fieldString, selectionData.getLayerIndex() + 1,
-                selectionData.getStyleIndex() + 1);
+        String completedString =
+                String.format(
+                        fieldString,
+                        selectionData.getLayerIndex() + 1,
+                        selectionData.getStyleIndex() + 1);
         return completedString;
     }
 
@@ -254,9 +261,13 @@ public class SLDOutputTest {
      */
     private String getRuleString(TreeSelectionData selectionData, String fieldString) {
 
-        String completedString = String.format(fieldString, selectionData.getLayerIndex() + 1,
-                selectionData.getStyleIndex() + 1, selectionData.getFeatureTypeStyleIndex() + 1,
-                selectionData.getRuleIndex() + 1);
+        String completedString =
+                String.format(
+                        fieldString,
+                        selectionData.getLayerIndex() + 1,
+                        selectionData.getStyleIndex() + 1,
+                        selectionData.getFeatureTypeStyleIndex() + 1,
+                        selectionData.getRuleIndex() + 1);
         return completedString;
     }
 
@@ -269,9 +280,14 @@ public class SLDOutputTest {
      */
     private String getSymbolizerString(TreeSelectionData selectionData, String fieldString) {
 
-        String completedString = String.format(fieldString, selectionData.getLayerIndex() + 1,
-                selectionData.getStyleIndex() + 1, selectionData.getFeatureTypeStyleIndex() + 1,
-                selectionData.getRuleIndex() + 1, selectionData.getSymbolizerIndex() + 1);
+        String completedString =
+                String.format(
+                        fieldString,
+                        selectionData.getLayerIndex() + 1,
+                        selectionData.getStyleIndex() + 1,
+                        selectionData.getFeatureTypeStyleIndex() + 1,
+                        selectionData.getRuleIndex() + 1,
+                        selectionData.getSymbolizerIndex() + 1);
         return completedString;
     }
 
@@ -302,9 +318,14 @@ public class SLDOutputTest {
         if (fieldString == null) {
             System.out.println("Failed");
         } else {
-            completedString = String.format(fieldString, selectionData.getLayerIndex() + 1,
-                    selectionData.getStyleIndex() + 1, selectionData.getFeatureTypeStyleIndex() + 1,
-                    selectionData.getRuleIndex() + 1, selectionData.getSymbolizerIndex() + 1);
+            completedString =
+                    String.format(
+                            fieldString,
+                            selectionData.getLayerIndex() + 1,
+                            selectionData.getStyleIndex() + 1,
+                            selectionData.getFeatureTypeStyleIndex() + 1,
+                            selectionData.getRuleIndex() + 1,
+                            selectionData.getSymbolizerIndex() + 1);
         }
         return completedString;
     }
@@ -323,9 +344,14 @@ public class SLDOutputTest {
         if (fieldString == null) {
             System.out.println("Failed");
         } else {
-            completedString = String.format(fieldString, selectionData.getLayerIndex() + 1,
-                    selectionData.getStyleIndex() + 1, selectionData.getFeatureTypeStyleIndex() + 1,
-                    selectionData.getRuleIndex() + 1, selectionData.getSymbolizerIndex() + 1);
+            completedString =
+                    String.format(
+                            fieldString,
+                            selectionData.getLayerIndex() + 1,
+                            selectionData.getStyleIndex() + 1,
+                            selectionData.getFeatureTypeStyleIndex() + 1,
+                            selectionData.getRuleIndex() + 1,
+                            selectionData.getSymbolizerIndex() + 1);
         }
         return completedString;
     }
@@ -339,8 +365,11 @@ public class SLDOutputTest {
      * @param testValue the test value
      * @return true, if successful
      */
-    public boolean testValue(String sldContentString, TreeSelectionData selectionData,
-            FieldIdEnum field, XMLFieldBase testValue) {
+    public boolean testValue(
+            String sldContentString,
+            TreeSelectionData selectionData,
+            FieldIdEnum field,
+            XMLFieldBase testValue) {
         boolean passed = false;
 
         String extractedString = getString(sldContentString, selectionData, field, null);
@@ -351,8 +380,10 @@ public class SLDOutputTest {
 
             passed = (valueToTest.compareTo(extractedString) == 0);
             if (!passed) {
-                System.out.println(String.format("Value to test : '%s' Extracted : '%s'",
-                        valueToTest, extractedString));
+                System.out.println(
+                        String.format(
+                                "Value to test : '%s' Extracted : '%s'",
+                                valueToTest, extractedString));
             }
         } else if (testValue instanceof XMLSetFieldLiteralDouble) {
             XMLSetFieldLiteralDouble doubleLiteral = (XMLSetFieldLiteralDouble) testValue;
@@ -362,14 +393,17 @@ public class SLDOutputTest {
             }
 
             if (!passed) {
-                System.out.println(String.format("Value to test : '%f' Extracted : '%s'",
-                        doubleLiteral.getValue(), extractedString));
+                System.out.println(
+                        String.format(
+                                "Value to test : '%f' Extracted : '%s'",
+                                doubleLiteral.getValue(), extractedString));
             }
         } else if (testValue instanceof XMLSetFieldLiteralInt) {
             XMLSetFieldLiteralInt intLiteral = (XMLSetFieldLiteralInt) testValue;
             if ((extractedString != null) && !extractedString.isEmpty()) {
-                passed = (Integer.valueOf(extractedString).intValue() == intLiteral.getValue()
-                        .intValue());
+                passed =
+                        (Integer.valueOf(extractedString).intValue()
+                                == intLiteral.getValue().intValue());
             }
         } else if (testValue instanceof XMLSetFieldLiteralBoolean) {
             XMLSetFieldLiteralBoolean booleanLiteral = (XMLSetFieldLiteralBoolean) testValue;
@@ -378,8 +412,13 @@ public class SLDOutputTest {
             }
         }
 
-        System.out.println("Checking value : " + field + " " + extractedString + " "
-                + (passed ? "PASS" : "FAIL"));
+        System.out.println(
+                "Checking value : "
+                        + field
+                        + " "
+                        + extractedString
+                        + " "
+                        + (passed ? "PASS" : "FAIL"));
 
         return passed;
     }
@@ -418,19 +457,27 @@ public class SLDOutputTest {
      * @param testValue the test value
      * @return true, if successful
      */
-    public boolean testAttribute(String sldContentString, TreeSelectionData selectionData,
-            FieldIdEnum field, XMLSetFieldAttribute testValue) {
+    public boolean testAttribute(
+            String sldContentString,
+            TreeSelectionData selectionData,
+            FieldIdEnum field,
+            XMLSetFieldAttribute testValue) {
         boolean passed = false;
 
-        String extractedString = getString(sldContentString, selectionData, field,
-                XPATH_CHILD_ELEMENT_VALUE);
+        String extractedString =
+                getString(sldContentString, selectionData, field, XPATH_CHILD_ELEMENT_VALUE);
 
         String valueToTest = testValue.getAttribute();
 
         passed = (valueToTest.compareTo(extractedString) == 0);
 
-        System.out.println("Checking attribute : " + field + " " + extractedString + " "
-                + (passed ? "PASS" : "FAIL"));
+        System.out.println(
+                "Checking attribute : "
+                        + field
+                        + " "
+                        + extractedString
+                        + " "
+                        + (passed ? "PASS" : "FAIL"));
 
         return passed;
     }

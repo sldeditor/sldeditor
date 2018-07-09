@@ -22,20 +22,18 @@ package com.sldeditor.test.unit.ui.tree.item;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.geotools.styling.Rule;
-import org.geotools.styling.Symbolizer;
-import org.junit.Test;
-
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.tree.SLDTreeTools;
 import com.sldeditor.ui.tree.item.SymbolizerTreeItem;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.geotools.styling.Rule;
+import org.geotools.styling.Symbolizer;
+import org.junit.Test;
 
 /**
  * The unit test for SymbolizerTreeItem.
- * 
+ *
  * <p>{@link com.sldeditor.ui.tree.item.SymbolizerTreeItem}
  *
  * @author Robert Ward (SCISYS)
@@ -43,8 +41,8 @@ import com.sldeditor.ui.tree.item.SymbolizerTreeItem;
 public class SymbolizerTreeItemTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.item.SymbolizerTreeItem#getTreeString(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.SymbolizerTreeItem#getTreeString(java.lang.Object)}.
      */
     @Test
     public void testGetTreeString() {
@@ -89,12 +87,11 @@ public class SymbolizerTreeItemTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.item.SymbolizerTreeItem#getTreeString(java.lang.Object)}. 
-     * 
-     * <p>NOTE:
-     * Code just returns image outline prefix regardless of symbolizer type, doesn't just restrict
-     * to line and polygon
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.SymbolizerTreeItem#getTreeString(java.lang.Object)}.
+     *
+     * <p>NOTE: Code just returns image outline prefix regardless of symbolizer type, doesn't just
+     * restrict to line and polygon
      */
     @Test
     public void testGetTreeStringImageOutline() {
@@ -109,52 +106,66 @@ public class SymbolizerTreeItemTest {
 
         Symbolizer pointSymbolizer = DefaultSymbols.createDefaultPointSymbolizer();
         actualValue = item.getTreeString(symbolizerNode, pointSymbolizer);
-        String expectedValue = String.format("%s - %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
-                Localisation.getString(SLDTreeTools.class, "TreeItem.newMarker"));
+        String expectedValue =
+                String.format(
+                        "%s - %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.newMarker"));
 
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         pointSymbolizer.setName(null);
         actualValue = item.getTreeString(symbolizerNode, pointSymbolizer);
-        expectedValue = String.format("%s - %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
-                Localisation.getString(SLDTreeTools.class, "TreeItem.marker"));
+        expectedValue =
+                String.format(
+                        "%s - %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.marker"));
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Symbolizer lineSymbolizer = DefaultSymbols.createDefaultLineSymbolizer();
         actualValue = item.getTreeString(symbolizerNode, lineSymbolizer);
-        expectedValue = String.format("%s - %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
-                Localisation.getString(SLDTreeTools.class, "TreeItem.line"));
+        expectedValue =
+                String.format(
+                        "%s - %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.line"));
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Symbolizer polygonSymbolizer = DefaultSymbols.createDefaultPolygonSymbolizer();
         actualValue = item.getTreeString(symbolizerNode, polygonSymbolizer);
-        expectedValue = String.format("%s - %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
-                Localisation.getString(SLDTreeTools.class, "TreeItem.polygon"));
+        expectedValue =
+                String.format(
+                        "%s - %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.polygon"));
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Symbolizer textSymbolizer = DefaultSymbols.createDefaultTextSymbolizer();
         actualValue = item.getTreeString(symbolizerNode, textSymbolizer);
-        expectedValue = String.format("%s - %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
-                Localisation.getString(SLDTreeTools.class, "TreeItem.newText"));
+        expectedValue =
+                String.format(
+                        "%s - %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.newText"));
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         textSymbolizer.setName("");
         actualValue = item.getTreeString(symbolizerNode, textSymbolizer);
-        expectedValue = String.format("%s - %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
-                Localisation.getString(SLDTreeTools.class, "TreeItem.text"));
+        expectedValue =
+                String.format(
+                        "%s - %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.text"));
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Symbolizer rasterSymbolizer = DefaultSymbols.createDefaultRasterSymbolizer();
         actualValue = item.getTreeString(symbolizerNode, rasterSymbolizer);
-        expectedValue = String.format("%s - %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
-                Localisation.getString(SLDTreeTools.class, "TreeItem.raster"));
+        expectedValue =
+                String.format(
+                        "%s - %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.imageOutline"),
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.raster"));
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         // Try an invalid node
@@ -164,8 +175,9 @@ public class SymbolizerTreeItemTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.item.SymbolizerTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.SymbolizerTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode,
+     * java.lang.Object)}.
      */
     @Test
     public void testItemSelected() {
@@ -186,5 +198,4 @@ public class SymbolizerTreeItemTest {
         parentNode.setUserObject(item);
         item.itemSelected(node, null);
     }
-
 }

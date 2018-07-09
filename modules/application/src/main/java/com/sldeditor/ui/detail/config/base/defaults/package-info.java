@@ -17,10 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Package contains the class that describe default values for fields read using {@link com.sldeditor.ui.detail.config.ReadPanelConfig}.
- * <p>Classes managed by factory class {@link com.sldeditor.ui.detail.config.base.defaults.ConfigDefaultFactory}.
- * 
- * @author Robert Ward (SCISYS)
+ * Package contains the class that describe default values for fields read using {@link
+ * com.sldeditor.ui.detail.config.ReadPanelConfig}.
  *
+ * <p>Classes managed by factory class {@link
+ * com.sldeditor.ui.detail.config.base.defaults.ConfigDefaultFactory}.
+ *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.config.base.defaults;

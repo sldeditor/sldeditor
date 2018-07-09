@@ -18,7 +18,7 @@
  */
 /**
  * Application extension package.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource.extension;

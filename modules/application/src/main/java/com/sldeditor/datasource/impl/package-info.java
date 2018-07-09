@@ -18,7 +18,7 @@
  */
 /**
  * Data source classes.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource.impl;

@@ -21,7 +21,6 @@ package com.sldeditor.ui.detail.vendor.geoserver.marker.arrow;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.renderer.markwkt.MeteoMarkFactory;
 import org.opengis.filter.FilterFactory;
@@ -70,13 +69,18 @@ public class ArrowUtils {
      * @param abExpression the ab expression
      * @return the string
      */
-    public static String encode(Expression hrExpression, Expression tValueExpression,
-            Expression abExpression) {
-        String string = String.format("%s?%s=%s&%s=%s&%s=%s", ARROW_PREFIX,
-                HEIGHT_OVER_WIDTH_ATTRIBUTE,
-                getExpression(hrExpression, HEIGHT_OVER_WIDTH_ATTRIBUTE), ARROW_THICKNESS_ATTRIBUTE,
-                getExpression(tValueExpression, ARROW_THICKNESS_ATTRIBUTE),
-                HEAD_BASE_RATIO_ATTRIBUTE, getExpression(abExpression, HEAD_BASE_RATIO_ATTRIBUTE));
+    public static String encode(
+            Expression hrExpression, Expression tValueExpression, Expression abExpression) {
+        String string =
+                String.format(
+                        "%s?%s=%s&%s=%s&%s=%s",
+                        ARROW_PREFIX,
+                        HEIGHT_OVER_WIDTH_ATTRIBUTE,
+                        getExpression(hrExpression, HEIGHT_OVER_WIDTH_ATTRIBUTE),
+                        ARROW_THICKNESS_ATTRIBUTE,
+                        getExpression(tValueExpression, ARROW_THICKNESS_ATTRIBUTE),
+                        HEAD_BASE_RATIO_ATTRIBUTE,
+                        getExpression(abExpression, HEAD_BASE_RATIO_ATTRIBUTE));
 
         return string;
     }
@@ -133,9 +137,7 @@ public class ArrowUtils {
         return expression;
     }
 
-    /**
-     * Initialise.
-     */
+    /** Initialise. */
     private static void initialise() {
         if (defaultMap.isEmpty()) {
             defaultMap.put(ARROW_THICKNESS_ATTRIBUTE, 0.2);

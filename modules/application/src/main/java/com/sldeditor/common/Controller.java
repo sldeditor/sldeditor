@@ -24,11 +24,11 @@ import javax.swing.JFrame;
 
 /**
  * Class contains the JFrame instance of the application, used as the parent for other dialogs.
- * 
+ *
  * <p>Allows the setting and getting of the 'is populating' flag.
- * 
+ *
  * <p>Class is implemented as a singleton.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class Controller implements PopulatingInterface {
@@ -42,11 +42,8 @@ public class Controller implements PopulatingInterface {
     /** The frame. */
     private JFrame frame = null;
 
-    /**
-     * Instantiates a new controller.
-     */
-    private Controller() {
-    }
+    /** Instantiates a new controller. */
+    private Controller() {}
 
     /**
      * Gets the single instance of Controller.
@@ -111,5 +108,4 @@ public class Controller implements PopulatingInterface {
             dialog.setLocation(x, y);
         }
     }
-
 }

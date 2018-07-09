@@ -18,8 +18,7 @@
  */
 /**
  * Package contains the classes to allow the configuration of feature type constraints
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.config.featuretypeconstraint;

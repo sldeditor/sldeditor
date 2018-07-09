@@ -22,16 +22,6 @@ package com.sldeditor.test.unit.tool.batchupdatefont;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.util.List;
-
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.NamedLayer;
-import org.geotools.styling.Rule;
-import org.geotools.styling.Style;
-import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.styling.TextSymbolizer;
-import org.junit.Test;
-
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.data.StyleWrapper;
@@ -40,10 +30,18 @@ import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.tool.batchupdatefont.BatchUpdateFontData;
 import com.sldeditor.tool.batchupdatefont.BatchUpdateFontUtils;
+import java.util.List;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.NamedLayer;
+import org.geotools.styling.Rule;
+import org.geotools.styling.Style;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.TextSymbolizer;
+import org.junit.Test;
 
 /**
  * The unit test for BatchUpdateFontData.
- * 
+ *
  * <p>{@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontUtils}
  *
  * @author Robert Ward (SCISYS)
@@ -51,7 +49,8 @@ import com.sldeditor.tool.batchupdatefont.BatchUpdateFontUtils;
 public class BatchUpdateFontUtilsTest {
 
     /**
-     * Test method for {@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontUtils#containsFonts(com.sldeditor.common.SLDDataInterface)}.
+     * Test method for {@link
+     * com.sldeditor.tool.batchupdatefont.BatchUpdateFontUtils#containsFonts(com.sldeditor.common.SLDDataInterface)}.
      */
     @Test
     public void testContainsFonts() {
@@ -101,5 +100,4 @@ public class BatchUpdateFontUtilsTest {
         assertEquals(1, actualList.size());
         assertEquals(rule.getName(), actualList.get(0).getRuleName());
     }
-
 }

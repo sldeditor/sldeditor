@@ -19,12 +19,6 @@
 
 package com.sldeditor.ui.detail.config;
 
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -32,16 +26,19 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class FieldConfigSlider wraps a slider GUI component and an optional
- * value/attribute/expression drop down,
- * ({@link com.sldeditor.ui.attribute.AttributeSelection})
- * 
+ * value/attribute/expression drop down, ({@link com.sldeditor.ui.attribute.AttributeSelection})
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigSlider extends FieldConfigBase implements UndoActionInterface {
@@ -67,12 +64,10 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
         super(commonData);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -85,24 +80,33 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
             FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
             slider = new JSlider();
-            slider.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+            slider.setBounds(
+                    xPos + BasePanel.WIDGET_X_START,
+                    0,
+                    BasePanel.WIDGET_STANDARD_WIDTH,
                     BasePanel.WIDGET_HEIGHT);
             fieldPanel.add(slider);
 
-            slider.addChangeListener(new ChangeListener() {
+            slider.addChangeListener(
+                    new ChangeListener() {
 
-                @Override
-                public void stateChanged(ChangeEvent e) {
-                    JSlider source = (JSlider) e.getSource();
-                    Integer newValueObj = (int) source.getValue();
+                        @Override
+                        public void stateChanged(ChangeEvent e) {
+                            JSlider source = (JSlider) e.getSource();
+                            Integer newValueObj = (int) source.getValue();
 
-                    UndoManager.getInstance().addUndoEvent(
-                            new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+                            UndoManager.getInstance()
+                                    .addUndoEvent(
+                                            new UndoEvent(
+                                                    parentObj,
+                                                    getFieldId(),
+                                                    oldValueObj,
+                                                    newValueObj));
 
-                    oldValueObj = newValueObj;
-                    valueUpdated();
-                }
-            });
+                            oldValueObj = newValueObj;
+                            valueUpdated();
+                        }
+                    });
 
             if (!isValueOnly()) {
                 setAttributeSelectionPanel(
@@ -118,7 +122,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
@@ -133,7 +137,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -150,7 +154,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -170,7 +174,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -185,12 +189,10 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -205,7 +207,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override

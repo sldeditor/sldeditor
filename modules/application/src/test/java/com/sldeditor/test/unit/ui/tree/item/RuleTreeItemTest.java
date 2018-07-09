@@ -21,17 +21,16 @@ package com.sldeditor.test.unit.ui.tree.item;
 
 import static org.junit.Assert.assertTrue;
 
-import org.geotools.styling.Rule;
-import org.junit.Test;
-
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.tree.SLDTreeTools;
 import com.sldeditor.ui.tree.item.RuleTreeItem;
+import org.geotools.styling.Rule;
+import org.junit.Test;
 
 /**
  * The unit test for RuleTreeItem.
- * 
+ *
  * <p>{@link com.sldeditor.ui.tree.item.RuleTreeItem}
  *
  * @author Robert Ward (SCISYS)
@@ -39,47 +38,53 @@ import com.sldeditor.ui.tree.item.RuleTreeItem;
 public class RuleTreeItemTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.item.RuleTreeItem#getTreeString(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.RuleTreeItem#getTreeString(java.lang.Object)}.
      */
     @Test
     public void testGetTreeString() {
         RuleTreeItem item = new RuleTreeItem();
         String actualValue = item.getTreeString(null, null);
-        String expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.rule"), "");
+        String expectedValue =
+                String.format(
+                        "%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.rule"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         Rule rule = DefaultSymbols.createNewRule();
 
         actualValue = item.getTreeString(null, rule);
-        expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.rule"),
-                Localisation.getString(SLDTreeTools.class, "TreeItem.newRule"));
+        expectedValue =
+                String.format(
+                        "%s : %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.rule"),
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.newRule"));
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         rule.setName(null);
         actualValue = item.getTreeString(null, rule);
-        expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.rule"), "");
+        expectedValue =
+                String.format(
+                        "%s : %s", Localisation.getString(SLDTreeTools.class, "TreeItem.rule"), "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         String expectedName = "test name";
         rule.setName(expectedName);
         actualValue = item.getTreeString(null, rule);
-        expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.rule"), expectedName);
+        expectedValue =
+                String.format(
+                        "%s : %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.rule"), expectedName);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.item.RuleTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.RuleTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode,
+     * java.lang.Object)}.
      */
     @Test
     public void testItemSelected() {
         RuleTreeItem item = new RuleTreeItem();
         item.itemSelected(null, null);
     }
-
 }

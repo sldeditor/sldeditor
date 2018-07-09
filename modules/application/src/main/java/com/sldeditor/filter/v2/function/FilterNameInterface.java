@@ -19,13 +19,11 @@
 
 package com.sldeditor.filter.v2.function;
 
+import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import java.util.List;
-
 import org.opengis.filter.Filter;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 
 /**
  * The Interface FilterNameInterface.
@@ -33,7 +31,7 @@ import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
  * @author Robert Ward (SCISYS)
  */
 public interface FilterNameInterface {
-    
+
     /**
      * Gets the filter config list.
      *
@@ -47,7 +45,7 @@ public interface FilterNameInterface {
      * @param functionName the function name
      * @return the expression
      */
-    Expression createExpression(FunctionName functionName);     
+    Expression createExpression(FunctionName functionName);
 
     /**
      * Convert function parameters to ui components.

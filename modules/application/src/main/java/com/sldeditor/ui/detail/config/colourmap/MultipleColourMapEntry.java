@@ -20,7 +20,6 @@
 package com.sldeditor.ui.detail.config.colourmap;
 
 import java.util.List;
-
 import org.geotools.styling.ColorMapEntry;
 import org.geotools.styling.ColorMapEntryImpl;
 

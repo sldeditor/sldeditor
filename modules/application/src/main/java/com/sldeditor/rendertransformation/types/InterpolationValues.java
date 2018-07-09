@@ -19,28 +19,25 @@
 
 package com.sldeditor.rendertransformation.types;
 
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.media.jai.Interpolation;
 import javax.media.jai.InterpolationBicubic;
 import javax.media.jai.InterpolationBicubic2;
 import javax.media.jai.InterpolationBilinear;
 import javax.media.jai.InterpolationNearest;
-
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 
 /**
  * The Class InterpolationValues.
@@ -58,27 +55,23 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
     private static final int defaultSampleBits = 8;
 
     /** The interpolation bicubic pattern match. */
-    private final Pattern INTERPOLATION_BICUBIC_PATTERN_MATCH = Pattern
-            .compile("InterpolationBicubic\\(\\d+\\)");
+    private final Pattern INTERPOLATION_BICUBIC_PATTERN_MATCH =
+            Pattern.compile("InterpolationBicubic\\(\\d+\\)");
 
-    private final Pattern INTERPOLATION_BICUBIC2_PATTERN_MATCH = Pattern
-            .compile("InterpolationBicubic2\\(\\d+\\)");
+    private final Pattern INTERPOLATION_BICUBIC2_PATTERN_MATCH =
+            Pattern.compile("InterpolationBicubic2\\(\\d+\\)");
 
     private final Pattern INTERPOLATION_BICUBIC_PATTERN_EXTRACT = Pattern.compile("\\d+");
 
     /** The sample bits. */
     private int sampleBits = defaultSampleBits;
 
-    /**
-     * Instantiates a new interpolation values.
-     */
+    /** Instantiates a new interpolation values. */
     public InterpolationValues() {
         populateInterpolation();
     }
 
-    /**
-     * Populate interpolation map.
-     */
+    /** Populate interpolation map. */
     private static synchronized void populateInterpolation() {
         if (interpolationMap == null) {
             interpolationMap = new LinkedHashMap<Class<? extends Interpolation>, String>();
@@ -91,7 +84,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.lang.Object)
      */
     @Override
@@ -112,7 +105,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getExpression()
      */
     @Override
@@ -120,8 +113,8 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
         if (value != null) {
             if ((value.getClass() == InterpolationBicubic.class)
                     || (value.getClass() == InterpolationBicubic2.class)) {
-                String string = String.format("%s(%d)", value.getClass().getSimpleName(),
-                        sampleBits);
+                String string =
+                        String.format("%s(%d)", value.getClass().getSimpleName(), sampleBits);
                 return filterFactory.literal(string);
             } else {
                 return filterFactory.literal(value.getClass().getSimpleName());
@@ -132,7 +125,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.Object)
      */
     @Override
@@ -187,7 +180,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -197,7 +190,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -207,7 +200,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

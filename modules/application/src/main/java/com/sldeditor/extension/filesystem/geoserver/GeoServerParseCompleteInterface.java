@@ -19,16 +19,15 @@
 
 package com.sldeditor.extension.filesystem.geoserver;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.StyleWrapper;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Interface GeoServerParseCompleteInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface GeoServerParseCompleteInterface {
@@ -40,7 +39,8 @@ public interface GeoServerParseCompleteInterface {
      * @param styleMap the style map
      * @param layerMap the layer map
      */
-    void populateComplete(GeoServerConnection connection, Map<String, List<StyleWrapper>> styleMap,
+    void populateComplete(
+            GeoServerConnection connection,
+            Map<String, List<StyleWrapper>> styleMap,
             Map<String, List<GeoServerLayer>> layerMap);
-
 }

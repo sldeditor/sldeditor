@@ -24,7 +24,7 @@ import org.geotools.styling.StyleFactoryImpl;
 
 /**
  * Base class used to create a new SLD symbols with default values.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class NewSLDBase {
@@ -33,8 +33,8 @@ public class NewSLDBase {
     private String name;
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private static StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /**
      * Instantiates a new new sld base.

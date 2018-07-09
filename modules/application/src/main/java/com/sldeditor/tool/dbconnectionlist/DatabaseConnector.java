@@ -19,6 +19,11 @@
 
 package com.sldeditor.tool.dbconnectionlist;
 
+import com.sldeditor.common.data.DatabaseConnection;
+import com.sldeditor.common.data.DatabaseConnectionField;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.ui.detail.BasePanel;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -36,15 +40,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.sldeditor.common.data.DatabaseConnection;
-import com.sldeditor.common.data.DatabaseConnectionField;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.datasource.SLDEditorFile;
-import com.sldeditor.ui.detail.BasePanel;
-
 /**
  * Database connector for database data sources.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DatabaseConnector implements DatabaseConnectionConfigInterface {
@@ -85,16 +83,12 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
     /** The field width. */
     private static final int FIELD_WIDTH = 300;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public DatabaseConnector() {
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         panel = new JPanel();
         panel.setLayout(null);
@@ -116,8 +110,8 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
         int row = textFieldMap.size();
         int y = row * ROW_HEIGHT;
 
-        JLabel label = new JLabel(
-                Localisation.getField(DatabaseConnector.class, field.getFieldName()));
+        JLabel label =
+                new JLabel(Localisation.getField(DatabaseConnector.class, field.getFieldName()));
         label.setBounds(LABEL_X, y, LABEL_WIDTH, FIELD_HEIGHT);
         panel.add(label);
 
@@ -139,36 +133,43 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
 
         if (field.isFilename()) {
             JButton button = new JButton("File");
-            button.addActionListener(new ActionListener() {
+            button.addActionListener(
+                    new ActionListener() {
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JFileChooser fileChooser = new JFileChooser();
-                    FileNameExtensionFilter fileExtensionFilter = field.getFileExtensionFilter();
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            JFileChooser fileChooser = new JFileChooser();
+                            FileNameExtensionFilter fileExtensionFilter =
+                                    field.getFileExtensionFilter();
 
-                    fileChooser.setFileFilter(fileExtensionFilter);
+                            fileChooser.setFileFilter(fileExtensionFilter);
 
-                    File f = SLDEditorFile.getInstance().getSldEditorFile();
-                    if ((f != null) && f.exists()) {
-                        fileChooser.setSelectedFile(f);
-                    }
+                            File f = SLDEditorFile.getInstance().getSldEditorFile();
+                            if ((f != null) && f.exists()) {
+                                fileChooser.setSelectedFile(f);
+                            }
 
-                    int result = fileChooser.showOpenDialog(panel);
-                    if (result == JFileChooser.APPROVE_OPTION) {
-                        File selectedFile = fileChooser.getSelectedFile();
-                        textFieldMap.get(field.getKey()).setText(selectedFile.getAbsolutePath());
-                    }
-                }
-            });
-            button.setBounds(textField.getX() + textField.getWidth() + 5, y,
-                    BasePanel.WIDGET_BUTTON_WIDTH, FIELD_HEIGHT);
+                            int result = fileChooser.showOpenDialog(panel);
+                            if (result == JFileChooser.APPROVE_OPTION) {
+                                File selectedFile = fileChooser.getSelectedFile();
+                                textFieldMap
+                                        .get(field.getKey())
+                                        .setText(selectedFile.getAbsolutePath());
+                            }
+                        }
+                    });
+            button.setBounds(
+                    textField.getX() + textField.getWidth() + 5,
+                    y,
+                    BasePanel.WIDGET_BUTTON_WIDTH,
+                    FIELD_HEIGHT);
             panel.add(button);
         }
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.dbconnectionlist.DatabaseConnectionConfigInterface#setConnection(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
@@ -207,13 +208,13 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.dbconnectionlist.DatabaseConnectionConfigInterface#getConnection()
      */
     @Override
     public DatabaseConnection getConnection() {
-        DatabaseConnection connectionData = DatabaseConnectionFactory
-                .getNewConnection(databaseConnection);
+        DatabaseConnection connectionData =
+                DatabaseConnectionFactory.getNewConnection(databaseConnection);
 
         if (connectionData != null) {
             Map<String, String> sourceMap = new HashMap<String, String>();
@@ -248,7 +249,7 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.dbconnectionlist.DatabaseConnectionConfigInterface#getPanel()
      */
     @Override

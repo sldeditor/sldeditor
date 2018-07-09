@@ -21,7 +21,7 @@ package com.sldeditor.ui.iface;
 
 /**
  * The Interface SpinnerNotifyInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SpinnerNotifyInterface {

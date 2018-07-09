@@ -19,14 +19,13 @@
 
 package com.sldeditor.ui.detail.config.base;
 
+import com.sldeditor.common.xml.ui.GroupIdEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sldeditor.common.xml.ui.GroupIdEnum;
-
 /**
  * Class that encapsulates data used as part of a MultiOptionGroup.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class OptionGroup {

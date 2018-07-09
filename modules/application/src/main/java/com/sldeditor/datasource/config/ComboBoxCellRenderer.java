@@ -20,14 +20,13 @@
 package com.sldeditor.datasource.config;
 
 import java.awt.Component;
-
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 /**
  * Draws JCheckboxes in JTable cells.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ComboBoxCellRenderer implements TableCellRenderer {
@@ -49,12 +48,18 @@ public class ComboBoxCellRenderer implements TableCellRenderer {
 
     /**
      * (non-Javadoc)
-     * 
-     * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+     *
+     * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable,
+     *     java.lang.Object, boolean, boolean, int, int)
      */
     @Override
-    public Component getTableCellRendererComponent(JTable jtable, Object value, boolean isSelected,
-            boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(
+            JTable jtable,
+            Object value,
+            boolean isSelected,
+            boolean hasFocus,
+            int row,
+            int column) {
         combo.setSelectedItem(value);
         return combo;
     }

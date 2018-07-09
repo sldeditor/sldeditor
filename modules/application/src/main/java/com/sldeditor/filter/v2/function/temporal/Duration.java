@@ -19,6 +19,7 @@
 
 package com.sldeditor.filter.v2.function.temporal;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,8 +30,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.sldeditor.common.console.ConsoleManager;
 
 /**
  * The Class Duration.
@@ -96,11 +95,8 @@ public class Duration {
     /** The after flag. */
     private boolean isDurationDate = false;
 
-    /**
-     * Instantiates a new duration.
-     */
-    public Duration() {
-    }
+    /** Instantiates a new duration. */
+    public Duration() {}
 
     /**
      * Instantiates and decodes a duration.
@@ -119,12 +115,14 @@ public class Duration {
             // Assume duration
             List<String> outputList = extractDurationValues(string.substring(1));
 
-            //CHECKSTYLE:OFF
-            boolean hasTime = (outputList.size() >= 2) && (outputList.get(0).endsWith(YEAR_SUFFIX)
-                    && (outputList.get(1).endsWith(HOUR_SUFFIX)
-                            || outputList.get(1).endsWith(MINUTE_SUFFIX)
-                            || outputList.get(1).endsWith(SECOND_SUFFIX)));
-            //CHECKSTYLE:ON
+            // CHECKSTYLE:OFF
+            boolean hasTime =
+                    (outputList.size() >= 2)
+                            && (outputList.get(0).endsWith(YEAR_SUFFIX)
+                                    && (outputList.get(1).endsWith(HOUR_SUFFIX)
+                                            || outputList.get(1).endsWith(MINUTE_SUFFIX)
+                                            || outputList.get(1).endsWith(SECOND_SUFFIX)));
+            // CHECKSTYLE:ON
 
             year = extractValue(outputList, YEAR_SUFFIX);
             month = extractValue(outputList, MONTH_SUFFIX);
@@ -138,14 +136,14 @@ public class Duration {
 
             setDuration(year, month, day, hour, minute, second);
         } else if (string.startsWith(DURATION_TIME_PREFIX)) {
-            //CHECKSTYLE:OFF
+            // CHECKSTYLE:OFF
             int year = 0;
             int month = 0;
             int day = 0;
             int hour = 0;
             int minute = 0;
             int second = 0;
-            //CHECKSTYLE:ON
+            // CHECKSTYLE:ON
 
             // Assume duration
             List<String> outputList = extractDurationValues(string);

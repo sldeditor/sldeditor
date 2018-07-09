@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * Class containing the list of DataSourceAttributes.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DataSourceAttributeList implements DataSourceAttributeListInterface {
@@ -31,15 +31,12 @@ public class DataSourceAttributeList implements DataSourceAttributeListInterface
     /** The attribute list. */
     private List<DataSourceAttributeData> attributeList = null;
 
-    /**
-     * Default constructor.
-     */
-    public DataSourceAttributeList() {
-    }
+    /** Default constructor. */
+    public DataSourceAttributeList() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.render.iface.RenderAttributeDataInterface#getData()
      */
     @Override
@@ -49,12 +46,11 @@ public class DataSourceAttributeList implements DataSourceAttributeListInterface
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.render.iface.RenderAttributeDataInterface#setData(java.util.Map)
      */
     @Override
     public void setData(List<DataSourceAttributeData> attributeList) {
         this.attributeList = attributeList;
     }
-
 }

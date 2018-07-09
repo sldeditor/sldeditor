@@ -17,16 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.datasource.impl;
 
-import java.util.List;
-
 import com.sldeditor.datasource.SLDEditorFileInterface;
+import java.util.List;
 
 /**
  * The Interface CreateDataSourceInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface CreateDataSourceInterface {
@@ -39,7 +37,6 @@ public interface CreateDataSourceInterface {
      * @param editorFile the editor file
      * @return the list
      */
-    List<DataSourceInfo> connect(String typeName, String geometryFieldName,
-            SLDEditorFileInterface editorFile);
-
+    List<DataSourceInfo> connect(
+            String typeName, String geometryFieldName, SLDEditorFileInterface editorFile);
 }

@@ -19,22 +19,19 @@
 
 package com.sldeditor.create.sld;
 
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.create.NewSLDBase;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * Class to create a new SLD line symbol with default values.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class NewLineSLD extends NewSLDBase implements NewSLDInterface {
 
-    /**
-     * Instantiates a new new line sld.
-     */
+    /** Instantiates a new new line sld. */
     public NewLineSLD() {
         super(Localisation.getString(NewLineSLD.class, "NewLineSLD.title"));
     }

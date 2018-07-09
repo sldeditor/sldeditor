@@ -22,6 +22,12 @@ package com.sldeditor.test.unit.ui.detail;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.RuleDetails;
+import com.sldeditor.ui.detail.config.FieldConfigString;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.Rule;
@@ -30,16 +36,9 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.junit.Test;
 
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.RuleDetails;
-import com.sldeditor.ui.detail.config.FieldConfigString;
-
 /**
  * The unit test for RuleDetails.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.RuleDetails}
  *
  * @author Robert Ward (SCISYS)
@@ -47,12 +46,15 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 public class RuleDetailsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#RuleDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
-     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#getFieldDataManager()}.
-     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#isDataPresent()}.
-     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#preLoadSymbol()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.RuleDetails#RuleDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.RuleDetails#populate(com.sldeditor.common.data.SelectedSymbol)}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.RuleDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link com.sldeditor.ui.detail.RuleDetails#getFieldDataManager()}. Test
+     * method for {@link com.sldeditor.ui.detail.RuleDetails#isDataPresent()}. Test method for
+     * {@link com.sldeditor.ui.detail.RuleDetails#preLoadSymbol()}.
      */
     @Test
     public void testRuleDetails() {
@@ -92,9 +94,9 @@ public class RuleDetailsTest {
 
         GraphicPanelFieldManager fieldDataManager = panel.getFieldDataManager();
         assertNotNull(fieldDataManager);
-        
-        FieldConfigString filterField = (FieldConfigString) fieldDataManager
-                .get(FieldIdEnum.FILTER);
+
+        FieldConfigString filterField =
+                (FieldConfigString) fieldDataManager.get(FieldIdEnum.FILTER);
         String filterString = "STATE_ABBR >= 'B' AND STATE_ABBR <= 'O'";
         filterField.populateField(filterString);
 

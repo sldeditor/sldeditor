@@ -26,8 +26,6 @@ package com.sldeditor.ui.detail.config.inlinefeature;
  */
 public interface InlineFeatureUpdateInterface {
 
-    /**
-     * Inline feature updated.
-     */
+    /** Inline feature updated. */
     void inlineFeatureUpdated();
 }

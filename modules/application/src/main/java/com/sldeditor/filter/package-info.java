@@ -18,7 +18,7 @@
  */
 /**
  * Package containing dialogs for editing filters and expressions.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.filter;

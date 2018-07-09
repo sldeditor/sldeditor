@@ -19,22 +19,20 @@
 
 package com.sldeditor.ui.widgets;
 
+import com.sldeditor.ui.attribute.AttributeSelection;
+import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import com.sldeditor.ui.attribute.AttributeSelection;
-import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-
 /**
  * Panel that contains a field.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldPanel extends JPanel {
@@ -81,8 +79,8 @@ public class FieldPanel extends JPanel {
      * @param optionalField the optional field
      * @param obj the obj
      */
-    public FieldPanel(int xPos, String labelString, int height, boolean optionalField,
-            FieldConfigBase obj) {
+    public FieldPanel(
+            int xPos, String labelString, int height, boolean optionalField, FieldConfigBase obj) {
         thisObj = obj;
 
         this.xPos = xPos;
@@ -109,13 +107,16 @@ public class FieldPanel extends JPanel {
      * @param rasterSymbol the raster symbol
      * @return the attribute selection
      */
-    public AttributeSelection internalCreateAttrButton(Class<?> classType, FieldConfigBase field,
-            boolean rasterSymbol) {
+    public AttributeSelection internalCreateAttrButton(
+            Class<?> classType, FieldConfigBase field, boolean rasterSymbol) {
 
-        AttributeSelection buttonAttrLabel = AttributeSelection.createAttributes(classType, field,
-                rasterSymbol);
-        buttonAttrLabel.setBounds(xPos + BasePanel.ATTRIBUTE_BTN_X, 0,
-                AttributeSelection.getPanelWidth(), BasePanel.WIDGET_HEIGHT);
+        AttributeSelection buttonAttrLabel =
+                AttributeSelection.createAttributes(classType, field, rasterSymbol);
+        buttonAttrLabel.setBounds(
+                xPos + BasePanel.ATTRIBUTE_BTN_X,
+                0,
+                AttributeSelection.getPanelWidth(),
+                BasePanel.WIDGET_HEIGHT);
         add(buttonAttrLabel);
 
         return buttonAttrLabel;
@@ -142,22 +143,24 @@ public class FieldPanel extends JPanel {
      */
     private void internalCreateOptionalCheckbox(int xPos) {
         optionalCheckbox = new JCheckBox();
-        optionalCheckbox.setBounds(xPos + 5 + BasePanel.LABEL_WIDTH, 0, BasePanel.CHECKBOX_WIDTH,
+        optionalCheckbox.setBounds(
+                xPos + 5 + BasePanel.LABEL_WIDTH,
+                0,
+                BasePanel.CHECKBOX_WIDTH,
                 BasePanel.WIDGET_HEIGHT);
         optionalCheckbox.setVisible(false);
-        optionalCheckbox.addActionListener(new ActionListener() {
+        optionalCheckbox.addActionListener(
+                new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleOptionalValue();
-            }
-        });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        handleOptionalValue();
+                    }
+                });
         add(optionalCheckbox);
     }
 
-    /**
-     * Handle optional value.
-     */
+    /** Handle optional value. */
     private void handleOptionalValue() {
         boolean enabled = true;
 

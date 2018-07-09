@@ -17,10 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Package that contains the class to read field configuration from XML files and 
- * to fit them into the a structure that allows groups of fields to be
- * shown/hidden, enabled/disabled. 
- * 
+ * Package that contains the class to read field configuration from XML files and to fit them into
+ * the a structure that allows groups of fields to be shown/hidden, enabled/disabled.
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.config.base;

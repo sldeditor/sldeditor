@@ -22,31 +22,29 @@ package com.sldeditor.test.unit.common.coordinate;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.coordinate.CoordManager;
+import com.sldeditor.ui.widgets.ValueComboBoxData;
 import java.util.List;
-
 import org.geotools.referencing.CRS;
 import org.junit.Test;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.sldeditor.common.coordinate.CoordManager;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
-
 /**
  * Unit test for CoordManager class.
- * 
- * <p>{@link com.sldeditor.common.coordinate.CoordManager}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.common.coordinate.CoordManager}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class CoordManagerTest {
 
     /**
-     * Test method for {@link com.sldeditor.common.coordinate.CoordManager#getInstance()}.
-     * Test method for {@link com.sldeditor.common.coordinate.CoordManager#getCRSList()}.
-     * Test method for {@link com.sldeditor.common.coordinate.CoordManager#getCRSCode(org.opengis.referencing.crs.CoordinateReferenceSystem)}.
+     * Test method for {@link com.sldeditor.common.coordinate.CoordManager#getInstance()}. Test
+     * method for {@link com.sldeditor.common.coordinate.CoordManager#getCRSList()}. Test method for
+     * {@link
+     * com.sldeditor.common.coordinate.CoordManager#getCRSCode(org.opengis.referencing.crs.CoordinateReferenceSystem)}.
      * Test method for {@link com.sldeditor.common.coordinate.CoordManager#getWGS84()}.
      *
      * @throws NoSuchAuthorityCodeException the no such authority code exception
@@ -81,5 +79,4 @@ public class CoordManagerTest {
         code = CoordManager.getInstance().getCRSCode(projectedCRS);
         assertTrue(code.compareTo(projectedCRSCode) == 0);
     }
-
 }

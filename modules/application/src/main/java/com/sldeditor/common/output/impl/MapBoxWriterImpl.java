@@ -19,24 +19,22 @@
 
 package com.sldeditor.common.output.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.util.stream.Stream;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.datasource.SLDEditorFile;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.util.stream.Stream;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * Class that converts an SLD stored as a StyledLayerDescriptor to a MapBox formatted string.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class MapBoxWriterImpl implements SLDWriterInterface {
@@ -47,11 +45,8 @@ public class MapBoxWriterImpl implements SLDWriterInterface {
     /** The cached file. */
     private File cachedFile = null;
 
-    /**
-     * Default constructor.
-     */
-    public MapBoxWriterImpl() {
-    }
+    /** Default constructor. */
+    public MapBoxWriterImpl() {}
 
     /**
      * Encode sld to a string.

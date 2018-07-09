@@ -20,7 +20,6 @@
 package com.sldeditor.filter.v2.envvar.dialog;
 
 import java.awt.Component;
-
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -35,9 +34,7 @@ public class TypeComboBoxEditor extends DefaultCellEditor {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Instantiates a new type combo box editor.
-     */
+    /** Instantiates a new type combo box editor. */
     public TypeComboBoxEditor() {
         super(new JComboBox<Class<?>>());
     }
@@ -53,8 +50,8 @@ public class TypeComboBoxEditor extends DefaultCellEditor {
      * @return the table cell editor component
      */
     @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
-            int row, int column) {
+    public Component getTableCellEditorComponent(
+            JTable table, Object value, boolean isSelected, int row, int column) {
         return super.getTableCellEditorComponent(table, value, isSelected, row, column);
     }
 }

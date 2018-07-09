@@ -21,18 +21,14 @@ package com.sldeditor.ui.attribute;
 
 /**
  * The Interface SubPanelUpdatedInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SubPanelUpdatedInterface {
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     void updateSymbol();
-    
-    /**
-     * Parameter added.
-     */
+
+    /** Parameter added. */
     void parameterAdded();
 }

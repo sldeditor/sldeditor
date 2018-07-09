@@ -19,9 +19,6 @@
 
 package com.sldeditor.filter;
 
-import java.awt.Color;
-import java.util.List;
-
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
@@ -32,6 +29,8 @@ import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
 import com.sldeditor.filter.v2.expression.ExpressionNode;
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.expression.FilterPanelv2;
+import java.awt.Color;
+import java.util.List;
 
 /**
  * A factory for creating FilterPanel and ExpressionPanel objects.
@@ -59,9 +58,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
         return instance;
     }
 
-    /**
-     * Instantiates a new expression panel factory.
-     */
+    /** Instantiates a new expression panel factory. */
     private ExpressionPanelFactory() {
         PrefManager.getInstance().addListener(this);
         VendorOptionManager.getInstance().addVendorOptionListener(this);
@@ -127,7 +124,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override

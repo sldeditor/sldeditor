@@ -18,7 +18,7 @@
  */
 /**
  * UI for configuring filters and expressions.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.filter.v2.expression;

@@ -19,6 +19,13 @@
 
 package com.sldeditor.ui.legend;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.utils.ColourUtils;
+import com.sldeditor.datasource.RenderSymbolInterface;
+import com.sldeditor.ui.legend.option.LegendOptionData;
+import com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface;
+import com.sldeditor.ui.legend.option.LegendOptionPanel;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -29,7 +36,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageTypeSpecifier;
@@ -39,7 +45,6 @@ import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageOutputStream;
-
 import org.geoserver.wms.GetLegendGraphicRequest;
 import org.geoserver.wms.GetLegendGraphicRequest.LegendRequest;
 import org.geoserver.wms.legendgraphic.SLDEditorBufferedImageLegendGraphicBuilder;
@@ -50,17 +55,9 @@ import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayerImpl;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.utils.ColourUtils;
-import com.sldeditor.datasource.RenderSymbolInterface;
-import com.sldeditor.ui.legend.option.LegendOptionData;
-import com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface;
-import com.sldeditor.ui.legend.option.LegendOptionPanel;
-
 /**
  * Manager object, implemented as a singleton, that controls the creation of SLD legend images.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class LegendManager implements LegendOptionDataUpdateInterface {
@@ -68,7 +65,8 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
     private static LegendManager instance = null;
 
     /** The legend builder. */
-    private SLDEditorBufferedImageLegendGraphicBuilder legendBuilder = new SLDEditorBufferedImageLegendGraphicBuilder();
+    private SLDEditorBufferedImageLegendGraphicBuilder legendBuilder =
+            new SLDEditorBufferedImageLegendGraphicBuilder();
 
     /** The legend option data. */
     private LegendOptionData legendOptionData = new LegendOptionData();
@@ -116,8 +114,11 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
      * @param separateSymbolizers the separate symbolizers
      * @return the map
      */
-    public Map<String, BufferedImage> createLegend(StyledLayerDescriptor sld, String heading,
-            String filename, boolean separateSymbolizers) {
+    public Map<String, BufferedImage> createLegend(
+            StyledLayerDescriptor sld,
+            String heading,
+            String filename,
+            boolean separateSymbolizers) {
         Map<String, BufferedImage> imageMap = new HashMap<String, BufferedImage>();
 
         //
@@ -143,10 +144,10 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
         request.setTransparent(legendOptionData.isTransparent());
         request.setStrict(false);
 
-        legendOptions.put("bgColor",
-                ColourUtils.fromColour(legendOptionData.getBackgroundColour()));
-        legendOptions.put("fontColor",
-                ColourUtils.fromColour(legendOptionData.getLabelFontColour()));
+        legendOptions.put(
+                "bgColor", ColourUtils.fromColour(legendOptionData.getBackgroundColour()));
+        legendOptions.put(
+                "fontColor", ColourUtils.fromColour(legendOptionData.getLabelFontColour()));
 
         //
         // Label Font
@@ -166,17 +167,17 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
 
         legendOptions.put("fontSize", String.valueOf(font.getSize()));
         legendOptions.put("dpi", Integer.valueOf(legendOptionData.getDpi()));
-        legendOptions.put("fontAntiAliasing",
-                getBooleanValueOnOff(legendOptionData.isFontAntiAliasing()));
+        legendOptions.put(
+                "fontAntiAliasing", getBooleanValueOnOff(legendOptionData.isFontAntiAliasing()));
         legendOptions.put("forceLabels", getBooleanValueOnOff(legendOptionData.isShowLabels()));
         legendOptions.put("forceTitles", getBooleanValueOnOff(legendOptionData.isShowTitle()));
-        legendOptions.put("bandInfo",
-                getBooleanValueTrueFalse(legendOptionData.isBandInformation()));
+        legendOptions.put(
+                "bandInfo", getBooleanValueTrueFalse(legendOptionData.isBandInformation()));
         legendOptions.put("border", getBooleanValueTrueFalse(legendOptionData.isBorder()));
-        legendOptions.put("borderColor",
-                ColourUtils.fromColour(legendOptionData.getBorderColour()));
-        legendOptions.put("imageSizeFactor",
-                String.valueOf(legendOptionData.getImageSize() / 100.0));
+        legendOptions.put(
+                "borderColor", ColourUtils.fromColour(legendOptionData.getBorderColour()));
+        legendOptions.put(
+                "imageSizeFactor", String.valueOf(legendOptionData.getImageSize() / 100.0));
 
         request.setLegendOptions(legendOptions);
 
@@ -265,7 +266,9 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
      * @param styleMap the style map
      * @param selectedStyledLayer the selected styled layer
      */
-    private void createMultipleStyleLegend(StyledLayerDescriptor sld, Map<String, Style> styleMap,
+    private void createMultipleStyleLegend(
+            StyledLayerDescriptor sld,
+            Map<String, Style> styleMap,
             StyledLayer selectedStyledLayer) {
         List<StyledLayer> styledLayerList = null;
 
@@ -313,8 +316,8 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
      * @param selectedStyledLayer the selected styled layer
      * @param selectedStyle the selected style
      */
-    private void createSingleStyleLegend(Map<String, Style> styleMap,
-            StyledLayer selectedStyledLayer, Style selectedStyle) {
+    private void createSingleStyleLegend(
+            Map<String, Style> styleMap, StyledLayer selectedStyledLayer, Style selectedStyle) {
         // A style has been selected
         List<Style> styleList = null;
 
@@ -352,7 +355,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface#updateLegendOptionData(com.
      * sldeditor.ui.legend.option.LegendOptionData)
@@ -386,12 +389,18 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
      * @param filenameList the filename list
      * @return true, if successful
      */
-    public boolean saveLegendImage(StyledLayerDescriptor sld, File destinationFolder,
-            String layerName, String heading, String filename, List<String> filenameList) {
+    public boolean saveLegendImage(
+            StyledLayerDescriptor sld,
+            File destinationFolder,
+            String layerName,
+            String heading,
+            String filename,
+            List<String> filenameList) {
         boolean ok = false;
 
-        Map<String, BufferedImage> imageMap = LegendManager.getInstance().createLegend(sld, heading,
-                filename, legendOptionData.splitSymbolizers());
+        Map<String, BufferedImage> imageMap =
+                LegendManager.getInstance()
+                        .createLegend(sld, heading, filename, legendOptionData.splitSymbolizers());
 
         if (imageMap != null) {
             for (String name : imageMap.keySet()) {
@@ -403,15 +412,21 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
                         if (name == null) {
                             legendFilename = layerName + "." + LegendManager.getLegendImageFormat();
                         } else {
-                            legendFilename = String.format("%s_%s.%s", layerName, name,
-                                    LegendManager.getLegendImageFormat());
+                            legendFilename =
+                                    String.format(
+                                            "%s_%s.%s",
+                                            layerName, name, LegendManager.getLegendImageFormat());
                         }
                         File fileToSave = new File(destinationFolder, legendFilename);
 
                         filenameList.add(fileToSave.getAbsolutePath());
 
-                        ok = saveGridImage(image, getLegendImageFormat(), fileToSave,
-                                legendOptionData.getDpi());
+                        ok =
+                                saveGridImage(
+                                        image,
+                                        getLegendImageFormat(),
+                                        fileToSave,
+                                        legendOptionData.getDpi());
                     } catch (IOException e) {
                         ConsoleManager.getInstance().exception(this, e);
                     }
@@ -458,16 +473,17 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
      * @return true, if successful
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private boolean saveGridImage(BufferedImage image, String formatName, File destinationFile,
-            int dpi) throws IOException {
+    private boolean saveGridImage(
+            BufferedImage image, String formatName, File destinationFile, int dpi)
+            throws IOException {
         destinationFile.delete();
 
-        for (Iterator<ImageWriter> iw = ImageIO.getImageWritersByFormatName(formatName); iw
-                .hasNext();) {
+        for (Iterator<ImageWriter> iw = ImageIO.getImageWritersByFormatName(formatName);
+                iw.hasNext(); ) {
             ImageWriter writer = iw.next();
             ImageWriteParam writeParam = writer.getDefaultWriteParam();
-            ImageTypeSpecifier typeSpecifier = ImageTypeSpecifier
-                    .createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
+            ImageTypeSpecifier typeSpecifier =
+                    ImageTypeSpecifier.createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
             IIOMetadata metadata = writer.getDefaultImageMetadata(typeSpecifier, writeParam);
             if (metadata.isReadOnly() || !metadata.isStandardMetadataFormatSupported()) {
                 continue;

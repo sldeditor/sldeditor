@@ -19,7 +19,7 @@
 
 /**
  * Package handling the console ui.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.console;

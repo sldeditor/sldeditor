@@ -19,7 +19,7 @@
 
 /**
  * The sld tree leaf items.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.tree.leaf;

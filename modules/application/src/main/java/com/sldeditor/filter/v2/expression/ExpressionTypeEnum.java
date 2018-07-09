@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.filter.v2.expression;
 
 /**
@@ -26,6 +25,9 @@ package com.sldeditor.filter.v2.expression;
  * @author Robert Ward (SCISYS)
  */
 public enum ExpressionTypeEnum {
-
-    PROPERTY, LITERAL, ENVVAR, EXPRESSION, FILTER
+    PROPERTY,
+    LITERAL,
+    ENVVAR,
+    EXPRESSION,
+    FILTER
 }

@@ -19,7 +19,7 @@
 
 /**
  * The different sld structure attributes displayed in the tree.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.tree.item;

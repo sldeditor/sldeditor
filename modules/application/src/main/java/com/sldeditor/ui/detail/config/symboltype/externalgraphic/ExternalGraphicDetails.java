@@ -19,19 +19,6 @@
 
 package com.sldeditor.ui.detail.config.symboltype.externalgraphic;
 
-import java.awt.Component;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.List;
-
-import javax.swing.JFileChooser;
-
-import org.geotools.styling.ExternalGraphic;
-import org.geotools.styling.ExternalGraphicImpl;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
@@ -52,14 +39,27 @@ import com.sldeditor.ui.detail.config.base.CurrentFieldState;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ExternalGraphicFilter;
+import java.awt.Component;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.List;
+import javax.swing.JFileChooser;
+import org.geotools.styling.ExternalGraphic;
+import org.geotools.styling.ExternalGraphicImpl;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class ExternalGraphicDetails panel contains all the fields to configure an external graphic.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
-public class ExternalGraphicDetails extends StandardPanel implements PopulateDetailsInterface,
-        UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
+public class ExternalGraphicDetails extends StandardPanel
+        implements PopulateDetailsInterface,
+                UpdateSymbolInterface,
+                UndoActionInterface,
+                FieldConfigStringButtonInterface {
 
     /** The Constant PANEL_CONFIG. */
     private static final String PANEL_CONFIG =
@@ -95,9 +95,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFileNoScrollPane(null, getClass(), this, PANEL_CONFIG);
 
@@ -117,7 +115,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
      * SelectedSymbol)
      */
@@ -146,7 +144,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -154,9 +152,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
         updateSymbol();
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
 
@@ -164,8 +160,13 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
             if (!lastURLValue.equals(expression.toString())) {
                 externalURL = parseString(expression.toString());
                 lastURLValue = expression.toString();
-                UndoManager.getInstance().addUndoEvent(new UndoEvent(this,
-                        FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
+                UndoManager.getInstance()
+                        .addUndoEvent(
+                                new UndoEvent(
+                                        this,
+                                        FieldIdEnum.EXTERNAL_GRAPHIC,
+                                        oldValueObj,
+                                        externalURL));
                 oldValueObj = externalURL;
             }
 
@@ -211,7 +212,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -226,7 +227,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -247,9 +248,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
         return expression;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     public void revertToDefaultValue() {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(null);
 
@@ -273,8 +272,10 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
                 ConsoleManager.getInstance().exception(this, e);
             }
 
-            UndoManager.getInstance().addUndoEvent(
-                    new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
             oldValueObj = externalURL;
 
             String path = RelativePath.convert(externalURL, useRelativePaths);
@@ -291,8 +292,10 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
         if (filename != null) {
             externalURL = parseString(filename);
 
-            UndoManager.getInstance().addUndoEvent(
-                    new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
             oldValueObj = externalURL;
 
             populateExpression(filename);
@@ -325,7 +328,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.undo.UndoActionInterface#undoAction(com.sldeditor.common.undo.
      * UndoInterface)
      */
@@ -350,7 +353,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.undo.UndoActionInterface#redoAction(com.sldeditor.common.undo.
      * UndoInterface)
      */
@@ -421,8 +424,10 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
         if (url != null) {
             externalURL = url;
 
-            UndoManager.getInstance().addUndoEvent(
-                    new UndoEvent(this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    this, FieldIdEnum.EXTERNAL_GRAPHIC, oldValueObj, externalURL));
             oldValueObj = externalURL;
 
             lastURLValue = RelativePath.convert(externalURL, useRelativePaths);
@@ -434,7 +439,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -444,7 +449,7 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.JComponent#setEnabled(boolean)
      */
     @Override
@@ -457,13 +462,13 @@ public class ExternalGraphicDetails extends StandardPanel implements PopulateDet
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
      * java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // No vendor options
     }
 }

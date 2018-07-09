@@ -19,12 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.fill;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.styling.PointSymbolizer;
-import org.geotools.styling.PolygonSymbolizer;
-
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
@@ -35,10 +29,14 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.styling.PointSymbolizer;
+import org.geotools.styling.PolygonSymbolizer;
 
 /**
  * A factory for creating VendorOptionFillFactory objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VendorOptionFillFactory
@@ -80,7 +78,7 @@ public class VendorOptionFillFactory
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.
      * String)
@@ -124,8 +122,9 @@ public class VendorOptionFillFactory
      */
     public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
         for (VendorOptionInterface extension : vendorOptionList) {
-            boolean displayVendorOption = VendorOptionManager.getInstance()
-                    .isAllowed(vendorOptionVersionList, extension.getVendorOption());
+            boolean displayVendorOption =
+                    VendorOptionManager.getInstance()
+                            .isAllowed(vendorOptionVersionList, extension.getVendorOption());
 
             if (displayVendorOption) {
                 extension.updateSymbol(polygonSymbolizer);
@@ -135,7 +134,7 @@ public class VendorOptionFillFactory
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.
      * util.List)
@@ -162,7 +161,7 @@ public class VendorOptionFillFactory
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionInfoList()
      */
     @Override
@@ -185,8 +184,8 @@ public class VendorOptionFillFactory
      * @param sldObj the sld obj
      * @param vendorOptionsPresentList the vendor options present list
      */
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         for (VendorOptionInterface vo : vendorOptionList) {
             vo.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
         }

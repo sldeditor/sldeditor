@@ -19,22 +19,19 @@
 
 package com.sldeditor.create.sld;
 
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.create.NewSLDBase;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * Class to create a new SLD point symbol with default values.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class NewPointSLD extends NewSLDBase implements NewSLDInterface {
 
-    /**
-     * Instantiates a new new point sld.
-     */
+    /** Instantiates a new new point sld. */
     public NewPointSLD() {
         super(Localisation.getString(NewPointSLD.class, "NewPointSLD.title"));
     }

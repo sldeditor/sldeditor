@@ -21,13 +21,12 @@ package com.sldeditor.test.unit.ui.tree.item;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem;
+import org.junit.Test;
 
 /**
  * The unit test for StyledLayerDescriptorTreeItem.
- * 
+ *
  * <p>{@link com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem}
  *
  * @author Robert Ward (SCISYS)
@@ -35,7 +34,8 @@ import com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem;
 public class StyledLayerDescriptorTreeItemTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem#getTreeString(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem#getTreeString(java.lang.Object)}.
      */
     @Test
     public void testGetTreeString() {
@@ -46,12 +46,13 @@ public class StyledLayerDescriptorTreeItemTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode,
+     * java.lang.Object)}.
      */
     @Test
     public void testItemSelected() {
         StyledLayerDescriptorTreeItem item = new StyledLayerDescriptorTreeItem();
         item.itemSelected(null, null);
     }
-
 }

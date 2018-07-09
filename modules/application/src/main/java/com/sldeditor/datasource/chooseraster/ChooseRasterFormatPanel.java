@@ -19,6 +19,8 @@
 
 package com.sldeditor.datasource.chooseraster;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.localisation.Localisation;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -34,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -46,12 +47,8 @@ import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.gce.image.WorldImageFormat;
-
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.localisation.Localisation;
 
 /**
  * The Class ChooseRasterFormatPanel.
@@ -78,8 +75,11 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
      * @param frame the frame
      */
     public ChooseRasterFormatPanel(JFrame frame) {
-        super(frame, Localisation.getString(ChooseRasterFormatPanel.class,
-                "ChooseRasterFormatPanel.title"), true);
+        super(
+                frame,
+                Localisation.getString(
+                        ChooseRasterFormatPanel.class, "ChooseRasterFormatPanel.title"),
+                true);
 
         setLayout(new BorderLayout());
 
@@ -88,24 +88,26 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
         formatListComponent = new JList<String>();
         formatListComponent.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         formatListComponent.setPreferredSize(new Dimension(100, 300));
-        formatListComponent.addListSelectionListener(new ListSelectionListener() {
+        formatListComponent.addListSelectionListener(
+                new ListSelectionListener() {
 
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    selectFormat();
-                }
-            }
-        });
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+                        if (!e.getValueIsAdjusting()) {
+                            selectFormat();
+                        }
+                    }
+                });
 
-        formatListComponent.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent evt) {
-                if (evt.getClickCount() == 2) {
-                    selectFormat();
-                    setVisible(false);
-                }
-            }
-        });
+        formatListComponent.addMouseListener(
+                new MouseAdapter() {
+                    public void mouseClicked(MouseEvent evt) {
+                        if (evt.getClickCount() == 2) {
+                            selectFormat();
+                            setVisible(false);
+                        }
+                    }
+                });
         JScrollPane listScroller = new JScrollPane(formatListComponent);
         p.add(listScroller);
 
@@ -125,15 +127,16 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
         //
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
-        JButton okButton = new JButton(
-                Localisation.getString(ChooseRasterFormatPanel.class, "common.ok"));
-        okButton.addActionListener(new ActionListener() {
+        JButton okButton =
+                new JButton(Localisation.getString(ChooseRasterFormatPanel.class, "common.ok"));
+        okButton.addActionListener(
+                new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
-        });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setVisible(false);
+                    }
+                });
 
         buttonPanel.add(okButton);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -144,7 +147,7 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.impl.chooseraster.ChooseRasterFormatInterface#showPanel(java.util.Set)
      */
     @Override
@@ -161,12 +164,15 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
         }
 
         // Sort formats alphabetically
-        Collections.sort(sortedFormatList, new Comparator<AbstractGridFormat>() {
-            @Override
-            public int compare(final AbstractGridFormat object1, final AbstractGridFormat object2) {
-                return object1.getName().compareTo(object2.getName());
-            }
-        });
+        Collections.sort(
+                sortedFormatList,
+                new Comparator<AbstractGridFormat>() {
+                    @Override
+                    public int compare(
+                            final AbstractGridFormat object1, final AbstractGridFormat object2) {
+                        return object1.getName().compareTo(object2.getName());
+                    }
+                });
 
         // Add WorldImageFormat to top of list
         sortedFormatList.add(0, wif);
@@ -189,9 +195,7 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
         return selectedFormat;
     }
 
-    /**
-     * Select format.
-     */
+    /** Select format. */
     protected void selectFormat() {
         String selectedFormat = formatListComponent.getSelectedValue();
 

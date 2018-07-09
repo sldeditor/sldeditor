@@ -19,14 +19,14 @@ import org.geotools.styling.visitor.DuplicatingStyleVisitor;
  */
 public class InlineDatastoreVisitor extends DuplicatingStyleVisitor {
 
-    /**
-     * Instantiates a new inline datastore visitor.
-     */
-    public InlineDatastoreVisitor() {
-    }
+    /** Instantiates a new inline datastore visitor. */
+    public InlineDatastoreVisitor() {}
 
-    /** (non-Javadoc)
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.UserLayer)
+    /**
+     * (non-Javadoc)
+     *
+     * @see
+     *     org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.UserLayer)
      */
     public void visit(UserLayer layer) {
 
@@ -65,5 +65,4 @@ public class InlineDatastoreVisitor extends DuplicatingStyleVisitor {
         }
         pages.push(copy);
     }
-
 }

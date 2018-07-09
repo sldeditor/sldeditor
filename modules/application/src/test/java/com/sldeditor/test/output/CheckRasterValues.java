@@ -19,18 +19,15 @@
 
 package com.sldeditor.test.output;
 
+import com.sldeditor.test.SLDTestRunner;
 import java.lang.reflect.InvocationTargetException;
-
 import javax.swing.SwingUtilities;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.sldeditor.test.SLDTestRunner;
-
 /**
  * The Class CheckRasterValues runs the tests for setting values in raster slds.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class CheckRasterValues {
@@ -45,12 +42,13 @@ public class CheckRasterValues {
      */
     @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
-        SwingUtilities.invokeAndWait(new Runnable() {
-            @Override
-            public void run() {
-                test = new SLDTestRunner();
-            }
-        });
+        SwingUtilities.invokeAndWait(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        test = new SLDTestRunner();
+                    }
+                });
     }
 
     @Test

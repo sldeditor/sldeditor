@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * A factory for creating UILayout objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class UILayoutFactory {
@@ -61,9 +61,7 @@ public class UILayoutFactory {
         return uiLayout;
     }
 
-    /**
-     * Populate.
-     */
+    /** Populate. */
     private static void populate() {
         SLDEditorDefaultLayout defaultUI = new SLDEditorDefaultLayout();
 

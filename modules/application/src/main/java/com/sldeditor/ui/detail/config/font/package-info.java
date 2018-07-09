@@ -19,8 +19,7 @@
 
 /**
  * Package contains font selection and preview fields.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.config.font;

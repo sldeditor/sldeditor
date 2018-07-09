@@ -19,18 +19,15 @@
 
 package com.sldeditor.test.sldcookbook;
 
+import com.sldeditor.test.SLDTestRunner;
 import java.lang.reflect.InvocationTargetException;
-
 import javax.swing.SwingUtilities;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.sldeditor.test.SLDTestRunner;
-
 /**
  * The Class SLDCookbookPolygon runs the tests for polygon slds in the SLD Cookbook.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDCookbookPolygon {
@@ -45,121 +42,94 @@ public class SLDCookbookPolygon {
      */
     @BeforeClass
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
-        SwingUtilities.invokeAndWait(new Runnable() {
-            @Override
-            public void run() {
-                test = new SLDTestRunner();
-            }
-        });
+        SwingUtilities.invokeAndWait(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        test = new SLDTestRunner();
+                    }
+                });
     }
 
-    /**
-     * Polygon simplepolygon.
-     */
+    /** Polygon simplepolygon. */
     @Test
     public void polygon_simplepolygon() {
         test.runTest("polygon", "polygon_simplepolygon.xml");
     }
 
-    /**
-     * Polygon simplepolygonwithstroke.
-     */
+    /** Polygon simplepolygonwithstroke. */
     @Test
     public void polygon_simplepolygonwithstroke() {
         test.runTest("polygon", "polygon_simplepolygonwithstroke.xml");
     }
 
-    /**
-     * Polygon transparentpolygon.
-     */
+    /** Polygon transparentpolygon. */
     @Test
     public void polygon_transparentpolygon() {
         test.runTest("polygon", "polygon_transparentpolygon.xml");
     }
 
-    /**
-     * Polygon hatchingfill.
-     */
+    /** Polygon hatchingfill. */
     @Test
     public void polygon_hatchingfill() {
         test.runTest("polygon", "polygon_hatchingfill.xml");
     }
 
-    /**
-     * Polygon polygonwithdefaultlabel.
-     */
+    /** Polygon polygonwithdefaultlabel. */
     @Test
     public void polygon_polygonwithdefaultlabel() {
         test.runTest("polygon", "polygon_polygonwithdefaultlabel.xml");
     }
 
-    /**
-     * Polygon labelhalo.
-     */
+    /** Polygon labelhalo. */
     @Test
     public void polygon_labelhalo() {
         test.runTest("polygon", "polygon_labelhalo.xml");
     }
 
-    /**
-     * Polygon attributebasedpolygon.
-     */
+    /** Polygon attributebasedpolygon. */
     @Test
     public void polygon_attributebasedpolygon() {
         test.runTest("polygon", "polygon_attributebasedpolygon.xml");
     }
 
-    /**
-     * Polygon zoombasedpolygon.
-     */
+    /** Polygon zoombasedpolygon. */
     @Test
     public void polygon_zoombasedpolygon() {
         test.runTest("polygon", "polygon_zoombasedpolygon.xml");
     }
 
-    /**
-     * Polygon trianglefill.
-     */
+    /** Polygon trianglefill. */
     @Test
     public void polygon_trianglefill() {
         test.runTest("polygon", "polygon_trianglefill.xml");
     }
 
-    /**
-     * Polygon trianglefill nostroke.
-     */
+    /** Polygon trianglefill nostroke. */
     @Test
     public void polygon_trianglefill_nostroke() {
         test.runTest("polygon", "polygon_trianglefill_nostroke.xml");
     }
 
-    /**
-     * Polygon hatchingfill transparent.
-     */
+    /** Polygon hatchingfill transparent. */
     @Test
     public void polygon_hatchingfill_transparent() {
         test.runTest("polygon", "polygon_hatchingfill_transparent.xml");
     }
 
-    /**
-     * Polygon picturefill.
-     */
+    /** Polygon picturefill. */
     @Test
     public void polygon_picturefill() {
         test.runTest("polygon", "polygon_picturefill.xml");
     }
 
-    /**
-     * Polygon ttfill.
-     */
+    /** Polygon ttfill. */
     @Test
     public void polygon_ttfill() {
         test.runTest("polygon", "polygon_ttffill.xml");
     }
 
-    /**
-     * Polygon wkt.
-     */
+    /** Polygon wkt. */
     @Test
     public void polygon_wkt() {
         test.runTest("polygon", "polygon_wkt.xml");

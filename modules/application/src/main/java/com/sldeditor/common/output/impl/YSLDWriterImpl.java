@@ -17,31 +17,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.output.impl;
-
-import java.io.IOException;
-import java.io.StringWriter;
-import java.net.URL;
-
-import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.ysld.Ysld;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.output.SLDWriterInterface;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.net.URL;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.ysld.Ysld;
 
 /**
  * Class that converts an SLD stored as a StyledLayerDescriptor to a YSLD formatted string.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class YSLDWriterImpl implements SLDWriterInterface {
 
-    /**
-     * Default constructor.
-     */
-    public YSLDWriterImpl() {
-    }
+    /** Default constructor. */
+    public YSLDWriterImpl() {}
 
     /**
      * Encode sld to a string.

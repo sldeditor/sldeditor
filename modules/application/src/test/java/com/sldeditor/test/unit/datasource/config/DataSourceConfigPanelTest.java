@@ -19,19 +19,17 @@
 
 package com.sldeditor.test.unit.datasource.config;
 
-import org.junit.Test;
-
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.datasource.config.DataSourceConfigPanel;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import org.junit.Test;
 
 /**
  * Unit test for DataSourceConfigPanel class.
- * 
- * <p>{@link com.sldeditor.datasource.config.DataSourceConfigPanel}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.config.DataSourceConfigPanel}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DataSourceConfigPanelTest {
 
@@ -62,8 +60,8 @@ public class DataSourceConfigPanelTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.config.DataSourceConfigPanel#DataSourceConfigPanel()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.config.DataSourceConfigPanel#DataSourceConfigPanel()}.
      */
     @Test
     public void testDataSourceConfigPanel() {
@@ -79,5 +77,4 @@ public class DataSourceConfigPanelTest {
         testObj.redoAction(null);
         testObj.reset();
     }
-
 }

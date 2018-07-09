@@ -21,19 +21,17 @@ package com.sldeditor.test.unit.ui.detail.vendor.geoserver.featuretypestyle;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.StyleFactoryImpl;
-import org.junit.Test;
-
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.FeatureTypeStyleDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSComposite;
 import com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VendorOptionFTSFactory;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.StyleFactoryImpl;
+import org.junit.Test;
 
 /**
  * The Class VendorOptionFTSFactoryTest.
@@ -43,8 +41,8 @@ import com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VendorOptionFTS
 public class VendorOptionFTSFactoryTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VendorOptionFTSFactory#VendorOptionFTSFactory(java.lang.Class)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VendorOptionFTSFactory#VendorOptionFTSFactory(java.lang.Class)}.
      */
     @Test
     public void testVendorOptionFTSFactory() {
@@ -67,11 +65,10 @@ public class VendorOptionFTSFactoryTest {
         assertEquals(1, vendorOptionsPresentList.size());
 
         assertEquals(expectedNoOfVO, obj.getVendorOptionInfoList().size());
-        assertEquals(1,
-                obj.getVendorOptionList(VOGeoServerFTSComposite.class.getName()).size());
+        assertEquals(1, obj.getVendorOptionList(VOGeoServerFTSComposite.class.getName()).size());
 
-        GraphicPanelFieldManager fieldMgr = new GraphicPanelFieldManager(
-                FeatureTypeStyleDetails.class);
+        GraphicPanelFieldManager fieldMgr =
+                new GraphicPanelFieldManager(FeatureTypeStyleDetails.class);
         obj.getFieldDataManager(fieldMgr);
 
         obj.populate(fts);

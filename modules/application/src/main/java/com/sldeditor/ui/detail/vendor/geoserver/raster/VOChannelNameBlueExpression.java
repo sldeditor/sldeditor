@@ -23,7 +23,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * Class to handle the getting and setting of blue raster channel names using expressions
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VOChannelNameBlueExpression extends VOChannelNameExpression {
@@ -37,8 +37,7 @@ public class VOChannelNameBlueExpression extends VOChannelNameExpression {
      * @param panelId the panel id
      * @param fieldId the field id
      */
-    public VOChannelNameBlueExpression(Class<?> panelId,FieldIdEnum fieldId) {
+    public VOChannelNameBlueExpression(Class<?> panelId, FieldIdEnum fieldId) {
         super(panelId, fieldId);
     }
-
 }

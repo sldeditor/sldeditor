@@ -21,17 +21,16 @@ package com.sldeditor.test.unit.ui.tree.item;
 
 import static org.junit.Assert.assertTrue;
 
-import org.geotools.styling.FeatureTypeStyle;
-import org.junit.Test;
-
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.tree.SLDTreeTools;
 import com.sldeditor.ui.tree.item.FeatureTypeStyleTreeItem;
+import org.geotools.styling.FeatureTypeStyle;
+import org.junit.Test;
 
 /**
  * The unit test for FeatureTypeStyleTreeItem.
- * 
+ *
  * <p>{@link com.sldeditor.ui.tree.item.FeatureTypeStyleTreeItem}
  *
  * @author Robert Ward (SCISYS)
@@ -39,49 +38,60 @@ import com.sldeditor.ui.tree.item.FeatureTypeStyleTreeItem;
 public class FeatureTypeStyleTreeItemTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.item.FeatureTypeStyleTreeItem#getTreeString(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.FeatureTypeStyleTreeItem#getTreeString(java.lang.Object)}.
      */
     @Test
     public void testGetTreeString() {
         FeatureTypeStyleTreeItem item = new FeatureTypeStyleTreeItem();
         String actualValue = item.getTreeString(null, null);
-        String expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"), "");
+        String expectedValue =
+                String.format(
+                        "%s : %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"),
+                        "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         FeatureTypeStyle fts = DefaultSymbols.createNewFeatureTypeStyle();
 
         actualValue = item.getTreeString(null, fts);
         // Default feature type style sets name = name!
-        expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"), "name");
+        expectedValue =
+                String.format(
+                        "%s : %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"),
+                        "name");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         fts.setName(null);
         actualValue = item.getTreeString(null, fts);
         // Default feature type style sets name = name!
-        expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"), "");
+        expectedValue =
+                String.format(
+                        "%s : %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"),
+                        "");
         assertTrue(actualValue.compareTo(expectedValue) == 0);
 
         String expectedName = "test name";
         fts.setName(expectedName);
         actualValue = item.getTreeString(null, fts);
-        expectedValue = String.format("%s : %s",
-                Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"),
-                expectedName);
+        expectedValue =
+                String.format(
+                        "%s : %s",
+                        Localisation.getString(SLDTreeTools.class, "TreeItem.featureTypeStyle"),
+                        expectedName);
         assertTrue(actualValue.compareTo(expectedValue) == 0);
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.item.FeatureTypeStyleTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.FeatureTypeStyleTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode,
+     * java.lang.Object)}.
      */
     @Test
     public void testItemSelected() {
         FeatureTypeStyleTreeItem item = new FeatureTypeStyleTreeItem();
         item.itemSelected(null, null);
     }
-
 }

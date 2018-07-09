@@ -19,17 +19,6 @@
 
 package com.sldeditor.tool.dbconnectionlist;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.DatabaseConnection;
@@ -40,10 +29,19 @@ import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOvera
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.ToolPanel;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  * Tool that manages all the database connections.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DatabaseConnectionListTool implements ToolInterface {
@@ -88,89 +86,114 @@ public class DatabaseConnectionListTool implements ToolInterface {
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(Localisation
-                .getString(DatabaseConnectionListTool.class, "DatabaseConnectionListTool.title")));
+        panel.setBorder(
+                BorderFactory.createTitledBorder(
+                        Localisation.getString(
+                                DatabaseConnectionListTool.class,
+                                "DatabaseConnectionListTool.title")));
         FlowLayout flowLayout = (FlowLayout) panel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
 
-        btnNew = new ToolButton(Localisation.getString(DatabaseConnectionListTool.class,
-                "DatabaseConnectionListTool.new"), "tool/newconnection.png");
+        btnNew =
+                new ToolButton(
+                        Localisation.getString(
+                                DatabaseConnectionListTool.class, "DatabaseConnectionListTool.new"),
+                        "tool/newconnection.png");
         btnNew.setEnabled(true);
-        btnNew.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (databaseConnectUpdate != null) {
-                    DatabaseConnection connectionDetails = DatabaseConnectionFactory
-                            .getNewConnection(selectedDatabaseType);
+        btnNew.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (databaseConnectUpdate != null) {
+                            DatabaseConnection connectionDetails =
+                                    DatabaseConnectionFactory.getNewConnection(
+                                            selectedDatabaseType);
 
-                    DatabaseConnection newConnectionDetails = DBConnectorDetailsPanel
-                            .showDialog(null, connectionDetails);
+                            DatabaseConnection newConnectionDetails =
+                                    DBConnectorDetailsPanel.showDialog(null, connectionDetails);
 
-                    if (newConnectionDetails != null) {
-                        databaseConnectUpdate.addNewConnection(newConnectionDetails);
+                            if (newConnectionDetails != null) {
+                                databaseConnectUpdate.addNewConnection(newConnectionDetails);
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
 
         panel.add(btnNew);
 
-        btnDuplicate = new ToolButton(Localisation.getString(DatabaseConnectionListTool.class,
-                "DatabaseConnectionListTool.duplicate"), "tool/duplicateconnection.png");
+        btnDuplicate =
+                new ToolButton(
+                        Localisation.getString(
+                                DatabaseConnectionListTool.class,
+                                "DatabaseConnectionListTool.duplicate"),
+                        "tool/duplicateconnection.png");
         btnDuplicate.setEnabled(false);
-        btnDuplicate.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (databaseConnectUpdate != null) {
-                    if (!connectionList.isEmpty()) {
-                        DatabaseConnection selectedConnectionDetails = connectionList.get(0);
+        btnDuplicate.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (databaseConnectUpdate != null) {
+                            if (!connectionList.isEmpty()) {
+                                DatabaseConnection selectedConnectionDetails =
+                                        connectionList.get(0);
 
-                        DatabaseConnection duplicateItem = selectedConnectionDetails.duplicate();
+                                DatabaseConnection duplicateItem =
+                                        selectedConnectionDetails.duplicate();
 
-                        databaseConnectUpdate.addNewConnection(duplicateItem);
+                                databaseConnectUpdate.addNewConnection(duplicateItem);
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
 
         panel.add(btnDuplicate);
 
-        btnEdit = new ToolButton(Localisation.getString(DatabaseConnectionListTool.class,
-                "DatabaseConnectionListTool.edit"), "tool/editconnection.png");
+        btnEdit =
+                new ToolButton(
+                        Localisation.getString(
+                                DatabaseConnectionListTool.class,
+                                "DatabaseConnectionListTool.edit"),
+                        "tool/editconnection.png");
         btnEdit.setEnabled(false);
-        btnEdit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (databaseConnectUpdate != null) {
-                    if (!connectionList.isEmpty()) {
-                        DatabaseConnection selectedConnectionDetails = connectionList.get(0);
-                        DatabaseConnection newConnectionDetails = DBConnectorDetailsPanel
-                                .showDialog(null, selectedConnectionDetails);
+        btnEdit.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (databaseConnectUpdate != null) {
+                            if (!connectionList.isEmpty()) {
+                                DatabaseConnection selectedConnectionDetails =
+                                        connectionList.get(0);
+                                DatabaseConnection newConnectionDetails =
+                                        DBConnectorDetailsPanel.showDialog(
+                                                null, selectedConnectionDetails);
 
-                        if (newConnectionDetails != null) {
-                            databaseConnectUpdate.updateConnectionDetails(selectedConnectionDetails,
-                                    newConnectionDetails);
+                                if (newConnectionDetails != null) {
+                                    databaseConnectUpdate.updateConnectionDetails(
+                                            selectedConnectionDetails, newConnectionDetails);
+                                }
+                            }
                         }
                     }
-                }
-            }
-        });
+                });
 
         panel.add(btnEdit);
 
-        btnDelete = new ToolButton(Localisation.getString(DatabaseConnectionListTool.class,
-                "DatabaseConnectionListTool.delete"), "tool/deleteconnection.png");
+        btnDelete =
+                new ToolButton(
+                        Localisation.getString(
+                                DatabaseConnectionListTool.class,
+                                "DatabaseConnectionListTool.delete"),
+                        "tool/deleteconnection.png");
         btnDelete.setEnabled(false);
-        btnDelete.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (databaseConnectUpdate != null) {
-                    databaseConnectUpdate.deleteConnections(connectionList);
-                }
-            }
-        });
+        btnDelete.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (databaseConnectUpdate != null) {
+                            databaseConnectUpdate.deleteConnections(connectionList);
+                        }
+                    }
+                });
 
         panel.add(btnDelete);
         panel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
@@ -178,7 +201,7 @@ public class DatabaseConnectionListTool implements ToolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#getPanel()
      */
     @Override
@@ -188,12 +211,12 @@ public class DatabaseConnectionListTool implements ToolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList,
-            List<SLDDataInterface> sldDataList) {
+    public void setSelectedItems(
+            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
         connectionList.clear();
         selectedDatabaseType = null;
 
@@ -218,15 +241,15 @@ public class DatabaseConnectionListTool implements ToolInterface {
             }
         }
 
-        btnDuplicate
-                .setEnabled(canDuplicate && databaseNodesSelected && (connectionList.size() == 1));
+        btnDuplicate.setEnabled(
+                canDuplicate && databaseNodesSelected && (connectionList.size() == 1));
         btnEdit.setEnabled(databaseNodesSelected && (connectionList.size() == 1));
         btnDelete.setEnabled(databaseNodesSelected);
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#getToolName()
      */
     @Override
@@ -236,11 +259,13 @@ public class DatabaseConnectionListTool implements ToolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolInterface#supports(java.util.List, java.util.List)
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+    public boolean supports(
+            List<Class<?>> uniqueNodeTypeList,
+            List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
         if (uniqueNodeTypeList.size() == 1) {
             return true;

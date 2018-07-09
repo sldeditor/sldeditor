@@ -20,7 +20,6 @@
 package com.sldeditor.filter.v2.function;
 
 import java.util.List;
-
 import org.opengis.filter.Filter;
 import org.opengis.filter.expression.Expression;
 

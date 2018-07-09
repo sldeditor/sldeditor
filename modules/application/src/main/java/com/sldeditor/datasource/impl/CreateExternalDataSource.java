@@ -19,24 +19,6 @@
 
 package com.sldeditor.datasource.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
-import org.geotools.coverage.grid.io.AbstractGridFormat;
-import org.geotools.data.DataStore;
-import org.geotools.data.DataStoreFinder;
-import org.geotools.data.shapefile.ShapefileDataStore;
-import org.geotools.data.simple.SimpleFeatureSource;
-import org.geotools.swing.dialog.JCRSChooser;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.GeometryType;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
@@ -49,6 +31,22 @@ import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.chooseraster.ChooseRasterFormatInterface;
 import com.sldeditor.datasource.chooseraster.ChooseRasterFormatPanel;
 import com.sldeditor.datasource.chooseraster.DetermineRasterFormat;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import org.apache.log4j.Logger;
+import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
+import org.geotools.coverage.grid.io.AbstractGridFormat;
+import org.geotools.data.DataStore;
+import org.geotools.data.DataStoreFinder;
+import org.geotools.data.shapefile.ShapefileDataStore;
+import org.geotools.data.simple.SimpleFeatureSource;
+import org.geotools.swing.dialog.JCRSChooser;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.GeometryType;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * The Class CreateExternalDataSource.
@@ -66,9 +64,7 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
     /** The logger. */
     private static Logger logger = Logger.getLogger(CreateExternalDataSource.class);
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public CreateExternalDataSource() {
         defaultCRS = CoordManager.getInstance().getWGS84();
     }
@@ -82,8 +78,8 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
      * @return the list of datastores
      */
     @Override
-    public List<DataSourceInfo> connect(String typeName, String geometryFieldName,
-            SLDEditorFileInterface editorFile) {
+    public List<DataSourceInfo> connect(
+            String typeName, String geometryFieldName, SLDEditorFileInterface editorFile) {
         List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
         dataSourceInfoList.add(dsInfo);
 
@@ -124,10 +120,16 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                         if (dataStore instanceof ShapefileDataStore) {
                             ShapefileDataStore shapeFileDatastore = (ShapefileDataStore) dataStore;
 
-                            CoordinateReferenceSystem crs = JCRSChooser.showDialog(
-                                    Localisation.getString(CreateExternalDataSource.class,
-                                            "CRSPanel.title"),
-                                    defaultCRS.getIdentifiers().iterator().next().toString());
+                            CoordinateReferenceSystem crs =
+                                    JCRSChooser.showDialog(
+                                            Localisation.getString(
+                                                    CreateExternalDataSource.class,
+                                                    "CRSPanel.title"),
+                                            defaultCRS
+                                                    .getIdentifiers()
+                                                    .iterator()
+                                                    .next()
+                                                    .toString());
                             if (crs != null) {
                                 shapeFileDatastore.forceSchemaCRS(crs);
                             }
@@ -143,11 +145,13 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                     // Try connecting to a raster data source
                     Object rasterFilename = map.get(DataSourceConnectorInterface.FILE_MAP_KEY);
                     if (rasterFilename != null) {
-                        File rasterFile = new File(
-                                ExternalFilenames.convertURLToFile((String) rasterFilename));
+                        File rasterFile =
+                                new File(
+                                        ExternalFilenames.convertURLToFile(
+                                                (String) rasterFilename));
 
-                        ChooseRasterFormatInterface panel = new ChooseRasterFormatPanel(
-                                Controller.getInstance().getFrame());
+                        ChooseRasterFormatInterface panel =
+                                new ChooseRasterFormatPanel(Controller.getInstance().getFrame());
 
                         AbstractGridFormat format = DetermineRasterFormat.choose(rasterFile, panel);
                         AbstractGridCoverage2DReader reader = format.getReader(rasterFile);
@@ -164,10 +168,13 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
             dsInfo.setDataStore(dataStore);
 
             if (!dsInfo.hasData()) {
-                ConsoleManager.getInstance().error(this,
-                        Localisation.getField(CreateExternalDataSource.class,
-                                "CreateExternalDataSource.failedToConnect")
-                                + dataSourceProperties.getDebugConnectionString());
+                ConsoleManager.getInstance()
+                        .error(
+                                this,
+                                Localisation.getField(
+                                                CreateExternalDataSource.class,
+                                                "CreateExternalDataSource.failedToConnect")
+                                        + dataSourceProperties.getDebugConnectionString());
             }
         }
         return dataSourceInfoList;
@@ -183,5 +190,4 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
 
         dsInfo.setGeometryType(GeometryTypeMapping.getGeometryType(bindingType));
     }
-
 }

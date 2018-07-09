@@ -19,9 +19,8 @@
 
 package com.sldeditor.tool.dbconnectionlist;
 
-import javax.swing.JPanel;
-
 import com.sldeditor.common.data.DatabaseConnection;
+import javax.swing.JPanel;
 
 /**
  * The Interface DatabaseConnectionConfigInterface.

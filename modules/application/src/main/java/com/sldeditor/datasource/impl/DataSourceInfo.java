@@ -19,13 +19,13 @@
 
 package com.sldeditor.datasource.impl;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
@@ -49,8 +49,6 @@ import org.opengis.feature.type.PropertyDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.util.InternationalString;
-
-import com.sldeditor.common.console.ConsoleManager;
 
 /**
  * The Class DataSourceInfo.
@@ -95,15 +93,10 @@ public class DataSourceInfo {
     /** The feature type factory. */
     private static FeatureTypeFactory featureTypeFactory = new FeatureTypeFactoryImpl();
 
-    /**
-     * Default constructor.
-     */
-    public DataSourceInfo() {
-    }
+    /** Default constructor. */
+    public DataSourceInfo() {}
 
-    /**
-     * Reset the member data.
-     */
+    /** Reset the member data. */
     public void reset() {
         schema = null;
 
@@ -183,9 +176,7 @@ public class DataSourceInfo {
         this.dataStore = dataStore;
     }
 
-    /**
-     * Unload data store.
-     */
+    /** Unload data store. */
     public void unloadDataStore() {
         if (dataStore != null) {
             dataStore.dispose();
@@ -239,8 +230,8 @@ public class DataSourceInfo {
 
         if (dataStore != null) {
             try {
-                FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = dataStore
-                        .getFeatureSource(typeName);
+                FeatureSource<SimpleFeatureType, SimpleFeature> featureSource =
+                        dataStore.getFeatureSource(typeName);
 
                 featureStore = (FeatureStore<SimpleFeatureType, SimpleFeature>) featureSource;
             } catch (IOException e) {
@@ -269,11 +260,19 @@ public class DataSourceInfo {
                     List<Filter> restrictions = null;
                     AttributeType superType = null;
                     InternationalString description = null;
-                    GeometryType type = featureTypeFactory.createGeometryType(
-                            new NameImpl(rasterGeometryField), GridCoverage2D.class, crs,
-                            isIdentifiable, isAbstract, restrictions, superType, description);
-                    GeometryDescriptor descriptor = featureTypeFactory.createGeometryDescriptor(
-                            type, new NameImpl(rasterGeometryField), 0, 1, false, null);
+                    GeometryType type =
+                            featureTypeFactory.createGeometryType(
+                                    new NameImpl(rasterGeometryField),
+                                    GridCoverage2D.class,
+                                    crs,
+                                    isIdentifiable,
+                                    isAbstract,
+                                    restrictions,
+                                    superType,
+                                    description);
+                    GeometryDescriptor descriptor =
+                            featureTypeFactory.createGeometryDescriptor(
+                                    type, new NameImpl(rasterGeometryField), 0, 1, false, null);
 
                     rasterPropertyDescriptorList.add(descriptor);
                 }
@@ -346,9 +345,7 @@ public class DataSourceInfo {
         return fieldTypeMap;
     }
 
-    /**
-     * Populate field map for the data source.
-     */
+    /** Populate field map for the data source. */
     public void populateFieldMap() {
         fieldNameMap.clear();
         fieldTypeMap.clear();
@@ -359,8 +356,10 @@ public class DataSourceInfo {
         if (descriptorList != null) {
             for (PropertyDescriptor property : descriptorList) {
                 if (property != null) {
-                    logger.debug(String.format("    %-20s %s", property.getName(),
-                            property.getType().getBinding().getName()));
+                    logger.debug(
+                            String.format(
+                                    "    %-20s %s",
+                                    property.getName(), property.getType().getBinding().getName()));
                     fieldNameMap.put(index, property.getName());
                     fieldTypeMap.put(index, property.getType().getBinding());
                 }

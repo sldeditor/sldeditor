@@ -19,7 +19,7 @@
 
 /**
  * Classes to support windbarb vendor option.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb;

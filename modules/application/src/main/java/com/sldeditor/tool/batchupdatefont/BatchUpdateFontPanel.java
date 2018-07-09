@@ -19,6 +19,10 @@
 
 package com.sldeditor.tool.batchupdatefont;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.SLDEditorInterface;
+import com.sldeditor.common.localisation.Localisation;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -27,7 +31,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -38,29 +41,23 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.geotools.styling.Font;
 import org.geotools.styling.RuleImpl;
 import org.geotools.styling.TextSymbolizerImpl;
 
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.SLDEditorInterface;
-import com.sldeditor.common.localisation.Localisation;
-
 /**
- * Dialog that displays one or more slds in table showing the fonts.
- * User is able to batch update the fonts.
+ * Dialog that displays one or more slds in table showing the fonts. User is able to batch update
+ * the fonts.
  */
 public class BatchUpdateFontPanel extends JDialog {
 
     /** The Constant PANEL_FULL_FONT. */
-    private static final String PANEL_FULL_FONT = Localisation.getString(BatchUpdateFontPanel.class,
-            "BatchUpdateFontPanel.full");
+    private static final String PANEL_FULL_FONT =
+            Localisation.getString(BatchUpdateFontPanel.class, "BatchUpdateFontPanel.full");
 
     /** The Constant PANEL_FONT_SIZE. */
-    private static final String PANEL_FONT_SIZE = Localisation.getString(BatchUpdateFontPanel.class,
-            "BatchUpdateFontPanel.fontSize");
+    private static final String PANEL_FONT_SIZE =
+            Localisation.getString(BatchUpdateFontPanel.class, "BatchUpdateFontPanel.fontSize");
 
     /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -116,9 +113,7 @@ public class BatchUpdateFontPanel extends JDialog {
         Controller.getInstance().centreDialog(this);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
 
         JPanel buttonPanel = new JPanel();
@@ -128,36 +123,39 @@ public class BatchUpdateFontPanel extends JDialog {
 
         btnApply = new JButton(Localisation.getString(BatchUpdateFontPanel.class, "common.apply"));
         btnApply.setEnabled(false);
-        btnApply.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                applyData();
-            }
-        });
+        btnApply.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        applyData();
+                    }
+                });
         buttonPanel.add(btnApply);
 
-        btnRevert = new JButton(
-                Localisation.getString(BatchUpdateFontPanel.class, "common.revert"));
+        btnRevert =
+                new JButton(Localisation.getString(BatchUpdateFontPanel.class, "common.revert"));
         btnRevert.setEnabled(false);
-        btnRevert.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dataModel.revertData();
-                fontDetails.populate(null);
-                fontSizePanel.populate(null);
-                btnSave.setEnabled(dataModel.anyChanges());
-            }
-        });
+        btnRevert.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        dataModel.revertData();
+                        fontDetails.populate(null);
+                        fontSizePanel.populate(null);
+                        btnSave.setEnabled(dataModel.anyChanges());
+                    }
+                });
         buttonPanel.add(btnRevert);
 
         btnSave = new JButton(Localisation.getString(BatchUpdateFontPanel.class, "common.save"));
         btnSave.setEnabled(false);
-        btnSave.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveData();
-            }
-        });
+        btnSave.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        saveData();
+                    }
+                });
         buttonPanel.add(btnSave);
 
         JPanel panel = new JPanel();
@@ -165,21 +163,24 @@ public class BatchUpdateFontPanel extends JDialog {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         table = new JTable();
         table.setModel(dataModel);
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        table.getSelectionModel()
+                .addListSelectionListener(
+                        new ListSelectionListener() {
 
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    List<Font> entries = dataModel.getFontEntries(table.getSelectedRows());
+                            @Override
+                            public void valueChanged(ListSelectionEvent e) {
+                                if (!e.getValueIsAdjusting()) {
+                                    List<Font> entries =
+                                            dataModel.getFontEntries(table.getSelectedRows());
 
-                    fontDetails.populate(entries);
-                    fontSizePanel.populate(entries);
+                                    fontDetails.populate(entries);
+                                    fontSizePanel.populate(entries);
 
-                    btnRevert.setEnabled(true);
-                    btnApply.setEnabled(true);
-                }
-            }
-        });
+                                    btnRevert.setEnabled(true);
+                                    btnApply.setEnabled(true);
+                                }
+                            }
+                        });
         dataModel.setColumnRenderer(table.getColumnModel());
 
         JScrollPane scrollPanel = new JScrollPane();
@@ -191,14 +192,15 @@ public class BatchUpdateFontPanel extends JDialog {
         panel.add(editPanel);
 
         comboBox = new JComboBox<String>();
-        comboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                CardLayout cl = (CardLayout) (panelSelector.getLayout());
-                cl.show(panelSelector, (String) comboBox.getSelectedItem());
-            }
-        });
-        comboBox.setModel(new DefaultComboBoxModel<String>(
-                new String[] { PANEL_FULL_FONT, PANEL_FONT_SIZE }));
+        comboBox.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        CardLayout cl = (CardLayout) (panelSelector.getLayout());
+                        cl.show(panelSelector, (String) comboBox.getSelectedItem());
+                    }
+                });
+        comboBox.setModel(
+                new DefaultComboBoxModel<String>(new String[] {PANEL_FULL_FONT, PANEL_FONT_SIZE}));
         editPanel.add(comboBox);
 
         panelSelector = new JPanel();
@@ -216,9 +218,7 @@ public class BatchUpdateFontPanel extends JDialog {
         panelSelector.add(PANEL_FONT_SIZE, fontSizePanel);
     }
 
-    /**
-     * Apply data.
-     */
+    /** Apply data. */
     private void applyData() {
         if (comboBox.getSelectedItem().equals(PANEL_FULL_FONT)) {
             dataModel.applyData(table.getSelectedRows(), fontDetails.getFontData());
@@ -230,9 +230,7 @@ public class BatchUpdateFontPanel extends JDialog {
         btnSave.setEnabled(dataModel.anyChanges());
     }
 
-    /**
-     * Save data.
-     */
+    /** Save data. */
     private void saveData() {
         if (dataModel.saveData(application)) {
             if (application != null) {
@@ -259,5 +257,4 @@ public class BatchUpdateFontPanel extends JDialog {
         }
         dataModel.loadData(fontDataList);
     }
-
 }

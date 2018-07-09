@@ -18,7 +18,7 @@
  */
 /**
  * Tools to allow the batch updating of font details
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.tool.batchupdatefont;

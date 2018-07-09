@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.watcher;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -33,12 +33,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sldeditor.common.console.ConsoleManager;
-
 /**
- * Class that implements a file watcher to inform the file system tree 
- * whether files have been added or deleted.
- * 
+ * Class that implements a file watcher to inform the file system tree whether files have been added
+ * or deleted.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FileSystemWatcher implements Runnable {
@@ -53,9 +51,7 @@ public class FileSystemWatcher implements Runnable {
     /** The instance. */
     private static FileSystemWatcher instance = null;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     private FileSystemWatcher() {
         // First create the watch service instance. This service watches a
         // directory for changes.
@@ -80,8 +76,12 @@ public class FileSystemWatcher implements Runnable {
             // Register three events. i.e. whenever a file is created, deleted or
             // modified the watcher gets informed
             try {
-                WatchKey key = path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
-                        StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
+                WatchKey key =
+                        path.register(
+                                watchService,
+                                StandardWatchEventKinds.ENTRY_CREATE,
+                                StandardWatchEventKinds.ENTRY_DELETE,
+                                StandardWatchEventKinds.ENTRY_MODIFY);
 
                 watcherMap.put(key, parent);
 
@@ -107,7 +107,7 @@ public class FileSystemWatcher implements Runnable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Runnable#run()
      */
     @Override
@@ -129,7 +129,7 @@ public class FileSystemWatcher implements Runnable {
 
         boolean stopPolling = false;
         // Poll for events in an infinite loop
-        for (;;) {
+        for (; ; ) {
             try {
                 // The take method waits till watch service receives a
                 // notification
@@ -194,22 +194,25 @@ public class FileSystemWatcher implements Runnable {
         // Folder we are going to watch
         File dir = new File(System.getProperty("user.dir"));
         System.out.println(dir.getAbsolutePath());
-        FileSystemWatcher.getInstance().addWatch(new FileWatcherUpdateInterface() {
+        FileSystemWatcher.getInstance()
+                .addWatch(
+                        new FileWatcherUpdateInterface() {
 
-            @Override
-            public void fileAdded(Path f) {
-                System.out.println("File Created:" + f.toString());
-            }
+                            @Override
+                            public void fileAdded(Path f) {
+                                System.out.println("File Created:" + f.toString());
+                            }
 
-            @Override
-            public void fileModified(Path f) {
-                System.out.println("File Modified:" + f.toString());
-            }
+                            @Override
+                            public void fileModified(Path f) {
+                                System.out.println("File Modified:" + f.toString());
+                            }
 
-            @Override
-            public void fileDeleted(Path f) {
-                System.out.println("File Deleted:" + f.toString());
-            }
-        }, dir.toPath());
+                            @Override
+                            public void fileDeleted(Path f) {
+                                System.out.println("File Deleted:" + f.toString());
+                            }
+                        },
+                        dir.toPath());
     }
 }

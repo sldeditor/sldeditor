@@ -22,22 +22,21 @@ package com.sldeditor.test.unit.ui.detail;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.NamedLayer;
-import org.geotools.styling.Style;
-import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Test;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StyleDetails;
 import com.sldeditor.ui.detail.config.FieldConfigString;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.NamedLayer;
+import org.geotools.styling.Style;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.junit.Test;
 
 /**
  * The unit test for StyleDetails.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.StyleDetails}
  *
  * @author Robert Ward (SCISYS)
@@ -45,12 +44,15 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 public class StyleDetailsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.StyleDetails#StyleDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.StyleDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
-     * Test method for {@link com.sldeditor.ui.detail.StyleDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for {@link com.sldeditor.ui.detail.StyleDetails#getFieldDataManager()}.
-     * Test method for {@link com.sldeditor.ui.detail.StyleDetails#isDataPresent()}.
-     * Test method for {@link com.sldeditor.ui.detail.StyleDetails#preLoadSymbol()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.StyleDetails#StyleDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.StyleDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.StyleDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link com.sldeditor.ui.detail.StyleDetails#getFieldDataManager()}. Test
+     * method for {@link com.sldeditor.ui.detail.StyleDetails#isDataPresent()}. Test method for
+     * {@link com.sldeditor.ui.detail.StyleDetails#preLoadSymbol()}.
      */
     @Test
     public void testStyleDetails() {
@@ -87,5 +89,4 @@ public class StyleDetailsTest {
         panel.preLoadSymbol();
         assertTrue("".compareTo(nameField.getStringValue()) == 0);
     }
-
 }

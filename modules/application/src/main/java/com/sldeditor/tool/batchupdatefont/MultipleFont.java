@@ -21,7 +21,6 @@ package com.sldeditor.tool.batchupdatefont;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Font;
 import org.geotools.styling.StyleFactoryImpl;
@@ -50,8 +49,8 @@ public class MultipleFont {
     private boolean sizeMultipleValue = true;
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private static StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /**
      * Parses the list.

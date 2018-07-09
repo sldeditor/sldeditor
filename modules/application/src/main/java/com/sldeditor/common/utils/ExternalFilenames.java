@@ -17,22 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.utils;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.localisation.Localisation;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.localisation.Localisation;
-
 /**
  * Utility methods to handle external filenames, e.g for external graphics.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ExternalFilenames {
@@ -52,15 +50,10 @@ public class ExternalFilenames {
     /** The format map. */
     private static Map<String, String> formatMap = new HashMap<String, String>();
 
-    /**
-     * Default constructor.
-     */
-    public ExternalFilenames() {
-    }
+    /** Default constructor. */
+    public ExternalFilenames() {}
 
-    /**
-     * Initialise.
-     */
+    /** Initialise. */
     private static void initialise() {
         formatMap.put("svg", "image/svg+xml");
         formatMap.put("png", "image/png");
@@ -89,8 +82,8 @@ public class ExternalFilenames {
                     String parentFolder = sldDataInterface.getSLDFile().getParent();
                     filename = parentFolder + File.separator + filePath;
                 } else {
-                    ConsoleManager.getInstance().error(ExternalFilenames.class,
-                            "No SLD filename set");
+                    ConsoleManager.getInstance()
+                            .error(ExternalFilenames.class, "No SLD filename set");
                     return null;
                 }
             } else {
@@ -141,7 +134,7 @@ public class ExternalFilenames {
 
     /**
      * Gets the file extension.
-     * 
+     *
      * <p>Returns null if fileName is null
      *
      * @param fileName the file name
@@ -165,7 +158,7 @@ public class ExternalFilenames {
 
     /**
      * Gets the image format.
-     * 
+     *
      * <p>If fileExtension is null then method returns null.
      *
      * @param fileExtension the file extension
@@ -185,9 +178,14 @@ public class ExternalFilenames {
         if (formatMap.containsKey(fileExtension)) {
             imageFormat = formatMap.get(fileExtension);
         } else {
-            ConsoleManager.getInstance().error(ExternalFilenames.class, String.format("%s : %s",
-                    Localisation.getString(ExternalFilenames.class, "ExternalFilenames.error"),
-                    fileExtension));
+            ConsoleManager.getInstance()
+                    .error(
+                            ExternalFilenames.class,
+                            String.format(
+                                    "%s : %s",
+                                    Localisation.getString(
+                                            ExternalFilenames.class, "ExternalFilenames.error"),
+                                    fileExtension));
         }
         return imageFormat;
     }

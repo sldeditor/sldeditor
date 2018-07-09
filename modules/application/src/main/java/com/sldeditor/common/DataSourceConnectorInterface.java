@@ -17,16 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common;
 
 import java.util.Map;
-
 import javax.swing.JPanel;
 
 /**
  * The Interface DataSourceConnectorInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface DataSourceConnectorInterface {
@@ -95,8 +93,6 @@ public interface DataSourceConnectorInterface {
     public Map<String, Object> getConnectionProperties(
             DataSourcePropertiesInterface dataSourceProperties);
 
-    /**
-     * Reset ui.
-     */
+    /** Reset ui. */
     public void reset();
 }

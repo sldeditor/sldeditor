@@ -19,25 +19,25 @@
 
 package com.sldeditor.test.unit.datasource.attribute;
 
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.datasource.attribute.AllowedAttributeTypes;
+import org.junit.Test;
 
 /**
  * Unit test for AllowedAttributeTypes class.
- * 
+ *
  * <p>{@link com.sldeditor.datasource.attribute.AllowedAttributeTypes}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class AllowedAttributeTypesTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.attribute.AllowedAttributeTypes#isAllowed(org.opengis.feature.type.PropertyDescriptor, java.lang.Class)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.attribute.AllowedAttributeTypes#isAllowed(org.opengis.feature.type.PropertyDescriptor,
+     * java.lang.Class)}.
      */
     @Test
     public void testIsAllowed() {
@@ -54,5 +54,4 @@ public class AllowedAttributeTypesTest {
         assertTrue(AllowedAttributeTypes.isAllowed(Double.class, Double.class));
         assertTrue(AllowedAttributeTypes.isAllowed(Float.class, Double.class));
     }
-
 }

@@ -26,8 +26,6 @@ package com.sldeditor.tool.scale;
  */
 public interface ScaleToolUpdate {
 
-    /**
-     * Data updated.
-     */
+    /** Data updated. */
     void dataUpdated();
 }

@@ -22,6 +22,7 @@ package com.sldeditor.test.unit.ui.detail;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.ui.detail.DetailsUtilities;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.AnchorPointImpl;
@@ -30,11 +31,9 @@ import org.geotools.styling.DisplacementImpl;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 
-import com.sldeditor.ui.detail.DetailsUtilities;
-
 /**
  * The unit test for DetailsUtilities.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.DetailsUtilities}
  *
  * @author Robert Ward (SCISYS)
@@ -42,11 +41,13 @@ import com.sldeditor.ui.detail.DetailsUtilities;
 public class DetailsUtilitiesTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.DetailsUtilities#isSame(org.geotools.styling.Displacement, org.geotools.styling.Displacement)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.DetailsUtilities#isSame(org.geotools.styling.Displacement,
+     * org.geotools.styling.Displacement)}.
      */
     @Test
     public void testIsSameDisplacementDisplacement() {
-        assertFalse(DetailsUtilities.isSame((Displacement)null, (Displacement)null));
+        assertFalse(DetailsUtilities.isSame((Displacement) null, (Displacement) null));
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
         // Try values that are the same
@@ -68,18 +69,20 @@ public class DetailsUtilitiesTest {
         assertFalse(DetailsUtilities.isSame(displacement2, displacement3));
 
         Displacement displacement4 = new DisplacementImpl();
-        displacement4.setDisplacementX(ff.literal((Long)1L));
+        displacement4.setDisplacementX(ff.literal((Long) 1L));
         displacement4.setDisplacementY(ff.literal(-2));
         assertFalse(DetailsUtilities.isSame(displacement1, displacement4));
         assertFalse(DetailsUtilities.isSame(displacement2, displacement4));
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.DetailsUtilities#isSame(org.geotools.styling.AnchorPoint, org.geotools.styling.AnchorPoint)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.DetailsUtilities#isSame(org.geotools.styling.AnchorPoint,
+     * org.geotools.styling.AnchorPoint)}.
      */
     @Test
     public void testIsSameAnchorPointAnchorPoint() {
-        assertFalse(DetailsUtilities.isSame((AnchorPoint)null, (AnchorPoint)null));
+        assertFalse(DetailsUtilities.isSame((AnchorPoint) null, (AnchorPoint) null));
 
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
@@ -101,5 +104,4 @@ public class DetailsUtilitiesTest {
         assertFalse(DetailsUtilities.isSame(anchorPoint1, anchorPoint3));
         assertFalse(DetailsUtilities.isSame(anchorPoint2, anchorPoint3));
     }
-
 }

@@ -24,18 +24,17 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.PolygonSymbolizerImpl;
 import org.junit.Test;
 
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon;
-
 /**
  * The unit test for SLDTreeLeafPolygon
- * 
+ *
  * <p>{@link com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDTreeLeafPolygonTest {
@@ -51,7 +50,8 @@ public class SLDTreeLeafPolygonTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#hasFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#hasFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testHasFill() {
@@ -68,7 +68,8 @@ public class SLDTreeLeafPolygonTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#hasStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#hasStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testHasStroke() {
@@ -85,7 +86,8 @@ public class SLDTreeLeafPolygonTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#getFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#getFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testGetFill() {
@@ -98,7 +100,8 @@ public class SLDTreeLeafPolygonTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#getStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#getStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testGetStroke() {
@@ -111,7 +114,8 @@ public class SLDTreeLeafPolygonTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#removeStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#removeStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testRemoveStroke() {
@@ -124,7 +128,8 @@ public class SLDTreeLeafPolygonTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#createStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#createStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testCreateStroke() {
@@ -138,7 +143,8 @@ public class SLDTreeLeafPolygonTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#createFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#createFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testCreateFill() {
@@ -151,7 +157,8 @@ public class SLDTreeLeafPolygonTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#removeFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon#removeFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testRemoveFill() {
@@ -161,5 +168,4 @@ public class SLDTreeLeafPolygonTest {
 
         assertNull(polygonSymbolizer.getFill());
     }
-
 }

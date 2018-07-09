@@ -19,18 +19,15 @@
 
 package com.sldeditor.ui.detail.config.featuretypeconstraint;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Extent;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.StyleFactoryImpl;
-
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
 
 /**
  * The Class ExtentModel.
@@ -70,8 +67,8 @@ public class ExtentModel extends AbstractTableModel {
     private FeatureTypeConstraintModelUpdateInterface parentObj = null;
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private static StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /**
      * Instantiates a new feature type constraint model.
@@ -81,21 +78,26 @@ public class ExtentModel extends AbstractTableModel {
     public ExtentModel(FeatureTypeConstraintModelUpdateInterface parent) {
         this.parentObj = parent;
 
-        columnList.add(Localisation.getString(FieldConfigBase.class,
-                "FeatureTypeConstraintExtentModel.name"));
-        columnList.add(Localisation.getString(FieldConfigBase.class,
-                "FeatureTypeConstraintExtentModel.minX"));
-        columnList.add(Localisation.getString(FieldConfigBase.class,
-                "FeatureTypeConstraintExtentModel.minY"));
-        columnList.add(Localisation.getString(FieldConfigBase.class,
-                "FeatureTypeConstraintExtentModel.maxX"));
-        columnList.add(Localisation.getString(FieldConfigBase.class,
-                "FeatureTypeConstraintExtentModel.maxY"));
+        columnList.add(
+                Localisation.getString(
+                        FieldConfigBase.class, "FeatureTypeConstraintExtentModel.name"));
+        columnList.add(
+                Localisation.getString(
+                        FieldConfigBase.class, "FeatureTypeConstraintExtentModel.minX"));
+        columnList.add(
+                Localisation.getString(
+                        FieldConfigBase.class, "FeatureTypeConstraintExtentModel.minY"));
+        columnList.add(
+                Localisation.getString(
+                        FieldConfigBase.class, "FeatureTypeConstraintExtentModel.maxX"));
+        columnList.add(
+                Localisation.getString(
+                        FieldConfigBase.class, "FeatureTypeConstraintExtentModel.maxY"));
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getRowCount()
      */
     @Override
@@ -105,7 +107,7 @@ public class ExtentModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     @Override
@@ -126,7 +128,7 @@ public class ExtentModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
@@ -145,38 +147,36 @@ public class ExtentModel extends AbstractTableModel {
 
         if (components != null) {
             switch (columnIndex) {
-            case COL_NAME:
-                return extent.getName();
-            case COL_MINX:
-                if (components.length > 0) {
-                    return components[0];
-                }
-                break;
-            case COL_MINY:
-                if (components.length > 1) {
-                    return components[1];
-                }
-                break;
-            case COL_MAXX:
-                if (components.length > 2) {
-                    return components[2];
-                }
-                break;
-            case COL_MAXY:
-                if (components.length > 3) {
-                    return components[3];
-                }
-                break;
-            default:
-                break;
+                case COL_NAME:
+                    return extent.getName();
+                case COL_MINX:
+                    if (components.length > 0) {
+                        return components[0];
+                    }
+                    break;
+                case COL_MINY:
+                    if (components.length > 1) {
+                        return components[1];
+                    }
+                    break;
+                case COL_MAXX:
+                    if (components.length > 2) {
+                        return components[2];
+                    }
+                    break;
+                case COL_MAXY:
+                    if (components.length > 3) {
+                        return components[3];
+                    }
+                    break;
+                default:
+                    break;
             }
         }
         return null;
     }
 
-    /**
-     * Adds the new entry.
-     */
+    /** Adds the new entry. */
     public void addNewEntry() {
 
         Extent extent = styleFactory.createExtent(DEFAULT_NEW_EXTENT_NAME, "0 0 0 0");
@@ -197,7 +197,8 @@ public class ExtentModel extends AbstractTableModel {
      * @param maxSelectionIndex the max selection index
      */
     public void removeEntries(int minSelectionIndex, int maxSelectionIndex) {
-        if ((minSelectionIndex < 0) || (maxSelectionIndex < minSelectionIndex)
+        if ((minSelectionIndex < 0)
+                || (maxSelectionIndex < minSelectionIndex)
                 || (maxSelectionIndex >= extentList.size())) {
             return;
         }
@@ -264,27 +265,29 @@ public class ExtentModel extends AbstractTableModel {
             try {
                 value = Double.valueOf((String) aValue);
                 switch (columnIndex) {
-                case COL_MINX:
-                    components[0] = value.toString();
-                    break;
-                case COL_MINY:
-                    components[1] = value.toString();
-                    break;
-                case COL_MAXX:
-                    components[2] = value.toString();
-                    break;
-                case COL_MAXY:
-                    components[3] = value.toString();
-                    break;
-                default:
-                    break;
+                    case COL_MINX:
+                        components[0] = value.toString();
+                        break;
+                    case COL_MINY:
+                        components[1] = value.toString();
+                        break;
+                    case COL_MAXX:
+                        components[2] = value.toString();
+                        break;
+                    case COL_MAXY:
+                        components[3] = value.toString();
+                        break;
+                    default:
+                        break;
                 }
             } catch (NumberFormatException e) {
                 // Ignore
             }
 
-            String encodedExtent = String.format("%s %s %s %s", components[0], components[1],
-                    components[2], components[3]);
+            String encodedExtent =
+                    String.format(
+                            "%s %s %s %s",
+                            components[0], components[1], components[2], components[3]);
 
             extent.setValue(encodedExtent);
         }

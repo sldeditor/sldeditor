@@ -19,15 +19,13 @@
 
 package com.sldeditor.datasource;
 
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import org.geotools.data.DataStore;
 
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
-
 /**
- * The interface used to notify when the data source has updated,
- * either because a new data has been selected or the fields have
- * been updated.
- * 
+ * The interface used to notify when the data source has updated, either because a new data has been
+ * selected or the fields have been updated.
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface DataSourceUpdatedInterface {
@@ -39,7 +37,7 @@ public interface DataSourceUpdatedInterface {
      * @param isConnectedToDataSourceFlag the is connected to data source flag
      */
     void dataSourceLoaded(GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag);
-    
+
     /**
      * Data source about to unloaded.
      *

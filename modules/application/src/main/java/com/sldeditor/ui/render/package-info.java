@@ -18,8 +18,7 @@
  */
 /**
  * Package contains the classes dealing with render rule options.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.render;

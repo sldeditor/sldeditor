@@ -19,12 +19,11 @@
 
 package com.sldeditor.common.connection;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface;
 import com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Interface GeoServerConnectionManagerInterface.
@@ -40,9 +39,7 @@ public interface DatabaseConnectionManagerInterface {
      */
     List<DatabaseConnection> getConnectionList();
 
-    /**
-     * Update connection list.
-     */
+    /** Update connection list. */
     void updateList();
 
     /**
@@ -80,8 +77,8 @@ public interface DatabaseConnectionManagerInterface {
      * @param progress the progress
      * @param newConnectionDetails the new connection details
      */
-    void addNewConnection(DatabaseReadProgressInterface progress,
-            DatabaseConnection newConnectionDetails);
+    void addNewConnection(
+            DatabaseReadProgressInterface progress, DatabaseConnection newConnectionDetails);
 
     /**
      * Gets the DB connection params.

@@ -19,15 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle;
 
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.SelectedChannelType;
-import org.geotools.styling.TextSymbolizer;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -41,10 +32,17 @@ import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.List;
+import java.util.Map;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.SelectedChannelType;
+import org.geotools.styling.TextSymbolizer;
 
 /**
  * Class to handle the getting and setting of GeoServer rule evaluation vendor option data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerFTSSortBy extends StandardPanel
@@ -73,9 +71,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFileNoScrollPane(null, getPanelId(), this, PANEL_CONFIG);
     }
@@ -87,7 +83,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOption()
      */
     @Override
@@ -102,7 +98,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.
      * FieldId)
@@ -121,7 +117,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
      * selectedsymbol.SelectedSymbol)
      */
@@ -137,7 +133,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * TextSymbolizer)
@@ -149,7 +145,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * RasterSymbolizer)
@@ -161,7 +157,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * FeatureTypeStyle)
@@ -177,8 +173,8 @@ public class VOGeoServerFTSSortBy extends StandardPanel
         if (sortByString != null) {
             group.setOption(GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_OPTION);
 
-            fieldConfigVisitor.populateTextField(FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST,
-                    sortByString);
+            fieldConfigVisitor.populateTextField(
+                    FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST, sortByString);
 
         } else {
             sortByGroupString = options.get(FeatureTypeStyle.SORT_BY_GROUP);
@@ -201,7 +197,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * PolygonSymbolizer)
@@ -218,7 +214,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -228,7 +224,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.RasterSymbolizer)
@@ -240,7 +236,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.FeatureTypeStyle)
@@ -249,18 +245,20 @@ public class VOGeoServerFTSSortBy extends StandardPanel
     public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
         Map<String, String> options = featureTypeStyle.getOptions();
 
-        MultiOptionGroup groupPanel = (MultiOptionGroup) getGroup(
-                GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION);
+        MultiOptionGroup groupPanel =
+                (MultiOptionGroup) getGroup(GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION);
 
         if (groupPanel.isPanelEnabled()) {
-            if (groupPanel.getSelectedOptionGroup()
-                    .getId() == GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_OPTION) {
-                String value = fieldConfigVisitor
-                        .getText(FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST);
+            if (groupPanel.getSelectedOptionGroup().getId()
+                    == GroupIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_OPTION) {
+                String value =
+                        fieldConfigVisitor.getText(
+                                FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_LIST);
                 options.put(FeatureTypeStyle.SORT_BY, value);
             } else {
-                String property = fieldConfigVisitor
-                        .getText(FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES);
+                String property =
+                        fieldConfigVisitor.getText(
+                                FieldIdEnum.VO_FTS_SORTBY_MULTIOPTION_SORTBY_GROUP_PROPERTIES);
 
                 if (property != null) {
                     options.put(FeatureTypeStyle.SORT_BY_GROUP, property);
@@ -281,7 +279,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.PolygonSymbolizer)
@@ -298,7 +296,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.TextSymbolizer)
@@ -315,7 +313,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getPanel()
      */
     @Override
@@ -330,7 +328,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.
      * ui.iface.UpdateSymbolInterface)
@@ -347,7 +345,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -357,7 +355,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -367,7 +365,7 @@ public class VOGeoServerFTSSortBy extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()
      */
     @Override
@@ -377,38 +375,41 @@ public class VOGeoServerFTSSortBy extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
         if (vendorOptionInfo == null) {
-            vendorOptionInfo = new VendorOptionInfo(
-                    Localisation.getString(VOGeoServerFTSSortBy.class,
-                            "geoserver.ruleevaluation.title"),
-                    this.getVendorOption(), Localisation.getString(VOGeoServerFTSSortBy.class,
-                            "geoserver.ruleevaluation.description"));
+            vendorOptionInfo =
+                    new VendorOptionInfo(
+                            Localisation.getString(
+                                    VOGeoServerFTSSortBy.class, "geoserver.ruleevaluation.title"),
+                            this.getVendorOption(),
+                            Localisation.getString(
+                                    VOGeoServerFTSSortBy.class,
+                                    "geoserver.ruleevaluation.description"));
         }
         return vendorOptionInfo;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
      * java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         if (sldObj instanceof FeatureTypeStyle) {
             FeatureTypeStyle fts = (FeatureTypeStyle) sldObj;
             Map<String, String> options = fts.getOptions();
 
             if (options.containsKey(FeatureTypeStyle.SORT_BY)
                     || options.containsKey(FeatureTypeStyle.SORT_BY_GROUP)) {
-                VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
-                        getVendorOptionInfo());
+                VendorOptionPresent voPresent =
+                        new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
                 vendorOptionsPresentList.add(voPresent);
             }

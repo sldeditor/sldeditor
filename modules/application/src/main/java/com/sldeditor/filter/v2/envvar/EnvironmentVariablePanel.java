@@ -19,16 +19,6 @@
 
 package com.sldeditor.filter.v2.envvar;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.filter.v2.envvar.dialog.EnvVarDlg;
@@ -36,6 +26,13 @@ import com.sldeditor.filter.v2.expression.ExpressionFilterInterface;
 import com.sldeditor.filter.v2.expression.ExpressionNode;
 import com.sldeditor.ui.attribute.DataSourceAttributePanel;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class EnvironmentVariablePanel.
@@ -69,23 +66,23 @@ public class EnvironmentVariablePanel extends JPanel {
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         setLayout(new BorderLayout());
 
-        dataSourceAttributePanel = new DataSourceAttributePanel(new SubPanelUpdatedInterface() {
-            @Override
-            public void updateSymbol() {
-                updateButtonState(true);
-            }
+        dataSourceAttributePanel =
+                new DataSourceAttributePanel(
+                        new SubPanelUpdatedInterface() {
+                            @Override
+                            public void updateSymbol() {
+                                updateButtonState(true);
+                            }
 
-            @Override
-            public void parameterAdded() {
-                // Do nothing
-            }
-        });
+                            @Override
+                            public void parameterAdded() {
+                                // Do nothing
+                            }
+                        });
 
         add(dataSourceAttributePanel, BorderLayout.NORTH);
 
@@ -118,29 +115,31 @@ public class EnvironmentVariablePanel extends JPanel {
         JPanel panel = new JPanel();
 
         btnApply = new JButton(Localisation.getString(EnvVarDlg.class, "common.apply"));
-        btnApply.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Expression expression = dataSourceAttributePanel.getExpression();
+        btnApply.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        Expression expression = dataSourceAttributePanel.getExpression();
 
-                if (expression != null) {
-                    selectedNode.setExpression(expression);
-                }
+                        if (expression != null) {
+                            selectedNode.setExpression(expression);
+                        }
 
-                if (parent != null) {
-                    parent.dataApplied();
-                }
-                updateButtonState(false);
-            }
-        });
+                        if (parent != null) {
+                            parent.dataApplied();
+                        }
+                        updateButtonState(false);
+                    }
+                });
         panel.add(btnApply);
 
         btnRevert = new JButton(Localisation.getString(EnvVarDlg.class, "common.revert"));
-        btnRevert.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                displayExpression(selectedNode);
-                updateButtonState(false);
-            }
-        });
+        btnRevert.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        displayExpression(selectedNode);
+                        updateButtonState(false);
+                    }
+                });
         panel.add(btnRevert);
 
         return panel;

@@ -22,13 +22,12 @@ package com.sldeditor.test.unit.ui.detail;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Test;
-
 import com.sldeditor.ui.detail.EmptyPanel;
+import org.junit.Test;
 
 /**
  * The unit test for EmptyPanel.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.EmptyPanel}
  *
  * @author Robert Ward (SCISYS)
@@ -36,11 +35,13 @@ import com.sldeditor.ui.detail.EmptyPanel;
 public class EmptyPanelTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.EmptyPanel#EmptyPanel(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.EmptyPanel#populate(com.sldeditor.common.data.SelectedSymbol)}.
-     * Test method for {@link com.sldeditor.ui.detail.EmptyPanel#getFieldDataManager()}.
-     * Test method for {@link com.sldeditor.ui.detail.EmptyPanel#isDataPresent()}.
-     * Test method for {@link com.sldeditor.ui.detail.EmptyPanel#preLoadSymbol()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.EmptyPanel#EmptyPanel(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.EmptyPanel#populate(com.sldeditor.common.data.SelectedSymbol)}. Test
+     * method for {@link com.sldeditor.ui.detail.EmptyPanel#getFieldDataManager()}. Test method for
+     * {@link com.sldeditor.ui.detail.EmptyPanel#isDataPresent()}. Test method for {@link
+     * com.sldeditor.ui.detail.EmptyPanel#preLoadSymbol()}.
      */
     @Test
     public void testEmptyPanel() {

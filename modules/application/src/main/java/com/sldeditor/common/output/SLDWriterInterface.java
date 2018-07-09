@@ -20,12 +20,11 @@
 package com.sldeditor.common.output;
 
 import java.net.URL;
-
 import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The Interface SLDWriterInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SLDWriterInterface {

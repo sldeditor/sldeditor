@@ -19,14 +19,13 @@
 
 package com.sldeditor.ui.detail.config.base.defaults;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sldeditor.common.console.ConsoleManager;
-
 /**
  * A factory for creating ConfigDefault objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ConfigDefaultFactory {
@@ -49,8 +48,12 @@ public class ConfigDefaultFactory {
             try {
                 return (Boolean) value;
             } catch (ClassCastException e) {
-                ConsoleManager.getInstance().error(ConfigDefaultFactory.class,
-                        "Incorrect type configured for : " + defaultValue + " expecting Boolean");
+                ConsoleManager.getInstance()
+                        .error(
+                                ConfigDefaultFactory.class,
+                                "Incorrect type configured for : "
+                                        + defaultValue
+                                        + " expecting Boolean");
             }
         }
 
@@ -72,8 +75,12 @@ public class ConfigDefaultFactory {
             try {
                 return (Integer) value;
             } catch (ClassCastException e) {
-                ConsoleManager.getInstance().error(ConfigDefaultFactory.class,
-                        "Incorrect type configured for : " + defaultValue + " expecting Integer");
+                ConsoleManager.getInstance()
+                        .error(
+                                ConfigDefaultFactory.class,
+                                "Incorrect type configured for : "
+                                        + defaultValue
+                                        + " expecting Integer");
             }
         }
 
@@ -95,10 +102,13 @@ public class ConfigDefaultFactory {
             try {
                 return (Double) value;
             } catch (ClassCastException e) {
-                ConsoleManager.getInstance().error(ConfigDefaultFactory.class,
-                        "Incorrect type configured for : " + defaultValue + " expecting Double");
+                ConsoleManager.getInstance()
+                        .error(
+                                ConfigDefaultFactory.class,
+                                "Incorrect type configured for : "
+                                        + defaultValue
+                                        + " expecting Double");
             }
-
         }
 
         return null;
@@ -119,8 +129,12 @@ public class ConfigDefaultFactory {
             try {
                 return (String) value;
             } catch (ClassCastException e) {
-                ConsoleManager.getInstance().error(ConfigDefaultFactory.class,
-                        "Incorrect type configured for : " + defaultValue + " expecting String");
+                ConsoleManager.getInstance()
+                        .error(
+                                ConfigDefaultFactory.class,
+                                "Incorrect type configured for : "
+                                        + defaultValue
+                                        + " expecting String");
             }
         }
 

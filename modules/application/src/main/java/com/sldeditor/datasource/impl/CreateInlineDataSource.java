@@ -19,20 +19,18 @@
 
 package com.sldeditor.datasource.impl;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.datasource.SLDEditorFileInterface;
+import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.data.DataStore;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.Name;
-
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.datasource.SLDEditorFileInterface;
-import com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUtils;
 
 /**
  * The Class CreateInlineDataSource.
@@ -53,8 +51,8 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
      * @return the list of data stores
      */
     @Override
-    public List<DataSourceInfo> connect(String typeName, String geometryFieldName,
-            SLDEditorFileInterface editorFile) {
+    public List<DataSourceInfo> connect(
+            String typeName, String geometryFieldName, SLDEditorFileInterface editorFile) {
         for (DataSourceInfo dsInfo : dataSourceInfoList) {
             dsInfo.reset();
         }
@@ -89,8 +87,9 @@ public class CreateInlineDataSource implements CreateDataSourceInterface {
 
                     dsInfo.setDataStore(dataStore);
 
-                    GeometryTypeEnum geometryType = InlineFeatureUtils.determineGeometryType(
-                            schema.getGeometryDescriptor(), source.getFeatures());
+                    GeometryTypeEnum geometryType =
+                            InlineFeatureUtils.determineGeometryType(
+                                    schema.getGeometryDescriptor(), source.getFeatures());
 
                     dsInfo.setGeometryType(geometryType);
                 } catch (IOException e) {

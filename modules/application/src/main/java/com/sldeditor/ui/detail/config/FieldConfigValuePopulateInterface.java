@@ -19,9 +19,10 @@
 
 package com.sldeditor.ui.detail.config;
 
+import com.sldeditor.filter.v2.function.temporal.TimePeriod;
+import com.sldeditor.ui.widgets.ValueComboBoxData;
 import java.util.Date;
 import java.util.List;
-
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.process.function.ProcessFunction;
 import org.geotools.styling.ColorMap;
@@ -31,12 +32,9 @@ import org.geotools.styling.UserLayer;
 import org.jaitools.numeric.Range;
 import org.opengis.filter.Id;
 
-import com.sldeditor.filter.v2.function.temporal.TimePeriod;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
-
 /**
- * The Interface FieldConfigValuePopulateInterface, part of a 
- * visitor pattern for populating data in fields.
+ * The Interface FieldConfigValuePopulateInterface, part of a visitor pattern for populating data in
+ * fields.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -182,7 +180,7 @@ public interface FieldConfigValuePopulateInterface {
      * @return the colour map
      */
     public ColorMap getColourMap();
-    
+
     /**
      * Gets the process function.
      *

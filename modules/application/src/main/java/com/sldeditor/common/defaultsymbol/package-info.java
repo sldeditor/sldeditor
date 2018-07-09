@@ -18,7 +18,7 @@
  */
 /**
  * Class to provide default sld attribute data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.defaultsymbol;

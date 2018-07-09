@@ -20,7 +20,6 @@
 package com.sldeditor.datasource.chooseraster;
 
 import java.util.Set;
-
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 
 /**
@@ -37,5 +36,4 @@ public interface ChooseRasterFormatInterface {
      * @return the abstract grid format
      */
     AbstractGridFormat showPanel(Set<AbstractGridFormat> formatList);
-
 }

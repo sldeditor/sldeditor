@@ -19,19 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.styling.ChannelSelection;
-import org.geotools.styling.ContrastEnhancement;
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.SelectedChannelType;
-import org.geotools.styling.TextSymbolizer;
-import org.opengis.filter.expression.Expression;
-import org.opengis.style.ContrastMethod;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
@@ -49,11 +36,22 @@ import com.sldeditor.ui.detail.config.base.OptionGroup;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.List;
+import java.util.Map;
+import org.geotools.styling.ChannelSelection;
+import org.geotools.styling.ContrastEnhancement;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.SelectedChannelType;
+import org.geotools.styling.TextSymbolizer;
+import org.opengis.filter.expression.Expression;
+import org.opengis.style.ContrastMethod;
 
 /**
  * Class to handle the getting and setting of GeoServer raster contrast enhancement normalize vendor
  * option data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPanel
@@ -95,9 +93,13 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      * @param minValueFieldId the min value field id
      * @param maxValueFieldId the max value field id
      */
-    protected VOGeoServerContrastEnhancementNormalize(Class<?> panelId, String resourceFile,
-            RasterSymbolizerDetails parentPanel, FieldIdEnum algorithmFieldId,
-            FieldIdEnum minValueFieldId, FieldIdEnum maxValueFieldId) {
+    protected VOGeoServerContrastEnhancementNormalize(
+            Class<?> panelId,
+            String resourceFile,
+            RasterSymbolizerDetails parentPanel,
+            FieldIdEnum algorithmFieldId,
+            FieldIdEnum minValueFieldId,
+            FieldIdEnum maxValueFieldId) {
         super(panelId);
 
         this.parentPanel = parentPanel;
@@ -124,7 +126,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOption()
      */
     @Override
@@ -139,7 +141,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.
      * FieldId)
@@ -158,7 +160,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -173,7 +175,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getPanel()
      */
     @Override
@@ -188,7 +190,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.
      * ui.iface.UpdateSymbolInterface)
@@ -215,7 +217,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -230,7 +232,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.PolygonSymbolizer)
@@ -250,7 +252,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.TextSymbolizer)
@@ -262,7 +264,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.RasterSymbolizer)
@@ -279,8 +281,8 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
 
                     OptionGroup selectedOption = contrastEnhancementGroup.getSelectedOptionGroup();
 
-                    ContrastEnhancement contrastEnhancement = getContrastEnhancement(
-                            selectedOption.getId(), channelSelection);
+                    ContrastEnhancement contrastEnhancement =
+                            getContrastEnhancement(selectedOption.getId(), channelSelection);
 
                     if (contrastEnhancement != null) {
                         extractNormalizeVendorOption(contrastEnhancement);
@@ -297,7 +299,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
      * selectedsymbol.SelectedSymbol)
      */
@@ -313,7 +315,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * PolygonSymbolizer)
@@ -338,7 +340,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * TextSymbolizer)
@@ -350,7 +352,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * RasterSymbolizer)
@@ -372,8 +374,8 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
                             minValue = Integer.valueOf(expression.toString());
                         } catch (Exception e) {
                             // Ignore number format conversions
-                            ConsoleManager.getInstance().error(this,
-                                    "Vendor Option - minValue not valid");
+                            ConsoleManager.getInstance()
+                                    .error(this, "Vendor Option - minValue not valid");
                         }
                         fieldConfigVisitor.populateIntegerField(minValueFieldId, minValue);
 
@@ -383,8 +385,8 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
                             maxValue = Integer.valueOf(expression.toString());
                         } catch (Exception e) {
                             // Ignore number format conversions
-                            ConsoleManager.getInstance().error(this,
-                                    "Vendor Option - maxValue not valid");
+                            ConsoleManager.getInstance()
+                                    .error(this, "Vendor Option - maxValue not valid");
                         }
                         fieldConfigVisitor.populateIntegerField(maxValueFieldId, maxValue);
                     }
@@ -395,7 +397,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -410,8 +412,8 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      * @param channelSelection the channel selection
      * @return the contrast enhancement
      */
-    protected abstract ContrastEnhancement getContrastEnhancement(GroupIdEnum id,
-            ChannelSelection channelSelection);
+    protected abstract ContrastEnhancement getContrastEnhancement(
+            GroupIdEnum id, ChannelSelection channelSelection);
 
     /**
      * Gets the contrast enhancement.
@@ -435,20 +437,20 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
             if (contrastEnhancement.getMethod() != null) {
                 String method = contrastEnhancement.getMethod().name();
                 if (method.compareToIgnoreCase(ContrastMethod.NORMALIZE.name()) == 0) {
-                    Expression algorithmExpression = fieldConfigVisitor
-                            .getExpression(algorithmFieldId);
+                    Expression algorithmExpression =
+                            fieldConfigVisitor.getExpression(algorithmFieldId);
                     if (algorithmExpression != null) {
                         options.put(ALGORITHM_OPTION, algorithmExpression);
                     }
 
-                    Expression minValueExpression = fieldConfigVisitor
-                            .getExpression(minValueFieldId);
+                    Expression minValueExpression =
+                            fieldConfigVisitor.getExpression(minValueFieldId);
                     if (minValueExpression != null) {
                         options.put(MIN_VALUE_OPTION, minValueExpression);
                     }
 
-                    Expression maxValueExpression = fieldConfigVisitor
-                            .getExpression(maxValueFieldId);
+                    Expression maxValueExpression =
+                            fieldConfigVisitor.getExpression(maxValueFieldId);
                     if (maxValueExpression != null) {
                         options.put(MAX_VALUE_OPTION, maxValueExpression);
                     }
@@ -459,31 +461,33 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        VendorOptionInfo info = new VendorOptionInfo("Raster Contrast Enhancement",
-                this.getVendorOptionVersion(),
-                Localisation.getString(VOGeoServerContrastEnhancementNormalize.class,
-                        "VOGeoServerContrastEnhancementNormalize.description"));
+        VendorOptionInfo info =
+                new VendorOptionInfo(
+                        "Raster Contrast Enhancement",
+                        this.getVendorOptionVersion(),
+                        Localisation.getString(
+                                VOGeoServerContrastEnhancementNormalize.class,
+                                "VOGeoServerContrastEnhancementNormalize.description"));
 
         return info;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
      * java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // No vendor options
     }
-
 
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.SelectedChannelType)

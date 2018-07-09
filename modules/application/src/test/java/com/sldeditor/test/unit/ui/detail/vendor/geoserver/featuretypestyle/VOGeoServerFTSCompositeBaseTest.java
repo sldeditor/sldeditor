@@ -24,17 +24,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.StyleFactoryImpl;
-import org.geotools.styling.TextSymbolizer;
-import org.junit.Test;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -42,6 +31,15 @@ import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.FeatureTypeStyleDetails;
 import com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSCompositeBase;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.StyleFactoryImpl;
+import org.geotools.styling.TextSymbolizer;
+import org.junit.Test;
 
 /**
  * The Class VOGeoServerFTSCompositeBaseTest.
@@ -51,8 +49,8 @@ import com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSC
 public class VOGeoServerFTSCompositeBaseTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSCompositeBase#VOGeoServerFTSCompositeBase(java.lang.Class)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VOGeoServerFTSCompositeBase#VOGeoServerFTSCompositeBase(java.lang.Class)}.
      */
     @Test
     public void testVOGeoServerFTSCompositeBase() {
@@ -126,5 +124,4 @@ public class VOGeoServerFTSCompositeBaseTest {
         obj.populate((SelectedSymbol) null);
         obj.dataChanged(FieldIdEnum.VO_FTS_COMPOSITE_BASE_BOOL);
     }
-
 }

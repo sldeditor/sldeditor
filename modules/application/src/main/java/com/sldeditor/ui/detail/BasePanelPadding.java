@@ -21,7 +21,6 @@ package com.sldeditor.ui.detail;
 
 import java.awt.Component;
 import java.awt.Dimension;
-
 import javax.swing.Box;
 
 /**
@@ -71,9 +70,7 @@ public class BasePanelPadding {
         return boxSize;
     }
 
-    /**
-     * Removes the padding.
-     */
+    /** Removes the padding. */
     public void removePadding() {
         if (padding != null) {
             box.remove(padding);

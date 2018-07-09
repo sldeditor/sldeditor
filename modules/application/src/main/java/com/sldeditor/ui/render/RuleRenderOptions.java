@@ -29,11 +29,8 @@ public class RuleRenderOptions {
     /** The apply transformation flag. */
     private boolean applyTransformation = false;
 
-    /**
-     * Default constructor.
-     */
-    public RuleRenderOptions() {
-    }
+    /** Default constructor. */
+    public RuleRenderOptions() {}
 
     /**
      * Checks if is transformation applied.
@@ -52,5 +49,4 @@ public class RuleRenderOptions {
     public void setApplyTransformation(boolean applyTransformation) {
         this.applyTransformation = applyTransformation;
     }
-
 }

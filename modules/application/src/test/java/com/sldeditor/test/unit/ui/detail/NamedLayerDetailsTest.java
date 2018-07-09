@@ -22,20 +22,19 @@ package com.sldeditor.test.unit.ui.detail;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.geotools.styling.NamedLayer;
-import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Test;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.NamedLayerDetails;
 import com.sldeditor.ui.detail.config.FieldConfigString;
+import org.geotools.styling.NamedLayer;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.junit.Test;
 
 /**
  * The unit test for NamedLayerDetails.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.NamedLayerDetails}
  *
  * @author Robert Ward (SCISYS)
@@ -43,12 +42,15 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 public class NamedLayerDetailsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.NamedLayerDetails#NamedLayerDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.NamedLayerDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
-     * Test method for {@link com.sldeditor.ui.detail.NamedLayerDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for {@link com.sldeditor.ui.detail.NamedLayerDetails#getFieldDataManager()}.
-     * Test method for {@link com.sldeditor.ui.detail.NamedLayerDetails#isDataPresent()}.
-     * Test method for {@link com.sldeditor.ui.detail.NamedLayerDetails#preLoadSymbol()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.NamedLayerDetails#NamedLayerDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.NamedLayerDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.NamedLayerDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link com.sldeditor.ui.detail.NamedLayerDetails#getFieldDataManager()}. Test
+     * method for {@link com.sldeditor.ui.detail.NamedLayerDetails#isDataPresent()}. Test method for
+     * {@link com.sldeditor.ui.detail.NamedLayerDetails#preLoadSymbol()}.
      */
     @Test
     public void testNamedLayerDetails() {
@@ -79,5 +81,4 @@ public class NamedLayerDetailsTest {
         panel.preLoadSymbol();
         assertTrue("".compareTo(nameField.getStringValue()) == 0);
     }
-
 }

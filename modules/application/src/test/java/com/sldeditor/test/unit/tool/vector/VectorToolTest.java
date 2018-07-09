@@ -26,37 +26,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.awt.event.WindowEvent;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import javax.swing.JFrame;
-
-import org.apache.commons.io.IOUtils;
-import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.opengis.feature.type.AttributeDescriptor;
-import org.opengis.feature.type.GeometryDescriptor;
-import org.opengis.feature.type.PropertyDescriptor;
-
 import com.google.common.io.Files;
 import com.sldeditor.SLDEditor;
 import com.sldeditor.SLDEditorDlgInterface;
@@ -93,14 +62,41 @@ import com.sldeditor.render.RenderPanelImpl;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 import com.sldeditor.tool.vector.VectorTool;
 import com.sldeditor.ui.menu.SLDEditorMenus;
+import java.awt.event.WindowEvent;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import javax.swing.JFrame;
+import org.apache.commons.io.IOUtils;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.opengis.feature.type.AttributeDescriptor;
+import org.opengis.feature.type.GeometryDescriptor;
+import org.opengis.feature.type.PropertyDescriptor;
 
 /**
  * Unit test for VectorTool class.
- * 
- * <p>{@link com.sldeditor.tool.vector.VectorTool}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.tool.vector.VectorTool}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class VectorToolTest {
 
@@ -121,9 +117,7 @@ public class VectorToolTest {
         clearDown();
     }
 
-    /**
-     * Clean up.
-     */
+    /** Clean up. */
     @AfterClass
     public static void cleanUp() {
         List<CheckAttributeInterface> checkList = new ArrayList<CheckAttributeInterface>();
@@ -133,9 +127,7 @@ public class VectorToolTest {
         clearDown();
     }
 
-    /**
-     * The Class TestVectorTool.
-     */
+    /** The Class TestVectorTool. */
     class TestVectorTool extends VectorTool {
 
         /**
@@ -186,9 +178,7 @@ public class VectorToolTest {
         }
     }
 
-    /**
-     * The Class TestMissingSLDAttributes.
-     */
+    /** The Class TestMissingSLDAttributes. */
     class TestMissingSLDAttributes implements CheckAttributeInterface {
 
         /** The missing field list. */
@@ -196,7 +186,7 @@ public class VectorToolTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.datasource.impl.CheckAttributeInterface#checkAttributes(com.sldeditor.datasource.SLDEditorFileInterface)
          */
         @Override
@@ -227,9 +217,7 @@ public class VectorToolTest {
         }
     }
 
-    /**
-     * The Class TestSLDEditor.
-     */
+    /** The Class TestSLDEditor. */
     static class TestSLDEditor extends SLDEditor {
 
         /** The Constant serialVersionUID. */
@@ -242,14 +230,16 @@ public class VectorToolTest {
          * @param extensionArgList the extension arg list
          * @param overrideSLDEditorDlg the override SLD editor dlg
          */
-        public TestSLDEditor(String filename, List<String> extensionArgList,
+        public TestSLDEditor(
+                String filename,
+                List<String> extensionArgList,
                 SLDEditorDlgInterface overrideSLDEditorDlg) {
             super(filename, extensionArgList, overrideSLDEditorDlg);
         }
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.SLDEditor#populate(com.sldeditor.common.SLDDataInterface)
          */
         @Override
@@ -257,8 +247,10 @@ public class VectorToolTest {
             super.populate(sldData);
         }
 
-        public static TestSLDEditor createAndShowGUI2(String filename,
-                List<String> extensionArgList, boolean underTest,
+        public static TestSLDEditor createAndShowGUI2(
+                String filename,
+                List<String> extensionArgList,
+                boolean underTest,
                 SLDEditorDlgInterface overrideSLDEditorDlg) {
             SLDEditor.underTestFlag = underTest;
 
@@ -275,19 +267,19 @@ public class VectorToolTest {
                     underTest ? JFrame.DISPOSE_ON_CLOSE : JFrame.EXIT_ON_CLOSE);
 
             // Add contents to the window.
-            TestSLDEditor sldEditor = new TestSLDEditor(filename, extensionArgList,
-                    overrideSLDEditorDlg);
+            TestSLDEditor sldEditor =
+                    new TestSLDEditor(filename, extensionArgList, overrideSLDEditorDlg);
 
             // Display the window.
             frame.pack();
 
             return sldEditor;
         }
-
     }
 
     /**
-     * Test method for {@link com.sldeditor.tool.vector.VectorTool#VectorTool(com.sldeditor.common.SLDEditorInterface)}.
+     * Test method for {@link
+     * com.sldeditor.tool.vector.VectorTool#VectorTool(com.sldeditor.common.SLDEditorInterface)}.
      */
     @Test
     public void testVectorToolFileDataSource() {
@@ -348,8 +340,8 @@ public class VectorToolTest {
             // Set a shape file as a data source - that matches the SLD
             File matchingShpFile = extractShapeFile(tempFolder, "/test/sld_cookbook_polygon.zip");
 
-            FileTreeNode fileTreeNode = new FileTreeNode(matchingShpFile.getParentFile(),
-                    matchingShpFile.getName());
+            FileTreeNode fileTreeNode =
+                    new FileTreeNode(matchingShpFile.getParentFile(), matchingShpFile.getName());
 
             vectorTool.testSetDataSource(fileTreeNode);
 
@@ -372,8 +364,9 @@ public class VectorToolTest {
             // Set a shape file as a data source - that does not match the SLD
             File nonMatchingShpFile = extractShapeFile(tempFolder, "/test/states.zip");
 
-            FileTreeNode fileTreeNode2 = new FileTreeNode(nonMatchingShpFile.getParentFile(),
-                    nonMatchingShpFile.getName());
+            FileTreeNode fileTreeNode2 =
+                    new FileTreeNode(
+                            nonMatchingShpFile.getParentFile(), nonMatchingShpFile.getName());
 
             vectorTool.testSetDataSource(fileTreeNode2);
 
@@ -431,9 +424,7 @@ public class VectorToolTest {
         purgeDirectory(tempFolder);
     }
 
-    /**
-     * Clear down.
-     */
+    /** Clear down. */
     private static void clearDown() {
         DataSourceFactory.reset();
         SelectedSymbol.destroyInstance();
@@ -503,18 +494,18 @@ public class VectorToolTest {
         File tempFolder = Files.createTempDir();
         TestVectorTool vectorTool = new TestVectorTool(testSLDEditor);
         try {
-            InputStream gpkgInputStream = VectorToolTest.class
-                    .getResourceAsStream("/test/sld_cookbook_polygon.gpkg");
+            InputStream gpkgInputStream =
+                    VectorToolTest.class.getResourceAsStream("/test/sld_cookbook_polygon.gpkg");
 
             final File gpkgFile = new File(tempFolder, "sld_cookbook_polygon.gpkg");
             try (FileOutputStream out = new FileOutputStream(gpkgFile)) {
                 IOUtils.copy(gpkgInputStream, out);
             }
 
-            DatabaseConnection databaseConnection = DatabaseConnectionFactory
-                    .getConnection(gpkgFile.getAbsolutePath());
-            DatabaseFeatureClassNode dbFCTreeNode = new DatabaseFeatureClassNode(null,
-                    databaseConnection, "sld_cookbook_polygon");
+            DatabaseConnection databaseConnection =
+                    DatabaseConnectionFactory.getConnection(gpkgFile.getAbsolutePath());
+            DatabaseFeatureClassNode dbFCTreeNode =
+                    new DatabaseFeatureClassNode(null, databaseConnection, "sld_cookbook_polygon");
 
             DatabaseConnectionManager.getInstance().addNewConnection(null, databaseConnection);
             vectorTool.testSetDataSource(dbFCTreeNode);
@@ -699,9 +690,7 @@ public class VectorToolTest {
         bos.close();
     }
 
-    /**
-     * Test method for {@link com.sldeditor.tool.vector.VectorTool#getPanel()}.
-     */
+    /** Test method for {@link com.sldeditor.tool.vector.VectorTool#getPanel()}. */
     @Test
     public void testGetPanel() {
         VectorTool vectorTool = new VectorTool(null);
@@ -709,15 +698,13 @@ public class VectorToolTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.tool.vector.VectorTool#setSelectedItems(java.util.List, java.util.List)}.
+     * Test method for {@link com.sldeditor.tool.vector.VectorTool#setSelectedItems(java.util.List,
+     * java.util.List)}.
      */
     @Test
-    public void testSetSelectedItems() {
-    }
+    public void testSetSelectedItems() {}
 
-    /**
-     * Test method for {@link com.sldeditor.tool.vector.VectorTool#getToolName()}.
-     */
+    /** Test method for {@link com.sldeditor.tool.vector.VectorTool#getToolName()}. */
     @Test
     public void testGetToolName() {
         VectorTool vectorTool = new VectorTool(null);
@@ -725,17 +712,18 @@ public class VectorToolTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.tool.vector.VectorTool#supports(java.util.List, java.util.List, java.util.List)}.
+     * Test method for {@link com.sldeditor.tool.vector.VectorTool#supports(java.util.List,
+     * java.util.List, java.util.List)}.
      */
     @Test
     public void testSupports() {
 
         try {
-            FileTreeNode vectorTreeNode = new FileTreeNode(new File("/test"),
-                    "sld_cookbook_polygon.shp");
+            FileTreeNode vectorTreeNode =
+                    new FileTreeNode(new File("/test"), "sld_cookbook_polygon.shp");
             vectorTreeNode.setFileCategory(FileTreeNodeTypeEnum.VECTOR);
-            FileTreeNode rasterTreeNode = new FileTreeNode(new File("/test"),
-                    "sld_cookbook_polygon.tif");
+            FileTreeNode rasterTreeNode =
+                    new FileTreeNode(new File("/test"), "sld_cookbook_polygon.tif");
             rasterTreeNode.setFileCategory(FileTreeNodeTypeEnum.RASTER);
             List<Class<?>> uniqueNodeTypeList = new ArrayList<Class<?>>();
             List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
@@ -753,8 +741,8 @@ public class VectorToolTest {
 
             // Try database feature class
             nodeTypeList.clear();
-            DatabaseFeatureClassNode databaseFeatureClassNode = new DatabaseFeatureClassNode(null,
-                    null, "db fc");
+            DatabaseFeatureClassNode databaseFeatureClassNode =
+                    new DatabaseFeatureClassNode(null, null, "db fc");
             nodeTypeList.add(databaseFeatureClassNode);
             assertTrue(vectorTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
@@ -776,7 +764,6 @@ public class VectorToolTest {
             e.printStackTrace();
             fail();
         }
-
     }
 
     /**
@@ -790,5 +777,4 @@ public class VectorToolTest {
         }
         return DEFAULT_FONT;
     }
-
 }

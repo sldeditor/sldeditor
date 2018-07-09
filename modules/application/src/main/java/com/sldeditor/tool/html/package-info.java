@@ -18,7 +18,7 @@
  */
 /**
  * Exports the sld legend data to HTML.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.tool.html;

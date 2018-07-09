@@ -19,19 +19,17 @@
 
 package com.sldeditor.filter.v2.function.logic;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.filter.OrImpl;
-import org.opengis.filter.Filter;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.filter.OrImpl;
+import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class Or.
@@ -40,14 +38,10 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class Or extends FilterBase implements FilterConfigInterface {
 
-    /**
-     * The Class OrExtended.
-     */
+    /** The Class OrExtended. */
     public class OrExtended extends OrImpl implements FilterExtendedInterface {
 
-        /**
-         * Instantiates a new or extended.
-         */
+        /** Instantiates a new or extended. */
         public OrExtended() {
             super(new ArrayList<Filter>());
         }
@@ -63,15 +57,14 @@ public class Or extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.geotools.filter.LogicFilterImpl#toString()
          */
         public String toString() {
             List<Filter> filterList = getChildren();
             List<String> filterStringList = new ArrayList<String>();
 
-            for(Filter f : filterList)
-            {
+            for (Filter f : filterList) {
                 filterStringList.add(f.toString());
             }
 
@@ -80,7 +73,7 @@ public class Or extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -89,9 +82,7 @@ public class Or extends FilterBase implements FilterConfigInterface {
         }
     }
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public Or(String category) {
         super(category);
     }

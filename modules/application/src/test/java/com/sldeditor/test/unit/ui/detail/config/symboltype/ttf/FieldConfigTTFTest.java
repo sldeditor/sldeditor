@@ -24,33 +24,31 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.ui.detail.ColourFieldConfig;
+import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.PointFillDetails;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigColour;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
-
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Mark;
 import org.geotools.styling.StyleBuilder;
 import org.junit.Test;
 import org.opengis.style.GraphicalSymbol;
 
-import com.sldeditor.common.vendoroption.VendorOptionManager;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.ui.detail.ColourFieldConfig;
-import com.sldeditor.ui.detail.PointFillDetails;
-import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigColour;
-import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigPopulate;
-import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
-
 /**
  * The unit test for FieldConfigTTF.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF}
  *
  * @author Robert Ward (SCISYS)
@@ -58,18 +56,22 @@ import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
 public class FieldConfigTTFTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#internal_setEnabled(boolean)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#isEnabled()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#internal_setEnabled(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -88,9 +90,13 @@ public class FieldConfigTTFTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigTTF field2 = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field2 =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         // Text field will not have been created
         expectedValue = true;
@@ -114,15 +120,19 @@ public class FieldConfigTTFTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#setVisible(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -133,23 +143,27 @@ public class FieldConfigTTFTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#generateExpression()}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#populateField(java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getStringValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#generateExpression()}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#populateExpression(java.lang.Object,
+     * org.opengis.filter.expression.Expression)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#populateField(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#setTestValue(com.sldeditor.ui.detail.config.FieldId,
+     * java.lang.String)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getStringValue()}.
      */
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         field.populateExpression((Double) null);
         field.populateField((String) null);
@@ -186,15 +200,19 @@ public class FieldConfigTTFTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#revertToDefaultValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#revertToDefaultValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         field.revertToDefaultValue();
 
@@ -203,22 +221,26 @@ public class FieldConfigTTFTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#justSelected()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#justSelected()}.
      */
     @Test
     public void testJustSelected() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         field.justSelected();
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
@@ -235,8 +257,10 @@ public class FieldConfigTTFTest {
             }
         }
 
-        TestFieldConfigTTF field = new TestFieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly));
+        TestFieldConfigTTF field =
+                new TestFieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
         FieldConfigTTF copy = (FieldConfigTTF) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -247,52 +271,66 @@ public class FieldConfigTTFTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#attributeSelection(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         field.attributeSelection("field");
         // Does nothing
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getVendorOption()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getVendorOption()}.
      */
     @Test
     public void testGetVendorOption() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
-        assertEquals(VendorOptionManager.getInstance().getDefaultVendorOptionVersion(),
+        assertEquals(
+                VendorOptionManager.getInstance().getDefaultVendorOptionVersion(),
                 field.getVendorOption());
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getSymbolClass()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getSymbolClass()}.
      */
     @Test
     public void testGetSymbolClass() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         assertEquals(ExternalGraphicImpl.class, field.getSymbolClass());
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#setValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, com.sldeditor.ui.detail.config.FieldConfigSymbolType, org.opengis.style.GraphicalSymbol)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#setValue(com.sldeditor.ui.detail.GraphicPanelFieldManager,
+     * com.sldeditor.ui.detail.config.FieldConfigSymbolType, org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testSetValue() {
@@ -302,22 +340,33 @@ public class FieldConfigTTFTest {
         Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
-        FieldConfigColour colourField = new FieldConfigColour(
-                new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigColour colourField =
+                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         fieldConfigManager.add(colourFieldId, colourField);
 
-        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL,
-                FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE,
-                FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY,
-                FieldIdEnum.STROKE_FILL_WIDTH);
+        ColourFieldConfig fillConfig =
+                new ColourFieldConfig(
+                        GroupIdEnum.FILL,
+                        FieldIdEnum.FILL_COLOUR,
+                        FieldIdEnum.OVERALL_OPACITY,
+                        FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig =
+                new ColourFieldConfig(
+                        GroupIdEnum.STROKE,
+                        FieldIdEnum.STROKE_STROKE_COLOUR,
+                        FieldIdEnum.OVERALL_OPACITY,
+                        FieldIdEnum.STROKE_FILL_WIDTH);
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                fillConfig, strokeConfig, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        fillConfig,
+                        strokeConfig,
+                        null);
 
         field.setValue(null, null, null, null, null);
         field.setValue(null, fieldConfigManager, null, null, null);
@@ -331,8 +380,9 @@ public class FieldConfigTTFTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getValue(com.sldeditor.ui.detail.GraphicPanelFieldManager, org.opengis.filter.expression.Expression, boolean, boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getValue(com.sldeditor.ui.detail.GraphicPanelFieldManager,
+     * org.opengis.filter.expression.Expression, boolean, boolean)}.
      */
     @Test
     public void testGetValue() {
@@ -342,22 +392,33 @@ public class FieldConfigTTFTest {
         Class<?> panelId = PointFillDetails.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
-        FieldConfigColour colourField = new FieldConfigColour(
-                new FieldConfigCommonData(panelId, colourFieldId, "", false));
+        FieldConfigColour colourField =
+                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         fieldConfigManager.add(colourFieldId, colourField);
 
-        ColourFieldConfig fillConfig = new ColourFieldConfig(GroupIdEnum.FILL,
-                FieldIdEnum.FILL_COLOUR, FieldIdEnum.OVERALL_OPACITY, FieldIdEnum.STROKE_WIDTH);
-        ColourFieldConfig strokeConfig = new ColourFieldConfig(GroupIdEnum.STROKE,
-                FieldIdEnum.STROKE_STROKE_COLOUR, FieldIdEnum.OVERALL_OPACITY,
-                FieldIdEnum.STROKE_FILL_WIDTH);
+        ColourFieldConfig fillConfig =
+                new ColourFieldConfig(
+                        GroupIdEnum.FILL,
+                        FieldIdEnum.FILL_COLOUR,
+                        FieldIdEnum.OVERALL_OPACITY,
+                        FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig =
+                new ColourFieldConfig(
+                        GroupIdEnum.STROKE,
+                        FieldIdEnum.STROKE_STROKE_COLOUR,
+                        FieldIdEnum.OVERALL_OPACITY,
+                        FieldIdEnum.STROKE_FILL_WIDTH);
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                fillConfig, strokeConfig, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        fillConfig,
+                        strokeConfig,
+                        null);
 
         List<GraphicalSymbol> actualValue = field.getValue(null, null, false, false);
         assertTrue(actualValue.isEmpty());
@@ -371,71 +432,88 @@ public class FieldConfigTTFTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getFill(org.opengis.style.GraphicFill, com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getFill(org.opengis.style.GraphicFill,
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testGetFill() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         assertNull(field.getFill(null, null));
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getBasePanel()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getBasePanel()}.
      */
     @Test
     public void testGetBasePanel() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         assertNull(field.getBasePanel());
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#populateFieldOverrideMap(java.lang.Class, com.sldeditor.ui.detail.FieldEnableState)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#populateFieldOverrideMap(java.lang.Class,
+     * com.sldeditor.ui.detail.FieldEnableState)}.
      */
     @Test
-    public void testPopulateFieldOverrideMap() {
-    }
+    public void testPopulateFieldOverrideMap() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getFieldList(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getFieldList(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testGetFieldList() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         assertEquals(1, field.getFieldList(null).size());
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#accept(org.opengis.style.GraphicalSymbol)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#accept(org.opengis.style.GraphicalSymbol)}.
      */
     @Test
     public void testAccept() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         assertFalse(field.accept(null));
 
         StyleBuilder styleBuilder = new StyleBuilder();
-        ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) styleBuilder
-                .createExternalGraphic("test.tmp", "png");
+        ExternalGraphicImpl externalGraphic =
+                (ExternalGraphicImpl) styleBuilder.createExternalGraphic("test.tmp", "png");
         assertFalse(field.accept(externalGraphic));
 
         Mark marker1 = styleBuilder.createMark("triangle");
@@ -446,47 +524,52 @@ public class FieldConfigTTFTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#setUpdateSymbolListener(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#setUpdateSymbolListener(com.sldeditor.ui.iface.UpdateSymbolInterface)}.
      */
     @Test
     public void testSetUpdateSymbolListener() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         field.setUpdateSymbolListener(null);
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getConfigField()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#getConfigField()}.
      */
     @Test
     public void testGetConfigField() {
         boolean valueOnly = true;
-        FieldConfigTTF field = new FieldConfigTTF(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigTTF field =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         assertEquals(field, field.getConfigField());
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#checkSymbolIsValid()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#checkSymbolIsValid()}.
      */
     @Test
-    public void testCheckSymbolIsValid() {
-    }
+    public void testCheckSymbolIsValid() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#ttfValueUpdated()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#ttfValueUpdated()}.
      */
     @Test
-    public void testTtfValueUpdated() {
-    }
-
+    public void testTtfValueUpdated() {}
 }

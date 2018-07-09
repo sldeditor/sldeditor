@@ -19,18 +19,16 @@
 
 package com.sldeditor.tool;
 
-import java.net.URL;
-
-import javax.swing.ImageIcon;
-import javax.swing.JToggleButton;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ParseXML;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JToggleButton;
 
 /**
- * The Class ToggleToolButton, overloads a JToggleButton but allows the button text
- * to set as a tooltip and the resource string as the button icon.
+ * The Class ToggleToolButton, overloads a JToggleButton but allows the button text to set as a
+ * tooltip and the resource string as the button icon.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -78,9 +76,11 @@ public class ToggleToolButton extends JToggleButton {
         URL url = ToggleToolButton.class.getClassLoader().getResource(resourceString);
 
         if (url == null) {
-            ConsoleManager.getInstance().error(ToggleToolButton.class,
-                    Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
-                            + resourceString);
+            ConsoleManager.getInstance()
+                    .error(
+                            ToggleToolButton.class,
+                            Localisation.getField(ParseXML.class, "ParseXML.failedToFindResource")
+                                    + resourceString);
             return null;
         } else {
             return new ImageIcon(url);

@@ -19,10 +19,11 @@
 
 package com.sldeditor.datasource.impl;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SelectedSymbol;
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import org.geotools.data.FeatureSource;
 import org.geotools.renderer.style.SLDStyleFactory;
 import org.geotools.styling.FeatureTypeStyle;
@@ -36,13 +37,10 @@ import org.geotools.styling.UserLayerImpl;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.SelectedSymbol;
-
 /**
- * The Class ExtractValidFieldTypes checks to see if the extracted field data types are correct.
- * If they are not then they are updated. This is a horrible hack but the symbol is rendered
- * and the exception messages returned are parsed to workout what data type should be set.
+ * The Class ExtractValidFieldTypes checks to see if the extracted field data types are correct. If
+ * they are not then they are updated. This is a horrible hack but the symbol is rendered and the
+ * exception messages returned are parsed to workout what data type should be set.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -87,7 +85,7 @@ public class ExtractValidFieldTypes {
                         for (FeatureTypeStyle fts : style.featureTypeStyles()) {
                             for (Rule rule : fts.rules()) {
                                 for (Symbolizer symbolizer : rule.symbolizers()) {
-                                    FeatureSource<SimpleFeatureType, SimpleFeature> featureList = 
+                                    FeatureSource<SimpleFeatureType, SimpleFeature> featureList =
                                             DataSourceFactory.getDataSource().getFeatureSource();
 
                                     if (featureList != null) {
@@ -106,10 +104,12 @@ public class ExtractValidFieldTypes {
                                             String message = e.getMessage();
                                             if (message.startsWith(UNABLE_TO_DECODE_PREFIX)
                                                     && message.endsWith(UNABLE_TO_DECODE_SUFFIX)) {
-                                                String fieldName = message.substring(
-                                                        UNABLE_TO_DECODE_PREFIX.length(),
-                                                        message.length()
-                                                                - UNABLE_TO_DECODE_SUFFIX.length());
+                                                String fieldName =
+                                                        message.substring(
+                                                                UNABLE_TO_DECODE_PREFIX.length(),
+                                                                message.length()
+                                                                        - UNABLE_TO_DECODE_SUFFIX
+                                                                                .length());
 
                                                 DataSourceFactory.getDataSource()
                                                         .updateFieldType(fieldName, Long.class);

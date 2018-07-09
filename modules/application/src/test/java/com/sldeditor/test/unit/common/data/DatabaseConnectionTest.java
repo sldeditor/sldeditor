@@ -24,24 +24,22 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.DatabaseConnection;
+import com.sldeditor.common.data.DatabaseConnectionField;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionName;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.geopkg.GeoPkgDataStoreFactory;
 import org.junit.Test;
 
-import com.sldeditor.common.data.DatabaseConnection;
-import com.sldeditor.common.data.DatabaseConnectionField;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionName;
-
 /**
  * The unit test for DatabaseConnection.
- * 
+ *
  * <p>{@link com.sldeditor.common.data.DatabaseConnection}
  *
  * @author Robert Ward (SCISYS)
@@ -49,8 +47,8 @@ import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionName;
 public class DatabaseConnectionTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.data.DatabaseConnection#DatabaseConnection(com.sldeditor.common.data.DatabaseConnection)}.
+     * Test method for {@link
+     * com.sldeditor.common.data.DatabaseConnection#DatabaseConnection(com.sldeditor.common.data.DatabaseConnection)}.
      */
     @Test
     public void testDatabaseConnection() {
@@ -62,28 +60,37 @@ public class DatabaseConnectionTest {
         String expectedDatabaseTypeLabel = "GeoPackage";
         boolean expectedSupportsDuplication = false;
 
-        DatabaseConnection test = new DatabaseConnection(param, expectedDatabaseTypeLabel,
-                expectedSupportsDuplication, expectedDetailList, new DatabaseConnectionName() {
+        DatabaseConnection test =
+                new DatabaseConnection(
+                        param,
+                        expectedDatabaseTypeLabel,
+                        expectedSupportsDuplication,
+                        expectedDetailList,
+                        new DatabaseConnectionName() {
 
-                    @Override
-                    public String getConnectionName(String duplicatePrefix, int noOfDuplicates,
-                            Map<String, String> properties) {
-                        String connectionName = Localisation.getString(DatabaseConnectionTest.class,
-                                "common.notSet");
-                        String databaseName = properties.get(GeoPkgDataStoreFactory.DATABASE.key);
-                        if (databaseName != null) {
-                            File f = new File(databaseName);
-                            if (f.isFile()) {
-                                connectionName = f.getName();
+                            @Override
+                            public String getConnectionName(
+                                    String duplicatePrefix,
+                                    int noOfDuplicates,
+                                    Map<String, String> properties) {
+                                String connectionName =
+                                        Localisation.getString(
+                                                DatabaseConnectionTest.class, "common.notSet");
+                                String databaseName =
+                                        properties.get(GeoPkgDataStoreFactory.DATABASE.key);
+                                if (databaseName != null) {
+                                    File f = new File(databaseName);
+                                    if (f.isFile()) {
+                                        connectionName = f.getName();
+                                    }
+                                }
+
+                                for (int i = 0; i < noOfDuplicates; i++) {
+                                    connectionName = duplicatePrefix + connectionName;
+                                }
+                                return connectionName;
                             }
-                        }
-
-                        for (int i = 0; i < noOfDuplicates; i++) {
-                            connectionName = duplicatePrefix + connectionName;
-                        }
-                        return connectionName;
-                    }
-                });
+                        });
 
         Map<String, String> connectionDataMap = new HashMap<String, String>();
         connectionDataMap.put(GeoPkgDataStoreFactory.DATABASE.key, "test datatbase");
@@ -97,9 +104,11 @@ public class DatabaseConnectionTest {
         assertEquals(1, test.getExpectedKeys().size());
         assertEquals(GeoPkgDataStoreFactory.DATABASE.key, test.getExpectedKeys().get(0));
         assertEquals(test.getDatabaseType(), param.sample);
-        assertEquals(test.getConnectionDataMap().get(GeoPkgDataStoreFactory.DATABASE.key),
+        assertEquals(
+                test.getConnectionDataMap().get(GeoPkgDataStoreFactory.DATABASE.key),
                 connectionDataMap.get(GeoPkgDataStoreFactory.DATABASE.key));
-        assertEquals(test.getConnectionDataMap().get(GeoPkgDataStoreFactory.DBTYPE.key),
+        assertEquals(
+                test.getConnectionDataMap().get(GeoPkgDataStoreFactory.DBTYPE.key),
                 GeoPkgDataStoreFactory.DBTYPE.sample);
 
         String expectedUserName = "test user";
@@ -132,85 +141,65 @@ public class DatabaseConnectionTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.data.DatabaseConnection#decodeString(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.common.data.DatabaseConnection#decodeString(java.lang.String)}.
      */
     @Test
-    public void testDecodeString() {
-    }
+    public void testDecodeString() {}
+
+    /** Test method for {@link com.sldeditor.common.data.DatabaseConnection#getConnectionName()}. */
+    @Test
+    public void testGetConnectionName() {}
 
     /**
-     * Test method for {@link com.sldeditor.common.data.DatabaseConnection#getConnectionName()}.
+     * Test method for {@link
+     * com.sldeditor.common.data.DatabaseConnection#compareTo(com.sldeditor.common.data.DatabaseConnection)}.
      */
     @Test
-    public void testGetConnectionName() {
-    }
+    public void testCompareTo() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.data.DatabaseConnection#compareTo(com.sldeditor.common.data.DatabaseConnection)}.
+     * Test method for {@link
+     * com.sldeditor.common.data.DatabaseConnection#update(com.sldeditor.common.data.DatabaseConnection)}.
      */
     @Test
-    public void testCompareTo() {
-    }
+    public void testUpdate() {}
 
-    /**
-     * Test method for
-     * {@link com.sldeditor.common.data.DatabaseConnection#update(com.sldeditor.common.data.DatabaseConnection)}.
-     */
+    /** Test method for {@link com.sldeditor.common.data.DatabaseConnection#encodeAsString()}. */
     @Test
-    public void testUpdate() {
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.common.data.DatabaseConnection#encodeAsString()}.
-     */
-    @Test
-    public void testEncodeAsString() {
-    }
+    public void testEncodeAsString() {}
 
     /**
      * Test method for {@link com.sldeditor.common.data.DatabaseConnection#getConnectionDataMap()}.
      */
     @Test
-    public void testGetConnectionDataMap() {
-    }
+    public void testGetConnectionDataMap() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.data.DatabaseConnection#setConnectionDataMap(java.util.Map)}.
+     * Test method for {@link
+     * com.sldeditor.common.data.DatabaseConnection#setConnectionDataMap(java.util.Map)}.
      */
     @Test
-    public void testSetConnectionDataMap() {
-    }
+    public void testSetConnectionDataMap() {}
+
+    /** Test method for {@link com.sldeditor.common.data.DatabaseConnection#duplicate()}. */
+    @Test
+    public void testDuplicate() {}
 
     /**
-     * Test method for {@link com.sldeditor.common.data.DatabaseConnection#duplicate()}.
+     * Test method for {@link
+     * com.sldeditor.common.data.DatabaseConnection#getDatabaseConnectionName()}.
      */
     @Test
-    public void testDuplicate() {
-    }
+    public void testGetDatabaseConnectionName() {}
 
-    /**
-     * Test method for
-     * {@link com.sldeditor.common.data.DatabaseConnection#getDatabaseConnectionName()}.
-     */
+    /** Test method for {@link com.sldeditor.common.data.DatabaseConnection#getExpectedKeys()}. */
     @Test
-    public void testGetDatabaseConnectionName() {
-    }
-
-    /**
-     * Test method for {@link com.sldeditor.common.data.DatabaseConnection#getExpectedKeys()}.
-     */
-    @Test
-    public void testGetExpectedKeys() {
-    }
+    public void testGetExpectedKeys() {}
 
     /**
      * Test method for {@link com.sldeditor.common.data.DatabaseConnection#getDBConnectionParams()}.
      */
     @Test
-    public void testGetDBConnectionParams() {
-    }
-
+    public void testGetDBConnectionParams() {}
 }

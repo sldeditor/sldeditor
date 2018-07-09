@@ -19,16 +19,15 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
+import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import org.geotools.styling.ChannelSelection;
 import org.geotools.styling.ContrastEnhancement;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.SelectedChannelType;
-
-import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 
 /**
  * The Class VOGeoServerContrastEnhancementNormalizeGrey.
@@ -39,7 +38,7 @@ public class VOGeoServerContrastEnhancementNormalizeGrey
         extends VOGeoServerContrastEnhancementNormalize {
 
     /** The Constant PANEL_CONFIG. */
-    private static final String PANEL_CONFIG = 
+    private static final String PANEL_CONFIG =
             "symbol/raster/PanelConfig_ContrastEnhancementNormalizeGrey.xml";
 
     /** The Constant serialVersionUID. */
@@ -51,22 +50,26 @@ public class VOGeoServerContrastEnhancementNormalizeGrey
      * @param panelId the panel id
      * @param parentPanel the parent panel
      */
-    public VOGeoServerContrastEnhancementNormalizeGrey(Class<?> panelId,
-            RasterSymbolizerDetails parentPanel) {
-        super(panelId, PANEL_CONFIG, parentPanel, FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_GREY,
+    public VOGeoServerContrastEnhancementNormalizeGrey(
+            Class<?> panelId, RasterSymbolizerDetails parentPanel) {
+        super(
+                panelId,
+                PANEL_CONFIG,
+                parentPanel,
+                FieldIdEnum.VO_RASTER_NORMALIZE_ALGORITHM_GREY,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MIN_VALUE_GREY,
                 FieldIdEnum.VO_RASTER_NORMALIZE_MAX_VALUE_GREY);
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(com.sldeditor.common.xml.ui.
      * GroupIdEnum, org.geotools.styling.ChannelSelection)
      */
     @Override
-    protected ContrastEnhancement getContrastEnhancement(GroupIdEnum id,
-            ChannelSelection channelSelection) {
+    protected ContrastEnhancement getContrastEnhancement(
+            GroupIdEnum id, ChannelSelection channelSelection) {
         if (id == GroupIdEnum.RASTER_GREY_CHANNEL_OPTION) {
             return channelSelection.getGrayChannel().getContrastEnhancement();
         }
@@ -75,7 +78,7 @@ public class VOGeoServerContrastEnhancementNormalizeGrey
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.raster.VOGeoServerContrastEnhancementNormalize#getContrastEnhancement(org.geotools.styling.
      * RasterSymbolizer)
      */
@@ -107,7 +110,7 @@ public class VOGeoServerContrastEnhancementNormalizeGrey
     @Override
     public void populate(FeatureTypeStyle featureTypeStyle) {
         // TODO Auto-generated method stub
-        
+
     }
 
     /* (non-Javadoc)
@@ -116,7 +119,6 @@ public class VOGeoServerContrastEnhancementNormalizeGrey
     @Override
     public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 }

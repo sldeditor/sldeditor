@@ -19,17 +19,15 @@
 
 package com.sldeditor.ui.tree.item;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.geotools.styling.Rule;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.tree.SLDTreeTools;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.geotools.styling.Rule;
 
 /**
  * Class that display Rule data within the sld tree structure.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class RuleTreeItem implements SLDTreeItemInterface {
@@ -39,7 +37,7 @@ public class RuleTreeItem implements SLDTreeItemInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#getTreeString(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
@@ -58,12 +56,11 @@ public class RuleTreeItem implements SLDTreeItemInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.item.SLDTreeItemInterface#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)
      */
     @Override
     public void itemSelected(DefaultMutableTreeNode node, Object userObject) {
         SelectedSymbol.getInstance().setRule((Rule) userObject);
     }
-
 }

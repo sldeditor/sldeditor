@@ -19,7 +19,7 @@
 
 /**
  * Package containing the different ui layout classes.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.layout;

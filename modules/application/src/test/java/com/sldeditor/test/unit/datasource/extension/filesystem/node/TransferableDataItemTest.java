@@ -24,6 +24,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.NodeInterface;
+import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
+import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
+import com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData;
+import com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
@@ -31,32 +37,22 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
-
 import org.junit.Test;
-
-import com.sldeditor.common.NodeInterface;
-import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
-import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
-import com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData;
-import com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 
 /**
  * Unit test for TransferableDataItem class.
- * 
- * <p>{@link com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class TransferableDataItemTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem#TransferableDataItem()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem#TransferableDataItem()}.
      */
     @Test
     public void testTransferableDataItem() {
@@ -87,8 +83,9 @@ public class TransferableDataItemTest {
                 assertTrue(data instanceof TransferredData);
                 assertEquals(selectedData.size(), ((TransferredData) data).getDataListSize());
 
-                assertFalse(dataItem
-                        .isDataFlavorSupported(BuiltInDataFlavour.GEOSERVER_DATAITEM_FLAVOUR));
+                assertFalse(
+                        dataItem.isDataFlavorSupported(
+                                BuiltInDataFlavour.GEOSERVER_DATAITEM_FLAVOUR));
                 assertTrue(
                         dataItem.isDataFlavorSupported(DataFlavourManager.FOLDER_DATAITEM_FLAVOR));
             } catch (UnsupportedFlavorException e) {
@@ -108,14 +105,14 @@ public class TransferableDataItemTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem#getTransferDataFlavors()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem#getTransferDataFlavors()}.
      */
     @SuppressWarnings("deprecation")
     @Test
     public void testGetTransferDataFlavors() {
-        assertEquals(DataFlavourManager.getDataFlavourArray(),
+        assertEquals(
+                DataFlavourManager.getDataFlavourArray(),
                 new TransferableDataItem(null).getTransferDataFlavors());
     }
-
 }

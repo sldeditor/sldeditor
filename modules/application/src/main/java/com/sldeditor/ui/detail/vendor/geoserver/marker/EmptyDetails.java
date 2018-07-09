@@ -24,9 +24,9 @@ import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 
 /**
- * The Class ArrowDetails panel contains all the fields to configure
- * an GeoServer vendor option arrow strings.
- * 
+ * The Class ArrowDetails panel contains all the fields to configure an GeoServer vendor option
+ * arrow strings.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class EmptyDetails extends StandardPanel implements UpdateSymbolInterface {
@@ -52,12 +52,11 @@ public class EmptyDetails extends StandardPanel implements UpdateSymbolInterface
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
     public void dataChanged(FieldIdEnum changedField) {
         // Do nothing
     }
-
 }

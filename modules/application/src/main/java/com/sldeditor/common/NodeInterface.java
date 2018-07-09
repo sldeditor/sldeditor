@@ -19,15 +19,13 @@
 
 package com.sldeditor.common;
 
-import java.awt.datatransfer.DataFlavor;
-
-import javax.swing.Icon;
-
 import com.sldeditor.common.filesystem.FileSystemInterface;
+import java.awt.datatransfer.DataFlavor;
+import javax.swing.Icon;
 
 /**
  * The Interface NodeInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface NodeInterface {

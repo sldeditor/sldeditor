@@ -7,10 +7,9 @@
 
 package com.sldeditor.tool.dbconnectionlist;
 
+import com.sldeditor.common.data.DatabaseConnection;
 import java.util.List;
 import java.util.Map;
-
-import com.sldeditor.common.data.DatabaseConnection;
 
 /**
  * The Interface DatabaseClientConnectorInterface.

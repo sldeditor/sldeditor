@@ -19,17 +19,6 @@
 
 package com.sldeditor.ui.detail.config;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
-import org.geotools.filter.LiteralExpressionImpl;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -40,15 +29,24 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.apache.log4j.Logger;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.opengis.filter.expression.Expression;
 
 /**
- * The Class FieldConfigEnum wraps a drop down GUI component and an 
- * optional value/attribute/expression drop down,
- * 
+ * The Class FieldConfigEnum wraps a drop down GUI component and an optional
+ * value/attribute/expression drop down,
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterface {
@@ -63,7 +61,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     private Map<String, ValueComboBoxData> comboDataMap = new HashMap<String, ValueComboBoxData>();
 
     /** The field map. */
-    private Map<Class<?>, Map<FieldIdEnum, Boolean>> fieldMap = 
+    private Map<Class<?>, Map<FieldIdEnum, Boolean>> fieldMap =
             new HashMap<Class<?>, Map<FieldIdEnum, Boolean>>();
 
     /** The default value. */
@@ -103,12 +101,10 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
         }
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -130,8 +126,11 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
             comboBox = new ValueComboBox();
             comboBox.initialiseSingle(dataList);
             comboBox.setBounds(
-                    xPos + BasePanel.WIDGET_X_START, 0, isValueOnly()
-                            ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
+                    xPos + BasePanel.WIDGET_X_START,
+                    0,
+                    isValueOnly()
+                            ? BasePanel.WIDGET_EXTENDED_WIDTH
+                            : BasePanel.WIDGET_STANDARD_WIDTH,
                     BasePanel.WIDGET_HEIGHT);
 
             FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
@@ -148,26 +147,32 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
                 }
             }
 
-            comboBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    ValueComboBox comboBox = (ValueComboBox) e.getSource();
-                    if (comboBox.getSelectedItem() != null) {
+            comboBox.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            ValueComboBox comboBox = (ValueComboBox) e.getSource();
+                            if (comboBox.getSelectedItem() != null) {
 
-                        Object newValueObj = comboBox.getSelectedValue().getKey();
+                                Object newValueObj = comboBox.getSelectedValue().getKey();
 
-                        if ((oldValueObj == null) && comboBox.getItemCount() > 0) {
-                            oldValueObj = comboBox.getFirstItem().getKey();
+                                if ((oldValueObj == null) && comboBox.getItemCount() > 0) {
+                                    oldValueObj = comboBox.getFirstItem().getKey();
+                                }
+
+                                UndoManager.getInstance()
+                                        .addUndoEvent(
+                                                new UndoEvent(
+                                                        parentObj,
+                                                        getFieldId(),
+                                                        oldValueObj,
+                                                        newValueObj));
+
+                                oldValueObj = newValueObj;
+
+                                valueUpdated();
+                            }
                         }
-
-                        UndoManager.getInstance().addUndoEvent(
-                                new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                        oldValueObj = newValueObj;
-
-                        valueUpdated();
-                    }
-                }
-            });
+                    });
         }
     }
 
@@ -178,7 +183,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
@@ -195,7 +200,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -212,7 +217,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     protected Expression generateExpression() {
@@ -235,7 +240,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -250,12 +255,10 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -270,7 +273,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -361,7 +364,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
@@ -385,7 +388,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override

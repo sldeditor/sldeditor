@@ -21,7 +21,6 @@ package com.sldeditor.common.data;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
@@ -30,7 +29,7 @@ import org.geotools.styling.Symbolizer;
 
 /**
  * The Class SymbolData contains the currently selected state of the the SLD symbol.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SymbolData {
@@ -68,16 +67,12 @@ public class SymbolData {
     /** The valid symbol flag map. */
     private Map<String, Boolean> validSymbolMap = new HashMap<String, Boolean>();
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public SymbolData() {
         resetData();
     }
 
-    /**
-     * Reset data.
-     */
+    /** Reset data. */
     public void resetData() {
         this.style = null;
         this.styledLayer = null;
@@ -209,16 +204,12 @@ public class SymbolData {
         return selectedSymbolizerIndex;
     }
 
-    /**
-     * Set the selected symbolizer index to 0.
-     */
+    /** Set the selected symbolizer index to 0. */
     public void initialiseSelectedSymbolizerIndex() {
         this.selectedSymbolizerIndex = 0;
     }
 
-    /**
-     * Increment selected symbolizer index.
-     */
+    /** Increment selected symbolizer index. */
     public void incrementSelectedSymbolizerIndex() {
         this.selectedSymbolizerIndex++;
     }
@@ -232,16 +223,12 @@ public class SymbolData {
         return selectedFTSIndex;
     }
 
-    /**
-     * Set the selected feature type style index to 0.
-     */
+    /** Set the selected feature type style index to 0. */
     public void initialiseSelectedFTSIndex() {
         this.selectedFTSIndex = 0;
     }
 
-    /**
-     * Increment selected feature type style index.
-     */
+    /** Increment selected feature type style index. */
     public void incrementSelectedFTSIndex() {
         this.selectedFTSIndex++;
     }
@@ -255,16 +242,12 @@ public class SymbolData {
         return selectedRuleIndex;
     }
 
-    /**
-     * Set the selected rule index to 0.
-     */
+    /** Set the selected rule index to 0. */
     public void initialiseSelectedRuleIndex() {
         this.selectedRuleIndex = 0;
     }
 
-    /**
-     * Increment selected rule index.
-     */
+    /** Increment selected rule index. */
     public void incrementSelectedRuleIndex() {
         this.selectedRuleIndex++;
     }
@@ -278,16 +261,12 @@ public class SymbolData {
         return selectedStyledLayerIndex;
     }
 
-    /**
-     * Set the selected styled layer index to 0.
-     */
+    /** Set the selected styled layer index to 0. */
     public void initialiseSelectedStyledLayerIndex() {
         this.selectedStyledLayerIndex = 0;
     }
 
-    /**
-     * Increment selected styled layer index.
-     */
+    /** Increment selected styled layer index. */
     public void incrementSelectedStyledLayerIndex() {
         this.selectedStyledLayerIndex++;
     }
@@ -301,16 +280,12 @@ public class SymbolData {
         return selectedStyleIndex;
     }
 
-    /**
-     * Set the selected style index to 0.
-     */
+    /** Set the selected style index to 0. */
     public void initialiseSelectedStyleIndex() {
         this.selectedStyleIndex = 0;
     }
 
-    /**
-     * Increment selected style index.
-     */
+    /** Increment selected style index. */
     public void incrementSelectedStyleIndex() {
         this.selectedStyleIndex++;
     }

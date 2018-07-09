@@ -19,7 +19,7 @@
 
 /**
  * Package for rendering the symbol.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.render;

@@ -19,31 +19,6 @@
 
 package com.sldeditor.filter.v2.expression;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.geotools.filter.AttributeExpressionImpl;
-import org.geotools.filter.FunctionExpression;
-import org.geotools.filter.FunctionExpressionImpl;
-import org.geotools.filter.function.EnvFunction;
-import org.geotools.filter.function.string.ConcatenateFunction;
-import org.opengis.filter.capability.FunctionName;
-import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Function;
-import org.opengis.parameter.Parameter;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -58,6 +33,28 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.geotools.filter.AttributeExpressionImpl;
+import org.geotools.filter.FunctionExpression;
+import org.geotools.filter.FunctionExpressionImpl;
+import org.geotools.filter.function.EnvFunction;
+import org.geotools.filter.function.string.ConcatenateFunction;
+import org.opengis.filter.capability.FunctionName;
+import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
+import org.opengis.parameter.Parameter;
 
 /**
  * The Class ExpressionSubPanel.
@@ -178,9 +175,7 @@ public class ExpressionSubPanel extends JPanel {
         }
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         setLayout(new BorderLayout());
         box = Box.createVerticalBox();
@@ -192,7 +187,7 @@ public class ExpressionSubPanel extends JPanel {
         //
         setUpLiteralPanel();
         box.add(Box.createVerticalStrut(VERTICAL_STRUCT_SIZE));
-        
+
         //
         // Property / attribute
         //
@@ -219,51 +214,54 @@ public class ExpressionSubPanel extends JPanel {
         panelRemoveParameter.setPreferredSize(new Dimension(150, 25));
         box.add(panelRemoveParameter);
 
-        btnRemoveParameter = new JButton(Localisation.getString(ExpressionPanelv2.class,
-                "ExpressionSubPanel.removeParameter"));
-        btnRemoveParameter.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
+        btnRemoveParameter =
+                new JButton(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "ExpressionSubPanel.removeParameter"));
+        btnRemoveParameter.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
 
-                int index = parentNode.getIndex(selectedNode);
-                parentNode.remove(index);
+                        int index = parentNode.getIndex(selectedNode);
+                        parentNode.remove(index);
 
-                if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
-                    FunctionExpression functionExpression = (FunctionExpression) parentNode
-                            .getExpression();
+                        if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
+                            FunctionExpression functionExpression =
+                                    (FunctionExpression) parentNode.getExpression();
 
-                    functionExpression.getParameters().remove(index);
-                } else if (parentNode.getExpression() instanceof ConcatenateFunction) {
-                    ConcatenateFunction concatenateFunction = (ConcatenateFunction) parentNode
-                            .getExpression();
+                            functionExpression.getParameters().remove(index);
+                        } else if (parentNode.getExpression() instanceof ConcatenateFunction) {
+                            ConcatenateFunction concatenateFunction =
+                                    (ConcatenateFunction) parentNode.getExpression();
 
-                    List<Expression> parameters = concatenateFunction.getParameters();
-                    parameters.remove(index);
-                    concatenateFunction.setParameters(parameters);
-                }
-                parentNode.setDisplayString();
+                            List<Expression> parameters = concatenateFunction.getParameters();
+                            parameters.remove(index);
+                            concatenateFunction.setParameters(parameters);
+                        }
+                        parentNode.setDisplayString();
 
-                if (parent != null) {
-                    parent.dataApplied();
-                }
-            }
-        });
+                        if (parent != null) {
+                            parent.dataApplied();
+                        }
+                    }
+                });
         panelRemoveParameter.add(btnRemoveParameter);
 
         box.add(createApplyRevertPanel());
     }
 
-    /**
-     * Sets the up literal panel.
-     */
+    /** Sets the up literal panel. */
     protected void setUpLiteralPanel() {
         panelLiteral = new JPanel();
         panelLiteral.setBorder(null);
         box.add(panelLiteral);
         panelLiteral.setLayout(new BoxLayout(panelLiteral, BoxLayout.X_AXIS));
 
-        rdbtnLiteral = new JRadioButton(
-                Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.literal"));
+        rdbtnLiteral =
+                new JRadioButton(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "ExpressionPanelv2.literal"));
         rdbtnLiteral.setMinimumSize(new Dimension(100, 20));
         rdbtnLiteral.setPreferredSize(new Dimension(100, 20));
         panelLiteral.add(rdbtnLiteral);
@@ -271,44 +269,46 @@ public class ExpressionSubPanel extends JPanel {
         buttonGroup.add(rdbtnLiteral);
     }
 
-    /**
-     * Sets the up property panel.
-     */
+    /** Sets the up property panel. */
     protected void setUpPropertyPanel() {
         panelAttribute = new JPanel();
         panelAttribute.setBorder(null);
         panelAttribute.setLayout(new BoxLayout(panelAttribute, BoxLayout.X_AXIS));
-        rdbtnAttribute = new JRadioButton(
-                Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.attribute"));
+        rdbtnAttribute =
+                new JRadioButton(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "ExpressionPanelv2.attribute"));
         panelAttribute.add(rdbtnAttribute);
         rdbtnAttribute.setMinimumSize(new Dimension(100, 20));
         rdbtnAttribute.setPreferredSize(new Dimension(100, 20));
         rdbtnAttribute.setActionCommand(ATTRIBUTE);
         buttonGroup.add(rdbtnAttribute);
 
-        dataSourceAttributePanel = new DataSourceAttributePanel(new SubPanelUpdatedInterface() {
-            @Override
-            public void updateSymbol() {
-                buttonGroup.setSelected(rdbtnAttribute.getModel(), true);
-                updateButtonState(true);
-            }
+        dataSourceAttributePanel =
+                new DataSourceAttributePanel(
+                        new SubPanelUpdatedInterface() {
+                            @Override
+                            public void updateSymbol() {
+                                buttonGroup.setSelected(rdbtnAttribute.getModel(), true);
+                                updateButtonState(true);
+                            }
 
-            @Override
-            public void parameterAdded() {
-                // Do nothing
-            }
-        });
+                            @Override
+                            public void parameterAdded() {
+                                // Do nothing
+                            }
+                        });
 
         panelAttribute.add(dataSourceAttributePanel);
         box.add(panelAttribute);
     }
 
-    /**
-     * Sets the up env var panel.
-     */
+    /** Sets the up env var panel. */
     protected void setUpEnvVarPanel() {
-        if (VendorOptionManager.getInstance().isAllowed(this.parent.getVendorOptionList(),
-                EnvironmentVariableField.getVendorOption())) {
+        if (VendorOptionManager.getInstance()
+                .isAllowed(
+                        this.parent.getVendorOptionList(),
+                        EnvironmentVariableField.getVendorOption())) {
             panelEnvVar = new JPanel();
             panelEnvVar.setBorder(null);
             panelEnvVar.setLayout(new BoxLayout(panelEnvVar, BoxLayout.X_AXIS));
@@ -320,54 +320,60 @@ public class ExpressionSubPanel extends JPanel {
             rdbtnEnvVar.setActionCommand(ENVVAR);
             buttonGroup.add(rdbtnEnvVar);
 
-            envVarField = new EnvironmentVariableField(new SubPanelUpdatedInterface() {
-                @Override
-                public void updateSymbol() {
-                    buttonGroup.setSelected(rdbtnEnvVar.getModel(), true);
-                    updateButtonState(true);
-                }
+            envVarField =
+                    new EnvironmentVariableField(
+                            new SubPanelUpdatedInterface() {
+                                @Override
+                                public void updateSymbol() {
+                                    buttonGroup.setSelected(rdbtnEnvVar.getModel(), true);
+                                    updateButtonState(true);
+                                }
 
-                @Override
-                public void parameterAdded() {
-                    // Do nothing
-                }
-            }, EnvironmentVariableManager.getInstance());
+                                @Override
+                                public void parameterAdded() {
+                                    // Do nothing
+                                }
+                            },
+                            EnvironmentVariableManager.getInstance());
 
             panelEnvVar.add(envVarField);
             box.add(panelEnvVar);
         }
     }
 
-    /**
-     * Sets the up function panel.
-     */
+    /** Sets the up function panel. */
     protected void setUpFunctionPanel() {
         panelFunction = new JPanel();
         panelFunction.setBorder(null);
         panelFunction.setLayout(new BoxLayout(panelFunction, BoxLayout.X_AXIS));
 
-        rdbtnFunction = new JRadioButton(
-                Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.function"));
+        rdbtnFunction =
+                new JRadioButton(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "ExpressionPanelv2.function"));
         rdbtnFunction.setMinimumSize(new Dimension(100, 20));
         rdbtnFunction.setPreferredSize(new Dimension(100, 20));
         panelFunction.add(rdbtnFunction);
         rdbtnFunction.setActionCommand(FUNCTION);
         buttonGroup.add(rdbtnFunction);
 
-        functionPanel = new FunctionField(new SubPanelUpdatedInterface() {
-            @Override
-            public void updateSymbol() {
-                buttonGroup.setSelected(rdbtnFunction.getModel(), true);
-                updateButtonState(true);
-            }
+        functionPanel =
+                new FunctionField(
+                        new SubPanelUpdatedInterface() {
+                            @Override
+                            public void updateSymbol() {
+                                buttonGroup.setSelected(rdbtnFunction.getModel(), true);
+                                updateButtonState(true);
+                            }
 
-            @Override
-            public void parameterAdded() {
-                if (parent != null) {
-                    parent.dataApplied();
-                }
-            }
-        }, FunctionManager.getInstance());
+                            @Override
+                            public void parameterAdded() {
+                                if (parent != null) {
+                                    parent.dataApplied();
+                                }
+                            }
+                        },
+                        FunctionManager.getInstance());
 
         panelFunction.add(functionPanel);
         box.add(panelFunction);
@@ -399,33 +405,38 @@ public class ExpressionSubPanel extends JPanel {
             }
         }
 
-        fieldConfig = PanelField.getField(ExpressionPanelv2.class, "ExpressionSubPanel.value",
-                node.getType(), enumList);
+        fieldConfig =
+                PanelField.getField(
+                        ExpressionPanelv2.class,
+                        "ExpressionSubPanel.value",
+                        node.getType(),
+                        enumList);
 
         if (fieldConfig != null) {
             fieldConfig.createUI();
-            fieldConfig.addDataChangedListener(new UpdateSymbolInterface() {
-                @Override
-                public void dataChanged(FieldIdEnum changedField) {
-                    buttonGroup.setSelected(rdbtnLiteral.getModel(), true);
-                    updateButtonState(true);
-                }
-            });
+            fieldConfig.addDataChangedListener(
+                    new UpdateSymbolInterface() {
+                        @Override
+                        public void dataChanged(FieldIdEnum changedField) {
+                            buttonGroup.setSelected(rdbtnLiteral.getModel(), true);
+                            updateButtonState(true);
+                        }
+                    });
 
             // Set the size of the panels so they all align
             FieldPanel panel = fieldConfig.getPanel();
             Dimension dimension = panel.getPreferredSize();
             panel.setMaximumSize(dimension);
 
-            dataSourceAttributePanel
-                    .setMaximumSize(new Dimension(dimension.width, BasePanel.WIDGET_HEIGHT));
+            dataSourceAttributePanel.setMaximumSize(
+                    new Dimension(dimension.width, BasePanel.WIDGET_HEIGHT));
 
             if (envVarField != null) {
                 envVarField.setMaximumSize(new Dimension(dimension.width, BasePanel.WIDGET_HEIGHT));
             }
 
-            functionPanel
-                    .setMaximumSize(new Dimension(dimension.width, BasePanel.WIDGET_HEIGHT * 3));
+            functionPanel.setMaximumSize(
+                    new Dimension(dimension.width, BasePanel.WIDGET_HEIGHT * 3));
 
             panelLiteral.add(panel);
 
@@ -460,8 +471,8 @@ public class ExpressionSubPanel extends JPanel {
             if (node.getParent() instanceof ExpressionNode) {
                 ExpressionNode parentNode = (ExpressionNode) node.getParent();
                 if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
-                    FunctionExpression functionExpression = (FunctionExpression) parentNode
-                            .getExpression();
+                    FunctionExpression functionExpression =
+                            (FunctionExpression) parentNode.getExpression();
                     FunctionName functionName = functionExpression.getFunctionName();
 
                     int argCount = functionName.getArgumentCount();
@@ -470,12 +481,12 @@ public class ExpressionSubPanel extends JPanel {
                         displayRemoveParameter = true;
                         argCount *= -1;
 
-                        btnRemoveParameter
-                                .setEnabled(functionExpression.getParameters().size() > argCount);
+                        btnRemoveParameter.setEnabled(
+                                functionExpression.getParameters().size() > argCount);
                     }
                 } else if (parentNode.getExpression() instanceof ConcatenateFunction) {
-                    ConcatenateFunction concatenateFunction = (ConcatenateFunction) parentNode
-                            .getExpression();
+                    ConcatenateFunction concatenateFunction =
+                            (ConcatenateFunction) parentNode.getExpression();
                     FunctionName functionName = concatenateFunction.getFunctionName();
 
                     int argCount = functionName.getArgumentCount();
@@ -484,8 +495,8 @@ public class ExpressionSubPanel extends JPanel {
                         displayRemoveParameter = true;
                         argCount *= -1;
 
-                        btnRemoveParameter
-                                .setEnabled(concatenateFunction.getParameters().size() > argCount);
+                        btnRemoveParameter.setEnabled(
+                                concatenateFunction.getParameters().size() > argCount);
                     }
                 }
             }
@@ -505,65 +516,68 @@ public class ExpressionSubPanel extends JPanel {
         JPanel panel = new JPanel();
 
         btnApply = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.apply"));
-        btnApply.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Expression expression = null;
+        btnApply.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        Expression expression = null;
 
-                String actionCommand = buttonGroup.getSelection().getActionCommand();
+                        String actionCommand = buttonGroup.getSelection().getActionCommand();
 
-                if (actionCommand.compareTo(LITERAL) == 0) {
-                    expression = fieldConfig.getExpression();
-                } else if (actionCommand.compareTo(ATTRIBUTE) == 0) {
-                    expression = dataSourceAttributePanel.getExpression();
-                } else if (actionCommand.compareTo(FUNCTION) == 0) {
-                    expression = functionPanel.getExpression();
-                } else if (actionCommand.compareTo(ENVVAR) == 0) {
-                    expression = envVarField.getExpression();
-                }
-
-                if (expression != null) {
-                    selectedNode.setExpression(expression);
-                }
-
-                // Update the display string for the parent function, needed for
-                // function expression nodes when function parameter has been changed
-                if (selectedNode.getParent() instanceof ExpressionNode) {
-                    ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
-                    if (parentNode != null) {
-
-                        int index = parentNode.getIndex(selectedNode);
-
-                        if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
-                            FunctionExpression functionExpression = (FunctionExpression) parentNode
-                                    .getExpression();
-
-                            List<Expression> parameterList = functionExpression.getParameters();
-                            parameterList.remove(index);
-                            parameterList.add(index, expression);
-                        } else {
-                            FunctionInterfaceUtils.handleFunctionInterface(parentNode, index,
-                                    expression);
+                        if (actionCommand.compareTo(LITERAL) == 0) {
+                            expression = fieldConfig.getExpression();
+                        } else if (actionCommand.compareTo(ATTRIBUTE) == 0) {
+                            expression = dataSourceAttributePanel.getExpression();
+                        } else if (actionCommand.compareTo(FUNCTION) == 0) {
+                            expression = functionPanel.getExpression();
+                        } else if (actionCommand.compareTo(ENVVAR) == 0) {
+                            expression = envVarField.getExpression();
                         }
 
-                        parentNode.setDisplayString();
-                    }
-                }
+                        if (expression != null) {
+                            selectedNode.setExpression(expression);
+                        }
 
-                if (parent != null) {
-                    parent.dataApplied();
-                }
-                updateButtonState(false);
-            }
-        });
+                        // Update the display string for the parent function, needed for
+                        // function expression nodes when function parameter has been changed
+                        if (selectedNode.getParent() instanceof ExpressionNode) {
+                            ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
+                            if (parentNode != null) {
+
+                                int index = parentNode.getIndex(selectedNode);
+
+                                if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
+                                    FunctionExpression functionExpression =
+                                            (FunctionExpression) parentNode.getExpression();
+
+                                    List<Expression> parameterList =
+                                            functionExpression.getParameters();
+                                    parameterList.remove(index);
+                                    parameterList.add(index, expression);
+                                } else {
+                                    FunctionInterfaceUtils.handleFunctionInterface(
+                                            parentNode, index, expression);
+                                }
+
+                                parentNode.setDisplayString();
+                            }
+                        }
+
+                        if (parent != null) {
+                            parent.dataApplied();
+                        }
+                        updateButtonState(false);
+                    }
+                });
         panel.add(btnApply);
 
         btnRevert = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.revert"));
-        btnRevert.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                displayExpression(selectedNode);
-                updateButtonState(false);
-            }
-        });
+        btnRevert.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        displayExpression(selectedNode);
+                        updateButtonState(false);
+                    }
+                });
         panel.add(btnRevert);
 
         return panel;

@@ -19,6 +19,13 @@
 
 package com.sldeditor.ui.detail.config.inlinefeature;
 
+import com.sldeditor.common.coordinate.CoordManager;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.menucombobox.ArrowIcon;
+import com.sldeditor.ui.widgets.ValueComboBox;
+import com.sldeditor.ui.widgets.ValueComboBoxData;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -30,7 +37,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -48,17 +54,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-
 import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeatureType;
-
-import com.sldeditor.common.coordinate.CoordManager;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.menucombobox.ArrowIcon;
-import com.sldeditor.ui.widgets.ValueComboBox;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * The Class InlineFeaturePanel.
@@ -137,13 +134,14 @@ public class InlineFeaturePanel extends JPanel {
         model.setTable(featureTable, crsComboBox);
 
         ListSelectionModel selectionModel = featureTable.getSelectionModel();
-        selectionModel.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    removeFeatureButton.setEnabled(true);
-                }
-            }
-        });
+        selectionModel.addListSelectionListener(
+                new ListSelectionListener() {
+                    public void valueChanged(ListSelectionEvent e) {
+                        if (!e.getValueIsAdjusting()) {
+                            removeFeatureButton.setEnabled(true);
+                        }
+                    }
+                });
 
         JScrollPane scrollPanel = new JScrollPane(featureTable);
         scrollPanel.setBounds(xPos, 0, BasePanel.FIELD_PANEL_WIDTH, getRowY(noOfRows - 2));
@@ -158,79 +156,94 @@ public class InlineFeaturePanel extends JPanel {
 
         // Feature panel
         JPanel addFeaturePanel = new JPanel();
-        addFeaturePanel.setBorder(BorderFactory.createTitledBorder(
-                Localisation.getString(FieldConfigBase.class, "InlineFeature.features")));
+        addFeaturePanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        Localisation.getString(FieldConfigBase.class, "InlineFeature.features")));
 
-        JButton addButton = new JButton(
-                Localisation.getString(FieldConfigBase.class, "InlineFeature.addfeature"));
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.addNewFeature();
-                removeFeatureButton.setEnabled(false);
-            }
-        });
+        JButton addButton =
+                new JButton(
+                        Localisation.getString(FieldConfigBase.class, "InlineFeature.addfeature"));
+        addButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        model.addNewFeature();
+                        removeFeatureButton.setEnabled(false);
+                    }
+                });
         addFeaturePanel.add(addButton);
 
-        removeFeatureButton = new JButton(
-                Localisation.getString(FieldConfigBase.class, "InlineFeature.removefeature"));
+        removeFeatureButton =
+                new JButton(
+                        Localisation.getString(
+                                FieldConfigBase.class, "InlineFeature.removefeature"));
         removeFeatureButton.setEnabled(false);
-        removeFeatureButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = featureTable.getSelectedRow();
-                model.removeFeature(selectedRow);
-                removeFeatureButton.setEnabled(false);
-            }
-        });
+        removeFeatureButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRow = featureTable.getSelectedRow();
+                        model.removeFeature(selectedRow);
+                        removeFeatureButton.setEnabled(false);
+                    }
+                });
         addFeaturePanel.add(removeFeatureButton);
 
         bottomPanel.add(addFeaturePanel);
 
         // Attribute panel
         JPanel attributePanel = new JPanel();
-        attributePanel.setBorder(BorderFactory.createTitledBorder(
-                Localisation.getString(FieldConfigBase.class, "InlineFeature.attributes")));
+        attributePanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        Localisation.getString(FieldConfigBase.class, "InlineFeature.attributes")));
 
-        JButton addColumnButton = new JButton(
-                Localisation.getString(FieldConfigBase.class, "InlineFeature.addattribute"));
-        addColumnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.addNewColumn();
-            }
-        });
+        JButton addColumnButton =
+                new JButton(
+                        Localisation.getString(
+                                FieldConfigBase.class, "InlineFeature.addattribute"));
+        addColumnButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        model.addNewColumn();
+                    }
+                });
         attributePanel.add(addColumnButton);
 
-        JButton removeColumnButton = new JButton(
-                Localisation.getString(FieldConfigBase.class, "InlineFeature.removeattribute"));
+        JButton removeColumnButton =
+                new JButton(
+                        Localisation.getString(
+                                FieldConfigBase.class, "InlineFeature.removeattribute"));
         ArrowIcon arrow = new ArrowIcon(SwingConstants.SOUTH, true);
         removeColumnButton.setIcon(arrow);
         removeColumnButton.setHorizontalTextPosition(AbstractButton.LEFT);
-        removeColumnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JPopupMenu popupMenu = new JPopupMenu();
+        removeColumnButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JPopupMenu popupMenu = new JPopupMenu();
 
-                List<String> columnNames = model.getColumnNames();
+                        List<String> columnNames = model.getColumnNames();
 
-                for (String columnName : columnNames) {
-                    JMenuItem menuItem = new JMenuItem(columnName);
-                    menuItem.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent event) {
-                            model.removeColumn(columnName);
+                        for (String columnName : columnNames) {
+                            JMenuItem menuItem = new JMenuItem(columnName);
+                            menuItem.addActionListener(
+                                    new ActionListener() {
+                                        public void actionPerformed(ActionEvent event) {
+                                            model.removeColumn(columnName);
+                                        }
+                                    });
+                            popupMenu.add(menuItem);
                         }
-                    });
-                    popupMenu.add(menuItem);
-                }
 
-                if (e != null) {
-                    popupMenu.show(removeColumnButton,
-                            removeColumnButton.getX() - removeColumnButton.getWidth(),
-                            removeColumnButton.getY());
-                }
-            }
-        });
+                        if (e != null) {
+                            popupMenu.show(
+                                    removeColumnButton,
+                                    removeColumnButton.getX() - removeColumnButton.getWidth(),
+                                    removeColumnButton.getY());
+                        }
+                    }
+                });
         attributePanel.add(removeColumnButton);
 
         bottomPanel.add(attributePanel);
@@ -240,22 +253,24 @@ public class InlineFeaturePanel extends JPanel {
         // Set up the column header editing
         //
         columnHeader = featureTable.getTableHeader();
-        columnHeader.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent event) {
-                if (event.getClickCount() == 2) {
-                    editColumnAt(event.getPoint());
-                }
-            }
-        });
+        columnHeader.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent event) {
+                        if (event.getClickCount() == 2) {
+                            editColumnAt(event.getPoint());
+                        }
+                    }
+                });
 
         columnTextField = new JTextField();
         columnTextField.setBorder(null);
-        columnTextField.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                renameColumn();
-            }
-        });
+        columnTextField.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        renameColumn();
+                    }
+                });
 
         renamePopup = new JPopupMenu();
         renamePopup.setBorder(new MatteBorder(0, 1, 1, 1, Color.DARK_GRAY));
@@ -280,17 +295,21 @@ public class InlineFeaturePanel extends JPanel {
         List<ValueComboBoxData> crsDataList = CoordManager.getInstance().getCRSList();
         crsComboBox = new ValueComboBox();
         crsComboBox.initialiseSingle(crsDataList);
-        crsComboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_EXTENDED_WIDTH,
+        crsComboBox.setBounds(
+                xPos + BasePanel.WIDGET_X_START,
+                0,
+                BasePanel.WIDGET_EXTENDED_WIDTH,
                 BasePanel.WIDGET_HEIGHT);
         parentPanel.add(crsComboBox);
-        crsComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!isPopulating()) {
-                    model.updateCRS(crsComboBox.getSelectedValue());
-                }
-            }
-        });
+        crsComboBox.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (!isPopulating()) {
+                            model.updateCRS(crsComboBox.getSelectedValue());
+                        }
+                    }
+                });
         return crsComboBox;
     }
 
@@ -314,8 +333,9 @@ public class InlineFeaturePanel extends JPanel {
             String crsCode = "";
             SimpleFeatureType inlineFeatureType = userLayer.getInlineFeatureType();
             if (inlineFeatureType != null) {
-                crsCode = CoordManager.getInstance()
-                        .getCRSCode(inlineFeatureType.getCoordinateReferenceSystem());
+                crsCode =
+                        CoordManager.getInstance()
+                                .getCRSCode(inlineFeatureType.getCoordinateReferenceSystem());
             }
 
             setPopulating(true);
@@ -365,9 +385,7 @@ public class InlineFeaturePanel extends JPanel {
         }
     }
 
-    /**
-     * Rename column.
-     */
+    /** Rename column. */
     private void renameColumn() {
         tableColumn.setHeaderValue(columnTextField.getText());
         renamePopup.setVisible(false);

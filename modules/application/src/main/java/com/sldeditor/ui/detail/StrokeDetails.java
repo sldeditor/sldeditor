@@ -19,10 +19,24 @@
 
 package com.sldeditor.ui.detail;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.common.xml.ui.GroupIdEnum;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigColour;
+import com.sldeditor.ui.detail.config.base.CurrentFieldState;
+import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory;
+import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
+import com.sldeditor.ui.iface.PopulateDetailsInterface;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import com.sldeditor.ui.widgets.ValueComboBoxData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.geotools.filter.ConstantExpression;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.AnchorPoint;
@@ -43,25 +57,9 @@ import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicStroke;
 import org.opengis.style.GraphicalSymbol;
 
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigColour;
-import com.sldeditor.ui.detail.config.base.CurrentFieldState;
-import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeFactory;
-import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
-import com.sldeditor.ui.iface.PopulateDetailsInterface;
-import com.sldeditor.ui.iface.UpdateSymbolInterface;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
-
 /**
  * The Class StrokeDetails allows a user to configure stroke data in a panel.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class StrokeDetails extends StandardPanel
@@ -91,29 +89,33 @@ public class StrokeDetails extends StandardPanel
     /** The symbolizer displayed. */
     private Symbolizer symbolizer = null;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public StrokeDetails() {
         super(StrokeDetails.class);
 
         setUpdateSymbolListener(this);
 
-        symbolTypeFactory = new SymbolTypeFactory(StrokeDetails.class,
-                new ColourFieldConfig(GroupIdEnum.FILLCOLOUR, FieldIdEnum.STROKE_FILL_COLOUR,
-                        FieldIdEnum.LINE_FILL_OPACITY, FieldIdEnum.STROKE_WIDTH),
-                new ColourFieldConfig(GroupIdEnum.STROKECOLOUR, FieldIdEnum.STROKE_STROKE_COLOUR,
-                        FieldIdEnum.LINE_STROKE_OPACITY, FieldIdEnum.STROKE_FILL_WIDTH),
-                FieldIdEnum.STROKE_STYLE);
+        symbolTypeFactory =
+                new SymbolTypeFactory(
+                        StrokeDetails.class,
+                        new ColourFieldConfig(
+                                GroupIdEnum.FILLCOLOUR,
+                                FieldIdEnum.STROKE_FILL_COLOUR,
+                                FieldIdEnum.LINE_FILL_OPACITY,
+                                FieldIdEnum.STROKE_WIDTH),
+                        new ColourFieldConfig(
+                                GroupIdEnum.STROKECOLOUR,
+                                FieldIdEnum.STROKE_STROKE_COLOUR,
+                                FieldIdEnum.LINE_STROKE_OPACITY,
+                                FieldIdEnum.STROKE_FILL_WIDTH),
+                        FieldIdEnum.STROKE_STYLE);
 
         fieldEnableState = symbolTypeFactory.getFieldOverrides(this.getClass());
 
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
 
         readConfigFile(null, getClass(), this, "Stroke.xml");
@@ -133,15 +135,15 @@ public class StrokeDetails extends StandardPanel
         Expression offset = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_OFFSET);
         Expression strokeWidth = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_WIDTH);
 
-        ValueComboBoxData symbolTypeValue = fieldConfigVisitor
-                .getComboBox(FieldIdEnum.STROKE_STYLE);
+        ValueComboBoxData symbolTypeValue =
+                fieldConfigVisitor.getComboBox(FieldIdEnum.STROKE_STYLE);
         Expression symbolType = null;
         if (symbolTypeValue != null) {
             symbolType = getFilterFactory().literal(symbolTypeValue.getKey());
         }
 
-        List<Float> dashList = createDashArray(
-                fieldConfigVisitor.getText(FieldIdEnum.STROKE_DASH_ARRAY));
+        List<Float> dashList =
+                createDashArray(fieldConfigVisitor.getText(FieldIdEnum.STROKE_DASH_ARRAY));
         float[] dashes = convertDashListToArray(dashList);
 
         FieldConfigBase fdmFillColour = fieldConfigManager.get(FieldIdEnum.STROKE_FILL_COLOUR);
@@ -161,14 +163,26 @@ public class StrokeDetails extends StandardPanel
         if (isLine) {
             opacity = fieldConfigVisitor.getExpression(FieldIdEnum.LINE_FILL_OPACITY);
 
-            stroke = getStyleFactory().stroke(fillColour, opacity, strokeWidth, join, lineCap,
-                    dashes, offset);
+            stroke =
+                    getStyleFactory()
+                            .stroke(
+                                    fillColour,
+                                    opacity,
+                                    strokeWidth,
+                                    join,
+                                    lineCap,
+                                    dashes,
+                                    offset);
         } else {
             stroke = getStyleFactory().getDefaultStroke();
 
-            AnchorPoint anchorPoint = getStyleFactory().anchorPoint(
-                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H),
-                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));
+            AnchorPoint anchorPoint =
+                    getStyleFactory()
+                            .anchorPoint(
+                                    fieldConfigVisitor.getExpression(
+                                            FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H),
+                                    fieldConfigVisitor.getExpression(
+                                            FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V));
 
             // Ignore the anchor point if it is the same as the
             // default so it doesn't appear in the SLD
@@ -176,9 +190,13 @@ public class StrokeDetails extends StandardPanel
                 anchorPoint = null;
             }
 
-            Displacement displacement = getStyleFactory().displacement(
-                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X),
-                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y));
+            Displacement displacement =
+                    getStyleFactory()
+                            .displacement(
+                                    fieldConfigVisitor.getExpression(
+                                            FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X),
+                                    fieldConfigVisitor.getExpression(
+                                            FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y));
 
             // Ignore the displacement if it is the same as the default
             // so it doesn't appear in the SLD
@@ -186,29 +204,42 @@ public class StrokeDetails extends StandardPanel
                 displacement = null;
             }
 
-            List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(this.fieldConfigManager,
-                    symbolType, fillColourEnabled, strokeColourEnabled, selectedFillPanelId);
+            List<GraphicalSymbol> symbols =
+                    symbolTypeFactory.getValue(
+                            this.fieldConfigManager,
+                            symbolType,
+                            fillColourEnabled,
+                            strokeColourEnabled,
+                            selectedFillPanelId);
 
-            Expression initalGap = fieldConfigVisitor
-                    .getExpression(FieldIdEnum.STROKE_SYMBOL_INITIAL_GAP);
+            Expression initalGap =
+                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_INITIAL_GAP);
             Expression gap = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_GAP);
 
             Expression rotation = fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_ANGLE);
-            Expression symbolSize = fieldConfigVisitor
-                    .getExpression(FieldIdEnum.STROKE_SYMBOL_SIZE);
+            Expression symbolSize =
+                    fieldConfigVisitor.getExpression(FieldIdEnum.STROKE_SYMBOL_SIZE);
 
-            GraphicStroke graphicStroke = getStyleFactory().graphicStroke(symbols, opacity,
-                    symbolSize, rotation, anchorPoint, displacement, initalGap, gap);
+            GraphicStroke graphicStroke =
+                    getStyleFactory()
+                            .graphicStroke(
+                                    symbols,
+                                    opacity,
+                                    symbolSize,
+                                    rotation,
+                                    anchorPoint,
+                                    displacement,
+                                    initalGap,
+                                    gap);
 
-            boolean overallOpacity = symbolTypeFactory.isOverallOpacity(PointSymbolizer.class,
-                    selectedFillPanelId);
+            boolean overallOpacity =
+                    symbolTypeFactory.isOverallOpacity(PointSymbolizer.class, selectedFillPanelId);
             if (overallOpacity) {
                 stroke.setOpacity(opacity);
             }
 
             stroke.setGraphicStroke(graphicStroke);
             stroke.setWidth(strokeWidth);
-
         }
         return stroke;
     }
@@ -261,7 +292,7 @@ public class StrokeDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
@@ -343,8 +374,8 @@ public class StrokeDetails extends StandardPanel
 
             if ((graphicFill == null) && (graphicStroke == null)) {
                 expOpacity = stroke.getOpacity();
-                symbolTypeFactory.setSolidFill(fieldConfigManager, stroke.getColor(),
-                        stroke.getOpacity());
+                symbolTypeFactory.setSolidFill(
+                        fieldConfigManager, stroke.getColor(), stroke.getOpacity());
             }
 
             expOpacity = stroke.getOpacity();
@@ -410,8 +441,8 @@ public class StrokeDetails extends StandardPanel
                         @SuppressWarnings("unused")
                         ExternalGraphicImpl externalGraphic = (ExternalGraphicImpl) graphicSymbol;
                     }
-                    symbolTypeFactory.setValue(symbolizerType, this.fieldConfigManager,
-                            graphicStroke, graphicSymbol);
+                    symbolTypeFactory.setValue(
+                            symbolizerType, this.fieldConfigManager, graphicStroke, graphicSymbol);
                 }
             }
 
@@ -426,15 +457,15 @@ public class StrokeDetails extends StandardPanel
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_SIZE, expSymbolSize);
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_ANGLE, expSymbolRotation);
 
-            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H,
-                    expAnchorPointX);
-            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V,
-                    expAnchorPointY);
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_H, expAnchorPointX);
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.STROKE_SYMBOL_ANCHOR_POINT_V, expAnchorPointY);
 
-            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X,
-                    expDisplacementX);
-            fieldConfigVisitor.populateField(FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y,
-                    expDisplacementY);
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_X, expDisplacementX);
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.STROKE_SYMBOL_DISPLACEMENT_Y, expDisplacementY);
 
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_FILL_COLOUR, expColour);
             fieldConfigVisitor.populateField(FieldIdEnum.STROKE_STROKE_COLOUR, expStrokeColour);
@@ -519,9 +550,7 @@ public class StrokeDetails extends StandardPanel
         return sb.toString();
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
             Stroke stroke = getStroke();
@@ -579,7 +608,7 @@ public class StrokeDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -609,23 +638,23 @@ public class StrokeDetails extends StandardPanel
      * @param selectedItem the selected item
      */
     private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem) {
-        Map<GroupIdEnum, Boolean> groupList = fieldEnableState.getGroupIdList(panelId.getName(),
-                selectedItem);
+        Map<GroupIdEnum, Boolean> groupList =
+                fieldEnableState.getGroupIdList(panelId.getName(), selectedItem);
 
         for (GroupIdEnum groupId : groupList.keySet()) {
             boolean groupEnabled = groupList.get(groupId);
-            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(this.getClass(),
-                    groupId);
+            GroupConfigInterface groupConfig =
+                    fieldConfigManager.getGroup(this.getClass(), groupId);
             if (groupConfig != null) {
                 groupConfig.setGroupStateOverride(groupEnabled);
             } else {
-                ConsoleManager.getInstance().error(this,
-                        "Failed to find group : " + groupId.toString());
+                ConsoleManager.getInstance()
+                        .error(this, "Failed to find group : " + groupId.toString());
             }
         }
 
-        Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(),
-                selectedItem);
+        Map<FieldIdEnum, Boolean> fieldList =
+                fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
 
         for (FieldIdEnum fieldId : fieldList.keySet()) {
             boolean fieldEnabled = fieldList.get(fieldId);
@@ -635,8 +664,8 @@ public class StrokeDetails extends StandardPanel
                 fieldState.setFieldEnabled(fieldEnabled);
                 fieldConfig.setFieldState(fieldState);
             } else {
-                ConsoleManager.getInstance().error(this,
-                        "Failed to find field : " + fieldId.toString());
+                ConsoleManager.getInstance()
+                        .error(this, "Failed to find field : " + fieldId.toString());
             }
         }
     }
@@ -648,7 +677,7 @@ public class StrokeDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -658,7 +687,7 @@ public class StrokeDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -668,12 +697,12 @@ public class StrokeDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         symbolTypeFactory.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }
 }

@@ -19,16 +19,15 @@
 
 package com.sldeditor.extension.filesystem.geoserver;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.StyleWrapper;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Interface GeoServerReadProgressInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface GeoServerReadProgressInterface {
@@ -47,8 +46,10 @@ public interface GeoServerReadProgressInterface {
      * @param styleMap the style map
      * @param partialRefresh the partial refresh
      */
-    void readStylesComplete(GeoServerConnection connection,
-            Map<String, List<StyleWrapper>> styleMap, boolean partialRefresh);
+    void readStylesComplete(
+            GeoServerConnection connection,
+            Map<String, List<StyleWrapper>> styleMap,
+            boolean partialRefresh);
 
     /**
      * Read styles progress.
@@ -65,8 +66,8 @@ public interface GeoServerReadProgressInterface {
      * @param connection the connection
      * @param layerMap the layer map
      */
-    void readLayersComplete(GeoServerConnection connection,
-            Map<String, List<GeoServerLayer>> layerMap);
+    void readLayersComplete(
+            GeoServerConnection connection, Map<String, List<GeoServerLayer>> layerMap);
 
     /**
      * Read layers progress.

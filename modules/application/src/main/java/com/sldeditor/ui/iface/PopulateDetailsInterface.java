@@ -19,15 +19,14 @@
 
 package com.sldeditor.ui.iface;
 
-import java.util.List;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import java.util.List;
 
 /**
  * The Interface PopulateDetailsInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface PopulateDetailsInterface {
@@ -53,9 +52,7 @@ public interface PopulateDetailsInterface {
      */
     public boolean isDataPresent();
 
-    /**
-     * Method called before symbol loaded.
-     */
+    /** Method called before symbol loaded. */
     public void preLoadSymbol();
 
     /**
@@ -65,6 +62,6 @@ public interface PopulateDetailsInterface {
      * @param sldObj the sld obj
      * @param vendorOptionsPresentList the vendor options present list
      */
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList);
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList);
 }

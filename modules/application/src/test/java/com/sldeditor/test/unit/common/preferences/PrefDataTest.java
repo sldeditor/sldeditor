@@ -23,29 +23,25 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-
 import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.common.preferences.PrefDataLastViewedEnum;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Unit test for PrefData.
- * 
+ *
  * <p>{@link com.sldeditor.common.preferences.PrefData}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class PrefDataTest {
 
-    /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#clone()}.
-     */
+    /** Test method for {@link com.sldeditor.common.preferences.PrefData#clone()}. */
     @Test
     public void testClone() {
         PrefData prefData = new PrefData();
@@ -72,9 +68,7 @@ public class PrefDataTest {
         assertEquals(newObj.isCheckAppVersionOnStartUp(), prefData.isCheckAppVersionOnStartUp());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#isUseAntiAlias()}.
-     */
+    /** Test method for {@link com.sldeditor.common.preferences.PrefData#isUseAntiAlias()}. */
     @Test
     public void testUseAntiAlias() {
         PrefData prefData = new PrefData();
@@ -87,8 +81,9 @@ public class PrefDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#setCheckAppVersionOnStartUp(boolean)}.
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#isCheckAppVersionOnStartUp()}.
+     * Test method for {@link
+     * com.sldeditor.common.preferences.PrefData#setCheckAppVersionOnStartUp(boolean)}. Test method
+     * for {@link com.sldeditor.common.preferences.PrefData#isCheckAppVersionOnStartUp()}.
      */
     @Test
     public void testCheckAppVersionOnStartUp() {
@@ -102,8 +97,9 @@ public class PrefDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#getVendorOptionVersionList()}.
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#setVendorOptionVersionList()}.
+     * Test method for {@link
+     * com.sldeditor.common.preferences.PrefData#getVendorOptionVersionList()}. Test method for
+     * {@link com.sldeditor.common.preferences.PrefData#setVendorOptionVersionList()}.
      */
     @Test
     public void testVendorOptionVersionList() {
@@ -117,8 +113,9 @@ public class PrefDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#getUiLayoutClass()}.
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#setUiLayoutClass(java.lang.String)}.
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#getUiLayoutClass()}. Test
+     * method for {@link
+     * com.sldeditor.common.preferences.PrefData#setUiLayoutClass(java.lang.String)}.
      */
     @Test
     public void testUiLayoutClass() {
@@ -131,8 +128,9 @@ public class PrefDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#getBackgroundColour()}.
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#setBackgroundColour(java.awt.Color)}.
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#getBackgroundColour()}. Test
+     * method for {@link
+     * com.sldeditor.common.preferences.PrefData#setBackgroundColour(java.awt.Color)}.
      */
     @Test
     public void testBackgroundColour() {
@@ -144,7 +142,8 @@ public class PrefDataTest {
 
     /**
      * Test method for {@link com.sldeditor.common.preferences.PrefData#getSaveLastFolderView()}.
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#setSaveLastFolderView(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.common.preferences.PrefData#setSaveLastFolderView(boolean)}.
      */
     @Test
     public void testSaveLastFolderView() {
@@ -159,8 +158,9 @@ public class PrefDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#getLastViewedKey()}.
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#setLastViewedKey(PrefDataLastViewedEnum)}.
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#getLastViewedKey()}. Test
+     * method for {@link
+     * com.sldeditor.common.preferences.PrefData#setLastViewedKey(PrefDataLastViewedEnum)}.
      */
     @Test
     public void testLastViewedKey() {
@@ -175,8 +175,8 @@ public class PrefDataTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#geLastFolderViewed()}.
-     * Test method for {@link com.sldeditor.common.preferences.PrefData#setLastFolderViewed(String)}.
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#geLastFolderViewed()}. Test
+     * method for {@link com.sldeditor.common.preferences.PrefData#setLastFolderViewed(String)}.
      */
     @Test
     public void testLastFolderViewed() {

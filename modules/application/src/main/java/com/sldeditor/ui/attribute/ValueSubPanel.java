@@ -20,16 +20,14 @@
 package com.sldeditor.ui.attribute;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import org.geotools.filter.LiteralExpressionImpl;
 import org.opengis.filter.expression.Expression;
 
 /**
  * Panel that allows the user to configure values for an SLD attribute.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ValueSubPanel extends JPanel {

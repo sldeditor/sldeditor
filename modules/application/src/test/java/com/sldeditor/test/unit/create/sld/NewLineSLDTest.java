@@ -21,6 +21,7 @@ package com.sldeditor.test.unit.create.sld;
 
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.create.sld.NewLineSLD;
 import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.StyledLayer;
@@ -28,18 +29,14 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.junit.Test;
 
-import com.sldeditor.create.sld.NewLineSLD;
-
 /**
  * The Class NewLineSLDTest.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class NewLineSLDTest {
 
-    /**
-     * Test new line sld.
-     */
+    /** Test new line sld. */
     @Test
     public void testNewLineSLD() {
         NewLineSLD newData = new NewLineSLD();
@@ -52,8 +49,16 @@ public class NewLineSLDTest {
 
         NamedLayer namedLayer = (NamedLayer) styledLayer;
 
-        Symbolizer symbolizer = namedLayer.styles().get(0).featureTypeStyles().get(0).rules().get(0)
-                .symbolizers().get(0);
+        Symbolizer symbolizer =
+                namedLayer
+                        .styles()
+                        .get(0)
+                        .featureTypeStyles()
+                        .get(0)
+                        .rules()
+                        .get(0)
+                        .symbolizers()
+                        .get(0);
 
         assertTrue(symbolizer instanceof LineSymbolizer);
     }

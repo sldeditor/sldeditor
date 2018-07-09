@@ -22,25 +22,25 @@ package com.sldeditor.test.unit.datasource.extension.filesystem.node.geoserver;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Test;
-
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode;
+import org.junit.Test;
 
 /**
  * Unit test for GeoServerStyleNode class.
- * 
- * <p>{@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode}
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class GeoServerStyleNodeTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode#GeoServerStyleNode(com.sldeditor.common.filesystem.FileSystemInterface)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode#GeoServerStyleNode(com.sldeditor.common.filesystem.FileSystemInterface)}.
      */
     @Test
     public void testGeoServerLayerNode() {

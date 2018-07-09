@@ -23,8 +23,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.datasource.SLDEditorFileInterface;
+import com.sldeditor.datasource.impl.CreateInternalDataSource;
+import com.sldeditor.datasource.impl.DataSourceInfo;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.LineSymbolizer;
@@ -39,17 +43,11 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
 import org.junit.Test;
 
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.datasource.SLDEditorFileInterface;
-import com.sldeditor.datasource.impl.CreateInternalDataSource;
-import com.sldeditor.datasource.impl.DataSourceInfo;
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
-
 /**
  * Unit test for CreateInternalDataSource.
- * 
+ *
  * <p>{@link com.sldeditor.datasource.impl.CreateInternalDataSource}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class CreateInternalDataSourceTest {
@@ -64,12 +62,11 @@ public class CreateInternalDataSourceTest {
         public GeometryTypeEnum callDetermineGeometryType(StyledLayerDescriptor sld) {
             return super.internal_determineGeometryType(sld);
         }
-
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.impl.CreateInternalDataSource#connect(com.sldeditor.datasource.SLDEditorFileInterface)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.CreateInternalDataSource#connect(com.sldeditor.datasource.SLDEditorFileInterface)}.
      */
     @Test
     public void testConnect() {
@@ -93,8 +90,8 @@ public class CreateInternalDataSourceTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.impl.CreateInternalDataSource#determineGeometryType(StyledLayerDescriptor)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.CreateInternalDataSource#determineGeometryType(StyledLayerDescriptor)}.
      */
     @Test
     public void testDetermineGeometryType() {

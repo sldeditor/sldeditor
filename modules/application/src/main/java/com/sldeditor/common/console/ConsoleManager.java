@@ -17,20 +17,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.console;
 
 import javax.swing.JPanel;
-
 import org.apache.log4j.Logger;
 
 /**
  * Central point to which all messages/errors/exceptions are sent to appear in the console panel.
- * 
+ *
  * <p>Received messages/errors/exceptions are logged as well.
- * 
+ *
  * <p>Class is implemented as a singleton.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ConsoleManager {
@@ -63,12 +61,8 @@ public class ConsoleManager {
         return (JPanel) panel;
     }
 
-    /**
-     * Make default constructor private.
-     */
-    private ConsoleManager() {
-
-    }
+    /** Make default constructor private. */
+    private ConsoleManager() {}
 
     /**
      * Error.
@@ -148,9 +142,7 @@ public class ConsoleManager {
         logger.error(sb.toString());
     }
 
-    /**
-     * Clear all displayed console messages.
-     */
+    /** Clear all displayed console messages. */
     public void clear() {
         panel.clear();
     }

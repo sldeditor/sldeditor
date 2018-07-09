@@ -19,6 +19,8 @@
 
 package com.sldeditor.common.data;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.console.ConsoleManager;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +28,6 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.DefaultResourceLocator;
 import org.geotools.styling.FeatureTypeStyle;
@@ -41,13 +42,10 @@ import org.geotools.styling.Symbolizer;
 import org.geotools.styling.UserLayerImpl;
 import org.geotools.util.URLs;
 
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.console.ConsoleManager;
-
 /**
- * The Class SLDUtils, contains utility methods to populate 
- * StyledLayerDescriptor objects from a string or a file.
- * 
+ * The Class SLDUtils, contains utility methods to populate StyledLayerDescriptor objects from a
+ * string or a file.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDUtils {
@@ -81,8 +79,8 @@ public class SLDUtils {
         try {
             sld = styleReader.parseSLD();
         } catch (RuntimeException e) {
-            String errorMessage = String.format("SLD Parser error : %s",
-                    sldData.getStyle().toString());
+            String errorMessage =
+                    String.format("SLD Parser error : %s", sldData.getStyle().toString());
             ConsoleManager.getInstance().error(SLDUtils.class, errorMessage);
             ConsoleManager.getInstance().error(SLDUtils.class, e.getMessage());
         }
@@ -167,7 +165,9 @@ public class SLDUtils {
      * @param otherSLD the other SLD
      * @return the symbolizer
      */
-    public static Symbolizer findSymbolizer(StyledLayerDescriptor sld, Symbolizer symbolizerToFind,
+    public static Symbolizer findSymbolizer(
+            StyledLayerDescriptor sld,
+            Symbolizer symbolizerToFind,
             StyledLayerDescriptor otherSLD) {
 
         List<StyledLayer> styledLayerList = sld.layers();
@@ -203,8 +203,13 @@ public class SLDUtils {
                                 symbolizerIndex = 0;
                                 for (org.opengis.style.Symbolizer symbolizer : rule.symbolizers()) {
                                     if (symbolizer == symbolizerToFind) {
-                                        return findEquivalentSymbolizer(otherSLD, styledLayerIndex,
-                                                isNamedLayer, styleIndex, ftsIndex, ruleIndex,
+                                        return findEquivalentSymbolizer(
+                                                otherSLD,
+                                                styledLayerIndex,
+                                                isNamedLayer,
+                                                styleIndex,
+                                                ftsIndex,
+                                                ruleIndex,
                                                 symbolizerIndex);
                                     }
                                     symbolizerIndex++;
@@ -234,8 +239,13 @@ public class SLDUtils {
      * @param symbolizerIndex the symbolizer index
      * @return the symbolizer
      */
-    private static Symbolizer findEquivalentSymbolizer(StyledLayerDescriptor otherSLD,
-            int styledLayerIndex, boolean isNamedLayer, int styleIndex, int ftsIndex, int ruleIndex,
+    private static Symbolizer findEquivalentSymbolizer(
+            StyledLayerDescriptor otherSLD,
+            int styledLayerIndex,
+            boolean isNamedLayer,
+            int styleIndex,
+            int ftsIndex,
+            int ruleIndex,
             int symbolizerIndex) {
         if (otherSLD != null) {
             List<StyledLayer> styledLayerList = otherSLD.layers();
@@ -277,8 +287,8 @@ public class SLDUtils {
      * @param otherSLD the other SLD
      * @return the rule
      */
-    public static Rule findRule(StyledLayerDescriptor sld, Rule ruleToFind,
-            StyledLayerDescriptor otherSLD) {
+    public static Rule findRule(
+            StyledLayerDescriptor sld, Rule ruleToFind, StyledLayerDescriptor otherSLD) {
         if (sld != null) {
             List<StyledLayer> styledLayerList = sld.layers();
 
@@ -310,8 +320,13 @@ public class SLDUtils {
                                 ruleIndex = 0;
                                 for (Rule rule : fts.rules()) {
                                     if (rule == ruleToFind) {
-                                        return findEquivalentRule(otherSLD, styledLayerIndex,
-                                                isNamedLayer, styleIndex, ftsIndex, ruleIndex);
+                                        return findEquivalentRule(
+                                                otherSLD,
+                                                styledLayerIndex,
+                                                isNamedLayer,
+                                                styleIndex,
+                                                ftsIndex,
+                                                ruleIndex);
                                     }
                                     ruleIndex++;
                                 }
@@ -338,8 +353,13 @@ public class SLDUtils {
      * @param ruleIndex the rule index
      * @return the rule
      */
-    private static Rule findEquivalentRule(StyledLayerDescriptor otherSLD, int styledLayerIndex,
-            boolean isNamedLayer, int styleIndex, int ftsIndex, int ruleIndex) {
+    private static Rule findEquivalentRule(
+            StyledLayerDescriptor otherSLD,
+            int styledLayerIndex,
+            boolean isNamedLayer,
+            int styleIndex,
+            int ftsIndex,
+            int ruleIndex) {
         if (otherSLD != null) {
             List<StyledLayer> styledLayerList = otherSLD.layers();
 

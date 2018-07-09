@@ -22,53 +22,53 @@ package com.sldeditor.test.unit.datasource.connector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.Test;
-
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.Test;
 
 /**
  * Unit test for DataSourceConnectorFactory class.
- * 
- * <p>{@link com.sldeditor.datasource.connector.DataSourceConnectorFactory}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.connector.DataSourceConnectorFactory}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DataSourceConnectorFactoryTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.DataSourceConnectorFactory#getDataSourceConnectorList()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.DataSourceConnectorFactory#getDataSourceConnectorList()}.
      */
     @Test
     public void testGetDataSourceConnectorList() {
 
-        Map<Class<?>, DataSourceConnectorInterface> actual = DataSourceConnectorFactory
-                .getDataSourceConnectorList();
+        Map<Class<?>, DataSourceConnectorInterface> actual =
+                DataSourceConnectorFactory.getDataSourceConnectorList();
 
         assertFalse(actual.isEmpty());
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.DataSourceConnectorFactory#getDataSourceProperties(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.DataSourceConnectorFactory#getDataSourceProperties(java.lang.String)}.
      */
     @Test
     public void testGetDataSourcePropertiesString() {
 
-        DataSourcePropertiesInterface dsp = 
+        DataSourcePropertiesInterface dsp =
                 DataSourceConnectorFactory.getDataSourceProperties("filename.shp");
 
         assertEquals(DataSourceConnector.class, dsp.getDataSourceConnector().getClass());
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.DataSourceConnectorFactory#getNoDataSource()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.DataSourceConnectorFactory#getNoDataSource()}.
      */
     @Test
     public void testGetNoDataSource() {
@@ -78,11 +78,12 @@ public class DataSourceConnectorFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.DataSourceConnectorFactory#getDataSourceProperties(java.util.Map)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.DataSourceConnectorFactory#getDataSourceProperties(java.util.Map)}.
      */
     @Test
     public void testGetDataSourcePropertiesMapOfStringString() {
-        Map<String, Object> propertyMap = new HashMap<String,Object>();
+        Map<String, Object> propertyMap = new HashMap<String, Object>();
 
         propertyMap.put("url", "filename.shp");
         DataSourcePropertiesInterface dsp =
@@ -105,14 +106,15 @@ public class DataSourceConnectorFactoryTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.datasource.connector.DataSourceConnectorFactory#getFileExtension(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.connector.DataSourceConnectorFactory#getFileExtension(java.lang.String)}.
      */
     @Test
     public void testGetFileExtension() {
         String extension = "shp";
 
-        assertEquals(extension, 
+        assertEquals(
+                extension,
                 DataSourceConnectorFactory.getFileExtension("testfilename." + extension));
     }
-
 }

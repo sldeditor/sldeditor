@@ -24,14 +24,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.filter.AttributeExpressionImpl;
-import org.geotools.filter.LiteralExpressionImpl;
-import org.junit.Test;
-import org.locationtech.jts.geom.Geometry;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
@@ -40,10 +32,17 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.AttributeExpressionImpl;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.junit.Test;
+import org.locationtech.jts.geom.Geometry;
+import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The unit test for FieldConfigColour.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.FieldConfigColour}
  *
  * @author Robert Ward (SCISYS)
@@ -51,16 +50,18 @@ import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 public class FieldConfigColourTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#internal_setEnabled(boolean)}. Test
-     * method for {@link com.sldeditor.ui.detail.config.FieldConfigColour#isEnabled()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigColour#internal_setEnabled(boolean)}. Test method
+     * for {@link com.sldeditor.ui.detail.config.FieldConfigColour#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigColour field = new FieldConfigColour(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigColour field =
+                new FieldConfigColour(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -80,8 +81,10 @@ public class FieldConfigColourTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigColour field2 = new FieldConfigColour(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigColour field2 =
+                new FieldConfigColour(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -106,8 +109,10 @@ public class FieldConfigColourTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigColour field = new FieldConfigColour(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigColour field =
+                new FieldConfigColour(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -119,16 +124,15 @@ public class FieldConfigColourTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#generateExpression()}. Test method
-     * for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#getColourExpression()}. Test method
-     * for {@link com.sldeditor.ui.detail.config.FieldConfigColour#getColourOpacityExpression()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigColour#getStringValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigColour#generateExpression()}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#populateExpression(java.lang.Object,
+     * org.opengis.filter.expression.Expression)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigColour#setTestValue(com.sldeditor.ui.detail.config.FieldId,
+     * java.lang.String)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigColour#getColourExpression()}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#getColourOpacityExpression()}. Test
+     * method for {@link com.sldeditor.ui.detail.config.FieldConfigColour#getStringValue()}.
      */
     @Test
     public void testGenerateExpression() {
@@ -144,8 +148,10 @@ public class FieldConfigColourTest {
             }
         }
 
-        TestFieldConfigColour field = new TestFieldConfigColour(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        TestFieldConfigColour field =
+                new TestFieldConfigColour(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
         field.setTestValue(FieldIdEnum.UNKNOWN, (String) null);
@@ -209,14 +215,16 @@ public class FieldConfigColourTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#revertToDefaultValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigColour#revertToDefaultValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigColour field = new FieldConfigColour(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigColour field =
+                new FieldConfigColour(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.revertToDefaultValue();
         assertTrue(field.getStringValue().compareTo("") == 0);
@@ -228,8 +236,8 @@ public class FieldConfigColourTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigColour#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
@@ -245,8 +253,10 @@ public class FieldConfigColourTest {
             }
         }
 
-        TestFieldConfigColour field = new TestFieldConfigColour(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        TestFieldConfigColour field =
+                new TestFieldConfigColour(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         FieldConfigColour copy = (FieldConfigColour) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -257,29 +267,33 @@ public class FieldConfigColourTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#attributeSelection(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigColour#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigColour field = new FieldConfigColour(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigColour field =
+                new FieldConfigColour(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         field.attributeSelection(null);
 
         // Does nothing
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigColour#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigColour#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigColour#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
-        FieldConfigColour field = new FieldConfigColour(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", false));
+        FieldConfigColour field =
+                new FieldConfigColour(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();

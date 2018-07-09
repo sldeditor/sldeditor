@@ -24,24 +24,20 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.colourramp.ColourRamp;
 import com.sldeditor.colourramp.ramp.ColourRampData;
+import org.junit.Test;
 
 /**
  * Unit test for ColourRampData class.
- * 
- * <p>{@link com.sldeditor.colourramp.ramp.ColourRampData}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.colourramp.ramp.ColourRampData}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class ColourRampDataTest {
 
-    /**
-     * Test method for {@link com.sldeditor.colourramp.ramp.ColourRampData#ColourRampData()}.
-     */
+    /** Test method for {@link com.sldeditor.colourramp.ramp.ColourRampData#ColourRampData()}. */
     @Test
     public void testColourRampData() {
         ColourRampData obj = new ColourRampData();
@@ -56,7 +52,7 @@ public class ColourRampDataTest {
         int expectedMaxValue = 69;
         obj.setMaxValue(expectedMaxValue);
         assertEquals(expectedMaxValue, obj.getMaxValue());
-        
+
         ColourRamp colourRamp = new ColourRamp();
         obj.setColourRamp(colourRamp);
         assertEquals(colourRamp, obj.getColourRamp());
@@ -64,5 +60,4 @@ public class ColourRampDataTest {
         obj.setReverseColours(true);
         assertTrue(obj.reverseColours());
     }
-
 }

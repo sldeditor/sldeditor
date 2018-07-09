@@ -19,13 +19,12 @@
 
 package com.sldeditor.update;
 
+import com.sldeditor.common.vendoroption.VersionData;
 import java.awt.Desktop;
 import java.awt.Desktop.Action;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-
-import com.sldeditor.common.vendoroption.VersionData;
 
 /**
  * The Class CheckUpdate.
@@ -61,8 +60,9 @@ public class CheckUpdate {
             latestData = client.getLatest();
 
             if (latestData != null) {
-                VersionData current = VersionData
-                        .decode(latestData.getVersion().getVendorOptionType(), currentVersion);
+                VersionData current =
+                        VersionData.decode(
+                                latestData.getVersion().getVendorOptionType(), currentVersion);
 
                 int result = current.compareTo(latestData.getVersion());
 
@@ -81,9 +81,7 @@ public class CheckUpdate {
         return latestData;
     }
 
-    /**
-     * Show download page.
-     */
+    /** Show download page. */
     public void showDownloadPage() {
         if (client != null) {
             URL url = client.getDownloadURL();
@@ -110,5 +108,4 @@ public class CheckUpdate {
         }
         return false;
     }
-
 }

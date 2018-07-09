@@ -21,24 +21,19 @@ package com.sldeditor.test.unit.create;
 
 import static org.junit.Assert.assertFalse;
 
-import org.junit.Test;
-
 import com.sldeditor.create.NewSLDFactory;
+import org.junit.Test;
 
 /**
  * Unit test for NewSLDFactory.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 public class NewSLDFactoryTest {
 
-    /**
-     * Test method for {@link com.sldeditor.create.NewSLDFactory#getAvailable()}.
-     */
+    /** Test method for {@link com.sldeditor.create.NewSLDFactory#getAvailable()}. */
     @Test
     public void testGetAvailable() {
         assertFalse(NewSLDFactory.getAvailable().isEmpty());
     }
-
 }

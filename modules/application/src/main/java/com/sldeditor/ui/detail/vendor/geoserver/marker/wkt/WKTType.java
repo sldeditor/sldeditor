@@ -21,7 +21,7 @@ package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
 /**
  * Class that contains configuration data describing a WKT type.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class WKTType {
@@ -54,8 +54,13 @@ public class WKTType {
      * @param canHaveMultipleShapes the can have multiple shapes
      * @param doFirstLastHaveToBeSame the do first last have to be same
      */
-    public WKTType(String name, boolean multipleCoordinates, int numOfPoints, String listItem,
-            boolean canHaveMultipleShapes, boolean doFirstLastHaveToBeSame) {
+    public WKTType(
+            String name,
+            boolean multipleCoordinates,
+            int numOfPoints,
+            String listItem,
+            boolean canHaveMultipleShapes,
+            boolean doFirstLastHaveToBeSame) {
         super();
         this.name = name;
         this.multipleCoordinates = multipleCoordinates;
@@ -90,7 +95,7 @@ public class WKTType {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -136,7 +141,7 @@ public class WKTType {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -154,7 +159,7 @@ public class WKTType {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

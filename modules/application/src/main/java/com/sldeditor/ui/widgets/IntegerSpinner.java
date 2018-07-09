@@ -19,8 +19,8 @@
 
 package com.sldeditor.ui.widgets;
 
+import com.sldeditor.ui.iface.SpinnerNotifyInterface;
 import java.util.ArrayList;
-
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
@@ -30,11 +30,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.DefaultFormatter;
 
-import com.sldeditor.ui.iface.SpinnerNotifyInterface;
-
 /**
  * Component that extends a JSpinner, allows only integers and is configured from an xml file.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class IntegerSpinner extends JSpinner {
@@ -48,9 +46,7 @@ public class IntegerSpinner extends JSpinner {
     /** The min is zero. */
     private boolean minIsZero = false;
 
-    /**
-     * Instantiates a new value spinner.
-     */
+    /** Instantiates a new value spinner. */
     public IntegerSpinner(int min, int max, int stepSize) {
         SpinnerNumberModel model = new SpinnerNumberModel(min, min, max, stepSize);
         setModel(model);
@@ -59,29 +55,30 @@ public class IntegerSpinner extends JSpinner {
         final JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
         DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
         formatter.setCommitsOnValidEdit(true);
-        addChangeListener(new ChangeListener() {
-            private double oldValue = Double.MAX_VALUE;
+        addChangeListener(
+                new ChangeListener() {
+                    private double oldValue = Double.MAX_VALUE;
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
 
-                Double doubleValue = IntegerSpinner.this.getDoubleValue();
+                        Double doubleValue = IntegerSpinner.this.getDoubleValue();
 
-                if (doubleValue != oldValue) {
-                    double oldValueCopy = oldValue;
+                        if (doubleValue != oldValue) {
+                            double oldValueCopy = oldValue;
 
-                    oldValue = doubleValue;
-                    if (minIsZero) {
-                        if (doubleValue < 0.0) {
-                            doubleValue = 0.0;
-                            field.setValue(doubleValue);
+                            oldValue = doubleValue;
+                            if (minIsZero) {
+                                if (doubleValue < 0.0) {
+                                    doubleValue = 0.0;
+                                    field.setValue(doubleValue);
+                                }
+                            }
+
+                            notifyListeners(oldValueCopy, doubleValue);
                         }
                     }
-
-                    notifyListeners(oldValueCopy, doubleValue);
-                }
-            }
-        });
+                });
     }
 
     /**

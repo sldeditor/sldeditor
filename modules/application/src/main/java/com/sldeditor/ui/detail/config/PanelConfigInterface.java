@@ -19,12 +19,11 @@
 
 package com.sldeditor.ui.detail.config;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Interface PanelConfigInterface.
@@ -39,7 +38,7 @@ public interface PanelConfigInterface {
      * @return the panel title
      */
     public String getPanelTitle();
-    
+
     /**
      * Gets the vendor option version read from the configuration.
      *

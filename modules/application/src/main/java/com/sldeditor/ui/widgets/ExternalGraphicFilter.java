@@ -19,15 +19,13 @@
 
 package com.sldeditor.ui.widgets;
 
-import java.io.File;
-
-import javax.swing.filechooser.FileFilter;
-
 import com.sldeditor.common.localisation.Localisation;
+import java.io.File;
+import javax.swing.filechooser.FileFilter;
 
 /**
  * External image file filter class, allows gif, jpg, tiff, or png files.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ExternalGraphicFilter extends FileFilter {
@@ -68,9 +66,8 @@ public class ExternalGraphicFilter extends FileFilter {
     }
 
     /**
-     * Accept all directories and all gif, jpg, tiff, or png files.
-     * (non-Javadoc)
-     * 
+     * Accept all directories and all gif, jpg, tiff, or png files. (non-Javadoc)
+     *
      * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
      */
     public boolean accept(File f) {
@@ -96,11 +93,11 @@ public class ExternalGraphicFilter extends FileFilter {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.filechooser.FileFilter#getDescription()
      */
     public String getDescription() {
-        return Localisation.getString(ExternalGraphicFilter.class,
-                "ExternalGraphicFilter.description");
+        return Localisation.getString(
+                ExternalGraphicFilter.class, "ExternalGraphicFilter.description");
     }
 }

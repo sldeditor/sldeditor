@@ -17,23 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.data;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.property.EncryptedPropertiesFactory;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.property.EncryptedPropertiesFactory;
-
 /**
- * The Class GeoServerConnection encapsulates GeoServer connection details,
- * including connection name, url, user name and password.
- * 
- * <p>The class is also capable of writing to and reading from a string all
- * of its attribute data.
- * 
+ * The Class GeoServerConnection encapsulates GeoServer connection details, including connection
+ * name, url, user name and password.
+ *
+ * <p>The class is also capable of writing to and reading from a string all of its attribute data.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerConnection implements Comparable<GeoServerConnection>, Serializable {
@@ -61,11 +58,8 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
     /** The use encryption flag. */
     private static boolean useEncryption = true;
 
-    /**
-     * Default constructor.
-     */
-    public GeoServerConnection() {
-    }
+    /** Default constructor. */
+    public GeoServerConnection() {}
 
     /**
      * Decode an encoded GeoServerConnection string.
@@ -185,7 +179,7 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override

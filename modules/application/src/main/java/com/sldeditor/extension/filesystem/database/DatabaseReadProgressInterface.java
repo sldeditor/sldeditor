@@ -19,13 +19,12 @@
 
 package com.sldeditor.extension.filesystem.database;
 
-import java.util.List;
-
 import com.sldeditor.common.data.DatabaseConnection;
+import java.util.List;
 
 /**
  * The Interface GeoServerReadProgressInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface DatabaseReadProgressInterface {
@@ -44,5 +43,4 @@ public interface DatabaseReadProgressInterface {
      * @param featureClassList the feature class list
      */
     void readFeatureClassesComplete(DatabaseConnection connection, List<String> featureClassList);
-
 }

@@ -19,22 +19,19 @@
 
 package com.sldeditor.rendertransformation;
 
+import com.sldeditor.rendertransformation.types.EnumValues;
+import com.sldeditor.rendertransformation.types.RenderTransformValueFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.locationtech.jts.geom.Geometry;
-
-import com.sldeditor.rendertransformation.types.EnumValues;
-import com.sldeditor.rendertransformation.types.RenderTransformValueFactory;
-
 import net.opengis.wps10.InputDescriptionType;
 import net.opengis.wps10.LiteralInputType;
 import net.opengis.wps10.ProcessDescriptionType;
 import net.opengis.wps10.SupportedCRSsType;
 import net.opengis.wps10.SupportedComplexDataType;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * Class that provides the process functions read from a GeoServer instance.
@@ -71,10 +68,12 @@ public class CustomProcessFunction {
         }
 
         if (selectedCustomFunction != null) {
-            for (int index = 0; index < selectedCustomFunction.getDataInputs().getInput()
-                    .size(); index++) {
-                InputDescriptionType input = (InputDescriptionType) selectedCustomFunction
-                        .getDataInputs().getInput().get(index);
+            for (int index = 0;
+                    index < selectedCustomFunction.getDataInputs().getInput().size();
+                    index++) {
+                InputDescriptionType input =
+                        (InputDescriptionType)
+                                selectedCustomFunction.getDataInputs().getInput().get(index);
 
                 ProcessFunctionParameterValue value = new ProcessFunctionParameterValue();
 
@@ -92,9 +91,7 @@ public class CustomProcessFunction {
         return valueList;
     }
 
-    /**
-     * Populate data map.
-     */
+    /** Populate data map. */
     private void populateDataMap() {
         dataTypeMap.put("xs:int", Integer.class);
         dataTypeMap.put("xs:double", Double.class);
@@ -130,8 +127,8 @@ public class CustomProcessFunction {
      * @param value the value
      * @return the type
      */
-    private void getType(InputDescriptionType inputDescription,
-            ProcessFunctionParameterValue value) {
+    private void getType(
+            InputDescriptionType inputDescription, ProcessFunctionParameterValue value) {
         LiteralInputType literal = inputDescription.getLiteralData();
         if (literal != null) {
             RenderTransformValueFactory.getInstance().getValueCustomProcess(value, literal);

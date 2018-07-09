@@ -19,21 +19,6 @@
 
 package com.sldeditor.ui.detail.config.symboltype;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.styling.Fill;
-import org.geotools.styling.Graphic;
-import org.geotools.styling.Stroke;
-import org.opengis.filter.FilterFactory;
-import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Literal;
-import org.opengis.style.GraphicFill;
-import org.opengis.style.GraphicalSymbol;
-
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
@@ -54,11 +39,24 @@ import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.styling.Fill;
+import org.geotools.styling.Graphic;
+import org.geotools.styling.Stroke;
+import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Literal;
+import org.opengis.style.GraphicFill;
+import org.opengis.style.GraphicalSymbol;
 
 /**
- * A factory for creating FieldConfig objects that appear in
- * {@link com.sldeditor.ui.detail.config.FieldConfigSymbolType}.
- * 
+ * A factory for creating FieldConfig objects that appear in {@link
+ * com.sldeditor.ui.detail.config.FieldConfigSymbolType}.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SymbolTypeFactory {
@@ -101,28 +99,41 @@ public class SymbolTypeFactory {
      * @param strokeFieldConfig the stroke field config
      * @param symbolSelectionField the selection combo box
      */
-    public SymbolTypeFactory(Class<?> panelId, ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+    public SymbolTypeFactory(
+            Class<?> panelId,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
         this.selectionComboBox = symbolSelectionField;
 
-        markerField = new FieldConfigMarker(
-                new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false),
-                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        externalImageField = new FieldConfigFilename(
-                new FieldConfigCommonData(panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true),
-                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-        ttfField = new FieldConfigTTF(
-                new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true),
-                fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        markerField =
+                new FieldConfigMarker(
+                        new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false),
+                        fillFieldConfig,
+                        strokeFieldConfig,
+                        symbolSelectionField);
+        externalImageField =
+                new FieldConfigFilename(
+                        new FieldConfigCommonData(panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true),
+                        fillFieldConfig,
+                        strokeFieldConfig,
+                        symbolSelectionField);
+        ttfField =
+                new FieldConfigTTF(
+                        new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true),
+                        fillFieldConfig,
+                        strokeFieldConfig,
+                        symbolSelectionField);
 
         symbolTypeFieldList.add(markerField);
         symbolTypeFieldList.add(externalImageField);
         symbolTypeFieldList.add(ttfField);
 
-        VendorOptionMarkerSymbolFactory vendorOptionMarkerSymbolFactory = new VendorOptionMarkerSymbolFactory();
-        List<FieldState> voFieldStateList = vendorOptionMarkerSymbolFactory
-                .getVendorOptionMarkerSymbols(panelId, fillFieldConfig, strokeFieldConfig,
-                        symbolSelectionField);
+        VendorOptionMarkerSymbolFactory vendorOptionMarkerSymbolFactory =
+                new VendorOptionMarkerSymbolFactory();
+        List<FieldState> voFieldStateList =
+                vendorOptionMarkerSymbolFactory.getVendorOptionMarkerSymbols(
+                        panelId, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
         symbolTypeFieldList.addAll(voFieldStateList);
 
         for (FieldState fieldConfig : symbolTypeFieldList) {
@@ -139,11 +150,11 @@ public class SymbolTypeFactory {
      * @param textPanel the text panel
      * @param fieldConfigManager the field config manager
      */
-    public void populate(VOGeoServerTextSymbolizer2 textPanel,
-            GraphicPanelFieldManager fieldConfigManager) {
+    public void populate(
+            VOGeoServerTextSymbolizer2 textPanel, GraphicPanelFieldManager fieldConfigManager) {
 
-        internal_populate(textPanel, textPanel, textPanel, this.selectionComboBox,
-                fieldConfigManager);
+        internal_populate(
+                textPanel, textPanel, textPanel, this.selectionComboBox, fieldConfigManager);
     }
 
     /**
@@ -152,11 +163,11 @@ public class SymbolTypeFactory {
      * @param fillPanel the graphic panel
      * @param fieldConfigManager the field config manager
      */
-    public void populate(PolygonFillDetails fillPanel,
-            GraphicPanelFieldManager fieldConfigManager) {
+    public void populate(
+            PolygonFillDetails fillPanel, GraphicPanelFieldManager fieldConfigManager) {
 
-        internal_populate(fillPanel, fillPanel, fillPanel, this.selectionComboBox,
-                fieldConfigManager);
+        internal_populate(
+                fillPanel, fillPanel, fillPanel, this.selectionComboBox, fieldConfigManager);
     }
 
     /**
@@ -167,8 +178,8 @@ public class SymbolTypeFactory {
      */
     public void populate(PointFillDetails fillPanel, GraphicPanelFieldManager fieldConfigManager) {
 
-        internal_populate(fillPanel, fillPanel, fillPanel, this.selectionComboBox,
-                fieldConfigManager);
+        internal_populate(
+                fillPanel, fillPanel, fillPanel, this.selectionComboBox, fieldConfigManager);
     }
 
     /**
@@ -179,7 +190,11 @@ public class SymbolTypeFactory {
      */
     public void populate(StrokeDetails strokePanel, GraphicPanelFieldManager fieldConfigManager) {
 
-        internal_populate(strokePanel, strokePanel, strokePanel, FieldIdEnum.STROKE_STYLE,
+        internal_populate(
+                strokePanel,
+                strokePanel,
+                strokePanel,
+                FieldIdEnum.STROKE_STYLE,
                 fieldConfigManager);
     }
 
@@ -192,9 +207,12 @@ public class SymbolTypeFactory {
      * @param selectionField the selection field
      * @param fieldConfigManager the field config manager
      */
-    private void internal_populate(BasePanel basePanel,
-            MultiOptionSelectedInterface multiOptionSelected, UpdateSymbolInterface updateSymbol,
-            FieldIdEnum selectionField, GraphicPanelFieldManager fieldConfigManager) {
+    private void internal_populate(
+            BasePanel basePanel,
+            MultiOptionSelectedInterface multiOptionSelected,
+            UpdateSymbolInterface updateSymbol,
+            FieldIdEnum selectionField,
+            GraphicPanelFieldManager fieldConfigManager) {
         List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
 
         /**
@@ -238,14 +256,17 @@ public class SymbolTypeFactory {
      * @param graphic the graphic
      * @param symbol the new value
      */
-    public void setValue(Class<?> symbolizerType, GraphicPanelFieldManager fieldConfigManager,
-            Graphic graphic, GraphicalSymbol symbol) {
+    public void setValue(
+            Class<?> symbolizerType,
+            GraphicPanelFieldManager fieldConfigManager,
+            Graphic graphic,
+            GraphicalSymbol symbol) {
 
         for (FieldState panel : classMap.values()) {
             if (panel != null) {
                 if (panel.accept(symbol)) {
-                    panel.setValue(symbolizerType, fieldConfigManager, symbolTypeField, graphic,
-                            symbol);
+                    panel.setValue(
+                            symbolizerType, fieldConfigManager, symbolTypeField, graphic, symbol);
                 }
             }
         }
@@ -261,8 +282,11 @@ public class SymbolTypeFactory {
      * @param selectedPanelId the selected panel id
      * @return the value
      */
-    public List<GraphicalSymbol> getValue(GraphicPanelFieldManager fieldConfigManager,
-            Expression symbolType, boolean fillEnabled, boolean strokeEnabled,
+    public List<GraphicalSymbol> getValue(
+            GraphicPanelFieldManager fieldConfigManager,
+            Expression symbolType,
+            boolean fillEnabled,
+            boolean strokeEnabled,
             Class<?> selectedPanelId) {
         FieldState panel = classMap.get(selectedPanelId);
         if (panel != null) {
@@ -279,7 +303,9 @@ public class SymbolTypeFactory {
      * @param expFillColour the exp fill colour
      * @param expFillColourOpacity the exp fill colour opacity
      */
-    public void setSolidFill(GraphicPanelFieldManager fieldConfigManager, Expression expFillColour,
+    public void setSolidFill(
+            GraphicPanelFieldManager fieldConfigManager,
+            Expression expFillColour,
             Expression expFillColourOpacity) {
         if (symbolTypeField != null) {
             FieldConfigBase field = fieldConfigManager.get(this.selectionComboBox);
@@ -386,8 +412,8 @@ public class SymbolTypeFactory {
      * @param sldObj the sld obj
      * @param vendorOptionsPresentList the vendor options present list
      */
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         GraphicalSymbol symbol = null;
 
         Graphic graphic = null;

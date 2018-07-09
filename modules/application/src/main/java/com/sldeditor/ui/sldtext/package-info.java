@@ -19,7 +19,7 @@
 
 /**
  * Displays the the sld symbol as xml.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.sldtext;

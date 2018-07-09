@@ -19,11 +19,11 @@
 
 package com.sldeditor.datasource.impl;
 
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpression;
 import org.geotools.filter.FunctionImpl;
@@ -60,8 +60,6 @@ import org.opengis.filter.spatial.BinarySpatialOperator;
 import org.opengis.filter.temporal.BinaryTemporalOperator;
 import org.opengis.parameter.Parameter;
 
-import com.sldeditor.datasource.attribute.DataSourceAttributeData;
-
 /**
  * Class that extracts all data source fields from an SLD file.
  *
@@ -70,10 +68,12 @@ import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 public class ExtractAttributes extends DuplicatingStyleVisitor {
 
     /** The processed field list. */
-    private List<DataSourceAttributeData> processedFieldList = new ArrayList<DataSourceAttributeData>();
+    private List<DataSourceAttributeData> processedFieldList =
+            new ArrayList<DataSourceAttributeData>();
 
     /** The field list. */
-    private Map<String, DataSourceAttributeData> fieldList = new HashMap<String, DataSourceAttributeData>();
+    private Map<String, DataSourceAttributeData> fieldList =
+            new HashMap<String, DataSourceAttributeData>();
 
     /** The geometry field list. */
     private List<String> geometryFieldList = new ArrayList<String>();
@@ -84,16 +84,14 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
     /** The WKTReader. */
     private static WKTReader reader = new WKTReader(geometryFactory);
 
-    /**
-     * Instantiates a new extract expressions.
-     */
+    /** Instantiates a new extract expressions. */
     public ExtractAttributes() {
         super();
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#copy(org.opengis.filter.expression.
      * Expression)
      */
@@ -116,7 +114,7 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#copy(org.opengis.filter.Filter)
      */
     protected Filter copy(Filter filter) {
@@ -130,47 +128,51 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
         } else if (filter instanceof MultiCompareFilterImpl) {
             MultiCompareFilterImpl multiCompareFilter = (MultiCompareFilterImpl) filter;
             List<String> foundList1 = new ArrayList<String>();
-            Class<?> returnType1 = extractAttribute(String.class,
-                    multiCompareFilter.getExpression1(), foundList1);
+            Class<?> returnType1 =
+                    extractAttribute(String.class, multiCompareFilter.getExpression1(), foundList1);
             List<String> foundList2 = new ArrayList<String>();
-            Class<?> returnType2 = extractAttribute(String.class,
-                    multiCompareFilter.getExpression2(), foundList2);
+            Class<?> returnType2 =
+                    extractAttribute(String.class, multiCompareFilter.getExpression2(), foundList2);
 
             determineTypeFromExpressions(foundList1, returnType1, foundList2, returnType2);
         } else if (filter instanceof BinaryTemporalOperator) {
             BinaryTemporalOperator binaryTemporalOperator = (BinaryTemporalOperator) filter;
             List<String> foundList1 = new ArrayList<String>();
-            Class<?> returnType1 = extractAttribute(String.class,
-                    binaryTemporalOperator.getExpression1(), foundList1);
+            Class<?> returnType1 =
+                    extractAttribute(
+                            String.class, binaryTemporalOperator.getExpression1(), foundList1);
             List<String> foundList2 = new ArrayList<String>();
-            Class<?> returnType2 = extractAttribute(String.class,
-                    binaryTemporalOperator.getExpression2(), foundList2);
+            Class<?> returnType2 =
+                    extractAttribute(
+                            String.class, binaryTemporalOperator.getExpression2(), foundList2);
 
             determineTypeFromExpressions(foundList1, returnType1, foundList2, returnType2);
         } else if (filter instanceof BinarySpatialOperator) {
             BinarySpatialOperator binarySpatialOperator = (BinarySpatialOperator) filter;
             List<String> foundList1 = new ArrayList<String>();
-            Class<?> returnType1 = extractAttribute(String.class,
-                    binarySpatialOperator.getExpression1(), foundList1);
+            Class<?> returnType1 =
+                    extractAttribute(
+                            String.class, binarySpatialOperator.getExpression1(), foundList1);
             List<String> foundList2 = new ArrayList<String>();
-            Class<?> returnType2 = extractAttribute(String.class,
-                    binarySpatialOperator.getExpression2(), foundList2);
+            Class<?> returnType2 =
+                    extractAttribute(
+                            String.class, binarySpatialOperator.getExpression2(), foundList2);
 
             determineTypeFromExpressions(foundList1, returnType1, foundList2, returnType2);
         } else if (filter instanceof PropertyIsBetween) {
             PropertyIsBetween isBetween = (PropertyIsBetween) filter;
             List<String> foundList1 = new ArrayList<String>();
-            Class<?> returnType1 = extractAttribute(String.class, isBetween.getLowerBoundary(),
-                    foundList1);
+            Class<?> returnType1 =
+                    extractAttribute(String.class, isBetween.getLowerBoundary(), foundList1);
             List<String> foundList2 = new ArrayList<String>();
-            Class<?> returnType2 = extractAttribute(String.class, isBetween.getExpression(),
-                    foundList2);
+            Class<?> returnType2 =
+                    extractAttribute(String.class, isBetween.getExpression(), foundList2);
             List<String> foundList3 = new ArrayList<String>();
-            Class<?> returnType3 = extractAttribute(String.class, isBetween.getUpperBoundary(),
-                    foundList3);
+            Class<?> returnType3 =
+                    extractAttribute(String.class, isBetween.getUpperBoundary(), foundList3);
 
-            determineTypeFromExpressions(foundList1, returnType1, foundList2, returnType2,
-                    foundList3, returnType3);
+            determineTypeFromExpressions(
+                    foundList1, returnType1, foundList2, returnType2, foundList3, returnType3);
         } else if (filter instanceof PropertyIsNull) {
             PropertyIsNull isNull = (PropertyIsNull) filter;
             List<String> foundList1 = new ArrayList<String>();
@@ -185,8 +187,9 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
 
     /**
      * (non-Javadoc)
-     * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PointSymbolizer)
+     *
+     * @see
+     *     org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PointSymbolizer)
      */
     public void visit(PointSymbolizer ps) {
         PointSymbolizer copy = sf.getDefaultPointSymbolizer();
@@ -207,8 +210,9 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
 
     /**
      * (non-Javadoc)
-     * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.LineSymbolizer)
+     *
+     * @see
+     *     org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.LineSymbolizer)
      */
     public void visit(LineSymbolizer line) {
         LineSymbolizer copy = sf.getDefaultLineSymbolizer();
@@ -229,8 +233,9 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
 
     /**
      * (non-Javadoc)
-     * 
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PolygonSymbolizer)
+     *
+     * @see
+     *     org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.PolygonSymbolizer)
      */
     public void visit(PolygonSymbolizer poly) {
         PolygonSymbolizer copy = sf.createPolygonSymbolizer();
@@ -251,9 +256,9 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.
-     *      FeatureTypeStyle)
+     *     FeatureTypeStyle)
      */
     public void visit(FeatureTypeStyle fts) {
 
@@ -290,8 +295,10 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             SortBy[] sortByArray = SLDStyleFactory.getSortBy(fts.getOptions());
             for (SortBy sortBy : sortByArray) {
                 List<String> foundList = new ArrayList<String>();
-                extractAttribute(String.class,
-                        ff.property(sortBy.getPropertyName().getPropertyName()), foundList);
+                extractAttribute(
+                        String.class,
+                        ff.property(sortBy.getPropertyName().getPropertyName()),
+                        foundList);
             }
         }
 
@@ -311,8 +318,11 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
      * @param foundList2 the found list 2
      * @param returnType2 the return type 2
      */
-    private void determineTypeFromExpressions(List<String> foundList1, Class<?> returnType1,
-            List<String> foundList2, Class<?> returnType2) {
+    private void determineTypeFromExpressions(
+            List<String> foundList1,
+            Class<?> returnType1,
+            List<String> foundList2,
+            Class<?> returnType2) {
         List<List<String>> foundList = new ArrayList<List<String>>();
         foundList.add(foundList1);
         foundList.add(foundList2);
@@ -334,8 +344,12 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
      * @param foundList3 the found list 3
      * @param returnType3 the return type 3
      */
-    private void determineTypeFromExpressions(List<String> foundList1, Class<?> returnType1,
-            List<String> foundList2, Class<?> returnType2, List<String> foundList3,
+    private void determineTypeFromExpressions(
+            List<String> foundList1,
+            Class<?> returnType1,
+            List<String> foundList2,
+            Class<?> returnType2,
+            List<String> foundList3,
             Class<?> returnType3) {
         List<List<String>> foundList = new ArrayList<List<String>>();
         foundList.add(foundList1);
@@ -356,8 +370,8 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
      * @param foundList the found list
      * @param returnTypeList the return type list
      */
-    private void determineTypeFromExpressions(List<List<String>> foundList,
-            List<Class<?>> returnTypeList) {
+    private void determineTypeFromExpressions(
+            List<List<String>> foundList, List<Class<?>> returnTypeList) {
         int index = 0;
         for (Class<?> returnType : returnTypeList) {
             if ((returnType != null) && (returnType != String.class)) {
@@ -403,8 +417,8 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
      * @param foundList the found list
      * @return the class
      */
-    protected Class<?> extractAttribute(Class<?> attributeType, Expression expression,
-            List<String> foundList) {
+    protected Class<?> extractAttribute(
+            Class<?> attributeType, Expression expression, List<String> foundList) {
         Class<?> returnType = String.class;
 
         if (expression instanceof AttributeExpressionImpl) {
@@ -419,8 +433,8 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
                 }
             } else {
                 if (!fieldList.containsKey(attributeName) && (attributeName != null)) {
-                    DataSourceAttributeData field = new DataSourceAttributeData(attributeName,
-                            attributeType, null);
+                    DataSourceAttributeData field =
+                            new DataSourceAttributeData(attributeName, attributeType, null);
                     processedFieldList.add(field);
                     fieldList.put(attributeName, field);
                     foundList.add(attributeName);
@@ -531,7 +545,8 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             visit(sld);
 
             // Check to see if any geometry fields have been added to processedFieldList
-            List<DataSourceAttributeData> fieldsToMoveToGeometryList = new ArrayList<DataSourceAttributeData>();
+            List<DataSourceAttributeData> fieldsToMoveToGeometryList =
+                    new ArrayList<DataSourceAttributeData>();
 
             for (DataSourceAttributeData dsAttribute : processedFieldList) {
                 if (dsAttribute.getType() == Geometry.class) {
@@ -564,5 +579,4 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
     public List<String> getGeometryFields() {
         return geometryFieldList;
     }
-
 }

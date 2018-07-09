@@ -18,8 +18,7 @@
  */
 /**
  * Classes to manage functions and filters.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.filter.v2.function;

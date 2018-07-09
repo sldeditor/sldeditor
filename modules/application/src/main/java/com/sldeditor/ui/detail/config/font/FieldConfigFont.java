@@ -19,17 +19,6 @@
 
 package com.sldeditor.ui.detail.config.font;
 
-import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.filter.LiteralExpressionImpl;
-import org.geotools.styling.Font;
-import org.geotools.styling.StyleBuilder;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -41,14 +30,23 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.geotools.styling.Font;
+import org.geotools.styling.StyleBuilder;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class FieldConfigFont wraps a button and text field that allows the selection of a font.
- * 
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigFont extends FieldConfigBase implements UndoActionInterface {
@@ -79,12 +77,10 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
         super(commonData);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -101,33 +97,42 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
             comboBox = new ValueComboBox();
             comboBox.initialiseSingle(fontFamilyList);
             int xPos = getXPos();
-            comboBox.setBounds(xPos + BasePanel.WIDGET_X_START, 0, BasePanel.WIDGET_STANDARD_WIDTH,
+            comboBox.setBounds(
+                    xPos + BasePanel.WIDGET_X_START,
+                    0,
+                    BasePanel.WIDGET_STANDARD_WIDTH,
                     BasePanel.WIDGET_HEIGHT);
 
             FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
             fieldPanel.add(comboBox);
             comboBox.setSelectValueKey(defaultValue);
 
-            comboBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    ValueComboBox comboBox = (ValueComboBox) e.getSource();
-                    if (comboBox.getSelectedItem() != null) {
+            comboBox.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            ValueComboBox comboBox = (ValueComboBox) e.getSource();
+                            if (comboBox.getSelectedItem() != null) {
 
-                        Object newValueObj = comboBox.getSelectedValue().getKey();
+                                Object newValueObj = comboBox.getSelectedValue().getKey();
 
-                        if ((oldValueObj == null) && comboBox.getItemCount() > 0) {
-                            oldValueObj = comboBox.getFirstItem().getKey();
+                                if ((oldValueObj == null) && comboBox.getItemCount() > 0) {
+                                    oldValueObj = comboBox.getFirstItem().getKey();
+                                }
+
+                                UndoManager.getInstance()
+                                        .addUndoEvent(
+                                                new UndoEvent(
+                                                        parentObj,
+                                                        getFieldId(),
+                                                        oldValueObj,
+                                                        newValueObj));
+
+                                oldValueObj = newValueObj;
+
+                                valueUpdated();
+                            }
                         }
-
-                        UndoManager.getInstance().addUndoEvent(
-                                new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
-
-                        oldValueObj = newValueObj;
-
-                        valueUpdated();
-                    }
-                }
-            });
+                    });
 
             if (!isValueOnly()) {
                 setAttributeSelectionPanel(
@@ -136,15 +141,13 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
         }
     }
 
-    /**
-     * Populate font family list.
-     */
+    /** Populate font family list. */
     private synchronized void populateFontFamilyList() {
         if (fontFamilyList == null) {
             fontFamilyList = new ArrayList<ValueComboBoxData>();
 
-            String[] families = GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .getAvailableFontFamilyNames();
+            String[] families =
+                    GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
             for (String fontFamily : families) {
                 fontFamilyList.add(new ValueComboBoxData(fontFamily, fontFamily, getPanelId()));
@@ -159,7 +162,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
@@ -174,7 +177,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -191,7 +194,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -215,7 +218,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -231,12 +234,10 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -251,7 +252,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override

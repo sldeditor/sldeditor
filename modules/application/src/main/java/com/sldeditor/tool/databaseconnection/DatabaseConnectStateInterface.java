@@ -19,13 +19,12 @@
 
 package com.sldeditor.tool.databaseconnection;
 
-import java.util.List;
-
 import com.sldeditor.common.data.DatabaseConnection;
+import java.util.List;
 
 /**
  * The Interface DatabaseConnectStateInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface DatabaseConnectStateInterface {

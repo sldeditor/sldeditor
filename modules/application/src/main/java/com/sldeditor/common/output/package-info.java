@@ -19,7 +19,7 @@
 
 /**
  * Interfaces for outputting SLD files
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.output;

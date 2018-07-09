@@ -19,25 +19,22 @@
 
 package com.sldeditor.datasource.connector.instance;
 
-import java.awt.BorderLayout;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import org.geotools.jdbc.JDBCDataStoreFactory;
-
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import com.sldeditor.datasource.impl.DataSourceProperties;
+import java.awt.BorderLayout;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import org.geotools.jdbc.JDBCDataStoreFactory;
 
 /**
  * Data source connector for data sources.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DataSourceConnector implements DataSourceConnectorInterface {
@@ -54,16 +51,14 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
     /** The model. */
     private DefaultTableModel model = new DefaultTableModel();
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public DataSourceConnector() {
         createUI();
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getDisplayName()
      */
     @Override
@@ -73,7 +68,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getPanel()
      */
     @Override
@@ -81,9 +76,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
         return dataSourceFieldPanel;
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         dataSourceFieldPanel = new JPanel();
         dataSourceFieldPanel.setLayout(new BorderLayout(0, 0));
@@ -108,7 +101,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
         reset();
         for (String key : propertyMap.keySet()) {
             if (!key.equals(JDBCDataStoreFactory.PASSWD.key)) {
-                model.addRow(new String[] { key, propertyMap.get(key).toString() });
+                model.addRow(new String[] {key, propertyMap.get(key).toString()});
             }
         }
         model.fireTableDataChanged();
@@ -116,7 +109,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#accept(java.lang.String)
      */
     @Override
@@ -133,7 +126,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.DataSourceConnectorInterface#accept(java.lang.String)
      */
     @Override
@@ -157,7 +150,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#getDataSourceProperties()
      */
     @Override
@@ -171,7 +164,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#populate(com.sldeditor.datasource.impl.DataSourceProperties)
      */
     @Override
@@ -186,7 +179,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.connector.DataSourceConnectorInterface#isEmpty()
      */
     @Override
@@ -208,7 +201,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.DataSourceConnectorInterface#reset()
      */
     @Override

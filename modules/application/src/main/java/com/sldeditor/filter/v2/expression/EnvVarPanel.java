@@ -1,40 +1,37 @@
 /*
 
- * SLD Editor - The Open Source Java SLD Editor
- *
- * Copyright (C) 2016, SCISYS UK Limited
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+* SLD Editor - The Open Source Java SLD Editor
+*
+* Copyright (C) 2016, SCISYS UK Limited
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 package com.sldeditor.filter.v2.expression;
-
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.opengis.filter.expression.Expression;
 
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableField;
 import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
 import com.sldeditor.filter.v2.envvar.dialog.EnvVarDlg;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class EnvVarPanel.
@@ -71,23 +68,24 @@ public class EnvVarPanel extends JPanel {
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         setLayout(new BorderLayout());
 
-        envVarField = new EnvironmentVariableField(new SubPanelUpdatedInterface() {
-            @Override
-            public void updateSymbol() {
-                updateButtonState(true);
-            }
+        envVarField =
+                new EnvironmentVariableField(
+                        new SubPanelUpdatedInterface() {
+                            @Override
+                            public void updateSymbol() {
+                                updateButtonState(true);
+                            }
 
-            @Override
-            public void parameterAdded() {
-                // Do nothing
-            }
-        }, EnvironmentVariableManager.getInstance());
+                            @Override
+                            public void parameterAdded() {
+                                // Do nothing
+                            }
+                        },
+                        EnvironmentVariableManager.getInstance());
 
         add(envVarField, BorderLayout.NORTH);
 
@@ -129,30 +127,32 @@ public class EnvVarPanel extends JPanel {
         JPanel panel = new JPanel();
 
         btnApply = new JButton(Localisation.getString(EnvVarDlg.class, "common.apply"));
-        btnApply.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Expression expression = envVarField.getExpression();
+        btnApply.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        Expression expression = envVarField.getExpression();
 
-                if (expression != null) {
-                    ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
-                    parentNode.setExpression(expression);
-                }
+                        if (expression != null) {
+                            ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
+                            parentNode.setExpression(expression);
+                        }
 
-                if (parent != null) {
-                    parent.dataApplied();
-                }
-                updateButtonState(false);
-            }
-        });
+                        if (parent != null) {
+                            parent.dataApplied();
+                        }
+                        updateButtonState(false);
+                    }
+                });
         panel.add(btnApply);
 
         btnRevert = new JButton(Localisation.getString(EnvVarDlg.class, "common.revert"));
-        btnRevert.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                displayExpression(selectedNode);
-                updateButtonState(false);
-            }
-        });
+        btnRevert.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        displayExpression(selectedNode);
+                        updateButtonState(false);
+                    }
+                });
         panel.add(btnRevert);
 
         return panel;

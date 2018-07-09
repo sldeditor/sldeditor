@@ -23,7 +23,7 @@ import org.opengis.geometry.DirectPosition;
 
 /**
  * Class that represents a WKT point.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class WKTPoint {
@@ -47,11 +47,8 @@ public class WKTPoint {
         }
     }
 
-    /**
-     * Default constructor.
-     */
-    public WKTPoint() {
-    }
+    /** Default constructor. */
+    public WKTPoint() {}
 
     /**
      * Gets the x coordinate.

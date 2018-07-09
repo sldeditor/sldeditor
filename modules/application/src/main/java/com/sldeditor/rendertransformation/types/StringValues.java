@@ -19,19 +19,17 @@
 
 package com.sldeditor.rendertransformation.types;
 
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigString;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import java.util.Arrays;
 import java.util.List;
-
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 
 /**
  * The Class StringValues.
@@ -43,15 +41,12 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
     /** The value. */
     private String value = null;
 
-    /**
-     * Instantiates a new string values.
-     */
-    public StringValues() {
-    }
+    /** Instantiates a new string values. */
+    public StringValues() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.lang.Object)
      */
     @Override
@@ -70,7 +65,7 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getExpression()
      */
     @Override
@@ -83,7 +78,7 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.Object)
      */
     @Override
@@ -107,7 +102,7 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getType()
      */
     @Override
@@ -117,7 +112,7 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
      */
     @Override
@@ -127,7 +122,7 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#createInstance()
      */
     @Override

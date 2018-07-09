@@ -20,15 +20,13 @@
 package com.sldeditor.ui.detail.config.symboltype.ttf;
 
 /**
- * The Interface TTFUpdateInterface allows classes to register for notifications when
- * TTF field values are updated.
- * 
+ * The Interface TTFUpdateInterface allows classes to register for notifications when TTF field
+ * values are updated.
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface TTFUpdateInterface {
 
-    /**
-     * Value updated.
-     */
+    /** Value updated. */
     void ttfValueUpdated();
 }

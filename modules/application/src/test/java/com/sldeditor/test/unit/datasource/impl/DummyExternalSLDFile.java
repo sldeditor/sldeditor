@@ -19,12 +19,6 @@
 
 package com.sldeditor.test.unit.datasource.impl;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
@@ -33,6 +27,10 @@ import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The Class DummyExternalSLDFile.
@@ -47,42 +45,58 @@ public class DummyExternalSLDFile implements SLDEditorFileInterface {
 
     private List<String> expectedFieldList = new ArrayList<String>();
 
-    /**
-     * Instantiates a new dummy external SLD file.
-     */
+    /** Instantiates a new dummy external SLD file. */
     public DummyExternalSLDFile() {
-        String sldContents = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
-                + "<StyledLayerDescriptor version=\"1.0.0\" "
-                + "    xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" "
-                + "    xmlns=\"http://www.opengis.net/sld\" "
-                + "    xmlns:ogc=\"http://www.opengis.net/ogc\" "
-                + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" + "  <NamedLayer>"
-                + "    <Name>Attribute-based point</Name>" + "    <UserStyle>"
-                + "      <Title>GeoServer SLD Cook Book: Attribute-based point</Title>"
-                + "      <FeatureTypeStyle>" + "        <Rule>" + "          <Name>SmallPop</Name>"
-                + "          <Title>1 to 50000</Title>" + "          <ogc:Filter>"
-                + "            <ogc:PropertyIsLessThan>"
-                + "              <ogc:PropertyName>pop</ogc:PropertyName>"
-                + "              <ogc:Literal>50000</ogc:Literal>"
-                + "            </ogc:PropertyIsLessThan>" + "          </ogc:Filter>"
-                + "          <PointSymbolizer>" + "            <Graphic>" + "              <Mark>"
-                + "                <WellKnownName>star</WellKnownName>" + "                <Fill>"
-                + "                  <CssParameter name=\"fill\">#0033CC</CssParameter>"
-                + "                </Fill>" + "              </Mark>"
-                + "              <Rotation>45</Rotation>" + "              <Size>6</Size>"
-                + "            </Graphic>" + "          </PointSymbolizer>" + "        </Rule>"
-                + "      </FeatureTypeStyle>" + "    </UserStyle>" + "  </NamedLayer>"
-                + "</StyledLayerDescriptor>";
+        String sldContents =
+                "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                        + "<StyledLayerDescriptor version=\"1.0.0\" "
+                        + "    xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" "
+                        + "    xmlns=\"http://www.opengis.net/sld\" "
+                        + "    xmlns:ogc=\"http://www.opengis.net/ogc\" "
+                        + "    xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
+                        + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+                        + "  <NamedLayer>"
+                        + "    <Name>Attribute-based point</Name>"
+                        + "    <UserStyle>"
+                        + "      <Title>GeoServer SLD Cook Book: Attribute-based point</Title>"
+                        + "      <FeatureTypeStyle>"
+                        + "        <Rule>"
+                        + "          <Name>SmallPop</Name>"
+                        + "          <Title>1 to 50000</Title>"
+                        + "          <ogc:Filter>"
+                        + "            <ogc:PropertyIsLessThan>"
+                        + "              <ogc:PropertyName>pop</ogc:PropertyName>"
+                        + "              <ogc:Literal>50000</ogc:Literal>"
+                        + "            </ogc:PropertyIsLessThan>"
+                        + "          </ogc:Filter>"
+                        + "          <PointSymbolizer>"
+                        + "            <Graphic>"
+                        + "              <Mark>"
+                        + "                <WellKnownName>star</WellKnownName>"
+                        + "                <Fill>"
+                        + "                  <CssParameter name=\"fill\">#0033CC</CssParameter>"
+                        + "                </Fill>"
+                        + "              </Mark>"
+                        + "              <Rotation>45</Rotation>"
+                        + "              <Size>6</Size>"
+                        + "            </Graphic>"
+                        + "          </PointSymbolizer>"
+                        + "        </Rule>"
+                        + "      </FeatureTypeStyle>"
+                        + "    </UserStyle>"
+                        + "  </NamedLayer>"
+                        + "</StyledLayerDescriptor>";
 
         sldData = new SLDData(new StyleWrapper(null, "test.sld"), sldContents);
 
-        URL url = SLDEditorFile.class.getClassLoader()
-                .getResource("point/sld/shp/sld_cookbook_point.shp");
+        URL url =
+                SLDEditorFile.class
+                        .getClassLoader()
+                        .getResource("point/sld/shp/sld_cookbook_point.shp");
         String filename = url.toString();
 
-        DataSourcePropertiesInterface dsp = DataSourceConnectorFactory
-                .getDataSourceProperties(filename);
+        DataSourcePropertiesInterface dsp =
+                DataSourceConnectorFactory.getDataSourceProperties(filename);
         dsp.setFilename(filename);
 
         sldData.setDataSourceProperties(dsp);

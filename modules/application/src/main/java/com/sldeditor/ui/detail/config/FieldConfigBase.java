@@ -19,12 +19,18 @@
 
 package com.sldeditor.ui.detail.config;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.ui.attribute.AttributeSelection;
+import com.sldeditor.ui.detail.config.base.CurrentFieldState;
+import com.sldeditor.ui.iface.AttributeButtonSelectionInterface;
+import com.sldeditor.ui.iface.ExpressionUpdateInterface;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import com.sldeditor.ui.widgets.ExpressionTypeEnum;
+import com.sldeditor.ui.widgets.FieldPanel;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JPanel;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.NameImpl;
 import org.geotools.filter.AttributeExpressionImpl;
@@ -38,30 +44,23 @@ import org.opengis.filter.expression.BinaryExpression;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.NilExpression;
 
-import com.sldeditor.common.Controller;
-import com.sldeditor.ui.attribute.AttributeSelection;
-import com.sldeditor.ui.detail.config.base.CurrentFieldState;
-import com.sldeditor.ui.iface.AttributeButtonSelectionInterface;
-import com.sldeditor.ui.iface.ExpressionUpdateInterface;
-import com.sldeditor.ui.iface.UpdateSymbolInterface;
-import com.sldeditor.ui.widgets.ExpressionTypeEnum;
-import com.sldeditor.ui.widgets.FieldPanel;
-
 /**
  * The Class FieldConfigBase is the base class for all derived FieldConfigxxx classes.
- * 
+ *
  * <p>Fields are identified by the id field.
- * 
+ *
  * <p>Handles the following common tasks:
+ *
  * <ul>
- * <li>value/attribute/expression drop down list, ({@link com.sldeditor.ui.attribute.AttributeSelection})</li>
- * <li>setting/getting of values via Expression</li>
- * <li>field enable/disable state</li>
- * <li>firing data changed notifications</li>
+ *   <li>value/attribute/expression drop down list, ({@link
+ *       com.sldeditor.ui.attribute.AttributeSelection})
+ *   <li>setting/getting of values via Expression
+ *   <li>field enable/disable state
+ *   <li>firing data changed notifications
  * </ul>
- * 
+ *
  * <img src="./doc-files/field.png" />
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public abstract class FieldConfigBase extends FieldConfigPopulate
@@ -90,8 +89,8 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
             new ArrayList<UpdateSymbolInterface>();
 
     /** The style factory. */
-    private StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /** The field state flag. */
     private CurrentFieldState fieldState = new CurrentFieldState();
@@ -153,9 +152,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      */
     public abstract boolean isEnabled();
 
-    /**
-     * Reverts to the default value.
-     */
+    /** Reverts to the default value. */
     public abstract void revertToDefaultValue();
 
     /**
@@ -165,9 +162,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      */
     public abstract void populateExpression(Object objValue);
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     public abstract void createUI();
 
     /**
@@ -226,9 +221,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
         }
     }
 
-    /**
-     * Sets the value field state.
-     */
+    /** Sets the value field state. */
     protected void setValueFieldState() {
 
         boolean fieldEnabled = fieldState.getFieldEnabledState();
@@ -243,9 +236,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
         }
     }
 
-    /**
-     * Fire data changed.
-     */
+    /** Fire data changed. */
     protected void fireDataChanged() {
         if (!Controller.getInstance().isPopulating()) {
             for (UpdateSymbolInterface listener : updateSymbolListenerList) {
@@ -254,9 +245,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
         }
     }
 
-    /**
-     * Value updated.
-     */
+    /** Value updated. */
     @Override
     public void valueUpdated() {
         expressionType = ExpressionTypeEnum.E_VALUE;
@@ -291,7 +280,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.ExpressionUpdateInterface#expressionUpdated(org.opengis.filter.expression.Expression)
      */
     @Override
@@ -311,7 +300,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.ExpressionUpdateInterface#expressionUpdated(org.opengis.filter.expression.Expression)
      */
     @Override
@@ -492,13 +481,12 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
     }
 
     /**
-     * Method called when the field has been selected from a 
-     * combo box and may need to be initialised
-     * 
+     * Method called when the field has been selected from a combo box and may need to be
+     * initialised
+     *
      * <p>Will be be overridden if necessary.
      */
-    public void justSelected() {
-    }
+    public void justSelected() {}
 
     /**
      * Gets the expression type.
@@ -555,8 +543,8 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      * @return the field panel
      */
     protected FieldPanel createFieldPanel(int xPos, int height, String fieldLabel) {
-        fieldPanel = new FieldPanel(xPos, fieldLabel, height, getCommonData().isOptionalField(),
-                this);
+        fieldPanel =
+                new FieldPanel(xPos, fieldLabel, height, getCommonData().isOptionalField(), this);
 
         return fieldPanel;
     }
@@ -657,13 +645,13 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return String.format("%s : (%s) %s", getClass().getName(), getFieldId().toString(),
-                getLabel());
+        return String.format(
+                "%s : (%s) %s", getClass().getName(), getFieldId().toString(), getLabel());
     }
 
     /**

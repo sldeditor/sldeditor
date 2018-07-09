@@ -19,22 +19,19 @@
 
 package com.sldeditor.ui.legend;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
-import org.geotools.data.DataStore;
-
 import com.sldeditor.common.output.SLDOutputInterface;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.render.RuleRenderOptions;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import org.geotools.data.DataStore;
 
 /**
  * Panel to display a SLD legend image.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class LegendPanel extends JPanel implements RenderSymbolInterface {
@@ -53,9 +50,7 @@ public class LegendPanel extends JPanel implements RenderSymbolInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Instantiates a new legend panel.
-     */
+    /** Instantiates a new legend panel. */
     public LegendPanel() {
         setLayout(new BorderLayout(0, 0));
 
@@ -67,12 +62,12 @@ public class LegendPanel extends JPanel implements RenderSymbolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType,
-            boolean isConnectedToDataSourceFlag) {
+    public void dataSourceLoaded(
+            GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag) {
         // Do nothing
     }
 
@@ -88,7 +83,7 @@ public class LegendPanel extends JPanel implements RenderSymbolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.render.iface.RenderSymbolInterface#renderSymbol()
      */
     @Override
@@ -109,7 +104,7 @@ public class LegendPanel extends JPanel implements RenderSymbolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override

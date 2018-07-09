@@ -19,14 +19,13 @@
 
 package com.sldeditor.test.unit.ui.tree;
 
-import org.junit.Test;
-
 import com.sldeditor.ui.tree.SLDTree;
 import com.sldeditor.ui.tree.SLDTreeManager;
+import org.junit.Test;
 
 /**
  * The unit test for SLDTreeManager.
- * 
+ *
  * <p>{@link com.sldeditor.ui.tree.SLDTreeManager}
  *
  * @author Robert Ward (SCISYS)
@@ -34,8 +33,9 @@ import com.sldeditor.ui.tree.SLDTreeManager;
 public class SLDTreeManagerTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeManager#createSLDTree(java.util.List, com.sldeditor.ui.tree.SLDTreeTools)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeManager#rebuildTree(com.sldeditor.ui.tree.SLDTree)}.
+     * Test method for {@link com.sldeditor.ui.tree.SLDTreeManager#createSLDTree(java.util.List,
+     * com.sldeditor.ui.tree.SLDTreeTools)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeManager#rebuildTree(com.sldeditor.ui.tree.SLDTree)}.
      */
     @Test
     public void testCreateSLDTree() {
@@ -46,5 +46,4 @@ public class SLDTreeManagerTest {
         SLDTreeManager.getInstance().rebuildTree(tree1);
         SLDTreeManager.getInstance().rebuildTree(tree2);
     }
-
 }

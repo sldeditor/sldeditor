@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Class that represents all the GeoServer vendor options.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerVendorOption implements VendorOptionTypeInterface {
@@ -38,7 +38,7 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getName()
      */
     @Override
@@ -48,7 +48,7 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersionStringList()
      */
     @Override
@@ -64,7 +64,7 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.vendoroption.VendorOptionTypeInterface#addVersion(com.sldeditor.vendoroption.
      * VersionData)
@@ -78,7 +78,7 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersion(java.lang.String)
      */
     @Override
@@ -90,7 +90,7 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.vendoroption.VendorOptionTypeInterface#getVersionList()
      */
     @Override

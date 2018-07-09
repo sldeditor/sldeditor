@@ -19,19 +19,17 @@
 
 package com.sldeditor.filter.v2.function.geometry;
 
-import java.util.List;
-
-import org.geotools.filter.spatial.TouchesImpl;
-import org.opengis.filter.Filter;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import java.util.List;
+import org.geotools.filter.spatial.TouchesImpl;
 import org.locationtech.jts.geom.Geometry;
+import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class Touches.
@@ -40,14 +38,10 @@ import org.locationtech.jts.geom.Geometry;
  */
 public class Touches extends FilterBase implements FilterConfigInterface {
 
-    /**
-     * The Class TouchesExtended.
-     */
+    /** The Class TouchesExtended. */
     public class TouchesExtended extends TouchesImpl implements FilterExtendedInterface {
 
-        /**
-         * Instantiates a new touches extended.
-         */
+        /** Instantiates a new touches extended. */
         public TouchesExtended() {
             super(null, null);
         }
@@ -64,7 +58,7 @@ public class Touches extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
@@ -73,7 +67,7 @@ public class Touches extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -82,9 +76,7 @@ public class Touches extends FilterBase implements FilterConfigInterface {
         }
     }
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public Touches(String category) {
         super(category);
     }
@@ -99,8 +91,9 @@ public class Touches extends FilterBase implements FilterConfigInterface {
         FilterName filterName = new FilterName("Touches", Boolean.class);
         filterName.addParameter(
                 new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Geometry.class));
-        filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION,
-                Geometry.class));
+        filterName.addParameter(
+                new FilterNameParameter(
+                        "expression", ExpressionTypeEnum.EXPRESSION, Geometry.class));
 
         return filterName;
     }

@@ -27,7 +27,7 @@ import com.sldeditor.common.PopulatingInterface;
  * @author Robert Ward (SCISYS)
  */
 class DummyPopulating implements PopulatingInterface {
-    
+
     /** The populating. */
     private boolean populating = false;
 

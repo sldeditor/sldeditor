@@ -19,16 +19,14 @@
 
 package com.sldeditor.datasource.checks;
 
-import java.util.List;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.datasource.impl.DataSourceImpl;
 import com.sldeditor.datasource.impl.ExtractAttributes;
+import java.util.List;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The Class MissingSLDAttributes.
@@ -52,12 +50,14 @@ public class MissingSLDAttributes implements CheckAttributeInterface {
         for (DataSourceAttributeData sldField : sldFieldList) {
             if (!dataSourceList.contains(sldField)) {
                 ConsoleManager.getInstance()
-                        .error(this,
-                                Localisation.getField(DataSourceImpl.class,
-                                        "DataSourceImpl.missingAttribute") + " "
+                        .error(
+                                this,
+                                Localisation.getField(
+                                                DataSourceImpl.class,
+                                                "DataSourceImpl.missingAttribute")
+                                        + " "
                                         + sldField.getName());
             }
         }
     }
-
 }

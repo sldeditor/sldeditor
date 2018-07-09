@@ -19,11 +19,9 @@
 
 package com.sldeditor.common;
 
-import java.io.File;
-
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.filesystem.SelectedFiles;
+import java.io.File;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The Interface LoadSLDInterface.
@@ -32,14 +30,10 @@ import com.sldeditor.common.filesystem.SelectedFiles;
  */
 public interface LoadSLDInterface {
 
-    /**
-     * Empty SLD.
-     */
+    /** Empty SLD. */
     void emptySLD();
 
-    /**
-     * Method called when a new folder/file has been selected but not processed.
-     */
+    /** Method called when a new folder/file has been selected but not processed. */
     void preLoad();
 
     /**
@@ -58,9 +52,6 @@ public interface LoadSLDInterface {
      */
     StyledLayerDescriptor readSLDFile(File file);
 
-    /**
-     * Reload SLD file.
-     */
+    /** Reload SLD file. */
     void reloadSLDFile();
-
 }

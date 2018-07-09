@@ -19,20 +19,6 @@
 
 package com.sldeditor.ui.detail;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
-
-import javax.swing.JButton;
-
-import org.geotools.filter.text.cql2.CQL;
-import org.geotools.filter.text.cql2.CQLException;
-import org.geotools.styling.Graphic;
-import org.opengis.filter.Filter;
-import org.opengis.style.GraphicLegend;
-import org.opengis.style.GraphicalSymbol;
-import org.opengis.style.Rule;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
@@ -49,10 +35,21 @@ import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.FieldPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.JButton;
+import org.geotools.filter.text.cql2.CQL;
+import org.geotools.filter.text.cql2.CQLException;
+import org.geotools.styling.Graphic;
+import org.opengis.filter.Filter;
+import org.opengis.style.GraphicLegend;
+import org.opengis.style.GraphicalSymbol;
+import org.opengis.style.Rule;
 
 /**
  * The Class RuleDetails allows a user to configure rules data in a panel.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class RuleDetails extends StandardPanel
@@ -64,17 +61,13 @@ public class RuleDetails extends StandardPanel
     /** The original filter, stored so it can be used if the new filter is invalid. */
     private Filter originalFilter;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public RuleDetails() {
         super(RuleDetails.class);
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFile(null, getClass(), this, "Rule.xml");
 
@@ -92,24 +85,26 @@ public class RuleDetails extends StandardPanel
         if (fieldConfig != null) {
             FieldPanel fieldPanel = fieldConfig.getPanel();
 
-            JButton btnEditFilter = new JButton(
-                    Localisation.getString(RuleDetails.class, "RuleDetails.edit"));
-            btnEditFilter.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    editFilter(filterFieldId);
-                }
-            });
-            btnEditFilter.setBounds(WIDGET_X_START + WIDGET_EXTENDED_WIDTH, 0, WIDGET_BUTTON_WIDTH,
-                    WIDGET_HEIGHT);
+            JButton btnEditFilter =
+                    new JButton(Localisation.getString(RuleDetails.class, "RuleDetails.edit"));
+            btnEditFilter.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            editFilter(filterFieldId);
+                        }
+                    });
+            btnEditFilter.setBounds(
+                    WIDGET_X_START + WIDGET_EXTENDED_WIDTH, 0, WIDGET_BUTTON_WIDTH, WIDGET_HEIGHT);
             fieldPanel.add(btnEditFilter);
 
-            JButton btnClearFilter = new JButton(
-                    Localisation.getString(RuleDetails.class, "RuleDetails.clear"));
-            btnClearFilter.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    clearFilter(filterFieldId);
-                }
-            });
+            JButton btnClearFilter =
+                    new JButton(Localisation.getString(RuleDetails.class, "RuleDetails.clear"));
+            btnClearFilter.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            clearFilter(filterFieldId);
+                        }
+                    });
 
             int x = btnEditFilter.getX() + btnEditFilter.getWidth() + 5;
             btnClearFilter.setBounds(x, 0, WIDGET_BUTTON_WIDTH, WIDGET_HEIGHT);
@@ -124,7 +119,7 @@ public class RuleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
@@ -146,7 +141,13 @@ public class RuleDetails extends StandardPanel
                     try {
                         filterString = originalFilter.toString();
                     } catch (Exception e) {
-                        ConsoleManager.getInstance().error(this, Localisation.getField(RuleDetails.class, "RuleDetails.filterError") + e.getMessage());
+                        ConsoleManager.getInstance()
+                                .error(
+                                        this,
+                                        Localisation.getField(
+                                                        RuleDetails.class,
+                                                        "RuleDetails.filterError")
+                                                + e.getMessage());
                     }
                 }
                 fieldConfigVisitor.populateTextField(FieldIdEnum.FILTER, filterString);
@@ -155,8 +156,8 @@ public class RuleDetails extends StandardPanel
                 minScaleText = ScaleUtil.getValue(rule.getMinScaleDenominator());
                 maxScaleText = ScaleUtil.getValue(rule.getMaxScaleDenominator());
 
-                fieldConfigVisitor.populateBooleanField(FieldIdEnum.ELSE_FILTER,
-                        rule.isElseFilter());
+                fieldConfigVisitor.populateBooleanField(
+                        FieldIdEnum.ELSE_FILTER, rule.isElseFilter());
             }
         }
 
@@ -175,9 +176,7 @@ public class RuleDetails extends StandardPanel
         group.enable(enabled);
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
             StandardData standardData = getStandardData();
@@ -209,8 +208,7 @@ public class RuleDetails extends StandardPanel
                 List<org.geotools.styling.Symbolizer> symbolizerList = existingRule.symbolizers();
 
                 org.geotools.styling.Symbolizer[] symbolizerArray =
-                        new org.geotools.styling.Symbolizer[symbolizerList
-                        .size()];
+                        new org.geotools.styling.Symbolizer[symbolizerList.size()];
                 int index = 0;
                 for (org.geotools.styling.Symbolizer symbolizer : symbolizerList) {
                     symbolizerArray[index] = symbolizer;
@@ -244,9 +242,17 @@ public class RuleDetails extends StandardPanel
                 //
                 // Create new rule object
                 //
-                Rule rule = getStyleFactory().createRule(symbolizerArray, standardData.description,
-                        legendGraphics, standardData.name, filter, isElseFilter, maxScale,
-                        minScale);
+                Rule rule =
+                        getStyleFactory()
+                                .createRule(
+                                        symbolizerArray,
+                                        standardData.description,
+                                        legendGraphics,
+                                        standardData.name,
+                                        filter,
+                                        isElseFilter,
+                                        maxScale,
+                                        minScale);
 
                 SelectedSymbol.getInstance().replaceRule((org.geotools.styling.Rule) rule);
 
@@ -262,7 +268,7 @@ public class RuleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldIdEnum)
      */
     @Override
@@ -277,7 +283,7 @@ public class RuleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -292,7 +298,7 @@ public class RuleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -337,7 +343,7 @@ public class RuleDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -347,12 +353,12 @@ public class RuleDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // No vendor options
     }
 
@@ -365,8 +371,8 @@ public class RuleDetails extends StandardPanel
         FilterPanelInterface filterPanel = ExpressionPanelFactory.getFilterPanel(null);
 
         String panelTitle = Localisation.getString(RuleDetails.class, "RuleDetails.panelTitle");
-        filterPanel.configure(panelTitle, Object.class,
-                SelectedSymbol.getInstance().isRasterSymbol());
+        filterPanel.configure(
+                panelTitle, Object.class, SelectedSymbol.getInstance().isRasterSymbol());
 
         Rule rule = SelectedSymbol.getInstance().getRule();
         if (rule != null) {
@@ -381,9 +387,7 @@ public class RuleDetails extends StandardPanel
         }
     }
 
-    /**
-     * Clear filter.
-     */
+    /** Clear filter. */
     protected void clearFilter(FieldIdEnum filterFieldId) {
         originalFilter = null;
         fieldConfigVisitor.populateTextField(filterFieldId, "");

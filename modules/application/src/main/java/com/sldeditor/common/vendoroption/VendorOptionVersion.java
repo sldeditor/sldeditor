@@ -23,7 +23,7 @@ import com.sldeditor.common.console.ConsoleManager;
 
 /**
  * Class that encapsulates a vendor option version.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VendorOptionVersion {
@@ -50,8 +50,8 @@ public class VendorOptionVersion {
      * @param minimumVersion the minimum version
      * @param maximumVersion the maximum version
      */
-    public VendorOptionVersion(Class<?> classType, VersionData minimumVersion,
-            VersionData maximumVersion) {
+    public VendorOptionVersion(
+            Class<?> classType, VersionData minimumVersion, VersionData maximumVersion) {
         this.classType = classType;
         this.minimumVersion = minimumVersion;
         this.maximumVersion = maximumVersion;
@@ -109,8 +109,10 @@ public class VendorOptionVersion {
             try {
                 classType = Class.forName(components[0]);
             } catch (ClassNotFoundException e) {
-                ConsoleManager.getInstance().error(VendorOptionVersion.class,
-                        "Unknown VendorOption class : " + components[0]);
+                ConsoleManager.getInstance()
+                        .error(
+                                VendorOptionVersion.class,
+                                "Unknown VendorOption class : " + components[0]);
                 return null;
             }
             if (components[1].compareTo(NULL_STRING) != 0) {
@@ -120,8 +122,8 @@ public class VendorOptionVersion {
             if (components[2].compareTo(NULL_STRING) != 0) {
                 maximumVersion = VersionData.getDecodedString(components[2]);
             }
-            VendorOptionVersion vendorOptionVersion = new VendorOptionVersion(classType,
-                    minimumVersion, maximumVersion);
+            VendorOptionVersion vendorOptionVersion =
+                    new VendorOptionVersion(classType, minimumVersion, maximumVersion);
 
             return vendorOptionVersion;
         }
@@ -149,15 +151,19 @@ public class VendorOptionVersion {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        String string = String.format("%s%s%s%s%s", classType.getName(), DELIMETER,
-                (minimumVersion != null) ? minimumVersion.getEncodedString() : NULL_STRING,
-                DELIMETER,
-                (maximumVersion != null) ? maximumVersion.getEncodedString() : NULL_STRING);
+        String string =
+                String.format(
+                        "%s%s%s%s%s",
+                        classType.getName(),
+                        DELIMETER,
+                        (minimumVersion != null) ? minimumVersion.getEncodedString() : NULL_STRING,
+                        DELIMETER,
+                        (maximumVersion != null) ? maximumVersion.getEncodedString() : NULL_STRING);
 
         return string;
     }
@@ -173,7 +179,7 @@ public class VendorOptionVersion {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -188,7 +194,7 @@ public class VendorOptionVersion {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

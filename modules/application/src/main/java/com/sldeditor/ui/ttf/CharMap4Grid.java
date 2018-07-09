@@ -31,91 +31,74 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
-
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * Character Map #4 - Display Characters and Copy to System Clipboard
- * Written by: Keith Fenske, http://www.psc-consulting.ca/fenske/
- * Monday, 19 May 2008
- * Java class name: CharMap4
- * Copyright (c) 2008 by Keith Fenske.  Released under GNU Public License.
- * 
- * This is a Java 5.0 graphical (GUI) application to display Unicode characters
- * or glyphs in text fonts, and copy those characters to the system clipboard.
- * Its major purpose is as a visual accessory for word processors such as
- * Microsoft Word.  The "character map" utility that comes with Windows suffers
- * from several problems.  This Java application can be resized, for text and
- * the program window, which is important in many languages.  Features are
- * limited to make the application faster and simpler to use.  A single click
- * adds a character to the sample text, and the sample text is automatically
- * copied to the system clipboard on each click.
+ * Character Map #4 - Display Characters and Copy to System Clipboard Written by: Keith Fenske,
+ * http://www.psc-consulting.ca/fenske/ Monday, 19 May 2008 Java class name: CharMap4 Copyright (c)
+ * 2008 by Keith Fenske. Released under GNU Public License.
  *
- * You may choose the font to be displayed and the size of the characters or
- * glyphs.  (Glyphs are bits and pieces that a font combines to produce the
- * characters you see.  In most cases, one character maps to one glyph.)  You
- * may edit the sample text, erase it with the "Clear" button, or copy it to the
- * system clipboard with the "Copy All" button.  Paste the text into your word
- * processor in the normal manner, which is usually a Control-V key combination.
- * Editing the sample text and pressing the Enter key also copies to the
- * clipboard.  Specific characters can be copied from the sample text by
- * selection and with the usual Control-C combination.  More characters are
- * available via the scroll bar on the right.  A description is shown in the
- * "caption" field when characters have a particular name or meaning.  Common
- * readings or sounds are given for Chinese, Japanese, and Korean characters.
- * Cantonese is prefixed with "C", Japanese "Kun" with "J", Korean with "K",
- * Mandarin with "M", and Sino-Japanese "On" with "S".  An English translation
- * of CJK character definitions would have been more amusing but less practical.
- * 
- * Keyboard shortcuts are provided to mimic the scroll bar: the Control-Home key
- * combination goes to the very first character, Control-End goes to the last
- * character, Page Down and Page Up scroll one screen at a time, and the arrow
- * keys scroll one line at a time.  You need to combine the End and Home keys
- * with the Control (Ctrl) key when the sample text has keyboard focus.  The F1
- * key is the only helpful undocumented feature.
+ * <p>This is a Java 5.0 graphical (GUI) application to display Unicode characters or glyphs in text
+ * fonts, and copy those characters to the system clipboard. Its major purpose is as a visual
+ * accessory for word processors such as Microsoft Word. The "character map" utility that comes with
+ * Windows suffers from several problems. This Java application can be resized, for text and the
+ * program window, which is important in many languages. Features are limited to make the
+ * application faster and simpler to use. A single click adds a character to the sample text, and
+ * the sample text is automatically copied to the system clipboard on each click.
  *
- * GNU General Public License (GPL)
- * --------------------------------
- * CharMap4 is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License or (at your option) any later
- * version.  This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY, without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
- * more details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see the http://www.gnu.org/licenses/ web page.
- * 
- * Restrictions and Limitations
- * ----------------------------
- * Which fonts will work with this program depends upon the operating system and
- * version of the Java run-time environment.  Java 5.0 on Windows 2000/XP will
- * show installed TrueType fonts, that is, fonts that have been added with the
- * Control Panel, Fonts icon.  (Temporary fonts are not shown if opened with the
- * Windows Font Viewer by double clicking on a font file name.)  If you think
- * this program is not working correctly on your computer, then "Lucida Console"
- * is a good font for testing the spacing and positioning, because its glyphs
- * are tightly packed.  Version 4 of CharMap supports extended Unicode (up to
- * 1,114,112 characters) and is noticeably slower than version 3, which only
- * supports the standard range of 65,536 characters.  Version 4 also tends to
- * run out of memory for very large fonts; see the -Xmx option on the Java
- * command line.
- * 
- * This program contains character data from the Unicode Consortium; please
- * visit their web site at http://www.unicode.org/ for more information.  Korean
- * character names were converted from Korean standards document KS X 1001:2002
- * with the title "Hangeul Syllables in Unicode 4.0" and dated 25 March 2004.
+ * <p>You may choose the font to be displayed and the size of the characters or glyphs. (Glyphs are
+ * bits and pieces that a font combines to produce the characters you see. In most cases, one
+ * character maps to one glyph.) You may edit the sample text, erase it with the "Clear" button, or
+ * copy it to the system clipboard with the "Copy All" button. Paste the text into your word
+ * processor in the normal manner, which is usually a Control-V key combination. Editing the sample
+ * text and pressing the Enter key also copies to the clipboard. Specific characters can be copied
+ * from the sample text by selection and with the usual Control-C combination. More characters are
+ * available via the scroll bar on the right. A description is shown in the "caption" field when
+ * characters have a particular name or meaning. Common readings or sounds are given for Chinese,
+ * Japanese, and Korean characters. Cantonese is prefixed with "C", Japanese "Kun" with "J", Korean
+ * with "K", Mandarin with "M", and Sino-Japanese "On" with "S". An English translation of CJK
+ * character definitions would have been more amusing but less practical.
+ *
+ * <p>Keyboard shortcuts are provided to mimic the scroll bar: the Control-Home key combination goes
+ * to the very first character, Control-End goes to the last character, Page Down and Page Up scroll
+ * one screen at a time, and the arrow keys scroll one line at a time. You need to combine the End
+ * and Home keys with the Control (Ctrl) key when the sample text has keyboard focus. The F1 key is
+ * the only helpful undocumented feature.
+ *
+ * <p>GNU General Public License (GPL) -------------------------------- CharMap4 is free software:
+ * you can redistribute it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License or (at your option)
+ * any later version. This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY, without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ * PURPOSE. See the GNU General Public License for more details.
+ *
+ * <p>You should have received a copy of the GNU General Public License along with this program. If
+ * not, see the http://www.gnu.org/licenses/ web page.
+ *
+ * <p>Restrictions and Limitations ---------------------------- Which fonts will work with this
+ * program depends upon the operating system and version of the Java run-time environment. Java 5.0
+ * on Windows 2000/XP will show installed TrueType fonts, that is, fonts that have been added with
+ * the Control Panel, Fonts icon. (Temporary fonts are not shown if opened with the Windows Font
+ * Viewer by double clicking on a font file name.) If you think this program is not working
+ * correctly on your computer, then "Lucida Console" is a good font for testing the spacing and
+ * positioning, because its glyphs are tightly packed. Version 4 of CharMap supports extended
+ * Unicode (up to 1,114,112 characters) and is noticeably slower than version 3, which only supports
+ * the standard range of 65,536 characters. Version 4 also tends to run out of memory for very large
+ * fonts; see the -Xmx option on the Java command line.
+ *
+ * <p>This program contains character data from the Unicode Consortium; please visit their web site
+ * at http://www.unicode.org/ for more information. Korean character names were converted from
+ * Korean standards document KS X 1001:2002 with the title "Hangeul Syllables in Unicode 4.0" and
+ * dated 25 March 2004.
  */
 
 /**
  * CharMap4Grid class
- * 
- * <p>This class draws the character grid and listens for mouse and scroll events.
- * Keyboard events are handled by the main class and mimic the scroll
- * bar.
+ *
+ * <p>This class draws the character grid and listens for mouse and scroll events. Keyboard events
+ * are handled by the main class and mimic the scroll bar.
  */
 class CharMap4Grid extends JPanel
         implements ChangeListener, MouseListener, MouseMotionListener, MouseWheelListener {
@@ -241,7 +224,7 @@ class CharMap4Grid extends JPanel
 
     /**
      * Instantiates a new char map4 grid.
-     * 
+     *
      * @param charMap4
      */
     public CharMap4Grid(CharMap4 charMap4) {
@@ -278,8 +261,8 @@ class CharMap4Grid extends JPanel
     } // end of CharMap4Grid() constructor
 
     /**
-     * Clear. The caller wants us to initialize the display, from the beginning. Flag our class variables so that this will happen when the panel is
-     * next redrawn.
+     * Clear. The caller wants us to initialize the display, from the beginning. Flag our class
+     * variables so that this will happen when the panel is next redrawn.
      */
     void clear() {
         panelFont = null; // saved font for drawing text on this panel
@@ -288,8 +271,9 @@ class CharMap4Grid extends JPanel
 
     /**
      * Convert mouse.
-     * 
-     * Convert mouse coordinates to a cell index. Return <NO_MOUSE> if the mouse is not well-centered on a defined character.
+     *
+     * <p>Convert mouse coordinates to a cell index. Return <NO_MOUSE> if the mouse is not
+     * well-centered on a defined character.
      *
      * @param event the event
      * @return the int
@@ -298,12 +282,13 @@ class CharMap4Grid extends JPanel
         int result; // converted cell index or <NO_MOUSE>
 
         if (panelFont == null) // can't do conversion if we haven't painted
-            return (NO_MOUSE); // tell caller to come back some other time
+        return (NO_MOUSE); // tell caller to come back some other time
 
         int colOff = event.getX() - GRID_WIDTH - PANEL_MARGIN; // known margins
         int colNum = colOff / horizStep; // convert pixels to column number
         int colRem = colOff % horizStep; // how far inside cell is the mouse?
-        if ((colNum >= panelColumns) || (colRem < TEXT_MARGIN)
+        if ((colNum >= panelColumns)
+                || (colRem < TEXT_MARGIN)
                 || (colRem > (horizStep - GRID_WIDTH - TEXT_MARGIN))) {
             return (NO_MOUSE); // horizontal coordinate is out of range
         }
@@ -317,15 +302,14 @@ class CharMap4Grid extends JPanel
 
         result = cornerIndex + (rowNum * panelColumns) + colNum;
         if (result >= cellCount) // is the mouse beyond the last character?
-            return (NO_MOUSE); // character index is out of range
+        return (NO_MOUSE); // character index is out of range
 
         return (result); // give caller a valid character index
-
     } // end of convertMouse() method
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
      */
     /*
@@ -338,7 +322,7 @@ class CharMap4Grid extends JPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
      */
     public void mouseDragged(MouseEvent event) {
@@ -347,7 +331,7 @@ class CharMap4Grid extends JPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
      */
     public void mouseEntered(MouseEvent event) {
@@ -355,7 +339,7 @@ class CharMap4Grid extends JPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
      */
     public void mouseExited(MouseEvent event) {
@@ -364,7 +348,7 @@ class CharMap4Grid extends JPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
      */
     public void mouseMoved(MouseEvent event) {
@@ -454,13 +438,12 @@ class CharMap4Grid extends JPanel
             repaint = true; // mark ourselves as needing to be repainted
         }
 
-        if (repaint)
-            this.repaint(); // repaint our display if something changed
+        if (repaint) this.repaint(); // repaint our display if something changed
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
      */
     public void mousePressed(MouseEvent event) {
@@ -485,13 +468,12 @@ class CharMap4Grid extends JPanel
             repaint = true; // mark ourselves as needing to be repainted
         }
 
-        if (repaint)
-            this.repaint(); // repaint our display if something changed
+        if (repaint) this.repaint(); // repaint our display if something changed
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
      */
     public void mouseReleased(MouseEvent event) {
@@ -512,7 +494,9 @@ class CharMap4Grid extends JPanel
             /* Mouse is over a defined character or glyph. */
 
             if ((event.getButton() != MouseEvent.BUTTON1) // right means not primary
-                    || event.isAltDown() || event.isControlDown() || event.isShiftDown()) {
+                    || event.isAltDown()
+                    || event.isControlDown()
+                    || event.isShiftDown()) {
                 // TODO
                 // CharMap4.rightSaveCaption = CharMap4.statusDialog.getText(); // caption
                 // CharMap4.rightSaveChar = cellChar[index]; // save character number
@@ -549,15 +533,14 @@ class CharMap4Grid extends JPanel
             repaint = true; // mark ourselves as needing to be repainted
         }
 
-        if (repaint)
-            this.repaint(); // repaint our display if something changed
-
+        if (repaint) this.repaint(); // repaint our display if something changed
     }
 
     /**
      * Mouse replace text.
-     * 
-     * After a mouse click, or the pop-up menu simulating a mouse click, call this method with a string to be added to the sample text.
+     *
+     * <p>After a mouse click, or the pop-up menu simulating a mouse click, call this method with a
+     * string to be added to the sample text.
      *
      * @param text the text
      */
@@ -575,50 +558,58 @@ class CharMap4Grid extends JPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.event.MouseWheelListener#mouseWheelMoved(java.awt.event.MouseWheelEvent)
      */
     /**
      * mouseWheelMoved
-     * 
-     * This is the mouse wheel listener, for the scroll wheel on some mice. The "unit" scroll uses the local system preferences for how many
-     * lines/rows per click of the mouse. The "unit" scroll may be too big if there are only one or two lines in the display.
-     * 
-     * The mouse wheel listener has no interaction with the other mouse listeners above.
+     *
+     * <p>This is the mouse wheel listener, for the scroll wheel on some mice. The "unit" scroll
+     * uses the local system preferences for how many lines/rows per click of the mouse. The "unit"
+     * scroll may be too big if there are only one or two lines in the display.
+     *
+     * <p>The mouse wheel listener has no interaction with the other mouse listeners above.
      */
     public void mouseWheelMoved(MouseWheelEvent event) {
         switch (event.getScrollType()) // different mice scroll differently
         {
-        case (MouseWheelEvent.WHEEL_BLOCK_SCROLL): {
-            charMap4.getGridScroll().setValue(charMap4.getGridScroll().getValue()
-                    + (event.getWheelRotation() * charMap4.getGridScroll().getBlockIncrement()));
-        }
-            break;
+            case (MouseWheelEvent.WHEEL_BLOCK_SCROLL):
+                {
+                    charMap4.getGridScroll()
+                            .setValue(
+                                    charMap4.getGridScroll().getValue()
+                                            + (event.getWheelRotation()
+                                                    * charMap4.getGridScroll()
+                                                            .getBlockIncrement()));
+                }
+                break;
 
-        case (MouseWheelEvent.WHEEL_UNIT_SCROLL): {
-            int i = charMap4.getGridScroll().getBlockIncrement(); // maximum scroll rows
-            i = Math.max((-i), Math.min(i, event.getUnitsToScroll())); // limits
-            charMap4.getGridScroll().setValue(charMap4.getGridScroll().getValue() + i);
-            // scroll using limited local preferences
-        }
-            break;
+            case (MouseWheelEvent.WHEEL_UNIT_SCROLL):
+                {
+                    int i = charMap4.getGridScroll().getBlockIncrement(); // maximum scroll rows
+                    i = Math.max((-i), Math.min(i, event.getUnitsToScroll())); // limits
+                    charMap4.getGridScroll().setValue(charMap4.getGridScroll().getValue() + i);
+                    // scroll using limited local preferences
+                }
+                break;
 
-        default: // ignore anything that we don't recognize
-            break;
+            default: // ignore anything that we don't recognize
+                break;
         }
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
     /**
      * paintComponent() method
-     * 
-     * This is the "paint" method for a Java Swing component. We have to worry about the window size changing, new options chosen by the user, etc.
-     * There are many temporary variables in this method, because some calculations are difficult and declaring all variables at the beginning would
-     * be worse than declaring them when they are first used.
+     *
+     * <p>This is the "paint" method for a Java Swing component. We have to worry about the window
+     * size changing, new options chosen by the user, etc. There are many temporary variables in
+     * this method, because some calculations are difficult and declaring all variables at the
+     * beginning would be worse than declaring them when they are first used.
      */
     protected void paintComponent(Graphics context) {
         Graphics2D gr2d; // special subclass of graphics context
@@ -700,7 +691,7 @@ class CharMap4Grid extends JPanel
 
                 // if (panelFont.canDisplay((char) i) == false) // Java 1.4
                 if (panelFont.canDisplay(i) == false) // Java 5.0
-                    continue; // jump to next interaction of <for> loop
+                continue; // jump to next interaction of <for> loop
 
                 // Update mapping information between characters and glyphs. Early
                 // Java 5.0 on the Apple Macintosh has a bug where canDisplay() returns
@@ -709,12 +700,16 @@ class CharMap4Grid extends JPanel
                 // glyph (often the out-of-range glyph number of 65,535).
 
                 String charToString = CharMap4.charToString(i);
-                GlyphVector glyvector = panelFont.createGlyphVector(render, charToString); // get glyph list for this character
+                GlyphVector glyvector =
+                        panelFont.createGlyphVector(
+                                render, charToString); // get glyph list for this character
                 int glycount = glyvector.getNumGlyphs(); // supposed number of glyphs
                 for (k = 0; k < glycount; k++) // for each glyph in the glyph vector
                 {
                     int glyph = glyvector.getGlyphCode(k); // get one glyph number
-                    if ((glyph >= 0) && (glyph < glyphCount) && (glyph != glymissing)) { // ignore missing and spacing glyphs
+                    if ((glyph >= 0)
+                            && (glyph < glyphCount)
+                            && (glyph != glymissing)) { // ignore missing and spacing glyphs
                         if (charTemp[i] < 0) // does this character already have a glyph?
                         {
                             charTemp[i] = glyph; // no, save the first good glyph we find
@@ -752,8 +747,11 @@ class CharMap4Grid extends JPanel
 
             // Protect ourselves from fonts that have no displayable characters.
 
-            charMap4.setStatusText(CharMap4.getFormatComma().format(charCount) + " characters with "
-                    + CharMap4.getFormatComma().format(glyphCount) + " glyphs"); // subvert "mouse caption" for extra trivia
+            charMap4.setStatusText(
+                    CharMap4.getFormatComma().format(charCount)
+                            + " characters with "
+                            + CharMap4.getFormatComma().format(glyphCount)
+                            + " glyphs"); // subvert "mouse caption" for extra trivia
 
             if ((charCount <= 0) || (glyphCount <= 0)) // need at least one defined
             {
@@ -785,8 +783,8 @@ class CharMap4Grid extends JPanel
             panelWidth = this.getWidth(); // save current panel width in pixels
             redoWidth = true; // remember that the width has changed
 
-            panelColumns = Math.max(1,
-                    ((panelWidth - (2 * PANEL_MARGIN) - GRID_WIDTH) / horizStep));
+            panelColumns =
+                    Math.max(1, ((panelWidth - (2 * PANEL_MARGIN) - GRID_WIDTH) / horizStep));
         }
 
         // If the panel height has changed, then we need to recalculate how many
@@ -812,11 +810,20 @@ class CharMap4Grid extends JPanel
             panelCount = cellCount; // save current number of displayed cells
             int row = cornerIndex / panelColumns;
             // convert character index to row number
-            row = Math.max(0, Math.min(row, ((cellCount / panelColumns) - panelRows + 1))); // if possible, don't leave blank rows at end
-            charMap4.getGridScroll().setValues(row, // scroll value
-                    panelRows, // extent (visible amount)
-                    0, // minimum: always zero
-                    ((cellCount + panelColumns - 1) / panelColumns));
+            row =
+                    Math.max(
+                            0,
+                            Math.min(
+                                    row,
+                                    ((cellCount / panelColumns)
+                                            - panelRows
+                                            + 1))); // if possible, don't leave blank rows at end
+            charMap4.getGridScroll()
+                    .setValues(
+                            row, // scroll value
+                            panelRows, // extent (visible amount)
+                            0, // minimum: always zero
+                            ((cellCount + panelColumns - 1) / panelColumns));
             // maximum: allow partial last row
             cornerIndex = charMap4.getGridScroll().getValue() * panelColumns;
             // convert scroll row back to character index
@@ -850,12 +857,12 @@ class CharMap4Grid extends JPanel
 
     /**
      * Paint grid cell.
-     * 
-     * The caller wants us to paint one cell in the character grid. The cell may or may not be defined. The cell may be highlighted during mouse
-     * clicks.
-     * 
-     * Please note that many fonts draw outside of their declared bounding boxes! View a font like "Lucida Console" before making any judgements about
-     * the accuracy of this method.
+     *
+     * <p>The caller wants us to paint one cell in the character grid. The cell may or may not be
+     * defined. The cell may be highlighted during mouse clicks.
+     *
+     * <p>Please note that many fonts draw outside of their declared bounding boxes! View a font
+     * like "Lucida Console" before making any judgements about the accuracy of this method.
      *
      * @param gr2d the gr2d
      * @param render the render
@@ -863,7 +870,7 @@ class CharMap4Grid extends JPanel
      */
     void paintGridCell(Graphics2D gr2d, FontRenderContext render, int index) {
         if (index >= cellCount) // is there a defined character?
-            return; // no, do nothing and return to caller
+        return; // no, do nothing and return to caller
 
         /* Calculate top-left drawing corner of the border for this cell. */
 
@@ -885,17 +892,17 @@ class CharMap4Grid extends JPanel
             gr2d.setColor(TEXT_COLOUR);
             /*
              * (non-Javadoc)
-             * 
+             *
              * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
              */
             /*
              * (non-Javadoc)
-             * 
+             *
              * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
              */
             /*
              * (non-Javadoc)
-             * 
+             *
              * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
              */
         }
@@ -912,7 +919,10 @@ class CharMap4Grid extends JPanel
             gr2d.setColor(SELECTED_COLOUR);
         }
 
-        gr2d.fillRect((x + GRID_WIDTH), (y + GRID_WIDTH), (horizStep - GRID_WIDTH),
+        gr2d.fillRect(
+                (x + GRID_WIDTH),
+                (y + GRID_WIDTH),
+                (horizStep - GRID_WIDTH),
                 (vertiStep - GRID_WIDTH));
 
         // Draw the defined character or raw glyph.
@@ -923,14 +933,20 @@ class CharMap4Grid extends JPanel
             int[] list = new int[1]; // need a list for createGlyphVector()
             list[0] = cellGlyph[index]; // only value in list is the glyph index
             GlyphVector glyvector = panelFont.createGlyphVector(render, list);
-            gr2d.drawGlyphVector(glyvector, (x + GRID_WIDTH + TEXT_MARGIN
-                    + ((maxWidth - ((int) glyvector.getGlyphMetrics(0).getAdvanceX())) / 2)),
+            gr2d.drawGlyphVector(
+                    glyvector,
+                    (x
+                            + GRID_WIDTH
+                            + TEXT_MARGIN
+                            + ((maxWidth - ((int) glyvector.getGlyphMetrics(0).getAdvanceX()))
+                                    / 2)),
                     (y + GRID_WIDTH + TEXT_MARGIN + lineAscent));
         } else // no, displaying standard characters
         {
             int ch = cellChar[index]; // get the character we want to display
             gr2d.setFont(panelFont); // set the correct font
-            gr2d.drawString(CharMap4.charToString(ch),
+            gr2d.drawString(
+                    CharMap4.charToString(ch),
                     (x + GRID_WIDTH + TEXT_MARGIN + ((maxWidth - fontData.charWidth(ch)) / 2)),
                     (y + GRID_WIDTH + TEXT_MARGIN + lineAscent));
         }
@@ -938,14 +954,14 @@ class CharMap4Grid extends JPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
      */
     /**
      * stateChanged()
-     * 
-     * Currently only used for the vertical scroll bar. This method gets called often, perhaps too often. Try to invoke other methods only if
-     * something important has changed.
+     *
+     * <p>Currently only used for the vertical scroll bar. This method gets called often, perhaps
+     * too often. Try to invoke other methods only if something important has changed.
      */
     public void stateChanged(ChangeEvent event) {
         if (panelFont != null) // are we ready to handle this yet?

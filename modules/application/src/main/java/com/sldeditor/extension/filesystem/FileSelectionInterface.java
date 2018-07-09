@@ -34,5 +34,4 @@ public interface FileSelectionInterface {
      * @param e the e
      */
     public void treeSelection(TreeSelectionEvent e);
-
 }

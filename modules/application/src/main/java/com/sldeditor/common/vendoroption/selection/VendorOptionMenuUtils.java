@@ -19,16 +19,15 @@
 
 package com.sldeditor.common.vendoroption.selection;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.ui.menucombobox.MenuComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Class VendorOptionMenuUtils. Provides methods to populate vendor option versions in a menu
@@ -71,10 +70,14 @@ public class VendorOptionMenuUtils {
                         keyOrderList.add(key);
                     }
 
-                    VendorOptionVersion vendorOptionVersion = new VendorOptionVersion(
-                            versionData.getVendorOptionType(), versionData);
-                    ValueComboBoxData value = new ValueComboBoxData(versionData.getVersionString(),
-                            versionData.getVersionString(), vendorOptionVersion, String.class);
+                    VendorOptionVersion vendorOptionVersion =
+                            new VendorOptionVersion(versionData.getVendorOptionType(), versionData);
+                    ValueComboBoxData value =
+                            new ValueComboBoxData(
+                                    versionData.getVersionString(),
+                                    versionData.getVersionString(),
+                                    vendorOptionVersion,
+                                    String.class);
                     dataList.add(value);
                     valueMap.put(versionData.getVersionString(), value);
                 }
@@ -82,8 +85,8 @@ public class VendorOptionMenuUtils {
                 // Add groups to menu combo
                 for (String key : keyOrderList) {
                     List<ValueComboBoxData> dataList = map.get(key);
-                    ValueComboBoxDataGroup group = new ValueComboBoxDataGroup(key + ".x", dataList,
-                            (dataList.size() > 1));
+                    ValueComboBoxDataGroup group =
+                            new ValueComboBoxDataGroup(key + ".x", dataList, (dataList.size() > 1));
 
                     dataSelectionList.add(group);
                 }
@@ -100,8 +103,8 @@ public class VendorOptionMenuUtils {
      */
     private static String getKey(VersionData aVersionData) {
         if (aVersionData != null) {
-            return String.format("%d.%d", aVersionData.getMajorNumber(),
-                    aVersionData.getMinorNumber());
+            return String.format(
+                    "%d.%d", aVersionData.getMajorNumber(), aVersionData.getMinorNumber());
         }
         return "unknown";
     }
@@ -121,5 +124,4 @@ public class VendorOptionMenuUtils {
             }
         }
     }
-
 }

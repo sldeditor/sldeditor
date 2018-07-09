@@ -19,18 +19,6 @@
 
 package com.sldeditor.ui.detail.config;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
-
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -38,15 +26,24 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import org.opengis.filter.expression.Expression;
 
 /**
- * The Class FieldConfigString wraps a text field GUI component and an
- * optional value/attribute/expression drop down,
- * 
+ * The Class FieldConfigString wraps a text field GUI component and an optional
+ * value/attribute/expression drop down,
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigString extends FieldConfigBase implements UndoActionInterface {
@@ -81,12 +78,10 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
         this.buttonText = buttonText;
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -99,17 +94,21 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
 
             textField = new TextFieldPropertyChange();
             textField.setBounds(
-                    xPos + BasePanel.WIDGET_X_START, 0, this.isValueOnly()
-                            ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
+                    xPos + BasePanel.WIDGET_X_START,
+                    0,
+                    this.isValueOnly()
+                            ? BasePanel.WIDGET_EXTENDED_WIDTH
+                            : BasePanel.WIDGET_STANDARD_WIDTH,
                     BasePanel.WIDGET_HEIGHT);
             fieldPanel.add(textField);
 
-            textField.addPropertyChangeListener(TextFieldPropertyChange.TEXT_PROPERTY,
+            textField.addPropertyChangeListener(
+                    TextFieldPropertyChange.TEXT_PROPERTY,
                     new PropertyChangeListener() {
 
                         /*
                          * (non-Javadoc)
-                         * 
+                         *
                          * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
                          */
                         @Override
@@ -119,8 +118,13 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
 
                             if ((originalValue.compareTo(newValueObj) != 0)) {
                                 if (!suppressUpdateOnSet) {
-                                    UndoManager.getInstance().addUndoEvent(new UndoEvent(parentObj,
-                                            getFieldId(), oldValueObj, newValueObj));
+                                    UndoManager.getInstance()
+                                            .addUndoEvent(
+                                                    new UndoEvent(
+                                                            parentObj,
+                                                            getFieldId(),
+                                                            oldValueObj,
+                                                            newValueObj));
 
                                     oldValueObj = originalValue;
                                 }
@@ -132,23 +136,28 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
 
             if (buttonText != null) {
                 final JButton buttonExternal = new JButton(buttonText);
-                buttonExternal.addActionListener(new ActionListener() {
+                buttonExternal.addActionListener(
+                        new ActionListener() {
 
-                    public void actionPerformed(ActionEvent e) {
-                        if (buttonPressedListenerList != null) {
-                            //CHECKSTYLE:OFF
-                            for (FieldConfigStringButtonInterface listener : buttonPressedListenerList) {
-                                listener.buttonPressed(buttonExternal);
+                            public void actionPerformed(ActionEvent e) {
+                                if (buttonPressedListenerList != null) {
+                                    // CHECKSTYLE:OFF
+                                    for (FieldConfigStringButtonInterface listener :
+                                            buttonPressedListenerList) {
+                                        listener.buttonPressed(buttonExternal);
+                                    }
+                                    // CHECKSTYLE:ON
+                                }
                             }
-                            //CHECKSTYLE:ON
-                        }
-                    }
-                });
+                        });
 
                 int buttonWidth = 26;
                 int padding = 3;
-                buttonExternal.setBounds(xPos + textField.getX() - buttonWidth - padding, 0,
-                        buttonWidth, BasePanel.WIDGET_HEIGHT);
+                buttonExternal.setBounds(
+                        xPos + textField.getX() - buttonWidth - padding,
+                        0,
+                        buttonWidth,
+                        BasePanel.WIDGET_HEIGHT);
                 fieldPanel.add(buttonExternal);
             }
 
@@ -166,7 +175,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
@@ -181,7 +190,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -198,7 +207,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -218,7 +227,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -233,12 +242,10 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -253,7 +260,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override

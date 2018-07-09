@@ -22,24 +22,22 @@ package com.sldeditor.test.unit.rendertransformation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Date;
-
-import org.junit.Test;
-
 import com.sldeditor.rendertransformation.ProcessFunctionParameterValue;
+import java.util.Date;
+import org.junit.Test;
 
 /**
  * Unit test for ProcessFunctionParameterValue class.
- * 
- * <p>{@link com.sldeditor.rendertransformation.ProcessFunctionParameterValue}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.rendertransformation.ProcessFunctionParameterValue}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class ProcessFunctionParameterValueTest {
 
     /**
-     * Test method for {@link com.sldeditor.rendertransformation.ProcessFunctionParameterValue#ProcessFunctionParameterValue(com.sldeditor.rendertransformation.ProcessFunctionParameterValue)}.
+     * Test method for {@link
+     * com.sldeditor.rendertransformation.ProcessFunctionParameterValue#ProcessFunctionParameterValue(com.sldeditor.rendertransformation.ProcessFunctionParameterValue)}.
      */
     @Test
     public void testProcessFunctionParameterValueProcessFunctionParameterValue() {
@@ -61,5 +59,4 @@ public class ProcessFunctionParameterValueTest {
         assertEquals(obj1.maxOccurences, obj2.maxOccurences);
         assertEquals(obj1.optional, obj2.optional);
     }
-
 }

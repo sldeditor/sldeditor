@@ -23,13 +23,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
+import org.junit.Test;
 
 /**
  * The unit test for WKTType.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType}
  *
  * @author Robert Ward (SCISYS)
@@ -37,31 +36,39 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
 public class WKTTypeTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#WKTType(java.lang.String, boolean, int, java.lang.String, boolean, boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#WKTType(java.lang.String, boolean, int, java.lang.String, boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#getName()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#isMultipleCoordinates()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#toString()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#getNumOfPoints()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#getListItem()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#canHaveMultipleShapes()}.
-     * Test method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#doFirstLastHaveToBeSame()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#WKTType(java.lang.String,
+     * boolean, int, java.lang.String, boolean, boolean)}. Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#WKTType(java.lang.String,
+     * boolean, int, java.lang.String, boolean)}. Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#getName()}. Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#isMultipleCoordinates()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#toString()}. Test method for
+     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#getNumOfPoints()}. Test
+     * method for {@link com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#getListItem()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#canHaveMultipleShapes()}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType#doFirstLastHaveToBeSame()}.
      */
     @Test
     public void testDoFirstLastHaveToBeSame() {
-        String name = "test"; 
+        String name = "test";
         boolean multipleCoordinates = true;
         int numOfPoints = 5;
         String listItem = "qwerty";
         boolean canHaveMultipleShapes = true;
         boolean doFirstLastHaveToBeSame = false;
 
-        WKTType wktType = new WKTType(name, 
-                multipleCoordinates,
-                numOfPoints,
-                listItem, 
-                canHaveMultipleShapes,
-                doFirstLastHaveToBeSame);
+        WKTType wktType =
+                new WKTType(
+                        name,
+                        multipleCoordinates,
+                        numOfPoints,
+                        listItem,
+                        canHaveMultipleShapes,
+                        doFirstLastHaveToBeSame);
 
         assertTrue(wktType.canHaveMultipleShapes());
         assertTrue(wktType.isMultipleCoordinates());
@@ -71,25 +78,28 @@ public class WKTTypeTest {
         assertTrue(wktType.getName().compareTo(name) == 0);
         assertTrue(wktType.toString().compareTo(name) == 0);
 
-        WKTType wktType2 = new WKTType(name, 
-                multipleCoordinates,
-                numOfPoints,
-                listItem,
-                false,
-                doFirstLastHaveToBeSame);
+        WKTType wktType2 =
+                new WKTType(
+                        name,
+                        multipleCoordinates,
+                        numOfPoints,
+                        listItem,
+                        false,
+                        doFirstLastHaveToBeSame);
         assertFalse(wktType2.canHaveMultipleShapes());
 
         assertFalse(wktType.equals(wktType2));
 
-        WKTType wktTypeCopy = new WKTType(name, 
-                multipleCoordinates,
-                numOfPoints,
-                listItem, 
-                canHaveMultipleShapes,
-                doFirstLastHaveToBeSame);
+        WKTType wktTypeCopy =
+                new WKTType(
+                        name,
+                        multipleCoordinates,
+                        numOfPoints,
+                        listItem,
+                        canHaveMultipleShapes,
+                        doFirstLastHaveToBeSame);
         assertEquals(wktType, wktTypeCopy);
 
         assertTrue(wktType.hashCode() != wktType2.hashCode());
     }
-
 }

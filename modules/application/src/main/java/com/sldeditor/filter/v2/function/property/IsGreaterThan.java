@@ -19,18 +19,16 @@
 
 package com.sldeditor.filter.v2.function.property;
 
-import java.util.List;
-
-import org.geotools.filter.IsGreaterThanImpl;
-import org.opengis.filter.Filter;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import java.util.List;
+import org.geotools.filter.IsGreaterThanImpl;
+import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class IsGreaterThan.
@@ -39,15 +37,11 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class IsGreaterThan extends FilterBase implements FilterConfigInterface {
 
-    /**
-     * The Class IsGreaterThanExtended.
-     */
+    /** The Class IsGreaterThanExtended. */
     public class IsGreaterThanExtended extends IsGreaterThanImpl
             implements FilterExtendedInterface {
 
-        /**
-         * Instantiates a new checks if is greater than extended.
-         */
+        /** Instantiates a new checks if is greater than extended. */
         public IsGreaterThanExtended() {
             super(null, null);
         }
@@ -64,7 +58,7 @@ public class IsGreaterThan extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -73,9 +67,7 @@ public class IsGreaterThan extends FilterBase implements FilterConfigInterface {
         }
     }
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public IsGreaterThan(String category) {
         super(category);
     }

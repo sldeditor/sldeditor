@@ -23,25 +23,22 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.tree.leaf.SLDTreeLeafText;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.TextSymbolizerImpl;
 import org.junit.Test;
 
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.tree.leaf.SLDTreeLeafText;
-
 /**
  * The unit test for SLDTreeLeafTextTest
- * 
+ *
  * <p>{@link com.sldeditor.common.tree.leaf.SLDTreeLeafTextTest}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDTreeLeafTextTest {
 
-    /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafText#getSymbolizer()}.
-     */
+    /** Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafText#getSymbolizer()}. */
     @Test
     public void testGetSymbolizer() {
         SLDTreeLeafText leaf = new SLDTreeLeafText();
@@ -50,7 +47,8 @@ public class SLDTreeLeafTextTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafText#hasFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafText#hasFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testHasFill() {
@@ -62,7 +60,8 @@ public class SLDTreeLeafTextTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafText#hasStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafText#hasStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testHasStroke() {
@@ -74,7 +73,8 @@ public class SLDTreeLeafTextTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafText#getFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafText#getFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testGetFill() {
@@ -85,7 +85,8 @@ public class SLDTreeLeafTextTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafText#getStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafText#getStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testGetStroke() {
@@ -96,7 +97,8 @@ public class SLDTreeLeafTextTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafText#removeStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafText#removeStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testRemoveStroke() {
@@ -109,7 +111,8 @@ public class SLDTreeLeafTextTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafText#createStroke(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafText#createStroke(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testCreateStroke() {
@@ -122,7 +125,8 @@ public class SLDTreeLeafTextTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafText#createFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafText#createFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testCreateFill() {
@@ -134,7 +138,8 @@ public class SLDTreeLeafTextTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.tree.leaf.SLDTreeLeafText#removeFill(org.opengis.style.Symbolizer)}.
+     * Test method for {@link
+     * com.sldeditor.common.tree.leaf.SLDTreeLeafText#removeFill(org.opengis.style.Symbolizer)}.
      */
     @Test
     public void testRemoveFill() {
@@ -144,5 +149,4 @@ public class SLDTreeLeafTextTest {
 
         // Does nothing
     }
-
 }

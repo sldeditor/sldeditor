@@ -24,6 +24,6 @@ public interface DatabaseConnectionName {
      * @param properties the properties
      * @return the connection name
      */
-    String getConnectionName(String duplicatePrefix, int noOfDuplicates,
-            Map<String, String> properties);
+    String getConnectionName(
+            String duplicatePrefix, int noOfDuplicates, Map<String, String> properties);
 }

@@ -19,10 +19,12 @@
 
 package com.sldeditor.datasource.impl;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.datasource.SLDEditorFileInterface;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.geotools.data.memory.MemoryDataStore;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.styling.FeatureTypeStyle;
@@ -43,10 +45,6 @@ import org.locationtech.jts.geom.Point;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.datasource.SLDEditorFileInterface;
-import com.sldeditor.datasource.attribute.DataSourceAttributeData;
-
 /**
  * The Class CreateInternalDataSource.
  *
@@ -64,8 +62,8 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
     private GeometryField geometryField = new GeometryField();
 
     /** The list of class considered geometry types. */
-    private static List<Class<?>> geometryTypeList = Arrays.asList(Geometry.class,
-            MultiPolygon.class, LineString.class, Point.class);
+    private static List<Class<?>> geometryTypeList =
+            Arrays.asList(Geometry.class, MultiPolygon.class, LineString.class, Point.class);
 
     /**
      * Creates the.
@@ -76,8 +74,8 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      * @return the list of datastores
      */
     @Override
-    public List<DataSourceInfo> connect(String typeName, String geometryFieldName,
-            SLDEditorFileInterface editorFile) {
+    public List<DataSourceInfo> connect(
+            String typeName, String geometryFieldName, SLDEditorFileInterface editorFile) {
         List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
         dataSourceInfoList.add(dsInfo);
 
@@ -162,14 +160,16 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      * @param b the feature type builder
      * @param fieldList the field list
      */
-    private void addFields(List<AttributeDescriptor> attrDescList,
-            ExtendedSimpleFeatureTypeBuilder b, List<DataSourceAttributeData> fieldList) {
+    private void addFields(
+            List<AttributeDescriptor> attrDescList,
+            ExtendedSimpleFeatureTypeBuilder b,
+            List<DataSourceAttributeData> fieldList) {
 
         for (DataSourceAttributeData field : fieldList) {
             Class<?> fieldType = field.getType();
             if (!isGeometryField(field.getType())) {
-                AttributeDescriptor attributeDescriptor = b
-                        .createAttributeDescriptor(field.getName(), fieldType);
+                AttributeDescriptor attributeDescriptor =
+                        b.createAttributeDescriptor(field.getName(), fieldType);
                 attrDescList.add(attributeDescriptor);
             }
         }
@@ -182,21 +182,21 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      * @param fieldName the field name
      * @return the attribute descriptor
      */
-    private AttributeDescriptor addGeometryField(ExtendedSimpleFeatureTypeBuilder b,
-            String fieldName) {
+    private AttributeDescriptor addGeometryField(
+            ExtendedSimpleFeatureTypeBuilder b, String fieldName) {
         geometryField.setGeometryFieldName(fieldName);
         Class<?> fieldType;
         switch (dsInfo.getGeometryType()) {
-        case POLYGON:
-            fieldType = MultiPolygon.class;
-            break;
-        case LINE:
-            fieldType = LineString.class;
-            break;
-        case POINT:
-        default:
-            fieldType = Point.class;
-            break;
+            case POLYGON:
+                fieldType = MultiPolygon.class;
+                break;
+            case LINE:
+                fieldType = LineString.class;
+                break;
+            case POINT:
+            default:
+                fieldType = Point.class;
+                break;
         }
         b.setDefaultGeometry(fieldName);
         AttributeDescriptor attributeDescriptor = b.createAttributeDescriptor(fieldName, fieldType);

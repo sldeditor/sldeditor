@@ -19,7 +19,7 @@
 
 /**
  * Tool to export legends.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.tool.legend;

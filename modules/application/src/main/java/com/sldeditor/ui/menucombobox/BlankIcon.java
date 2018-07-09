@@ -22,12 +22,11 @@ package com.sldeditor.ui.menucombobox;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
-
 import javax.swing.Icon;
 
 /**
  * Class to draw a blank icon in the menu combo box.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 class BlankIcon implements Icon {
@@ -40,9 +39,7 @@ class BlankIcon implements Icon {
     /** The size. */
     private int size;
 
-    /**
-     * Instantiates a new blank icon.
-     */
+    /** Instantiates a new blank icon. */
     public BlankIcon() {
         this(null, DEFAULT_SIZE);
     }
@@ -61,7 +58,7 @@ class BlankIcon implements Icon {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
      */
     public void paintIcon(Component c, Graphics g, int x, int y) {
@@ -73,7 +70,7 @@ class BlankIcon implements Icon {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.Icon#getIconWidth()
      */
     public int getIconWidth() {
@@ -82,7 +79,7 @@ class BlankIcon implements Icon {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.Icon#getIconHeight()
      */
     public int getIconHeight() {

@@ -19,7 +19,7 @@
 
 /**
  * About dialog package.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.about;

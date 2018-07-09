@@ -19,7 +19,7 @@
 
 /**
  * GeoServer vendor option panel ui.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.detail.vendor.geoserver;

@@ -23,12 +23,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
-import com.sldeditor.ui.detail.PointFillDetails;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.PointFillDetails;
 import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
@@ -37,10 +35,11 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
+import org.junit.Test;
 
 /**
  * The unit test for GraphicPanelFieldManager.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.GraphicPanelFieldManager}
  *
  * @author Robert Ward (SCISYS)
@@ -48,14 +47,22 @@ import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 public class GraphicPanelFieldManagerTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#GraphicPanelFieldManager(java.lang.Class)}.
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#get(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#get(com.sldeditor.common.xml.ui.FieldIdEnum)}.
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#getFieldEnum(java.lang.Class, com.sldeditor.ui.detail.config.FieldConfigBase)}.
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#getComponentId()}.
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#addField(com.sldeditor.ui.detail.config.FieldConfigBase)}.
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#add(com.sldeditor.ui.detail.config.FieldId, com.sldeditor.ui.detail.config.FieldConfigBase)}.
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#getData(java.lang.Class, com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#GraphicPanelFieldManager(java.lang.Class)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#get(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#get(com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#getFieldEnum(java.lang.Class,
+     * com.sldeditor.ui.detail.config.FieldConfigBase)}. Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#getComponentId()}. Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#addField(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#add(com.sldeditor.ui.detail.config.FieldId,
+     * com.sldeditor.ui.detail.config.FieldConfigBase)}. Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#getData(java.lang.Class,
+     * com.sldeditor.ui.detail.config.FieldId)}.
      */
     @Test
     public void testGraphicPanelFieldManager() {
@@ -71,9 +78,11 @@ public class GraphicPanelFieldManagerTest {
 
         // Now try with a field
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
-        FieldConfigString stringField = new FieldConfigString(
-                new FieldConfigCommonData(String.class, expectedFieldId, "test label", false),
-                "button text");
+        FieldConfigString stringField =
+                new FieldConfigString(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, "test label", false),
+                        "button text");
 
         mgr.addField(null);
         mgr.addField(stringField);
@@ -85,7 +94,8 @@ public class GraphicPanelFieldManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#getFields(java.lang.Class)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#getFields(java.lang.Class)}.
      */
     @Test
     public void testGetFields() {
@@ -96,9 +106,11 @@ public class GraphicPanelFieldManagerTest {
         mgr = new GraphicPanelFieldManager(expectedPanelId);
 
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
-        FieldConfigString stringField = new FieldConfigString(
-                new FieldConfigCommonData(String.class, expectedFieldId, "test label", false),
-                "button text");
+        FieldConfigString stringField =
+                new FieldConfigString(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, "test label", false),
+                        "button text");
         mgr.addField(stringField);
         assertTrue(mgr.getFields(FieldConfigBoolean.class).isEmpty());
 
@@ -106,7 +118,8 @@ public class GraphicPanelFieldManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#add(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#add(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testAddGraphicPanelFieldManager() {
@@ -116,9 +129,11 @@ public class GraphicPanelFieldManagerTest {
         GraphicPanelFieldManager mgr1 = new GraphicPanelFieldManager(expectedPanelId);
 
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
-        FieldConfigString stringField = new FieldConfigString(
-                new FieldConfigCommonData(String.class, expectedFieldId, "test label", false),
-                "button text");
+        FieldConfigString stringField =
+                new FieldConfigString(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, "test label", false),
+                        "button text");
         mgr1.addField(stringField);
         assertTrue(mgr1.getFields(FieldConfigBoolean.class).isEmpty());
 
@@ -129,8 +144,10 @@ public class GraphicPanelFieldManagerTest {
         GraphicPanelFieldManager mgr2 = new GraphicPanelFieldManager(expectedPanelId2);
 
         FieldIdEnum expectedFieldId2 = FieldIdEnum.ANGLE;
-        FieldConfigDouble doubleField = new FieldConfigDouble(
-                new FieldConfigCommonData(Double.class, expectedFieldId2, "test label", false));
+        FieldConfigDouble doubleField =
+                new FieldConfigDouble(
+                        new FieldConfigCommonData(
+                                Double.class, expectedFieldId2, "test label", false));
         mgr2.addField(doubleField);
         assertEquals(1, mgr2.getFields(FieldConfigDouble.class).size());
 
@@ -145,8 +162,11 @@ public class GraphicPanelFieldManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#addMultiOptionGroup(com.sldeditor.ui.detail.config.base.MultiOptionGroup)}.
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#getMultiOptionGroup(java.lang.Class, com.sldeditor.common.xml.ui.GroupIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#addMultiOptionGroup(com.sldeditor.ui.detail.config.base.MultiOptionGroup)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#getMultiOptionGroup(java.lang.Class,
+     * com.sldeditor.common.xml.ui.GroupIdEnum)}.
      */
     @Test
     public void testAddMultiOptionGroup() {
@@ -154,9 +174,11 @@ public class GraphicPanelFieldManagerTest {
         GraphicPanelFieldManager mgr = new GraphicPanelFieldManager(expectedPanelId);
 
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
-        FieldConfigString stringField = new FieldConfigString(
-                new FieldConfigCommonData(String.class, expectedFieldId, "test label", false),
-                "button text");
+        FieldConfigString stringField =
+                new FieldConfigString(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, "test label", false),
+                        "button text");
         mgr.addField(stringField);
 
         MultiOptionGroup multiOption = new MultiOptionGroup();
@@ -172,8 +194,10 @@ public class GraphicPanelFieldManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#getGroup(java.lang.Class, com.sldeditor.common.xml.ui.GroupIdEnum)}.
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#addGroup(com.sldeditor.ui.detail.config.base.GroupConfig)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#getGroup(java.lang.Class,
+     * com.sldeditor.common.xml.ui.GroupIdEnum)}. Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#addGroup(com.sldeditor.ui.detail.config.base.GroupConfig)}.
      */
     @Test
     public void testAddGroup() {
@@ -181,9 +205,11 @@ public class GraphicPanelFieldManagerTest {
         GraphicPanelFieldManager mgr = new GraphicPanelFieldManager(expectedPanelId);
 
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
-        FieldConfigString stringField = new FieldConfigString(
-                new FieldConfigCommonData(String.class, expectedFieldId, "test label", false),
-                "button text");
+        FieldConfigString stringField =
+                new FieldConfigString(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, "test label", false),
+                        "button text");
         mgr.addField(stringField);
 
         GroupConfig multiOption = new GroupConfig();
@@ -199,7 +225,8 @@ public class GraphicPanelFieldManagerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.GraphicPanelFieldManager#removeField(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.GraphicPanelFieldManager#removeField(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testRemoveField() {
@@ -207,9 +234,11 @@ public class GraphicPanelFieldManagerTest {
         GraphicPanelFieldManager mgr = new GraphicPanelFieldManager(expectedPanelId);
 
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
-        FieldConfigString stringField = new FieldConfigString(
-                new FieldConfigCommonData(String.class, expectedFieldId, "test label", false),
-                "button text");
+        FieldConfigString stringField =
+                new FieldConfigString(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, "test label", false),
+                        "button text");
 
         mgr.removeField(null);
         // Does n't exists yet
@@ -223,5 +252,4 @@ public class GraphicPanelFieldManagerTest {
         actualFieldId = mgr.getFieldEnum(expectedPanelId, stringField);
         assertEquals(FieldIdEnum.UNKNOWN, actualFieldId);
     }
-
 }

@@ -34,7 +34,8 @@ import java.net.URL;
 public class Help {
 
     /** The Constant USER_GUIDE_URL. */
-    private static final String USER_GUIDE_URL = "https://github.com/robward-scisys/sldeditor/wiki/userguide";
+    private static final String USER_GUIDE_URL =
+            "https://github.com/robward-scisys/sldeditor/wiki/userguide";
 
     /** The singleton instance. */
     private static Help instance = null;
@@ -52,11 +53,8 @@ public class Help {
         return instance;
     }
 
-    /**
-     * Instantiates a new help reader.
-     */
-    private Help() {
-    }
+    /** Instantiates a new help reader. */
+    private Help() {}
 
     /**
      * Display user guide section.
@@ -84,5 +82,4 @@ public class Help {
             }
         }
     }
-
 }

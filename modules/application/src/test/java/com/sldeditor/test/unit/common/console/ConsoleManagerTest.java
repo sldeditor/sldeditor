@@ -22,21 +22,19 @@ package com.sldeditor.test.unit.common.console;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import com.sldeditor.common.console.ConsoleManager;
-
 /**
  * The unit test for ConsoleManager.
- * 
- * {@link com.sldeditor.common.console.ConsoleManager}
+ *
+ * <p>{@link com.sldeditor.common.console.ConsoleManager}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -50,9 +48,7 @@ public class ConsoleManagerTest {
         logFile.delete();
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.console.ConsoleManager#getInstance()}.
-     */
+    /** Test method for {@link com.sldeditor.common.console.ConsoleManager#getInstance()}. */
     @Test
     public void testGetInstance() {
         ConsoleManager instance1 = ConsoleManager.getInstance();
@@ -60,9 +56,7 @@ public class ConsoleManagerTest {
         assertEquals(instance1, instance2);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.console.ConsoleManager#getPanel()}.
-     */
+    /** Test method for {@link com.sldeditor.common.console.ConsoleManager#getPanel()}. */
     @Test
     public void testGetPanel() {
         assertNotNull(ConsoleManager.getInstance().getPanel());
@@ -71,13 +65,15 @@ public class ConsoleManagerTest {
     /**
      * Have to write all the messages to a file and then check them all. If you do it individually
      * there is no guarantee log4j has written the log files and flushing doesn't seem to work.
-     * 
-     * <p>Test method for:
-     * {@link com.sldeditor.common.console.ConsoleManager#error(java.lang.Object, java.lang.String)}.
+     *
+     * <p>Test method for: {@link
+     * com.sldeditor.common.console.ConsoleManager#error(java.lang.Object, java.lang.String)}.
      * {@link com.sldeditor.common.console.ConsoleManager#warn(java.lang.Object, java.lang.String)}.
-     * {@link com.sldeditor.common.console.ConsoleManager#information(java.lang.Object, java.lang.String)}.
-     * {@link com.sldeditor.common.console.ConsoleManager#exception(java.lang.Object, java.lang.String)}.
-     * {@link com.sldeditor.common.console.ConsoleManager#exception(java.lang.Class, java.lang.String)}.
+     * {@link com.sldeditor.common.console.ConsoleManager#information(java.lang.Object,
+     * java.lang.String)}. {@link
+     * com.sldeditor.common.console.ConsoleManager#exception(java.lang.Object, java.lang.String)}.
+     * {@link com.sldeditor.common.console.ConsoleManager#exception(java.lang.Class,
+     * java.lang.String)}.
      */
     @Test
     public void testWarnErrorInfoException() {
@@ -151,9 +147,7 @@ public class ConsoleManagerTest {
         return count;
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.console.ConsoleManager#clear()}.
-     */
+    /** Test method for {@link com.sldeditor.common.console.ConsoleManager#clear()}. */
     @Test
     public void testClear() {
         // Does nothing in the log file

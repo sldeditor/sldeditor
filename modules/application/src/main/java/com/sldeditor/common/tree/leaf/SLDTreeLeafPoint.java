@@ -20,7 +20,6 @@
 package com.sldeditor.common.tree.leaf;
 
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
@@ -36,18 +35,18 @@ import org.opengis.style.Symbolizer;
 
 /**
  * Class that represents a point in the SLD structure tree.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private static StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getSymbolizer()
      */
     @Override
@@ -57,7 +56,7 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#hasFill(org.opengis.style.Symbolizer)
      */
     @Override
@@ -74,7 +73,7 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#hasStroke(org.opengis.style.Symbolizer)
      */
     @Override
@@ -84,7 +83,7 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getFill(org.opengis.style.Symbolizer)
      */
     @Override
@@ -116,7 +115,7 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getStroke(org.opengis.style.Symbolizer)
      */
     @Override
@@ -126,7 +125,7 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeStroke(org.opengis.style.Symbolizer)
      */
     @Override
@@ -136,7 +135,7 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createStroke(org.opengis.style.Symbolizer)
      */
     @Override
@@ -146,7 +145,7 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createFill(org.opengis.style.Symbolizer)
      */
     @Override
@@ -174,7 +173,7 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeFill(org.opengis.style.Symbolizer)
      */
     @Override

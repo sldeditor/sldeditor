@@ -24,15 +24,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import org.junit.Test;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -40,11 +31,18 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDate;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import org.junit.Test;
 import org.locationtech.jts.geom.Geometry;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The unit test for FieldConfigDate.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.FieldConfigDate}
  *
  * @author Robert Ward (SCISYS)
@@ -52,17 +50,19 @@ import org.locationtech.jts.geom.Geometry;
 public class FieldConfigDateTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigDate#internal_setEnabled(boolean)}. Test
-     * method for {@link com.sldeditor.ui.detail.config.FieldConfigDate#isEnabled()}. Test method
-     * for {@link com.sldeditor.ui.detail.config.FieldConfigDate#createUI(javax.swing.Box)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigDate#internal_setEnabled(boolean)}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigDate#isEnabled()}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigDate#createUI(javax.swing.Box)}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigDate field = new FieldConfigDate(
-                new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDate field =
+                new FieldConfigDate(
+                        new FieldConfigCommonData(
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -82,8 +82,10 @@ public class FieldConfigDateTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigDate field2 = new FieldConfigDate(
-                new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDate field2 =
+                new FieldConfigDate(
+                        new FieldConfigCommonData(
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -108,8 +110,10 @@ public class FieldConfigDateTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigDate field = new FieldConfigDate(
-                new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDate field =
+                new FieldConfigDate(
+                        new FieldConfigCommonData(
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -122,13 +126,14 @@ public class FieldConfigDateTest {
 
     /**
      * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDate#generateExpression()}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigDate#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigDate#populateField(java.util.Date)}. Test
-     * method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigDate#setTestValue(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigDate#getStringValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigDate#populateExpression(java.lang.Object,
+     * org.opengis.filter.expression.Expression)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigDate#populateField(java.util.Date)}. Test method
+     * for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigDate#setTestValue(com.sldeditor.ui.detail.config.FieldId,
+     * java.lang.String)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigDate#getStringValue()}.
      */
     @Test
     public void testGenerateExpression() {
@@ -144,8 +149,10 @@ public class FieldConfigDateTest {
             }
         }
 
-        TestFieldConfigDate field = new TestFieldConfigDate(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        TestFieldConfigDate field =
+                new TestFieldConfigDate(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -167,14 +174,14 @@ public class FieldConfigDateTest {
 
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         DateFormat tf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-        String dateFormat1String = String.format("%sT%sZ", df.format(dateTime1),
-                tf.format(dateTime1));
+        String dateFormat1String =
+                String.format("%sT%sZ", df.format(dateTime1), tf.format(dateTime1));
         assertTrue(dateFormat1String.compareTo(actualExpression.toString()) == 0);
 
         field.populateExpression(dateString);
         actualExpression = field.callGenerateExpression();
-        String dateFormat1aString = String.format("%sT%sZ", df.format(dateTime1),
-                tf.format(dateTime1));
+        String dateFormat1aString =
+                String.format("%sT%sZ", df.format(dateTime1), tf.format(dateTime1));
         assertTrue(dateFormat1aString.compareTo(actualExpression.toString()) == 0);
 
         String dateTime2 = "23-05-2015 11:56:47";
@@ -185,22 +192,24 @@ public class FieldConfigDateTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String dateFormat2String = String.format("%sT%sZ", df.format(dateTime21),
-                tf.format(dateTime21));
+        String dateFormat2String =
+                String.format("%sT%sZ", df.format(dateTime21), tf.format(dateTime21));
 
         actualExpression = field.callGenerateExpression();
         assertTrue(dateFormat2String.compareTo(actualExpression.toString()) == 0);
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigDate#revertToDefaultValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigDate#revertToDefaultValue()}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigDate field = new FieldConfigDate(
-                new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDate field =
+                new FieldConfigDate(
+                        new FieldConfigCommonData(
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
@@ -212,8 +221,8 @@ public class FieldConfigDateTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigDate#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigDate#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
@@ -229,8 +238,10 @@ public class FieldConfigDateTest {
             }
         }
 
-        TestFieldConfigDate field = new TestFieldConfigDate(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        TestFieldConfigDate field =
+                new TestFieldConfigDate(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         FieldConfigDate copy = (FieldConfigDate) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -241,29 +252,32 @@ public class FieldConfigDateTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigDate#attributeSelection(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigDate#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigDate field = new FieldConfigDate(
-                new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigDate field =
+                new FieldConfigDate(
+                        new FieldConfigCommonData(
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
         field.attributeSelection(null);
 
         // Does nothing
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigDate#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigDate#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigDate#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigDate#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
-        FieldConfigDate field = new FieldConfigDate(
-                new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", false));
+        FieldConfigDate field =
+                new FieldConfigDate(
+                        new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
@@ -284,13 +298,13 @@ public class FieldConfigDateTest {
 
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         DateFormat tf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-        String dateFormat1String = String.format("%sT%sZ", df.format(dateTime1),
-                tf.format(dateTime1));
+        String dateFormat1String =
+                String.format("%sT%sZ", df.format(dateTime1), tf.format(dateTime1));
         assertTrue(dateFormat1String.compareTo(field.getStringValue()) == 0);
 
         field.populateField(dateTime2);
-        String dateFormat2String = String.format("%sT%sZ", df.format(dateTime2),
-                tf.format(dateTime2));
+        String dateFormat2String =
+                String.format("%sT%sZ", df.format(dateTime2), tf.format(dateTime2));
         assertTrue(dateFormat2String.compareTo(field.getStringValue()) == 0);
 
         UndoManager.getInstance().undo();
@@ -306,5 +320,4 @@ public class FieldConfigDateTest {
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
     }
-
 }

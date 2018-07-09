@@ -23,6 +23,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.RasterSymbolizerDetails;
+import com.sldeditor.ui.detail.config.FieldConfigString;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.ContrastEnhancement;
 import org.geotools.styling.FeatureTypeStyle;
@@ -38,16 +44,9 @@ import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.style.OverlapBehavior;
 
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.RasterSymbolizerDetails;
-import com.sldeditor.ui.detail.config.FieldConfigString;
-
 /**
  * The unit test for RasterSymbolizerDetails.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.RasterSymbolizerDetails}
  *
  * @author Robert Ward (SCISYS)
@@ -55,12 +54,16 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 public class RasterSymbolizerDetailsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#RasterSymbolizerDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#isDataPresent()}.
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#getFieldDataManager()}.
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#preLoadSymbol()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.RasterSymbolizerDetails#RasterSymbolizerDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#isDataPresent()}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.RasterSymbolizerDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.RasterSymbolizerDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.RasterSymbolizerDetails#getFieldDataManager()}. Test method for
+     * {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#preLoadSymbol()}.
      */
     @Test
     public void testRasterSymbolizerDetailsGreyChannel() {
@@ -88,10 +91,10 @@ public class RasterSymbolizerDetailsTest {
         RasterSymbolizer symbolizer = DefaultSymbols.createDefaultRasterSymbolizer();
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
-        ContrastEnhancement contrastEnhancement = (ContrastEnhancement) styleFactory
-                .contrastEnhancement(ff.literal(.5), "ramp");
-        SelectedChannelType greyChannel = styleFactory.createSelectedChannelType("grey",
-                contrastEnhancement);
+        ContrastEnhancement contrastEnhancement =
+                (ContrastEnhancement) styleFactory.contrastEnhancement(ff.literal(.5), "ramp");
+        SelectedChannelType greyChannel =
+                styleFactory.createSelectedChannelType("grey", contrastEnhancement);
         symbolizer.setChannelSelection(styleFactory.channelSelection(greyChannel));
         String expectedNameValue = "symbolizer test value";
         symbolizer.setName(expectedNameValue);
@@ -121,12 +124,16 @@ public class RasterSymbolizerDetailsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#RasterSymbolizerDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#isDataPresent()}.
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#getFieldDataManager()}.
-     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#preLoadSymbol()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.RasterSymbolizerDetails#RasterSymbolizerDetails(com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#isDataPresent()}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.RasterSymbolizerDetails#populate(com.sldeditor.common.data.SelectedSymbol)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.RasterSymbolizerDetails#dataChanged(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.RasterSymbolizerDetails#getFieldDataManager()}. Test method for
+     * {@link com.sldeditor.ui.detail.RasterSymbolizerDetails#preLoadSymbol()}.
      */
     @Test
     public void testRasterSymbolizerDetailsColourChannel() {
@@ -153,14 +160,14 @@ public class RasterSymbolizerDetailsTest {
 
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
-        ContrastEnhancement contrastEnhancement = (ContrastEnhancement) styleFactory
-                .contrastEnhancement(ff.literal(.5), "ramp");
-        SelectedChannelType redChannel = styleFactory.createSelectedChannelType("red",
-                contrastEnhancement);
-        SelectedChannelType greenChannel = styleFactory.createSelectedChannelType("green",
-                contrastEnhancement);
-        SelectedChannelType blueChannel = styleFactory.createSelectedChannelType("blue",
-                contrastEnhancement);
+        ContrastEnhancement contrastEnhancement =
+                (ContrastEnhancement) styleFactory.contrastEnhancement(ff.literal(.5), "ramp");
+        SelectedChannelType redChannel =
+                styleFactory.createSelectedChannelType("red", contrastEnhancement);
+        SelectedChannelType greenChannel =
+                styleFactory.createSelectedChannelType("green", contrastEnhancement);
+        SelectedChannelType blueChannel =
+                styleFactory.createSelectedChannelType("blue", contrastEnhancement);
 
         SelectedChannelType[] channels = new SelectedChannelType[3];
         channels[0] = redChannel;
@@ -199,5 +206,4 @@ public class RasterSymbolizerDetailsTest {
         // Reset to default value
         panel.preLoadSymbol();
     }
-
 }

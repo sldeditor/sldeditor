@@ -19,39 +19,6 @@
 
 package com.sldeditor.extension.filesystem.file.sldeditor;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.tree.DefaultTreeModel;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -72,10 +39,40 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
 import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 import com.sldeditor.filter.v2.envvar.EnvVar;
 import com.sldeditor.ui.legend.option.LegendOptionData;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.tree.DefaultTreeModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * Class that handles read/writing SLD Editor project files.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDEditorFileHandler implements FileHandlerInterface {
@@ -112,7 +109,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.FileHandlerInterface#getFileExtension()
      */
     @Override
@@ -122,20 +119,20 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.input.FileSystemInterface,
      * javax.swing.tree.DefaultTreeModel, com.sldeditor.extension.input.file.FileTreeNode)
      */
     @Override
-    public boolean populate(FileSystemInterface inputInferface, DefaultTreeModel treeModel,
-            FileTreeNode node) {
+    public boolean populate(
+            FileSystemInterface inputInferface, DefaultTreeModel treeModel, FileTreeNode node) {
         // Do nothing
         return false;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.input.NodeInterface)
      */
     @Override
@@ -175,10 +172,11 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
             Document document = documentBuilder.parse(file);
 
             String sldFile = extractTextData(document, SLDEditorFileHandler.SLD_ELEMENT);
-            DataSourcePropertiesInterface dataSourceProperties = DataSourceProperties
-                    .decodeXML(document, SLDEditorFileHandler.DATASOURCE_ELEMENT);
-            List<VersionData> vendorOptionList = extractVendorOptionData(document,
-                    SLDEditorFileHandler.VENDOR_OPTION_ELEMENT);
+            DataSourcePropertiesInterface dataSourceProperties =
+                    DataSourceProperties.decodeXML(
+                            document, SLDEditorFileHandler.DATASOURCE_ELEMENT);
+            List<VersionData> vendorOptionList =
+                    extractVendorOptionData(document, SLDEditorFileHandler.VENDOR_OPTION_ELEMENT);
 
             File f = new File(sldFile);
             String sldContents = readFile(f, Charset.defaultCharset());
@@ -192,12 +190,13 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
             sldData.setReadOnly(false);
             sldData.setSldEditorFile(file);
 
-            List<EnvVar> envVarList = extractEnvironmentVariables(document,
-                    SLDEditorFileHandler.ENVVAR_ELEMENT);
+            List<EnvVar> envVarList =
+                    extractEnvironmentVariables(document, SLDEditorFileHandler.ENVVAR_ELEMENT);
             sldData.setEnvVarList(envVarList);
 
-            LegendOptionData legendOption = LegendOptionData.decodeXML(document,
-                    SLDEditorFileHandler.LEGEND_OPTION_ELEMENT);
+            LegendOptionData legendOption =
+                    LegendOptionData.decodeXML(
+                            document, SLDEditorFileHandler.LEGEND_OPTION_ELEMENT);
             sldData.setLegendOptions(legendOption);
         } catch (ParserConfigurationException e) {
             ConsoleManager.getInstance().exception(this, e);
@@ -272,8 +271,11 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
 
         // Try and remove any duplicates
         List<String> nameList = new ArrayList<String>();
-        nameList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersion().getLatest()
-                .toString());
+        nameList.add(
+                VendorOptionManager.getInstance()
+                        .getDefaultVendorOptionVersion()
+                        .getLatest()
+                        .toString());
         list.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersion().getLatest());
 
         NodeList nodeList = document.getElementsByTagName(elementName);
@@ -326,7 +328,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#open(java.io.File)
      */
     @Override
@@ -344,7 +346,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
@@ -373,11 +375,11 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
             List<VersionData> vendorOptionList = sldData.getVendorOptionList();
             if (vendorOptionList != null) {
                 for (VersionData versionData : vendorOptionList) {
-                    Element vendorOptionElement = doc
-                            .createElement(SLDEditorFileHandler.VENDOR_OPTION_ELEMENT);
+                    Element vendorOptionElement =
+                            doc.createElement(SLDEditorFileHandler.VENDOR_OPTION_ELEMENT);
 
-                    VendorOptionVersion vendorOption = new VendorOptionVersion(
-                            versionData.getVendorOptionType(), versionData);
+                    VendorOptionVersion vendorOption =
+                            new VendorOptionVersion(versionData.getVendorOptionType(), versionData);
                     vendorOptionElement.appendChild(doc.createTextNode(vendorOption.toString()));
                     root.appendChild(vendorOptionElement);
                 }
@@ -397,15 +399,15 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
                 for (EnvVar envVar : envVarList) {
                     Element envVarElement = doc.createElement(SLDEditorFileHandler.ENVVAR_ELEMENT);
 
-                    envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_NAME_ATTRIBUTE,
-                            envVar.getName());
-                    envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_TYPE_ATTRIBUTE,
-                            envVar.getType().getName());
+                    envVarElement.setAttribute(
+                            SLDEditorFileHandler.ENVVAR_NAME_ATTRIBUTE, envVar.getName());
+                    envVarElement.setAttribute(
+                            SLDEditorFileHandler.ENVVAR_TYPE_ATTRIBUTE, envVar.getType().getName());
 
                     if (envVar.getValue() != null) {
                         String value = envVar.getValue().toString();
-                        envVarElement.setAttribute(SLDEditorFileHandler.ENVVAR_VALUE_ATTRIBUTE,
-                                value);
+                        envVarElement.setAttribute(
+                                SLDEditorFileHandler.ENVVAR_VALUE_ATTRIBUTE, value);
                     }
 
                     envVarListElement.appendChild(envVarElement);
@@ -423,8 +425,8 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
 
             Transformer transformer = tf.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, SLDEditorFileHandler.YES);
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
-                    SLDEditorFileHandler.YES);
+            transformer.setOutputProperty(
+                    OutputKeys.OMIT_XML_DECLARATION, SLDEditorFileHandler.YES);
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             StringWriter stringWriter = new StringWriter();
             transformer.transform(new DOMSource(doc), new StreamResult(stringWriter));
@@ -460,14 +462,15 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
     public String getSLDName(SLDDataInterface sldData) {
         if (sldData != null) {
-            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames
-                    .addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
+            return sldData.getLayerNameWithOutSuffix()
+                    + ExternalFilenames.addFileExtensionSeparator(
+                            SLDEditorFile.getSLDFileExtension());
         }
 
         return "";
@@ -485,7 +488,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
      */
     @Override

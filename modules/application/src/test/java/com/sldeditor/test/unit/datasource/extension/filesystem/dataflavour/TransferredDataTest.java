@@ -22,25 +22,23 @@ package com.sldeditor.test.unit.datasource.extension.filesystem.dataflavour;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import javax.swing.tree.TreePath;
-
-import org.junit.Test;
-
 import com.sldeditor.datasource.extension.filesystem.dataflavour.SLDDataFlavour;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData;
+import javax.swing.tree.TreePath;
+import org.junit.Test;
 
 /**
  * Unit test for TransferredData class.
- * 
- * <p>{@link com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class TransferredDataTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData#getDataListSize()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData#getDataListSize()}.
      */
     @Test
     public void testGetDataListSize() {
@@ -75,5 +73,4 @@ public class TransferredDataTest {
         assertNull(data.getTreePath(-1));
         assertNull(data.getTreePath(11));
     }
-
 }

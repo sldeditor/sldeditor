@@ -19,6 +19,15 @@
 
 package com.sldeditor.datasource.extension.filesystem.node.file;
 
+import com.sldeditor.common.NodeInterface;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.filesystem.FileSystemInterface;
+import com.sldeditor.common.utils.ExternalFilenames;
+import com.sldeditor.common.watcher.FileSystemWatcher;
+import com.sldeditor.common.watcher.FileWatcherUpdateInterface;
+import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
+import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
+import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
 import java.awt.datatransfer.DataFlavor;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,25 +41,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.Icon;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import com.sldeditor.common.NodeInterface;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.filesystem.FileSystemInterface;
-import com.sldeditor.common.utils.ExternalFilenames;
-import com.sldeditor.common.watcher.FileSystemWatcher;
-import com.sldeditor.common.watcher.FileWatcherUpdateInterface;
-import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
-import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
-import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
-
 /**
  * File system tree node representing either a file or folder.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FileTreeNode extends DefaultMutableTreeNode
@@ -71,8 +69,9 @@ public class FileTreeNode extends DefaultMutableTreeNode
     /** File object for this node. */
     private boolean isRoot = false;
 
-    /** The path, declared as a string to get round
-     *  sun.nio.fs.WindowsPath not being serialisable. */
+    /**
+     * The path, declared as a string to get round sun.nio.fs.WindowsPath not being serialisable.
+     */
     private String path;
 
     /** The name of the node. */
@@ -180,11 +179,10 @@ public class FileTreeNode extends DefaultMutableTreeNode
     }
 
     /**
-     * Populate directories. For display purposes, we return our own name
-     * public String toString() { return name; } If we are a directory, scan our
-     * contents and populate with children. In addition, populate those children
-     * if the "descend" flag is true. We only descend once, to avoid
-     * recursing the whole subtree.
+     * Populate directories. For display purposes, we return our own name public String toString() {
+     * return name; } If we are a directory, scan our contents and populate with children. In
+     * addition, populate those children if the "descend" flag is true. We only descend once, to
+     * avoid recursing the whole subtree.
      *
      * @param descend the descend
      * @return true, if successful
@@ -369,7 +367,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
@@ -393,22 +391,22 @@ public class FileTreeNode extends DefaultMutableTreeNode
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override
     public DataFlavor getDataFlavour() {
         boolean isDirectory = isDir();
 
-        DataFlavor flavour = isDirectory ? DataFlavourManager.FOLDER_DATAITEM_FLAVOR
-                : BuiltInDataFlavour.FILE_DATAITEM_FLAVOR;
+        DataFlavor flavour =
+                isDirectory
+                        ? DataFlavourManager.FOLDER_DATAITEM_FLAVOR
+                        : BuiltInDataFlavour.FILE_DATAITEM_FLAVOR;
 
         return flavour;
     }
 
-    /**
-     * Refresh folder.
-     */
+    /** Refresh folder. */
     public void refreshFolder() {
         populated = false;
         interim = true;
@@ -573,14 +571,14 @@ public class FileTreeNode extends DefaultMutableTreeNode
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.NodeInterface#getIcon()
      */
     @Override
     public Icon getIcon() {
         if (!isDir) {
-            FileHandlerInterface handler = fileHandlerMap
-                    .get(ExternalFilenames.getFileExtension(name));
+            FileHandlerInterface handler =
+                    fileHandlerMap.get(ExternalFilenames.getFileExtension(name));
             if (handler != null) {
                 return handler.getIcon(path, name);
             }

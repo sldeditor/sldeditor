@@ -19,34 +19,29 @@
 
 package com.sldeditor.extension.filesystem.geoserver.client;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.GeoServerConnection;
+import it.geosolutions.geoserver.rest.GeoServerRESTManager;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.GeoServerConnection;
-
-import it.geosolutions.geoserver.rest.GeoServerRESTManager;
-
 /**
  * A factory for creating GeoServerRESTManager objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerRESTManagerFactory {
 
     /** The map. */
-    private Map<GeoServerConnection, GeoServerRESTManager> map = 
+    private Map<GeoServerConnection, GeoServerRESTManager> map =
             new HashMap<GeoServerConnection, GeoServerRESTManager>();
 
     /** The instance. */
     private static GeoServerRESTManagerFactory instance = null;
 
-    /**
-     * Instantiates a new geo server rest manager factory.
-     */
-    private GeoServerRESTManagerFactory() {
-    }
+    /** Instantiates a new geo server rest manager factory. */
+    private GeoServerRESTManagerFactory() {}
 
     /**
      * Gets the single instance of GeoServerRESTManagerFactory.
@@ -90,8 +85,11 @@ public class GeoServerRESTManagerFactory {
             if (geoserverURL != null) {
                 try {
                     if (connection.getUserName() != null) {
-                        manager = new GeoServerRESTManager(geoserverURL, connection.getUserName(),
-                                connection.getPassword());
+                        manager =
+                                new GeoServerRESTManager(
+                                        geoserverURL,
+                                        connection.getUserName(),
+                                        connection.getPassword());
 
                         map.put(connection, manager);
                     }
@@ -120,5 +118,4 @@ public class GeoServerRESTManagerFactory {
     private void internal_deleteConnection(GeoServerConnection connection) {
         map.remove(connection);
     }
-
 }

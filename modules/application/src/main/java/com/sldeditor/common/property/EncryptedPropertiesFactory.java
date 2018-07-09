@@ -19,14 +19,13 @@
 
 package com.sldeditor.common.property;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import com.sldeditor.common.console.ConsoleManager;
-
 /**
  * Class that encrypts/decrypts strings.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class EncryptedPropertiesFactory {
@@ -47,9 +46,7 @@ public class EncryptedPropertiesFactory {
         encryptedPropertiesClassName = className;
     }
 
-    /**
-     * Reset singleton.
-     */
+    /** Reset singleton. */
     public static void reset() {
         instance = null;
     }
@@ -106,8 +103,8 @@ public class EncryptedPropertiesFactory {
             InetAddress addr = InetAddress.getLocalHost();
             hostname = addr.getHostName();
         } catch (UnknownHostException ex) {
-            ConsoleManager.getInstance().error(EncryptedPropertiesFactory.class,
-                    "Hostname can not be resolved");
+            ConsoleManager.getInstance()
+                    .error(EncryptedPropertiesFactory.class, "Hostname can not be resolved");
         }
 
         return hostname;

@@ -18,8 +18,7 @@
  */
 /**
  * Tool to import vector data sources.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.tool.vector;

@@ -17,12 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.tree.leaf;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Fill;
@@ -33,7 +31,7 @@ import org.opengis.style.Symbolizer;
 
 /**
  * A factory for creating SLDTreeLeaf objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDTreeLeafFactory {
@@ -45,15 +43,13 @@ public class SLDTreeLeafFactory {
     private Map<Class<?>, SLDTreeLeafInterface> map = new HashMap<Class<?>, SLDTreeLeafInterface>();
 
     /** The style factory. */
-    private static StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private static StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(SLDTreeLeafFactory.class.getName());
 
-    /**
-     * Instantiates a new SLD tree leaf factory.
-     */
+    /** Instantiates a new SLD tree leaf factory. */
     private SLDTreeLeafFactory() {
         populate();
     }
@@ -70,9 +66,7 @@ public class SLDTreeLeafFactory {
         return instance;
     }
 
-    /**
-     * Populate factory.
-     */
+    /** Populate factory. */
     private void populate() {
         add(new SLDTreeLeafPolygon());
         add(new SLDTreeLeafPoint());

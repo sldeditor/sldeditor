@@ -18,7 +18,7 @@
  */
 /**
  * Tools to display all sld scales as a table which can be edited.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.tool.scale;

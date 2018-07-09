@@ -19,24 +19,6 @@
 
 package com.sldeditor.ui.detail.config;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.util.List;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
-import org.opengis.filter.expression.Expression;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.NoSuchAuthorityCodeException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.common.localisation.Localisation;
@@ -49,14 +31,29 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 import com.sldeditor.ui.widgets.ValueComboBox;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
+import org.opengis.filter.expression.Expression;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.NoSuchAuthorityCodeException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * The Class FieldConfigBoundingBox wraps bounding box fields.
- * 
+ *
  * <p>Supports undo/redo functionality.
- * 
+ *
  * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActionInterface {
@@ -98,12 +95,10 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
         return (row * BasePanel.WIDGET_HEIGHT);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#createUI()
      */
     @Override
@@ -113,24 +108,46 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
             FieldPanel fieldPanel = createFieldPanel(xPos, "");
 
             int row = 0;
-            xMinTextField = createRow(
-                    Localisation.getField(FieldConfigBase.class, "FieldConfigBoundingBox.minx"),
-                    xPos, fieldPanel, row);
-            xMaxTextField = createRow(
-                    Localisation.getField(FieldConfigBase.class, "FieldConfigBoundingBox.maxx"),
-                    xPos, fieldPanel, ++row);
-            yMinTextField = createRow(
-                    Localisation.getField(FieldConfigBase.class, "FieldConfigBoundingBox.miny"),
-                    xPos, fieldPanel, ++row);
-            yMaxTextField = createRow(
-                    Localisation.getField(FieldConfigBase.class, "FieldConfigBoundingBox.maxy"),
-                    xPos, fieldPanel, ++row);
-            crsComboBox = createCRSList(
-                    Localisation.getField(FieldConfigBase.class, "FieldConfigBoundingBox.crs"),
-                    xPos, fieldPanel, ++row);
+            xMinTextField =
+                    createRow(
+                            Localisation.getField(
+                                    FieldConfigBase.class, "FieldConfigBoundingBox.minx"),
+                            xPos,
+                            fieldPanel,
+                            row);
+            xMaxTextField =
+                    createRow(
+                            Localisation.getField(
+                                    FieldConfigBase.class, "FieldConfigBoundingBox.maxx"),
+                            xPos,
+                            fieldPanel,
+                            ++row);
+            yMinTextField =
+                    createRow(
+                            Localisation.getField(
+                                    FieldConfigBase.class, "FieldConfigBoundingBox.miny"),
+                            xPos,
+                            fieldPanel,
+                            ++row);
+            yMaxTextField =
+                    createRow(
+                            Localisation.getField(
+                                    FieldConfigBase.class, "FieldConfigBoundingBox.maxy"),
+                            xPos,
+                            fieldPanel,
+                            ++row);
+            crsComboBox =
+                    createCRSList(
+                            Localisation.getField(
+                                    FieldConfigBase.class, "FieldConfigBoundingBox.crs"),
+                            xPos,
+                            fieldPanel,
+                            ++row);
 
-            Dimension preferredSize = new Dimension((int) fieldPanel.getPreferredSize().getWidth(),
-                    crsComboBox.getY() + crsComboBox.getHeight());
+            Dimension preferredSize =
+                    new Dimension(
+                            (int) fieldPanel.getPreferredSize().getWidth(),
+                            crsComboBox.getY() + crsComboBox.getHeight());
 
             fieldPanel.setPreferredSize(preferredSize);
 
@@ -161,16 +178,20 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
         crsComboBox = new ValueComboBox();
         crsComboBox.initialiseSingle(crsDataList);
         crsComboBox.setBounds(
-                xPos + BasePanel.WIDGET_X_START, getRowY(row), this.isValueOnly()
-                        ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
+                xPos + BasePanel.WIDGET_X_START,
+                getRowY(row),
+                this.isValueOnly()
+                        ? BasePanel.WIDGET_EXTENDED_WIDTH
+                        : BasePanel.WIDGET_STANDARD_WIDTH,
                 BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(crsComboBox);
-        crsComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                valueUpdated();
-            }
-        });
+        crsComboBox.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        valueUpdated();
+                    }
+                });
         return crsComboBox;
     }
 
@@ -193,34 +214,42 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
 
         JTextField textField = new JTextField();
         textField.setBounds(
-                xPos + BasePanel.WIDGET_X_START, getRowY(row), this.isValueOnly()
-                        ? BasePanel.WIDGET_EXTENDED_WIDTH : BasePanel.WIDGET_STANDARD_WIDTH,
+                xPos + BasePanel.WIDGET_X_START,
+                getRowY(row),
+                this.isValueOnly()
+                        ? BasePanel.WIDGET_EXTENDED_WIDTH
+                        : BasePanel.WIDGET_STANDARD_WIDTH,
                 BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(textField);
 
-        textField.addFocusListener(new FocusListener() {
-            private String originalValue = "";
+        textField.addFocusListener(
+                new FocusListener() {
+                    private String originalValue = "";
 
-            @Override
-            public void focusGained(FocusEvent e) {
-                originalValue = textField.getText();
-            }
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        originalValue = textField.getText();
+                    }
 
-            @Override
-            public void focusLost(FocusEvent e) {
-                String newValueObj = textField.getText();
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        String newValueObj = textField.getText();
 
-                if (originalValue.compareTo(newValueObj) != 0) {
-                    UndoManager.getInstance().addUndoEvent(
-                            new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+                        if (originalValue.compareTo(newValueObj) != 0) {
+                            UndoManager.getInstance()
+                                    .addUndoEvent(
+                                            new UndoEvent(
+                                                    parentObj,
+                                                    getFieldId(),
+                                                    oldValueObj,
+                                                    newValueObj));
 
-                    oldValueObj = originalValue;
+                            oldValueObj = originalValue;
 
-                    valueUpdated();
-                }
-
-            }
-        });
+                            valueUpdated();
+                        }
+                    }
+                });
 
         return textField;
     }
@@ -232,7 +261,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
@@ -247,7 +276,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
@@ -264,7 +293,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#generateExpression()
      */
     @Override
@@ -284,14 +313,14 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
             return null;
         }
 
-        double minX = xMinTextField.getText().isEmpty() ? 0.0
-                : Double.valueOf(xMinTextField.getText());
-        double maxX = xMaxTextField.getText().isEmpty() ? 0.0
-                : Double.valueOf(xMaxTextField.getText());
-        double minY = yMinTextField.getText().isEmpty() ? 0.0
-                : Double.valueOf(yMinTextField.getText());
-        double maxY = yMaxTextField.getText().isEmpty() ? 0.0
-                : Double.valueOf(yMaxTextField.getText());
+        double minX =
+                xMinTextField.getText().isEmpty() ? 0.0 : Double.valueOf(xMinTextField.getText());
+        double maxX =
+                xMaxTextField.getText().isEmpty() ? 0.0 : Double.valueOf(xMaxTextField.getText());
+        double minY =
+                yMinTextField.getText().isEmpty() ? 0.0 : Double.valueOf(yMinTextField.getText());
+        double maxY =
+                yMaxTextField.getText().isEmpty() ? 0.0 : Double.valueOf(yMaxTextField.getText());
 
         ValueComboBoxData crsDataValue = crsComboBox.getSelectedValue();
 
@@ -317,7 +346,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#isEnabled()
      */
     @Override
@@ -332,12 +361,10 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
         return false;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#revertToDefaultValue()
      */
     @Override
@@ -354,7 +381,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#populateExpression(java.lang.Object)
      */
     @Override
@@ -472,5 +499,4 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
             crsComboBox.setVisible(visible);
         }
     }
-
 }

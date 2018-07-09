@@ -19,17 +19,15 @@
 
 package com.sldeditor.ui.iface;
 
-import java.util.List;
-
-import javax.swing.JPanel;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import java.util.List;
+import javax.swing.JPanel;
 
 /**
  * The Interface SymbolPanelInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SymbolPanelInterface {
@@ -76,7 +74,6 @@ public interface SymbolPanelInterface {
      * @param sldObj the sld obj
      * @param vendorOptionsPresentList the vendor options present list
      */
-    void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList);
-
+    void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList);
 }

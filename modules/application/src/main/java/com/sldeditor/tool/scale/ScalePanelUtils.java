@@ -19,9 +19,10 @@
 
 package com.sldeditor.tool.scale;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDUtils;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Rule;
@@ -29,12 +30,9 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.data.SLDUtils;
-
 /**
- * Class given an SLD file will convert it to a list of ScaleSLDData objects
- * describing the scales at which rules are displayed.
+ * Class given an SLD file will convert it to a list of ScaleSLDData objects describing the scales
+ * at which rules are displayed.
  */
 public class ScalePanelUtils {
 

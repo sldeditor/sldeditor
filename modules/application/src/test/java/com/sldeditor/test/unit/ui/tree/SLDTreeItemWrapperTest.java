@@ -22,16 +22,15 @@ package com.sldeditor.test.unit.ui.tree;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.ui.tree.SLDTreeItemWrapper;
 import org.geotools.styling.HaloImpl;
 import org.geotools.styling.TextSymbolizer;
 import org.junit.Test;
 
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.ui.tree.SLDTreeItemWrapper;
-
 /**
  * The unit test for SLDTreeItemWrapper.
- * 
+ *
  * <p>{@link com.sldeditor.ui.tree.SLDTreeItemWrapper}
  *
  * @author Robert Ward (SCISYS)
@@ -39,8 +38,8 @@ import com.sldeditor.ui.tree.SLDTreeItemWrapper;
 public class SLDTreeItemWrapperTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.tree.SLDTreeItemWrapper#SLDTreeItemWrapper(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeItemWrapper#SLDTreeItemWrapper(java.lang.Object)}.
      */
     @Test
     public void testSLDTreeItemWrapper() {
@@ -53,10 +52,10 @@ public class SLDTreeItemWrapperTest {
 
         // Try with 2 different text symbolizers instances but the same contents, hash codes should
         // be different
-        String testObj3 = SLDTreeItemWrapper
-                .generateKey(DefaultSymbols.createDefaultTextSymbolizer());
-        String testObj4 = SLDTreeItemWrapper
-                .generateKey(DefaultSymbols.createDefaultTextSymbolizer());
+        String testObj3 =
+                SLDTreeItemWrapper.generateKey(DefaultSymbols.createDefaultTextSymbolizer());
+        String testObj4 =
+                SLDTreeItemWrapper.generateKey(DefaultSymbols.createDefaultTextSymbolizer());
 
         assertTrue(testObj3.equals(testObj3));
         assertFalse(testObj3.equals(testObj4));
@@ -70,5 +69,4 @@ public class SLDTreeItemWrapperTest {
         assertTrue(testObj5.equals(testObj5));
         assertTrue(testObj5.equals(testObj6));
     }
-
 }

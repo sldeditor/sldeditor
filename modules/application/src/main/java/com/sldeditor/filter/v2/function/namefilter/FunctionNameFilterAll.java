@@ -22,7 +22,7 @@ package com.sldeditor.filter.v2.function.namefilter;
 import org.opengis.filter.capability.FunctionName;
 
 /**
- * The Class FunctionNameFilterAll.  Accepts all function names.
+ * The Class FunctionNameFilterAll. Accepts all function names.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -35,5 +35,4 @@ public class FunctionNameFilterAll implements FunctionNameFilterInterface {
     public boolean accept(FunctionName functionName) {
         return true;
     }
-
 }

@@ -18,7 +18,7 @@
  */
 /**
  * Classes to allow new SLD symbol types to be created.
- *  
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.create;

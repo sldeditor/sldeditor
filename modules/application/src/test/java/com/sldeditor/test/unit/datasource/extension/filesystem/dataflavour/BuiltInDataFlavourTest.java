@@ -21,25 +21,25 @@ package com.sldeditor.test.unit.datasource.extension.filesystem.dataflavour;
 
 import static org.junit.Assert.assertFalse;
 
+import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
 import java.awt.datatransfer.DataFlavor;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
-
-import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
 
 /**
  * Unit test for BuiltInDataFlavour.
- * 
- * <p>{@link com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour}
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class BuiltInDataFlavourTest {
 
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour#populate(java.util.List, java.util.List, java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour#populate(java.util.List,
+     * java.util.List, java.util.List)}.
      */
     @Test
     public void testPopulate() {
@@ -54,5 +54,4 @@ public class BuiltInDataFlavourTest {
         assertFalse(destinationFolderList.isEmpty());
         assertFalse(destinationGeoServerList.isEmpty());
     }
-
 }

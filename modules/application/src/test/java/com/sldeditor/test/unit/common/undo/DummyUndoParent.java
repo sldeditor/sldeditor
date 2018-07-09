@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.test.unit.common.undo;
 
 import com.sldeditor.common.undo.UndoActionInterface;
@@ -29,7 +28,7 @@ import com.sldeditor.common.undo.UndoInterface;
  * @author Robert Ward (SCISYS)
  */
 class DummyUndoParent implements UndoActionInterface {
-    
+
     /** The undo action. */
     public UndoInterface undoAction = null;
 

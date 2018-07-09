@@ -19,16 +19,6 @@
 
 package com.sldeditor.render;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-
-import org.geotools.data.DataStore;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
@@ -36,6 +26,13 @@ import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.render.RuleRenderOptions;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+import org.geotools.data.DataStore;
 
 /**
  * A panel to allow the configuration of render options, fields are currently not shown.
@@ -62,8 +59,8 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
      * @param renderSymbol the render symbol
      * @param rendererList the renderer list
      */
-    public RenderOptionsPanel(RenderSymbolInterface renderSymbol,
-            List<RenderSymbolInterface> rendererList) {
+    public RenderOptionsPanel(
+            RenderSymbolInterface renderSymbol, List<RenderSymbolInterface> rendererList) {
         this.renderSymbol = renderSymbol;
         this.rendererList = rendererList;
 
@@ -77,31 +74,31 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
         updateButtonState(GeometryTypeEnum.UNKNOWN);
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        applyTransformationCheckBox = new JCheckBox(Localisation.getString(RenderOptionsPanel.class,
-                "RenderOptionsPanel.applyTransformation"));
-        applyTransformationCheckBox.addActionListener(new ActionListener() {
+        applyTransformationCheckBox =
+                new JCheckBox(
+                        Localisation.getString(
+                                RenderOptionsPanel.class,
+                                "RenderOptionsPanel.applyTransformation"));
+        applyTransformationCheckBox.addActionListener(
+                new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                RuleRenderOptions options = renderSymbol.getRuleRenderOptions();
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        RuleRenderOptions options = renderSymbol.getRuleRenderOptions();
 
-                options.setApplyTransformation(applyTransformationCheckBox.isSelected());
+                        options.setApplyTransformation(applyTransformationCheckBox.isSelected());
 
-                updateSymbols();
-            }
-        });
+                        updateSymbols();
+                    }
+                });
         // Hide for now
         // add(applyTransformationCheckBox);
     }
 
-    /**
-     * Refresh the drawing of any symbols in renderers.
-     */
+    /** Refresh the drawing of any symbols in renderers. */
     private void updateSymbols() {
         if (rendererList != null) {
             for (RenderSymbolInterface renderer : rendererList) {
@@ -110,9 +107,7 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
         }
     }
 
-    /**
-     * Populate.
-     */
+    /** Populate. */
     private void populate() {
         RuleRenderOptions options = this.renderSymbol.getRuleRenderOptions();
 
@@ -126,8 +121,8 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
      * @param isConnectedToDataSourceFlag the is connected to data source flag
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType,
-            boolean isConnectedToDataSourceFlag) {
+    public void dataSourceLoaded(
+            GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag) {
         updateButtonState(geometryType);
     }
 
@@ -140,15 +135,15 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
         boolean applyTransformEnabled = false;
 
         switch (geometryType) {
-        case POINT:
-        case LINE:
-        case POLYGON:
-            applyTransformEnabled = true;
-            break;
-        case RASTER:
-            break;
-        default:
-            break;
+            case POINT:
+            case LINE:
+            case POLYGON:
+                applyTransformEnabled = true;
+                break;
+            case RASTER:
+                break;
+            default:
+                break;
         }
 
         if (applyTransformationCheckBox != null) {
@@ -158,7 +153,7 @@ public class RenderOptionsPanel extends JPanel implements DataSourceUpdatedInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
      */
     @Override

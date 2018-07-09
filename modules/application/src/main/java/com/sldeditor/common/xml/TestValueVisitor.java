@@ -19,19 +19,17 @@
 
 package com.sldeditor.common.xml;
 
+import com.sldeditor.common.xml.ui.FieldIdEnum;
 import java.util.List;
-
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-
 /**
- * The Interface TestValueVisitor, part of a visitor pattern to allow test values to
- * be applied to fields.
- * 
+ * The Interface TestValueVisitor, part of a visitor pattern to allow test values to be applied to
+ * fields.
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface TestValueVisitor {

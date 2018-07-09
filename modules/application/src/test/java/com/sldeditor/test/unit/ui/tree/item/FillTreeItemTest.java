@@ -21,20 +21,18 @@ package com.sldeditor.test.unit.ui.tree.item;
 
 import static org.junit.Assert.assertTrue;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import org.geotools.styling.Fill;
-import org.geotools.styling.Symbolizer;
-import org.junit.Test;
-
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.ui.tree.SLDTreeTools;
 import com.sldeditor.ui.tree.item.FillTreeItem;
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.geotools.styling.Fill;
+import org.geotools.styling.Symbolizer;
+import org.junit.Test;
 
 /**
  * The unit test for FillTreeItem.
- * 
+ *
  * <p>{@link com.sldeditor.ui.tree.item.FillTreeItem}
  *
  * @author Robert Ward (SCISYS)
@@ -42,7 +40,8 @@ import com.sldeditor.ui.tree.item.FillTreeItem;
 public class FillTreeItemTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.item.FillTreeItem#getTreeString(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.FillTreeItem#getTreeString(java.lang.Object)}.
      */
     @Test
     public void testGetTreeString() {
@@ -61,7 +60,9 @@ public class FillTreeItemTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.item.FillTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.item.FillTreeItem#itemSelected(javax.swing.tree.DefaultMutableTreeNode,
+     * java.lang.Object)}.
      */
     @Test
     public void testItemSelected() {
@@ -81,5 +82,4 @@ public class FillTreeItemTest {
         parentNode.setUserObject(item);
         item.itemSelected(node, null);
     }
-
 }

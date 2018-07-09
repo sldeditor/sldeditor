@@ -19,19 +19,17 @@
 
 package com.sldeditor.filter.v2.function.geometry;
 
-import java.util.List;
-
-import org.geotools.filter.spatial.ContainsImpl;
-import org.locationtech.jts.geom.Geometry;
-import org.opengis.filter.Filter;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import java.util.List;
+import org.geotools.filter.spatial.ContainsImpl;
+import org.locationtech.jts.geom.Geometry;
+import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class Contains.
@@ -40,14 +38,10 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class Contains extends FilterBase implements FilterConfigInterface {
 
-    /**
-     * The Class ContainsExtended.
-     */
+    /** The Class ContainsExtended. */
     public class ContainsExtended extends ContainsImpl implements FilterExtendedInterface {
 
-        /**
-         * Instantiates a new contains extended.
-         */
+        /** Instantiates a new contains extended. */
         public ContainsExtended() {
             super(null, null);
         }
@@ -64,7 +58,7 @@ public class Contains extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
         public String toString() {
@@ -73,7 +67,7 @@ public class Contains extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -82,9 +76,7 @@ public class Contains extends FilterBase implements FilterConfigInterface {
         }
     }
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public Contains(String category) {
         super(category);
     }
@@ -99,8 +91,9 @@ public class Contains extends FilterBase implements FilterConfigInterface {
         FilterName filterName = new FilterName("Contains", Boolean.class);
         filterName.addParameter(
                 new FilterNameParameter("property", ExpressionTypeEnum.PROPERTY, Geometry.class));
-        filterName.addParameter(new FilterNameParameter("expression", ExpressionTypeEnum.EXPRESSION,
-                Geometry.class));
+        filterName.addParameter(
+                new FilterNameParameter(
+                        "expression", ExpressionTypeEnum.EXPRESSION, Geometry.class));
 
         return filterName;
     }

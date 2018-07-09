@@ -18,18 +18,18 @@
  */
 package com.sldeditor.common.xml.ui;
 
+import com.sldeditor.common.xml.TestValueVisitor;
 import org.geotools.factory.CommonFactoryFinder;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.common.xml.TestValueVisitor;
 
 /**
  * The Class XMLSetFieldAttributeEx.
  *
  * @author Robert Ward (SCISYS)
  */
-public class XMLSetFieldAttributeEx extends XMLSetFieldAttribute implements XMLSetFieldLiteralInterface {
+public class XMLSetFieldAttributeEx extends XMLSetFieldAttribute
+        implements XMLSetFieldLiteralInterface {
 
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();

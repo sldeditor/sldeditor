@@ -17,12 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.console;
 
 /**
  * The Interface ConsolePanelInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface ConsolePanelInterface {
@@ -41,8 +40,6 @@ public interface ConsolePanelInterface {
      */
     public void addErrorMessage(String errorMessage);
 
-    /**
-     * Clear all displayed console messages.
-     */
+    /** Clear all displayed console messages. */
     public void clear();
 }

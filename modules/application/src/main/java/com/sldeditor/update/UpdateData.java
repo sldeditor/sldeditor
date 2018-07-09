@@ -30,7 +30,7 @@ public class UpdateData {
 
     /** The version. */
     private VersionData version;
-    
+
     /** The description. */
     private String description;
 

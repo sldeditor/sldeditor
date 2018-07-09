@@ -23,7 +23,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * The Interface ValueComboBoxDataSelectedInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface ValueComboBoxDataSelectedInterface {

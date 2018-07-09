@@ -24,5 +24,4 @@ public interface EncryptedPropertiesInterface {
      * @return the string
      */
     String encrypt(String str);
-
 }

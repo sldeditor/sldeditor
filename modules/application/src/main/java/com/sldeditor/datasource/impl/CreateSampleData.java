@@ -19,13 +19,17 @@
 
 package com.sldeditor.datasource.impl;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
+import com.sldeditor.datasource.example.ExampleLineInterface;
+import com.sldeditor.datasource.example.ExamplePointInterface;
+import com.sldeditor.datasource.example.ExamplePolygonInterface;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.geotools.data.DataUtilities;
 import org.geotools.data.memory.MemoryDataStore;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
@@ -35,12 +39,6 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.AttributeType;
 import org.opengis.feature.type.FeatureType;
-
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.datasource.attribute.DataSourceAttributeData;
-import com.sldeditor.datasource.example.ExampleLineInterface;
-import com.sldeditor.datasource.example.ExamplePointInterface;
-import com.sldeditor.datasource.example.ExamplePolygonInterface;
 
 /**
  * The Class CreateSampleData.
@@ -55,11 +53,8 @@ public class CreateSampleData {
     /** The geometry type. */
     private GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
 
-    /**
-     * Default constructor.
-     */
-    public CreateSampleData() {
-    }
+    /** Default constructor. */
+    public CreateSampleData() {}
 
     /**
      * Gets the data store.
@@ -91,7 +86,8 @@ public class CreateSampleData {
         }
 
         // Put fields into map for speed
-        Map<String, DataSourceAttributeData> fieldMap = new HashMap<String, DataSourceAttributeData>();
+        Map<String, DataSourceAttributeData> fieldMap =
+                new HashMap<String, DataSourceAttributeData>();
         if (fieldList != null) {
             for (DataSourceAttributeData attributeData : fieldList) {
                 fieldMap.put(attributeData.getName(), attributeData);
@@ -121,20 +117,22 @@ public class CreateSampleData {
                 geometryType = GeometryTypeMapping.getGeometryType(fieldType);
 
                 switch (geometryType) {
-                case POLYGON:
-                    ExamplePolygonInterface examplePolygon = DataSourceFactory
-                            .createExamplePolygon(null);
-                    value = examplePolygon.getPolygon();
-                    break;
-                case LINE:
-                    ExampleLineInterface exampleLine = DataSourceFactory.createExampleLine(null);
-                    value = exampleLine.getLine();
-                    break;
-                case POINT:
-                default:
-                    ExamplePointInterface examplePoint = DataSourceFactory.createExamplePoint(null);
-                    value = examplePoint.getPoint();
-                    break;
+                    case POLYGON:
+                        ExamplePolygonInterface examplePolygon =
+                                DataSourceFactory.createExamplePolygon(null);
+                        value = examplePolygon.getPolygon();
+                        break;
+                    case LINE:
+                        ExampleLineInterface exampleLine =
+                                DataSourceFactory.createExampleLine(null);
+                        value = exampleLine.getLine();
+                        break;
+                    case POINT:
+                    default:
+                        ExamplePointInterface examplePoint =
+                                DataSourceFactory.createExamplePoint(null);
+                        value = examplePoint.getPoint();
+                        break;
                 }
             } else {
                 if ((fieldList != null) && (index < fieldList.size())) {
@@ -145,8 +143,9 @@ public class CreateSampleData {
                     }
                 }
 
-                value = getFieldTypeValue(index, attributeType.getName().getLocalPart(), fieldType,
-                        value);
+                value =
+                        getFieldTypeValue(
+                                index, attributeType.getName().getLocalPart(), fieldType, value);
             }
             builder.add(value);
             index++;
@@ -166,8 +165,8 @@ public class CreateSampleData {
      * @param valueToTest the value to test
      * @return the field type value
      */
-    public static Object getFieldTypeValue(int index, String fieldName, Class<?> fieldType,
-            Object valueToTest) {
+    public static Object getFieldTypeValue(
+            int index, String fieldName, Class<?> fieldType, Object valueToTest) {
         if ((valueToTest != null) && (fieldType != String.class)) {
             return valueToTest;
         }
@@ -203,7 +202,8 @@ public class CreateSampleData {
             Calendar cal = Calendar.getInstance();
             value = new java.sql.Timestamp(cal.getTime().getTime());
         } else {
-            // This should be an Object, so hedge our bets and set the default value to be an integer in a string
+            // This should be an Object, so hedge our bets and set the default value to be an
+            // integer in a string
             value = String.valueOf(index);
         }
         return value;

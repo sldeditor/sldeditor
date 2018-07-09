@@ -10,6 +10,13 @@ package com.sldeditor.test.unit.ui.detail;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.GraphicPanelFieldManager;
+import com.sldeditor.ui.detail.PointFillDetails;
+import com.sldeditor.ui.detail.config.FieldConfigDouble;
+import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.PointSymbolizer;
@@ -18,17 +25,9 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.Test;
 
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.detail.PointFillDetails;
-import com.sldeditor.ui.detail.config.FieldConfigDouble;
-import com.sldeditor.ui.detail.config.FieldConfigSlider;
-
 /**
  * The unit test for PointFillDetailsTest.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.PointFillDetailsTest}
  *
  * @author Robert Ward (SCISYS)
@@ -36,7 +35,9 @@ import com.sldeditor.ui.detail.config.FieldConfigSlider;
 public class PointFillDetailsTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.PointFillDetailsTest#FillDetails(java.lang.Class, com.sldeditor.filter.v2.function.FunctionNameInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.PointFillDetailsTest#FillDetails(java.lang.Class,
+     * com.sldeditor.filter.v2.function.FunctionNameInterface)}.
      */
     @Test
     public void testFillDetailsPoint() {
@@ -81,8 +82,8 @@ public class PointFillDetailsTest {
         FieldConfigDouble angleField = (FieldConfigDouble) fieldDataManager.get(FieldIdEnum.ANGLE);
         angleField.populateField(expectedAngle);
 
-        FieldConfigSlider opacityField = (FieldConfigSlider) fieldDataManager
-                .get(FieldIdEnum.OVERALL_OPACITY);
+        FieldConfigSlider opacityField =
+                (FieldConfigSlider) fieldDataManager.get(FieldIdEnum.OVERALL_OPACITY);
         double opacity = 0.15;
         opacityField.populateField(opacity);
 

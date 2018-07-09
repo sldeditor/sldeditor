@@ -18,7 +18,7 @@
  */
 /**
  * GUI for configuring data source attributes.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.datasource.config;

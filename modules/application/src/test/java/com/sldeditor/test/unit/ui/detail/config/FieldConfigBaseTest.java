@@ -25,13 +25,21 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.filter.v2.function.temporal.TimePeriod;
+import com.sldeditor.ui.attribute.AttributeSelection;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigString;
+import com.sldeditor.ui.iface.ExpressionUpdateInterface;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import com.sldeditor.ui.widgets.ExpressionTypeEnum;
 import java.awt.Component;
 import java.util.Date;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.feature.NameImpl;
 import org.geotools.filter.AttributeExpressionImpl;
@@ -47,20 +55,9 @@ import org.opengis.filter.Id;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.temporal.TimePeriod;
-import com.sldeditor.ui.attribute.AttributeSelection;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigString;
-import com.sldeditor.ui.iface.ExpressionUpdateInterface;
-import com.sldeditor.ui.iface.UpdateSymbolInterface;
-import com.sldeditor.ui.widgets.ExpressionTypeEnum;
-
 /**
  * The unit test for FieldConfigBase.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.FieldConfigBase}
  *
  * @author Robert Ward (SCISYS)
@@ -79,16 +76,13 @@ public class FieldConfigBaseTest {
         }
 
         @Override
-        public void attributeSelection(String field) {
-        }
+        public void attributeSelection(String field) {}
 
         @Override
-        public void internal_setEnabled(boolean enabled) {
-        }
+        public void internal_setEnabled(boolean enabled) {}
 
         @Override
-        public void setVisible(boolean visible) {
-        }
+        public void setVisible(boolean visible) {}
 
         @Override
         protected Expression generateExpression() {
@@ -101,12 +95,10 @@ public class FieldConfigBaseTest {
         }
 
         @Override
-        public void revertToDefaultValue() {
-        }
+        public void revertToDefaultValue() {}
 
         @Override
-        public void populateExpression(Object objValue) {
-        }
+        public void populateExpression(Object objValue) {}
 
         @Override
         public void createUI() {
@@ -222,79 +214,83 @@ public class FieldConfigBaseTest {
         }
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getFieldId()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getFieldId()}. */
     @Test
     public void testGetFieldId() {
         boolean valueOnly = true;
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, "test label", valueOnly));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, "test label", valueOnly));
 
         assertEquals(expectedFieldId, field.getFieldId());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getLabel()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getLabel()}. */
     @Test
     public void testGetLabel() {
         boolean valueOnly = true;
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, valueOnly));
 
         assertTrue(expectedLabel.compareTo(field.getLabel()) == 0);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#isValueOnly()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#isValueOnly()}. */
     @Test
     public void testIsValueOnly() {
         boolean valueOnly = true;
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, valueOnly));
 
         assertEquals(valueOnly, field.isValueOnly());
 
         valueOnly = false;
-        field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
+        field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, valueOnly));
 
         assertEquals(valueOnly, field.isValueOnly());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getPanel()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getPanel()}. */
     @Test
     public void testGetPanel() {
         boolean valueOnly = true;
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, valueOnly));
 
         assertNull(field.getPanel());
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBase#addCustomPanel(javax.swing.JPanel)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getCustomPanels()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBase#addCustomPanel(javax.swing.JPanel)}. Test
+     * method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#getCustomPanels()}.
      */
     @Test
     public void testGetCustomPanels() {
         boolean valueOnly = true;
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, valueOnly));
 
         assertNull(field.getCustomPanels());
 
@@ -314,11 +310,13 @@ public class FieldConfigBaseTest {
         boolean valueOnly = true;
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, valueOnly));
 
-        AttributeSelection attributeSelectionPanel = AttributeSelection
-                .createAttributes(String.class, field, false);
+        AttributeSelection attributeSelectionPanel =
+                AttributeSelection.createAttributes(String.class, field, false);
         attributeSelectionPanel.setEnabled(true);
         field.testAttributeSelectionPanel(attributeSelectionPanel);
         field.testSetValueFieldState();
@@ -333,16 +331,16 @@ public class FieldConfigBaseTest {
         assertEquals(fieldEnabledFlag, field.isEnabled());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#fireDataChanged()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#fireDataChanged()}. */
     @Test
     public void testFireDataChanged() {
         boolean valueOnly = true;
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, valueOnly));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, valueOnly));
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
@@ -360,15 +358,15 @@ public class FieldConfigBaseTest {
         // Leave the is populating flag as false otherwise a load of tests will fail
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#valueUpdated()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#valueUpdated()}. */
     @Test
     public void testValueUpdated() {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, false));
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
@@ -380,15 +378,17 @@ public class FieldConfigBaseTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBase#attributeUpdated(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBase#attributeUpdated(java.lang.String)}.
      */
     @Test
     public void testAttributeUpdated() {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, false));
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
@@ -405,15 +405,17 @@ public class FieldConfigBaseTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBase#expressionUpdated(org.opengis.filter.expression.Expression)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBase#expressionUpdated(org.opengis.filter.expression.Expression)}.
      */
     @Test
     public void testExpressionUpdated() {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, false));
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
@@ -432,15 +434,17 @@ public class FieldConfigBaseTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBase#functionUpdated(org.opengis.filter.expression.Expression)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBase#functionUpdated(org.opengis.filter.expression.Expression)}.
      */
     @Test
     public void testFunctionUpdated() {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, false));
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
@@ -452,17 +456,16 @@ public class FieldConfigBaseTest {
 
         FunctionName functionName = null;
 
-        for(FunctionName func : functionFactory.getFunctionNames())
-        {
-            if(func.getName() == "greaterThan")
-            {
+        for (FunctionName func : functionFactory.getFunctionNames()) {
+            if (func.getName() == "greaterThan") {
                 functionName = func;
                 break;
             }
         }
 
         assertNotNull(functionName);
-        Expression testExpression = ff.function(functionName.getFunctionName(), ff.literal(1), ff.literal(2) );
+        Expression testExpression =
+                ff.function(functionName.getFunctionName(), ff.literal(1), ff.literal(2));
         field.functionUpdated(testExpression);
         assertTrue(listener.hasBeenCalled());
 
@@ -472,20 +475,23 @@ public class FieldConfigBaseTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBase#populate(org.opengis.filter.expression.Expression)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBase#populate(org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBase#populate(org.opengis.filter.expression.Expression)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBase#populate(org.opengis.filter.expression.Expression,
+     * org.opengis.filter.expression.Expression)}.
      */
     @Test
     public void testPopulateExpressionExpression() {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, false));
 
-        AttributeSelection attributeSelectionPanel = AttributeSelection
-                .createAttributes(String.class, field, false);
+        AttributeSelection attributeSelectionPanel =
+                AttributeSelection.createAttributes(String.class, field, false);
         field.testAttributeSelectionPanel(attributeSelectionPanel);
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
@@ -498,10 +504,8 @@ public class FieldConfigBaseTest {
         DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
         FunctionName functionName = null;
 
-        for(FunctionName func : functionFactory.getFunctionNames())
-        {
-            if(func.getName() == "greaterThan")
-            {
+        for (FunctionName func : functionFactory.getFunctionNames()) {
+            if (func.getName() == "greaterThan") {
                 functionName = func;
                 break;
             }
@@ -509,7 +513,8 @@ public class FieldConfigBaseTest {
 
         assertNotNull(functionName);
 
-        Expression testExpression = ff.function(functionName.getFunctionName(), ff.literal(1), ff.literal(2) );
+        Expression testExpression =
+                ff.function(functionName.getFunctionName(), ff.literal(1), ff.literal(2));
         field.populate(testExpression);
         // Updated because the attribute pulldown changed
         assertTrue(listener.hasBeenCalled());
@@ -535,31 +540,33 @@ public class FieldConfigBaseTest {
         // assertEquals(ExpressionTypeEnum.E_VALUE, field.getExpressionType());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#isASingleValue()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#isASingleValue()}. */
     @Test
     public void testIsASingleValue() {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, false));
 
         assertTrue(field.isASingleValue());
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBase#setExpressionUpdateListener(com.sldeditor.ui.iface.ExpressionUpdateInterface)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBase#fireExpressionUpdated(org.opengis.filter.expression.Expression)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBase#setExpressionUpdateListener(com.sldeditor.ui.iface.ExpressionUpdateInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBase#fireExpressionUpdated(org.opengis.filter.expression.Expression)}.
      */
     @Test
     public void testFireExpressionUpdated() {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, false));
 
         TestExpressionUpdateInterface testExpressionUpdate = new TestExpressionUpdateInterface();
 
@@ -571,15 +578,17 @@ public class FieldConfigBaseTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBase#populateField(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBase#populateField(java.lang.String)}.
      */
     @Test
     public void testPopulateFieldString() {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, false));
 
         field.populateField("");
         field.setTestValue(expectedFieldId, "");
@@ -620,15 +629,15 @@ public class FieldConfigBaseTest {
         assertNull(field.getEnumValue());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#duplicate()}.
-     */
+    /** Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBase#duplicate()}. */
     @Test
     public void testDuplicate() {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, false));
 
         TestUpdateSymbolInterface listener = new TestUpdateSymbolInterface();
         field.addDataChangedListener(listener);
@@ -638,15 +647,17 @@ public class FieldConfigBaseTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBase#addUI(java.awt.Component,int, int, int)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBase#addUI(java.awt.Component,int, int, int)}.
      */
     @Test
     public void testAddUI() {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, false));
 
         field.addUI(null, 10, 10, 10);
 
@@ -655,15 +666,17 @@ public class FieldConfigBaseTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBase#showOptionField(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBase#showOptionField(boolean)}.
      */
     @Test
     public void testShowOptionField() {
         FieldIdEnum expectedFieldId = FieldIdEnum.NAME;
         String expectedLabel = "test label";
-        TestFieldConfigBase field = new TestFieldConfigBase(
-                new FieldConfigCommonData(String.class, expectedFieldId, expectedLabel, false));
+        TestFieldConfigBase field =
+                new TestFieldConfigBase(
+                        new FieldConfigCommonData(
+                                String.class, expectedFieldId, expectedLabel, false));
 
         field.showOptionField(true);
         field.setOptionFieldValue(true);

@@ -24,19 +24,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.detail.config.FieldConfigSlider;
+import org.junit.Test;
 
 /**
  * The unit test for FieldConfigSlider.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.FieldConfigSlider}
  *
  * @author Robert Ward (SCISYS)
@@ -44,16 +43,18 @@ import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 public class FieldConfigSliderTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#internal_setEnabled(boolean)}. Test
-     * method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#isEnabled()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigSlider#internal_setEnabled(boolean)}. Test method
+     * for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(
-                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigSlider field =
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -72,8 +73,10 @@ public class FieldConfigSliderTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigSlider field2 = new FieldConfigSlider(
-                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigSlider field2 =
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -98,8 +101,10 @@ public class FieldConfigSliderTest {
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(
-                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigSlider field =
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -111,21 +116,23 @@ public class FieldConfigSliderTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#generateExpression()}. Test method
-     * for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#populateField(java.lang.Double)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#setTestValue(com.sldeditor.ui.detail.config.FieldId, double)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#getDoubleValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigSlider#generateExpression()}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#populateExpression(java.lang.Object,
+     * org.opengis.filter.expression.Expression)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigSlider#populateField(java.lang.Double)}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigSlider#setTestValue(com.sldeditor.ui.detail.config.FieldId,
+     * double)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigSlider#getDoubleValue()}.
      */
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(
-                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigSlider field =
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         double defaultDefaultValue = 0.5;
         double expectedValue = 1.0;
@@ -169,15 +176,17 @@ public class FieldConfigSliderTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#revertToDefaultValue()}. Test method
-     * for {@link com.sldeditor.ui.detail.config.FieldConfigSlider#setDefaultValue(double)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigSlider#revertToDefaultValue()}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#setDefaultValue(double)}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(
-                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigSlider field =
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
 
         double defaultDefaultValue = 0.5;
         field.revertToDefaultValue();
@@ -193,8 +202,8 @@ public class FieldConfigSliderTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigSlider#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
@@ -210,8 +219,10 @@ public class FieldConfigSliderTest {
             }
         }
 
-        TestFieldConfigSlider field = new TestFieldConfigSlider(
-                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        TestFieldConfigSlider field =
+                new TestFieldConfigSlider(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
         FieldConfigSlider copy = (FieldConfigSlider) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -222,30 +233,34 @@ public class FieldConfigSliderTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#attributeSelection(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigSlider#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(
-                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigSlider field =
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
         field.attributeSelection(null);
 
         // Do nothing
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigSlider#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigSlider#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigSlider#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigSlider field = new FieldConfigSlider(
-                new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigSlider field =
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
         field.undoAction(null);
         field.redoAction(null);
 
@@ -269,5 +284,4 @@ public class FieldConfigSliderTest {
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
     }
-
 }

@@ -19,44 +19,36 @@
 
 package com.sldeditor.extension.filesystem.database;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseNode;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  * Class that handles the progress of reading databases for data sources.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DatabaseReadProgress implements DatabaseReadProgressInterface {
-    /**
-     * Internal class to handle the state of the operation.
-     */
+    /** Internal class to handle the state of the operation. */
     class PopulateState {
 
         /** The feature class complete flag. */
         private boolean featureClassComplete = false;
 
-        /**
-         * Instantiates a new populate state.
-         */
+        /** Instantiates a new populate state. */
         PopulateState() {
             startFeatureClasses();
         }
 
-        /**
-         * Sets the styles complete.
-         */
+        /** Sets the styles complete. */
         public void setFeatureClassesComplete() {
             featureClassComplete = true;
         }
@@ -70,9 +62,7 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface {
             return featureClassComplete;
         }
 
-        /**
-         * Start feature classes.
-         */
+        /** Start feature classes. */
         public void startFeatureClasses() {
             featureClassComplete = false;
         }
@@ -111,8 +101,8 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface {
      * @param handler the handler
      * @param parseComplete the parse complete
      */
-    public DatabaseReadProgress(FileSystemInterface handler,
-            DatabaseParseCompleteInterface parseComplete) {
+    public DatabaseReadProgress(
+            FileSystemInterface handler, DatabaseParseCompleteInterface parseComplete) {
         this.handler = handler;
         this.parseComplete = parseComplete;
     }
@@ -123,8 +113,8 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface {
      * @param connection the connection
      * @param featureClassList the feature class list
      */
-    public void readFeatureClassesComplete(DatabaseConnection connection,
-            List<String> featureClassList) {
+    public void readFeatureClassesComplete(
+            DatabaseConnection connection, List<String> featureClassList) {
         if (featureClassList == null) {
             return;
         }
@@ -179,8 +169,8 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface {
         List<String> featureClassList = databaseFeatureClassMap.get(connection);
 
         for (String featureClass : featureClassList) {
-            DatabaseFeatureClassNode fcNode = new DatabaseFeatureClassNode(this.handler, connection,
-                    featureClass);
+            DatabaseFeatureClassNode fcNode =
+                    new DatabaseFeatureClassNode(this.handler, connection, featureClass);
 
             // It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
             treeModel.insertNodeInto(fcNode, databaseNode, databaseNode.getChildCount());
@@ -196,8 +186,8 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface {
     public static void removeNode(DatabaseNode databaseNode, String nodeTitleToRemove) {
         if ((databaseNode != null) && (nodeTitleToRemove != null)) {
             for (int index = 0; index < databaseNode.getChildCount(); index++) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) databaseNode
-                        .getChildAt(index);
+                DefaultMutableTreeNode node =
+                        (DefaultMutableTreeNode) databaseNode.getChildAt(index);
                 String nodeName = (String) node.getUserObject();
                 if (nodeName != null) {
                     if (nodeName.startsWith(nodeTitleToRemove)) {
@@ -211,7 +201,7 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface#startPopulating(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
@@ -292,8 +282,8 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface {
      * @param originalConnectionDetails the original connection details
      * @param newConnectionDetails the new connection details
      */
-    public void updateConnection(DatabaseConnection originalConnectionDetails,
-            DatabaseConnection newConnectionDetails) {
+    public void updateConnection(
+            DatabaseConnection originalConnectionDetails, DatabaseConnection newConnectionDetails) {
         if (newConnectionDetails != null) {
             DatabaseNode databaseNode = nodeMap.get(originalConnectionDetails);
 
@@ -316,7 +306,9 @@ public class DatabaseReadProgress implements DatabaseReadProgressInterface {
      * @param connectionData the connection data
      * @param disableTreeSelection the disable tree selection
      */
-    public void setFolder(String overallNodeName, DatabaseConnection connectionData,
+    public void setFolder(
+            String overallNodeName,
+            DatabaseConnection connectionData,
             boolean disableTreeSelection) {
         if (tree != null) {
             if (disableTreeSelection) {

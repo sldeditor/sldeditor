@@ -19,23 +19,6 @@
 
 package com.sldeditor.ui.detail;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
-import org.apache.log4j.Logger;
-import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.styling.StyleFactoryImpl;
-import org.opengis.filter.FilterFactory;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDTreeUpdatedInterface;
@@ -58,22 +41,32 @@ import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import org.apache.log4j.Logger;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.styling.StyleFactoryImpl;
+import org.opengis.filter.FilterFactory;
 
 /**
  * The Class BasePanel.
- * 
- * <p>
- * Notifies the rest of the application if symbol needs redrawing.
- * 
- * <p>
- * Contains list of field configuration for the panel.
- * 
- * <p>
- * Defines size, position and spacing of field ui components.
- * 
- * <p>
- * Reads panel configuration file and configures ui.</li>
- * 
+ *
+ * <p>Notifies the rest of the application if symbol needs redrawing.
+ *
+ * <p>Contains list of field configuration for the panel.
+ *
+ * <p>Defines size, position and spacing of field ui components.
+ *
+ * <p>Reads panel configuration file and configures ui.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class BasePanel extends JPanel {
@@ -117,8 +110,8 @@ public class BasePanel extends JPanel {
     private List<SLDTreeUpdatedInterface> treeUpdateList = new ArrayList<SLDTreeUpdatedInterface>();
 
     /** The style factory. */
-    private StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder
-            .getStyleFactory();
+    private StyleFactoryImpl styleFactory =
+            (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
@@ -189,9 +182,7 @@ public class BasePanel extends JPanel {
         }
     }
 
-    /**
-     * Fire update symbol.
-     */
+    /** Fire update symbol. */
     protected void fireUpdateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
             // Notify that renderers need to be updated
@@ -250,8 +241,8 @@ public class BasePanel extends JPanel {
      * @param fieldList the field list
      * @param obj object to receive the callbacks
      */
-    protected void registerForSymbolUpdates(List<FieldConfigBase> fieldList,
-            UpdateSymbolInterface obj) {
+    protected void registerForSymbolUpdates(
+            List<FieldConfigBase> fieldList, UpdateSymbolInterface obj) {
         for (FieldConfigBase fieldConfig : fieldList) {
             if (fieldConfig != null) {
                 fieldConfig.addDataChangedListener(obj);
@@ -304,9 +295,7 @@ public class BasePanel extends JPanel {
         this.updateSymbolListener = listener;
     }
 
-    /**
-     * Data changed, called when symbol should be updated.
-     */
+    /** Data changed, called when symbol should be updated. */
     protected void dataHasChanged() {
         if (updateSymbolListener != null) {
             updateSymbolListener.dataChanged(FieldIdEnum.UNKNOWN);
@@ -320,8 +309,11 @@ public class BasePanel extends JPanel {
      * @param parent the parent
      * @param filename the filename
      */
-    protected void readConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
-            Class<?> panelId, UpdateSymbolInterface parent, String filename) {
+    protected void readConfigFile(
+            VendorOptionFactoryInterface vendorOptionFactory,
+            Class<?> panelId,
+            UpdateSymbolInterface parent,
+            String filename) {
         internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, true, false);
     }
 
@@ -333,8 +325,11 @@ public class BasePanel extends JPanel {
      * @param parent the parent
      * @param filename the filename
      */
-    protected void readRasterConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
-            Class<?> panelId, UpdateSymbolInterface parent, String filename) {
+    protected void readRasterConfigFile(
+            VendorOptionFactoryInterface vendorOptionFactory,
+            Class<?> panelId,
+            UpdateSymbolInterface parent,
+            String filename) {
         internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, true, true);
     }
 
@@ -345,8 +340,11 @@ public class BasePanel extends JPanel {
      * @param parent the parent
      * @param filename the filename
      */
-    protected void readConfigFileNoScrollPane(VendorOptionFactoryInterface vendorOptionFactory,
-            Class<?> panelId, UpdateSymbolInterface parent, String filename) {
+    protected void readConfigFileNoScrollPane(
+            VendorOptionFactoryInterface vendorOptionFactory,
+            Class<?> panelId,
+            UpdateSymbolInterface parent,
+            String filename) {
         internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, false, false);
     }
 
@@ -360,8 +358,12 @@ public class BasePanel extends JPanel {
      * @param useScrollFrame the use scroll frame
      * @param isRasterSymbol the is raster symbol
      */
-    private void internal_readConfigFile(VendorOptionFactoryInterface vendorOptionFactory,
-            Class<?> panelId, UpdateSymbolInterface parent, String filename, boolean useScrollFrame,
+    private void internal_readConfigFile(
+            VendorOptionFactoryInterface vendorOptionFactory,
+            Class<?> panelId,
+            UpdateSymbolInterface parent,
+            String filename,
+            boolean useScrollFrame,
             boolean isRasterSymbol) {
 
         ReadPanelConfig readConfig = new ReadPanelConfig(vendorOptionFactory, isRasterSymbol);
@@ -378,8 +380,8 @@ public class BasePanel extends JPanel {
      * @param useScrollFrame the use scroll frame
      * @param config the config
      */
-    private void configureUI(UpdateSymbolInterface parent, boolean useScrollFrame,
-            PanelConfigInterface config) {
+    private void configureUI(
+            UpdateSymbolInterface parent, boolean useScrollFrame, PanelConfigInterface config) {
         groupConfigList = config.getGroupList();
         vendorOptionVersion = config.getVendorOptionVersion();
         if (vendorOptionVersion == null) {
@@ -431,8 +433,11 @@ public class BasePanel extends JPanel {
      * @param groupConfig the group config
      * @param parentField the parent field
      */
-    private void populateGroup(UpdateSymbolInterface parent, Box parentBox,
-            GroupConfigInterface groupConfig, FieldConfigBase parentField) {
+    private void populateGroup(
+            UpdateSymbolInterface parent,
+            Box parentBox,
+            GroupConfigInterface groupConfig,
+            FieldConfigBase parentField) {
         groupConfig.createTitle(parentBox, parent);
 
         if (groupConfig instanceof GroupConfig) {
@@ -500,8 +505,8 @@ public class BasePanel extends JPanel {
                 fieldConfigManager.addMultiOptionGroup(multiOption);
 
                 for (OptionGroup optionGroup : multiOption.getGroupList()) {
-                    for (GroupConfigInterface subMultiOptionGroupConfig : optionGroup
-                            .getGroupList()) {
+                    for (GroupConfigInterface subMultiOptionGroupConfig :
+                            optionGroup.getGroupList()) {
                         if (subMultiOptionGroupConfig instanceof GroupConfig) {
                             populateOptionGroup(parent, (GroupConfig) subMultiOptionGroupConfig);
                         }
@@ -558,15 +563,18 @@ public class BasePanel extends JPanel {
                 }
             }
         } else {
-            ConsoleManager.getInstance().error(this, String.format("handleFieldState - %s : %s",
-                    Localisation.getString(StandardPanel.class, "StandardPanel.unknownField"),
-                    fieldId));
+            ConsoleManager.getInstance()
+                    .error(
+                            this,
+                            String.format(
+                                    "handleFieldState - %s : %s",
+                                    Localisation.getString(
+                                            StandardPanel.class, "StandardPanel.unknownField"),
+                                    fieldId));
         }
     }
 
-    /**
-     * Handle field state for all combo box fields.
-     */
+    /** Handle field state for all combo box fields. */
     protected void handleFieldState() {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(FieldConfigEnum.class);
         for (FieldConfigBase field : fieldList) {
@@ -592,9 +600,14 @@ public class BasePanel extends JPanel {
         if (fieldConfig != null) {
             fieldConfig.setEnabled(enable);
         } else {
-            ConsoleManager.getInstance().error(this, String.format("enableField - %s : %s",
-                    Localisation.getString(StandardPanel.class, "StandardPanel.unknownField"),
-                    fieldId));
+            ConsoleManager.getInstance()
+                    .error(
+                            this,
+                            String.format(
+                                    "enableField - %s : %s",
+                                    Localisation.getString(
+                                            StandardPanel.class, "StandardPanel.unknownField"),
+                                    fieldId));
         }
     }
 
@@ -619,8 +632,8 @@ public class BasePanel extends JPanel {
      * @param fieldId the field id
      * @param listener the listener
      */
-    protected void registerForTextFieldButton(FieldIdEnum fieldId,
-            FieldConfigStringButtonInterface listener) {
+    protected void registerForTextFieldButton(
+            FieldIdEnum fieldId, FieldConfigStringButtonInterface listener) {
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
         if (fieldConfig != null) {
             FieldConfigString textField = (FieldConfigString) fieldConfig;
@@ -694,9 +707,13 @@ public class BasePanel extends JPanel {
                     padding.removePadding();
                 }
 
-                logger.debug(String.format("%s : %s -> %s",
-                        Localisation.getString(StandardPanel.class, "StandardPanel.addingPanel"),
-                        panel.getClass().getName(), this.getClass().getName()));
+                logger.debug(
+                        String.format(
+                                "%s : %s -> %s",
+                                Localisation.getString(
+                                        StandardPanel.class, "StandardPanel.addingPanel"),
+                                panel.getClass().getName(),
+                                this.getClass().getName()));
 
                 if (fieldIndex > -1) {
                     fieldIndex++;
@@ -761,17 +778,13 @@ public class BasePanel extends JPanel {
         return defaultFieldMap.get(fieldId);
     }
 
-    /**
-     * Refresh panel.
-     */
+    /** Refresh panel. */
     public void refreshPanel() {
         revalidate();
         repaint();
     }
 
-    /**
-     * Sets the default values for all the fields.
-     */
+    /** Sets the default values for all the fields. */
     protected void setAllDefaultValues() {
         for (FieldConfigBase fieldConfig : fieldConfigList) {
             if (fieldConfig != null) {

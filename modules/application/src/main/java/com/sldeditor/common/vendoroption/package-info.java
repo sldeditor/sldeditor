@@ -19,7 +19,7 @@
 
 /**
  * Vendor option classes.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.vendoroption;

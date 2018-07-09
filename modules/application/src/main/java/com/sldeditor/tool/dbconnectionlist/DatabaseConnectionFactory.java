@@ -7,6 +7,11 @@
 
 package com.sldeditor.tool.dbconnectionlist;
 
+import com.sldeditor.common.data.DatabaseConnection;
+import com.sldeditor.common.data.DatabaseConnectionField;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
+import com.sldeditor.extension.filesystem.file.database.DatabaseFileHandler;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,9 +19,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.data.DataStoreFactorySpi;
 import org.geotools.data.DataStoreFinder;
@@ -32,12 +35,6 @@ import org.geotools.data.sqlserver.jtds.JTDSSqlServerDataStoreFactory;
 import org.geotools.data.teradata.TeradataDataStoreFactory;
 import org.geotools.geopkg.GeoPkgDataStoreFactory;
 import org.geotools.jdbc.JDBCDataStoreFactory;
-
-import com.sldeditor.common.data.DatabaseConnection;
-import com.sldeditor.common.data.DatabaseConnectionField;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
-import com.sldeditor.extension.filesystem.file.database.DatabaseFileHandler;
 
 /**
  * A factory for creating DatabaseConnection objects.
@@ -74,37 +71,51 @@ public class DatabaseConnectionFactory {
     public static DatabaseConnection createGeoPackage() {
         List<DatabaseConnectionField> list = new ArrayList<DatabaseConnectionField>();
 
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(Localisation
-                .getString(DatabaseConnector.class, "DatabaseConnectorGeoPkg.fileExtension")
-                + " (*." + GEOPACKAGE_FILE_EXTENSION + ")", GEOPACKAGE_FILE_EXTENSION);
+        FileNameExtensionFilter filter =
+                new FileNameExtensionFilter(
+                        Localisation.getString(
+                                        DatabaseConnector.class,
+                                        "DatabaseConnectorGeoPkg.fileExtension")
+                                + " (*."
+                                + GEOPACKAGE_FILE_EXTENSION
+                                + ")",
+                        GEOPACKAGE_FILE_EXTENSION);
 
         list.add(new DatabaseConnectionField(GeoPkgDataStoreFactory.DATABASE, filter));
         list.add(new DatabaseConnectionField(GeoPkgDataStoreFactory.USER));
 
         GeoPkgDataStoreFactory factory = new GeoPkgDataStoreFactory();
-        DatabaseConnection databaseConnection = new DatabaseConnection(
-                GeoPkgDataStoreFactory.DBTYPE, factory.getDisplayName(), false, list,
-                new DatabaseConnectionName() {
+        DatabaseConnection databaseConnection =
+                new DatabaseConnection(
+                        GeoPkgDataStoreFactory.DBTYPE,
+                        factory.getDisplayName(),
+                        false,
+                        list,
+                        new DatabaseConnectionName() {
 
-                    @Override
-                    public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
-                            Map<String, String> properties) {
-                        String connectionName = Localisation
-                                .getString(DatabaseConnectionFactory.class, "common.notSet");
-                        String databaseName = properties.get(JDBCDataStoreFactory.DATABASE.key);
-                        if (databaseName != null) {
-                            File f = new File(databaseName);
-                            if (f.isFile()) {
-                                connectionName = f.getName();
+                            @Override
+                            public String getConnectionName(
+                                    String duplicatePrefix,
+                                    int noOfTimesDuplicated,
+                                    Map<String, String> properties) {
+                                String connectionName =
+                                        Localisation.getString(
+                                                DatabaseConnectionFactory.class, "common.notSet");
+                                String databaseName =
+                                        properties.get(JDBCDataStoreFactory.DATABASE.key);
+                                if (databaseName != null) {
+                                    File f = new File(databaseName);
+                                    if (f.isFile()) {
+                                        connectionName = f.getName();
+                                    }
+                                }
+
+                                for (int i = 0; i < noOfTimesDuplicated; i++) {
+                                    connectionName = duplicatePrefix + connectionName;
+                                }
+                                return connectionName;
                             }
-                        }
-
-                        for (int i = 0; i < noOfTimesDuplicated; i++) {
-                            connectionName = duplicatePrefix + connectionName;
-                        }
-                        return connectionName;
-                    }
-                });
+                        });
 
         return databaseConnection;
     }
@@ -130,36 +141,50 @@ public class DatabaseConnectionFactory {
 
         list.add(new DatabaseConnectionField(SpatiaLiteDataStoreFactory.DATABASE));
 
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(Localisation
-                .getString(DatabaseConnector.class, "DatabaseConnectorGeoPkg.fileExtension")
-                + " (*." + SPATIALITE_FILE_EXTENSION + ")", SPATIALITE_FILE_EXTENSION);
+        FileNameExtensionFilter filter =
+                new FileNameExtensionFilter(
+                        Localisation.getString(
+                                        DatabaseConnector.class,
+                                        "DatabaseConnectorGeoPkg.fileExtension")
+                                + " (*."
+                                + SPATIALITE_FILE_EXTENSION
+                                + ")",
+                        SPATIALITE_FILE_EXTENSION);
         list.add(new DatabaseConnectionField(SpatiaLiteDataStoreFactory.USER, filter));
 
         SpatiaLiteDataStoreFactory factory = new SpatiaLiteDataStoreFactory();
 
-        DatabaseConnection databaseConnection = new DatabaseConnection(
-                SpatiaLiteDataStoreFactory.DBTYPE, factory.getDisplayName(), false, list,
-                new DatabaseConnectionName() {
+        DatabaseConnection databaseConnection =
+                new DatabaseConnection(
+                        SpatiaLiteDataStoreFactory.DBTYPE,
+                        factory.getDisplayName(),
+                        false,
+                        list,
+                        new DatabaseConnectionName() {
 
-                    @Override
-                    public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
-                            Map<String, String> properties) {
-                        String connectionName = Localisation
-                                .getString(DatabaseConnectionFactory.class, "common.notSet");
-                        String databaseName = properties.get(JDBCDataStoreFactory.DATABASE.key);
-                        if (databaseName != null) {
-                            File f = new File(databaseName);
-                            if (f.isFile()) {
-                                connectionName = f.getName();
+                            @Override
+                            public String getConnectionName(
+                                    String duplicatePrefix,
+                                    int noOfTimesDuplicated,
+                                    Map<String, String> properties) {
+                                String connectionName =
+                                        Localisation.getString(
+                                                DatabaseConnectionFactory.class, "common.notSet");
+                                String databaseName =
+                                        properties.get(JDBCDataStoreFactory.DATABASE.key);
+                                if (databaseName != null) {
+                                    File f = new File(databaseName);
+                                    if (f.isFile()) {
+                                        connectionName = f.getName();
+                                    }
+                                }
+
+                                for (int i = 0; i < noOfTimesDuplicated; i++) {
+                                    connectionName = duplicatePrefix + connectionName;
+                                }
+                                return connectionName;
                             }
-                        }
-
-                        for (int i = 0; i < noOfTimesDuplicated; i++) {
-                            connectionName = duplicatePrefix + connectionName;
-                        }
-                        return connectionName;
-                    }
-                });
+                        });
 
         return databaseConnection;
     }
@@ -182,24 +207,33 @@ public class DatabaseConnectionFactory {
 
         DB2NGDataStoreFactory factory = new DB2NGDataStoreFactory();
 
-        DatabaseConnection databaseConnection = new DatabaseConnection(DB2NGDataStoreFactory.DBTYPE,
-                factory.getDisplayName(), true, list, new DatabaseConnectionName() {
+        DatabaseConnection databaseConnection =
+                new DatabaseConnection(
+                        DB2NGDataStoreFactory.DBTYPE,
+                        factory.getDisplayName(),
+                        true,
+                        list,
+                        new DatabaseConnectionName() {
 
-                    @Override
-                    public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
-                            Map<String, String> properties) {
-                        String connectionName = String.format("%s/%s@%s:%s",
-                                properties.get("tabschema"),
-                                properties.get(JDBCDataStoreFactory.DATABASE.key),
-                                properties.get(JDBCDataStoreFactory.HOST.key),
-                                properties.get(JDBCDataStoreFactory.PORT.key));
+                            @Override
+                            public String getConnectionName(
+                                    String duplicatePrefix,
+                                    int noOfTimesDuplicated,
+                                    Map<String, String> properties) {
+                                String connectionName =
+                                        String.format(
+                                                "%s/%s@%s:%s",
+                                                properties.get("tabschema"),
+                                                properties.get(JDBCDataStoreFactory.DATABASE.key),
+                                                properties.get(JDBCDataStoreFactory.HOST.key),
+                                                properties.get(JDBCDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; i++) {
-                            connectionName = duplicatePrefix + connectionName;
-                        }
-                        return connectionName;
-                    }
-                });
+                                for (int i = 0; i < noOfTimesDuplicated; i++) {
+                                    connectionName = duplicatePrefix + connectionName;
+                                }
+                                return connectionName;
+                            }
+                        });
 
         return databaseConnection;
     }
@@ -217,29 +251,37 @@ public class DatabaseConnectionFactory {
 
         H2DataStoreFactory factory = new H2DataStoreFactory();
 
-        DatabaseConnection databaseConnection = new DatabaseConnection(H2DataStoreFactory.DBTYPE,
-                factory.getDisplayName(), false, list, new DatabaseConnectionName() {
+        DatabaseConnection databaseConnection =
+                new DatabaseConnection(
+                        H2DataStoreFactory.DBTYPE,
+                        factory.getDisplayName(),
+                        false,
+                        list,
+                        new DatabaseConnectionName() {
 
-                    @Override
-                    public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
-                            Map<String, String> properties) {
-                        String connectionName = Localisation
-                                .getString(DatabaseConnectionFactory.class,
-                                        "common.notSet");
-                        String databaseName = properties.get(JDBCDataStoreFactory.DATABASE.key);
-                        if (databaseName != null) {
-                            File f = new File(databaseName);
-                            if (f.isFile()) {
-                                connectionName = f.getName();
+                            @Override
+                            public String getConnectionName(
+                                    String duplicatePrefix,
+                                    int noOfTimesDuplicated,
+                                    Map<String, String> properties) {
+                                String connectionName =
+                                        Localisation.getString(
+                                                DatabaseConnectionFactory.class, "common.notSet");
+                                String databaseName =
+                                        properties.get(JDBCDataStoreFactory.DATABASE.key);
+                                if (databaseName != null) {
+                                    File f = new File(databaseName);
+                                    if (f.isFile()) {
+                                        connectionName = f.getName();
+                                    }
+                                }
+
+                                for (int i = 0; i < noOfTimesDuplicated; i++) {
+                                    connectionName = duplicatePrefix + connectionName;
+                                }
+                                return connectionName;
                             }
-                        }
-
-                        for (int i = 0; i < noOfTimesDuplicated; i++) {
-                            connectionName = duplicatePrefix + connectionName;
-                        }
-                        return connectionName;
-                    }
-                });
+                        });
 
         return databaseConnection;
     }
@@ -261,23 +303,32 @@ public class DatabaseConnectionFactory {
 
         MySQLDataStoreFactory factory = new MySQLDataStoreFactory();
 
-        DatabaseConnection databaseConnection = new DatabaseConnection(MySQLDataStoreFactory.DBTYPE,
-                factory.getDisplayName(), true, list, new DatabaseConnectionName() {
+        DatabaseConnection databaseConnection =
+                new DatabaseConnection(
+                        MySQLDataStoreFactory.DBTYPE,
+                        factory.getDisplayName(),
+                        true,
+                        list,
+                        new DatabaseConnectionName() {
 
-                    @Override
-                    public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
-                            Map<String, String> properties) {
-                        String connectionName = String.format("%s@%s:%s",
-                                properties.get(MySQLDataStoreFactory.DATABASE.key),
-                                properties.get(MySQLDataStoreFactory.HOST.key),
-                                properties.get(MySQLDataStoreFactory.PORT.key));
+                            @Override
+                            public String getConnectionName(
+                                    String duplicatePrefix,
+                                    int noOfTimesDuplicated,
+                                    Map<String, String> properties) {
+                                String connectionName =
+                                        String.format(
+                                                "%s@%s:%s",
+                                                properties.get(MySQLDataStoreFactory.DATABASE.key),
+                                                properties.get(MySQLDataStoreFactory.HOST.key),
+                                                properties.get(MySQLDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; i++) {
-                            connectionName = duplicatePrefix + connectionName;
-                        }
-                        return connectionName;
-                    }
-                });
+                                for (int i = 0; i < noOfTimesDuplicated; i++) {
+                                    connectionName = duplicatePrefix + connectionName;
+                                }
+                                return connectionName;
+                            }
+                        });
 
         return databaseConnection;
     }
@@ -299,25 +350,34 @@ public class DatabaseConnectionFactory {
 
         OracleNGDataStoreFactory factory = new OracleNGDataStoreFactory();
 
-        DatabaseConnection databaseConnection = new DatabaseConnection(
-                OracleNGDataStoreFactory.DBTYPE, factory.getDisplayName(), true, list,
-                new DatabaseConnectionName() {
+        DatabaseConnection databaseConnection =
+                new DatabaseConnection(
+                        OracleNGDataStoreFactory.DBTYPE,
+                        factory.getDisplayName(),
+                        true,
+                        list,
+                        new DatabaseConnectionName() {
 
-                    @Override
-                    public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
-                            Map<String, String> properties) {
-                        String connectionName = String.format("%s/%s@%s:%s",
-                                properties.get(OracleNGDataStoreFactory.SCHEMA.key),
-                                properties.get(OracleNGDataStoreFactory.DATABASE.key),
-                                properties.get(OracleNGDataStoreFactory.HOST.key),
-                                properties.get(OracleNGDataStoreFactory.PORT.key));
+                            @Override
+                            public String getConnectionName(
+                                    String duplicatePrefix,
+                                    int noOfTimesDuplicated,
+                                    Map<String, String> properties) {
+                                String connectionName =
+                                        String.format(
+                                                "%s/%s@%s:%s",
+                                                properties.get(OracleNGDataStoreFactory.SCHEMA.key),
+                                                properties.get(
+                                                        OracleNGDataStoreFactory.DATABASE.key),
+                                                properties.get(OracleNGDataStoreFactory.HOST.key),
+                                                properties.get(OracleNGDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; i++) {
-                            connectionName = duplicatePrefix + connectionName;
-                        }
-                        return connectionName;
-                    }
-                });
+                                for (int i = 0; i < noOfTimesDuplicated; i++) {
+                                    connectionName = duplicatePrefix + connectionName;
+                                }
+                                return connectionName;
+                            }
+                        });
 
         return databaseConnection;
     }
@@ -342,25 +402,37 @@ public class DatabaseConnectionFactory {
 
         JDTSSQLServerJNDIDataStoreFactory factory = new JDTSSQLServerJNDIDataStoreFactory();
 
-        DatabaseConnection databaseConnection = new DatabaseConnection(
-                JTDSSqlServerDataStoreFactory.DBTYPE, factory.getDisplayName(), true, list,
-                new DatabaseConnectionName() {
+        DatabaseConnection databaseConnection =
+                new DatabaseConnection(
+                        JTDSSqlServerDataStoreFactory.DBTYPE,
+                        factory.getDisplayName(),
+                        true,
+                        list,
+                        new DatabaseConnectionName() {
 
-                    @Override
-                    public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
-                            Map<String, String> properties) {
-                        String connectionName = String.format("%s/%s@%s:%s",
-                                properties.get(JTDSSqlServerDataStoreFactory.INSTANCE.key),
-                                properties.get(JTDSSqlServerDataStoreFactory.DATABASE.key),
-                                properties.get(JTDSSqlServerDataStoreFactory.HOST.key),
-                                properties.get(JTDSSqlServerDataStoreFactory.PORT.key));
+                            @Override
+                            public String getConnectionName(
+                                    String duplicatePrefix,
+                                    int noOfTimesDuplicated,
+                                    Map<String, String> properties) {
+                                String connectionName =
+                                        String.format(
+                                                "%s/%s@%s:%s",
+                                                properties.get(
+                                                        JTDSSqlServerDataStoreFactory.INSTANCE.key),
+                                                properties.get(
+                                                        JTDSSqlServerDataStoreFactory.DATABASE.key),
+                                                properties.get(
+                                                        JTDSSqlServerDataStoreFactory.HOST.key),
+                                                properties.get(
+                                                        JTDSSqlServerDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; i++) {
-                            connectionName = duplicatePrefix + connectionName;
-                        }
-                        return connectionName;
-                    }
-                });
+                                for (int i = 0; i < noOfTimesDuplicated; i++) {
+                                    connectionName = duplicatePrefix + connectionName;
+                                }
+                                return connectionName;
+                            }
+                        });
 
         return databaseConnection;
     }
@@ -382,25 +454,34 @@ public class DatabaseConnectionFactory {
 
         TeradataDataStoreFactory factory = new TeradataDataStoreFactory();
 
-        DatabaseConnection databaseConnection = new DatabaseConnection(
-                TeradataDataStoreFactory.DBTYPE, factory.getDisplayName(), true, list,
-                new DatabaseConnectionName() {
+        DatabaseConnection databaseConnection =
+                new DatabaseConnection(
+                        TeradataDataStoreFactory.DBTYPE,
+                        factory.getDisplayName(),
+                        true,
+                        list,
+                        new DatabaseConnectionName() {
 
-                    @Override
-                    public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
-                            Map<String, String> properties) {
-                        String connectionName = String.format("%s/%s@%s:%s",
-                                properties.get(TeradataDataStoreFactory.SCHEMA.key),
-                                properties.get(TeradataDataStoreFactory.DATABASE.key),
-                                properties.get(TeradataDataStoreFactory.HOST.key),
-                                properties.get(TeradataDataStoreFactory.PORT.key));
+                            @Override
+                            public String getConnectionName(
+                                    String duplicatePrefix,
+                                    int noOfTimesDuplicated,
+                                    Map<String, String> properties) {
+                                String connectionName =
+                                        String.format(
+                                                "%s/%s@%s:%s",
+                                                properties.get(TeradataDataStoreFactory.SCHEMA.key),
+                                                properties.get(
+                                                        TeradataDataStoreFactory.DATABASE.key),
+                                                properties.get(TeradataDataStoreFactory.HOST.key),
+                                                properties.get(TeradataDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; i++) {
-                            connectionName = duplicatePrefix + connectionName;
-                        }
-                        return connectionName;
-                    }
-                });
+                                for (int i = 0; i < noOfTimesDuplicated; i++) {
+                                    connectionName = duplicatePrefix + connectionName;
+                                }
+                                return connectionName;
+                            }
+                        });
 
         return databaseConnection;
     }
@@ -422,25 +503,35 @@ public class DatabaseConnectionFactory {
 
         PostgisNGDataStoreFactory factory = new PostgisNGDataStoreFactory();
 
-        DatabaseConnection databaseConnection = new DatabaseConnection(
-                PostgisNGDataStoreFactory.DBTYPE, factory.getDisplayName(), true, list,
-                new DatabaseConnectionName() {
+        DatabaseConnection databaseConnection =
+                new DatabaseConnection(
+                        PostgisNGDataStoreFactory.DBTYPE,
+                        factory.getDisplayName(),
+                        true,
+                        list,
+                        new DatabaseConnectionName() {
 
-                    @Override
-                    public String getConnectionName(String duplicatePrefix, int noOfTimesDuplicated,
-                            Map<String, String> properties) {
-                        String connectionName = String.format("%s/%s@%s:%s",
-                                properties.get(PostgisNGDataStoreFactory.SCHEMA.key),
-                                properties.get(PostgisNGDataStoreFactory.DATABASE.key),
-                                properties.get(PostgisNGDataStoreFactory.HOST.key),
-                                properties.get(PostgisNGDataStoreFactory.PORT.key));
+                            @Override
+                            public String getConnectionName(
+                                    String duplicatePrefix,
+                                    int noOfTimesDuplicated,
+                                    Map<String, String> properties) {
+                                String connectionName =
+                                        String.format(
+                                                "%s/%s@%s:%s",
+                                                properties.get(
+                                                        PostgisNGDataStoreFactory.SCHEMA.key),
+                                                properties.get(
+                                                        PostgisNGDataStoreFactory.DATABASE.key),
+                                                properties.get(PostgisNGDataStoreFactory.HOST.key),
+                                                properties.get(PostgisNGDataStoreFactory.PORT.key));
 
-                        for (int i = 0; i < noOfTimesDuplicated; i++) {
-                            connectionName = duplicatePrefix + connectionName;
-                        }
-                        return connectionName;
-                    }
-                });
+                                for (int i = 0; i < noOfTimesDuplicated; i++) {
+                                    connectionName = duplicatePrefix + connectionName;
+                                }
+                                return connectionName;
+                            }
+                        });
 
         return databaseConnection;
     }
@@ -512,9 +603,7 @@ public class DatabaseConnectionFactory {
         return list;
     }
 
-    /**
-     * Populate name map.
-     */
+    /** Populate name map. */
     private static void populateNameMap() {
         Iterator<DataStoreFactorySpi> datastore = DataStoreFinder.getAvailableDataStores();
 
@@ -596,12 +685,14 @@ public class DatabaseConnectionFactory {
     public static List<FileHandlerInterface> getFileHandlers() {
         if (fileHandlerList.isEmpty()) {
             addFileDatabase(
-                    new DatabaseFileHandler("ui/filesystemicons/spatialite.png",
+                    new DatabaseFileHandler(
+                            "ui/filesystemicons/spatialite.png",
                             Arrays.asList(SPATIALITE_FILE_EXTENSION)),
                     SpatiaLiteDataStoreFactory.DBTYPE);
 
             addFileDatabase(
-                    new DatabaseFileHandler("ui/filesystemicons/geopackage.png",
+                    new DatabaseFileHandler(
+                            "ui/filesystemicons/geopackage.png",
                             Arrays.asList(GEOPACKAGE_FILE_EXTENSION)),
                     GeoPkgDataStoreFactory.DBTYPE);
         }

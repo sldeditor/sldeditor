@@ -19,10 +19,15 @@
 
 package com.sldeditor.datasource;
 
+import com.sldeditor.common.DataSourcePropertiesInterface;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
+import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
+import com.sldeditor.datasource.checks.CheckAttributeInterface;
+import com.sldeditor.datasource.impl.CreateDataSourceInterface;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.FeatureSource;
 import org.geotools.styling.UserLayer;
@@ -30,16 +35,9 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;
 
-import com.sldeditor.common.DataSourcePropertiesInterface;
-import com.sldeditor.datasource.attribute.DataSourceAttributeData;
-import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
-import com.sldeditor.datasource.checks.CheckAttributeInterface;
-import com.sldeditor.datasource.impl.CreateDataSourceInterface;
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
-
 /**
  * The Interface DataSourceInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface DataSourceInterface {
@@ -65,12 +63,12 @@ public interface DataSourceInterface {
      * @param editorFile the editor file
      * @param checkList the check list
      */
-    void connect(String typeName, SLDEditorFileInterface editorFile,
+    void connect(
+            String typeName,
+            SLDEditorFileInterface editorFile,
             List<CheckAttributeInterface> checkList);
 
-    /**
-     * Reset.
-     */
+    /** Reset. */
     void reset();
 
     /**
@@ -159,7 +157,8 @@ public interface DataSourceInterface {
      * @param externalDataSource the external data source
      * @param inlineDataSource the inline data source
      */
-    void setDataSourceCreation(CreateDataSourceInterface internalDataSource,
+    void setDataSourceCreation(
+            CreateDataSourceInterface internalDataSource,
             CreateDataSourceInterface externalDataSource,
             CreateDataSourceInterface inlineDataSource);
 
@@ -184,9 +183,7 @@ public interface DataSourceInterface {
      */
     Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> getUserLayerFeatureSource();
 
-    /**
-     * Recreate inline data sources for user layers.
-     */
+    /** Recreate inline data sources for user layers. */
     void updateUserLayers();
 
     /**
@@ -196,5 +193,4 @@ public interface DataSourceInterface {
      * @param dataType the data type
      */
     void updateFieldType(String fieldName, Class<?> dataType);
-
 }

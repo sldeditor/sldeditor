@@ -21,9 +21,7 @@ package com.sldeditor.datasource.impl;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.geotools.coverage.grid.GridCoverage2D;
-
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.MultiLineString;
 import org.locationtech.jts.geom.MultiPoint;
@@ -42,9 +40,7 @@ public class GeometryTypeMapping {
     private static Map<Class<?>, GeometryTypeEnum> geometryMap =
             new HashMap<Class<?>, GeometryTypeEnum>();
 
-    /**
-     * Populate member data.
-     */
+    /** Populate member data. */
     private static void populate() {
         geometryMap.put(Point.class, GeometryTypeEnum.POINT);
         geometryMap.put(MultiPoint.class, GeometryTypeEnum.POINT);

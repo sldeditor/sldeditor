@@ -19,7 +19,7 @@
 
 /**
  * Package for reading/writing properties.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.property;

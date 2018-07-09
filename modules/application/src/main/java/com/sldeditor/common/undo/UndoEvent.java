@@ -23,7 +23,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * Class that encapsulates an undo/redo event.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class UndoEvent implements UndoInterface {
@@ -54,15 +54,17 @@ public class UndoEvent implements UndoInterface {
      * @param oldValue the old value
      * @param newValue the new value
      */
-    public UndoEvent(UndoActionInterface parentObj, FieldIdEnum fieldId, Object oldValue,
-            Object newValue) {
+    public UndoEvent(
+            UndoActionInterface parentObj, FieldIdEnum fieldId, Object oldValue, Object newValue) {
         this.parentObj = parentObj;
         this.fieldId = fieldId;
         this.oldValue = oldValue;
         this.newValue = newValue;
 
-        representation = String.format("Storing value : %s Old : %s New : %s", fieldId.toString(),
-                oldValue, newValue);
+        representation =
+                String.format(
+                        "Storing value : %s Old : %s New : %s",
+                        fieldId.toString(), oldValue, newValue);
     }
 
     /**
@@ -79,31 +81,29 @@ public class UndoEvent implements UndoInterface {
         this.newValue = newValue;
         this.customText = text;
 
-        representation = String.format("Storing value : %s Old : %s New : %s", text, oldValue,
-                newValue);
+        representation =
+                String.format("Storing value : %s Old : %s New : %s", text, oldValue, newValue);
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoInterface#undo()
      */
     @Override
-    public void undo() {
-    }
+    public void undo() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoInterface#redo()
      */
     @Override
-    public void redo() {
-    }
+    public void redo() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoInterface#getStringRepresentation()
      */
     @Override
@@ -143,7 +143,7 @@ public class UndoEvent implements UndoInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoInterface#doUndo()
      */
     @Override
@@ -155,7 +155,7 @@ public class UndoEvent implements UndoInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoInterface#doRedo()
      */
     @Override
@@ -167,7 +167,7 @@ public class UndoEvent implements UndoInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoInterface#getUndoString()
      */
     @Override
@@ -179,7 +179,7 @@ public class UndoEvent implements UndoInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoInterface#getRedoString()
      */
     @Override

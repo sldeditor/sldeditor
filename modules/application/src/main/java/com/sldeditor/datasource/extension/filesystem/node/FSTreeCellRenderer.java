@@ -19,24 +19,21 @@
 
 package com.sldeditor.datasource.extension.filesystem.node;
 
+import com.sldeditor.common.NodeInterface;
 import java.awt.Component;
-
 import javax.swing.Icon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 
-import com.sldeditor.common.NodeInterface;
-
 /**
- * A FSTreeCellRenderer displays each node of a tree. The default renderer displays
- * arbitrary Object nodes by calling their toString() method. The
- * Component.toString() method returns long strings with extraneous information. 
- * Therefore, we use this "wrapper" implementation of TreeCellRenderer
- * to convert nodes from Component objects to useful String values before passing
- * those String values on to the default renderer.
- * 
+ * A FSTreeCellRenderer displays each node of a tree. The default renderer displays arbitrary Object
+ * nodes by calling their toString() method. The Component.toString() method returns long strings
+ * with extraneous information. Therefore, we use this "wrapper" implementation of TreeCellRenderer
+ * to convert nodes from Component objects to useful String values before passing those String
+ * values on to the default renderer.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FSTreeCellRenderer extends DefaultTreeCellRenderer implements TreeCellRenderer {
@@ -44,21 +41,24 @@ public class FSTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Instantiates a new component cell renderer.
-     */
-    public FSTreeCellRenderer() {
-    }
-
+    /** Instantiates a new component cell renderer. */
+    public FSTreeCellRenderer() {}
 
     /**
-     * This is the only TreeCellRenderer method.
-     * Compute the string to display, and pass it to the wrapped renderer
-     * 
-     * @see javax.swing.tree.DefaultTreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
+     * This is the only TreeCellRenderer method. Compute the string to display, and pass it to the
+     * wrapped renderer
+     *
+     * @see javax.swing.tree.DefaultTreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree,
+     *     java.lang.Object, boolean, boolean, boolean, int, boolean)
      */
-    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected,
-            boolean expanded, boolean leaf, int row, boolean hasFocus) {
+    public Component getTreeCellRendererComponent(
+            JTree tree,
+            Object value,
+            boolean selected,
+            boolean expanded,
+            boolean leaf,
+            int row,
+            boolean hasFocus) {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         Object userObject = node.getUserObject();
 
@@ -93,5 +93,4 @@ public class FSTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
         }
         return name;
     }
-
 }

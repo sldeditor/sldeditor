@@ -24,7 +24,7 @@ import com.sldeditor.common.localisation.Localisation;
 
 /**
  * Class that represents the vendor option versions supported.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VersionData implements Comparable<VersionData>, Cloneable {
@@ -78,16 +78,12 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
     /** The is latest flag. */
     private boolean isLatest = false;
 
-    /**
-     * Default constructor.
-     */
-    public VersionData() {
-
-    }
+    /** Default constructor. */
+    public VersionData() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#clone()
      */
     @Override
@@ -154,7 +150,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
@@ -243,7 +239,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -365,8 +361,10 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
                     Class<?> classType = Class.forName(components[0]);
                     versionData = VersionData.decode(classType, components[1]);
                 } catch (ClassNotFoundException e) {
-                    ConsoleManager.getInstance().error(VersionData.class,
-                            "Unknown vendor option class : " + components[0]);
+                    ConsoleManager.getInstance()
+                            .error(
+                                    VersionData.class,
+                                    "Unknown vendor option class : " + components[0]);
                 }
             }
         }
@@ -375,7 +373,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -393,7 +391,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -468,8 +466,9 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
         } else {
             snapshot = versionString.endsWith(SNAPSHOT_SUFFIX);
             if (snapshot) {
-                versionString = versionString.substring(0,
-                        versionString.length() - SNAPSHOT_SUFFIX.length());
+                versionString =
+                        versionString.substring(
+                                0, versionString.length() - SNAPSHOT_SUFFIX.length());
             }
 
             String[] versionComponents = versionString.split("\\.");

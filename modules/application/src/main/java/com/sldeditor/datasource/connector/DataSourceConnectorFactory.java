@@ -19,18 +19,17 @@
 
 package com.sldeditor.datasource.connector;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
 import com.sldeditor.datasource.impl.DataSourceProperties;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * A factory for creating DataSourceConnector objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DataSourceConnectorFactory {
@@ -57,9 +56,7 @@ public class DataSourceConnectorFactory {
         return dataConnectorMap;
     }
 
-    /**
-     * Populate.
-     */
+    /** Populate. */
     private static void populate() {
         noDataSource = new DataSourceConnectorEmpty();
         dataSource = new DataSourceConnector();

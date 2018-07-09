@@ -19,21 +19,18 @@
 
 package com.sldeditor.datasource.extension.filesystem.node.file;
 
-import java.io.File;
-import java.io.Serializable;
-import java.util.List;
-
-import javax.swing.Icon;
-import javax.swing.tree.DefaultTreeModel;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.filesystem.FileSystemInterface;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import java.io.File;
+import java.io.Serializable;
+import java.util.List;
+import javax.swing.Icon;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  * The Interface FileHandlerInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface FileHandlerInterface extends Serializable {
@@ -53,8 +50,8 @@ public interface FileHandlerInterface extends Serializable {
      * @param node the node
      * @return true, if successful
      */
-    boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel,
-            FileTreeNode node);
+    boolean populate(
+            FileSystemInterface inputInterface, DefaultTreeModel treeModel, FileTreeNode node);
 
     /**
      * Gets the SLD contents.

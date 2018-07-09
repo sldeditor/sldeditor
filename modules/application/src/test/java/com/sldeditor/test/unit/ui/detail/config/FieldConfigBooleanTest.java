@@ -24,9 +24,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-import org.locationtech.jts.geom.Geometry;
-
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -34,10 +31,12 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import org.junit.Test;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * The unit test for FieldConfigBoolean.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.FieldConfigBoolean}
  *
  * @author Robert Ward (SCISYS)
@@ -45,16 +44,18 @@ import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 public class FieldConfigBooleanTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#internal_setEnabled(boolean)}. Test
-     * method for {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#isEnabled()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#internal_setEnabled(boolean)}. Test method
+     * for {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigBoolean field = new FieldConfigBoolean(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoolean field =
+                new FieldConfigBoolean(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -73,8 +74,10 @@ public class FieldConfigBooleanTest {
 
         // Has attribute/expression dropdown
         valueOnly = false;
-        FieldConfigBoolean field2 = new FieldConfigBoolean(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoolean field2 =
+                new FieldConfigBoolean(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         // Text field will not have been created
         expectedValue = true;
@@ -94,14 +97,16 @@ public class FieldConfigBooleanTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#setVisible(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#setVisible(boolean)}.
      */
     @Test
     public void testSetVisible() {
         boolean valueOnly = true;
-        FieldConfigBoolean field = new FieldConfigBoolean(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoolean field =
+                new FieldConfigBoolean(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -113,14 +118,16 @@ public class FieldConfigBooleanTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#generateExpression()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#generateExpression()}.
      */
     @Test
     public void testGenerateExpression() {
         boolean valueOnly = true;
-        FieldConfigBoolean field = new FieldConfigBoolean(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoolean field =
+                new FieldConfigBoolean(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.setTestValue(null, true);
         field.populateField((Boolean) null);
@@ -141,15 +148,17 @@ public class FieldConfigBooleanTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#revertToDefaultValue()}. Test method
-     * for {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#setDefaultValue(boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#revertToDefaultValue()}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#setDefaultValue(boolean)}.
      */
     @Test
     public void testRevertToDefaultValue() {
         boolean valueOnly = true;
-        FieldConfigBoolean field = new FieldConfigBoolean(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoolean field =
+                new FieldConfigBoolean(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
 
         field.revertToDefaultValue();
         assertFalse(field.getBooleanValue());
@@ -165,22 +174,22 @@ public class FieldConfigBooleanTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#populateExpression(java.lang.Object, org.opengis.filter.expression.Expression)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#populateField(java.lang.Boolean)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#setTestValue(com.sldeditor.ui.detail.config.FieldId, boolean)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#getBooleanValue()}.
-     * Test method for {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#getStringValue()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#populateExpression(java.lang.Object,
+     * org.opengis.filter.expression.Expression)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#populateField(java.lang.Boolean)}. Test
+     * method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#setTestValue(com.sldeditor.ui.detail.config.FieldId,
+     * boolean)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#getBooleanValue()}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#getStringValue()}.
      */
     @Test
-    public void testPopulateExpression() {
-    }
+    public void testPopulateExpression() {}
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)}.
      */
     @Test
     public void testCreateCopy() {
@@ -196,8 +205,10 @@ public class FieldConfigBooleanTest {
             }
         }
 
-        TestFieldConfigBoolean field = new TestFieldConfigBoolean(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        TestFieldConfigBoolean field =
+                new TestFieldConfigBoolean(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         FieldConfigBoolean copy = (FieldConfigBoolean) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -208,30 +219,34 @@ public class FieldConfigBooleanTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#attributeSelection(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#attributeSelection(java.lang.String)}.
      */
     @Test
     public void testAttributeSelection() {
         boolean valueOnly = true;
-        FieldConfigBoolean field = new FieldConfigBoolean(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoolean field =
+                new FieldConfigBoolean(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         field.attributeSelection(null);
 
         // Does nothing
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#undoAction(com.sldeditor.common.undo.UndoInterface)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#redoAction(com.sldeditor.common.undo.UndoInterface)}.
      */
     @Test
     public void testUndoAction() {
         boolean valueOnly = true;
-        FieldConfigBoolean field = new FieldConfigBoolean(
-                new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+        FieldConfigBoolean field =
+                new FieldConfigBoolean(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
         field.undoAction(null);
         field.redoAction(null);
 
@@ -255,5 +270,4 @@ public class FieldConfigBooleanTest {
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
     }
-
 }

@@ -21,38 +21,32 @@ package com.sldeditor.test.unit.extension.filesystem;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.event.MouseEvent;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JPopupMenu;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
-import org.junit.Test;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.extension.filesystem.FileSystemExtensionFactory;
+import java.awt.event.MouseEvent;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JPopupMenu;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import org.junit.Test;
 
 /**
  * Unit test for FileSystemExtensionFactory class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.FileSystemExtensionFactory}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.FileSystemExtensionFactory}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class FileSystemExtensionFactoryTest {
 
-    /**
-     * The Class DummyExtension.
-     */
+    /** The Class DummyExtension. */
     class DummyExtension implements FileSystemInterface {
 
         /** The Constant serialVersionUID. */
@@ -66,8 +60,8 @@ public class FileSystemExtensionFactoryTest {
          * @param rootNode the root node
          */
         @Override
-        public void populate(FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode) {
-        }
+        public void populate(
+                FSTree tree, DefaultTreeModel model, DefaultMutableTreeNode rootNode) {}
 
         /**
          * Tree expanded.
@@ -88,8 +82,7 @@ public class FileSystemExtensionFactoryTest {
          * @param e the e
          */
         @Override
-        public void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e) {
-        }
+        public void rightMouseButton(JPopupMenu popupMenu, Object selectedItem, MouseEvent e) {}
 
         /**
          * Gets the SLD contents.
@@ -146,7 +139,8 @@ public class FileSystemExtensionFactoryTest {
          * @return true, if successful
          */
         @Override
-        public boolean copyNodes(NodeInterface destinationTreeNode,
+        public boolean copyNodes(
+                NodeInterface destinationTreeNode,
                 Map<NodeInterface, List<SLDDataInterface>> droppedDataMap) {
             return false;
         }
@@ -158,8 +152,7 @@ public class FileSystemExtensionFactoryTest {
          * @param sldDataList the sld data list
          */
         @Override
-        public void deleteNodes(NodeInterface nodeToTransfer, List<SLDDataInterface> sldDataList) {
-        }
+        public void deleteNodes(NodeInterface nodeToTransfer, List<SLDDataInterface> sldDataList) {}
 
         /**
          * Gets the destination text.
@@ -174,10 +167,10 @@ public class FileSystemExtensionFactoryTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.FileSystemExtensionFactory#override(java.util.List)}.
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.FileSystemExtensionFactory#getFileExtensionList(com.sldeditor.common.ToolSelectionInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.FileSystemExtensionFactory#override(java.util.List)}. Test
+     * method for {@link
+     * com.sldeditor.extension.filesystem.FileSystemExtensionFactory#getFileExtensionList(com.sldeditor.common.ToolSelectionInterface)}.
      */
     @Test
     public void testGetFileExtensionList() {
@@ -185,8 +178,8 @@ public class FileSystemExtensionFactoryTest {
         FileSystemExtensionFactory.override(null);
 
         // Should return the default
-        List<FileSystemInterface> fileExtensionList = FileSystemExtensionFactory
-                .getFileExtensionList(null);
+        List<FileSystemInterface> fileExtensionList =
+                FileSystemExtensionFactory.getFileExtensionList(null);
         assertEquals(3, fileExtensionList.size());
 
         List<FileSystemInterface> extList = new ArrayList<FileSystemInterface>();
@@ -204,5 +197,4 @@ public class FileSystemExtensionFactoryTest {
         fileExtensionList = FileSystemExtensionFactory.getFileExtensionList(null);
         assertEquals(3, fileExtensionList.size());
     }
-
 }

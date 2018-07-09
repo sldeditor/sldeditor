@@ -24,6 +24,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.NodeInterface;
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.datasource.extension.filesystem.node.FSTree;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.extension.filesystem.file.FileSystemInput;
+import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,33 +41,22 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-
 import org.junit.Test;
-
-import com.sldeditor.common.NodeInterface;
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.data.SLDData;
-import com.sldeditor.datasource.extension.filesystem.node.FSTree;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
-import com.sldeditor.extension.filesystem.file.FileSystemInput;
-import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
 
 /**
  * Unit test for FileSystemInput class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.file.FileSystemInput#FileSystemInput}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.file.FileSystemInput#FileSystemInput}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class FileSystemInputTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.file.FileSystemInput#FileSystemInput(com.sldeditor.common.ToolSelectionInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.FileSystemInput#FileSystemInput(com.sldeditor.common.ToolSelectionInterface)}.
      */
     @Test
     public void testFileSystemInput() {
@@ -93,8 +89,8 @@ public class FileSystemInputTest {
 
             FileTreeNode fileTreeNode = new FileTreeNode(parent, "point_attribute.sld");
 
-            List<SLDDataInterface> sldDataContentsList = input.getSLDContents(fileTreeNode)
-                    .getSldData();
+            List<SLDDataInterface> sldDataContentsList =
+                    input.getSLDContents(fileTreeNode).getSldData();
             assertEquals(1, sldDataContentsList.size());
 
             // Changes where the file is to be saved to
@@ -121,8 +117,8 @@ public class FileSystemInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.file.FileSystemInput#treeExpanded(java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.FileSystemInput#treeExpanded(java.lang.Object)}.
      */
     @Test
     public void testTreeExpanded() {
@@ -130,8 +126,9 @@ public class FileSystemInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.file.FileSystemInput#rightMouseButton(java.lang.Object, java.awt.event.MouseEvent)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.FileSystemInput#rightMouseButton(java.lang.Object,
+     * java.awt.event.MouseEvent)}.
      */
     @Test
     public void testRightMouseButton() {
@@ -139,8 +136,8 @@ public class FileSystemInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.file.FileSystemInput#getNodeTypes()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.FileSystemInput#getNodeTypes()}.
      */
     @Test
     public void testGetNodeTypes() {
@@ -150,8 +147,9 @@ public class FileSystemInputTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.extension.filesystem.file.FileSystemInput#copyNodes(com.sldeditor.common.NodeInterface, java.util.Map)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.FileSystemInput#copyNodes(com.sldeditor.common.NodeInterface,
+     * java.util.Map)}.
      */
     @Test
     public void testCopyNodes() {
@@ -167,8 +165,8 @@ public class FileSystemInputTest {
             Path tempFolder = Files.createTempDirectory(getClass().getSimpleName());
 
             File tempFolderFile = tempFolder.toFile();
-            FileTreeNode destinationTreeNode = new FileTreeNode(tempFolderFile.getParentFile(),
-                    tempFolderFile.getName());
+            FileTreeNode destinationTreeNode =
+                    new FileTreeNode(tempFolderFile.getParentFile(), tempFolderFile.getName());
 
             Map<NodeInterface, List<SLDDataInterface>> copyDataMap =
                     new HashMap<NodeInterface, List<SLDDataInterface>>();
@@ -187,5 +185,4 @@ public class FileSystemInputTest {
             fail(e.getMessage());
         }
     }
-
 }

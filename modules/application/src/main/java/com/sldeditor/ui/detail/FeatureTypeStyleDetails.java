@@ -19,12 +19,6 @@
 
 package com.sldeditor.ui.detail;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.styling.FeatureTypeStyle;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
@@ -33,10 +27,14 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle.VendorOptionFTSFactory;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.styling.FeatureTypeStyle;
+import org.opengis.filter.expression.Expression;
 
 /**
  * Panel that allows the setting and getting of FeatureTypeStyle data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FeatureTypeStyleDetails extends StandardPanel
@@ -48,20 +46,16 @@ public class FeatureTypeStyleDetails extends StandardPanel
     /** The vendor option feature type style factory. */
     private VendorOptionFTSFactory vendorOptionFTSFactory = null;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public FeatureTypeStyleDetails() {
         super(FeatureTypeStyleDetails.class);
 
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
-        
+
         createVendorOptionPanel();
 
         readConfigFile(vendorOptionFTSFactory, getClass(), this, "FeatureTypeStyles.xml");
@@ -91,7 +85,7 @@ public class FeatureTypeStyleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
      * SelectedSymbol)
      */
@@ -103,8 +97,8 @@ public class FeatureTypeStyleDetails extends StandardPanel
             populateStandardData(featureTypeStyle);
 
             if (featureTypeStyle != null) {
-                fieldConfigVisitor.populateField(FieldIdEnum.TRANSFORMATION,
-                        featureTypeStyle.getTransformation());
+                fieldConfigVisitor.populateField(
+                        FieldIdEnum.TRANSFORMATION, featureTypeStyle.getTransformation());
             }
 
             if (vendorOptionFTSFactory != null) {
@@ -120,7 +114,7 @@ public class FeatureTypeStyleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -128,15 +122,13 @@ public class FeatureTypeStyleDetails extends StandardPanel
         updateSymbol();
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
             StandardData standardData = getStandardData();
 
-            Expression transformation = fieldConfigVisitor
-                    .getExpression(FieldIdEnum.TRANSFORMATION);
+            Expression transformation =
+                    fieldConfigVisitor.getExpression(FieldIdEnum.TRANSFORMATION);
 
             FeatureTypeStyle existingFTS = SelectedSymbol.getInstance().getFeatureTypeStyle();
             if (existingFTS != null) {
@@ -145,10 +137,17 @@ public class FeatureTypeStyleDetails extends StandardPanel
                     newRuleList.add(rule);
                 }
 
-                FeatureTypeStyle fts = (FeatureTypeStyle) getStyleFactory().featureTypeStyle(
-                        standardData.name, (org.opengis.style.Description) standardData.description,
-                        existingFTS.getFeatureInstanceIDs(), existingFTS.featureTypeNames(),
-                        existingFTS.semanticTypeIdentifiers(), newRuleList);
+                FeatureTypeStyle fts =
+                        (FeatureTypeStyle)
+                                getStyleFactory()
+                                        .featureTypeStyle(
+                                                standardData.name,
+                                                (org.opengis.style.Description)
+                                                        standardData.description,
+                                                existingFTS.getFeatureInstanceIDs(),
+                                                existingFTS.featureTypeNames(),
+                                                existingFTS.semanticTypeIdentifiers(),
+                                                newRuleList);
 
                 if (transformation != null) {
                     fts.setTransformation(transformation);
@@ -172,7 +171,7 @@ public class FeatureTypeStyleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -187,7 +186,7 @@ public class FeatureTypeStyleDetails extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -197,7 +196,7 @@ public class FeatureTypeStyleDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -207,13 +206,13 @@ public class FeatureTypeStyleDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
      * java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         vendorOptionFTSFactory.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
     }
 }

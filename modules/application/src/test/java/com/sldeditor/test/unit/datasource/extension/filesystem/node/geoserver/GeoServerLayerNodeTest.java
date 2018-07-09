@@ -22,25 +22,25 @@ package com.sldeditor.test.unit.datasource.extension.filesystem.node.geoserver;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Test;
-
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerNode;
+import org.junit.Test;
 
 /**
  * Unit test for GeoServerLayerNode class.
- * 
- * <p>{@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerNode}
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerNode}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class GeoServerLayerNodeTest {
 
-
     /**
-     * Test method for {@link com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerNode#GeoServerLayerNode(com.sldeditor.common.filesystem.FileSystemInterface, com.sldeditor.common.data.GeoServerLayer)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLayerNode#GeoServerLayerNode(com.sldeditor.common.filesystem.FileSystemInterface,
+     * com.sldeditor.common.data.GeoServerLayer)}.
      */
     @Test
     public void testGeoServerLayerNode() {
@@ -51,7 +51,7 @@ public class GeoServerLayerNodeTest {
         layer.setLayerName(expectedLayerName);
 
         GeoServerLayerNode node = new GeoServerLayerNode(fileHandler, layer);
-        
+
         assertEquals(layer, node.getLayer());
         assertEquals(fileHandler, node.getHandler());
         assertEquals(BuiltInDataFlavour.GEOSERVER_LAYER_DATAITEM_FLAVOUR, node.getDataFlavour());

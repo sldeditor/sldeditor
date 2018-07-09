@@ -18,7 +18,7 @@
  */
 /**
  * Package containing the application extensions.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.extension;

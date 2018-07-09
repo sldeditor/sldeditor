@@ -19,7 +19,7 @@
 
 /**
  * Tool to update GeoServer layer style.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.tool.layerstyle;

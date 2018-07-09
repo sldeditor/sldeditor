@@ -23,7 +23,7 @@ import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The Interface NewSLDInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface NewSLDInterface {
@@ -41,5 +41,4 @@ public interface NewSLDInterface {
      * @return the styled layer descriptor
      */
     StyledLayerDescriptor create();
-
 }

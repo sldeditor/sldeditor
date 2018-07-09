@@ -22,17 +22,16 @@ package com.sldeditor.test.unit.ui.tree;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.junit.Test;
 
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
-import com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState;
-
 /**
  * The unit test for SLDTreeSymbolizerButtonState.
- * 
+ *
  * <p>{@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState}
  *
  * @author Robert Ward (SCISYS)
@@ -40,14 +39,23 @@ import com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState;
 public class SLDTreeSymbolizerButtonStateTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isMarkerVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isLineVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isPolygonVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isRasterVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isTextVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlineLineVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlinePolygonVisible(java.lang.Object, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isMarkerVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isLineVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isPolygonVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isRasterVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isTextVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlineLineVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlinePolygonVisible(java.lang.Object,
+     * java.lang.Object)}.
      */
     @Test
     public void testMarker() {
@@ -69,14 +77,23 @@ public class SLDTreeSymbolizerButtonStateTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isMarkerVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isLineVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isPolygonVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isRasterVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isTextVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlineLineVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlinePolygonVisible(java.lang.Object, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isMarkerVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isLineVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isPolygonVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isRasterVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isTextVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlineLineVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlinePolygonVisible(java.lang.Object,
+     * java.lang.Object)}.
      */
     @Test
     public void testLine() {
@@ -98,14 +115,23 @@ public class SLDTreeSymbolizerButtonStateTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isMarkerVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isLineVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isPolygonVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isRasterVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isTextVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlineLineVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlinePolygonVisible(java.lang.Object, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isMarkerVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isLineVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isPolygonVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isRasterVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isTextVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlineLineVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlinePolygonVisible(java.lang.Object,
+     * java.lang.Object)}.
      */
     @Test
     public void testPolygon() {
@@ -127,14 +153,23 @@ public class SLDTreeSymbolizerButtonStateTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isMarkerVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isLineVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isPolygonVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isRasterVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isTextVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlineLineVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlinePolygonVisible(java.lang.Object, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isMarkerVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isLineVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isPolygonVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isRasterVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isTextVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlineLineVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlinePolygonVisible(java.lang.Object,
+     * java.lang.Object)}.
      */
     @Test
     public void testRaster() {
@@ -168,14 +203,22 @@ public class SLDTreeSymbolizerButtonStateTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#showSymbolizerButtons()}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isMarkerVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isLineVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isPolygonVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isRasterVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isTextVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlineLineVisible(java.lang.Object, java.lang.Object)}.
-     * Test method for {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlinePolygonVisible(java.lang.Object, java.lang.Object)}.
+     * Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#showSymbolizerButtons()}. Test method for
+     * {@link com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isMarkerVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isLineVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isPolygonVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isRasterVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isTextVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlineLineVisible(java.lang.Object,
+     * java.lang.Object)}. Test method for {@link
+     * com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState#isImageOutlinePolygonVisible(java.lang.Object,
+     * java.lang.Object)}.
      */
     @Test
     public void testDefaultState() {

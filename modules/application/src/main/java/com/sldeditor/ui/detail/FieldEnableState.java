@@ -1,15 +1,13 @@
-
 package com.sldeditor.ui.detail;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * The Class FieldEnableState, stores the configuration for enabled fields/groups
- *  only when a symbol type menu option is selected.
+ * The Class FieldEnableState, stores the configuration for enabled fields/groups only when a symbol
+ * type menu option is selected.
  */
 public class FieldEnableState {
 
@@ -29,12 +27,15 @@ public class FieldEnableState {
      * @param fieldList the field list
      * @param groupList the group list
      */
-    public void add(String panelName, String menuOption, Map<FieldIdEnum, Boolean> fieldList,
+    public void add(
+            String panelName,
+            String menuOption,
+            Map<FieldIdEnum, Boolean> fieldList,
             Map<GroupIdEnum, Boolean> groupList) {
 
         // Add field id
-        Map<String, Map<FieldIdEnum, Boolean>> menuOptionFieldMap = enabledFieldStateMap
-                .get(panelName);
+        Map<String, Map<FieldIdEnum, Boolean>> menuOptionFieldMap =
+                enabledFieldStateMap.get(panelName);
 
         if (menuOptionFieldMap == null) {
             menuOptionFieldMap = new HashMap<String, Map<FieldIdEnum, Boolean>>();
@@ -44,8 +45,8 @@ public class FieldEnableState {
         menuOptionFieldMap.put(menuOption, fieldList);
 
         // Add group id
-        Map<String, Map<GroupIdEnum, Boolean>> menuOptionGroupMap = enabledGroupStateMap
-                .get(panelName);
+        Map<String, Map<GroupIdEnum, Boolean>> menuOptionGroupMap =
+                enabledGroupStateMap.get(panelName);
         if (menuOptionGroupMap == null) {
             menuOptionGroupMap = new HashMap<String, Map<GroupIdEnum, Boolean>>();
             enabledGroupStateMap.put(panelName, menuOptionGroupMap);

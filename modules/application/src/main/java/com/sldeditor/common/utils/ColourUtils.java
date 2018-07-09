@@ -23,13 +23,12 @@ import java.awt.Color;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.geotools.styling.SLD;
 import org.opengis.filter.expression.Expression;
 
 /**
  * Methods to convert from #rrggbb colours to Java Color objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ColourUtils {
@@ -45,7 +44,7 @@ public class ColourUtils {
 
     /**
      * Create a #rrggbb string From colour.
-     * 
+     *
      * <p>Returns null if colour is null.
      *
      * @param colour the colour
@@ -76,9 +75,9 @@ public class ColourUtils {
     }
 
     /**
-     * Gets the colour as an int value, i.e remove '#' symbol and convert 
-     * the remaining hex values as a decimal.
-     * 
+     * Gets the colour as an int value, i.e remove '#' symbol and convert the remaining hex values
+     * as a decimal.
+     *
      * <p>Returns 0 if colourExpression is null.
      *
      * @param colourExpression the colour expression
@@ -123,9 +122,12 @@ public class ColourUtils {
      */
     public static Color getTextColour(Color colour) {
         // Counting the perceptive luminance - human eye favours green colour...
-        double a = 1.0
-                - (0.299 * colour.getRed() + 0.587 * colour.getGreen() + 0.114 * colour.getBlue())
-                        / 255.0;
+        double a =
+                1.0
+                        - (0.299 * colour.getRed()
+                                        + 0.587 * colour.getGreen()
+                                        + 0.114 * colour.getBlue())
+                                / 255.0;
 
         if (a < 0.5) {
             return Color.black;

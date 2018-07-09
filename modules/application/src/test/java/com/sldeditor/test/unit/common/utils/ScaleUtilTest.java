@@ -23,27 +23,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.utils.ScaleUtil;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-
 import org.geotools.styling.Rule;
 import org.junit.Test;
 
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.utils.ScaleUtil;
-
 /**
  * Unit test for ScaleUtil class.
- * 
+ *
  * <p>{@link com.sldeditor.common.utils.ScaleUtil}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ScaleUtilTest {
 
-    /**
-     * Test method for {@link com.sldeditor.common.utils.ScaleUtil#getValue(double)}.
-     */
+    /** Test method for {@link com.sldeditor.common.utils.ScaleUtil#getValue(double)}. */
     @Test
     public void testGetValue() {
         assertEquals("", ScaleUtil.getValue(0.0));
@@ -52,7 +48,6 @@ public class ScaleUtilTest {
         assertEquals("1:500", ScaleUtil.getValue(500.0));
 
         assertEquals(getExpectedValue("1:123,456,789"), ScaleUtil.getValue(123456789.0));
-
     }
 
     /**
@@ -69,9 +64,7 @@ public class ScaleUtilTest {
         return expectedValue.replace(',', sep);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.utils.ScaleUtil#isNotSet(double)}.
-     */
+    /** Test method for {@link com.sldeditor.common.utils.ScaleUtil#isNotSet(double)}. */
     @Test
     public void testIsNotSet() {
         assertTrue(ScaleUtil.isNotSet(0.0));
@@ -82,7 +75,8 @@ public class ScaleUtilTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.utils.ScaleUtil#isPresent(org.opengis.style.Rule)}.
+     * Test method for {@link
+     * com.sldeditor.common.utils.ScaleUtil#isPresent(org.opengis.style.Rule)}.
      */
     @Test
     public void testIsPresent() {
@@ -116,5 +110,4 @@ public class ScaleUtilTest {
         assertTrue(Math.abs(ScaleUtil.extractValue("12,345,678") - 12345678.0) < 0.001);
         assertTrue(Math.abs(ScaleUtil.extractValue("0") - 0.0) < 0.001);
     }
-
 }

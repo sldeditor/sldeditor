@@ -20,7 +20,6 @@
 package com.sldeditor.ui.widgets;
 
 import java.awt.Component;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -36,17 +35,14 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Instantiates a new combo box renderer.
-     */
+    /** Instantiates a new combo box renderer. */
     public ComboBoxRenderer() {
         setOpaque(true);
     }
 
     /**
-     * Gets the list cell renderer component.
-     * This method finds the image and text corresponding to the selected value and 
-     * returns the label, set up to display the text and image.
+     * Gets the list cell renderer component. This method finds the image and text corresponding to
+     * the selected value and returns the label, set up to display the text and image.
      *
      * @param list the list
      * @param value the value
@@ -55,8 +51,8 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer {
      * @param cellHasFocus the cell has focus
      * @return the list cell renderer component
      */
-    public Component getListCellRendererComponent(JList list, Object value, int index,
-            boolean isSelected, boolean cellHasFocus) {
+    public Component getListCellRendererComponent(
+            JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
         if (isSelected) {
             setBackground(list.getSelectionBackground());

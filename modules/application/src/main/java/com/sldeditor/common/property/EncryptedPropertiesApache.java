@@ -26,7 +26,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Properties;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -34,12 +33,11 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEParameterSpec;
-
 import org.apache.commons.codec.binary.Base64;
 
 /**
  * Class that encrypts/decrypts strings using org.apache.commons.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class EncryptedPropertiesApache extends Properties implements EncryptedPropertiesInterface {
@@ -54,15 +52,11 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
     private Cipher decrypter = null;
 
     /** The salt. */
-    private static byte[] salt = { (byte) 0x03, 0x0F, 0x12, 0x0D, 0x03, 0x0F, 0x12, 0x0D };
+    private static byte[] salt = {(byte) 0x03, 0x0F, 0x12, 0x0D, 0x03, 0x0F, 0x12, 0x0D};
 
-    /**
-     * Instantiates a new encrypted properties.
-     */
-    public EncryptedPropertiesApache() {
-        
-    }
-    
+    /** Instantiates a new encrypted properties. */
+    public EncryptedPropertiesApache() {}
+
     /* (non-Javadoc)
      * @see com.sldeditor.common.property.EncryptedPropertiesInterface#initialise(java.lang.String)
      */
@@ -72,8 +66,8 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
         SecretKeyFactory kf;
         try {
             kf = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
-            SecretKey k = kf
-                    .generateSecret(new javax.crypto.spec.PBEKeySpec(password.toCharArray()));
+            SecretKey k =
+                    kf.generateSecret(new javax.crypto.spec.PBEKeySpec(password.toCharArray()));
             encrypter = Cipher.getInstance("PBEWithMD5AndDES/CBC/PKCS5Padding");
             decrypter = Cipher.getInstance("PBEWithMD5AndDES/CBC/PKCS5Padding");
             encrypter.init(Cipher.ENCRYPT_MODE, k, ps);

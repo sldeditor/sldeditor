@@ -23,6 +23,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.watcher.FileSystemWatcher;
+import com.sldeditor.common.watcher.FileWatcherUpdateInterface;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,26 +32,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.sldeditor.common.watcher.FileSystemWatcher;
-import com.sldeditor.common.watcher.FileWatcherUpdateInterface;
-
 /**
  * Unit test for FileSystemWatcher.
- * 
- * <p>{@link com.sldeditor.common.watcher.FileSystemWatcher}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.common.watcher.FileSystemWatcher}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class FileSystemWatcherTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.watcher.FileSystemWatcher#addWatch(com.sldeditor.common.watcher.FileWatcherUpdateInterface, java.io.File)}.
+     * Test method for {@link
+     * com.sldeditor.common.watcher.FileSystemWatcher#addWatch(com.sldeditor.common.watcher.FileWatcherUpdateInterface,
+     * java.io.File)}.
      */
     @Test
     @Ignore
@@ -66,27 +64,30 @@ public class FileSystemWatcherTest {
 
         List<String> resultList = new ArrayList<String>();
 
-        FileSystemWatcher.getInstance().addWatch(new FileWatcherUpdateInterface() {
+        FileSystemWatcher.getInstance()
+                .addWatch(
+                        new FileWatcherUpdateInterface() {
 
-            @Override
-            public void fileAdded(Path f) {
-                String message = "Added " + f.toString();
-                resultList.add(message);
-                System.out.println(message);
-            }
+                            @Override
+                            public void fileAdded(Path f) {
+                                String message = "Added " + f.toString();
+                                resultList.add(message);
+                                System.out.println(message);
+                            }
 
-            @Override
-            public void fileModified(Path f) {
-                // Ignore
-            }
+                            @Override
+                            public void fileModified(Path f) {
+                                // Ignore
+                            }
 
-            @Override
-            public void fileDeleted(Path f) {
-                String message = "Del " + f.toString();
-                resultList.add(message);
-                System.out.println(message);
-            }
-        }, tempFolder);
+                            @Override
+                            public void fileDeleted(Path f) {
+                                String message = "Del " + f.toString();
+                                resultList.add(message);
+                                System.out.println(message);
+                            }
+                        },
+                        tempFolder);
 
         File tmpFile = null;
         try {
@@ -132,5 +133,4 @@ public class FileSystemWatcherTest {
         assertEquals("Added " + resultingTempFilename, resultList.get(0));
         assertEquals("Del " + resultingTempFilename, resultList.get(resultList.size() - 1));
     }
-
 }

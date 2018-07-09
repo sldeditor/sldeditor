@@ -19,20 +19,12 @@
 
 package com.sldeditor.extension.filesystem.geoserver.client;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgressInterface;
-
 import it.geosolutions.geoserver.rest.GeoServerRESTManager;
 import it.geosolutions.geoserver.rest.GeoServerRESTPublisher;
 import it.geosolutions.geoserver.rest.GeoServerRESTReader;
@@ -41,11 +33,17 @@ import it.geosolutions.geoserver.rest.decoder.RESTLayerList;
 import it.geosolutions.geoserver.rest.decoder.RESTStyleList;
 import it.geosolutions.geoserver.rest.decoder.utils.NameLinkElem;
 import it.geosolutions.geoserver.rest.encoder.GSLayerEncoder;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
- * Class that manages the connection to a GeoServer instance.
- * Retrieves style and layer data from and uploads new styles.
- * 
+ * Class that manages the connection to a GeoServer instance. Retrieves style and layer data from
+ * and uploads new styles.
+ *
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerClient implements Serializable, GeoServerClientInterface {
@@ -67,11 +65,8 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
     /** The connected flag. */
     private boolean connected = false;
 
-    /**
-     * Default constructor.
-     */
-    public GeoServerClient() {
-    }
+    /** Default constructor. */
+    public GeoServerClient() {}
 
     /**
      * Initialise a new GeoServer client.
@@ -85,9 +80,7 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
         GeoServerLayer.setDefaultWorkspaceName(DEFAULT_WORKSPACE_NAME);
     }
 
-    /**
-     * Retrieve data from GeoServer.
-     */
+    /** Retrieve data from GeoServer. */
     @Override
     public void retrieveData() {
         GeoServerRESTManager manager = GeoServerRESTManagerFactory.getManager(connection);
@@ -114,29 +107,33 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
      * @param workspaceList the workspace list
      */
     private void parseStyleList(GeoServerRESTReader reader, List<String> workspaceList) {
-        Thread t1 = new Thread(new Runnable() {
-            public void run() {
+        Thread t1 =
+                new Thread(
+                        new Runnable() {
+                            public void run() {
 
-                Map<String, List<StyleWrapper>> styleMap =
-                        new LinkedHashMap<String, List<StyleWrapper>>();
+                                Map<String, List<StyleWrapper>> styleMap =
+                                        new LinkedHashMap<String, List<StyleWrapper>>();
 
-                int count = 1;
-                List<StyleWrapper> styleList = new ArrayList<StyleWrapper>();
+                                int count = 1;
+                                List<StyleWrapper> styleList = new ArrayList<StyleWrapper>();
 
-                count = parseStyleInDefaultWorkspace(reader, count, styleList);
+                                count = parseStyleInDefaultWorkspace(reader, count, styleList);
 
-                styleMap.put(DEFAULT_WORKSPACE_NAME, styleList);
+                                styleMap.put(DEFAULT_WORKSPACE_NAME, styleList);
 
-                // Read styles from workspaces
-                for (String workspaceName : workspaceList) {
-                    count = parseStyleInWorkspace(reader, styleMap, count, workspaceName);
-                }
+                                // Read styles from workspaces
+                                for (String workspaceName : workspaceList) {
+                                    count =
+                                            parseStyleInWorkspace(
+                                                    reader, styleMap, count, workspaceName);
+                                }
 
-                if (parentObj != null) {
-                    parentObj.readStylesComplete(connection, styleMap, false);
-                }
-            }
-        });
+                                if (parentObj != null) {
+                                    parentObj.readStylesComplete(connection, styleMap, false);
+                                }
+                            }
+                        });
         t1.start();
     }
 
@@ -147,77 +144,82 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
      * @param existingWorkspaceList the existing workspace list
      * @param workspaceName the workspace name
      */
-    private void parseLayerList(GeoServerRESTReader reader, List<String> existingWorkspaceList,
-            String workspaceName) {
-        Thread t1 = new Thread(new Runnable() {
-            public void run() {
-                List<String> workspaceList = null;
+    private void parseLayerList(
+            GeoServerRESTReader reader, List<String> existingWorkspaceList, String workspaceName) {
+        Thread t1 =
+                new Thread(
+                        new Runnable() {
+                            public void run() {
+                                List<String> workspaceList = null;
 
-                if (workspaceName == null) {
-                    workspaceList = existingWorkspaceList;
-                    workspaceList.add(null); // Add the default workspace last
-                }
-
-                Map<String, List<GeoServerLayer>> layerMap = 
-                        new LinkedHashMap<String, List<GeoServerLayer>>();
-                RESTLayerList layers = reader.getLayers();
-
-                int count = 1;
-                int total = layers.size();
-
-                for (NameLinkElem featureTypeName : layers) {
-                    @SuppressWarnings("deprecation")
-                    RESTLayer layer = reader.getLayer(featureTypeName.getName());
-
-                    if (layer != null) {
-                        String layerName = layer.getName();
-                        String workspace = null;
-                        for (String workspaceNameToTest : workspaceList) {
-                            if (reader.existsLayer(workspaceNameToTest, layerName, true)) {
-                                if (workspaceNameToTest == null) {
-                                    workspace = DEFAULT_WORKSPACE_NAME;
-                                } else {
-                                    workspace = workspaceNameToTest;
+                                if (workspaceName == null) {
+                                    workspaceList = existingWorkspaceList;
+                                    workspaceList.add(null); // Add the default workspace last
                                 }
 
-                                break;
+                                Map<String, List<GeoServerLayer>> layerMap =
+                                        new LinkedHashMap<String, List<GeoServerLayer>>();
+                                RESTLayerList layers = reader.getLayers();
+
+                                int count = 1;
+                                int total = layers.size();
+
+                                for (NameLinkElem featureTypeName : layers) {
+                                    @SuppressWarnings("deprecation")
+                                    RESTLayer layer = reader.getLayer(featureTypeName.getName());
+
+                                    if (layer != null) {
+                                        String layerName = layer.getName();
+                                        String workspace = null;
+                                        for (String workspaceNameToTest : workspaceList) {
+                                            if (reader.existsLayer(
+                                                    workspaceNameToTest, layerName, true)) {
+                                                if (workspaceNameToTest == null) {
+                                                    workspace = DEFAULT_WORKSPACE_NAME;
+                                                } else {
+                                                    workspace = workspaceNameToTest;
+                                                }
+
+                                                break;
+                                            }
+                                        }
+                                        GeoServerLayer geoServerlayer = new GeoServerLayer();
+                                        geoServerlayer.setLayerWorkspace(workspace);
+                                        geoServerlayer.setLayerName(layerName);
+                                        geoServerlayer.setConnection(connection);
+
+                                        StyleWrapper styleWrapper = new StyleWrapper();
+                                        styleWrapper.setStyle(layer.getDefaultStyle());
+
+                                        String styleWorkspace = layer.getDefaultStyleWorkspace();
+                                        styleWrapper.setWorkspace(
+                                                (styleWorkspace == null)
+                                                        ? DEFAULT_WORKSPACE_NAME
+                                                        : styleWorkspace);
+
+                                        geoServerlayer.setStyle(styleWrapper);
+
+                                        List<GeoServerLayer> layerList = layerMap.get(workspace);
+
+                                        if (layerList == null) {
+                                            layerList = new ArrayList<GeoServerLayer>();
+                                            layerMap.put(workspace, layerList);
+                                        }
+                                        layerList.add(geoServerlayer);
+
+                                        if (parentObj != null) {
+                                            parentObj.readLayersProgress(connection, count, total);
+                                        }
+                                    }
+
+                                    count++;
+                                }
+
+                                if (parentObj != null) {
+                                    parentObj.readLayersComplete(connection, layerMap);
+                                }
                             }
-                        }
-                        GeoServerLayer geoServerlayer = new GeoServerLayer();
-                        geoServerlayer.setLayerWorkspace(workspace);
-                        geoServerlayer.setLayerName(layerName);
-                        geoServerlayer.setConnection(connection);
-
-                        StyleWrapper styleWrapper = new StyleWrapper();
-                        styleWrapper.setStyle(layer.getDefaultStyle());
-
-                        String styleWorkspace = layer.getDefaultStyleWorkspace();
-                        styleWrapper.setWorkspace(
-                                (styleWorkspace == null) ? DEFAULT_WORKSPACE_NAME : styleWorkspace);
-
-                        geoServerlayer.setStyle(styleWrapper);
-
-                        List<GeoServerLayer> layerList = layerMap.get(workspace);
-
-                        if (layerList == null) {
-                            layerList = new ArrayList<GeoServerLayer>();
-                            layerMap.put(workspace, layerList);
-                        }
-                        layerList.add(geoServerlayer);
-
-                        if (parentObj != null) {
-                            parentObj.readLayersProgress(connection, count, total);
-                        }
-                    }
-
-                    count++;
-                }
-
-                if (parentObj != null) {
-                    parentObj.readLayersComplete(connection, layerMap);
-                }
-            }
-        });
+                        });
         t1.start();
     }
 
@@ -282,9 +284,7 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
         return connected;
     }
 
-    /**
-     * Disconnect.
-     */
+    /** Disconnect. */
     @Override
     public void disconnect() {
         GeoServerRESTManagerFactory.deleteConnection(connection);
@@ -328,10 +328,13 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
                         if (!reader.existsWorkspace(workspaceName)) {
                             if (!publisher.createWorkspace(workspaceName)) {
 
-                                ConsoleManager.getInstance().error(this,
-                                        Localisation.getField(GeoServerClient.class,
-                                                "GeoServerClient.failedToCreateWorkspace")
-                                                + workspaceName);
+                                ConsoleManager.getInstance()
+                                        .error(
+                                                this,
+                                                Localisation.getField(
+                                                                GeoServerClient.class,
+                                                                "GeoServerClient.failedToCreateWorkspace")
+                                                        + workspaceName);
                                 return false;
                             }
                         }
@@ -344,11 +347,16 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
         }
 
         if (result) {
-            ConsoleManager.getInstance().information(this,
-                    String.format("%s : %s %s/%s",
-                            Localisation.getString(GeoServerClient.class,
-                                    "GeoServerClient.styleUploaded"),
-                            connection.getConnectionName(), workspaceName, styleName));
+            ConsoleManager.getInstance()
+                    .information(
+                            this,
+                            String.format(
+                                    "%s : %s %s/%s",
+                                    Localisation.getString(
+                                            GeoServerClient.class, "GeoServerClient.styleUploaded"),
+                                    connection.getConnectionName(),
+                                    workspaceName,
+                                    styleName));
         }
         return result;
     }
@@ -418,8 +426,9 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
                 defaultStyle = updatedStyle.getWorkspace() + ":" + updatedStyle.getStyle();
             }
             layerEncoder.setDefaultStyle(defaultStyle);
-            ok = publisher.configureLayer(layer.getLayerWorkspace(), layer.getLayerName(),
-                    layerEncoder);
+            ok =
+                    publisher.configureLayer(
+                            layer.getLayerWorkspace(), layer.getLayerName(), layerEncoder);
         }
 
         return ok;
@@ -469,8 +478,9 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
             if (isDefaultWorkspace(styleToDelete.getWorkspace())) {
                 result = publisher.removeStyle(styleToDelete.getStyle());
             } else {
-                result = publisher.removeStyleInWorkspace(styleToDelete.getWorkspace(),
-                        styleToDelete.getStyle());
+                result =
+                        publisher.removeStyleInWorkspace(
+                                styleToDelete.getWorkspace(), styleToDelete.getStyle());
             }
         }
 
@@ -515,8 +525,8 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
      * @param styleList the style list
      * @return the int
      */
-    private int parseStyleInDefaultWorkspace(GeoServerRESTReader reader, int count,
-            List<StyleWrapper> styleList) {
+    private int parseStyleInDefaultWorkspace(
+            GeoServerRESTReader reader, int count, List<StyleWrapper> styleList) {
         // Read styles not in a workspace
         RESTStyleList geoServerStyleList = reader.getStyles();
 
@@ -541,8 +551,11 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
      * @param workspaceName the workspace name
      * @return the int
      */
-    private int parseStyleInWorkspace(GeoServerRESTReader reader,
-            Map<String, List<StyleWrapper>> styleMap, int count, String workspaceName) {
+    private int parseStyleInWorkspace(
+            GeoServerRESTReader reader,
+            Map<String, List<StyleWrapper>> styleMap,
+            int count,
+            String workspaceName) {
         List<StyleWrapper> styleList;
         if (workspaceName != null) {
             RESTStyleList geoServerWorkspaceStyleList = reader.getStyles(workspaceName);
@@ -616,8 +629,12 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
 
         if (publisher != null) {
             if (isDefaultWorkspace(workspaceName)) {
-                ConsoleManager.getInstance().error(this, Localisation.getString(
-                        GeoServerClient.class, "GeoServerClient.cannotDeleteDefaultWorkspace"));
+                ConsoleManager.getInstance()
+                        .error(
+                                this,
+                                Localisation.getString(
+                                        GeoServerClient.class,
+                                        "GeoServerClient.cannotDeleteDefaultWorkspace"));
             } else {
                 result = publisher.removeWorkspace(workspaceName, false);
             }

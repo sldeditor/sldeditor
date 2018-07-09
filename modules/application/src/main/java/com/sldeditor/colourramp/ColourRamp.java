@@ -19,23 +19,20 @@
 
 package com.sldeditor.colourramp;
 
+import com.sldeditor.colourramp.ramp.ColourRampData;
+import com.sldeditor.common.utils.ColourUtils;
+import com.sldeditor.ui.detail.BasePanel;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
-
-import com.sldeditor.colourramp.ramp.ColourRampData;
-import com.sldeditor.common.utils.ColourUtils;
-import com.sldeditor.ui.detail.BasePanel;
 
 /**
  * The Class ColourRamp.
@@ -68,11 +65,8 @@ public class ColourRamp {
     /** The gradient image. */
     private BufferedImage gradientImage = null;
 
-    /**
-     * Instantiates a new colour ramp.
-     */
-    public ColourRamp() {
-    }
+    /** Instantiates a new colour ramp. */
+    public ColourRamp() {}
 
     /**
      * Adds the colour.
@@ -152,9 +146,14 @@ public class ColourRamp {
     private BufferedImage createImage(int width, boolean reverseColours) {
         BufferedImage image = new BufferedImage(width, IMAGE_HEIGHT, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = image.createGraphics();
-        GradientPaint gradient = new GradientPaint(0, 0,
-                reverseColours ? getEndColour() : getStartColour(), width, 0,
-                reverseColours ? getStartColour() : getEndColour());
+        GradientPaint gradient =
+                new GradientPaint(
+                        0,
+                        0,
+                        reverseColours ? getEndColour() : getStartColour(),
+                        width,
+                        0,
+                        reverseColours ? getStartColour() : getEndColour());
         g2.setPaint(gradient);
         g2.fillRect(0, 0, width, IMAGE_HEIGHT);
 
@@ -169,8 +168,8 @@ public class ColourRamp {
      * @param reverseColours the reverse colours
      * @return the colour
      */
-    public Expression getColour(ColourRampData data, Expression quantityExpression,
-            boolean reverseColours) {
+    public Expression getColour(
+            ColourRampData data, Expression quantityExpression, boolean reverseColours) {
 
         Expression expression = null;
         if (quantityExpression instanceof LiteralExpressionImpl) {
@@ -179,7 +178,8 @@ public class ColourRamp {
             int tmpRange = Math.abs(data.getMaxValue() - data.getMinValue());
 
             // Check to see if we have set up the gradient yet
-            if ((range != tmpRange) || (lastMinValue != data.getMinValue())
+            if ((range != tmpRange)
+                    || (lastMinValue != data.getMinValue())
                     || (lastReverseColoursFlag != reverseColours)) {
                 range = tmpRange;
                 lastMinValue = data.getMinValue();

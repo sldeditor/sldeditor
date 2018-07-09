@@ -19,7 +19,7 @@
 
 /**
  * Package to handle the undo/redo framework.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.undo;

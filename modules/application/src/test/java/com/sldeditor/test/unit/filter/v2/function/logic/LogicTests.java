@@ -25,51 +25,41 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.filter.v2.function.FilterConfigInterface;
+import com.sldeditor.filter.v2.function.logic.And;
+import com.sldeditor.filter.v2.function.logic.Not;
+import com.sldeditor.filter.v2.function.logic.Or;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
 import org.junit.Test;
 import org.opengis.filter.Filter;
 
-import com.sldeditor.filter.v2.function.FilterConfigInterface;
-import com.sldeditor.filter.v2.function.logic.And;
-import com.sldeditor.filter.v2.function.logic.Not;
-import com.sldeditor.filter.v2.function.logic.Or;
-
 /**
- * Unit test for the following classes: {@link com.sldeditor.filter.v2.function.logic.And}
- * {@link com.sldeditor.filter.v2.function.logic.Or}
- * {@link com.sldeditor.filter.v2.function.logic.Not}
- * 
- * @author Robert Ward (SCISYS)
+ * Unit test for the following classes: {@link com.sldeditor.filter.v2.function.logic.And} {@link
+ * com.sldeditor.filter.v2.function.logic.Or} {@link com.sldeditor.filter.v2.function.logic.Not}
  *
+ * @author Robert Ward (SCISYS)
  */
 public class LogicTests {
 
     private String category = "Test category";
-    
-    /**
-     * {@link com.sldeditor.filter.v2.function.logic.And}.
-     */
+
+    /** {@link com.sldeditor.filter.v2.function.logic.And}. */
     @Test
     public void testAnd() {
         testClass(new And(category), 2);
     }
 
-    /**
-     * {@link com.sldeditor.filter.v2.function.logic.Or}.
-     */
+    /** {@link com.sldeditor.filter.v2.function.logic.Or}. */
     @Test
     public void testOr() {
         testClass(new Or(category), 2);
     }
 
-    /**
-     * {@link com.sldeditor.filter.v2.function.logic.Not}.
-     */
+    /** {@link com.sldeditor.filter.v2.function.logic.Not}. */
     @Test
     public void testNot() {
         testClass(new Not(category), 1);

@@ -18,8 +18,7 @@
  */
 /**
  * Package to support the configuration of filters, expressions and functions.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.filter.v2;

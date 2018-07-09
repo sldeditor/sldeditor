@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * The Interface VendorOptionUpdateInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface VendorOptionUpdateInterface {

@@ -19,26 +19,21 @@
 
 package com.sldeditor.test.unit.render;
 
+import com.sldeditor.render.RendererErrors;
 import java.io.FileNotFoundException;
-
 import org.geotools.renderer.RenderListener;
 import org.junit.Test;
 
-import com.sldeditor.render.RendererErrors;
-
 /**
  * Unit test for RendererErrors class.
- * 
- * <p>{@link com.sldeditor.render.RendererErrors}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.render.RendererErrors}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class RendererErrorsTest {
 
-    /**
-     * Test method for {@link com.sldeditor.render.RendererErrors#RendererErrors(boolean)}.
-     */
+    /** Test method for {@link com.sldeditor.render.RendererErrors#RendererErrors(boolean)}. */
     @Test
     public void testRendererErrors() {
         RenderListener instance1 = RendererErrors.getInstance();
@@ -46,7 +41,7 @@ public class RendererErrorsTest {
         String exceptionMessage1 = "test exception";
 
         Exception e = new FileNotFoundException(exceptionMessage1);
-        
+
         instance1.errorOccurred(null);
         instance1.errorOccurred(e);
         instance2.errorOccurred(e);

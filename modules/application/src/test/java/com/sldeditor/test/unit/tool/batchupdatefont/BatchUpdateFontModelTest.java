@@ -24,12 +24,20 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.output.SLDWriterInterface;
+import com.sldeditor.common.output.impl.SLDWriterFactory;
+import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.tool.batchupdatefont.BatchUpdateFontData;
+import com.sldeditor.tool.batchupdatefont.BatchUpdateFontModel;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JTable;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Font;
@@ -42,20 +50,9 @@ import org.geotools.styling.TextSymbolizer;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 
-import com.sldeditor.common.data.SLDData;
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.common.data.StyleWrapper;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.output.SLDWriterInterface;
-import com.sldeditor.common.output.impl.SLDWriterFactory;
-import com.sldeditor.datasource.SLDEditorFile;
-import com.sldeditor.tool.batchupdatefont.BatchUpdateFontData;
-import com.sldeditor.tool.batchupdatefont.BatchUpdateFontModel;
-
 /**
  * The unit test for BatchUpdateFontData.
- * 
+ *
  * <p>{@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontModel}
  *
  * @author Robert Ward (SCISYS)
@@ -63,7 +60,8 @@ import com.sldeditor.tool.batchupdatefont.BatchUpdateFontModel;
 public class BatchUpdateFontModelTest {
 
     /**
-     * Test method for {@link com.sldeditor.tool.batchupdatefont.BatchUpdateFontModel#loadData(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.tool.batchupdatefont.BatchUpdateFontModel#loadData(java.util.List)}.
      */
     @Test
     public void testLoadData() {
@@ -91,10 +89,14 @@ public class BatchUpdateFontModelTest {
         rule.symbolizers().add(symbolizer);
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
         FilterFactory ff = CommonFactoryFinder.getFilterFactory();
-        Font font = styleFactory.createFont(ff.literal("abc"), ff.literal("normal"),
-                ff.literal("normal"), ff.literal(10));
+        Font font =
+                styleFactory.createFont(
+                        ff.literal("abc"),
+                        ff.literal("normal"),
+                        ff.literal("normal"),
+                        ff.literal(10));
         symbolizer.setFont(font);
-        
+
         SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
         String sldContents = sldWriter.encodeSLD(null, sld);
 
@@ -129,7 +131,7 @@ public class BatchUpdateFontModelTest {
         assertFalse(model.anyChanges());
         assertFalse(model.saveData(null));
 
-        List<Font> actualFontlist = model.getFontEntries(new int[] { 0 });
+        List<Font> actualFontlist = model.getFontEntries(new int[] {0});
         assertEquals(1, actualFontlist.size());
         assertEquals(1, model.getRowCount());
 
@@ -138,9 +140,13 @@ public class BatchUpdateFontModelTest {
         String originalFontStyle = "italic";
         String originalFontWeight = "bold";
         int originalFontSize = 16;
-        font = styleFactory.createFont(ff.literal(originalFontname), ff.literal(originalFontStyle),
-                ff.literal(originalFontWeight), ff.literal(originalFontSize));
-        model.applyData(new int[] { 0 }, font);
+        font =
+                styleFactory.createFont(
+                        ff.literal(originalFontname),
+                        ff.literal(originalFontStyle),
+                        ff.literal(originalFontWeight),
+                        ff.literal(originalFontSize));
+        model.applyData(new int[] {0}, font);
         assertTrue(model.hasValueBeenUpdated(0, 7));
         assertTrue(model.hasValueBeenUpdated(0, 8));
         assertTrue(model.hasValueBeenUpdated(0, 9));
@@ -155,7 +161,7 @@ public class BatchUpdateFontModelTest {
         assertFalse(model.anyChanges());
 
         int expectedFontSize = 99;
-        model.applyData(new int[] { 0 }, expectedFontSize);
+        model.applyData(new int[] {0}, expectedFontSize);
         assertTrue(model.hasValueBeenUpdated(0, 10)); // Font size
 
         assertEquals(expectedWorkspace, model.getValueAt(0, 0));
@@ -182,8 +188,9 @@ public class BatchUpdateFontModelTest {
 
         assertFalse(model.isCellEditable(0, 0));
 
-        assertEquals(Localisation.getString(BatchUpdateFontModel.class,
-                "BatchUpdateFontModel.workspace"), model.getColumnName(0));
+        assertEquals(
+                Localisation.getString(
+                        BatchUpdateFontModel.class, "BatchUpdateFontModel.workspace"),
+                model.getColumnName(0));
     }
-
 }

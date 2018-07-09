@@ -19,6 +19,9 @@
 
 package com.sldeditor;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.generated.Version;
+import com.sldeditor.ui.about.AboutDialog;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -28,13 +31,8 @@ import java.awt.RenderingHints;
 import java.awt.SplashScreen;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
-
 import org.apache.log4j.Logger;
 import org.geotools.factory.GeoTools;
-
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.generated.Version;
-import com.sldeditor.ui.about.AboutDialog;
 
 /**
  * The application splash screen.
@@ -88,15 +86,10 @@ public final class AppSplashScreen {
     /** The logger. */
     private static Logger logger = Logger.getLogger(AppSplashScreen.class);
 
-    /**
-     * Instantiates a new app splash screen.
-     */
-    private AppSplashScreen() {
-    }
+    /** Instantiates a new app splash screen. */
+    private AppSplashScreen() {}
 
-    /**
-     * Splash initialise.
-     */
+    /** Splash initialise. */
     public static void splashInit() {
         splashScreenObj = SplashScreen.getSplashScreen();
         if (splashScreenObj != null) {
@@ -120,9 +113,7 @@ public final class AppSplashScreen {
         return String.format("Version : %s", Version.getVersionNumber());
     }
 
-    /**
-     * Creates the text area.
-     */
+    /** Creates the text area. */
     private static void createTextArea() {
         if (splashTextArea == null) {
             Dimension ssDim = null;
@@ -136,8 +127,12 @@ public final class AppSplashScreen {
             int width = ssDim.width;
 
             // stake out some area for our status information
-            splashTextArea = new Rectangle2D.Double(TEXT_AREA_X, height * TEXT_AREA_Y_FRACTION,
-                    width * TEXT_AREA_WIDTH_FRACTION, TEXTAREA_HEIGHT);
+            splashTextArea =
+                    new Rectangle2D.Double(
+                            TEXT_AREA_X,
+                            height * TEXT_AREA_Y_FRACTION,
+                            width * TEXT_AREA_WIDTH_FRACTION,
+                            TEXTAREA_HEIGHT);
         }
     }
 
@@ -154,16 +149,20 @@ public final class AppSplashScreen {
             splashGraphics.setPaint(Color.BLACK);
 
             splashGraphics.setFont(getFont());
-            splashGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            splashGraphics.setRenderingHint(
+                    RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             splashGraphics.setColor(Color.black);
 
-            splashGraphics.drawString(str, (int) getTextPosition().getX(),
-                    (int) getTextPosition().getY());
-            String geoToolsVersionString = String.format("%s GeoTools %s",
-                    Localisation.getString(AboutDialog.class, "AboutDialog.basedOn"),
-                    GeoTools.getVersion().toString());
-            splashGraphics.drawString(geoToolsVersionString, (int) getTextPosition().getX(),
+            splashGraphics.drawString(
+                    str, (int) getTextPosition().getX(), (int) getTextPosition().getY());
+            String geoToolsVersionString =
+                    String.format(
+                            "%s GeoTools %s",
+                            Localisation.getString(AboutDialog.class, "AboutDialog.basedOn"),
+                            GeoTools.getVersion().toString());
+            splashGraphics.drawString(
+                    geoToolsVersionString,
+                    (int) getTextPosition().getX(),
                     (int) (getTextPosition().getY() + AppSplashScreen.getFont().getSize2D()));
 
             // make sure it's displayed
@@ -179,8 +178,10 @@ public final class AppSplashScreen {
     public static Point getTextPosition() {
         createTextArea();
 
-        Point p = new Point((int) (splashTextArea.getX() + TEXTPOSITION_X_OFFSET),
-                (int) (splashTextArea.getY() + TEXTPOSITION_Y_OFFSET));
+        Point p =
+                new Point(
+                        (int) (splashTextArea.getX() + TEXTPOSITION_X_OFFSET),
+                        (int) (splashTextArea.getY() + TEXTPOSITION_Y_OFFSET));
 
         return p;
     }

@@ -20,15 +20,13 @@
 package com.sldeditor.ui.detail.vendor.geoserver.marker.arrow;
 
 /**
- * The Interface ArrowUpdateInterface allows classes to register for notifications when
- * arrow field values are updated.
- * 
+ * The Interface ArrowUpdateInterface allows classes to register for notifications when arrow field
+ * values are updated.
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface ArrowUpdateInterface {
 
-    /**
-     * Value updated.
-     */
+    /** Value updated. */
     void arrowValueUpdated();
 }

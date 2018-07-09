@@ -19,9 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -35,10 +32,12 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.qgis.VOGeoServerQGISSymbo
 import com.sldeditor.ui.detail.vendor.geoserver.marker.shape.VOGeoServerShapeSymbol;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.VOGeoServerWindbarbSymbol;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.VOGeoServerWKTSymbol;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A factory for creating VendorOptionMarkerSymbolFactory objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInterface {
@@ -47,7 +46,7 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
     private VOMarkerSymbolInterface vendorOptionGeoServerShape = new VOGeoServerShapeSymbol();
 
     /** The GeoServer vendor option for extshapes://. */
-    private VOMarkerSymbolInterface vendorOptionGeoServerExtShapes = 
+    private VOMarkerSymbolInterface vendorOptionGeoServerExtShapes =
             new VOGeoServerExtShapeSymbol();
 
     /** The GeoServer vendor option for extshape://arrow. */
@@ -65,9 +64,7 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
     /** The list of all the extensions. */
     private List<VOMarkerSymbolInterface> list = new ArrayList<VOMarkerSymbolInterface>();
 
-    /**
-     * Instantiates a new vendor option marker symbol factory.
-     */
+    /** Instantiates a new vendor option marker symbol factory. */
     public VendorOptionMarkerSymbolFactory() {
         list.add(vendorOptionGeoServerShape);
         list.add(vendorOptionGeoServerExtShapes);
@@ -81,7 +78,7 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList()
      */
     @Override
@@ -91,7 +88,7 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
      */
     @Override
@@ -108,14 +105,17 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
      * @param symbolSelectionField the symbol selection field
      * @return the vendor option marker symbols
      */
-    public List<FieldState> getVendorOptionMarkerSymbols(Class<?> panelId,
-            ColourFieldConfig fillFieldConfig, ColourFieldConfig strokeFieldConfig,
+    public List<FieldState> getVendorOptionMarkerSymbols(
+            Class<?> panelId,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField) {
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
         for (VOMarkerSymbolInterface obj : list) {
-            List<FieldState> markerFieldStateList = obj.getMarkerSymbols(panelId, fillFieldConfig,
-                    strokeFieldConfig, symbolSelectionField);
+            List<FieldState> markerFieldStateList =
+                    obj.getMarkerSymbols(
+                            panelId, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
             if ((markerFieldStateList != null) && !markerFieldStateList.isEmpty()) {
                 fieldStateList.addAll(markerFieldStateList);
             }
@@ -126,7 +126,7 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionInfoList()
      */
     @Override

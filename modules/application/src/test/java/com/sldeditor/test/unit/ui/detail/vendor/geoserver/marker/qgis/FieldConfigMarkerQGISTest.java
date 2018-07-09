@@ -21,15 +21,14 @@ package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.qgis;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test;
-
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.qgis.FieldConfigMarkerQGIS;
+import org.junit.Test;
 
 /**
  * The unit test for FieldConfigMarkerQGIS.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.vendor.geoserver.marker.qgis.FieldConfigMarkerQGIS}
  *
  * @author Robert Ward (SCISYS)
@@ -37,18 +36,23 @@ import com.sldeditor.ui.detail.vendor.geoserver.marker.qgis.FieldConfigMarkerQGI
 public class FieldConfigMarkerQGISTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.vendor.geoserver.marker.qgis.FieldConfigMarkerQGIS#FieldConfigMarkerQGIS(com.sldeditor.ui.detail.config.FieldConfigCommonData, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.qgis.FieldConfigMarkerQGIS#FieldConfigMarkerQGIS(com.sldeditor.ui.detail.config.FieldConfigCommonData,
+     * com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig,
+     * com.sldeditor.common.xml.ui.FieldIdEnum)}.
      */
     @Test
     public void testFieldConfigMarkerShape() {
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
-        FieldConfigMarkerQGIS field = new FieldConfigMarkerQGIS(
-                new FieldConfigCommonData(String.class, FieldIdEnum.NAME, "test label", valueOnly),
-                null, null, null);
+        FieldConfigMarkerQGIS field =
+                new FieldConfigMarkerQGIS(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                        null,
+                        null,
+                        null);
 
         assertNotNull(field);
     }
-
 }

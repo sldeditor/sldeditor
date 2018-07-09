@@ -19,11 +19,11 @@
 
 package com.sldeditor.filter.v2.expression;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpression;
 import org.geotools.filter.FunctionExpressionImpl;
@@ -39,9 +39,6 @@ import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Function;
 import org.opengis.parameter.Parameter;
-
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface;
 
 /**
  * The Class ExpressionNode.
@@ -86,9 +83,7 @@ public class ExpressionNode extends DefaultMutableTreeNode {
     /** The environment manager. */
     private static EnvironmentManagerInterface envMgr = null;
 
-    /**
-     * Instantiates a new expression node.
-     */
+    /** Instantiates a new expression node. */
     public ExpressionNode() {
         setDisplayString();
     }
@@ -103,9 +98,7 @@ public class ExpressionNode extends DefaultMutableTreeNode {
         return displayString;
     }
 
-    /**
-     * Sets the display string.
-     */
+    /** Sets the display string. */
     public void setDisplayString() {
         StringBuilder sb = new StringBuilder();
 
@@ -116,31 +109,39 @@ public class ExpressionNode extends DefaultMutableTreeNode {
 
         if (expression == null) {
             if (expressionType == ExpressionTypeEnum.LITERAL) {
-                sb.append(Localisation.getString(ExpressionPanelv2.class,
-                        "ExpressionPanelv2.literalNotSet"));
+                sb.append(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "ExpressionPanelv2.literalNotSet"));
             } else if (expressionType == ExpressionTypeEnum.PROPERTY) {
-                sb.append(Localisation.getString(ExpressionPanelv2.class,
-                        "ExpressionPanelv2.propertyNotSet"));
+                sb.append(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "ExpressionPanelv2.propertyNotSet"));
             } else {
                 if (optionalParam) {
-                    sb.append(Localisation.getString(ExpressionPanelv2.class,
-                            "ExpressionPanelv2.optional"));
+                    sb.append(
+                            Localisation.getString(
+                                    ExpressionPanelv2.class, "ExpressionPanelv2.optional"));
 
                 } else {
-                    sb.append(Localisation.getString(ExpressionPanelv2.class,
-                            "ExpressionPanelv2.expressionNotSet"));
+                    sb.append(
+                            Localisation.getString(
+                                    ExpressionPanelv2.class, "ExpressionPanelv2.expressionNotSet"));
                 }
             }
         }
 
         if (expression instanceof LiteralExpressionImpl) {
-            sb.append(Localisation.getField(ExpressionPanelv2.class, "ExpressionPanelv2.literal")
-                    + " ");
+            sb.append(
+                    Localisation.getField(ExpressionPanelv2.class, "ExpressionPanelv2.literal")
+                            + " ");
             sb.append(expression.toString());
         } else if (expression instanceof AttributeExpressionImpl) {
-            sb.append(String.format("%s : [%s]",
-                    Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.attribute"),
-                    expression.toString()));
+            sb.append(
+                    String.format(
+                            "%s : [%s]",
+                            Localisation.getString(
+                                    ExpressionPanelv2.class, "ExpressionPanelv2.attribute"),
+                            expression.toString()));
         } else if (expression instanceof FunctionExpressionImpl) {
             sb.append(FunctionExpressionUtils.toString(expression));
         } else if (expression instanceof FunctionImpl) {
@@ -236,8 +237,9 @@ public class ExpressionNode extends DefaultMutableTreeNode {
                 argCount *= -1;
             }
 
-            for (int index = 0; index < Math.max(functionExpression.getParameters().size(),
-                    argCount); index++) {
+            for (int index = 0;
+                    index < Math.max(functionExpression.getParameters().size(), argCount);
+                    index++) {
                 ExpressionNode childNode = new ExpressionNode();
 
                 // If function has a variable number of arguments pick the last one
@@ -316,8 +318,8 @@ public class ExpressionNode extends DefaultMutableTreeNode {
         } else if (expression instanceof MathExpressionImpl) {
             MathExpressionImpl mathsExpression = (MathExpressionImpl) expression;
 
-            String expressionText = Localisation.getString(ExpressionPanelv2.class,
-                    "ExpressionPanelv2.expression");
+            String expressionText =
+                    Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.expression");
             ExpressionNode childNode1 = new ExpressionNode();
             childNode1.setType(Number.class);
             childNode1.setName(expressionText + " 1");
@@ -342,9 +344,7 @@ public class ExpressionNode extends DefaultMutableTreeNode {
         }
     }
 
-    /**
-     * Marks the parameter as optional.
-     */
+    /** Marks the parameter as optional. */
     private void setOptional() {
         optionalParam = true;
     }
@@ -437,18 +437,13 @@ public class ExpressionNode extends DefaultMutableTreeNode {
         return optionalParam;
     }
 
-    /**
-     * @return the optionalParamUsed
-     */
+    /** @return the optionalParamUsed */
     public boolean isOptionalParamUsed() {
         return optionalParamUsed;
     }
 
-    /**
-     * @param optionalParamUsed the optionalParamUsed to set
-     */
+    /** @param optionalParamUsed the optionalParamUsed to set */
     public void setOptionalParamUsed(boolean optionalParamUsed) {
         this.optionalParamUsed = optionalParamUsed;
     }
-
 }

@@ -17,8 +17,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * @author Robert Ward (SCISYS)
- *
- */
+/** @author Robert Ward (SCISYS) */
 package com.sldeditor.test.unit;

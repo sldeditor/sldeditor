@@ -21,15 +21,14 @@ package com.sldeditor.test.unit.ui.detail;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
+import org.junit.Test;
 
 /**
  * The unit test for ColourFieldConfig.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.ColourFieldConfig}
  *
  * @author Robert Ward (SCISYS)
@@ -37,10 +36,12 @@ import com.sldeditor.ui.detail.ColourFieldConfig;
 public class ColourFieldConfigTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.ColourFieldConfig#ColourFieldConfig(com.sldeditor.common.xml.ui.FieldIdEnum, com.sldeditor.common.xml.ui.FieldIdEnum, com.sldeditor.common.xml.ui.FieldIdEnum)}.
-     * Test method for {@link com.sldeditor.ui.detail.ColourFieldConfig#getColour()}.
-     * Test method for {@link com.sldeditor.ui.detail.ColourFieldConfig#getOpacity()}.
-     * Test method for {@link com.sldeditor.ui.detail.ColourFieldConfig#getWidth()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.ColourFieldConfig#ColourFieldConfig(com.sldeditor.common.xml.ui.FieldIdEnum,
+     * com.sldeditor.common.xml.ui.FieldIdEnum, com.sldeditor.common.xml.ui.FieldIdEnum)}. Test
+     * method for {@link com.sldeditor.ui.detail.ColourFieldConfig#getColour()}. Test method for
+     * {@link com.sldeditor.ui.detail.ColourFieldConfig#getOpacity()}. Test method for {@link
+     * com.sldeditor.ui.detail.ColourFieldConfig#getWidth()}.
      */
     @Test
     public void testColourFieldConfig() {
@@ -48,13 +49,13 @@ public class ColourFieldConfigTest {
         FieldIdEnum strokeFillColour = FieldIdEnum.STROKE_FILL_COLOUR;
         FieldIdEnum strokeFillOpacity = FieldIdEnum.OVERALL_OPACITY;
         FieldIdEnum strokeFillWidth = FieldIdEnum.STROKE_FILL_WIDTH;
-        ColourFieldConfig config = new ColourFieldConfig(groupId, strokeFillColour,
-                strokeFillOpacity, strokeFillWidth);
+        ColourFieldConfig config =
+                new ColourFieldConfig(
+                        groupId, strokeFillColour, strokeFillOpacity, strokeFillWidth);
 
         assertEquals(groupId, config.getGroup());
         assertEquals(strokeFillColour, config.getColour());
         assertEquals(strokeFillOpacity, config.getOpacity());
         assertEquals(strokeFillWidth, config.getWidth());
     }
-
 }

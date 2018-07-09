@@ -22,8 +22,11 @@ package com.sldeditor.test.unit.datasource.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.data.SLDUtils;
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.datasource.attribute.DataSourceAttributeData;
+import com.sldeditor.datasource.impl.ExtractAttributes;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.Rule;
@@ -32,18 +35,12 @@ import org.junit.Test;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 
-import com.sldeditor.common.data.SLDUtils;
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.datasource.attribute.DataSourceAttributeData;
-import com.sldeditor.datasource.impl.ExtractAttributes;
-
 /**
  * Unit test for ExtractAttributes class.
- * 
- * <p>{@link com.sldeditor.datasource.impl.ExtractAttributes}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.impl.ExtractAttributes}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class ExtractAttributesTest {
 
@@ -51,8 +48,9 @@ public class ExtractAttributesTest {
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder, java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder,
+     * java.lang.String)}.
      */
     @Test
     public void testAddDefaultFields() {
@@ -83,8 +81,10 @@ public class ExtractAttributesTest {
 
     /**
      * Test sld symbol contains non-default geometry field.
-     * 
-     * {@link com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder, java.lang.String)}.
+     *
+     * <p>{@link
+     * com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder,
+     * java.lang.String)}.
      */
     @Test
     public void testNonStandardGeometryField() {
@@ -109,8 +109,10 @@ public class ExtractAttributesTest {
 
     /**
      * Test sld symbol contains non-default geometry field and non-standard xml namespace.
-     * 
-     * {@link com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder, java.lang.String)}.
+     *
+     * <p>{@link
+     * com.sldeditor.datasource.impl.ExtractAttributes#addDefaultFields(org.geotools.feature.simple.SimpleFeatureTypeBuilder,
+     * java.lang.String)}.
      */
     @Test
     public void testNonStandardGeometryNamespace() {
@@ -141,9 +143,7 @@ public class ExtractAttributesTest {
         assertTrue(expectedGeometryFieldName.compareTo(actualGeometryFields.get(0)) == 0);
     }
 
-    /**
-     * Test filter.
-     */
+    /** Test filter. */
     @Test
     public void testFilter() {
         DummyInternalSLDFile2 dummy = new DummyInternalSLDFile2();
@@ -216,8 +216,10 @@ public class ExtractAttributesTest {
         Rule rule = DefaultSymbols.createNewRule();
 
         // Try with something complex
-        Filter filter = ff.and(ff.greater(ff.literal(42), ff.property("int")),
-                ff.less(ff.literal(12), ff.property("abc")));
+        Filter filter =
+                ff.and(
+                        ff.greater(ff.literal(42), ff.property("int")),
+                        ff.less(ff.literal(12), ff.property("abc")));
         rule.setFilter(filter);
         ruleList.clear();
         ruleList.add(rule);

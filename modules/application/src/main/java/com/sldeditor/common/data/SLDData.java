@@ -17,13 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.data;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
 
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -34,18 +28,23 @@ import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import com.sldeditor.filter.v2.envvar.EnvVar;
 import com.sldeditor.ui.legend.option.LegendOptionData;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 
 /**
  * Class the encapsulates data describing an SLD, includes:
+ *
  * <ul>
- * <li>Location of SLD file within a file system.</li>
- * <li>Location of SLD file within a GeoServer instance.</li>
- * <li>Name of the SLD.</li>
- * <li>The string contents of an SLD.</li>
- * <li>Data source details.</li>
- * <li>Vendor options supported</li>.
+ *   <li>Location of SLD file within a file system.
+ *   <li>Location of SLD file within a GeoServer instance.
+ *   <li>Name of the SLD.
+ *   <li>The string contents of an SLD.
+ *   <li>Data source details.
+ *   <li>Vendor options supported.
  * </ul>
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDData implements SLDDataInterface {
@@ -336,7 +335,7 @@ public class SLDData implements SLDDataInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.SLDDataInterface#setEnvVarList(java.util.List)
      */
     @Override
@@ -356,7 +355,7 @@ public class SLDData implements SLDDataInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.SLDDataInterface#setOriginalFormat(com.sldeditor.common.output.SLDOutputFormatEnum)
      */
     @Override
@@ -366,7 +365,7 @@ public class SLDData implements SLDDataInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.SLDDataInterface#getOriginalFormat()
      */
     @Override
@@ -420,7 +419,7 @@ public class SLDData implements SLDDataInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.SLDDataInterface#getSLDURL()
      */
     @Override

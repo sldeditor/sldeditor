@@ -24,19 +24,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.NamedLayer;
-import org.geotools.styling.PointSymbolizer;
-import org.geotools.styling.Rule;
-import org.geotools.styling.Style;
-import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Test;
-
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
@@ -54,21 +41,28 @@ import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.ui.panels.GetMinimumVersionInterface;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.NamedLayer;
+import org.geotools.styling.PointSymbolizer;
+import org.geotools.styling.Rule;
+import org.geotools.styling.Style;
+import org.geotools.styling.StyledLayerDescriptor;
+import org.junit.Test;
 
 /**
  * Unit test for VendorOptionManager.
- * 
- * <p>
- * {@link com.sldeditor.common.vendoroption.VendorOptionManager}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.common.vendoroption.VendorOptionManager}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class VendorOptionManagerTest {
 
-    /**
-     * The Class DummyVendorOptionUpdate.
-     */
+    /** The Class DummyVendorOptionUpdate. */
     class DummyVendorOptionUpdate implements VendorOptionUpdateInterface {
 
         /** The vendor option versions list. */
@@ -76,7 +70,7 @@ public class VendorOptionManagerTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see
          * com.sldeditor.common.vendoroption.VendorOptionUpdateInterface#vendorOptionsUpdated(java.
          * util.List)
@@ -85,15 +79,14 @@ public class VendorOptionManagerTest {
         public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
             this.vendorOptionVersionsList = vendorOptionVersionsList;
         }
-
     }
 
     /** The obj. */
     private DummyVendorOptionUpdate obj = new DummyVendorOptionUpdate();
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getClass(java.lang.Class)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.VendorOptionManager#getClass(java.lang.Class)}.
      */
     @Test
     public void testGetClassClassOfQ() {
@@ -103,31 +96,38 @@ public class VendorOptionManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getVendorOptionVersion(java.lang.Class, java.lang.String, java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.VendorOptionManager#getVendorOptionVersion(java.lang.Class,
+     * java.lang.String, java.lang.String)}.
      */
     @Test
     public void testGetVendorOptionVersionClassOfQStringString() {
         assertNull(VendorOptionManager.getInstance().getVendorOptionVersion(null, null, null));
 
         String exepectedEndVersion = "2.8.1";
-        VendorOptionVersion voGS = VendorOptionManager.getInstance()
-                .getVendorOptionVersion(GeoServerVendorOption.class, "2.4.1", exepectedEndVersion);
+        VendorOptionVersion voGS =
+                VendorOptionManager.getInstance()
+                        .getVendorOptionVersion(
+                                GeoServerVendorOption.class, "2.4.1", exepectedEndVersion);
         assertEquals(exepectedEndVersion, voGS.getLatest().getVersionString());
 
-        VendorOptionVersion voGS1 = VendorOptionManager.getInstance()
-                .getVendorOptionVersion(GeoServerVendorOption.class, null, exepectedEndVersion);
+        VendorOptionVersion voGS1 =
+                VendorOptionManager.getInstance()
+                        .getVendorOptionVersion(
+                                GeoServerVendorOption.class, null, exepectedEndVersion);
         assertEquals(exepectedEndVersion, voGS1.getLatest().getVersionString());
 
         exepectedEndVersion = "2.8.a";
-        VendorOptionVersion voGS2 = VendorOptionManager.getInstance()
-                .getVendorOptionVersion(GeoServerVendorOption.class, "2.4.1", exepectedEndVersion);
+        VendorOptionVersion voGS2 =
+                VendorOptionManager.getInstance()
+                        .getVendorOptionVersion(
+                                GeoServerVendorOption.class, "2.4.1", exepectedEndVersion);
         assertEquals("Latest", voGS2.getLatest().getVersionString());
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOption()}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOption()}.
      */
     @Test
     public void testGetDefaultVendorOption() {
@@ -137,8 +137,8 @@ public class VendorOptionManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOptionVersion()}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOptionVersion()}.
      */
     @Test
     public void testGetDefaultVendorOptionVersion() {
@@ -148,25 +148,27 @@ public class VendorOptionManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getVendorOptionVersion(java.lang.Class)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.VendorOptionManager#getVendorOptionVersion(java.lang.Class)}.
      */
     @Test
     public void testGetVendorOptionVersionClassOfQ() {
         assertNull(VendorOptionManager.getInstance().getVendorOptionVersion(null));
 
-        VendorOptionVersion vo = VendorOptionManager.getInstance()
-                .getVendorOptionVersion(NoVendorOption.class);
+        VendorOptionVersion vo =
+                VendorOptionManager.getInstance().getVendorOptionVersion(NoVendorOption.class);
         assertEquals("Latest", vo.getLatest().getVersionString());
 
-        VendorOptionVersion voGS = VendorOptionManager.getInstance()
-                .getVendorOptionVersion(GeoServerVendorOption.class);
+        VendorOptionVersion voGS =
+                VendorOptionManager.getInstance()
+                        .getVendorOptionVersion(GeoServerVendorOption.class);
         assertEquals("Latest", voGS.getLatest().getVersionString());
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#isAllowed(java.util.List, com.sldeditor.common.vendoroption.VendorOptionVersion)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.VendorOptionManager#isAllowed(java.util.List,
+     * com.sldeditor.common.vendoroption.VendorOptionVersion)}.
      */
     @Test
     public void testIsAllowed() {
@@ -175,8 +177,9 @@ public class VendorOptionManagerTest {
         VersionData versionDataMin = VersionData.decode(getClass(), "2.4.1");
         VersionData versionDataMax = VersionData.decode(getClass(), "2.8.3");
 
-        VendorOptionVersion vo = new VendorOptionVersion(GeoServerVendorOption.class,
-                versionDataMin, versionDataMax);
+        VendorOptionVersion vo =
+                new VendorOptionVersion(
+                        GeoServerVendorOption.class, versionDataMin, versionDataMax);
 
         List<VersionData> versionList = new ArrayList<VersionData>();
         versionList.add(VersionData.decode(GeoServerVendorOption.class, "1.8.3"));
@@ -188,19 +191,17 @@ public class VendorOptionManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOptionVersionData()}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.VendorOptionManager#getDefaultVendorOptionVersionData()}.
      */
     @Test
     public void testGetDefaultVendorOptionVersionData() {
-        VersionData versionData = VendorOptionManager.getInstance()
-                .getDefaultVendorOptionVersionData();
+        VersionData versionData =
+                VendorOptionManager.getInstance().getDefaultVendorOptionVersionData();
         assertEquals("Latest", versionData.getVersionString());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.vendoroption.VendorOptionManager#getTitle()}.
-     */
+    /** Test method for {@link com.sldeditor.common.vendoroption.VendorOptionManager#getTitle()}. */
     @Test
     public void testGetTitle() {
         StringBuilder expectedValue = new StringBuilder();
@@ -212,8 +213,9 @@ public class VendorOptionManagerTest {
         assertTrue(expectedValue.toString().compareTo(actualValue) == 0);
 
         // Now try with some real values
-        VersionData noVO = VersionData
-                .getDecodedString("com.sldeditor.common.vendoroption.NoVendorOption@Latest");
+        VersionData noVO =
+                VersionData.getDecodedString(
+                        "com.sldeditor.common.vendoroption.NoVendorOption@Latest");
 
         VendorOptionVersion noVOV = new VendorOptionVersion(NoVendorOption.class, noVO);
         actualValue = VendorOptionManager.getInstance().getTitle(noVOV);
@@ -224,12 +226,15 @@ public class VendorOptionManagerTest {
 
         assertTrue(expectedValue1.toString().compareTo(actualValue) == 0);
 
-        VersionData geoServerVOMin = VersionData
-                .getDecodedString("com.sldeditor.common.vendoroption.GeoServerVendorOption@2.4.2");
-        VersionData geoServerVOMax = VersionData
-                .getDecodedString("com.sldeditor.common.vendoroption.GeoServerVendorOption@2.9.0");
-        VendorOptionVersion geoServerVOV = new VendorOptionVersion(GeoServerVendorOption.class,
-                geoServerVOMin, geoServerVOMax);
+        VersionData geoServerVOMin =
+                VersionData.getDecodedString(
+                        "com.sldeditor.common.vendoroption.GeoServerVendorOption@2.4.2");
+        VersionData geoServerVOMax =
+                VersionData.getDecodedString(
+                        "com.sldeditor.common.vendoroption.GeoServerVendorOption@2.9.0");
+        VendorOptionVersion geoServerVOV =
+                new VendorOptionVersion(
+                        GeoServerVendorOption.class, geoServerVOMin, geoServerVOMax);
         actualValue = VendorOptionManager.getInstance().getTitle(geoServerVOV);
         StringBuilder expectedValue2 = new StringBuilder();
         expectedValue2.append(expectedValue.toString());
@@ -239,8 +244,8 @@ public class VendorOptionManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#getVendorOptionVersion()}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.VendorOptionManager#getVendorOptionVersion()}.
      */
     @Test
     public void testLoadSLDFile() {
@@ -291,19 +296,29 @@ public class VendorOptionManagerTest {
         sld.layers().add(namedLayer);
         VersionData testVersionData = VersionData.decode(GeoServerVendorOption.class, "2.8.0");
 
-        VendorOptionManager.getInstance().loadSLDFile(new GetMinimumVersionInterface() {
+        VendorOptionManager.getInstance()
+                .loadSLDFile(
+                        new GetMinimumVersionInterface() {
 
-            @Override
-            public void getMinimumVersion(Object parentObj, Object sldObj,
-                    List<VendorOptionPresent> vendorOptionsPresentList) {
-                VendorOptionInfo vendorOptionInfo = new VendorOptionInfo("qgis://",
-                        new VendorOptionVersion(testVersionData.getVendorOptionType(),
-                                testVersionData),
-                        "");
-                VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, vendorOptionInfo);
-                vendorOptionsPresentList.add(voPresent);
-            }
-        }, sld, sldData);
+                            @Override
+                            public void getMinimumVersion(
+                                    Object parentObj,
+                                    Object sldObj,
+                                    List<VendorOptionPresent> vendorOptionsPresentList) {
+                                VendorOptionInfo vendorOptionInfo =
+                                        new VendorOptionInfo(
+                                                "qgis://",
+                                                new VendorOptionVersion(
+                                                        testVersionData.getVendorOptionType(),
+                                                        testVersionData),
+                                                "");
+                                VendorOptionPresent voPresent =
+                                        new VendorOptionPresent(sldObj, vendorOptionInfo);
+                                vendorOptionsPresentList.add(voPresent);
+                            }
+                        },
+                        sld,
+                        sldData);
         assertEquals(1, obj.vendorOptionVersionsList.size());
         assertEquals(testVersionData, obj.vendorOptionVersionsList.get(0));
 
@@ -312,26 +327,37 @@ public class VendorOptionManagerTest {
         List<VersionData> sldEditorVendorOptionList = new ArrayList<VersionData>();
         VersionData testVersionData2 = VersionData.decode(GeoServerVendorOption.class, "2.10.0");
         sldEditorVendorOptionList.add(testVersionData2);
-        sldEditorVendorOptionList
-                .add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
+        sldEditorVendorOptionList.add(
+                VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
         sldData.setVendorOptionList(sldEditorVendorOptionList);
         sldData.setSldEditorFile(new File("."));
-        VendorOptionManager.getInstance().loadSLDFile(new GetMinimumVersionInterface() {
+        VendorOptionManager.getInstance()
+                .loadSLDFile(
+                        new GetMinimumVersionInterface() {
 
-            @Override
-            public void getMinimumVersion(Object parentObj, Object sldObj,
-                    List<VendorOptionPresent> vendorOptionsPresentList) {
-                VendorOptionInfo vendorOptionInfo = new VendorOptionInfo("qgis://",
-                        new VendorOptionVersion(testVersionData.getVendorOptionType(),
-                                testVersionData),
-                        "");
-                VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, vendorOptionInfo);
-                vendorOptionsPresentList.add(voPresent);
-            }
-        }, sld, sldData);
+                            @Override
+                            public void getMinimumVersion(
+                                    Object parentObj,
+                                    Object sldObj,
+                                    List<VendorOptionPresent> vendorOptionsPresentList) {
+                                VendorOptionInfo vendorOptionInfo =
+                                        new VendorOptionInfo(
+                                                "qgis://",
+                                                new VendorOptionVersion(
+                                                        testVersionData.getVendorOptionType(),
+                                                        testVersionData),
+                                                "");
+                                VendorOptionPresent voPresent =
+                                        new VendorOptionPresent(sldObj, vendorOptionInfo);
+                                vendorOptionsPresentList.add(voPresent);
+                            }
+                        },
+                        sld,
+                        sldData);
         Collections.sort(obj.vendorOptionVersionsList);
         assertEquals(2, obj.vendorOptionVersionsList.size());
-        assertEquals(testVersionData2,
+        assertEquals(
+                testVersionData2,
                 obj.vendorOptionVersionsList.get(obj.vendorOptionVersionsList.size() - 1));
 
         // Increase code coverage
@@ -339,8 +365,9 @@ public class VendorOptionManagerTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.common.vendoroption.VendorOptionManager#overrideSelectedVendorOptions(java.util.List, com.sldeditor.common.vendoroption.VendorOptionVersion)}.
+     * Test method for {@link
+     * com.sldeditor.common.vendoroption.VendorOptionManager#overrideSelectedVendorOptions(java.util.List,
+     * com.sldeditor.common.vendoroption.VendorOptionVersion)}.
      */
     @Test
     public void testOverrideSelectedVendorOptions() {

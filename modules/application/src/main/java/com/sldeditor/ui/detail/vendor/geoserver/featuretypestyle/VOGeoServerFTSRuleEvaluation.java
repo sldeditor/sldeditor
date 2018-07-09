@@ -19,15 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle;
 
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.SelectedChannelType;
-import org.geotools.styling.TextSymbolizer;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -42,10 +33,17 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import java.util.List;
+import java.util.Map;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.SelectedChannelType;
+import org.geotools.styling.TextSymbolizer;
 
 /**
  * Class to handle the getting and setting of GeoServer rule evaluation vendor option data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VOGeoServerFTSRuleEvaluation extends StandardPanel
@@ -77,9 +75,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFileNoScrollPane(null, getPanelId(), this, PANEL_CONFIG);
     }
@@ -91,7 +87,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOption()
      */
     @Override
@@ -106,7 +102,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.
      * FieldId)
@@ -125,7 +121,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
      * selectedsymbol.SelectedSymbol)
      */
@@ -141,7 +137,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * TextSymbolizer)
@@ -153,7 +149,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * RasterSymbolizer)
@@ -165,7 +161,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * FeatureTypeStyle)
@@ -178,9 +174,10 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
 
         String value = DEFAULT_COMPOSITE_RULE_EVALUATION;
 
-        if ((compositeBaseString != null) && (compositeBaseString
-                .equals(FeatureTypeStyle.VALUE_EVALUATION_MODE_ALL)
-                || compositeBaseString.equals(FeatureTypeStyle.VALUE_EVALUATION_MODE_FIRST))) {
+        if ((compositeBaseString != null)
+                && (compositeBaseString.equals(FeatureTypeStyle.VALUE_EVALUATION_MODE_ALL)
+                        || compositeBaseString.equals(
+                                FeatureTypeStyle.VALUE_EVALUATION_MODE_FIRST))) {
             value = compositeBaseString;
         }
 
@@ -197,7 +194,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * PolygonSymbolizer)
@@ -214,7 +211,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -224,7 +221,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.RasterSymbolizer)
@@ -236,7 +233,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.FeatureTypeStyle)
@@ -247,8 +244,8 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
 
         GroupConfigInterface groupPanel = getGroup(GroupIdEnum.VO_FTS_RULE_EVALUATION);
         if (groupPanel.isPanelEnabled()) {
-            ValueComboBoxData value = fieldConfigVisitor
-                    .getComboBox(FieldIdEnum.VO_FTS_RULE_EVALUATION_OPTION);
+            ValueComboBoxData value =
+                    fieldConfigVisitor.getComboBox(FieldIdEnum.VO_FTS_RULE_EVALUATION_OPTION);
 
             options.put(FeatureTypeStyle.KEY_EVALUATION_MODE, value.getKey());
         } else {
@@ -263,7 +260,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.PolygonSymbolizer)
@@ -280,7 +277,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.TextSymbolizer)
@@ -297,7 +294,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getPanel()
      */
     @Override
@@ -312,7 +309,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.
      * ui.iface.UpdateSymbolInterface)
@@ -329,7 +326,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -339,7 +336,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -349,7 +346,7 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()
      */
     @Override
@@ -359,38 +356,41 @@ public class VOGeoServerFTSRuleEvaluation extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
         if (vendorOptionInfo == null) {
-            vendorOptionInfo = new VendorOptionInfo(
-                    Localisation.getString(VOGeoServerFTSRuleEvaluation.class,
-                            "geoserver.ruleevaluation.title"),
-                    this.getVendorOption(),
-                    Localisation.getString(VOGeoServerFTSRuleEvaluation.class,
-                            "geoserver.ruleevaluation.description"));
+            vendorOptionInfo =
+                    new VendorOptionInfo(
+                            Localisation.getString(
+                                    VOGeoServerFTSRuleEvaluation.class,
+                                    "geoserver.ruleevaluation.title"),
+                            this.getVendorOption(),
+                            Localisation.getString(
+                                    VOGeoServerFTSRuleEvaluation.class,
+                                    "geoserver.ruleevaluation.description"));
         }
         return vendorOptionInfo;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
      * java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         if (sldObj instanceof FeatureTypeStyle) {
             FeatureTypeStyle fts = (FeatureTypeStyle) sldObj;
             Map<String, String> options = fts.getOptions();
 
             if (options.containsKey(FeatureTypeStyle.KEY_EVALUATION_MODE)) {
-                VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
-                        getVendorOptionInfo());
+                VendorOptionPresent voPresent =
+                        new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
                 vendorOptionsPresentList.add(voPresent);
             }

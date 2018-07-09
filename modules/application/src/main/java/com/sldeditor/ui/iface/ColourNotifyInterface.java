@@ -21,7 +21,7 @@ package com.sldeditor.ui.iface;
 
 /**
  * The Interface ColourNotifyInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface ColourNotifyInterface {

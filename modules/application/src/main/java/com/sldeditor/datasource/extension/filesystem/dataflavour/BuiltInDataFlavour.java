@@ -19,9 +19,6 @@
 
 package com.sldeditor.datasource.extension.filesystem.dataflavour;
 
-import java.awt.datatransfer.DataFlavor;
-import java.util.List;
-
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseNode;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOverallNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
@@ -29,47 +26,46 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerLay
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerOverallNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode;
+import java.awt.datatransfer.DataFlavor;
+import java.util.List;
 
 /**
  * Adds the built-in (file, folder, GeoServer) data flavours to the application.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class BuiltInDataFlavour implements DataFlavourInterface {
 
     /** The Constant GEOSERVER_OVERALL_DATAITEM_FLAVOR. */
-    public static final SLDDataFlavour GEOSERVER_OVERALL_DATAITEM_FLAVOUR = new SLDDataFlavour(
-            GeoServerOverallNode.class, GeoServerOverallNode.class.getName());
+    public static final SLDDataFlavour GEOSERVER_OVERALL_DATAITEM_FLAVOUR =
+            new SLDDataFlavour(GeoServerOverallNode.class, GeoServerOverallNode.class.getName());
 
     /** The Constant GEOSERVER_DATAITEM_FLAVOUR. */
-    public static final SLDDataFlavour GEOSERVER_DATAITEM_FLAVOUR = new SLDDataFlavour(
-            GeoServerNode.class, GeoServerNode.class.getName());
+    public static final SLDDataFlavour GEOSERVER_DATAITEM_FLAVOUR =
+            new SLDDataFlavour(GeoServerNode.class, GeoServerNode.class.getName());
 
     /** The Constant GEOSERVER_LAYER_DATAITEM_FLAVOUR. */
-    public static final SLDDataFlavour GEOSERVER_LAYER_DATAITEM_FLAVOUR = new SLDDataFlavour(
-            GeoServerLayerNode.class, GeoServerLayerNode.class.getName());
+    public static final SLDDataFlavour GEOSERVER_LAYER_DATAITEM_FLAVOUR =
+            new SLDDataFlavour(GeoServerLayerNode.class, GeoServerLayerNode.class.getName());
 
     /** The Constant GEOSERVER_STYLE_DATAITEM_FLAVOR. */
-    public static final SLDDataFlavour GEOSERVER_STYLE_DATAITEM_FLAVOUR = new SLDDataFlavour(
-            GeoServerStyleNode.class, GeoServerStyleNode.class.getName());
+    public static final SLDDataFlavour GEOSERVER_STYLE_DATAITEM_FLAVOUR =
+            new SLDDataFlavour(GeoServerStyleNode.class, GeoServerStyleNode.class.getName());
 
     /** The Constant DEFAULT_MUTABLE_DATAITEM_FLAVOR. */
-    public static final SLDDataFlavour FILE_DATAITEM_FLAVOR = new SLDDataFlavour(FileTreeNode.class,
-            "File");
+    public static final SLDDataFlavour FILE_DATAITEM_FLAVOR =
+            new SLDDataFlavour(FileTreeNode.class, "File");
 
     /** The Constant DATABASE_OVERALL_DATAITEM_FLAVOUR. */
-    public static final SLDDataFlavour DATABASE_OVERALL_DATAITEM_FLAVOUR = new SLDDataFlavour(
-            DatabaseOverallNode.class, DatabaseOverallNode.class.getName());
+    public static final SLDDataFlavour DATABASE_OVERALL_DATAITEM_FLAVOUR =
+            new SLDDataFlavour(DatabaseOverallNode.class, DatabaseOverallNode.class.getName());
 
     /** The Constant DATABASE_DATAITEM_FLAVOUR. */
-    public static final SLDDataFlavour DATABASE_DATAITEM_FLAVOUR = new SLDDataFlavour(
-            DatabaseNode.class, DatabaseNode.class.getName());
+    public static final SLDDataFlavour DATABASE_DATAITEM_FLAVOUR =
+            new SLDDataFlavour(DatabaseNode.class, DatabaseNode.class.getName());
 
-    /**
-     * Instantiates a new built in data flavour.
-     */
-    public BuiltInDataFlavour() {
-    }
+    /** Instantiates a new built in data flavour. */
+    public BuiltInDataFlavour() {}
 
     /**
      * Populate data flavours supported.
@@ -79,7 +75,9 @@ public class BuiltInDataFlavour implements DataFlavourInterface {
      * @param destinationGeoServerList the destination geo server list
      */
     @Override
-    public void populate(List<DataFlavor> dataFlavourList, List<DataFlavor> destinationFolderList,
+    public void populate(
+            List<DataFlavor> dataFlavourList,
+            List<DataFlavor> destinationFolderList,
             List<DataFlavor> destinationGeoServerList) {
 
         dataFlavourList.add(FILE_DATAITEM_FLAVOR);
@@ -95,5 +93,4 @@ public class BuiltInDataFlavour implements DataFlavourInterface {
         destinationGeoServerList.add(FILE_DATAITEM_FLAVOR);
         destinationGeoServerList.add(GEOSERVER_STYLE_DATAITEM_FLAVOUR);
     }
-
 }

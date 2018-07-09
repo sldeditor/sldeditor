@@ -19,6 +19,12 @@
 
 package com.sldeditor.update;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.VersionData;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,19 +40,11 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.vendoroption.VersionData;
 
 /**
  * The Class CheckUpdateGitHub.
@@ -74,25 +72,22 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
     private static final String REPO = "sldeditor";
 
     /** The Constant DOWNLOAD_URL. */
-    private static final String DOWNLOAD_URL = String.format("https://github.com/%s/%s/releases",
-            USER, REPO);
+    private static final String DOWNLOAD_URL =
+            String.format("https://github.com/%s/%s/releases", USER, REPO);
 
     /** The Constant URL. */
-    private static final String URL = String.format("https://api.github.com/repos/%s/%s/releases",
-            USER, REPO);
+    private static final String URL =
+            String.format("https://api.github.com/repos/%s/%s/releases", USER, REPO);
 
     /** The destination reached flag. */
     private boolean destinationReached = false;
 
-    /**
-     * Instantiates a new check update github.
-     */
-    public CheckUpdateGitHub() {
-    }
+    /** Instantiates a new check update github. */
+    public CheckUpdateGitHub() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.update.CheckUpdateClientInterface#getLatest()
      */
     @Override
@@ -123,12 +118,15 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
         StringBuilder sb = new StringBuilder();
         if (url != null) {
             int timeout = 5;
-            RequestConfig config = RequestConfig.custom()
-              .setConnectTimeout(timeout * 1000)
-              .setConnectionRequestTimeout(timeout * 1000)
-              .setSocketTimeout(timeout * 1000).build();
-            
-            try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
+            RequestConfig config =
+                    RequestConfig.custom()
+                            .setConnectTimeout(timeout * 1000)
+                            .setConnectionRequestTimeout(timeout * 1000)
+                            .setSocketTimeout(timeout * 1000)
+                            .build();
+
+            try (CloseableHttpClient httpClient =
+                    HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
 
                 HttpGet getRequest = new HttpGet(url);
                 getRequest.addHeader("accept", "application/json");
@@ -136,14 +134,19 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
                 HttpResponse response = httpClient.execute(getRequest);
 
                 if (response.getStatusLine().getStatusCode() != 200) {
-                    ConsoleManager.getInstance().error(this,
-                            String.format("%s %s",
-                                    Localisation.getField(CheckUpdatePanel.class,
-                                            "CheckUpdateGitHub.httpError"),
-                                    response.getStatusLine().getStatusCode()));
+                    ConsoleManager.getInstance()
+                            .error(
+                                    this,
+                                    String.format(
+                                            "%s %s",
+                                            Localisation.getField(
+                                                    CheckUpdatePanel.class,
+                                                    "CheckUpdateGitHub.httpError"),
+                                            response.getStatusLine().getStatusCode()));
                 } else {
-                    BufferedReader br = new BufferedReader(
-                            new InputStreamReader((response.getEntity().getContent())));
+                    BufferedReader br =
+                            new BufferedReader(
+                                    new InputStreamReader((response.getEntity().getContent())));
 
                     String output;
                     while ((output = br.readLine()) != null) {
@@ -155,8 +158,12 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
                 httpClient.close();
             } catch (IOException e) {
-                ConsoleManager.getInstance().error(this, Localisation.getString(
-                        CheckUpdatePanel.class, "CheckUpdatePanel.destinationUnreachable"));
+                ConsoleManager.getInstance()
+                        .error(
+                                this,
+                                Localisation.getString(
+                                        CheckUpdatePanel.class,
+                                        "CheckUpdatePanel.destinationUnreachable"));
             }
         }
 
@@ -267,7 +274,7 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.update.CheckUpdateClientInterface#getDownloadURL()
      */
     @Override
@@ -290,5 +297,4 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
     public boolean isDestinationReached() {
         return destinationReached;
     }
-
 }

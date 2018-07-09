@@ -17,14 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.common.data;
 
 import java.io.Serializable;
 
 /**
  * Class that encapsulates data describing a GeoServer layer.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerLayer implements Serializable {
@@ -53,15 +52,10 @@ public class GeoServerLayer implements Serializable {
     /** The connection. */
     private GeoServerConnection connection = null;
 
-    /**
-     * Default constructor.
-     */
-    public GeoServerLayer() {
-    }
+    /** Default constructor. */
+    public GeoServerLayer() {}
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public GeoServerLayer(String layerWorkspace, String layerName) {
         this.layerWorkspace = layerWorkspace;
         this.layerName = layerName;
@@ -103,16 +97,17 @@ public class GeoServerLayer implements Serializable {
         this.layerName = layerName;
     }
 
-    /**
-     * Encode style.
-     */
+    /** Encode style. */
     private void encodeStyle() {
-        if (styleWrapper.getWorkspace() == null || (defaultWorkspaceName == null)
+        if (styleWrapper.getWorkspace() == null
+                || (defaultWorkspaceName == null)
                 || (styleWrapper.getWorkspace().compareTo(defaultWorkspaceName) == 0)) {
             styleString = styleWrapper.getStyle();
         } else {
-            styleString = String.format("%s%s%s", styleWrapper.getWorkspace(), SEPARATOR,
-                    styleWrapper.getStyle());
+            styleString =
+                    String.format(
+                            "%s%s%s",
+                            styleWrapper.getWorkspace(), SEPARATOR, styleWrapper.getStyle());
         }
     }
 

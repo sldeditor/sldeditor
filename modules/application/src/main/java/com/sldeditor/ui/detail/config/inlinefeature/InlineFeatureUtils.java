@@ -19,17 +19,18 @@
 
 package com.sldeditor.ui.detail.config.inlinefeature;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import com.sldeditor.datasource.impl.GeometryTypeMapping;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -38,6 +39,7 @@ import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
+import org.locationtech.jts.geom.Geometry;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.feature.type.Name;
@@ -46,16 +48,10 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
-import com.sldeditor.datasource.impl.GeometryTypeMapping;
-import org.locationtech.jts.geom.Geometry;
-
 /**
  * Utility methods to read/write inline features as GML.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 public class InlineFeatureUtils {
 
@@ -90,7 +86,8 @@ public class InlineFeatureUtils {
     private static final String SLD_USER_LAYER_START = "<sld:UserLayer>";
 
     /** The Constant SLD_ROOT_ELEMENT. */
-    private static final String SLD_ROOT_ELEMENT = "<sld:StyledLayerDescriptor xmlns=\"http://www.opengis.net/sld\" xmlns:sld=\"http://www.opengis.net/sld\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" version=\"1.0.0\">";
+    private static final String SLD_ROOT_ELEMENT =
+            "<sld:StyledLayerDescriptor xmlns=\"http://www.opengis.net/sld\" xmlns:sld=\"http://www.opengis.net/sld\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:ogc=\"http://www.opengis.net/ogc\" version=\"1.0.0\">";
 
     /** The Constant XML_HEADER. */
     private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
@@ -205,8 +202,8 @@ public class InlineFeatureUtils {
 
             // The hack, put the gml namespace prefix back otherwise the XML parsing fails
             inlineFeatures = inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX, GML_FEATURE_FID);
-            inlineFeatures = inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX_END,
-                    GML_FEATURE_FID_END);
+            inlineFeatures =
+                    inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX_END, GML_FEATURE_FID_END);
 
             // Remove empty namespace prefixes
             inlineFeatures = inlineFeatures.replace("<:", "<");
@@ -292,7 +289,8 @@ public class InlineFeatureUtils {
      * @param simpleFeatureCollection the simple feature collection
      * @return the geometry type enum
      */
-    public static GeometryTypeEnum determineGeometryType(GeometryDescriptor geometryDescriptor,
+    public static GeometryTypeEnum determineGeometryType(
+            GeometryDescriptor geometryDescriptor,
             SimpleFeatureCollection simpleFeatureCollection) {
 
         if (geometryDescriptor == null) {
@@ -317,8 +315,8 @@ public class InlineFeatureUtils {
                 Object value = feature.getAttribute(geometryName);
 
                 if (value != null) {
-                    GeometryTypeEnum geometryType = GeometryTypeMapping
-                            .getGeometryType(value.getClass());
+                    GeometryTypeEnum geometryType =
+                            GeometryTypeMapping.getGeometryType(value.getClass());
 
                     if (!geometryFeatures.contains(geometryType)) {
                         geometryFeatures.add(geometryType);

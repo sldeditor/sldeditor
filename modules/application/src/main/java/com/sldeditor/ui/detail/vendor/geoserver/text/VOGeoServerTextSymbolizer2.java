@@ -19,27 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.text;
 
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.styling.AnchorPoint;
-import org.geotools.styling.Displacement;
-import org.geotools.styling.ExternalGraphic;
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.Fill;
-import org.geotools.styling.Graphic;
-import org.geotools.styling.Mark;
-import org.geotools.styling.OtherText;
-import org.geotools.styling.OtherTextImpl;
-import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.SelectedChannelType;
-import org.geotools.styling.Stroke;
-import org.geotools.styling.TextSymbolizer;
-import org.geotools.styling.TextSymbolizer2;
-import org.opengis.filter.expression.Expression;
-import org.opengis.style.GraphicalSymbol;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
@@ -61,14 +40,36 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.MultiOptionSelectedInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.List;
+import java.util.Map;
+import org.geotools.styling.AnchorPoint;
+import org.geotools.styling.Displacement;
+import org.geotools.styling.ExternalGraphic;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.Fill;
+import org.geotools.styling.Graphic;
+import org.geotools.styling.Mark;
+import org.geotools.styling.OtherText;
+import org.geotools.styling.OtherTextImpl;
+import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.SelectedChannelType;
+import org.geotools.styling.Stroke;
+import org.geotools.styling.TextSymbolizer;
+import org.geotools.styling.TextSymbolizer2;
+import org.opengis.filter.expression.Expression;
+import org.opengis.style.GraphicalSymbol;
 
 /**
  * Class to handle the getting and setting of GeoServer texts symbolizer 2 vendor option data.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorOptionInterface,
-        PopulateDetailsInterface, UpdateSymbolInterface, MultiOptionSelectedInterface {
+public class VOGeoServerTextSymbolizer2 extends StandardPanel
+        implements VendorOptionInterface,
+                PopulateDetailsInterface,
+                UpdateSymbolInterface,
+                MultiOptionSelectedInterface {
 
     /** The Constant PANEL_CONFIG. */
     private static final String PANEL_CONFIG = "symbol/text/PanelConfig_TextSymbolizer2.xml";
@@ -101,24 +102,26 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
 
         setUpdateSymbolListener(this);
 
-        symbolTypeFactory = new SymbolTypeFactory(VOGeoServerTextSymbolizer2.class,
-                new ColourFieldConfig(GroupIdEnum.VO_TEXTSYMBOLIZER_2_FILL,
-                        FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_COLOUR,
-                        FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_OPACITY,
-                        FieldIdEnum.VO_TEXTSYMBOLIZER_2_SIZE),
-                new ColourFieldConfig(GroupIdEnum.VO_TEXTSYMBOLIZER_2_STROKE,
-                        FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR,
-                        FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_OPACITY,
-                        FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH),
-                FieldIdEnum.VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE);
+        symbolTypeFactory =
+                new SymbolTypeFactory(
+                        VOGeoServerTextSymbolizer2.class,
+                        new ColourFieldConfig(
+                                GroupIdEnum.VO_TEXTSYMBOLIZER_2_FILL,
+                                FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_COLOUR,
+                                FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_OPACITY,
+                                FieldIdEnum.VO_TEXTSYMBOLIZER_2_SIZE),
+                        new ColourFieldConfig(
+                                GroupIdEnum.VO_TEXTSYMBOLIZER_2_STROKE,
+                                FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR,
+                                FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_OPACITY,
+                                FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH),
+                        FieldIdEnum.VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE);
 
         fieldEnableState = symbolTypeFactory.getFieldOverrides(VOGeoServerTextSymbolizer2.class);
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFileNoScrollPane(null, getPanelId(), this, PANEL_CONFIG);
         symbolTypeFactory.populate(this, fieldConfigManager);
@@ -131,7 +134,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOption()
      */
     @Override
@@ -146,7 +149,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldId)
      */
     @Override
@@ -163,7 +166,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -173,7 +176,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
      */
     @Override
@@ -196,7 +199,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.PolygonSymbolizer)
      */
     @Override
@@ -211,7 +214,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.TextSymbolizer)
      */
     @Override
@@ -224,14 +227,15 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
         if (textSymbolizer instanceof TextSymbolizer2) {
             TextSymbolizer2 textSymbol2 = (TextSymbolizer2) textSymbolizer;
 
-            Expression featureDescription = fieldConfigVisitor
-                    .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION);
+            Expression featureDescription =
+                    fieldConfigVisitor.getExpression(
+                            FieldIdEnum.VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION);
             if (!featureDescription.toString().isEmpty()) {
                 textSymbol2.setFeatureDescription(featureDescription);
             }
 
-            Expression snippet = fieldConfigVisitor
-                    .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SNIPPET);
+            Expression snippet =
+                    fieldConfigVisitor.getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SNIPPET);
             if (!snippet.toString().isEmpty()) {
                 textSymbol2.setSnippet(snippet);
             }
@@ -241,10 +245,12 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
             group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT);
             if (group != null) {
                 if (group.isPanelEnabled()) {
-                    String target = fieldConfigVisitor
-                            .getText(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET);
-                    Expression text = fieldConfigVisitor
-                            .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT);
+                    String target =
+                            fieldConfigVisitor.getText(
+                                    FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET);
+                    Expression text =
+                            fieldConfigVisitor.getExpression(
+                                    FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT);
 
                     if (!target.isEmpty() && !text.toString().isEmpty()) {
                         otherText = new OtherTextImpl();
@@ -260,30 +266,38 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
             group = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_GRAPHIC);
 
             if (group.isPanelEnabled()) {
-                Expression symbolType = fieldConfigVisitor
-                        .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE);
+                Expression symbolType =
+                        fieldConfigVisitor.getExpression(
+                                FieldIdEnum.VO_TEXTSYMBOLIZER_2_SYMBOL_TYPE);
 
                 boolean hasFill = (fillGroup == null) ? false : fillGroup.isPanelEnabled();
                 boolean hasStroke = (strokeGroup == null) ? false : strokeGroup.isPanelEnabled();
 
-                Expression size = fieldConfigVisitor
-                        .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SIZE);
-                Expression rotation = fieldConfigVisitor
-                        .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_ANGLE);
+                Expression size =
+                        fieldConfigVisitor.getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SIZE);
+                Expression rotation =
+                        fieldConfigVisitor.getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_ANGLE);
 
-                List<GraphicalSymbol> symbols = symbolTypeFactory.getValue(fieldConfigManager,
-                        symbolType, hasFill, hasStroke, selectedFillPanelId);
+                List<GraphicalSymbol> symbols =
+                        symbolTypeFactory.getValue(
+                                fieldConfigManager,
+                                symbolType,
+                                hasFill,
+                                hasStroke,
+                                selectedFillPanelId);
 
                 AnchorPoint anchor = null;
                 Displacement displacement = null;
-                graphic = getStyleFactory().graphic(symbols, null, size, rotation, anchor,
-                        displacement);
+                graphic =
+                        getStyleFactory()
+                                .graphic(symbols, null, size, rotation, anchor, displacement);
 
                 if (!symbols.isEmpty()) {
                     boolean overallOpacity = (symbols.get(0) instanceof ExternalGraphic);
                     if (overallOpacity) {
-                        Expression opacity = fieldConfigVisitor
-                                .getExpression(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OVERALL_OPACITY);
+                        Expression opacity =
+                                fieldConfigVisitor.getExpression(
+                                        FieldIdEnum.VO_TEXTSYMBOLIZER_2_OVERALL_OPACITY);
                         graphic.setOpacity(opacity);
                     }
                 }
@@ -300,7 +314,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getPanel()
      */
     @Override
@@ -315,7 +329,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.ui.iface.UpdateSymbolInterface)
      */
     @Override
@@ -330,7 +344,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -345,7 +359,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.PolygonSymbolizer)
      */
     @Override
@@ -360,7 +374,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
@@ -370,7 +384,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.RasterSymbolizer)
      */
     @Override
@@ -393,7 +407,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.TextSymbolizer)
      */
     @Override
@@ -401,10 +415,11 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
         if (textSymbolizer instanceof TextSymbolizer2) {
             TextSymbolizer2 textSymbol2 = (TextSymbolizer2) textSymbolizer;
 
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION,
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.VO_TEXTSYMBOLIZER_2_FEATURE_DESCRIPTION,
                     textSymbol2.getFeatureDescription());
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SNIPPET,
-                    textSymbol2.getSnippet());
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.VO_TEXTSYMBOLIZER_2_SNIPPET, textSymbol2.getSnippet());
 
             OtherText otherText = textSymbol2.getOtherText();
             String target = null;
@@ -419,8 +434,8 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
             if (group != null) {
                 group.enable(otherText != null);
             }
-            fieldConfigVisitor.populateTextField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET,
-                    target);
+            fieldConfigVisitor.populateTextField(
+                    FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TARGET, target);
             fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_OTHERTEXT_TEXT, text);
 
             Graphic graphic = textSymbol2.getGraphic();
@@ -436,19 +451,19 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
             }
 
             Expression fillColour = getFilterFactory().literal(DefaultSymbols.defaultColour());
-            Expression fillOpacity = getFilterFactory()
-                    .literal(DefaultSymbols.defaultColourOpacity());
+            Expression fillOpacity =
+                    getFilterFactory().literal(DefaultSymbols.defaultColourOpacity());
             Expression strokeColour = getFilterFactory().literal(DefaultSymbols.defaultColour());
-            Expression strokeOpacity = getFilterFactory()
-                    .literal(DefaultSymbols.defaultColourOpacity());
+            Expression strokeOpacity =
+                    getFilterFactory().literal(DefaultSymbols.defaultColourOpacity());
             Expression strokeLineWidth = null;
 
             List<GraphicalSymbol> graphicalSymbolList = graphic.graphicalSymbols();
 
             if (!graphicalSymbolList.isEmpty()) {
                 GraphicalSymbol symbol = graphicalSymbolList.get(0);
-                symbolTypeFactory.setValue(TextSymbolizer2.class, this.fieldConfigManager, graphic,
-                        symbol);
+                symbolTypeFactory.setValue(
+                        TextSymbolizer2.class, this.fieldConfigManager, graphic, symbol);
 
                 if (symbol instanceof Mark) {
                     Mark mark = (Mark) symbol;
@@ -473,16 +488,16 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
             fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_SIZE, expSize);
             fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_ANGLE, expRotation);
 
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_COLOUR,
-                    fillColour);
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_OPACITY,
-                    fillOpacity);
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR,
-                    strokeColour);
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_OPACITY,
-                    strokeOpacity);
-            fieldConfigVisitor.populateField(FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH,
-                    strokeLineWidth);
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_COLOUR, fillColour);
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.VO_TEXTSYMBOLIZER_2_FILL_OPACITY, fillOpacity);
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_COLOUR, strokeColour);
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_OPACITY, strokeOpacity);
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.VO_TEXTSYMBOLIZER_2_STROKE_FILL_WIDTH, strokeLineWidth);
 
             GroupConfigInterface fillGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_FILL);
             if (fillGroup != null) {
@@ -502,7 +517,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -512,7 +527,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()
      */
     @Override
@@ -522,37 +537,41 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
         if (vendorOptionInfo == null) {
-            vendorOptionInfo = new VendorOptionInfo(
-                    Localisation.getString(VOGeoServerTextSymbolizer2.class,
-                            "geoserver.textsymbolizer2.title"),
-                    this.getVendorOption(), Localisation.getString(VOGeoServerTextSymbolizer2.class,
-                            "geoserver.textsymbolizer2.description"));
+            vendorOptionInfo =
+                    new VendorOptionInfo(
+                            Localisation.getString(
+                                    VOGeoServerTextSymbolizer2.class,
+                                    "geoserver.textsymbolizer2.title"),
+                            this.getVendorOption(),
+                            Localisation.getString(
+                                    VOGeoServerTextSymbolizer2.class,
+                                    "geoserver.textsymbolizer2.description"));
         }
         return vendorOptionInfo;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         if (sldObj instanceof TextSymbolizer2) {
             TextSymbolizer2 textSymbolizer = (TextSymbolizer2) sldObj;
             if ((textSymbolizer.getFeatureDescription() != null)
                     || (textSymbolizer.getSnippet() != null)
                     || (textSymbolizer.getGraphic() != null)
                     || (textSymbolizer.getOtherText() != null)) {
-                VendorOptionPresent voPresent = new VendorOptionPresent(sldObj,
-                        getVendorOptionInfo());
+                VendorOptionPresent voPresent =
+                        new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
                 if (!vendorOptionsPresentList.contains(voPresent)) {
                     vendorOptionsPresentList.add(voPresent);
@@ -563,7 +582,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.MultiOptionSelectedInterface#optionSelected(java.lang.Class, java.lang.String)
      */
     @Override
@@ -582,8 +601,8 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
      * @param selectedItem the selected item
      */
     private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem) {
-        Map<GroupIdEnum, Boolean> groupList = fieldEnableState.getGroupIdList(panelId.getName(),
-                selectedItem);
+        Map<GroupIdEnum, Boolean> groupList =
+                fieldEnableState.getGroupIdList(panelId.getName(), selectedItem);
 
         for (GroupIdEnum groupId : groupList.keySet()) {
             boolean groupEnabled = groupList.get(groupId);
@@ -591,13 +610,13 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
             if (groupConfig != null) {
                 groupConfig.setGroupStateOverride(groupEnabled);
             } else {
-                ConsoleManager.getInstance().error(this,
-                        "Failed to find group : " + groupId.toString());
+                ConsoleManager.getInstance()
+                        .error(this, "Failed to find group : " + groupId.toString());
             }
         }
 
-        Map<FieldIdEnum, Boolean> fieldList = fieldEnableState.getFieldIdList(panelId.getName(),
-                selectedItem);
+        Map<FieldIdEnum, Boolean> fieldList =
+                fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
 
         for (FieldIdEnum fieldId : fieldList.keySet()) {
             boolean fieldEnabled = fieldList.get(fieldId);
@@ -607,8 +626,8 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel implements VendorO
                 fieldState.setFieldEnabled(fieldEnabled);
                 fieldConfig.setFieldState(fieldState);
             } else {
-                ConsoleManager.getInstance().error(this,
-                        "Failed to find field : " + fieldId.toString());
+                ConsoleManager.getInstance()
+                        .error(this, "Failed to find field : " + fieldId.toString());
             }
         }
     }

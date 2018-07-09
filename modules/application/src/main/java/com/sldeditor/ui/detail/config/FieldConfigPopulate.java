@@ -19,9 +19,12 @@
 
 package com.sldeditor.ui.detail.config;
 
+import com.sldeditor.common.xml.TestValueVisitor;
+import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.filter.v2.function.temporal.TimePeriod;
+import com.sldeditor.ui.widgets.ValueComboBoxData;
 import java.util.Date;
 import java.util.List;
-
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.process.function.ProcessFunction;
 import org.geotools.styling.ColorMap;
@@ -32,17 +35,12 @@ import org.jaitools.numeric.Range;
 import org.opengis.filter.Id;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.xml.TestValueVisitor;
-import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.filter.v2.function.temporal.TimePeriod;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
-
 /**
  * The Class FieldConfigPopulate is a base class for all derived FieldConfigxxx classes.
- * 
+ *
  * <p>All FieldConfigValuePopulateInterface, TestValueVisitor interface methods grouped into this
  * class.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public abstract class FieldConfigPopulate extends FieldConfigCommonData
@@ -386,5 +384,4 @@ public abstract class FieldConfigPopulate extends FieldConfigCommonData
         // Do nothing
         return null;
     }
-
 }

@@ -24,7 +24,7 @@ import com.sldeditor.common.output.SLDWriterInterface;
 
 /**
  * A factory for creating SLDWriter objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDWriterFactory {
@@ -53,25 +53,28 @@ public class SLDWriterFactory {
         }
 
         switch (hint) {
-        case YSLD: {
-            if (ysldWriterImpl == null) {
-                ysldWriterImpl = new YSLDWriterImpl();
-            }
-            return ysldWriterImpl;
-        }
-        case MAPBOX: {
-            if (mapBoxWriterImpl == null) {
-                mapBoxWriterImpl = new MapBoxWriterImpl();
-            }
-            return mapBoxWriterImpl;
-        }
-        case SLD:
-        default: {
-            if (sldWriterImpl == null) {
-                sldWriterImpl = new SLDWriterImpl();
-            }
-            return sldWriterImpl;
-        }
+            case YSLD:
+                {
+                    if (ysldWriterImpl == null) {
+                        ysldWriterImpl = new YSLDWriterImpl();
+                    }
+                    return ysldWriterImpl;
+                }
+            case MAPBOX:
+                {
+                    if (mapBoxWriterImpl == null) {
+                        mapBoxWriterImpl = new MapBoxWriterImpl();
+                    }
+                    return mapBoxWriterImpl;
+                }
+            case SLD:
+            default:
+                {
+                    if (sldWriterImpl == null) {
+                        sldWriterImpl = new SLDWriterImpl();
+                    }
+                    return sldWriterImpl;
+                }
         }
     }
 }

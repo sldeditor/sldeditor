@@ -21,14 +21,12 @@ package com.sldeditor.common.data;
 
 /**
  * The Interface SLDTreeUpdatedInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SLDTreeUpdatedInterface {
 
-    /**
-     * Text updated.
-     */
+    /** Text updated. */
     void textUpdated();
 
     /**
@@ -39,8 +37,6 @@ public interface SLDTreeUpdatedInterface {
      */
     void updateNode(Object objectOld, Object objectNew);
 
-    /**
-     * Leaf selected.
-     */
+    /** Leaf selected. */
     void leafSelected();
 }

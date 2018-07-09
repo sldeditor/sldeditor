@@ -24,6 +24,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.datasource.SLDEditorFile;
+import com.sldeditor.datasource.impl.DataSourceInfo;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,7 +34,6 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureStore;
@@ -41,23 +43,18 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;
 
-import com.sldeditor.datasource.SLDEditorFile;
-import com.sldeditor.datasource.impl.DataSourceInfo;
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
-
 /**
  * Unit test for DataSourceInfo.
- * 
- * <p>{@link com.sldeditor.datasource.impl.DataSourceInfo}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.impl.DataSourceInfo}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class DataSourceInfoTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.impl.DataSourceInfo#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceInfo#setGeometryType(com.sldeditor.datasource.impl.GeometryTypeEnum)}.
      * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getGeometryType()}.
      */
     @Test
@@ -75,9 +72,9 @@ public class DataSourceInfoTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.impl.DataSourceInfo#setTypeName(java.lang.String)}. Test
-     * method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getTypeName()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceInfo#setTypeName(java.lang.String)}. Test method for
+     * {@link com.sldeditor.datasource.impl.DataSourceInfo#getTypeName()}.
      */
     @Test
     public void testSetTypeName() {
@@ -93,11 +90,11 @@ public class DataSourceInfoTest {
 
     /**
      * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getDataStore()}. Test
-     * method for
-     * {@link com.sldeditor.datasource.impl.DataSourceInfo#setDataStore(org.geotools.data.DataStore)}.
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#unloadDataStore()}.
+     * method for {@link
+     * com.sldeditor.datasource.impl.DataSourceInfo#setDataStore(org.geotools.data.DataStore)}. Test
+     * method for {@link com.sldeditor.datasource.impl.DataSourceInfo#unloadDataStore()}.
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @Test
     public void testDataStore() {
         File file = new File("example.shp");
@@ -128,14 +125,14 @@ public class DataSourceInfoTest {
         }
     }
 
-    /**
-     * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getFeatures()}.
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    /** Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getFeatures()}. */
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Test
     public void testGetFeatures() {
-        URL url = SLDEditorFile.class.getClassLoader()
-                .getResource("point/sld/shp/sld_cookbook_point.shp");
+        URL url =
+                SLDEditorFile.class
+                        .getClassLoader()
+                        .getResource("point/sld/shp/sld_cookbook_point.shp");
 
         Map map = new HashMap();
         map.put("url", url);
@@ -166,11 +163,13 @@ public class DataSourceInfoTest {
     /**
      * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getFeatureCollection()}.
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Test
     public void testGetFeatureCollection() {
-        URL url = SLDEditorFile.class.getClassLoader()
-                .getResource("point/sld/shp/sld_cookbook_point.shp");
+        URL url =
+                SLDEditorFile.class
+                        .getClassLoader()
+                        .getResource("point/sld/shp/sld_cookbook_point.shp");
 
         Map map = new HashMap();
         map.put("url", url);
@@ -197,14 +196,16 @@ public class DataSourceInfoTest {
 
     /**
      * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getFeatureStore()}. Test
-     * method for
-     * {@link com.sldeditor.datasource.impl.DataSourceInfo#setSchema(org.opengis.feature.type.FeatureType)}.
+     * method for {@link
+     * com.sldeditor.datasource.impl.DataSourceInfo#setSchema(org.opengis.feature.type.FeatureType)}.
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Test
     public void testGetFeatureStore() {
-        URL url = SLDEditorFile.class.getClassLoader()
-                .getResource("point/sld/shp/sld_cookbook_point.shp");
+        URL url =
+                SLDEditorFile.class
+                        .getClassLoader()
+                        .getResource("point/sld/shp/sld_cookbook_point.shp");
 
         Map map = new HashMap();
         map.put("url", url);
@@ -233,14 +234,16 @@ public class DataSourceInfoTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.datasource.impl.DataSourceInfo#getPropertyDescriptorList()}.
+     * Test method for {@link
+     * com.sldeditor.datasource.impl.DataSourceInfo#getPropertyDescriptorList()}.
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Test
     public void testGetPropertyDescriptorList() {
-        URL url = SLDEditorFile.class.getClassLoader()
-                .getResource("point/sld/shp/sld_cookbook_point.shp");
+        URL url =
+                SLDEditorFile.class
+                        .getClassLoader()
+                        .getResource("point/sld/shp/sld_cookbook_point.shp");
 
         Map map = new HashMap();
         map.put("url", url);
@@ -270,11 +273,13 @@ public class DataSourceInfoTest {
     /**
      * Test method for {@link com.sldeditor.datasource.impl.DataSourceInfo#getGeometryFieldName()}.
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Test
     public void testGetGeometryFieldName() {
-        URL url = SLDEditorFile.class.getClassLoader()
-                .getResource("point/sld/shp/sld_cookbook_point.shp");
+        URL url =
+                SLDEditorFile.class
+                        .getClassLoader()
+                        .getResource("point/sld/shp/sld_cookbook_point.shp");
 
         Map map = new HashMap();
         map.put("url", url);
@@ -298,5 +303,4 @@ public class DataSourceInfoTest {
             fail(e.getMessage());
         }
     }
-
 }

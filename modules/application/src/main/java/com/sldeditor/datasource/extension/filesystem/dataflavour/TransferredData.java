@@ -23,12 +23,11 @@ import java.awt.datatransfer.DataFlavor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.tree.TreePath;
 
 /**
  * The data being dragged and dropped within the file system tree.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class TransferredData implements Serializable {
@@ -56,11 +55,8 @@ public class TransferredData implements Serializable {
     /** The data list. */
     private List<InternalTransferredData> dataList = new ArrayList<InternalTransferredData>();
 
-    /**
-     * Default constructor.
-     */
-    public TransferredData() {
-    }
+    /** Default constructor. */
+    public TransferredData() {}
 
     /**
      * Gets the size of the data list.
@@ -126,5 +122,4 @@ public class TransferredData implements Serializable {
 
         dataList.add(data);
     }
-
 }

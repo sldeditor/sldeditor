@@ -21,9 +21,10 @@ package com.sldeditor.test.unit.ui.detail.config.colourmap;
 
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.xml.ui.XMLColourMapEntry;
+import com.sldeditor.ui.detail.config.colourmap.EncodeColourMap;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntryImpl;
@@ -31,12 +32,9 @@ import org.geotools.styling.ColorMapImpl;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 
-import com.sldeditor.common.xml.ui.XMLColourMapEntry;
-import com.sldeditor.ui.detail.config.colourmap.EncodeColourMap;
-
 /**
  * The unit test for EncodeColourMap.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.colourmap.EncodeColourMap}
  *
  * @author Robert Ward (SCISYS)
@@ -65,8 +63,10 @@ public class EncodeColourMapTest {
     private static final String LABEL_2 = "testlabel2";
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.colourmap.EncodeColourMap#encode(org.geotools.styling.ColorMap)}.
-     * Test method for {@link com.sldeditor.ui.detail.config.colourmap.EncodeColourMap#encode(java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.colourmap.EncodeColourMap#encode(org.geotools.styling.ColorMap)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.colourmap.EncodeColourMap#encode(java.util.List)}.
      */
     @Test
     public void testEncodeColorMap() {
@@ -104,5 +104,4 @@ public class EncodeColourMapTest {
 
         assertTrue(actualValue1.compareTo(actualValue2) == 0);
     }
-
 }

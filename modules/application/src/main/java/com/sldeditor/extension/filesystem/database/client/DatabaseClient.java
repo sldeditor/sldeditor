@@ -19,21 +19,19 @@
 
 package com.sldeditor.extension.filesystem.database.client;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.DatabaseConnection;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.feature.type.Name;
-
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.DatabaseConnection;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface;
 
 /**
  * The Class DatabaseClient.
@@ -56,7 +54,7 @@ public class DatabaseClient implements DatabaseClientInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#initialise(com.sldeditor.extension.filesystem.database.
      * DatabaseReadProgressInterface, com.sldeditor.common.data.DatabaseConnection)
      */
@@ -68,7 +66,7 @@ public class DatabaseClient implements DatabaseClientInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#retrieveData()
      */
     @Override
@@ -80,7 +78,7 @@ public class DatabaseClient implements DatabaseClientInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#connect()
      */
     @Override
@@ -111,9 +109,12 @@ public class DatabaseClient implements DatabaseClientInterface {
                     ConsoleManager.getInstance().exception(this, e);
                 }
             } else {
-                String message = String.format("%s : %s",
-                        Localisation.getString(DatabaseClient.class, "DatabaseClient.noDriver"),
-                        connection.getConnectionName());
+                String message =
+                        String.format(
+                                "%s : %s",
+                                Localisation.getString(
+                                        DatabaseClient.class, "DatabaseClient.noDriver"),
+                                connection.getConnectionName());
                 ConsoleManager.getInstance().error(this, message);
             }
         } catch (IOException e) {
@@ -133,8 +134,8 @@ public class DatabaseClient implements DatabaseClientInterface {
     private boolean hasGeometryField(DataStore dataStore, Name name) {
         try {
             SimpleFeatureSource featureSource = dataStore.getFeatureSource(name);
-            GeometryDescriptor geometryDescriptor = featureSource.getSchema()
-                    .getGeometryDescriptor();
+            GeometryDescriptor geometryDescriptor =
+                    featureSource.getSchema().getGeometryDescriptor();
 
             return (geometryDescriptor != null);
 
@@ -146,7 +147,7 @@ public class DatabaseClient implements DatabaseClientInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#disconnect()
      */
     @Override
@@ -157,7 +158,7 @@ public class DatabaseClient implements DatabaseClientInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#getFeatureClassList()
      */
     @Override
@@ -167,7 +168,7 @@ public class DatabaseClient implements DatabaseClientInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#isConnected()
      */
     @Override
@@ -177,7 +178,7 @@ public class DatabaseClient implements DatabaseClientInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#getConnection()
      */
     @Override
@@ -187,13 +188,15 @@ public class DatabaseClient implements DatabaseClientInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#accept(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public boolean accept(DatabaseConnection connection) {
         if (connection != null) {
-            return connection.getConnectionDataMap().keySet()
+            return connection
+                    .getConnectionDataMap()
+                    .keySet()
                     .containsAll(connection.getExpectedKeys());
         }
         return false;
@@ -201,12 +204,11 @@ public class DatabaseClient implements DatabaseClientInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#getDBConnectionParams()
      */
     @Override
     public Map<String, Object> getDBConnectionParams() {
         return connection.getDBConnectionParams();
     }
-
 }

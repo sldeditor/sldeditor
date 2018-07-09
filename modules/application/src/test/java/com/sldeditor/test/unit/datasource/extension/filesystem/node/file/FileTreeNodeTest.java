@@ -25,6 +25,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,31 +35,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
-
 /**
  * Unit test for FileTreeNode class.
- * 
- * <p>{@link com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class FileTreeNodeTest {
 
-    /**
-     * Test.
-     */
+    /** Test. */
     @Ignore
     @Test
     public void test() {
-        Map<String, FileHandlerInterface> fileHandlerMap = 
+        Map<String, FileHandlerInterface> fileHandlerMap =
                 new LinkedHashMap<String, FileHandlerInterface>();
 
         FileHandlerInterface fileHandler = new DummyFileHandler();
@@ -88,9 +83,9 @@ public class FileTreeNodeTest {
             assertEquals(name, node.getName());
             assertEquals(DataFlavourManager.FOLDER_DATAITEM_FLAVOR, node.getDataFlavour());
 
-            //CHECKSTYLE:OFF
+            // CHECKSTYLE:OFF
             File tmpFile1 = File.createTempFile("sldeditor", ".abc", folder);
-            //CHECKSTYLE:ON
+            // CHECKSTYLE:ON
 
             Thread.sleep(1000);
 
@@ -123,5 +118,4 @@ public class FileTreeNodeTest {
             e.printStackTrace();
         }
     }
-
 }

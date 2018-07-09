@@ -18,11 +18,13 @@
  */
 /**
  * Classes generated from:
+ *
  * <ul>
- * <li>paneldetails.xsd to read the configuration files containing all the panel ui configuration data.</li>
- * <li>test.xsd to read the configuration files containing all the panel ui tests.</li>
+ *   <li>paneldetails.xsd to read the configuration files containing all the panel ui configuration
+ *       data.
+ *   <li>test.xsd to read the configuration files containing all the panel ui tests.
  * </ul>
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.xml.ui;

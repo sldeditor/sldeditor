@@ -19,15 +19,6 @@
 
 package com.sldeditor.extension.filesystem.file.database;
 
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.tree.DefaultTreeModel;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.filesystem.FileSystemInterface;
@@ -37,10 +28,17 @@ import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOvera
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  * Class that handles reading geopackage files to the file system.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DatabaseFileHandler implements FileHandlerInterface {
@@ -56,9 +54,7 @@ public class DatabaseFileHandler implements FileHandlerInterface {
     /** The file extension list. */
     private List<String> fileExtensionList;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public DatabaseFileHandler(String resourceIcon, List<String> fileExtensionList) {
         this.resourceIcon = resourceIcon;
         this.fileExtensionList = fileExtensionList;
@@ -83,8 +79,8 @@ public class DatabaseFileHandler implements FileHandlerInterface {
      * @return true, if successful
      */
     @Override
-    public boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel,
-            FileTreeNode node) {
+    public boolean populate(
+            FileSystemInterface inputInterface, DefaultTreeModel treeModel, FileTreeNode node) {
         if (node != null) {
             node.setFileCategory(FileTreeNodeTypeEnum.DATABASE);
         }
@@ -100,7 +96,7 @@ public class DatabaseFileHandler implements FileHandlerInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.input.NodeInterface)
      */
     @Override
@@ -127,7 +123,7 @@ public class DatabaseFileHandler implements FileHandlerInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
@@ -143,14 +139,15 @@ public class DatabaseFileHandler implements FileHandlerInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
     public String getSLDName(SLDDataInterface sldData) {
         if (sldData != null) {
-            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames
-                    .addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
+            return sldData.getLayerNameWithOutSuffix()
+                    + ExternalFilenames.addFileExtensionSeparator(
+                            SLDEditorFile.getSLDFileExtension());
         }
 
         return "";
@@ -168,7 +165,7 @@ public class DatabaseFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
      */
     @Override

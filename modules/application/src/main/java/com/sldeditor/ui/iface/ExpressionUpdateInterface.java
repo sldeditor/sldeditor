@@ -23,14 +23,12 @@ import org.opengis.filter.expression.Expression;
 
 /**
  * The Interface ExpressionUpdateInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface ExpressionUpdateInterface {
 
-    /**
-     * Value updated.
-     */
+    /** Value updated. */
     void valueUpdated();
 
     /**

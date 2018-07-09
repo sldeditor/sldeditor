@@ -19,22 +19,20 @@
 
 package com.sldeditor.ui.widgets;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 
 /**
  * Class that presents a combo box to the user, configured from xml files.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ValueComboBox extends JComboBox<ValueComboBoxData>
@@ -55,9 +53,7 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData>
     /** The vendor option list allowed to be used. */
     private List<VersionData> vendorOptionVersionsList = new ArrayList<VersionData>();
 
-    /**
-     * Instantiates a new value combo box.
-     */
+    /** Instantiates a new value combo box. */
     @SuppressWarnings("unchecked")
     public ValueComboBox() {
         setRenderer(new ComboBoxRenderer());
@@ -86,15 +82,13 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData>
         }
     }
 
-    /**
-     * Update.
-     */
+    /** Update. */
     private void update() {
         model = new DefaultComboBoxModel<ValueComboBoxData>();
         if (valueList != null) {
             for (ValueComboBoxData data : valueList) {
-                if (VendorOptionManager.getInstance().isAllowed(vendorOptionVersionsList,
-                        data.getVendorOption())) {
+                if (VendorOptionManager.getInstance()
+                        .isAllowed(vendorOptionVersionsList, data.getVendorOption())) {
                     model.addElement(data);
                 }
             }
@@ -111,8 +105,8 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData>
         Object selectedObj = getSelectedItem();
         if (selectedObj != null) {
             if (selectedObj instanceof ValueComboBoxData) {
-                ValueComboBoxData valueComboBoxData = valueMap
-                        .get(((ValueComboBoxData) selectedObj).getKey());
+                ValueComboBoxData valueComboBoxData =
+                        valueMap.get(((ValueComboBoxData) selectedObj).getKey());
 
                 return valueComboBoxData;
             }
@@ -160,7 +154,7 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData>
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override

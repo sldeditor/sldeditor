@@ -27,11 +27,11 @@ import java.io.IOException;
 
 /**
  * Class to allow images to be copied to the clipboard.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 class ImageSelection implements Transferable {
-    
+
     /** The image. */
     private Image image;
 
@@ -48,7 +48,7 @@ class ImageSelection implements Transferable {
      * @see java.awt.datatransfer.Transferable#getTransferDataFlavors()
      */
     public DataFlavor[] getTransferDataFlavors() {
-        return new DataFlavor[] { DataFlavor.imageFlavor };
+        return new DataFlavor[] {DataFlavor.imageFlavor};
     }
 
     /* (non-Javadoc)
@@ -62,7 +62,7 @@ class ImageSelection implements Transferable {
      * @see java.awt.datatransfer.Transferable#getTransferData(java.awt.datatransfer.DataFlavor)
      */
     public Object getTransferData(DataFlavor flavor)
-                    throws UnsupportedFlavorException, IOException {
+            throws UnsupportedFlavorException, IOException {
         if (!DataFlavor.imageFlavor.equals(flavor)) {
             throw new UnsupportedFlavorException(flavor);
         }

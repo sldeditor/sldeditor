@@ -19,10 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.qgis;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
@@ -31,10 +27,13 @@ import com.sldeditor.ui.detail.config.symboltype.FieldState;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.EmptyDetails;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class to handle the getting and setting of GeoServer marker shapes vendor option data.
- * 
+ *
  * <p>Only sets the &gt;WellKnownName&lt; string, no extra fields needed.
  *
  * @author Robert Ward (SCISYS)
@@ -49,9 +48,7 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
 
     private FieldConfigMarkerQGIS markerField;
 
-    /**
-     * Instantiates a new VOGeoServerQGISSymbol.
-     */
+    /** Instantiates a new VOGeoServerQGISSymbol. */
     public VOGeoServerQGISSymbol() {
 
         emptyDetails = new EmptyDetails(PANEL_CONFIG);
@@ -59,17 +56,23 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
      */
     @Override
-    public List<FieldState> getMarkerSymbols(Class<?> panelId, ColourFieldConfig fillFieldConfig,
-            ColourFieldConfig strokeFieldConfig, FieldIdEnum symbolSelectionField) {
+    public List<FieldState> getMarkerSymbols(
+            Class<?> panelId,
+            ColourFieldConfig fillFieldConfig,
+            ColourFieldConfig strokeFieldConfig,
+            FieldIdEnum symbolSelectionField) {
         List<FieldState> fieldStateList = new ArrayList<FieldState>();
 
-        markerField = new FieldConfigMarkerQGIS(
-                new FieldConfigCommonData(panelId, FieldIdEnum.VO_QGIS, "", false), fillFieldConfig,
-                strokeFieldConfig, symbolSelectionField);
+        markerField =
+                new FieldConfigMarkerQGIS(
+                        new FieldConfigCommonData(panelId, FieldIdEnum.VO_QGIS, "", false),
+                        fillFieldConfig,
+                        strokeFieldConfig,
+                        symbolSelectionField);
 
         markerField.setVendorOptionVersion(emptyDetails.getVendorOptionVersion());
 
@@ -80,7 +83,7 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getFieldMap()
      */
     @Override
@@ -90,7 +93,7 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
      */
     @Override

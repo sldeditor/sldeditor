@@ -70,6 +70,9 @@
         <app.name>SLDEditor</app.name>
         <sldeditor.dest.folder>../../bin</sldeditor.dest.folder>
 
+        <fmt.action>format</fmt.action>
+        <fmt.skip>false</fmt.skip>
+    
         <!-- Jacoco coverage -->
         <jacoco.version>0.7.9</jacoco.version>
 
@@ -257,6 +260,27 @@
                   </execution>
                 </executions>
               </plugin>
+
+              <!--  Code formatting -->
+              <plugin>
+                <groupId>com.coveo</groupId>
+                <artifactId>fmt-maven-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <filesNamePattern>.*\.java</filesNamePattern>
+                    <skip>${fmt.skip}</skip>
+                    <style>aosp</style>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>${fmt.action}</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+              
            </plugins>
         <pluginManagement>
             <plugins>
@@ -342,7 +366,7 @@
             </plugins>
         </pluginManagement>
     </build>
-
+    
     <repositories>
         <repository>
             <id>osgeo</id>

@@ -19,12 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.marker.wkt;
 
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.util.List;
-
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.undo.UndoActionInterface;
@@ -39,14 +33,21 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.util.List;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class WKTDetails panel contains all the fields to configure WKT strings.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
-public class WKTDetails extends StandardPanel implements PopulateDetailsInterface,
-        UpdateSymbolInterface, UndoActionInterface, FieldConfigStringButtonInterface {
+public class WKTDetails extends StandardPanel
+        implements PopulateDetailsInterface,
+                UpdateSymbolInterface,
+                UndoActionInterface,
+                FieldConfigStringButtonInterface {
 
     /** The Constant PANEL_CONFIG. */
     private static final String PANEL_CONFIG = "symbol/marker/wkt/PanelConfig_WKT.xml";
@@ -72,9 +73,7 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFileNoScrollPane(null, getClass(), this, PANEL_CONFIG);
 
@@ -88,7 +87,7 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
      * SelectedSymbol)
      */
@@ -116,7 +115,7 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -124,9 +123,7 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
         updateSymbol();
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
             if (parentObj != null) {
@@ -142,7 +139,7 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -157,7 +154,7 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -178,9 +175,7 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
         return expression;
     }
 
-    /**
-     * Revert to default value.
-     */
+    /** Revert to default value. */
     public void revertToDefaultValue() {
         List<FieldConfigBase> fieldList = fieldConfigManager.getFields(null);
 
@@ -233,18 +228,19 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
 
             oldValueObj = wktString;
 
-            EventQueue.invokeLater(new Runnable() {
+            EventQueue.invokeLater(
+                    new Runnable() {
 
-                public void run() {
-                    updateSymbol();
-                }
-            });
+                        public void run() {
+                            updateSymbol();
+                        }
+                    });
         }
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -254,7 +250,7 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.JComponent#setEnabled(boolean)
      */
     @Override
@@ -267,13 +263,13 @@ public class WKTDetails extends StandardPanel implements PopulateDetailsInterfac
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
      * java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // No vendor options
     }
 }

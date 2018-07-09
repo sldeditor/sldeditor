@@ -17,13 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.sldeditor.extension.filesystem.geoserver.client;
 
-import java.util.List;
-
 import com.sldeditor.common.DataTypeEnum;
-
+import java.util.List;
 import net.opengis.wps10.ProcessBriefType;
 
 /**
@@ -47,5 +44,4 @@ public interface GeoServerWPSClientInterface {
      * @return the render transformations
      */
     List<ProcessBriefType> getRenderTransformations(DataTypeEnum typeOfData);
-
 }

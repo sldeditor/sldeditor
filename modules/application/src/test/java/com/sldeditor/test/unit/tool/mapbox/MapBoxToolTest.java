@@ -23,6 +23,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sldeditor.common.NodeInterface;
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.tool.ToolButton;
+import com.sldeditor.tool.mapbox.MapBoxTool;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,23 +40,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JPanel;
-
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
-import com.sldeditor.common.NodeInterface;
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.data.SLDData;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
-import com.sldeditor.tool.ToolButton;
-import com.sldeditor.tool.mapbox.MapBoxTool;
-
 /**
  * The unit test for MapBoxTool.
- * 
+ *
  * <p>{@link com.sldeditor.tool.mapbox.MapBoxTool}
  *
  * @author Robert Ward (SCISYS)
@@ -58,9 +55,7 @@ public class MapBoxToolTest {
 
     public static final String PREFIX = "extracted";
 
-    /**
-     * Test method for {@link com.sldeditor.tool.mapbox.MapBoxTool#getPanel()}.
-     */
+    /** Test method for {@link com.sldeditor.tool.mapbox.MapBoxTool#getPanel()}. */
     @Test
     public void testGetPanel() {
         MapBoxTool tool = new MapBoxTool();
@@ -69,8 +64,8 @@ public class MapBoxToolTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.tool.mapbox.MapBoxTool#setSelectedItems(java.util.List, java.util.List)}.
+     * Test method for {@link com.sldeditor.tool.mapbox.MapBoxTool#setSelectedItems(java.util.List,
+     * java.util.List)}.
      */
     @Test
     public void testSetSelectedItems() {
@@ -85,7 +80,8 @@ public class MapBoxToolTest {
                 ToolButton button = (ToolButton) c;
                 String toolTipText = button.getToolTipText();
                 if (toolTipText.compareTo(
-                        Localisation.getString(MapBoxTool.class, "MapBoxTool.exportToSLD")) == 0) {
+                                Localisation.getString(MapBoxTool.class, "MapBoxTool.exportToSLD"))
+                        == 0) {
                     toSLD = button;
                 }
             }
@@ -119,12 +115,12 @@ public class MapBoxToolTest {
          * // Try with valid mapbox file sldDataList = new ArrayList<SLDDataInterface>(); SLDData
          * sldData3 = getSLDDataFile("/point/mapbox/circleStyleTest.json");
          * sldDataList.add(sldData3); tool.setSelectedItems(null, sldDataList);
-         * 
+         *
          * // SLD should be enabled assertTrue(toSLD.isEnabled()); toSLD.doClick();
-         * 
+         *
          * // Try with valid sld files sldDataList = new ArrayList<SLDDataInterface>();
          * sldDataList.add(sldData3); tool.setSelectedItems(null, sldDataList);
-         * 
+         *
          * // SLD should be enabled assertTrue(toSLD.isEnabled());
          */
 
@@ -173,25 +169,25 @@ public class MapBoxToolTest {
     private static SLDData getSLDDataFile(String testfile) {
         SLDData sldData = null;
         /*
-         * 
+         *
          * InputStream inputStream = MapBoxToolTest.class.getResourceAsStream(testfile);
-         * 
+         *
          * if (inputStream == null) { Assert.assertNotNull("Failed to find test file : " + testfile,
          * inputStream); } else { File f = null; try { String fileExtension =
          * ExternalFilenames.getFileExtension(testfile); f = stream2file(inputStream,
          * ExternalFilenames.addFileExtensionSeparator(fileExtension)); String sldContents =
          * readFile(f.getAbsolutePath());
-         * 
+         *
          * if (fileExtension.compareTo("json") == 0) { StyledLayerDescriptor sld =
          * MapBoxStyle.parse(sldContents);
-         * 
+         *
          * // Convert mapbox to SLD string SLDWriterInterface sldWriter = SLDWriterFactory
          * .createWriter(SLDOutputFormatEnum.SLD);
-         * 
+         *
          * sldContents = sldWriter.encodeSLD(null, sld); }
-         * 
+         *
          * sldData = new SLDData(new StyleWrapper(f.getName()), sldContents); sldData.setSLDFile(f);
-         * 
+         *
          * SelectedSymbol.getInstance().setSld(SLDUtils.createSLDFromString(sldData)); } catch
          * (IOException e1) { e1.printStackTrace(); } }
          */
@@ -223,9 +219,7 @@ public class MapBoxToolTest {
         }
     }
 
-    /**
-     * Test method for {@link com.sldeditor.tool.mapbox.MapBoxTool#getToolName()}.
-     */
+    /** Test method for {@link com.sldeditor.tool.mapbox.MapBoxTool#getToolName()}. */
     @Test
     public void testGetToolName() {
         MapBoxTool tool = new MapBoxTool();
@@ -235,8 +229,8 @@ public class MapBoxToolTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.tool.mapbox.MapBoxTool#supports(java.util.List, java.util.List, java.util.List)}.
+     * Test method for {@link com.sldeditor.tool.mapbox.MapBoxTool#supports(java.util.List,
+     * java.util.List, java.util.List)}.
      */
     @Test
     public void testSupports() {
@@ -289,5 +283,4 @@ public class MapBoxToolTest {
         testFile2.delete();
         testFile3.delete();
     }
-
 }

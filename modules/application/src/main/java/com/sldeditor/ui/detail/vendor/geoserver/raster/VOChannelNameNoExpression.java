@@ -19,15 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.raster;
 
-import java.util.List;
-
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.SelectedChannelType;
-import org.geotools.styling.TextSymbolizer;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -39,6 +30,13 @@ import com.sldeditor.ui.detail.StandardPanel;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.List;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.SelectedChannelType;
+import org.geotools.styling.TextSymbolizer;
+import org.opengis.filter.expression.Expression;
 
 /**
  * Class to handle the getting and setting of raster channel names using strings.
@@ -97,7 +95,7 @@ public class VOChannelNameNoExpression extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOption()
      */
     @Override
@@ -112,7 +110,7 @@ public class VOChannelNameNoExpression extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.
      * FieldId)
@@ -131,7 +129,7 @@ public class VOChannelNameNoExpression extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
      * selectedsymbol.SelectedSymbol)
      */
@@ -142,7 +140,7 @@ public class VOChannelNameNoExpression extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * SelectedChannelType)
@@ -158,7 +156,7 @@ public class VOChannelNameNoExpression extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * RasterSymbolizer)
@@ -170,7 +168,7 @@ public class VOChannelNameNoExpression extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * FeatureTypeStyle)
@@ -187,7 +185,7 @@ public class VOChannelNameNoExpression extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * PolygonSymbolizer)
@@ -204,7 +202,7 @@ public class VOChannelNameNoExpression extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -214,7 +212,7 @@ public class VOChannelNameNoExpression extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.RasterSymbolizer)
@@ -231,7 +229,7 @@ public class VOChannelNameNoExpression extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.PolygonSymbolizer)
@@ -243,7 +241,7 @@ public class VOChannelNameNoExpression extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.SelectedChannelType)
@@ -259,7 +257,7 @@ public class VOChannelNameNoExpression extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.FeatureTypeStyle)
@@ -276,7 +274,7 @@ public class VOChannelNameNoExpression extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getPanel()
      */
     @Override
@@ -291,7 +289,7 @@ public class VOChannelNameNoExpression extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.
      * ui.iface.UpdateSymbolInterface)
@@ -308,7 +306,7 @@ public class VOChannelNameNoExpression extends StandardPanel
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -318,7 +316,7 @@ public class VOChannelNameNoExpression extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -328,7 +326,7 @@ public class VOChannelNameNoExpression extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getParentPanel()
      */
     @Override
@@ -338,29 +336,32 @@ public class VOChannelNameNoExpression extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
         if (vendorOptionInfo == null) {
-            vendorOptionInfo = new VendorOptionInfo(
-                    Localisation.getString(ChannelName.class, "channelname.no.expression.title"),
-                    this.getVendorOption(), Localisation.getString(ChannelName.class,
-                            "channelname.no.expression.description"));
+            vendorOptionInfo =
+                    new VendorOptionInfo(
+                            Localisation.getString(
+                                    ChannelName.class, "channelname.no.expression.title"),
+                            this.getVendorOption(),
+                            Localisation.getString(
+                                    ChannelName.class, "channelname.no.expression.description"));
         }
         return vendorOptionInfo;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
      * java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         if (sldObj instanceof SelectedChannelType) {
             VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
@@ -372,7 +373,7 @@ public class VOChannelNameNoExpression extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
      * TextSymbolizer)
@@ -384,7 +385,7 @@ public class VOChannelNameNoExpression extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
      * styling.TextSymbolizer)

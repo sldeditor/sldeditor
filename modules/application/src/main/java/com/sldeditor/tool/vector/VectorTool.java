@@ -19,19 +19,6 @@
 
 package com.sldeditor.tool.vector;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.LoadSLDInterface;
@@ -57,6 +44,17 @@ import com.sldeditor.extension.filesystem.database.client.DatabaseClientInterfac
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.ToolPanel;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  * The Class VectorTool.
@@ -97,80 +95,83 @@ public class VectorTool implements ToolInterface {
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         vectorPanel = new JPanel();
         FlowLayout flowLayout = (FlowLayout) vectorPanel.getLayout();
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
-        vectorPanel.setBorder(BorderFactory
-                .createTitledBorder(Localisation.getString(VectorTool.class, "VectorTool.title")));
+        vectorPanel.setBorder(
+                BorderFactory.createTitledBorder(
+                        Localisation.getString(VectorTool.class, "VectorTool.title")));
 
         //
         // Import vector
         //
-        importVectorButton = new ToolButton(
-                Localisation.getString(VectorTool.class, "VectorTool.import"),
-                "tool/importvector.png");
+        importVectorButton =
+                new ToolButton(
+                        Localisation.getString(VectorTool.class, "VectorTool.import"),
+                        "tool/importvector.png");
         vectorPanel.add(importVectorButton);
         importVectorButton.setEnabled(false);
 
-        importVectorButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ((nodeTypeList != null) && (nodeTypeList.size() == 1)) {
-                    if (sldEditorInterface != null) {
-                        NodeInterface nodeInterface = nodeTypeList.get(0);
-                        if (nodeInterface instanceof FileTreeNode) {
-                            FileTreeNode fileTreeNode = (FileTreeNode) nodeInterface;
+        importVectorButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if ((nodeTypeList != null) && (nodeTypeList.size() == 1)) {
+                            if (sldEditorInterface != null) {
+                                NodeInterface nodeInterface = nodeTypeList.get(0);
+                                if (nodeInterface instanceof FileTreeNode) {
+                                    FileTreeNode fileTreeNode = (FileTreeNode) nodeInterface;
 
-                            if (!importFile(fileTreeNode)) {
-                                return;
-                            }
-                        } else if (nodeInterface instanceof DatabaseFeatureClassNode) {
-                            DatabaseFeatureClassNode featureClassNode =
-                                    (DatabaseFeatureClassNode) nodeInterface;
+                                    if (!importFile(fileTreeNode)) {
+                                        return;
+                                    }
+                                } else if (nodeInterface instanceof DatabaseFeatureClassNode) {
+                                    DatabaseFeatureClassNode featureClassNode =
+                                            (DatabaseFeatureClassNode) nodeInterface;
 
-                            if (!importFeatureClass(featureClassNode)) {
-                                return;
+                                    if (!importFeatureClass(featureClassNode)) {
+                                        return;
+                                    }
+                                }
                             }
                         }
                     }
-                }
-            }
-        });
+                });
 
         //
         // Set data source
         //
-        dataSourceButton = new ToolButton(
-                Localisation.getString(VectorTool.class, "VectorTool.dataSource"),
-                "tool/setdatasource.png");
+        dataSourceButton =
+                new ToolButton(
+                        Localisation.getString(VectorTool.class, "VectorTool.dataSource"),
+                        "tool/setdatasource.png");
         vectorPanel.add(dataSourceButton);
         dataSourceButton.setEnabled(false);
 
-        dataSourceButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ((nodeTypeList != null) && (nodeTypeList.size() == 1)) {
-                    if (sldEditorInterface != null) {
-                        NodeInterface nodeInterface = nodeTypeList.get(0);
-                        if (nodeInterface instanceof FileTreeNode) {
-                            FileTreeNode fileTreeNode = (FileTreeNode) nodeInterface;
+        dataSourceButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if ((nodeTypeList != null) && (nodeTypeList.size() == 1)) {
+                            if (sldEditorInterface != null) {
+                                NodeInterface nodeInterface = nodeTypeList.get(0);
+                                if (nodeInterface instanceof FileTreeNode) {
+                                    FileTreeNode fileTreeNode = (FileTreeNode) nodeInterface;
 
-                            setDataSource(fileTreeNode);
-                        } else if (nodeInterface instanceof DatabaseFeatureClassNode) {
-                            DatabaseFeatureClassNode featureClassNode =
-                                    (DatabaseFeatureClassNode) nodeInterface;
+                                    setDataSource(fileTreeNode);
+                                } else if (nodeInterface instanceof DatabaseFeatureClassNode) {
+                                    DatabaseFeatureClassNode featureClassNode =
+                                            (DatabaseFeatureClassNode) nodeInterface;
 
-                            setDataSource(featureClassNode);
+                                    setDataSource(featureClassNode);
+                                }
+                            }
                         }
                     }
-                }
-            }
-        });
+                });
         vectorPanel.setPreferredSize(new Dimension(PANEL_WIDTH, ToolPanel.TOOL_PANEL_HEIGHT));
     }
 
@@ -191,8 +192,8 @@ public class VectorTool implements ToolInterface {
      * @param sldDataList the sld data list
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList,
-            List<SLDDataInterface> sldDataList) {
+    public void setSelectedItems(
+            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
         this.nodeTypeList = nodeTypeList;
 
         if (importVectorButton != null) {
@@ -223,7 +224,9 @@ public class VectorTool implements ToolInterface {
      * @return true, if successful
      */
     @Override
-    public boolean supports(List<Class<?>> uniqueNodeTypeList, List<NodeInterface> nodeTypeList,
+    public boolean supports(
+            List<Class<?>> uniqueNodeTypeList,
+            List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
         if ((nodeTypeList != null) && !nodeTypeList.isEmpty()) {
             for (NodeInterface node : nodeTypeList) {
@@ -254,22 +257,27 @@ public class VectorTool implements ToolInterface {
     protected boolean importFile(FileTreeNode fileTreeNode) {
         if (fileTreeNode != null) {
             File vectorFile = fileTreeNode.getFile();
-            ConsoleManager.getInstance().information(this,
-                    String.format("%s : %s",
-                            Localisation.getString(VectorTool.class, "VectorTool.createSymbol"),
-                            vectorFile.getAbsolutePath()));
+            ConsoleManager.getInstance()
+                    .information(
+                            this,
+                            String.format(
+                                    "%s : %s",
+                                    Localisation.getString(
+                                            VectorTool.class, "VectorTool.createSymbol"),
+                                    vectorFile.getAbsolutePath()));
             SLDDataInterface sldData = vectorReader.createVectorSLDData(vectorFile);
 
-            DataSourcePropertiesInterface dsProperties = SLDEditorFile.getInstance()
-                    .getDataSource();
+            DataSourcePropertiesInterface dsProperties =
+                    SLDEditorFile.getInstance().getDataSource();
 
-            DataSourceConnectorInterface dsc = DataSourceConnectorFactory
-                    .getDataSource(DataSourceConnector.class);
+            DataSourceConnectorInterface dsc =
+                    DataSourceConnectorFactory.getDataSource(DataSourceConnector.class);
 
             try {
                 String vectorFilename = vectorFile.toURI().toURL().toString();
-                dsProperties = dsc.getDataSourceProperties(
-                        DataSourceProperties.encodeFilename(vectorFilename));
+                dsProperties =
+                        dsc.getDataSourceProperties(
+                                DataSourceProperties.encodeFilename(vectorFilename));
             } catch (MalformedURLException exceptionObj) {
                 ConsoleManager.getInstance().exception(VectorTool.class, exceptionObj);
                 return false;
@@ -287,9 +295,12 @@ public class VectorTool implements ToolInterface {
      * @param sldData the sld data
      * @param folderName the folder name
      */
-    private void loadSymbol(DataSourcePropertiesInterface dsProperties, SLDDataInterface sldData,
-            File vectorFile) {
-        loadSymbol(dsProperties, sldData, ExternalFilenames.removeSuffix(vectorFile.getName()),
+    private void loadSymbol(
+            DataSourcePropertiesInterface dsProperties, SLDDataInterface sldData, File vectorFile) {
+        loadSymbol(
+                dsProperties,
+                sldData,
+                ExternalFilenames.removeSuffix(vectorFile.getName()),
                 vectorFile.getParent());
     }
 
@@ -301,8 +312,11 @@ public class VectorTool implements ToolInterface {
      * @param vectorFilename the vector filename
      * @param folder the folder
      */
-    private void loadSymbol(DataSourcePropertiesInterface dsProperties, SLDDataInterface sldData,
-            String vectorFilename, String folder) {
+    private void loadSymbol(
+            DataSourcePropertiesInterface dsProperties,
+            SLDDataInterface sldData,
+            String vectorFilename,
+            String folder) {
 
         // Vector file
         SLDEditorFile.getInstance().setSLDData(sldData);
@@ -331,29 +345,39 @@ public class VectorTool implements ToolInterface {
      */
     protected boolean importFeatureClass(DatabaseFeatureClassNode featureClassNode) {
         if (featureClassNode != null) {
-            DatabaseClientInterface dbClient = DatabaseConnectionManager.getInstance()
-                    .getConnectionMap().get(featureClassNode.getConnectionData());
+            DatabaseClientInterface dbClient =
+                    DatabaseConnectionManager.getInstance()
+                            .getConnectionMap()
+                            .get(featureClassNode.getConnectionData());
             if (dbClient != null) {
 
-                ConsoleManager.getInstance().information(this,
-                        String.format("%s : %s",
-                                Localisation.getString(VectorTool.class, "VectorTool.createSymbol"),
-                                featureClassNode.toString()));
+                ConsoleManager.getInstance()
+                        .information(
+                                this,
+                                String.format(
+                                        "%s : %s",
+                                        Localisation.getString(
+                                                VectorTool.class, "VectorTool.createSymbol"),
+                                        featureClassNode.toString()));
 
-                SLDDataInterface sldData = vectorReader.createVectorSLDData(
-                        featureClassNode.getConnectionData(), featureClassNode.toString());
+                SLDDataInterface sldData =
+                        vectorReader.createVectorSLDData(
+                                featureClassNode.getConnectionData(), featureClassNode.toString());
 
-                DataSourcePropertiesInterface dsProperties = SLDEditorFile.getInstance()
-                        .getDataSource();
+                DataSourcePropertiesInterface dsProperties =
+                        SLDEditorFile.getInstance().getDataSource();
 
-                DataSourceConnectorInterface dsc = DataSourceConnectorFactory
-                        .getDataSource(dbClient.getClass());
+                DataSourceConnectorInterface dsc =
+                        DataSourceConnectorFactory.getDataSource(dbClient.getClass());
 
                 dsProperties = dsc.getDataSourceProperties(dbClient.getDBConnectionParams());
 
                 dsProperties.setFilename(featureClassNode.toString());
 
-                loadSymbol(dsProperties, sldData, featureClassNode.toString(),
+                loadSymbol(
+                        dsProperties,
+                        sldData,
+                        featureClassNode.toString(),
                         featureClassNode.getConnectionData().getConnectionName());
             }
         }
@@ -368,19 +392,25 @@ public class VectorTool implements ToolInterface {
     protected void setDataSource(FileTreeNode fileTreeNode) {
         File vectorFile = fileTreeNode.getFile();
 
-        ConsoleManager.getInstance().information(this,
-                String.format("%s : %s",
-                        Localisation.getString(VectorTool.class, "VectorTool.setDataSource"),
-                        vectorFile.getAbsolutePath()));
+        ConsoleManager.getInstance()
+                .information(
+                        this,
+                        String.format(
+                                "%s : %s",
+                                Localisation.getString(
+                                        VectorTool.class, "VectorTool.setDataSource"),
+                                vectorFile.getAbsolutePath()));
 
         // Vector file
-        DataSourceConnectorInterface dsc = DataSourceConnectorFactory
-                .getDataSource(DataSourceConnector.class);
+        DataSourceConnectorInterface dsc =
+                DataSourceConnectorFactory.getDataSource(DataSourceConnector.class);
 
         DataSourcePropertiesInterface dsProperties = null;
         try {
-            dsProperties = dsc.getDataSourceProperties(
-                    DataSourceProperties.encodeFilename(vectorFile.toURI().toURL().toString()));
+            dsProperties =
+                    dsc.getDataSourceProperties(
+                            DataSourceProperties.encodeFilename(
+                                    vectorFile.toURI().toURL().toString()));
         } catch (MalformedURLException exceptionObj) {
             ConsoleManager.getInstance().exception(VectorTool.class, exceptionObj);
             return;
@@ -403,21 +433,27 @@ public class VectorTool implements ToolInterface {
      * @param featureClassNode the new data source
      */
     protected void setDataSource(DatabaseFeatureClassNode featureClassNode) {
-        DatabaseClientInterface dbClient = DatabaseConnectionManager.getInstance()
-                .getConnectionMap().get(featureClassNode.getConnectionData());
+        DatabaseClientInterface dbClient =
+                DatabaseConnectionManager.getInstance()
+                        .getConnectionMap()
+                        .get(featureClassNode.getConnectionData());
         if (dbClient != null) {
 
-            ConsoleManager.getInstance().information(this,
-                    String.format("%s : %s",
-                            Localisation.getString(VectorTool.class, "VectorTool.setDataSource"),
-                            featureClassNode.toString()));
+            ConsoleManager.getInstance()
+                    .information(
+                            this,
+                            String.format(
+                                    "%s : %s",
+                                    Localisation.getString(
+                                            VectorTool.class, "VectorTool.setDataSource"),
+                                    featureClassNode.toString()));
 
             // Vector file
-            DataSourcePropertiesInterface dsProperties = SLDEditorFile.getInstance()
-                    .getDataSource();
+            DataSourcePropertiesInterface dsProperties =
+                    SLDEditorFile.getInstance().getDataSource();
 
-            DataSourceConnectorInterface dsc = DataSourceConnectorFactory
-                    .getDataSource(dbClient.getClass());
+            DataSourceConnectorInterface dsc =
+                    DataSourceConnectorFactory.getDataSource(dbClient.getClass());
 
             dsProperties = dsc.getDataSourceProperties(dbClient.getDBConnectionParams());
 
@@ -428,7 +464,9 @@ public class VectorTool implements ToolInterface {
             DataSourceInterface dataSource = DataSourceFactory.createDataSource(null);
 
             if (dataSource != null) {
-                dataSource.connect(featureClassNode.toString(), SLDEditorFile.getInstance(),
+                dataSource.connect(
+                        featureClassNode.toString(),
+                        SLDEditorFile.getInstance(),
                         CheckAttributeFactory.getCheckList());
             }
         }

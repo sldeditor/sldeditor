@@ -19,16 +19,15 @@
 
 package com.sldeditor.render;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.sldeditor.common.output.SLDOutputInterface;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.map.MapRender;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A factory for creating RenderPanel objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class RenderPanelFactory {
@@ -79,5 +78,4 @@ public class RenderPanelFactory {
 
         return mapPanelRender;
     }
-
 }

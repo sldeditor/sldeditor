@@ -21,49 +21,49 @@ package com.sldeditor.filter.v2.function.namefilter;
 
 import java.util.Arrays;
 import java.util.List;
-
-import org.opengis.filter.capability.FunctionName;
-import org.opengis.parameter.Parameter;
-
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.MultiPoint;
 import org.locationtech.jts.geom.Point;
+import org.opengis.filter.capability.FunctionName;
+import org.opengis.parameter.Parameter;
 
 /**
- * The Class FunctionNameFilterRaster. Accept on functions suitable for raster symbols.
- * Ignore functions which return geometry or contain geometry
- * parameters.
+ * The Class FunctionNameFilterRaster. Accept on functions suitable for raster symbols. Ignore
+ * functions which return geometry or contain geometry parameters.
  *
  * @author Robert Ward (SCISYS)
  */
 public class FunctionNameFilterRaster implements FunctionNameFilterInterface {
 
     /** The allowed geometry types. */
-    //CHECKSTYLE:OFF
-    private static Class<?>[] allowedGeometryTypes = { Geometry.class, LineString.class,
-            Point.class, MultiPoint.class, LinearRing.class, Object.class };
-    //CHECKSTYLE:ON
+    // CHECKSTYLE:OFF
+    private static Class<?>[] allowedGeometryTypes = {
+        Geometry.class,
+        LineString.class,
+        Point.class,
+        MultiPoint.class,
+        LinearRing.class,
+        Object.class
+    };
+    // CHECKSTYLE:ON
 
     /** The allowed geometry type list. */
     private List<Class<?>> allowedGeometryTypeList = Arrays.asList(allowedGeometryTypes);
 
     /** The disallowed function names. */
-    private static String[] disallowedFunctionNames = { "id", "property" };
+    private static String[] disallowedFunctionNames = {"id", "property"};
 
     /** The disallowed function name list. */
     private List<String> disallowedFunctionNameList = Arrays.asList(disallowedFunctionNames);
 
-    /**
-     * Instantiates a new function name filter raster.
-     */
-    public FunctionNameFilterRaster() {
-    }
+    /** Instantiates a new function name filter raster. */
+    public FunctionNameFilterRaster() {}
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface#accept(org.opengis.filter.capability.FunctionName)
      */
     @Override

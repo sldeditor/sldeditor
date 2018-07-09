@@ -21,29 +21,25 @@ package com.sldeditor.test.unit.update;
 
 import static org.junit.Assert.assertTrue;
 
-import java.net.URL;
-
-import org.junit.Test;
-
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.update.CheckUpdate;
 import com.sldeditor.update.CheckUpdateClientInterface;
 import com.sldeditor.update.CheckUpdatePanel;
 import com.sldeditor.update.UpdateData;
+import java.net.URL;
+import org.junit.Test;
 
 /**
  * The unit test for CheckUpdatePanel.
- * 
+ *
  * <p>{@link com.sldeditor.update.CheckUpdatePanel}
  *
  * @author Robert Ward (SCISYS)
  */
 public class CheckUpdatePanelTest {
 
-    /**
-     * The Class TestCheckUpdatePanel.
-     */
+    /** The Class TestCheckUpdatePanel. */
     class TestCheckUpdatePanel extends CheckUpdatePanel {
 
         /** The Constant serialVersionUID. */
@@ -52,13 +48,15 @@ public class CheckUpdatePanelTest {
         /** The Constant LATEST_VERSION. */
         private static final String LATEST_VERSION = "0.4.0";
 
-        //CHECKSTYLE:OFF
+        // CHECKSTYLE:OFF
         /** The Constant DESCRIPTION. */
-        private static final String DESCRIPTION = "<html>\n  <head>\n    \n  </head>\n  <body>\n    Description\n  </body>\n</html>\n";
+        private static final String DESCRIPTION =
+                "<html>\n  <head>\n    \n  </head>\n  <body>\n    Description\n  </body>\n</html>\n";
 
         /** The Constant EMPTY_STRING. */
-        private static final String EMPTY_STRING = "<html>\r\n  <head>\r\n\r\n  </head>\r\n  <body>\r\n    <p style=\"margin-top: 0\">\r\n      \r\n    </p>\r\n  </body>\r\n</html>\r\n";
-        //CHECKSTYLE:ON
+        private static final String EMPTY_STRING =
+                "<html>\r\n  <head>\r\n\r\n  </head>\r\n  <body>\r\n    <p style=\"margin-top: 0\">\r\n      \r\n    </p>\r\n  </body>\r\n</html>\r\n";
+        // CHECKSTYLE:ON
 
         /**
          * Test check for latest version.
@@ -66,8 +64,8 @@ public class CheckUpdatePanelTest {
          * @param currentVersion the current version
          * @param client the client
          */
-        public void testCheckForLatestVersion(String currentVersion,
-                CheckUpdateClientInterface client) {
+        public void testCheckForLatestVersion(
+                String currentVersion, CheckUpdateClientInterface client) {
             checkForLatestVersion(currentVersion, client, false);
         }
 
@@ -77,8 +75,9 @@ public class CheckUpdatePanelTest {
          * @return true, if successful
          */
         public boolean testUnreachable() {
-            String expectedStatus = Localisation.getString(CheckUpdatePanel.class,
-                    "CheckUpdatePanel.destinationUnreachable");
+            String expectedStatus =
+                    Localisation.getString(
+                            CheckUpdatePanel.class, "CheckUpdatePanel.destinationUnreachable");
             boolean status = expectedStatus.equals(lblStatus.getText());
             boolean latest = "".equals(lblLatestVersion.getText());
             boolean getButton = (btnGet.isVisible() == false);
@@ -92,12 +91,16 @@ public class CheckUpdatePanelTest {
          * @return true, if successful
          */
         public boolean testNoUpdate() {
-            String latestVersionString = String.format("%s %s",
-                    Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.latestVersion"),
-                    TestCheckUpdatePanel.LATEST_VERSION);
+            String latestVersionString =
+                    String.format(
+                            "%s %s",
+                            Localisation.getField(
+                                    CheckUpdatePanel.class, "CheckUpdatePanel.latestVersion"),
+                            TestCheckUpdatePanel.LATEST_VERSION);
 
-            String expectedStatus = Localisation.getString(CheckUpdatePanel.class,
-                    "CheckUpdatePanel.runningLatest");
+            String expectedStatus =
+                    Localisation.getString(
+                            CheckUpdatePanel.class, "CheckUpdatePanel.runningLatest");
             boolean status = expectedStatus.equals(lblStatus.getText());
             boolean latest = latestVersionString.equals(lblLatestVersion.getText());
             boolean getButton = (btnGet.isVisible() == false);
@@ -113,12 +116,16 @@ public class CheckUpdatePanelTest {
          * @return true, if successful
          */
         public boolean testLaterVersion() {
-            String latestVersionString = String.format("%s %s",
-                    Localisation.getField(CheckUpdatePanel.class, "CheckUpdatePanel.latestVersion"),
-                    TestCheckUpdatePanel.LATEST_VERSION);
+            String latestVersionString =
+                    String.format(
+                            "%s %s",
+                            Localisation.getField(
+                                    CheckUpdatePanel.class, "CheckUpdatePanel.latestVersion"),
+                            TestCheckUpdatePanel.LATEST_VERSION);
 
-            String expectedStatus = Localisation.getString(CheckUpdatePanel.class,
-                    "CheckUpdatePanel.newVersionAvailable");
+            String expectedStatus =
+                    Localisation.getString(
+                            CheckUpdatePanel.class, "CheckUpdatePanel.newVersionAvailable");
             boolean status = expectedStatus.equals(lblStatus.getText());
             boolean latest = latestVersionString.equals(lblLatestVersion.getText());
             boolean getButton = (btnGet.isVisible() == true);
@@ -129,9 +136,7 @@ public class CheckUpdatePanelTest {
         }
     }
 
-    /**
-     * The Class TestCheckUpdateClient.
-     */
+    /** The Class TestCheckUpdateClient. */
     class TestCheckUpdateClient implements CheckUpdateClientInterface {
 
         /** The destination reached. */
@@ -139,20 +144,22 @@ public class CheckUpdatePanelTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.update.CheckUpdateClientInterface#getLatest()
          */
         @Override
         public UpdateData getLatest() {
-            UpdateData updateData = new UpdateData(
-                    VersionData.decode(CheckUpdate.class, TestCheckUpdatePanel.LATEST_VERSION),
-                    TestCheckUpdatePanel.DESCRIPTION);
+            UpdateData updateData =
+                    new UpdateData(
+                            VersionData.decode(
+                                    CheckUpdate.class, TestCheckUpdatePanel.LATEST_VERSION),
+                            TestCheckUpdatePanel.DESCRIPTION);
             return updateData;
         }
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.update.CheckUpdateClientInterface#getDownloadURL()
          */
         @Override
@@ -162,19 +169,19 @@ public class CheckUpdatePanelTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.update.CheckUpdateClientInterface#isDestinationReached()
          */
         @Override
         public boolean isDestinationReached() {
             return destinationReached;
         }
-
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.update.CheckUpdatePanel#checkForLatestVersion(java.lang.String, com.sldeditor.update.CheckUpdateClientInterface)}.
+     * Test method for {@link
+     * com.sldeditor.update.CheckUpdatePanel#checkForLatestVersion(java.lang.String,
+     * com.sldeditor.update.CheckUpdateClientInterface)}.
      */
     @Test
     public void testCheckForLatestVersion() {
@@ -215,5 +222,4 @@ public class CheckUpdatePanelTest {
     private static String removeNewLine(String string) {
         return string.replace("\n", "").replace("\r", "");
     }
-
 }

@@ -19,8 +19,7 @@
 
 /**
  * Package containing tools to operate on YSLD file
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.tool.mapbox;

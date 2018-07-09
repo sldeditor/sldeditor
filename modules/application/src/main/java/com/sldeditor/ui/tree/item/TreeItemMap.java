@@ -9,7 +9,6 @@ package com.sldeditor.ui.tree.item;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.geotools.styling.FeatureTypeStyleImpl;
 import org.geotools.styling.FillImpl;
 import org.geotools.styling.LineSymbolizerImpl;
@@ -44,16 +43,12 @@ public class TreeItemMap {
     /** The singleton instance. */
     private static TreeItemMap instance = null;
 
-    /**
-     * Instantiates a new tree item map.
-     */
+    /** Instantiates a new tree item map. */
     private TreeItemMap() {
         createTreeItemMap();
     }
 
-    /**
-     * Creates the tree item map.
-     */
+    /** Creates the tree item map. */
     private void createTreeItemMap() {
 
         if (treeItemMap.isEmpty()) {

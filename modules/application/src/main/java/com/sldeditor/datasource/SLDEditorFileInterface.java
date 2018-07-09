@@ -19,16 +19,14 @@
 
 package com.sldeditor.datasource;
 
-import org.geotools.styling.StyledLayerDescriptor;
-
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
+import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The Interface SLDEditorFileInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
- * 
  */
 public interface SLDEditorFileInterface {
 

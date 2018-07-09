@@ -19,27 +19,6 @@
 
 package com.sldeditor.filter.v2.function;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-
-import org.geotools.filter.FunctionExpression;
-import org.geotools.filter.FunctionExpressionImpl;
-import org.geotools.filter.function.string.ConcatenateFunction;
-import org.opengis.filter.capability.FunctionName;
-import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Function;
-import org.opengis.parameter.Parameter;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.undo.UndoActionInterface;
@@ -54,10 +33,28 @@ import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterInterface;
 import com.sldeditor.filter.v2.function.namefilter.FunctionNameFilterRaster;
 import com.sldeditor.ui.attribute.DataSourceAttributePanel;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import org.geotools.filter.FunctionExpression;
+import org.geotools.filter.FunctionExpressionImpl;
+import org.geotools.filter.function.string.ConcatenateFunction;
+import org.opengis.filter.capability.FunctionName;
+import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
+import org.opengis.parameter.Parameter;
 
 /**
  * Panel to be able to edit FunctionField objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class FunctionField extends JPanel implements UndoActionInterface {
@@ -110,8 +107,8 @@ public class FunctionField extends JPanel implements UndoActionInterface {
      * @param parentObj the parent obj
      * @param functionNameMgr the function name mgr
      */
-    public FunctionField(SubPanelUpdatedInterface parentObj,
-            FunctionNameInterface functionNameMgr) {
+    public FunctionField(
+            SubPanelUpdatedInterface parentObj, FunctionNameInterface functionNameMgr) {
         final UndoActionInterface thisObj = this;
         this.functionNameMgr = functionNameMgr;
 
@@ -123,44 +120,48 @@ public class FunctionField extends JPanel implements UndoActionInterface {
         JPanel panel = new JPanel();
         add(panel, BorderLayout.SOUTH);
 
-        btnAddParameter = new JButton(
-                Localisation.getString(ExpressionPanelv2.class, "FunctionField.addParameter"));
-        btnAddParameter.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addParameter();
-                if (parentObj != null) {
-                    parentObj.parameterAdded();
-                }
-            }
-        });
+        btnAddParameter =
+                new JButton(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "FunctionField.addParameter"));
+        btnAddParameter.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        addParameter();
+                        if (parentObj != null) {
+                            parentObj.parameterAdded();
+                        }
+                    }
+                });
         panel.add(btnAddParameter);
 
-        functionComboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        functionComboBox.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
 
-                String newValueObj = (String) functionComboBox.getSelectedItem();
+                        String newValueObj = (String) functionComboBox.getSelectedItem();
 
-                UndoManager.getInstance()
-                        .addUndoEvent(new UndoEvent(thisObj, "Function", oldValueObj, newValueObj));
+                        UndoManager.getInstance()
+                                .addUndoEvent(
+                                        new UndoEvent(
+                                                thisObj, "Function", oldValueObj, newValueObj));
 
-                FunctionName functionName = functionNameMap.get(newValueObj);
-                boolean variableNoOfParameters = false;
-                if (functionName != null) {
-                    variableNoOfParameters = (functionName.getArgumentCount() < 0);
-                }
+                        FunctionName functionName = functionNameMap.get(newValueObj);
+                        boolean variableNoOfParameters = false;
+                        if (functionName != null) {
+                            variableNoOfParameters = (functionName.getArgumentCount() < 0);
+                        }
 
-                btnAddParameter.setVisible(preSelectedFunction && variableNoOfParameters);
+                        btnAddParameter.setVisible(preSelectedFunction && variableNoOfParameters);
 
-                if (parentObj != null) {
-                    parentObj.updateSymbol();
-                }
-            }
-        });
+                        if (parentObj != null) {
+                            parentObj.updateSymbol();
+                        }
+                    }
+                });
     }
 
-    /**
-     * Adds a variable parameter.
-     */
+    /** Adds a variable parameter. */
     private void addParameter() {
         if (currentExpression instanceof FunctionExpression) {
             FunctionExpression functionExpression = (FunctionExpression) currentExpression;
@@ -191,8 +192,10 @@ public class FunctionField extends JPanel implements UndoActionInterface {
                 argCount *= -1;
             }
             ExpressionNode childNode = new ExpressionNode();
-            Parameter<?> parameter = functionName.getArguments()
-                    .get(Math.min(functionName.getArguments().size() - 1, argCount - 1));
+            Parameter<?> parameter =
+                    functionName
+                            .getArguments()
+                            .get(Math.min(functionName.getArguments().size() - 1, argCount - 1));
             childNode.setType(parameter.getType());
             childNode.setName(parameter.getName());
 
@@ -214,7 +217,8 @@ public class FunctionField extends JPanel implements UndoActionInterface {
     public void setDataType(Class<?> fieldType) {
         functionNameMap.clear();
 
-        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
+        List<FunctionNameFilterInterface> functionNameFilterList =
+                new ArrayList<FunctionNameFilterInterface>();
 
         if (isRasterSymbol) {
             functionNameFilterList.add(new FunctionNameFilterRaster());
@@ -222,8 +226,8 @@ public class FunctionField extends JPanel implements UndoActionInterface {
             functionNameFilterList.add(new FunctionNameFilterAll());
         }
 
-        List<FunctionName> functionNameList = functionNameMgr.getFunctionNameList(fieldType,
-                functionNameFilterList);
+        List<FunctionName> functionNameList =
+                functionNameMgr.getFunctionNameList(fieldType, functionNameFilterList);
 
         for (FunctionName functionName : functionNameList) {
             String functionNameString = functionName.getName();
@@ -234,9 +238,7 @@ public class FunctionField extends JPanel implements UndoActionInterface {
         populateFunctionComboBox();
     }
 
-    /**
-     * Populate function combo box.
-     */
+    /** Populate function combo box. */
     private void populateFunctionComboBox() {
         if (functionComboBox != null) {
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
@@ -312,8 +314,12 @@ public class FunctionField extends JPanel implements UndoActionInterface {
 
                 functionComboBox.setSelectedItem(functionName);
             } else {
-                ConsoleManager.getInstance().error(this, Localisation.getString(
-                        DataSourceAttributePanel.class, "DataSourceAttributePanel.error1"));
+                ConsoleManager.getInstance()
+                        .error(
+                                this,
+                                Localisation.getString(
+                                        DataSourceAttributePanel.class,
+                                        "DataSourceAttributePanel.error1"));
             }
         }
 
@@ -372,8 +378,8 @@ public class FunctionField extends JPanel implements UndoActionInterface {
             }
             boolean validSymbolFlag = (params.size() == argCount);
             if (validSymbolFlag) {
-                Expression retValue = FunctionInterfaceUtils.createNewFunction(newExpression,
-                        params);
+                Expression retValue =
+                        FunctionInterfaceUtils.createNewFunction(newExpression, params);
 
                 if (retValue != null) {
                     return retValue;
@@ -393,7 +399,7 @@ public class FunctionField extends JPanel implements UndoActionInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override
@@ -410,7 +416,7 @@ public class FunctionField extends JPanel implements UndoActionInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
      */
     @Override

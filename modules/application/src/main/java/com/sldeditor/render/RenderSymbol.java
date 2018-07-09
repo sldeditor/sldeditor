@@ -19,8 +19,9 @@
 
 package com.sldeditor.render;
 
+import com.sldeditor.common.data.SelectedSymbol;
+import com.sldeditor.ui.render.RuleRenderOptions;
 import java.util.List;
-
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Rule;
@@ -28,12 +29,9 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.UserLayerImpl;
 
-import com.sldeditor.common.data.SelectedSymbol;
-import com.sldeditor.ui.render.RuleRenderOptions;
-
 /**
  * Class to render a symbol and decide which bit of the symbol to draw.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class RenderSymbol {
@@ -41,11 +39,8 @@ public class RenderSymbol {
     /** The render options. */
     private RuleRenderOptions renderOptions = new RuleRenderOptions();
 
-    /**
-     * Instantiates a new render symbol.
-     */
-    public RenderSymbol() {
-    }
+    /** Instantiates a new render symbol. */
+    public RenderSymbol() {}
 
     /**
      * Gets the render style.
@@ -93,13 +88,16 @@ public class RenderSymbol {
      * @param options the options
      * @return the style
      */
-    private Style renderSymbol(Style style, FeatureTypeStyle ftsToRender, Rule ruleToRender,
+    private Style renderSymbol(
+            Style style,
+            FeatureTypeStyle ftsToRender,
+            Rule ruleToRender,
             RuleRenderOptions options) {
 
         int symbolIndex = SelectedSymbol.getInstance().getSymbolIndex();
 
-        RuleRenderVisitor visitor = new RuleRenderVisitor(ftsToRender, ruleToRender, symbolIndex,
-                options);
+        RuleRenderVisitor visitor =
+                new RuleRenderVisitor(ftsToRender, ruleToRender, symbolIndex, options);
         style.accept(visitor);
         Style copy = (Style) visitor.getCopy();
 
@@ -113,8 +111,8 @@ public class RenderSymbol {
      * @param ruleToRender the rule to render
      * @return true, if successful
      */
-    private boolean shouldRenderSymbol(Style style, FeatureTypeStyle ftsToRender,
-            Rule ruleToRender) {
+    private boolean shouldRenderSymbol(
+            Style style, FeatureTypeStyle ftsToRender, Rule ruleToRender) {
 
         if (ruleToRender == null) {
             return true;

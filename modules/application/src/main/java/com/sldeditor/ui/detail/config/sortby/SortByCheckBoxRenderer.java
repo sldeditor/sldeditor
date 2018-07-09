@@ -20,7 +20,6 @@
 package com.sldeditor.ui.detail.config.sortby;
 
 import java.awt.Component;
-
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -36,9 +35,7 @@ public class SortByCheckBoxRenderer extends JCheckBox implements TableCellRender
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Instantiates a new check box renderer.
-     */
+    /** Instantiates a new check box renderer. */
     SortByCheckBoxRenderer() {
         setHorizontalAlignment(JLabel.CENTER);
     }
@@ -54,8 +51,8 @@ public class SortByCheckBoxRenderer extends JCheckBox implements TableCellRender
      * @param column the column
      * @return the table cell renderer component
      */
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-            boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(
+            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 
         if (column == SortByTableModel.getSortOrderColumn()) {
             if (isSelected) {

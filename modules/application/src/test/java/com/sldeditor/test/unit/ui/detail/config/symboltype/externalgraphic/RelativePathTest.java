@@ -25,18 +25,16 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import org.junit.Test;
-
-import com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath;
 
 /**
  * The unit test for RelativePath.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath}
  *
  * @author Robert Ward (SCISYS)
@@ -44,7 +42,8 @@ import com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath;
 public class RelativePathTest {
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath#isRelativePath(java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath#isRelativePath(java.lang.String)}.
      */
     @Test
     public void testIsRelativePath() {
@@ -57,7 +56,9 @@ public class RelativePathTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath#convert(java.net.URL, boolean)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath#convert(java.net.URL,
+     * boolean)}.
      */
     @Test
     public void testConvert() {
@@ -97,7 +98,9 @@ public class RelativePathTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath#getRelativePath(java.io.File, java.io.File)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath#getRelativePath(java.io.File,
+     * java.io.File)}.
      */
     @Test
     public void testGetRelativePath() {
@@ -115,5 +118,4 @@ public class RelativePathTest {
         actualResult = RelativePath.getRelativePath(file, folder);
         assertEquals(filename, actualResult);
     }
-
 }

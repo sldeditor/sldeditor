@@ -19,6 +19,10 @@
 
 package com.sldeditor.extension.filesystem.geoserver.client;
 
+import com.sldeditor.common.DataTypeEnum;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.GeoServerConnection;
+import com.sldeditor.common.localisation.Localisation;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -26,18 +30,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.eclipse.emf.common.util.EList;
-import org.geotools.data.wps.WebProcessingService;
-import org.geotools.data.wps.request.DescribeProcessRequest;
-import org.geotools.data.wps.response.DescribeProcessResponse;
-import org.geotools.ows.ServiceException;
-
-import com.sldeditor.common.DataTypeEnum;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.GeoServerConnection;
-import com.sldeditor.common.localisation.Localisation;
-
 import net.opengis.ows11.DomainMetadataType;
 import net.opengis.wps10.ComplexDataCombinationsType;
 import net.opengis.wps10.ComplexDataDescriptionType;
@@ -55,6 +47,11 @@ import net.opengis.wps10.SupportedCRSsType;
 import net.opengis.wps10.SupportedComplexDataType;
 import net.opengis.wps10.WPSCapabilitiesType;
 import net.opengis.wps10.impl.ProcessBriefTypeImpl;
+import org.eclipse.emf.common.util.EList;
+import org.geotools.data.wps.WebProcessingService;
+import org.geotools.data.wps.request.DescribeProcessRequest;
+import org.geotools.data.wps.response.DescribeProcessResponse;
+import org.geotools.ows.ServiceException;
 
 /**
  * The Class GeoServerWPSClient.
@@ -68,17 +65,20 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
             "/ows?service=WPS&request=GetCapabilities";
 
     /** The vector geometry type array. */
-    //CHECKSTYLE:OFF
-    private static String[] vectorGeometryTypeArray = { "text/xml; subtype=wfs-collection/1.0",
-            "text/xml; subtype=wfs-collection/1.1", "application/wfs-collection-1.0",
-            "application/wfs-collection-1.1" };
-    //CHECKSTYLE:ON
+    // CHECKSTYLE:OFF
+    private static String[] vectorGeometryTypeArray = {
+        "text/xml; subtype=wfs-collection/1.0",
+        "text/xml; subtype=wfs-collection/1.1",
+        "application/wfs-collection-1.0",
+        "application/wfs-collection-1.1"
+    };
+    // CHECKSTYLE:ON
 
     /** The vector geometry type list. */
     private static List<String> vectorGeometryTypeList = Arrays.asList(vectorGeometryTypeArray);
 
     /** The raster geometry type array. */
-    private static String[] rasterGeometryTypeArray = { "image/tiff", "application/arcgrid" };
+    private static String[] rasterGeometryTypeArray = {"image/tiff", "application/arcgrid"};
 
     /** The raster geometry type list. */
     private static List<String> rasterGeometryTypeList = Arrays.asList(rasterGeometryTypeArray);
@@ -103,7 +103,7 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
      *
      * @return returns true if capabilities read, false if error
      */
-    @SuppressWarnings({ "rawtypes" })
+    @SuppressWarnings({"rawtypes"})
     @Override
     public boolean getCapabilities() {
         boolean ok = false;
@@ -127,15 +127,15 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
                 // create a WebProcessingService as shown above,
                 // then do a full describeprocess on my process
                 DescribeProcessRequest descRequest = wps.createDescribeProcessRequest();
-                
+
                 // describe the double addition process
-                descRequest.setIdentifier(functionIdentifier); 
+                descRequest.setIdentifier(functionIdentifier);
 
                 // send the request and get the ProcessDescriptionType bean to create a WPSFactory
                 DescribeProcessResponse descResponse = wps.issueRequest(descRequest);
                 ProcessDescriptionsType processDesc = descResponse.getProcessDesc();
-                ProcessDescriptionType pdt = (ProcessDescriptionType) processDesc
-                        .getProcessDescription().get(0);
+                ProcessDescriptionType pdt =
+                        (ProcessDescriptionType) processDesc.getProcessDescription().get(0);
 
                 processList.add(pdt);
             }
@@ -147,8 +147,11 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
             ConsoleManager.getInstance().exception(this, e);
         } catch (ServiceException e) {
             ConsoleManager.getInstance().exception(this, e);
-            ConsoleManager.getInstance().error(this, Localisation
-                    .getString(GeoServerWPSClient.class, "GeoServerWPSClient.noCapabilities"));
+            ConsoleManager.getInstance()
+                    .error(
+                            this,
+                            Localisation.getString(
+                                    GeoServerWPSClient.class, "GeoServerWPSClient.noCapabilities"));
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
@@ -167,8 +170,8 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
         List<ProcessBriefType> functionList = new ArrayList<ProcessBriefType>();
 
         for (ProcessDescriptionType processDescription : processList) {
-            boolean outputParameter = getOutputParameter(typeOfData,
-                    processDescription.getProcessOutputs());
+            boolean outputParameter =
+                    getOutputParameter(typeOfData, processDescription.getProcessOutputs());
             boolean inputParameter = true;
             // if(outputParameter)
             // {
@@ -275,18 +278,18 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
                 ComplexDataDescriptionType format = (ComplexDataDescriptionType) obj;
 
                 switch (typeOfData) {
-                case E_VECTOR:
-                    if (vectorGeometryTypeList.contains(format.getMimeType())) {
-                        count++;
-                    }
-                    break;
-                case E_RASTER:
-                    if (rasterGeometryTypeList.contains(format.getMimeType())) {
-                        count++;
-                    }
-                    break;
-                default:
-                    break;
+                    case E_VECTOR:
+                        if (vectorGeometryTypeList.contains(format.getMimeType())) {
+                            count++;
+                        }
+                        break;
+                    case E_RASTER:
+                        if (rasterGeometryTypeList.contains(format.getMimeType())) {
+                            count++;
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
         }

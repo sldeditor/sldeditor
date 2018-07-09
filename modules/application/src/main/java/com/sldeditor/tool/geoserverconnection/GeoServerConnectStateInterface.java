@@ -19,13 +19,12 @@
 
 package com.sldeditor.tool.geoserverconnection;
 
-import java.util.List;
-
 import com.sldeditor.common.data.GeoServerConnection;
+import java.util.List;
 
 /**
  * The Interface GeoServerConnectStateInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface GeoServerConnectStateInterface {

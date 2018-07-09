@@ -26,6 +26,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,28 +38,21 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.data.SLDData;
-import com.sldeditor.common.data.StyleWrapper;
-import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
-import com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler;
-
 /**
  * Unit test for MapBoxFileHandler class.
- * 
- * <p>{@link com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler}
- * 
- * @author Robert Ward (SCISYS)
  *
+ * <p>{@link com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler}
+ *
+ * @author Robert Ward (SCISYS)
  */
 public class MapBoxFileHandlerTest {
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#getFileExtensionList()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#getFileExtensionList()}.
      */
     @Test
     public void testGetFileExtensionList() {
@@ -62,7 +60,10 @@ public class MapBoxFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface, javax.swing.tree.DefaultTreeModel, com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#populate(com.sldeditor.common.filesystem.FileSystemInterface,
+     * javax.swing.tree.DefaultTreeModel,
+     * com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode)}.
      */
     @Test
     public void testPopulate() {
@@ -70,7 +71,8 @@ public class MapBoxFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     @Ignore
@@ -120,7 +122,8 @@ public class MapBoxFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#open(java.io.File)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#open(java.io.File)}.
      */
     @Test
     public void testOpen() {
@@ -128,7 +131,8 @@ public class MapBoxFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#save(com.sldeditor.common.SLDDataInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#save(com.sldeditor.common.SLDDataInterface)}.
      */
     @Test
     public void testSave() {
@@ -136,7 +140,8 @@ public class MapBoxFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#getSLDName(com.sldeditor.common.SLDDataInterface)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#getSLDName(com.sldeditor.common.SLDDataInterface)}.
      */
     @Test
     public void testGetSLDName() {
@@ -150,7 +155,8 @@ public class MapBoxFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#isDataSource()}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#isDataSource()}.
      */
     @Test
     public void testIsDataSource() {
@@ -158,12 +164,13 @@ public class MapBoxFileHandlerTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#getIcon(java.lang.String, java.lang.String)}.
+     * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#getIcon(java.lang.String,
+     * java.lang.String)}.
      */
     @Test
     public void testGetIcon() {
         assertNotNull(new MapBoxFileHandler().getIcon(null, null));
         assertNotNull(new MapBoxFileHandler().getIcon(null, null));
     }
-
 }

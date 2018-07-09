@@ -27,14 +27,14 @@ import org.opengis.style.Symbolizer;
 
 /**
  * Class that represents a raster in the SLD structure tree.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SLDTreeLeafRaster implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getSymbolizer()
      */
     @Override
@@ -44,7 +44,7 @@ public class SLDTreeLeafRaster implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#hasFill(org.opengis.style.Symbolizer)
      */
     @Override
@@ -54,7 +54,7 @@ public class SLDTreeLeafRaster implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#hasStroke(org.opengis.style.Symbolizer)
      */
     @Override
@@ -64,7 +64,7 @@ public class SLDTreeLeafRaster implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getFill(org.opengis.style.Symbolizer)
      */
     @Override
@@ -74,7 +74,7 @@ public class SLDTreeLeafRaster implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.SLDTreeLeafInterface#getStroke(org.opengis.style.Symbolizer)
      */
     @Override
@@ -84,7 +84,7 @@ public class SLDTreeLeafRaster implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeStroke(org.opengis.style.Symbolizer)
      */
     @Override
@@ -94,7 +94,7 @@ public class SLDTreeLeafRaster implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createStroke(org.opengis.style.Symbolizer)
      */
     @Override
@@ -104,7 +104,7 @@ public class SLDTreeLeafRaster implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createFill(org.opengis.style.Symbolizer)
      */
     @Override
@@ -114,7 +114,7 @@ public class SLDTreeLeafRaster implements SLDTreeLeafInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeFill(org.opengis.style.Symbolizer)
      */
     @Override

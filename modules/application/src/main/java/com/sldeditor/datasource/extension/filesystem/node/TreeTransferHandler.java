@@ -19,13 +19,16 @@
 
 package com.sldeditor.datasource.extension.filesystem.node;
 
+import com.sldeditor.common.NodeInterface;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
+import com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.TransferHandler;
@@ -33,14 +36,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import com.sldeditor.common.NodeInterface;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
-import com.sldeditor.datasource.extension.filesystem.dataflavour.TransferredData;
-
 /**
  * The file system tree transfer handler.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class TreeTransferHandler extends TransferHandler {
@@ -56,7 +54,7 @@ public class TreeTransferHandler extends TransferHandler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.TransferHandler#createTransferable(javax.swing.JComponent)
      */
     @Override
@@ -69,11 +67,11 @@ public class TreeTransferHandler extends TransferHandler {
 
         JTree tree = (JTree) c;
         if (tree.isEditing()) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
-                    .getLastSelectedPathComponent();
+            DefaultMutableTreeNode node =
+                    (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
             TreePath editPath = tree.getEditingPath();
-            DefaultMutableTreeNode editNode = (DefaultMutableTreeNode) editPath
-                    .getLastPathComponent();
+            DefaultMutableTreeNode editNode =
+                    (DefaultMutableTreeNode) editPath.getLastPathComponent();
             if (node == editNode) {
                 tree.stopEditing();
             }
@@ -113,7 +111,7 @@ public class TreeTransferHandler extends TransferHandler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.TransferHandler#exportDone(javax.swing.JComponent, java.awt.datatransfer.Transferable, int)
      */
     @Override
@@ -150,7 +148,7 @@ public class TreeTransferHandler extends TransferHandler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.TransferHandler#getSourceActions(javax.swing.JComponent)
      */
     @Override
@@ -160,7 +158,7 @@ public class TreeTransferHandler extends TransferHandler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.TransferHandler#importData(javax.swing.JComponent, java.awt.datatransfer.Transferable)
      */
     @Override
@@ -199,7 +197,7 @@ public class TreeTransferHandler extends TransferHandler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.TransferHandler#canImport(javax.swing.TransferHandler.TransferSupport)
      */
     @Override

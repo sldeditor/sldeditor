@@ -21,14 +21,13 @@ package com.sldeditor.ui.menucombobox;
 
 import java.awt.Component;
 import java.awt.Graphics;
-
 import javax.swing.Icon;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 /**
  * Displays an arrow icon in the menu combo box.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ArrowIcon implements Icon, SwingConstants {
@@ -78,7 +77,7 @@ public class ArrowIcon implements Icon, SwingConstants {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
      */
     public void paintIcon(Component c, Graphics g, int x, int y) {
@@ -87,39 +86,39 @@ public class ArrowIcon implements Icon, SwingConstants {
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.Icon#getIconWidth()
      */
     public int getIconWidth() {
         // int retCode;
         switch (direction) {
-        case NORTH:
-        case SOUTH:
-            return iconSize;
-        case EAST:
-        case WEST:
-            return size;
-        default:
-            break;
+            case NORTH:
+            case SOUTH:
+                return iconSize;
+            case EAST:
+            case WEST:
+                return size;
+            default:
+                break;
         }
         return iconSize;
     }
 
     /**
      * (non-Javadoc)
-     * 
+     *
      * @see javax.swing.Icon#getIconHeight()
      */
     public int getIconHeight() {
         switch (direction) {
-        case NORTH:
-        case SOUTH:
-            return size;
-        case EAST:
-        case WEST:
-            return iconSize;
-        default:
-            break;
+            case NORTH:
+            case SOUTH:
+                return size;
+            case EAST:
+            case WEST:
+                return iconSize;
+            default:
+                break;
         }
         return size;
     }

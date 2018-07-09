@@ -21,9 +21,7 @@ package com.sldeditor.extension.filesystem;
 
 import com.sldeditor.common.ToolSelectionInterface;
 
-/**
- * The Interface ExtensionToolInterface.
- */
+/** The Interface ExtensionToolInterface. */
 public interface ExtensionToolInterface {
 
     /**

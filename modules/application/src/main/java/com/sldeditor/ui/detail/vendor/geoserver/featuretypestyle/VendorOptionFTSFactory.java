@@ -19,11 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.featuretypestyle;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.styling.FeatureTypeStyle;
-
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionUpdateInterface;
 import com.sldeditor.common.vendoroption.VersionData;
@@ -34,10 +29,13 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.styling.FeatureTypeStyle;
 
 /**
  * A factory for creating VendorOptionFTS objects.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VendorOptionFTSFactory
@@ -95,7 +93,7 @@ public class VendorOptionFTSFactory
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionList(java.lang.String)
      */
     @Override
@@ -128,8 +126,9 @@ public class VendorOptionFTSFactory
      */
     public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
         for (VendorOptionInterface vendorOption : vendorOptionList) {
-            boolean displayVendorOption = VendorOptionManager.getInstance()
-                    .isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
+            boolean displayVendorOption =
+                    VendorOptionManager.getInstance()
+                            .isAllowed(vendorOptionVersionsList, vendorOption.getVendorOption());
 
             if (displayVendorOption) {
                 vendorOption.updateSymbol(featureTypeStyle);
@@ -139,7 +138,7 @@ public class VendorOptionFTSFactory
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
      */
     @Override
@@ -164,7 +163,7 @@ public class VendorOptionFTSFactory
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface#getVendorOptionInfoList()
      */
     @Override
@@ -187,8 +186,8 @@ public class VendorOptionFTSFactory
      * @param sldObj the sld obj
      * @param vendorOptionsPresentList the vendor options present list
      */
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         for (VendorOptionInterface vo : vendorOptionList) {
             vo.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
         }

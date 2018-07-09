@@ -19,19 +19,17 @@
 
 package com.sldeditor.filter.v2.function.temporal;
 
-import java.util.Date;
-import java.util.List;
-
-import org.geotools.filter.temporal.MeetsImpl;
-import org.opengis.filter.Filter;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterBase;
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterExtendedInterface;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
+import java.util.Date;
+import java.util.List;
+import org.geotools.filter.temporal.MeetsImpl;
+import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class Meets.
@@ -40,14 +38,10 @@ import com.sldeditor.filter.v2.function.FilterNameParameter;
  */
 public class Meets extends FilterBase implements FilterConfigInterface {
 
-    /**
-     * The Class MeetsExtended.
-     */
+    /** The Class MeetsExtended. */
     public class MeetsExtended extends MeetsImpl implements FilterExtendedInterface {
 
-        /**
-         * Instantiates a new after extended.
-         */
+        /** Instantiates a new after extended. */
         public MeetsExtended() {
             super(null, null);
         }
@@ -64,7 +58,7 @@ public class Meets extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.lang.Object#toString()
          */
         public String toString() {
@@ -73,7 +67,7 @@ public class Meets extends FilterBase implements FilterConfigInterface {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.filter.v2.function.FilterExtendedInterface#getOriginalFilter()
          */
         @Override
@@ -82,9 +76,7 @@ public class Meets extends FilterBase implements FilterConfigInterface {
         }
     }
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public Meets(String category) {
         super(category);
     }

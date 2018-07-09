@@ -23,20 +23,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import com.sldeditor.common.utils.ColourUtils;
 import java.awt.Color;
-
 import org.geotools.factory.CommonFactoryFinder;
 import org.junit.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
-import com.sldeditor.common.utils.ColourUtils;
-
 /**
  * Unit test for ColourUtils.
- * 
+ *
  * <p>{@link com.sldeditor.common.utils.ColourUtils}
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ColourUtilsTest {
@@ -82,7 +80,8 @@ public class ColourUtilsTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.common.utils.ColourUtils#getIntColour(org.opengis.filter.expression.Expression)}.
+     * Test method for {@link
+     * com.sldeditor.common.utils.ColourUtils#getIntColour(org.opengis.filter.expression.Expression)}.
      */
     @Test
     public void testGetIntColour() {
@@ -96,9 +95,7 @@ public class ColourUtilsTest {
         colourValue = ColourUtils.getIntColour(null);
     }
 
-    /**
-     * Test method for {@link com.sldeditor.common.utils.ColourUtils#createRandomColour()}.
-     */
+    /** Test method for {@link com.sldeditor.common.utils.ColourUtils#createRandomColour()}. */
     @Test
     public void testCreateRandomColour() {
 

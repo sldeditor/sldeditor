@@ -23,13 +23,11 @@ import java.awt.Component;
 
 /**
  * The Interface FieldConfigStringButtonInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface FieldConfigStringButtonInterface {
 
-    /**
-     * Button pressed.
-     */
+    /** Button pressed. */
     void buttonPressed(Component buttonExternal);
 }

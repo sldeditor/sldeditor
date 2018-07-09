@@ -23,7 +23,7 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 
 /**
  * The Interface UndoInferface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface UndoInterface {
@@ -48,14 +48,10 @@ public interface UndoInterface {
      */
     public Object getNewValue();
 
-    /**
-     * Undo.
-     */
+    /** Undo. */
     public void undo();
 
-    /**
-     * Redo.
-     */
+    /** Redo. */
     public void redo();
 
     /**
@@ -65,14 +61,10 @@ public interface UndoInterface {
      */
     public String getStringRepresentation();
 
-    /**
-     * Do undo.
-     */
+    /** Do undo. */
     public void doUndo();
 
-    /**
-     * Do redo.
-     */
+    /** Do redo. */
     public void doRedo();
 
     /**

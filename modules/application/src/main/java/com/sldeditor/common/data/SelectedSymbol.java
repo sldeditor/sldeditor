@@ -19,9 +19,10 @@
 
 package com.sldeditor.common.data;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayer;
@@ -36,23 +37,21 @@ import org.geotools.styling.UserLayer;
 import org.geotools.styling.UserLayerImpl;
 import org.opengis.style.GraphicalSymbol;
 
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.tree.leaf.SLDTreeLeafFactory;
-
 /**
  * The Class SelectedSymbol contains the SLD data for the symbol being edited.
- * 
+ *
  * <p>Methods exists to:
+ *
  * <ul>
- * <li>add new structure items, e.g. rules, symbolizers, etc.</li>
- * <li>replace exist structure items with new ones, e.g. rules, symbolizers, etc.</li>
- * <li>remove structure items, e.g. rules, symbolizers, etc.</li>
- * <li>sets the currently selected structure item e.g. rule, symbolizer etc.</li>
- * <li>get the currently selected structure item e.g. rule, symbolizer etc.</li>
+ *   <li>add new structure items, e.g. rules, symbolizers, etc.
+ *   <li>replace exist structure items with new ones, e.g. rules, symbolizers, etc.
+ *   <li>remove structure items, e.g. rules, symbolizers, etc.
+ *   <li>sets the currently selected structure item e.g. rule, symbolizer etc.
+ *   <li>get the currently selected structure item e.g. rule, symbolizer etc.
  * </ul>
- * 
+ *
  * <p>Class is implemented as a singleton.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class SelectedSymbol {
@@ -73,7 +72,7 @@ public class SelectedSymbol {
     private SymbolData symbolData = new SymbolData();
 
     /** The tree update listener. */
-    private List<SLDTreeUpdatedInterface> treeUpdateListenerList = 
+    private List<SLDTreeUpdatedInterface> treeUpdateListenerList =
             new ArrayList<SLDTreeUpdatedInterface>();
 
     /** The filename. */
@@ -94,16 +93,12 @@ public class SelectedSymbol {
         return instance;
     }
 
-    /**
-     * Destroy instance.
-     */
+    /** Destroy instance. */
     public static void destroyInstance() {
         instance = null;
     }
 
-    /**
-     * Instantiates a new selected symbol.
-     */
+    /** Instantiates a new selected symbol. */
     public SelectedSymbol() {
         super();
     }
@@ -186,8 +181,11 @@ public class SelectedSymbol {
         if (this.symbolData.getStyle() == null) {
             logger.debug("Style cleared");
         } else {
-            logger.debug(String.format("Selected style : %s (Style %d)",
-                    this.symbolData.getStyle().getName(), this.symbolData.getSelectedStyleIndex()));
+            logger.debug(
+                    String.format(
+                            "Selected style : %s (Style %d)",
+                            this.symbolData.getStyle().getName(),
+                            this.symbolData.getSelectedStyleIndex()));
         }
     }
 
@@ -205,9 +203,11 @@ public class SelectedSymbol {
         if (this.symbolData.getStyledLayer() == null) {
             logger.debug("Styled layer cleared");
         } else {
-            logger.debug(String.format("Selected styled layer : %s (Styled %d)",
-                    this.symbolData.getStyledLayer().getName(),
-                    this.symbolData.getSelectedStyledLayerIndex()));
+            logger.debug(
+                    String.format(
+                            "Selected styled layer : %s (Styled %d)",
+                            this.symbolData.getStyledLayer().getName(),
+                            this.symbolData.getSelectedStyledLayerIndex()));
         }
     }
 
@@ -225,9 +225,12 @@ public class SelectedSymbol {
         if (this.symbolData.getRule() == null) {
             logger.debug("Rule cleared");
         } else {
-            logger.debug(String.format("Selected rule : %s (FTS %d/Rule %d)",
-                    this.symbolData.getRule().getName(), this.symbolData.getSelectedFTSIndex(),
-                    this.symbolData.getSelectedRuleIndex()));
+            logger.debug(
+                    String.format(
+                            "Selected rule : %s (FTS %d/Rule %d)",
+                            this.symbolData.getRule().getName(),
+                            this.symbolData.getSelectedFTSIndex(),
+                            this.symbolData.getSelectedRuleIndex()));
         }
     }
 
@@ -345,9 +348,11 @@ public class SelectedSymbol {
         if (this.symbolData.getFeatureTypeStyle() == null) {
             logger.debug("FeatureTypeStyle cleared");
         } else {
-            logger.debug(String.format("Selected feature type style : %s (FTS %d)",
-                    this.symbolData.getFeatureTypeStyle().getName(),
-                    this.symbolData.getSelectedFTSIndex()));
+            logger.debug(
+                    String.format(
+                            "Selected feature type style : %s (FTS %d)",
+                            this.symbolData.getFeatureTypeStyle().getName(),
+                            this.symbolData.getSelectedFTSIndex()));
         }
     }
 
@@ -403,8 +408,8 @@ public class SelectedSymbol {
         if (this.symbolData.getRule() == null) {
             ConsoleManager.getInstance().error(this, "rule == null");
         } else {
-            List<Symbolizer> symbolizerList = (List<Symbolizer>) this.symbolData.getRule()
-                    .symbolizers();
+            List<Symbolizer> symbolizerList =
+                    (List<Symbolizer>) this.symbolData.getRule().symbolizers();
             symbolizerList.add(newSymbolizer);
         }
     }
@@ -571,8 +576,8 @@ public class SelectedSymbol {
     public void replaceSymbolizer(Symbolizer newSymbolizer) {
         if (this.symbolData != null) {
             if (this.symbolData.getRule() != null) {
-                List<Symbolizer> symbolizerList = (List<Symbolizer>) this.symbolData.getRule()
-                        .symbolizers();
+                List<Symbolizer> symbolizerList =
+                        (List<Symbolizer>) this.symbolData.getRule().symbolizers();
 
                 Symbolizer oldSymbolizer = null;
                 int indexFound = -1;
@@ -761,8 +766,8 @@ public class SelectedSymbol {
      * @param symbolizerToDelete the symbolizer to delete
      */
     public void removeSymbolizer(Symbolizer symbolizerToDelete) {
-        List<Symbolizer> symbolizerList = (List<Symbolizer>) this.symbolData.getRule()
-                .symbolizers();
+        List<Symbolizer> symbolizerList =
+                (List<Symbolizer>) this.symbolData.getRule().symbolizers();
 
         int indexFound = -1;
         int index = 0;
@@ -1037,5 +1042,4 @@ public class SelectedSymbol {
         }
         return false;
     }
-
 }

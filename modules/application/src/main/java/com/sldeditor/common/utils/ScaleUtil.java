@@ -20,12 +20,11 @@
 package com.sldeditor.common.utils;
 
 import java.text.NumberFormat;
-
 import org.opengis.style.Rule;
 
 /**
  * The Class ScaleUtil contains methods to handle map scales in strings.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ScaleUtil {
@@ -64,8 +63,8 @@ public class ScaleUtil {
      * @return the string
      */
     private static String format(double value) {
-        return String.format("%s%s", SCALE_PREFIX,
-                NumberFormat.getIntegerInstance().format((int) value));
+        return String.format(
+                "%s%s", SCALE_PREFIX, NumberFormat.getIntegerInstance().format((int) value));
     }
 
     /**

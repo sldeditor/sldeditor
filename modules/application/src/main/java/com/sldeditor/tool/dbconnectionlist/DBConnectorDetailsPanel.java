@@ -19,6 +19,9 @@
 
 package com.sldeditor.tool.dbconnectionlist;
 
+import com.sldeditor.common.Controller;
+import com.sldeditor.common.data.DatabaseConnection;
+import com.sldeditor.common.localisation.Localisation;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
@@ -27,19 +30,14 @@ import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.sldeditor.common.Controller;
-import com.sldeditor.common.data.DatabaseConnection;
-import com.sldeditor.common.localisation.Localisation;
-
 /**
  * The panel to allow a user to enter data database connection details.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class DBConnectorDetailsPanel extends JPanel {
@@ -51,7 +49,7 @@ public class DBConnectorDetailsPanel extends JPanel {
     private boolean ok = false;
 
     /** The database connection map. */
-    private Map<String, DatabaseConnectionConfigInterface> databaseConnectionMap = 
+    private Map<String, DatabaseConnectionConfigInterface> databaseConnectionMap =
             new LinkedHashMap<String, DatabaseConnectionConfigInterface>();
 
     /** The connection panel. */
@@ -75,31 +73,35 @@ public class DBConnectorDetailsPanel extends JPanel {
         FlowLayout flPanelOkCancel = (FlowLayout) panelOkCancel.getLayout();
         flPanelOkCancel.setAlignment(FlowLayout.TRAILING);
 
-        JButton btnOk = new JButton(
-                Localisation.getString(DBConnectorDetailsPanel.class, "common.ok"));
-        btnOk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ok = true;
-                frame.setVisible(false);
-            }
-        });
+        JButton btnOk =
+                new JButton(Localisation.getString(DBConnectorDetailsPanel.class, "common.ok"));
+        btnOk.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ok = true;
+                        frame.setVisible(false);
+                    }
+                });
         panelOkCancel.add(btnOk);
 
-        JButton btnCancel = new JButton(
-                Localisation.getString(DBConnectorDetailsPanel.class, "common.cancel"));
-        btnCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ok = false;
-                frame.setVisible(false);
-            }
-        });
+        JButton btnCancel =
+                new JButton(Localisation.getString(DBConnectorDetailsPanel.class, "common.cancel"));
+        btnCancel.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ok = false;
+                        frame.setVisible(false);
+                    }
+                });
         panelOkCancel.add(btnCancel);
 
         JPanel panelSelection = new JPanel();
-        JLabel label = new JLabel(Localisation.getField(DBConnectorDetailsPanel.class,
-                "DBConnectorDetailsPanel.field"));
+        JLabel label =
+                new JLabel(
+                        Localisation.getField(
+                                DBConnectorDetailsPanel.class, "DBConnectorDetailsPanel.field"));
         panelSelection.add(label);
 
         connectionPanel = new JPanel();
@@ -113,9 +115,7 @@ public class DBConnectorDetailsPanel extends JPanel {
         }
     }
 
-    /**
-     * Populate database connections.
-     */
+    /** Populate database connections. */
     private void populateDatabaseConnections() {
         List<String> dbConnectorNameList = DatabaseConnectionFactory.getNames();
 
@@ -132,8 +132,8 @@ public class DBConnectorDetailsPanel extends JPanel {
      * @param connectionDetails the connection details
      * @return the connector details panel
      */
-    public static DatabaseConnection showDialog(JDialog parentPanel,
-            DatabaseConnection connectionDetails) {
+    public static DatabaseConnection showDialog(
+            JDialog parentPanel, DatabaseConnection connectionDetails) {
         JDialog dialog = new JDialog(parentPanel, connectionDetails.getDatabaseTypeLabel(), true);
         dialog.setResizable(false);
 

@@ -18,8 +18,9 @@
  */
 
 /**
- * Classes generated from envvar.xsd to read the configuration file containing built-in environment variables.
- * 
+ * Classes generated from envvar.xsd to read the configuration file containing built-in environment
+ * variables.
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.xml.envvar;

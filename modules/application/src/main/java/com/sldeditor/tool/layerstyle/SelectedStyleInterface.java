@@ -23,7 +23,7 @@ import com.sldeditor.common.data.StyleWrapper;
 
 /**
  * Selected style interface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface SelectedStyleInterface {

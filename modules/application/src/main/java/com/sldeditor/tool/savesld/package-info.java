@@ -19,7 +19,7 @@
 
 /**
  * Tool to save all Esri MXD layers to separate SLD file.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.tool.savesld;

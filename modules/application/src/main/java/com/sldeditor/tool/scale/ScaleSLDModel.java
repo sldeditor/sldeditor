@@ -19,20 +19,16 @@
 
 package com.sldeditor.tool.scale;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumnModel;
-
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumnModel;
 
-/**
- * Table model to allows the viewing and editing of ScaleSLDData objects.
- */
+/** Table model to allows the viewing and editing of ScaleSLDData objects. */
 public class ScaleSLDModel extends AbstractTableModel {
 
     /** The Constant serialVersionUID. */
@@ -74,9 +70,7 @@ public class ScaleSLDModel extends AbstractTableModel {
     /** The listener. */
     private ScaleToolUpdate listener = null;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public ScaleSLDModel(ScaleToolUpdate listener) {
         this.listener = listener;
 
@@ -84,8 +78,8 @@ public class ScaleSLDModel extends AbstractTableModel {
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.source"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.namedLayer"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.style"));
-        columnNameList
-                .add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.featureTypeStyle"));
+        columnNameList.add(
+                Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.featureTypeStyle"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.rule"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.minScale"));
         columnNameList.add(Localisation.getString(ScaleSLDModel.class, "ScaleSLDModel.maxScale"));
@@ -134,30 +128,30 @@ public class ScaleSLDModel extends AbstractTableModel {
         ScaleSLDData data = scaleList.get(rowIndex);
 
         switch (columnIndex) {
-        case COL_WORKSPACE:
-            return data.getWorkspace();
-        case COL_SOURCE:
-            return data.getName();
-        case COL_NAMED_LAYER:
-            return data.getNamedLayer();
-        case COL_STYLE:
-            return data.getStyle();
-        case COL_FEATURE_TYPE_STYLE:
-            return data.getFeatureTypeStyle();
-        case COL_RULE:
-            return data.getRuleName();
-        case COL_MIN_SCALE:
-            if (data.isMinScaleSet()) {
-                return data.getMinScaleString();
-            }
-            break;
-        case COL_MAX_SCALE:
-            if (data.isMaxScaleSet()) {
-                return data.getMaxScaleString();
-            }
-            break;
-        default:
-            break;
+            case COL_WORKSPACE:
+                return data.getWorkspace();
+            case COL_SOURCE:
+                return data.getName();
+            case COL_NAMED_LAYER:
+                return data.getNamedLayer();
+            case COL_STYLE:
+                return data.getStyle();
+            case COL_FEATURE_TYPE_STYLE:
+                return data.getFeatureTypeStyle();
+            case COL_RULE:
+                return data.getRuleName();
+            case COL_MIN_SCALE:
+                if (data.isMinScaleSet()) {
+                    return data.getMinScaleString();
+                }
+                break;
+            case COL_MAX_SCALE:
+                if (data.isMaxScaleSet()) {
+                    return data.getMaxScaleString();
+                }
+                break;
+            default:
+                break;
         }
         return null;
     }
@@ -209,9 +203,7 @@ public class ScaleSLDModel extends AbstractTableModel {
         }
     }
 
-    /**
-     * Revert data to original.
-     */
+    /** Revert data to original. */
     public void revertData() {
         for (ScaleSLDData data : scaleList) {
             data.revertToOriginal();

@@ -19,8 +19,7 @@
 
 /**
  * Package containing class to present vendor option information.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.common.vendoroption.info;

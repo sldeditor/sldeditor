@@ -20,13 +20,11 @@
 package com.sldeditor.rendertransformation;
 
 import java.util.List;
-
+import net.opengis.wps10.ProcessDescriptionType;
 import org.geotools.feature.NameImpl;
 import org.geotools.process.function.ProcessFunction;
 import org.opengis.feature.type.Name;
 import org.opengis.filter.capability.FunctionName;
-
-import net.opengis.wps10.ProcessDescriptionType;
 
 /**
  * Class that abstracts away which which process function was selected, built-in or custom.
@@ -83,8 +81,8 @@ public class SelectedProcessFunction {
      * @param builtInProcessFunction the builtInProcessFunction to set
      * @param existingProcessFunction the existing process function
      */
-    public void setBuiltInProcessFunction(FunctionName builtInProcessFunction,
-            ProcessFunction existingProcessFunction) {
+    public void setBuiltInProcessFunction(
+            FunctionName builtInProcessFunction, ProcessFunction existingProcessFunction) {
         this.builtInProcessFunction = builtInProcessFunction;
         this.selectedProcessFunctionData = existingProcessFunction;
         this.selectedCustomFunction = null;

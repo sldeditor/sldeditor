@@ -8,7 +8,6 @@
 package com.sldeditor.common.data;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.jdbc.JDBCDataStoreFactory;
 

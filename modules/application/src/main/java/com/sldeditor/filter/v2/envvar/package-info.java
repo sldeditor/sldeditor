@@ -15,9 +15,10 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *//**
+ */
+/**
  * Package to manage and display environment variables.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.filter.v2.envvar;

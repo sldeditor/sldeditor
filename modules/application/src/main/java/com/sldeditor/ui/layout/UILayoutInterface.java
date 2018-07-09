@@ -19,15 +19,14 @@
 
 package com.sldeditor.ui.layout;
 
-import java.util.List;
-
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.extension.ExtensionInterface;
 import com.sldeditor.ui.panels.SLDEditorUIPanels;
+import java.util.List;
 
 /**
  * The Interface UILayoutInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface UILayoutInterface {
@@ -39,7 +38,9 @@ public interface UILayoutInterface {
      * @param uiMgr the ui mgr
      * @param extensionList the extension list
      */
-    void createUI(SLDEditorInterface application, SLDEditorUIPanels uiMgr,
+    void createUI(
+            SLDEditorInterface application,
+            SLDEditorUIPanels uiMgr,
             List<ExtensionInterface> extensionList);
 
     /**

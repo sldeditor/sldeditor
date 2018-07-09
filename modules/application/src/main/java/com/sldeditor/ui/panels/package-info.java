@@ -19,7 +19,7 @@
 
 /**
  * Classes to handle the display of 0, 1 or more selected sld files.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.ui.panels;

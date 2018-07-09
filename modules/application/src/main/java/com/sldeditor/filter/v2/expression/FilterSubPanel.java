@@ -19,25 +19,22 @@
 
 package com.sldeditor.filter.v2.expression;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.filter.v2.function.FilterField;
+import com.sldeditor.filter.v2.function.FilterManager;
+import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import org.geotools.filter.LogicFilterImpl;
 import org.opengis.filter.Filter;
-
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.filter.v2.function.FilterField;
-import com.sldeditor.filter.v2.function.FilterManager;
-import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
 
 /**
  * The Class FilterSubPanel.
@@ -89,9 +86,7 @@ public class FilterSubPanel extends JPanel {
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         setLayout(new BorderLayout());
         box = Box.createVerticalBox();
@@ -102,21 +97,26 @@ public class FilterSubPanel extends JPanel {
         //
         panelFilter = new JPanel(new FlowLayout());
 
-        lblFilter = new JLabel(
-                Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.filter"));
+        lblFilter =
+                new JLabel(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "ExpressionPanelv2.filter"));
         panelFilter.add(lblFilter);
 
-        filterPanel = new FilterField(new SubPanelUpdatedInterface() {
-            @Override
-            public void updateSymbol() {
-                updateButtonState(true);
-            }
+        filterPanel =
+                new FilterField(
+                        new SubPanelUpdatedInterface() {
+                            @Override
+                            public void updateSymbol() {
+                                updateButtonState(true);
+                            }
 
-            @Override
-            public void parameterAdded() {
-                // Do nothing
-            }
-        }, FilterManager.getInstance());
+                            @Override
+                            public void parameterAdded() {
+                                // Do nothing
+                            }
+                        },
+                        FilterManager.getInstance());
         panelFilter.add(filterPanel);
 
         box.add(panelFilter);
@@ -149,8 +149,9 @@ public class FilterSubPanel extends JPanel {
         boolean removeFilterButtonFlag = false;
         FilterNode parentNode = (FilterNode) node.getParent();
         if (parentNode != null) {
-            removeFilterButtonFlag = (parentNode.getFilter() instanceof LogicFilterImpl)
-                    && (parentNode.getChildCount() > 2);
+            removeFilterButtonFlag =
+                    (parentNode.getFilter() instanceof LogicFilterImpl)
+                            && (parentNode.getChildCount() > 2);
         }
         btnRemoveFilter.setVisible(removeFilterButtonFlag);
         revalidate();
@@ -163,41 +164,47 @@ public class FilterSubPanel extends JPanel {
      */
     private JPanel createAddRemoveFilterPanel() {
 
-        btnAddFilter = new JButton(
-                Localisation.getString(ExpressionPanelv2.class, "FilterSubPanel.addFilter"));
+        btnAddFilter =
+                new JButton(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "FilterSubPanel.addFilter"));
         btnAddFilter.setVisible(false);
-        btnAddFilter.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        btnAddFilter.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
 
-                selectedNode.addFilter();
+                        selectedNode.addFilter();
 
-                if (parent != null) {
-                    parent.dataApplied();
-                }
+                        if (parent != null) {
+                            parent.dataApplied();
+                        }
 
-                updateButtonState(false);
-            }
-        });
+                        updateButtonState(false);
+                    }
+                });
         JPanel panel = new JPanel();
         panel.add(btnAddFilter);
 
-        btnRemoveFilter = new JButton(
-                Localisation.getString(ExpressionPanelv2.class, "FilterSubPanel.removeFilter"));
+        btnRemoveFilter =
+                new JButton(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "FilterSubPanel.removeFilter"));
         btnRemoveFilter.setVisible(false);
-        btnRemoveFilter.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        btnRemoveFilter.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
 
-                FilterNode parentNode = (FilterNode) selectedNode.getParent();
-                if (parentNode != null) {
-                    parentNode.remove(selectedNode);
-                }
-                if (parent != null) {
-                    parent.dataApplied();
-                }
+                        FilterNode parentNode = (FilterNode) selectedNode.getParent();
+                        if (parentNode != null) {
+                            parentNode.remove(selectedNode);
+                        }
+                        if (parent != null) {
+                            parent.dataApplied();
+                        }
 
-                updateButtonState(false);
-            }
-        });
+                        updateButtonState(false);
+                    }
+                });
         panel.add(btnRemoveFilter);
 
         return panel;
@@ -212,30 +219,33 @@ public class FilterSubPanel extends JPanel {
 
         btnApply = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.apply"));
         btnApply.setEnabled(false);
-        btnApply.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        btnApply.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
 
-                selectedNode.setFilter(filterPanel.getFilter(), filterPanel.getFilterConfig());
+                        selectedNode.setFilter(
+                                filterPanel.getFilter(), filterPanel.getFilterConfig());
 
-                if (parent != null) {
-                    parent.dataApplied();
-                }
+                        if (parent != null) {
+                            parent.dataApplied();
+                        }
 
-                updateButtonState(false);
-            }
-        });
+                        updateButtonState(false);
+                    }
+                });
         JPanel panel = new JPanel();
         panel.add(btnApply);
 
         btnRevert = new JButton(Localisation.getString(ExpressionPanelv2.class, "common.revert"));
         btnRevert.setEnabled(false);
-        btnRevert.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                displayFilter(selectedNode);
+        btnRevert.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        displayFilter(selectedNode);
 
-                updateButtonState(false);
-            }
-        });
+                        updateButtonState(false);
+                    }
+                });
         panel.add(btnRevert);
 
         return panel;

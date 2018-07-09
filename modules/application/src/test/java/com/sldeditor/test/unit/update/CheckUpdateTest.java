@@ -24,43 +24,40 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.net.URL;
-
-import org.junit.Test;
-
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.update.CheckUpdate;
 import com.sldeditor.update.CheckUpdateClientInterface;
 import com.sldeditor.update.UpdateData;
+import java.net.URL;
+import org.junit.Test;
 
 /**
  * The unit test for CheckUpdate.
- * 
+ *
  * <p>{@link com.sldeditor.update.CheckUpdate}
  *
  * @author Robert Ward (SCISYS)
  */
 public class CheckUpdateTest {
 
-    /**
-     * The Class TestCheckUpdateClient.
-     */
+    /** The Class TestCheckUpdateClient. */
     class TestCheckUpdateClient implements CheckUpdateClientInterface {
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.update.CheckUpdateClientInterface#getLatest()
          */
         @Override
         public UpdateData getLatest() {
-            UpdateData data = new UpdateData(VersionData.decode(CheckUpdate.class, "0.5.0"),
-                    "Some description");
+            UpdateData data =
+                    new UpdateData(
+                            VersionData.decode(CheckUpdate.class, "0.5.0"), "Some description");
             return data;
         }
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.update.CheckUpdateClientInterface#getDownloadURL()
          */
         @Override
@@ -70,7 +67,7 @@ public class CheckUpdateTest {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see com.sldeditor.update.CheckUpdateClientInterface#isDestinationReached()
          */
         @Override
@@ -100,18 +97,14 @@ public class CheckUpdateTest {
         assertNotNull(obj.getLatestData());
     }
 
-    /**
-     * Test method for {@link com.sldeditor.update.CheckUpdate#showDownloadPage()}.
-     */
+    /** Test method for {@link com.sldeditor.update.CheckUpdate#showDownloadPage()}. */
     @Test
     public void testShowDownloadPage() {
         CheckUpdate obj = new CheckUpdate(null);
         obj.showDownloadPage();
     }
 
-    /**
-     * Test method for {@link com.sldeditor.update.CheckUpdate#isDestinationReached()}.
-     */
+    /** Test method for {@link com.sldeditor.update.CheckUpdate#isDestinationReached()}. */
     @Test
     public void testIsDestinationReached() {
         CheckUpdate obj = new CheckUpdate(null);

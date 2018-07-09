@@ -19,24 +19,22 @@
 
 package com.sldeditor.ui.detail;
 
-import java.util.List;
-
-import org.geotools.styling.FeatureTypeConstraint;
-import org.geotools.styling.NamedLayer;
-import org.geotools.styling.NamedLayerImpl;
-import org.geotools.styling.Style;
-import org.geotools.styling.StyledLayer;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.List;
+import org.geotools.styling.FeatureTypeConstraint;
+import org.geotools.styling.NamedLayer;
+import org.geotools.styling.NamedLayerImpl;
+import org.geotools.styling.Style;
+import org.geotools.styling.StyledLayer;
 
 /**
  * The Class NamedLayerDetails allows a user to configure named layer data in a panel.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class NamedLayerDetails extends StandardPanel
@@ -45,25 +43,21 @@ public class NamedLayerDetails extends StandardPanel
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor. */
     public NamedLayerDetails() {
         super(NamedLayerDetails.class);
 
         createUI();
     }
 
-    /**
-     * Creates the ui.
-     */
+    /** Creates the ui. */
     private void createUI() {
         readConfigFile(null, getClass(), this, "NamedLayer.xml");
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
      */
     @Override
@@ -87,7 +81,7 @@ public class NamedLayerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged()
      */
     @Override
@@ -95,9 +89,7 @@ public class NamedLayerDetails extends StandardPanel
         updateSymbol();
     }
 
-    /**
-     * Update symbol.
-     */
+    /** Update symbol. */
     private void updateSymbol() {
         if (!Controller.getInstance().isPopulating()) {
             String name = fieldConfigVisitor.getText(FieldIdEnum.NAME);
@@ -105,8 +97,9 @@ public class NamedLayerDetails extends StandardPanel
             namedLayer.setName(name);
 
             // Feature type constraints
-            List<FeatureTypeConstraint> ftcList = fieldConfigVisitor
-                    .getFeatureTypeConstraint(FieldIdEnum.LAYER_FEATURE_CONSTRAINTS);
+            List<FeatureTypeConstraint> ftcList =
+                    fieldConfigVisitor.getFeatureTypeConstraint(
+                            FieldIdEnum.LAYER_FEATURE_CONSTRAINTS);
             if ((ftcList != null) && !ftcList.isEmpty()) {
                 FeatureTypeConstraint[] ftcArray = new FeatureTypeConstraint[ftcList.size()];
                 namedLayer.setLayerFeatureConstraints(ftcList.toArray(ftcArray));
@@ -128,7 +121,7 @@ public class NamedLayerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getFieldDataManager()
      */
     @Override
@@ -138,7 +131,7 @@ public class NamedLayerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#isDataPresent()
      */
     @Override
@@ -148,7 +141,7 @@ public class NamedLayerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#initialseFields()
      */
     @Override
@@ -158,12 +151,12 @@ public class NamedLayerDetails extends StandardPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
-    public void getMinimumVersion(Object parentObj, Object sldObj,
-            List<VendorOptionPresent> vendorOptionsPresentList) {
+    public void getMinimumVersion(
+            Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         // No vendor options
     }
 }

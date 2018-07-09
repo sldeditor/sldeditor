@@ -34,5 +34,4 @@ public interface XMLSetFieldLiteralInterface {
      * @param fieldId the field id
      */
     public void accept(TestValueVisitor visitor, FieldIdEnum fieldId);
-
 }

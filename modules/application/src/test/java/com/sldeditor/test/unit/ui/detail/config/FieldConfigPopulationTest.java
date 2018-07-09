@@ -25,22 +25,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.geotools.filter.LiteralExpressionImpl;
-import org.geotools.styling.ColorMap;
-import org.geotools.styling.ColorMapEntry;
-import org.geotools.styling.ColorMapEntryImpl;
-import org.geotools.styling.ColorMapImpl;
-import org.geotools.styling.FeatureTypeConstraint;
-import org.geotools.styling.Font;
-import org.geotools.styling.StyleBuilder;
-import org.geotools.styling.UserLayer;
-import org.junit.Test;
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
@@ -54,11 +38,25 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap;
 import com.sldeditor.ui.detail.config.font.FieldConfigFont;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import org.geotools.filter.LiteralExpressionImpl;
+import org.geotools.styling.ColorMap;
+import org.geotools.styling.ColorMapEntry;
+import org.geotools.styling.ColorMapEntryImpl;
+import org.geotools.styling.ColorMapImpl;
+import org.geotools.styling.FeatureTypeConstraint;
+import org.geotools.styling.Font;
+import org.geotools.styling.StyleBuilder;
+import org.geotools.styling.UserLayer;
+import org.junit.Test;
 import org.locationtech.jts.geom.Geometry;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The unit test for FieldConfigPopulation.
- * 
+ *
  * <p>{@link com.sldeditor.ui.detail.config.FieldConfigPopulation}
  *
  * @author Robert Ward (SCISYS)
@@ -66,8 +64,8 @@ import org.locationtech.jts.geom.Geometry;
 public class FieldConfigPopulationTest {
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#FieldConfigPopulation(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#FieldConfigPopulation(com.sldeditor.ui.detail.GraphicPanelFieldManager)}.
      */
     @Test
     public void testFieldConfigPopulation() {
@@ -97,14 +95,14 @@ public class FieldConfigPopulationTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateBooleanField(com.sldeditor.ui.detail.config.FieldId, java.lang.Boolean)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateBooleanField(com.sldeditor.common.xml.ui.FieldIdEnum, java.lang.Boolean)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getBoolean(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getBoolean(com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateBooleanField(com.sldeditor.ui.detail.config.FieldId,
+     * java.lang.Boolean)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateBooleanField(com.sldeditor.common.xml.ui.FieldIdEnum,
+     * java.lang.Boolean)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getBoolean(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getBoolean(com.sldeditor.common.xml.ui.FieldIdEnum)}.
      */
     @Test
     public void testBoolean() {
@@ -113,8 +111,9 @@ public class FieldConfigPopulationTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
-        FieldConfigBoolean booleanField = new FieldConfigBoolean(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+        FieldConfigBoolean booleanField =
+                new FieldConfigBoolean(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
         booleanField.createUI();
         fieldConfigManager.add(fieldId, booleanField);
 
@@ -134,14 +133,14 @@ public class FieldConfigPopulationTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateComboBoxField(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateComboBoxField(com.sldeditor.common.xml.ui.FieldIdEnum, java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getComboBox(com.sldeditor.common.xml.ui.FieldIdEnum)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getComboBox(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateComboBoxField(com.sldeditor.ui.detail.config.FieldId,
+     * java.lang.String)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateComboBoxField(com.sldeditor.common.xml.ui.FieldIdEnum,
+     * java.lang.String)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getComboBox(com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getComboBox(com.sldeditor.ui.detail.config.FieldId)}.
      */
     @Test
     public void testComboBox() {
@@ -157,8 +156,9 @@ public class FieldConfigPopulationTest {
         List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
         configList.add(s1);
 
-        FieldConfigEnum enumField = new FieldConfigEnum(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+        FieldConfigEnum enumField =
+                new FieldConfigEnum(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
         enumField.addConfig(configList);
         enumField.createUI();
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
@@ -181,8 +181,9 @@ public class FieldConfigPopulationTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateColourField(com.sldeditor.ui.detail.config.FieldId, org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateColourField(com.sldeditor.ui.detail.config.FieldId,
+     * org.opengis.filter.expression.Expression, org.opengis.filter.expression.Expression)}.
      */
     @Test
     public void testColour() {
@@ -191,8 +192,9 @@ public class FieldConfigPopulationTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
-        FieldConfigColour colourField = new FieldConfigColour(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+        FieldConfigColour colourField =
+                new FieldConfigColour(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
         colourField.createUI();
         colourField.createUI();
         fieldConfigManager.add(fieldId, colourField);
@@ -208,12 +210,12 @@ public class FieldConfigPopulationTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateColourMapField(com.sldeditor.common.xml.ui.FieldIdEnum, org.geotools.styling.ColorMap)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getColourMap(com.sldeditor.common.xml.ui.FieldIdEnum)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getColourMap(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateColourMapField(com.sldeditor.common.xml.ui.FieldIdEnum,
+     * org.geotools.styling.ColorMap)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getColourMap(com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getColourMap(com.sldeditor.ui.detail.config.FieldId)}.
      */
     @Test
     public void testColourMap() {
@@ -222,8 +224,9 @@ public class FieldConfigPopulationTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
-        FieldConfigColourMap colourMapField = new FieldConfigColourMap(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+        FieldConfigColourMap colourMapField =
+                new FieldConfigColourMap(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
         colourMapField.createUI();
         fieldConfigManager.add(fieldId, colourMapField);
 
@@ -236,7 +239,8 @@ public class FieldConfigPopulationTest {
         expectedValue.addColorMapEntry(entry);
         FieldConfigPopulation obj = new FieldConfigPopulation(fieldConfigManager);
         obj.populateColourMapField(fieldId, expectedValue);
-        assertEquals(expectedValue.getColorMapEntries().length,
+        assertEquals(
+                expectedValue.getColorMapEntries().length,
                 obj.getColourMap(fieldId).getColorMapEntries().length);
 
         // This shouldn't work as it does not know about the field
@@ -246,8 +250,9 @@ public class FieldConfigPopulationTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateFontField(com.sldeditor.common.xml.ui.FieldIdEnum, org.geotools.styling.Font)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateFontField(com.sldeditor.common.xml.ui.FieldIdEnum,
+     * org.geotools.styling.Font)}.
      */
     @Test
     public void testFont() {
@@ -256,8 +261,9 @@ public class FieldConfigPopulationTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
-        FieldConfigFont fontField = new FieldConfigFont(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+        FieldConfigFont fontField =
+                new FieldConfigFont(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
         fontField.createUI();
         fieldConfigManager.add(fieldId, fontField);
 
@@ -274,14 +280,14 @@ public class FieldConfigPopulationTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateTextField(com.sldeditor.ui.detail.config.FieldId, java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateTextField(com.sldeditor.common.xml.ui.FieldIdEnum, java.lang.String)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getText(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getText(com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateTextField(com.sldeditor.ui.detail.config.FieldId,
+     * java.lang.String)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateTextField(com.sldeditor.common.xml.ui.FieldIdEnum,
+     * java.lang.String)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getText(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getText(com.sldeditor.common.xml.ui.FieldIdEnum)}.
      */
     @Test
     public void testString() {
@@ -290,8 +296,10 @@ public class FieldConfigPopulationTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
-        FieldConfigString stringField = new FieldConfigString(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true), "button text");
+        FieldConfigString stringField =
+                new FieldConfigString(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true),
+                        "button text");
         stringField.createUI();
         fieldConfigManager.add(fieldId, stringField);
 
@@ -311,12 +319,12 @@ public class FieldConfigPopulationTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateDoubleField(com.sldeditor.ui.detail.config.FieldId, java.lang.Double)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getDouble(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getDouble(com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateDoubleField(com.sldeditor.ui.detail.config.FieldId,
+     * java.lang.Double)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getDouble(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getDouble(com.sldeditor.common.xml.ui.FieldIdEnum)}.
      */
     @Test
     public void testDouble() {
@@ -325,8 +333,9 @@ public class FieldConfigPopulationTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
-        FieldConfigDouble doubleField = new FieldConfigDouble(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+        FieldConfigDouble doubleField =
+                new FieldConfigDouble(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
         doubleField.createUI();
         fieldConfigManager.add(fieldId, doubleField);
 
@@ -346,12 +355,12 @@ public class FieldConfigPopulationTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateIntegerField(com.sldeditor.ui.detail.config.FieldId, java.lang.Integer)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getInteger(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getInteger(com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateIntegerField(com.sldeditor.ui.detail.config.FieldId,
+     * java.lang.Integer)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getInteger(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getInteger(com.sldeditor.common.xml.ui.FieldIdEnum)}.
      */
     @Test
     public void testInteger() {
@@ -360,8 +369,9 @@ public class FieldConfigPopulationTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
-        FieldConfigInteger intField = new FieldConfigInteger(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+        FieldConfigInteger intField =
+                new FieldConfigInteger(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
         intField.createUI();
         fieldConfigManager.add(fieldId, intField);
 
@@ -381,14 +391,14 @@ public class FieldConfigPopulationTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateField(com.sldeditor.ui.detail.config.FieldId, org.opengis.filter.expression.Expression)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#populateField(com.sldeditor.common.xml.ui.FieldIdEnum, org.opengis.filter.expression.Expression)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getExpression(com.sldeditor.ui.detail.config.FieldId)}.
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getExpression(com.sldeditor.common.xml.ui.FieldIdEnum)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateField(com.sldeditor.ui.detail.config.FieldId,
+     * org.opengis.filter.expression.Expression)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#populateField(com.sldeditor.common.xml.ui.FieldIdEnum,
+     * org.opengis.filter.expression.Expression)}. Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getExpression(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getExpression(com.sldeditor.common.xml.ui.FieldIdEnum)}.
      */
     @Test
     public void testExpression() {
@@ -397,8 +407,9 @@ public class FieldConfigPopulationTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
-        FieldConfigInteger intField = new FieldConfigInteger(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+        FieldConfigInteger intField =
+                new FieldConfigInteger(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
         intField.createUI();
         fieldConfigManager.add(fieldId, intField);
 
@@ -427,9 +438,9 @@ public class FieldConfigPopulationTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#isTreeDataUpdated()}. Test method
-     * for {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#resetTreeDataUpdated()}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#isTreeDataUpdated()}. Test method for
+     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#resetTreeDataUpdated()}.
      */
     @Test
     public void testIsTreeDataUpdated() {
@@ -437,8 +448,10 @@ public class FieldConfigPopulationTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
-        FieldConfigString stringField = new FieldConfigString(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true), "button text");
+        FieldConfigString stringField =
+                new FieldConfigString(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true),
+                        "button text");
         stringField.createUI();
         fieldConfigManager.add(fieldId, stringField);
 
@@ -468,8 +481,8 @@ public class FieldConfigPopulationTest {
     }
 
     /**
-     * Test method for
-     * {@link com.sldeditor.ui.detail.config.FieldConfigPopulation#getFieldConfig(com.sldeditor.ui.detail.config.FieldId)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigPopulation#getFieldConfig(com.sldeditor.ui.detail.config.FieldId)}.
      */
     @Test
     public void testGetFieldConfig() {
@@ -478,8 +491,9 @@ public class FieldConfigPopulationTest {
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
 
-        FieldConfigInteger intField = new FieldConfigInteger(
-                new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+        FieldConfigInteger intField =
+                new FieldConfigInteger(
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
         intField.createUI();
         fieldConfigManager.add(fieldId, intField);
 
@@ -489,5 +503,4 @@ public class FieldConfigPopulationTest {
         FieldIdEnum wrongFieldEnum = FieldIdEnum.ELSE_FILTER;
         assertNull(obj.getFieldConfig(wrongFieldEnum));
     }
-
 }

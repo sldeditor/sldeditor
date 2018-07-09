@@ -19,9 +19,8 @@
 
 package com.sldeditor.tool.raster;
 
-import java.io.File;
-
 import com.sldeditor.common.SLDDataInterface;
+import java.io.File;
 
 /**
  * The Interface RasterReaderInterface.
@@ -37,5 +36,4 @@ public interface RasterReaderInterface {
      * @return the styled layer descriptor
      */
     SLDDataInterface createRasterSLDData(File rasterFile);
-
 }

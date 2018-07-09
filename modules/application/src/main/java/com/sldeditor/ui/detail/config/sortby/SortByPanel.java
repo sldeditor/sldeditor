@@ -19,6 +19,12 @@
 
 package com.sldeditor.ui.detail.config.sortby;
 
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.datasource.DataSourceInterface;
+import com.sldeditor.datasource.DataSourceUpdatedInterface;
+import com.sldeditor.datasource.impl.DataSourceFactory;
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import com.sldeditor.ui.detail.BasePanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,7 +33,6 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -42,18 +47,10 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-
 import org.geotools.data.DataStore;
 import org.geotools.renderer.style.SLDStyleFactory;
 import org.geotools.styling.FeatureTypeStyle;
 import org.opengis.filter.sort.SortBy;
-
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.datasource.DataSourceInterface;
-import com.sldeditor.datasource.DataSourceUpdatedInterface;
-import com.sldeditor.datasource.impl.DataSourceFactory;
-import com.sldeditor.datasource.impl.GeometryTypeEnum;
-import com.sldeditor.ui.detail.BasePanel;
 
 /**
  * The Class SortByPanel.
@@ -115,9 +112,7 @@ public class SortByPanel extends JPanel
         dataSource.addListener(this);
     }
 
-    /**
-     * Creates the UI.
-     */
+    /** Creates the UI. */
     private void createUI(int noOfRows) {
         int xPos = 0;
         int width = BasePanel.FIELD_PANEL_WIDTH - xPos - 20;
@@ -134,13 +129,14 @@ public class SortByPanel extends JPanel
         panel.add(scrollPaneSource);
 
         sourceList = new JList<String>(sourceModel);
-        sourceList.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                if (e.getValueIsAdjusting() == false) {
-                    sourceSelected();
-                }
-            }
-        });
+        sourceList.addListSelectionListener(
+                new ListSelectionListener() {
+                    public void valueChanged(ListSelectionEvent e) {
+                        if (e.getValueIsAdjusting() == false) {
+                            sourceSelected();
+                        }
+                    }
+                });
         scrollPaneSource.setViewportView(sourceList);
 
         JPanel panel_1 = new JPanel();
@@ -154,20 +150,22 @@ public class SortByPanel extends JPanel
 
         btnSrcToDestButton = new JButton("->");
         btnSrcToDestButton.setEnabled(false);
-        btnSrcToDestButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moveSrcToDestination();
-            }
-        });
+        btnSrcToDestButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        moveSrcToDestination();
+                    }
+                });
         centrePanel.add(btnSrcToDestButton);
 
         btnDestToSrcButton = new JButton("<-");
         btnDestToSrcButton.setEnabled(false);
-        btnDestToSrcButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moveDestinationToSource();
-            }
-        });
+        btnDestToSrcButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        moveDestinationToSource();
+                    }
+                });
         centrePanel.add(btnDestToSrcButton);
 
         // Destination list
@@ -184,32 +182,36 @@ public class SortByPanel extends JPanel
         col.setCellRenderer(checkBoxRenderer);
         col.setCellEditor(new SortByOptionalValueEditor(destinationModel));
 
-        destinationTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                if (e.getValueIsAdjusting() == false) {
-                    ListSelectionModel model = destinationTable.getSelectionModel();
-                    if (!model.isSelectionEmpty()) {
-                        destinationSelected();
+        destinationTable
+                .getSelectionModel()
+                .addListSelectionListener(
+                        new ListSelectionListener() {
+                            public void valueChanged(ListSelectionEvent e) {
+                                if (e.getValueIsAdjusting() == false) {
+                                    ListSelectionModel model = destinationTable.getSelectionModel();
+                                    if (!model.isSelectionEmpty()) {
+                                        destinationSelected();
+                                    }
+                                }
+                            }
+                        });
+
+        destinationModel.addTableModelListener(
+                new TableModelListener() {
+
+                    @Override
+                    public void tableChanged(TableModelEvent e) {
+                        if (e.getColumn() == SortByTableModel.getSortOrderColumn()) {
+                            ListSelectionModel model = destinationTable.getSelectionModel();
+                            model.clearSelection();
+
+                            btnMoveDown.setEnabled(false);
+                            btnMoveUp.setEnabled(false);
+                            btnSrcToDestButton.setEnabled(false);
+                            btnDestToSrcButton.setEnabled(false);
+                        }
                     }
-                }
-            }
-        });
-
-        destinationModel.addTableModelListener(new TableModelListener() {
-
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                if (e.getColumn() == SortByTableModel.getSortOrderColumn()) {
-                    ListSelectionModel model = destinationTable.getSelectionModel();
-                    model.clearSelection();
-
-                    btnMoveDown.setEnabled(false);
-                    btnMoveUp.setEnabled(false);
-                    btnSrcToDestButton.setEnabled(false);
-                    btnDestToSrcButton.setEnabled(false);
-                }
-            }
-        });
+                });
         scrollPaneDest.setViewportView(destinationTable);
 
         JPanel buttonPanel = new JPanel();
@@ -219,26 +221,26 @@ public class SortByPanel extends JPanel
 
         btnMoveUp = new JButton(Localisation.getString(SortByPanel.class, "sortby.up"));
         btnMoveUp.setEnabled(false);
-        btnMoveUp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moveDestinationUp();
-            }
-        });
+        btnMoveUp.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        moveDestinationUp();
+                    }
+                });
         buttonPanel.add(btnMoveUp);
 
         btnMoveDown = new JButton(Localisation.getString(SortByPanel.class, "sortby.down"));
         btnMoveDown.setEnabled(false);
-        btnMoveDown.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moveDestinationDown();
-            }
-        });
+        btnMoveDown.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        moveDestinationDown();
+                    }
+                });
         buttonPanel.add(btnMoveDown);
     }
 
-    /**
-     * Move destination down.
-     */
+    /** Move destination down. */
     protected void moveDestinationDown() {
         int[] indices = destinationTable.getSelectedRows();
         int[] updatedIndices = new int[indices.length];
@@ -262,9 +264,7 @@ public class SortByPanel extends JPanel
         }
     }
 
-    /**
-     * Move destination up.
-     */
+    /** Move destination up. */
     protected void moveDestinationUp() {
         int[] indices = destinationTable.getSelectedRows();
         int[] updatedIndices = new int[indices.length];
@@ -289,9 +289,7 @@ public class SortByPanel extends JPanel
         }
     }
 
-    /**
-     * Move destination to source.
-     */
+    /** Move destination to source. */
     protected void moveDestinationToSource() {
         List<String> selectedItemList = destinationModel.removeSelected(destinationTable);
 
@@ -304,9 +302,7 @@ public class SortByPanel extends JPanel
         btnDestToSrcButton.setEnabled(false);
     }
 
-    /**
-     * Move source to destination.
-     */
+    /** Move source to destination. */
     protected void moveSrcToDestination() {
         List<String> selectedItemList = sourceList.getSelectedValuesList();
 
@@ -321,9 +317,7 @@ public class SortByPanel extends JPanel
         btnSrcToDestButton.setEnabled(false);
     }
 
-    /**
-     * Update lists.
-     */
+    /** Update lists. */
     private void updateLists() {
         sourceModel.clear();
 
@@ -339,18 +333,14 @@ public class SortByPanel extends JPanel
         }
     }
 
-    /**
-     * Destination selected.
-     */
+    /** Destination selected. */
     protected void destinationSelected() {
         btnMoveDown.setEnabled(true);
         btnMoveUp.setEnabled(true);
         btnDestToSrcButton.setEnabled(true);
     }
 
-    /**
-     * Source selected.
-     */
+    /** Source selected. */
     protected void sourceSelected() {
         btnSrcToDestButton.setEnabled(true);
     }
@@ -420,22 +410,22 @@ public class SortByPanel extends JPanel
      * @param isAscending the is ascending
      */
     protected void setSortOrder(int index, boolean isAscending) {
-        destinationModel.setValueAt(Boolean.valueOf(isAscending), index,
-                SortByTableModel.getSortOrderColumn());
+        destinationModel.setValueAt(
+                Boolean.valueOf(isAscending), index, SortByTableModel.getSortOrderColumn());
 
         destinationModel.fireTableDataChanged();
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource
      * .impl.GeometryTypeEnum, boolean)
      */
     @Override
-    public void dataSourceLoaded(GeometryTypeEnum geometryType,
-            boolean isConnectedToDataSourceFlag) {
+    public void dataSourceLoaded(
+            GeometryTypeEnum geometryType, boolean isConnectedToDataSourceFlag) {
         DataSourceInterface dataSource = DataSourceFactory.getDataSource();
         populateFieldNames(dataSource.getAllAttributes(false));
     }
@@ -453,7 +443,7 @@ public class SortByPanel extends JPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.
      * data.DataStore)
@@ -465,7 +455,7 @@ public class SortByPanel extends JPanel
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.ui.detail.config.sortby.SortOrderUpdateInterface#sortOrderUpdated()
      */
     @Override
@@ -474,5 +464,4 @@ public class SortByPanel extends JPanel
             parentObj.sortByUpdated(getText());
         }
     }
-
 }

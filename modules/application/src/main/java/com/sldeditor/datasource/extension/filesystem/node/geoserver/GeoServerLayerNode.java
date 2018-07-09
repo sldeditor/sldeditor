@@ -19,19 +19,17 @@
 
 package com.sldeditor.datasource.extension.filesystem.node.geoserver;
 
-import java.awt.datatransfer.DataFlavor;
-
-import javax.swing.Icon;
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
+import java.awt.datatransfer.DataFlavor;
+import javax.swing.Icon;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * File system tree node representing a GeoServer layer.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class GeoServerLayerNode extends DefaultMutableTreeNode implements NodeInterface {
@@ -67,7 +65,7 @@ public class GeoServerLayerNode extends DefaultMutableTreeNode implements NodeIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getHandler()
      */
     @Override
@@ -77,7 +75,7 @@ public class GeoServerLayerNode extends DefaultMutableTreeNode implements NodeIn
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.NodeInterface#getDataFlavour()
      */
     @Override

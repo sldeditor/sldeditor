@@ -19,15 +19,14 @@
 
 package com.sldeditor.extension.filesystem.database.client;
 
+import com.sldeditor.common.data.DatabaseConnection;
+import com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface;
 import java.util.List;
 import java.util.Map;
 
-import com.sldeditor.common.data.DatabaseConnection;
-import com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface;
-
 /**
  * The Interface DatabaseClientInterface.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public interface DatabaseClientInterface {
@@ -39,7 +38,7 @@ public interface DatabaseClientInterface {
      * @return true, if successful
      */
     boolean accept(DatabaseConnection connection);
-    
+
     /**
      * Initialise a new database client.
      *
@@ -48,9 +47,7 @@ public interface DatabaseClientInterface {
      */
     void initialise(DatabaseReadProgressInterface parent, DatabaseConnection connection);
 
-    /**
-     * Retrieve data from GeoServer.
-     */
+    /** Retrieve data from GeoServer. */
     void retrieveData();
 
     /**
@@ -60,9 +57,7 @@ public interface DatabaseClientInterface {
      */
     boolean connect();
 
-    /**
-     * Disconnect.
-     */
+    /** Disconnect. */
     void disconnect();
 
     /**
@@ -92,5 +87,4 @@ public interface DatabaseClientInterface {
      * @return the DB connection params
      */
     Map<String, Object> getDBConnectionParams();
-
 }

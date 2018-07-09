@@ -19,6 +19,11 @@
 
 package com.sldeditor.tool.html;
 
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SLDUtils;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.ui.legend.LegendManager;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,19 +35,12 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.io.IOUtils;
 import org.geotools.styling.StyledLayerDescriptor;
 
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.SLDUtils;
-import com.sldeditor.common.data.StyleWrapper;
-import com.sldeditor.ui.legend.LegendManager;
-
 /**
  * Exports a list of SLD object to html.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ExportHTML {
@@ -65,8 +63,11 @@ public class ExportHTML {
      * @param sldDataList the sld data list
      * @param backgroundColour the background colour
      */
-    public static void save(File destinationFolder, String filename,
-            List<SLDDataInterface> sldDataList, Color backgroundColour) {
+    public static void save(
+            File destinationFolder,
+            String filename,
+            List<SLDDataInterface> sldDataList,
+            Color backgroundColour) {
         if (!destinationFolder.exists()) {
             destinationFolder.mkdirs();
         }
@@ -126,14 +127,22 @@ public class ExportHTML {
 
                     List<String> legendFileNameList = new ArrayList<String>();
 
-                    boolean result = LegendManager.getInstance().saveLegendImage(sld,
-                            destinationFolder, layerName, showHeading, showFilename,
-                            legendFileNameList);
+                    boolean result =
+                            LegendManager.getInstance()
+                                    .saveLegendImage(
+                                            sld,
+                                            destinationFolder,
+                                            layerName,
+                                            showHeading,
+                                            showFilename,
+                                            legendFileNameList);
 
                     if (result) {
                         String legendFilename = legendFileNameList.get(0);
-                        sb.append(String.format("    <td><img src=\"%s\" alt=\"%s\" ></td>\n",
-                                legendFilename, layerName));
+                        sb.append(
+                                String.format(
+                                        "    <td><img src=\"%s\" alt=\"%s\" ></td>\n",
+                                        legendFilename, layerName));
                     }
                 }
                 sb.append("  </tr>\n");
@@ -173,5 +182,4 @@ public class ExportHTML {
         }
         return tempFile;
     }
-
 }

@@ -19,7 +19,7 @@
 
 /**
  * Dialog to configure environment variables.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 package com.sldeditor.filter.v2.envvar.dialog;

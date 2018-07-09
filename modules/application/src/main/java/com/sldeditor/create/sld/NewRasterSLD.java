@@ -19,8 +19,10 @@
 
 package com.sldeditor.create.sld;
 
+import com.sldeditor.common.defaultsymbol.DefaultSymbols;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.create.NewSLDBase;
 import java.util.List;
-
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.RasterSymbolizer;
@@ -28,20 +30,14 @@ import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 
-import com.sldeditor.common.defaultsymbol.DefaultSymbols;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.create.NewSLDBase;
-
 /**
  * Class to create a new SLD raster symbol with default values.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class NewRasterSLD extends NewSLDBase implements NewSLDInterface {
 
-    /**
-     * Instantiates a new new polygon sld.
-     */
+    /** Instantiates a new new polygon sld. */
     public NewRasterSLD() {
         super(Localisation.getString(NewRasterSLD.class, "NewRasterSLD.title"));
     }
@@ -81,5 +77,4 @@ public class NewRasterSLD extends NewSLDBase implements NewSLDInterface {
 
         return sld;
     }
-
 }

@@ -19,12 +19,16 @@
 
 package com.sldeditor.common.coordinate;
 
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.vendoroption.VendorOptionManager;
+import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import com.sldeditor.ui.widgets.ValueComboBoxData;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
 import org.geotools.factory.Hints;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.ReferencingFactoryFinder;
@@ -35,12 +39,6 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.ReferenceIdentifier;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
-import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.vendoroption.VendorOptionManager;
-import com.sldeditor.common.vendoroption.VendorOptionVersion;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * The Class CoordManager.
@@ -62,7 +60,7 @@ public class CoordManager {
     private static List<ValueComboBoxData> crsDataList = new ArrayList<ValueComboBoxData>();
 
     /** The crs map. */
-    private static HashMap<String, ValueComboBoxData> crsMap = 
+    private static HashMap<String, ValueComboBoxData> crsMap =
             new HashMap<String, ValueComboBoxData>();
 
     /** The default crs. */
@@ -99,53 +97,58 @@ public class CoordManager {
         return crsDataList.isEmpty();
     }
 
-    /**
-     * Populate crs list.
-     */
+    /** Populate crs list. */
     public void populateCRSList() {
 
         if (isPopulated()) {
-            Runnable runnable = () -> {
-                VendorOptionVersion vendorOptionVersion = VendorOptionManager.getInstance()
-                        .getDefaultVendorOptionVersion();
+            Runnable runnable =
+                    () -> {
+                        VendorOptionVersion vendorOptionVersion =
+                                VendorOptionManager.getInstance().getDefaultVendorOptionVersion();
 
-                ValueComboBoxData notSetValue = new ValueComboBoxData(NOT_SET_CRS,
-                        Localisation.getString(CoordManager.class, "common.notSet"),
-                        vendorOptionVersion);
-                crsDataList.add(notSetValue);
+                        ValueComboBoxData notSetValue =
+                                new ValueComboBoxData(
+                                        NOT_SET_CRS,
+                                        Localisation.getString(CoordManager.class, "common.notSet"),
+                                        vendorOptionVersion);
+                        crsDataList.add(notSetValue);
 
-                Hints hints = null;
-                for (AuthorityFactory factory : ReferencingFactoryFinder
-                        .getCRSAuthorityFactories(hints)) {
-                    String authorityCode = NOT_SET_CRS;
+                        Hints hints = null;
+                        for (AuthorityFactory factory :
+                                ReferencingFactoryFinder.getCRSAuthorityFactories(hints)) {
+                            String authorityCode = NOT_SET_CRS;
 
-                    Citation citation = factory.getAuthority();
-                    if (citation != null) {
-                        @SuppressWarnings("unchecked")
-                        Collection<Identifier> identifierList = (Collection<Identifier>) citation
-                                .getIdentifiers();
-                        authorityCode = identifierList.iterator().next().getCode();
-                    }
-                    Set<String> codeList;
-                    try {
-                        codeList = factory.getAuthorityCodes(CoordinateReferenceSystem.class);
+                            Citation citation = factory.getAuthority();
+                            if (citation != null) {
+                                @SuppressWarnings("unchecked")
+                                Collection<Identifier> identifierList =
+                                        (Collection<Identifier>) citation.getIdentifiers();
+                                authorityCode = identifierList.iterator().next().getCode();
+                            }
+                            Set<String> codeList;
+                            try {
+                                codeList =
+                                        factory.getAuthorityCodes(CoordinateReferenceSystem.class);
 
-                        for (String code : codeList) {
-                            String fullCode = String.format("%s:%s", authorityCode, code);
-                            String descriptionText = factory.getDescriptionText(code).toString();
-                            String text = String.format("%s - %s", fullCode, descriptionText);
-                            ValueComboBoxData value = new ValueComboBoxData(fullCode, text,
-                                    vendorOptionVersion);
-                            crsDataList.add(value);
-                            crsMap.put(fullCode, value);
+                                for (String code : codeList) {
+                                    String fullCode = String.format("%s:%s", authorityCode, code);
+                                    String descriptionText =
+                                            factory.getDescriptionText(code).toString();
+                                    String text =
+                                            String.format("%s - %s", fullCode, descriptionText);
+                                    ValueComboBoxData value =
+                                            new ValueComboBoxData(
+                                                    fullCode, text, vendorOptionVersion);
+                                    crsDataList.add(value);
+                                    crsMap.put(fullCode, value);
+                                }
+                            } catch (NoSuchAuthorityCodeException e) {
+                                // ConsoleManager.getInstance().exception(this, e);
+                            } catch (FactoryException e) {
+                                ConsoleManager.getInstance().exception(this, e);
+                            }
                         }
-                    } catch (NoSuchAuthorityCodeException e) {
-                        // ConsoleManager.getInstance().exception(this, e);
-                    } catch (FactoryException e) {
-                        ConsoleManager.getInstance().exception(this, e);
-                    }
-                }
-            };
+                    };
             Thread thread = new Thread(runnable);
             thread.start();
         }

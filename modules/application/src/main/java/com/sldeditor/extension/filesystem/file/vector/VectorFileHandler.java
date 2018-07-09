@@ -19,15 +19,6 @@
 
 package com.sldeditor.extension.filesystem.file.vector;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.Icon;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.tree.DefaultTreeModel;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.filesystem.FileSystemInterface;
@@ -37,21 +28,25 @@ import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatu
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.Icon;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  * Class that handles reading vector files to the file system.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class VectorFileHandler implements FileHandlerInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7418498226923733628L;
 
-    /**
-     * Default constructor.
-     */
-    public VectorFileHandler() {
-    }
+    /** Default constructor. */
+    public VectorFileHandler() {}
 
     /**
      * Gets the file extension.
@@ -72,8 +67,8 @@ public class VectorFileHandler implements FileHandlerInterface {
      * @return true, if successful
      */
     @Override
-    public boolean populate(FileSystemInterface inputInterface, DefaultTreeModel treeModel,
-            FileTreeNode node) {
+    public boolean populate(
+            FileSystemInterface inputInterface, DefaultTreeModel treeModel, FileTreeNode node) {
         if (node != null) {
             node.setFileCategory(FileTreeNodeTypeEnum.VECTOR);
         }
@@ -89,7 +84,7 @@ public class VectorFileHandler implements FileHandlerInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.input.NodeInterface)
      */
     @Override
@@ -128,7 +123,7 @@ public class VectorFileHandler implements FileHandlerInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
@@ -144,14 +139,15 @@ public class VectorFileHandler implements FileHandlerInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
     public String getSLDName(SLDDataInterface sldData) {
         if (sldData != null) {
-            return sldData.getLayerNameWithOutSuffix() + ExternalFilenames
-                    .addFileExtensionSeparator(SLDEditorFile.getSLDFileExtension());
+            return sldData.getLayerNameWithOutSuffix()
+                    + ExternalFilenames.addFileExtensionSeparator(
+                            SLDEditorFile.getSLDFileExtension());
         }
 
         return "";
@@ -169,7 +165,7 @@ public class VectorFileHandler implements FileHandlerInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
      */
     @Override

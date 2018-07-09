@@ -19,12 +19,6 @@
 
 package com.sldeditor.common.connection;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.property.PropertyManagerFactory;
@@ -32,6 +26,11 @@ import com.sldeditor.extension.filesystem.database.DatabaseInput;
 import com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface;
 import com.sldeditor.extension.filesystem.database.client.DatabaseClient;
 import com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The Class DatabaseConnectionManager.
@@ -51,7 +50,7 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
     private static DatabaseConnectionManagerInterface instance = null;
 
     /** The DatabaseClientInterface class to create. */
-    public List<DatabaseClientInterface> databaseClientClassList = 
+    public List<DatabaseClientInterface> databaseClientClassList =
             new ArrayList<DatabaseClientInterface>();
 
     /** The connection map. */
@@ -71,9 +70,7 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         return instance;
     }
 
-    /**
-     * Instantiates a new database connection manager.
-     */
+    /** Instantiates a new database connection manager. */
     public DatabaseConnectionManager() {
         databaseClientClassList.add(new DatabaseClient());
     }
@@ -87,8 +84,8 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
     public List<DatabaseConnection> getConnectionList() {
         List<DatabaseConnection> connectionList = new ArrayList<DatabaseConnection>();
 
-        List<String> valueList = PropertyManagerFactory.getInstance()
-                .getMultipleValues(DATABASE_CONNECTION_FIELD);
+        List<String> valueList =
+                PropertyManagerFactory.getInstance().getMultipleValues(DATABASE_CONNECTION_FIELD);
 
         for (String connectionString : valueList) {
             DatabaseConnection connection = DatabaseConnection.decodeString(connectionString);
@@ -100,9 +97,7 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         return connectionList;
     }
 
-    /**
-     * Update connection list.
-     */
+    /** Update connection list. */
     @Override
     public void updateList() {
         Set<DatabaseConnection> keySet = connectionMap.keySet();
@@ -110,8 +105,8 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         PropertyManagerFactory.getInstance().clearValue(DATABASE_CONNECTION_FIELD, true);
         for (DatabaseConnection connection : keySet) {
             count++;
-            PropertyManagerFactory.getInstance().updateValue(DATABASE_CONNECTION_FIELD, count,
-                    connection.encodeAsString());
+            PropertyManagerFactory.getInstance()
+                    .updateValue(DATABASE_CONNECTION_FIELD, count, connection.encodeAsString());
         }
     }
 
@@ -135,7 +130,8 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
      * (non-Javadoc).
      *
      * @param progress the progress
-     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#readPropertyFile(com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface)
+     * @see
+     *     com.sldeditor.common.connection.DatabaseConnectionManagerInterface#readPropertyFile(com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface)
      */
     public void readPropertyFile(DatabaseReadProgressInterface progress) {
         List<DatabaseConnection> connectionList = getConnectionList();
@@ -152,15 +148,16 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
      * @param connection the connection
      * @return the database client
      */
-    private DatabaseClientInterface createDatabaseClient(DatabaseReadProgressInterface progress,
-            DatabaseConnection connection) {
+    private DatabaseClientInterface createDatabaseClient(
+            DatabaseReadProgressInterface progress, DatabaseConnection connection) {
 
         for (DatabaseClientInterface client : databaseClientClassList) {
             if (client.accept(connection)) {
                 DatabaseClientInterface newClient = null;
                 try {
-                    newClient = (DatabaseClientInterface) Class.forName(client.getClass().getName())
-                            .newInstance();
+                    newClient =
+                            (DatabaseClientInterface)
+                                    Class.forName(client.getClass().getName()).newInstance();
                     newClient.initialise(progress, connection);
 
                     return newClient;
@@ -188,7 +185,7 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.connection.DatabaseReadProgressInterface#removeConnection(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
@@ -198,27 +195,25 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#addNewConnection(com.sldeditor.extension.filesystem.database.
      * DatabaseReadProgressInterface, com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
-    public void addNewConnection(DatabaseReadProgressInterface progress,
-            DatabaseConnection newConnectionDetails) {
-        connectionMap.put(newConnectionDetails,
-                createDatabaseClient(progress, newConnectionDetails));
+    public void addNewConnection(
+            DatabaseReadProgressInterface progress, DatabaseConnection newConnectionDetails) {
+        connectionMap.put(
+                newConnectionDetails, createDatabaseClient(progress, newConnectionDetails));
     }
 
-    /**
-     * Destroy instance.
-     */
+    /** Destroy instance. */
     public static void destroyInstance() {
         instance = null;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getDBConnectionParams(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
@@ -233,7 +228,7 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getMatchingConnection(com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
@@ -245,5 +240,4 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         }
         return null;
     }
-
 }

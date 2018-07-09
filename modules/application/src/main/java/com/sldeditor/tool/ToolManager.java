@@ -19,24 +19,21 @@
 
 package com.sldeditor.tool;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JPanel;
-
-import org.apache.log4j.Logger;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.RecursiveUpdateInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.ToolSelectionInterface;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JPanel;
+import org.apache.log4j.Logger;
 
 /**
  * A manager for handling tools.
- * 
+ *
  * @author Robert Ward (SCISYS)
  */
 public class ToolManager implements ToolSelectionInterface {
@@ -44,7 +41,7 @@ public class ToolManager implements ToolSelectionInterface {
     private static ToolManager instance = null;
 
     /** The tool map. */
-    private Map<Class<?>, List<ToolInterface>> toolMap = 
+    private Map<Class<?>, List<ToolInterface>> toolMap =
             new HashMap<Class<?>, List<ToolInterface>>();
 
     /** The unique tool map. */
@@ -72,11 +69,8 @@ public class ToolManager implements ToolSelectionInterface {
     private List<RecursiveUpdateInterface> recursiveUpdateListenerList =
             new ArrayList<RecursiveUpdateInterface>();
 
-    /**
-     * Default constructor.
-     */
-    private ToolManager() {
-    }
+    /** Default constructor. */
+    private ToolManager() {}
 
     /**
      * Register tool.
@@ -124,7 +118,7 @@ public class ToolManager implements ToolSelectionInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolSelectionInterface#getPanel()
      */
     @Override
@@ -144,12 +138,12 @@ public class ToolManager implements ToolSelectionInterface {
      */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolSelectionInterface#setSelectedItems(java.util.List, java.util.List)
      */
     @Override
-    public void setSelectedItems(List<NodeInterface> nodeTypeList,
-            List<SLDDataInterface> sldDataList) {
+    public void setSelectedItems(
+            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
         lastNodeTypeList = nodeTypeList;
         lastSldDataList = sldDataList;
 
@@ -162,8 +156,8 @@ public class ToolManager implements ToolSelectionInterface {
      * @param nodeTypeList the node type list
      * @param sldDataList the sld data list
      */
-    private void forwardSelectedItems(List<NodeInterface> nodeTypeList,
-            List<SLDDataInterface> sldDataList) {
+    private void forwardSelectedItems(
+            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
         if (toolPanel != null) {
             List<Class<?>> uniqueNodeTypeList = new ArrayList<Class<?>>();
             if (nodeTypeList != null) {
@@ -177,12 +171,10 @@ public class ToolManager implements ToolSelectionInterface {
         }
     }
 
-    /**
-     * Refresh selection.
-     */
+    /** Refresh selection. */
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.tool.ToolSelectionInterface#refreshSelection()
      */
     @Override
@@ -234,7 +226,7 @@ public class ToolManager implements ToolSelectionInterface {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.sldeditor.common.ToolSelectionInterface#addRecursiveListener(com.sldeditor.common.RecursiveUpdateInterface)
      */
     @Override
