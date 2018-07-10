@@ -33,9 +33,6 @@ import java.util.List;
 import net.opengis.ows11.DomainMetadataType;
 import net.opengis.wps10.ComplexDataCombinationsType;
 import net.opengis.wps10.ComplexDataDescriptionType;
-import net.opengis.wps10.DataInputsType;
-import net.opengis.wps10.InputDescriptionType;
-import net.opengis.wps10.LiteralInputType;
 import net.opengis.wps10.LiteralOutputType;
 import net.opengis.wps10.OutputDescriptionType;
 import net.opengis.wps10.ProcessBriefType;
@@ -54,7 +51,7 @@ import org.geotools.data.wps.response.DescribeProcessResponse;
 import org.geotools.ows.ServiceException;
 
 /**
- * The Class GeoServerWPSClient.
+ * The Class GeoServerWPSClient, reads the GeoServer WPS process functions.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -69,6 +66,10 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
     private static String[] vectorGeometryTypeArray = {
         "text/xml; subtype=wfs-collection/1.0",
         "text/xml; subtype=wfs-collection/1.1",
+        "text/xml; subtype=gml/3.1.1",
+        "text/xml; subtype=gml/2.1.2",
+        "application/wkt",
+        "application/json",
         "application/wfs-collection-1.0",
         "application/wfs-collection-1.1"
     };
@@ -90,7 +91,7 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
     private List<ProcessDescriptionType> processList = new ArrayList<ProcessDescriptionType>();
 
     /**
-     * Instantiates a new geo server wps client.
+     * Instantiates a new GeoServer WPS client.
      *
      * @param connection the connection
      */
@@ -125,7 +126,7 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
                 String functionIdentifier = process.getIdentifier().getValue();
 
                 // create a WebProcessingService as shown above,
-                // then do a full describeprocess on my process
+                // then do a full describe process on my process
                 DescribeProcessRequest descRequest = wps.createDescribeProcessRequest();
 
                 // describe the double addition process
@@ -170,13 +171,16 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
         List<ProcessBriefType> functionList = new ArrayList<ProcessBriefType>();
 
         for (ProcessDescriptionType processDescription : processList) {
+            ConsoleManager.getInstance()
+                    .information(this, processDescription.getTitle().getValue());
+
             boolean outputParameter =
                     getOutputParameter(typeOfData, processDescription.getProcessOutputs());
             boolean inputParameter = true;
-            // if(outputParameter)
-            // {
-            // inputParameter = getInputParameter(typeOfData, processDescription.getDataInputs());
-            // }
+            //            if (outputParameter) {
+            //                inputParameter = getInputParameter(typeOfData,
+            // processDescription.getDataInputs());
+            //            }
 
             if (inputParameter && outputParameter) {
                 functionList.add(processDescription);
@@ -193,39 +197,43 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
      * @param dataInputs the data inputs
      * @return the input parameter
      */
-    @SuppressWarnings("unused")
-    private boolean getInputParameter(DataTypeEnum typeOfData, DataInputsType dataInputs) {
+    /*
+        private boolean getInputParameter(DataTypeEnum typeOfData, DataInputsType dataInputs) {
+            ConsoleManager.getInstance().information(this,
+                    "Inputs");
 
-        for (Object dataInput : dataInputs.getInput()) {
-            InputDescriptionType input = (InputDescriptionType) dataInput;
+            for (Object dataInput : dataInputs.getInput()) {
+                InputDescriptionType input = (InputDescriptionType) dataInput;
 
-            if (input instanceof InputDescriptionType) {
-                InputDescriptionType inputDescription = (InputDescriptionType) input;
+                if (input instanceof InputDescriptionType) {
+                    InputDescriptionType inputDescription = (InputDescriptionType) input;
 
-                LiteralInputType literal = inputDescription.getLiteralData();
-                if (literal != null) {
-                    DomainMetadataType dataType = literal.getDataType();
+                    LiteralInputType literal = inputDescription.getLiteralData();
+                    if (literal != null) {
+                        DomainMetadataType dataType = literal.getDataType();
 
-                    // System.out.println(dataType.getValue() + "/" + dataType.getReference());
-                } else {
-                    SupportedCRSsType bbox = inputDescription.getBoundingBoxData();
-                    if (bbox != null) {
-                        // System.out.println(bbox);
-                    } else {
-                        SupportedComplexDataType complex = inputDescription.getComplexData();
-                        if (complex != null) {
-                            ComplexDataCombinationsType parameterDataType = complex.getSupported();
-                            if (isGeometry(typeOfData, parameterDataType)) {
-                                return true;
+                        ConsoleManager.getInstance().information(this,
+                                dataType.getValue());
+                        } else {
+                        SupportedCRSsType bbox = inputDescription.getBoundingBoxData();
+                        if (bbox != null) {
+                            ConsoleManager.getInstance().information(this,
+                                    "BBox");
+                        } else {
+                            SupportedComplexDataType complex = inputDescription.getComplexData();
+                            if (complex != null) {
+                                ComplexDataCombinationsType parameterDataType = complex.getSupported();
+                                if (isGeometry(typeOfData, parameterDataType)) {
+                                    return true;
+                                }
                             }
                         }
                     }
                 }
             }
+            return false;
         }
-        return false;
-    }
-
+    */
     /**
      * Gets the output parameter.
      *
@@ -234,6 +242,8 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
      * @return the output parameter
      */
     private boolean getOutputParameter(DataTypeEnum typeOfData, ProcessOutputsType processOutputs) {
+        ConsoleManager.getInstance().information(this, "Outputs");
+
         for (Object o : processOutputs.getOutput()) {
             if (o instanceof OutputDescriptionType) {
                 OutputDescriptionType oo = (OutputDescriptionType) o;
@@ -243,12 +253,12 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
                     DomainMetadataType dataType = literal.getDataType();
 
                     if (dataType != null) {
-                        // System.out.println(dataType.getValue() + "/" + dataType.getReference());
+                        ConsoleManager.getInstance().information(this, dataType.getValue());
                     }
                 } else {
                     SupportedCRSsType bbox = oo.getBoundingBoxOutput();
                     if (bbox != null) {
-                        // System.out.println(bbox);
+                        ConsoleManager.getInstance().information(this, "BBox");
                     } else {
                         SupportedComplexDataType complex = oo.getComplexOutput();
                         if (complex != null) {
@@ -272,11 +282,13 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
      * @return true, if is geometry
      */
     private boolean isGeometry(DataTypeEnum typeOfData, ComplexDataCombinationsType dataType) {
+
         int count = 0;
+
         for (Object obj : dataType.getFormat()) {
             if (obj instanceof ComplexDataDescriptionType) {
                 ComplexDataDescriptionType format = (ComplexDataDescriptionType) obj;
-
+                ConsoleManager.getInstance().information(this, format.getMimeType());
                 switch (typeOfData) {
                     case E_VECTOR:
                         if (vectorGeometryTypeList.contains(format.getMimeType())) {
@@ -293,6 +305,6 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
                 }
             }
         }
-        return (count > 3);
+        return (count > 0);
     }
 }

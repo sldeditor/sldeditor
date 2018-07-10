@@ -42,7 +42,6 @@ import java.util.Map;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -54,11 +53,13 @@ import org.junit.Test;
  */
 public class GeoServerClientTest {
 
-    private static final String TEST_GEOSERVER_INSTANCE = "http://localhost:8080/geoserver";
+    private static final String TEST_GEOSERVER_INSTANCE = "http://localhost:8081/geoserver";
 
     private static final String TEST_GEOSERVER_USERNAME = "admin";
 
     private static final String TEST_GEOSERVER_PASSWORD = "geoserver";
+
+    private static final String TEST_PREFIX = "SLDEDITOR_";
 
     private static GeoServerConnection testConnection = null;
 
@@ -68,6 +69,8 @@ public class GeoServerClientTest {
         private boolean layersComplete = false;
 
         public int styleTotal = 0;
+
+        public Map<String, List<GeoServerLayer>> layerMap = null;
 
         @Override
         public void startPopulating(GeoServerConnection connection) {
@@ -97,6 +100,7 @@ public class GeoServerClientTest {
 
             System.out.println("All styles read");
             layersComplete = true;
+            this.layerMap = layerMap;
         }
 
         @Override
@@ -191,130 +195,174 @@ public class GeoServerClientTest {
      * Test method for {@link
      * com.sldeditor.extension.filesystem.geoserver.client.GeoServerClient#disconnect()}.
      */
-    @Ignore
     @Test
     public void testInitialiseWithValidConnection() {
         GeoServerClient client = new GeoServerClient();
         TestProgressClass progress = new TestProgressClass();
 
         client.initialise(progress, testConnection);
-        assertTrue(client.connect());
 
-        assertEquals(testConnection, client.getConnection());
+        boolean connectionResult = client.connect();
 
-        List<String> actualWorkspaceList = client.getWorkspaceList();
-        assertTrue(actualWorkspaceList.size() > 0);
+        if (!connectionResult) {
+            System.out.println("No GeoServer running");
+        } else {
+            assertEquals(testConnection, client.getConnection());
 
-        client.retrieveData();
+            List<String> actualWorkspaceList = client.getWorkspaceList();
+            assertTrue(actualWorkspaceList.size() > 0);
 
-        int count = 0;
-        while (!progress.hasFinished() && count < 50) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            client.retrieveData();
+
+            int count = 0;
+            while (!progress.hasFinished() && count < 50) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                count++;
             }
-            count++;
-        }
 
-        assertTrue(progress.hasFinished());
+            assertTrue(progress.hasFinished());
 
-        // CHECKSTYLE:OFF
-        int actualNoOfStyles = progress.styleTotal;
-        // CHECKSTYLE:ON
+            // CHECKSTYLE:OFF
+            int actualNoOfStyles = progress.styleTotal;
+            // CHECKSTYLE:ON
 
-        // Retrieve style
-        StyleWrapper styleWrapper = new StyleWrapper(client.getDefaultWorkspaceName(), "point");
-        String sldContents = client.getStyle(styleWrapper);
+            // Retrieve style
+            StyleWrapper invalidStyleWrapper = new StyleWrapper("Does not exist", "point");
+            assertNull(client.getStyle(invalidStyleWrapper));
+            assertNull(client.getStyle(null));
 
-        assertTrue(sldContents != null);
+            StyleWrapper styleWrapper = new StyleWrapper(client.getDefaultWorkspaceName(), "point");
+            String sldContents = client.getStyle(styleWrapper);
 
-        SLDData sldData = new SLDData(styleWrapper, sldContents);
+            assertTrue(sldContents != null);
 
-        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
-        assertEquals("default_point", sld.layers().get(0).getName());
+            SLDData sldData = new SLDData(styleWrapper, sldContents);
 
-        // Upload as new style
-        String timeString = "" + System.currentTimeMillis();
+            StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
+            assertEquals("default_point", sld.layers().get(0).getName());
 
-        String styleName = "New_Test_style_" + timeString;
-        styleWrapper.setStyle(styleName);
-        assertTrue(client.uploadSLD(styleWrapper, sldContents));
-        List<StyleWrapper> stylesToDeleteList = new ArrayList<StyleWrapper>();
-        stylesToDeleteList.add(styleWrapper.clone());
+            // Upload as new style
+            String timeString = "" + System.currentTimeMillis();
 
-        // Replace the existing style
-        StyledLayer styledLayer = sld.layers().get(0);
+            String styleName = TEST_PREFIX + "New_Test_style_" + timeString;
+            styleWrapper.setStyle(styleName);
+            assertTrue(client.uploadSLD(styleWrapper, sldContents));
+            List<StyleWrapper> stylesToDeleteList = new ArrayList<StyleWrapper>();
+            stylesToDeleteList.add(styleWrapper.clone());
 
-        styledLayer.setName("test point sld");
+            // Replace the existing style
+            StyledLayer styledLayer = sld.layers().get(0);
 
-        SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
-        String updatedSLDBody = sldWriter.encodeSLD(null, sld);
-        assertTrue(client.uploadSLD(styleWrapper, updatedSLDBody));
+            styledLayer.setName("test point sld");
 
-        // Change the workspace name - invalid
-        styleWrapper.setWorkspace("Test workspace");
-        assertFalse(client.uploadSLD(styleWrapper, updatedSLDBody));
+            SLDWriterInterface sldWriter = SLDWriterFactory.createWriter(null);
+            String updatedSLDBody = sldWriter.encodeSLD(null, sld);
+            assertTrue(client.uploadSLD(styleWrapper, updatedSLDBody));
 
-        // Change the workspace name - valid
-        String expectedWorkspace = "Test_workspace_" + timeString;
-        styleWrapper.setWorkspace(expectedWorkspace);
-        assertTrue(client.uploadSLD(styleWrapper, updatedSLDBody));
-        stylesToDeleteList.add(styleWrapper.clone());
+            // Change the workspace name - invalid
+            styleWrapper.setWorkspace("Test workspace");
+            assertFalse(client.uploadSLD(styleWrapper, updatedSLDBody));
 
-        actualWorkspaceList = client.getWorkspaceList();
-        assertTrue(actualWorkspaceList.contains(expectedWorkspace));
+            // Change the workspace name - valid
+            String expectedWorkspace = TEST_PREFIX + "Test_workspace_" + timeString;
+            styleWrapper.setWorkspace(expectedWorkspace);
+            assertTrue(client.uploadSLD(styleWrapper, updatedSLDBody));
+            stylesToDeleteList.add(styleWrapper.clone());
 
-        // Update the contents
-        styledLayer.setName("updated test point sld");
+            actualWorkspaceList = client.getWorkspaceList();
+            assertTrue(actualWorkspaceList.contains(expectedWorkspace));
 
-        updatedSLDBody = sldWriter.encodeSLD(null, sld);
-        assertTrue(client.uploadSLD(styleWrapper, updatedSLDBody));
+            // Update the contents
+            styledLayer.setName("updated test point sld");
 
-        // Check refresh workspace works
-        client.refreshWorkspace(client.getDefaultWorkspaceName());
+            updatedSLDBody = sldWriter.encodeSLD(null, sld);
+            assertTrue(client.uploadSLD(styleWrapper, updatedSLDBody));
 
-        count = 0;
-        while (!progress.hasFinished() && count < 50) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            sldContents = client.getStyle(styleWrapper);
+            assertTrue(sldContents != null);
+
+            // Check refresh default workspace works
+            client.refreshWorkspace(client.getDefaultWorkspaceName());
+
+            count = 0;
+            while (!progress.hasFinished() && count < 50) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                count++;
             }
-            count++;
+
+            assertTrue(progress.hasFinished());
+
+            assertEquals(actualNoOfStyles + 1, progress.styleTotal);
+
+            // Check refresh workspace works
+            client.refreshWorkspace(expectedWorkspace);
+
+            count = 0;
+            while (!progress.hasFinished() && count < 50) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                count++;
+            }
+
+            assertTrue(progress.hasFinished());
+
+            // Update the layer's style
+            GeoServerLayer geoserverLayer =
+                    progress.layerMap
+                            .get(progress.layerMap.keySet().iterator().next())
+                            .iterator()
+                            .next();
+
+            StyleWrapper previousStyleWrapper = geoserverLayer.getStyle();
+
+            geoserverLayer.setStyle(styleWrapper);
+            assertTrue(client.updateLayerStyles(geoserverLayer));
+
+            // Put it back to the previous style
+            geoserverLayer.setStyle(previousStyleWrapper);
+            assertTrue(client.updateLayerStyles(geoserverLayer));
+
+            //
+            // Tidy up - delete all styles created
+            //
+            for (StyleWrapper styleToDelete : stylesToDeleteList) {
+                System.out.println(
+                        "Deleting style : "
+                                + styleToDelete.getWorkspace()
+                                + "/"
+                                + styleToDelete.getStyle());
+                assertTrue(client.deleteStyle(styleToDelete));
+            }
+            assertFalse(client.deleteStyle(null));
+            assertFalse(client.deleteStyle(new StyleWrapper()));
+
+            StyleWrapper tmpStyle = styleWrapper.clone();
+            tmpStyle.setStyle("invalid");
+            assertFalse(client.deleteStyle(tmpStyle));
+
+            tmpStyle = styleWrapper.clone();
+            tmpStyle.setWorkspace("invalid");
+            assertFalse(client.deleteStyle(tmpStyle));
+
+            System.out.println("Deleting workspace : " + expectedWorkspace);
+
+            assertFalse(client.deleteWorkspace(null));
+            assertFalse(client.deleteWorkspace(client.getDefaultWorkspaceName()));
+            assertTrue(client.deleteWorkspace(expectedWorkspace));
+
+            client.disconnect();
         }
-
-        assertTrue(progress.hasFinished());
-
-        assertEquals(actualNoOfStyles + 1, progress.styleTotal);
-
-        //
-        // Tidy up - delete all styles created
-        //
-        for (StyleWrapper styleToDelete : stylesToDeleteList) {
-            System.out.println(
-                    "Deleting style : "
-                            + styleToDelete.getWorkspace()
-                            + "/"
-                            + styleToDelete.getStyle());
-            assertTrue(client.deleteStyle(styleToDelete));
-        }
-        assertFalse(client.deleteStyle(null));
-        assertFalse(client.deleteStyle(new StyleWrapper()));
-
-        StyleWrapper tmpStyle = styleWrapper.clone();
-        tmpStyle.setStyle("invalid");
-        assertFalse(client.deleteStyle(tmpStyle));
-
-        tmpStyle = styleWrapper.clone();
-        tmpStyle.setWorkspace("invalid");
-        assertFalse(client.deleteStyle(tmpStyle));
-
-        System.out.println("Deleting workspace : " + expectedWorkspace);
-
-        assertTrue(client.deleteWorkspace(expectedWorkspace));
-
-        client.disconnect();
         assertFalse(client.isConnected());
     }
 
