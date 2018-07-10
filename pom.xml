@@ -73,7 +73,7 @@
         <fmt.skip>false</fmt.skip>
     
         <!-- Jacoco coverage -->
-        <jacoco.version>0.7.9</jacoco.version>
+        <jacoco.version>0.8.1</jacoco.version>
 
         <!-- CheckStyle -->
         <checkstyle.config.location>build/checkstyle/sldeditor_checkstyle.xml</checkstyle.config.location>
