@@ -17,5 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @author Robert Ward (SCISYS) */
+/**
+ * Package containing classes to determine whether data source attributes are present.
+ *
+ * @author Robert Ward (SCISYS)
+ */
 package com.sldeditor.common.vendoroption.minversion;

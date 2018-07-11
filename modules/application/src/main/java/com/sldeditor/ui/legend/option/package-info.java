@@ -17,5 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @author Robert Ward (SCISYS) */
+/**
+ * Package containing legend option data.
+ *
+ * @author Robert Ward (SCISYS)
+ */
 package com.sldeditor.ui.legend.option;

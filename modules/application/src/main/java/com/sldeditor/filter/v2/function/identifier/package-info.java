@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2017, SCISYS UK Limited
+ * Copyright (C) 2018, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
  */
 
 /**
- * Package to supply an abstract interface to the database clients.
+ * Classes to handle the configuration of feature identifier filter functions.
  *
  * @author Robert Ward (SCISYS)
  */
-package com.sldeditor.extension.filesystem.database.client;
+package com.sldeditor.filter.v2.function.identifier;

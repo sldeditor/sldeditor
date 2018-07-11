@@ -17,5 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @author Robert Ward (SCISYS) */
+/**
+ * Package containing the legend ui classes.
+ *
+ * @author Robert Ward (SCISYS)
+ */
 package com.sldeditor.ui.legend;

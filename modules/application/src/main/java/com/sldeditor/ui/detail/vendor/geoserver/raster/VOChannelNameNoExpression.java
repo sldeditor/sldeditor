@@ -62,6 +62,7 @@ public class VOChannelNameNoExpression extends StandardPanel
      * Constructor.
      *
      * @param panelId the panel id
+     * @param fieldId the field id
      */
     public VOChannelNameNoExpression(Class<?> panelId, FieldIdEnum fieldId) {
         super(panelId);
@@ -73,7 +74,6 @@ public class VOChannelNameNoExpression extends StandardPanel
      * Configures the class.
      *
      * @param panelConfig the panel config
-     * @param fieldId the field id
      */
     public void setUp(String panelConfig) {
         createUI(panelConfig);

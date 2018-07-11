@@ -17,5 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @author Robert Ward (SCISYS) */
+/**
+ * Package containing vendor option shape:// marker GUI panels.
+ *
+ * @author Robert Ward (SCISYS)
+ */
 package com.sldeditor.ui.detail.vendor.geoserver.marker.shape;

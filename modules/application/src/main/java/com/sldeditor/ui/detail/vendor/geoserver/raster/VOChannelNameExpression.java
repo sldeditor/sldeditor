@@ -74,13 +74,16 @@ public class VOChannelNameExpression extends StandardPanel
      * Configures the class.
      *
      * @param panelConfig the panel config
-     * @param fieldId the field id
      */
     public void setUp(String panelConfig) {
         createUI(panelConfig);
     }
 
-    /** Creates the ui. */
+    /**
+     *  Creates the ui.
+     *
+     * @param panelConfig the panel config
+     */
     private void createUI(String panelConfig) {
         readConfigFileNoScrollPane(null, getPanelId(), this, panelConfig);
     }
