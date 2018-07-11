@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.common.console;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.sldeditor.common.console.ConsoleManager;
 import java.io.BufferedReader;
@@ -28,8 +28,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import org.junit.AfterClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for ConsoleManager.
@@ -43,7 +43,7 @@ public class ConsoleManagerTest {
     /** The log file, defined in /src/test/resources/log4j.properties. */
     private static File logFile = new File("consolemanagertest.log");
 
-    @AfterClass
+    @AfterAll
     public static void endOfTest() {
         logFile.delete();
     }

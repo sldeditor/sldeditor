@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.filter.v2.function.temporal;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.temporal.After;
@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.temporal.BinaryTemporalOperatorImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 

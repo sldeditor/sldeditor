@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.ui.preferences;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.ui.preferences.PrefPanel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for PrefPanel class.

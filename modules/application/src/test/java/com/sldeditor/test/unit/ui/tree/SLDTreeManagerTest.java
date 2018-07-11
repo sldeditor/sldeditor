@@ -21,7 +21,7 @@ package com.sldeditor.test.unit.ui.tree;
 
 import com.sldeditor.ui.tree.SLDTree;
 import com.sldeditor.ui.tree.SLDTreeManager;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for SLDTreeManager.

@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.common.preferences;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.SelectedFiles;
@@ -43,7 +43,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for PrefManager.

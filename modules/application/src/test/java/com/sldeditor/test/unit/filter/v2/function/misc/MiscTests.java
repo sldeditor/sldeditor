@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.filter.v2.function.misc;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.misc.IsLike;
@@ -34,7 +34,7 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.CompareFilterImpl;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
@@ -66,8 +66,7 @@ public class MiscTests {
         try {
             parameterList.add(ff.literal(CQL.toFilter("expr1 >= 5")));
         } catch (CQLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
         filter = (IsLikeExtended) objUnderTest.createFilter(parameterList);
         assertNull(filter.getLiteral());

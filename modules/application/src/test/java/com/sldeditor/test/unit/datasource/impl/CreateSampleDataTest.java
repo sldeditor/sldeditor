@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.datasource.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.datasource.impl.CreateSampleData;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
@@ -29,7 +29,7 @@ import java.util.Date;
 import org.geotools.data.DataStore;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Polygon;
 import org.opengis.feature.simple.SimpleFeatureType;
 

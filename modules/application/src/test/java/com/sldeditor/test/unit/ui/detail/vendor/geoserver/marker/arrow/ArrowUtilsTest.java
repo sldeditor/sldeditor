@@ -19,11 +19,11 @@
 
 package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.arrow;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.ui.detail.vendor.geoserver.marker.arrow.ArrowUtils;
 import org.geotools.factory.CommonFactoryFinder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 

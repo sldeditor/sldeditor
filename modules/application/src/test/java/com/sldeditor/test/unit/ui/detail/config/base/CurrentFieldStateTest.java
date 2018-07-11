@@ -19,11 +19,11 @@
 
 package com.sldeditor.test.unit.ui.detail.config.base;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.ui.detail.config.base.CurrentFieldState;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for CurrentFieldState.

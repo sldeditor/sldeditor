@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.ui.detail.config.featuretypeconstraint;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
@@ -37,7 +37,7 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Extent;
 import org.geotools.styling.FeatureTypeConstraint;
 import org.geotools.styling.StyleFactoryImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 import org.opengis.filter.Filter;
 

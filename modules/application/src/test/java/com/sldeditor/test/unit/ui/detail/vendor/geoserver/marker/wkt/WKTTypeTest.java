@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.wkt;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for WKTType.

@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.ui.detail.config.symboltype.externalgraphic;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -38,7 +38,7 @@ import java.net.URL;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.StyleFactoryImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for ExternalGraphicDetails.
@@ -215,8 +215,7 @@ public class ExternalGraphicDetailsTest {
                     (ExternalGraphicImpl)
                             styleFactory.createExternalGraphic(expectedURL, "image/png");
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
         assertFalse(callback.isCalled());
         panel.setValue(externalGraphic);
@@ -224,8 +223,7 @@ public class ExternalGraphicDetailsTest {
         try {
             assertEquals(expectedURL.toExternalForm(), actual.getLocation().toExternalForm());
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
         assertTrue(callback.isCalled());
 
@@ -242,8 +240,7 @@ public class ExternalGraphicDetailsTest {
                     externalGraphic.getLocation().toExternalForm(),
                     actual.getLocation().toExternalForm());
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
     }
 
@@ -293,8 +290,7 @@ public class ExternalGraphicDetailsTest {
             panel.testUserSelectedFileURL(expectedURL1);
             assertTrue(callback.isCalled());
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
         assertEquals(RelativePath.convert(expectedURL1, true), panel.getExpression().toString());
         panel.testUserSelectedFileURL(expectedURL1);
@@ -306,8 +302,7 @@ public class ExternalGraphicDetailsTest {
         try {
             expectedURL2 = new URL(expectedString);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
         panel.testUserSelectedFileURL(expectedURL2);
         assertTrue(callback.isCalled());

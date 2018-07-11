@@ -60,12 +60,12 @@
 	<classpathentry kind="var" path="M2_REPO/net/sourceforge/jdatepicker/jdatepicker/1.3.2/jdatepicker-1.3.2.jar" sourcepath="M2_REPO/net/sourceforge/jdatepicker/jdatepicker/1.3.2/jdatepicker-1.3.2-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/dockingframes/docking-frames-common/1.1.2-SNAPSHOT/docking-frames-common-1.1.2-SNAPSHOT.jar" sourcepath="M2_REPO/org/dockingframes/docking-frames-common/1.1.2-SNAPSHOT/docking-frames-common-1.1.2-SNAPSHOT-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/dockingframes/docking-frames-core/1.1.2-SNAPSHOT/docking-frames-core-1.1.2-SNAPSHOT.jar" sourcepath="M2_REPO/org/dockingframes/docking-frames-core/1.1.2-SNAPSHOT/docking-frames-core-1.1.2-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/junit/junit/4.12/junit-4.12.jar" sourcepath="M2_REPO/junit/junit/4.12/junit-4.12-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" sourcepath="M2_REPO/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

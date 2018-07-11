@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.create;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.sldeditor.create.NewSLDFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for NewSLDFactory.

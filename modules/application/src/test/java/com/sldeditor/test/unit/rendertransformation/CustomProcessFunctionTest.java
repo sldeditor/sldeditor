@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.rendertransformation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.rendertransformation.CustomProcessFunction;
 import com.sldeditor.rendertransformation.ProcessFunctionParameterValue;
@@ -39,7 +39,7 @@ import net.opengis.wps10.SupportedCRSsType;
 import net.opengis.wps10.SupportedComplexDataInputType;
 import net.opengis.wps10.impl.Wps10FactoryImpl;
 import org.eclipse.emf.common.util.EList;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for CustomProcessFunction class.
@@ -125,10 +125,10 @@ public class CustomProcessFunctionTest {
 
         List<ProcessFunctionParameterValue> valueList = obj.extractParameters(process);
 
-        assertEquals(type, 1, valueList.size());
+        assertEquals(1, valueList.size(), type);
         ProcessFunctionParameterValue value = valueList.get(0);
-        assertEquals(type, minOccurs, value.minOccurences);
-        assertEquals(type, maxOccurs, value.maxOccurences);
+        assertEquals(minOccurs, value.minOccurences, type);
+        assertEquals(maxOccurs, value.maxOccurences, type);
         return value;
     }
 

@@ -19,14 +19,14 @@
 
 package com.sldeditor.test.unit.rendertransformation;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.common.connection.GeoServerConnectionManagerInterface;
 import com.sldeditor.rendertransformation.RenderTransformationDialog;
 import org.geotools.process.function.ProcessFunction;
 import org.geotools.process.function.ProcessFunctionFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.capability.FunctionName;
 
 /**

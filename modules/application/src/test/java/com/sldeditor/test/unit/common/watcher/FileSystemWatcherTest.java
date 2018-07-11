@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.common.watcher;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.watcher.FileSystemWatcher;
 import com.sldeditor.common.watcher.FileWatcherUpdateInterface;
@@ -32,8 +32,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for FileSystemWatcher.
@@ -50,7 +50,7 @@ public class FileSystemWatcherTest {
      * java.io.File)}.
      */
     @Test
-    @Ignore
+    @Disabled
     public void testAddWatch() {
 
         Path tempFolder = null;

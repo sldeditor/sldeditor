@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.filter.v2.function;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.FilterManager;
@@ -49,8 +49,8 @@ import javax.measure.Unit;
 import org.geotools.filter.FunctionExpression;
 import org.geotools.filter.function.Classifier;
 import org.geotools.filter.function.DefaultFunctionFactory;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.opengis.filter.Filter;
@@ -71,7 +71,7 @@ public class FilterManagerTest {
     private static Map<Class<?>, Class<?>> typeMap = new HashMap<Class<?>, Class<?>>();
 
     /** Sets the up class. */
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
         typeMap.put(Number.class, FieldConfigDouble.class);
         typeMap.put(Double.class, FieldConfigDouble.class);
@@ -148,9 +148,9 @@ public class FilterManagerTest {
             List<FieldConfigBase> fieldList = groupConfig.getFieldConfigList();
 
             assertEquals(
-                    functionName.getName(),
                     fieldList.size(),
-                    Math.abs(functionName.getArgumentCount()));
+                    Math.abs(functionName.getArgumentCount()),
+                    functionName.getName());
 
             List<String> argList = new ArrayList<String>();
             for (int fieldIndex = 0; fieldIndex < fieldList.size(); fieldIndex++) {
@@ -198,12 +198,12 @@ public class FilterManagerTest {
         String debugMessage = String.format("%s/%d %s", functionName.getName(), fieldIndex, label);
         FieldConfigPopulate field = fieldList.get(fieldIndex);
 
-        assertNotNull(debugMessage, field);
+        assertNotNull(field, debugMessage);
         Parameter<?> parameterType = functionName.getArguments().get(adjustedIndex);
 
         Class<?> actual = typeMap.get(parameterType.getType());
-        assertEquals(debugMessage, field.getClass(), actual);
-        assertTrue(debugMessage, field.getLabel().compareTo(label) == 0);
+        assertEquals(field.getClass(), actual, debugMessage);
+        assertTrue(field.getLabel().compareTo(label) == 0, debugMessage);
         argList.add(parameterType.getType().getSimpleName());
     }
 
@@ -225,7 +225,7 @@ public class FilterManagerTest {
         for (FilterConfigInterface filterConfig : filterConfigList) {
             FilterName filterName = filterConfig.getFilterConfiguration();
             returnType = FilterManager.getInstance().getFunctionType(filterName.getFilterName());
-            assertEquals(filterName.getFilterName(), filterName.getReturnType(), returnType);
+            assertEquals(filterName.getReturnType(), returnType, filterName.getFilterName());
 
             FilterConfigInterface actualFilterConfig =
                     FilterManager.getInstance().getFilterConfig(filterName.getFilterName());

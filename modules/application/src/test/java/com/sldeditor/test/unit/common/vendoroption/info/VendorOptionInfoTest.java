@@ -7,14 +7,14 @@
 
 package com.sldeditor.test.unit.common.vendoroption.info;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.vendoroption.info.VendorOptionInfo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for VendorOptionInfo.

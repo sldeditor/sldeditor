@@ -32,7 +32,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for SLDEditorMenus.

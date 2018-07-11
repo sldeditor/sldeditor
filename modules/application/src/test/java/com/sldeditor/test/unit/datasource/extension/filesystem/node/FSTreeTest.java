@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.datasource.extension.filesystem.node;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for FSTree.

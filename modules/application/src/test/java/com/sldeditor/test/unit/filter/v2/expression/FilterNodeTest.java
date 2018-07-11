@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.filter.v2.expression;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
@@ -41,7 +41,7 @@ import org.geotools.factory.Hints;
 import org.geotools.geometry.GeometryFactoryFinder;
 import org.geotools.geometry.text.WKTParser;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.geometry.Geometry;
@@ -140,8 +140,7 @@ public class FilterNodeTest {
         try {
             geometry = wktParser.parse("POINT( 48.44 -123.37)");
         } catch (ParseException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
         filter = ff.overlaps("property", geometry);
         filterConfig = new Overlaps(category);

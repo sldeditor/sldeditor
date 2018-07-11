@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.ui.tree.item;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.localisation.Localisation;
@@ -28,7 +28,7 @@ import com.sldeditor.ui.tree.item.StrokeTreeItem;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Symbolizer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for StrokeTreeItem.

@@ -19,11 +19,11 @@
 
 package com.sldeditor.test.unit.ui.detail.config.inlinefeature;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDUtils;
@@ -36,7 +36,7 @@ import java.util.List;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.feature.type.GeometryDescriptor;
 
 /**

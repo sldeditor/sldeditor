@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.ui.detail;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
@@ -30,7 +30,7 @@ import com.sldeditor.ui.detail.NamedLayerDetails;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for NamedLayerDetails.

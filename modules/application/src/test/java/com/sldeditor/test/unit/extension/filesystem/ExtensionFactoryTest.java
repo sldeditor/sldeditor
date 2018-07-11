@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.extension.filesystem;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.extension.ExtensionFactory;
 import com.sldeditor.extension.ExtensionInterface;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for ExtensionFactory class.

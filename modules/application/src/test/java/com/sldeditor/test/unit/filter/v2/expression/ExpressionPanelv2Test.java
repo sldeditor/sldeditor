@@ -19,14 +19,14 @@
 
 package com.sldeditor.test.unit.filter.v2.expression;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import java.util.List;
 import org.geotools.factory.CommonFactoryFinder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 

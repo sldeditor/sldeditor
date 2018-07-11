@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.common.vendoroption;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
@@ -28,7 +28,7 @@ import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for VendorOptionStatus.

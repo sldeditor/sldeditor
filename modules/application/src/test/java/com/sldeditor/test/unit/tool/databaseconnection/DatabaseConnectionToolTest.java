@@ -7,9 +7,9 @@
 
 package com.sldeditor.test.unit.tool.databaseconnection;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -26,7 +26,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for DatabaseConnectionTool class.

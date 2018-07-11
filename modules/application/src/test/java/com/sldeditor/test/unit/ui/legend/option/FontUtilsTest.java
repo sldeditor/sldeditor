@@ -19,13 +19,13 @@
 
 package com.sldeditor.test.unit.ui.legend.option;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.ui.legend.option.FontUtils;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import org.geotools.styling.StyleBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for FontUtils.

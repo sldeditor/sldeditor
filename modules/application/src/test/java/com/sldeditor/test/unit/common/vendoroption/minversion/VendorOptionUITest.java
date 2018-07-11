@@ -4,7 +4,7 @@ import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionUI;
 import com.sldeditor.ui.panels.GetMinimumVersionInterface;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for VendorOptionUI.

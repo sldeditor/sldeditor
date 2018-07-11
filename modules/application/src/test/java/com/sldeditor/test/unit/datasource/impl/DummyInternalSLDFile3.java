@@ -88,6 +88,11 @@ public class DummyInternalSLDFile3 implements SLDEditorFileInterface {
                         + "              </abc:Size>"
                         + "            </abc:Graphic>"
                         + "          </abc:PointSymbolizer>"
+                        + "          <abc:LineSymbolizer>"
+                        + "            <abc:Stroke>"
+                        + "              <abc:CssParameter name=\"stroke-width\"><ogc:PropertyName>linewidth</ogc:PropertyName></abc:CssParameter>"
+                        + "            </abc:Stroke>"
+                        + "          </abc:LineSymbolizer>"
                         + "          <abc:TextSymbolizer>"
                         + "            <abc:Geometry>"
                         + "              <ogc:Function name=\"centroid\">"
@@ -115,6 +120,7 @@ public class DummyInternalSLDFile3 implements SLDEditorFileInterface {
         expectedFieldList.add("angle");
         expectedFieldList.add("size");
         expectedFieldList.add("popstring");
+        expectedFieldList.add("linewidth");
 
         expectedGeometryFieldList.add("qwerty");
     }

@@ -22,8 +22,8 @@ package com.sldeditor.test.sldcookbook;
 import com.sldeditor.test.SLDTestRunner;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * The Class SLDCookbookPolygon runs the tests for polygon slds in the SLD Cookbook.
@@ -40,7 +40,7 @@ public class SLDCookbookPolygon {
      * @throws InvocationTargetException the invocation target exception
      * @throws InterruptedException the interrupted exception
      */
-    @BeforeClass
+    @BeforeAll
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
         SwingUtilities.invokeAndWait(
                 new Runnable() {

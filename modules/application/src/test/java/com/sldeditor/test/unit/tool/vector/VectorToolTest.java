@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.tool.vector;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.google.common.io.Files;
 import com.sldeditor.SLDEditor;
@@ -83,10 +83,9 @@ import java.util.zip.ZipInputStream;
 import javax.swing.JFrame;
 import org.apache.commons.io.IOUtils;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.feature.type.PropertyDescriptor;
@@ -112,13 +111,13 @@ public class VectorToolTest {
     /** The Constant SUFFIX. */
     private static final String SUFFIX = ".sld";
 
-    @BeforeClass
+    @BeforeAll
     public static void startUp() {
         clearDown();
     }
 
     /** Clean up. */
-    @AfterClass
+    @AfterAll
     public static void cleanUp() {
         List<CheckAttributeInterface> checkList = new ArrayList<CheckAttributeInterface>();
         CheckAttributeFactory.setOverideCheckList(checkList);
@@ -299,7 +298,7 @@ public class VectorToolTest {
         InputStream inputStream = VectorToolTest.class.getResourceAsStream(testsldfile);
 
         if (inputStream == null) {
-            Assert.assertNotNull("Failed to find sld test file : " + testsldfile, inputStream);
+            assertNotNull(inputStream, "Failed to find sld test file : " + testsldfile);
         } else {
             File f = null;
             try {
@@ -410,8 +409,7 @@ public class VectorToolTest {
             // Release locks
             dataSource.reset();
         } catch (IOException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
 
         // Tidy up so the remaining unit tests are ok
@@ -456,7 +454,7 @@ public class VectorToolTest {
         InputStream inputStream = VectorToolTest.class.getResourceAsStream(testsldfile);
 
         if (inputStream == null) {
-            Assert.assertNotNull("Failed to find sld test file : " + testsldfile, inputStream);
+            assertNotNull(inputStream, "Failed to find sld test file : " + testsldfile);
         } else {
             File f = null;
             try {
@@ -547,8 +545,7 @@ public class VectorToolTest {
             // Release locks
             dataSource.reset();
         } catch (IOException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
 
         // Tidy up so the remaining unit tests are ok
@@ -758,11 +755,9 @@ public class VectorToolTest {
             // Try with null
             assertFalse(vectorTool.supports(uniqueNodeTypeList, null, sldDataList));
         } catch (SecurityException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
     }
 

@@ -19,11 +19,11 @@
 
 package com.sldeditor.test.unit.common.data;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.SLDData;
@@ -49,7 +49,7 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.visitor.DuplicatingStyleVisitor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 
 /**
@@ -102,8 +102,7 @@ public class SLDUtilsTest {
             String expectedResourcelocator = url.toExternalForm();
             assertTrue(expectedResourcelocator.compareTo(actualResourceLocator) == 0);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
     }
 

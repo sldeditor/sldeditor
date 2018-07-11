@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.tool.batchupdatefont;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.tool.batchupdatefont.MultipleFont;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.List;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Font;
 import org.geotools.styling.StyleFactoryImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 
 /**

@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.common.tree.leaf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.tree.leaf.SLDTreeLeafLine;
@@ -30,7 +30,7 @@ import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.LineSymbolizerImpl;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Stroke;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for SLDTreeLeafLine

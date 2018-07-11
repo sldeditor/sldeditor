@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.ui.detail.vendor.geoserver.featuretypestyle;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
@@ -39,7 +39,7 @@ import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.TextSymbolizer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The Class VOGeoServerFTSCompositeBaseTest.

@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.extension.filesystem.geoserver.client;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.DataTypeEnum;
 import com.sldeditor.common.data.GeoServerConnection;
@@ -27,8 +27,8 @@ import com.sldeditor.extension.filesystem.geoserver.client.GeoServerWPSClient;
 import java.net.URL;
 import java.util.List;
 import net.opengis.wps10.ProcessBriefType;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for GeoServerWPSClient class.
@@ -52,7 +52,7 @@ public class GeoServerWPSClientTest {
      *
      * @throws Exception the exception
      */
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() throws Exception {
         testConnection = new GeoServerConnection();
         testConnection.setConnectionName("Test Connection");

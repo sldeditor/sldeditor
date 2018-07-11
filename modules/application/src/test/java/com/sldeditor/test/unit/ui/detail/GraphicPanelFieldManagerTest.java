@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.ui.detail;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
@@ -35,7 +35,7 @@ import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for GraphicPanelFieldManager.

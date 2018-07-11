@@ -19,13 +19,13 @@
 
 package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.wkt;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTConversion;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTDialog;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for WKTDialog.

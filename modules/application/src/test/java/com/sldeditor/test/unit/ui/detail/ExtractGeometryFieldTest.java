@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.ui.detail;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.ExtractGeometryField;
@@ -28,7 +28,7 @@ import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldConfigPopulation;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 import org.opengis.filter.expression.Expression;
 

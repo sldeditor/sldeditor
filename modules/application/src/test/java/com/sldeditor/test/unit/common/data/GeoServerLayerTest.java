@@ -19,13 +19,13 @@
 
 package com.sldeditor.test.unit.common.data;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.StyleWrapper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for GeoServerLayer.

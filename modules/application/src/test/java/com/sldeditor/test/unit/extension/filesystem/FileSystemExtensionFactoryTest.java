@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.extension.filesystem;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -35,7 +35,7 @@ import java.util.Map;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for FileSystemExtensionFactory class.

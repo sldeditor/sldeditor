@@ -22,7 +22,7 @@ package com.sldeditor.test.unit.datasource.config;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.datasource.config.DataSourceConfigPanel;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for DataSourceConfigPanel class.

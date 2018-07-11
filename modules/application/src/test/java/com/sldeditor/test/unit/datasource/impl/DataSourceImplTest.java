@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.datasource.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
@@ -45,7 +45,7 @@ import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.type.GeometryDescriptorImpl;
 import org.geotools.styling.UserLayer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;

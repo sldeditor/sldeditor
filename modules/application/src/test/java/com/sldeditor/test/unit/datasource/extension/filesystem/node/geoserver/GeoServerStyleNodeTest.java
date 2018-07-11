@@ -19,15 +19,15 @@
 
 package com.sldeditor.test.unit.datasource.extension.filesystem.node.geoserver;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for GeoServerStyleNode class.

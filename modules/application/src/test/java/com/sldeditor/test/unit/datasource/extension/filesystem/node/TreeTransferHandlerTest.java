@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.datasource.extension.filesystem.node;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.sldeditor.datasource.extension.filesystem.node.TreeTransferHandler;
 import javax.swing.TransferHandler;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for TreeTransferHandler.

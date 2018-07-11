@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.tool.dbconnectionlist;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.geotools.data.teradata.TeradataDataStoreFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for DatabaseConnectionFactory class.

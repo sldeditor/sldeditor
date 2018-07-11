@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.datasource.chooseraster;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.datasource.chooseraster.ChooseRasterFormatInterface;
 import com.sldeditor.datasource.chooseraster.DetermineRasterFormat;
@@ -30,7 +30,7 @@ import java.util.Set;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.UnknownFormat;
 import org.geotools.gce.image.WorldImageFormat;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for DetermineRasterFormat.

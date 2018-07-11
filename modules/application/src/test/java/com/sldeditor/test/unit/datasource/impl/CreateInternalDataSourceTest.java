@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.datasource.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.datasource.SLDEditorFileInterface;
@@ -41,7 +41,7 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.UserLayer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for CreateInternalDataSource.

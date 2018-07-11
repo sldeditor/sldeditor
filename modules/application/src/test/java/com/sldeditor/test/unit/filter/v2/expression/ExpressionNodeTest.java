@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.filter.v2.expression;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.filter.v2.expression.ExpressionNode;
@@ -34,7 +34,7 @@ import org.geotools.filter.FunctionImpl;
 import org.geotools.filter.function.DefaultFunctionFactory;
 import org.geotools.filter.function.EnvFunction;
 import org.geotools.filter.function.string.ConcatenateFunction;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Function;

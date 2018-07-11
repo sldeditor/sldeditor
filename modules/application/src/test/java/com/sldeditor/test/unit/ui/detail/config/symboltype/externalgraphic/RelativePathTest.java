@@ -19,18 +19,18 @@
 
 package com.sldeditor.test.unit.ui.detail.config.symboltype.externalgraphic;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.RelativePath;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for RelativePath.
@@ -89,11 +89,9 @@ public class RelativePathTest {
             assertEquals(urlString, actualResult);
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         } catch (IOException e1) {
-            e1.printStackTrace();
-            fail();
+            fail(e1.getStackTrace().toString());
         }
     }
 

@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.datasource.extension.filesystem.node;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.datasource.extension.filesystem.dataflavour.BuiltInDataFlavour;
@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for TransferableDataItem class.
@@ -108,7 +108,6 @@ public class TransferableDataItemTest {
      * Test method for {@link
      * com.sldeditor.datasource.extension.filesystem.node.TransferableDataItem#getTransferDataFlavors()}.
      */
-    @SuppressWarnings("deprecation")
     @Test
     public void testGetTransferDataFlavors() {
         assertEquals(

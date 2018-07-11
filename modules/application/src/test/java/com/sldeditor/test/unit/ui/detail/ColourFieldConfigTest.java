@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.ui.detail;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.ColourFieldConfig;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for ColourFieldConfig.

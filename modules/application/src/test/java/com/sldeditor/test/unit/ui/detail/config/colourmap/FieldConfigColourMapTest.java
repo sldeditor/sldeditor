@@ -7,11 +7,11 @@
 
 package com.sldeditor.test.unit.ui.detail.config.colourmap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
@@ -25,7 +25,7 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntryImpl;
 import org.geotools.styling.ColorMapImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 import org.opengis.filter.FilterFactory;
 

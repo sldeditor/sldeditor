@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.ui.detail;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.ui.detail.DetailsUtilities;
 import org.geotools.factory.CommonFactoryFinder;
@@ -28,7 +28,7 @@ import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.AnchorPointImpl;
 import org.geotools.styling.Displacement;
 import org.geotools.styling.DisplacementImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 
 /**

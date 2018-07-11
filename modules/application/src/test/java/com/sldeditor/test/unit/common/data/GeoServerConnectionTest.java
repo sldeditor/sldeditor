@@ -19,13 +19,13 @@
 
 package com.sldeditor.test.unit.common.data;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.data.GeoServerConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for GeoServerConnection.
@@ -63,8 +63,7 @@ public class GeoServerConnectionTest {
 
             assertEquals(connection.getUrl().toExternalForm(), url.toExternalForm());
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
     }
 
@@ -181,8 +180,7 @@ public class GeoServerConnectionTest {
             url = new URL("http://www.example.com/dummy");
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
 
         GeoServerConnection connection1 = new GeoServerConnection();

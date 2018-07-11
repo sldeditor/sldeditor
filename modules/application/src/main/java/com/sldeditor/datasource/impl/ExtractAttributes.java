@@ -25,8 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.geotools.filter.AttributeExpressionImpl;
-import org.geotools.filter.FunctionExpression;
-import org.geotools.filter.FunctionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MultiCompareFilterImpl;
@@ -442,46 +440,6 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             }
         } else if (expression instanceof Function) {
             Function function = (Function) expression;
-            FunctionName functionName = function.getFunctionName();
-            List<Parameter<?>> argumentList = functionName.getArguments();
-            int index = 0;
-
-            for (Expression parameterExpression : function.getParameters()) {
-                Parameter<?> parameter = argumentList.get(index);
-                extractAttribute(parameter.getType(), parameterExpression, foundList);
-
-                if (index < argumentList.size()) {
-                    index++;
-                }
-
-                if (index >= argumentList.size()) {
-                    index = argumentList.size() - 1;
-                }
-            }
-
-            returnType = functionName.getReturn().getType();
-        } else if (expression instanceof FunctionExpression) {
-            FunctionExpression function = (FunctionExpression) expression;
-            FunctionName functionName = function.getFunctionName();
-            List<Parameter<?>> argumentList = functionName.getArguments();
-            int index = 0;
-
-            for (Expression parameterExpression : function.getParameters()) {
-                Parameter<?> parameter = argumentList.get(index);
-                extractAttribute(parameter.getType(), parameterExpression, foundList);
-
-                if (index < argumentList.size()) {
-                    index++;
-                }
-
-                if (index >= argumentList.size()) {
-                    index = argumentList.size() - 1;
-                }
-            }
-
-            returnType = functionName.getReturn().getType();
-        } else if (expression instanceof FunctionImpl) {
-            FunctionImpl function = (FunctionImpl) expression;
             FunctionName functionName = function.getFunctionName();
             List<Parameter<?>> argumentList = functionName.getArguments();
             int index = 0;

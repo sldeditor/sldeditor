@@ -22,7 +22,7 @@ package com.sldeditor.test.unit.render;
 import com.sldeditor.render.RendererErrors;
 import java.io.FileNotFoundException;
 import org.geotools.renderer.RenderListener;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for RendererErrors class.

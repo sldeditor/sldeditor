@@ -19,16 +19,16 @@
 
 package com.sldeditor.test.unit.common.tree.leaf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.common.tree.leaf.SLDTreeLeafPolygon;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.PolygonSymbolizerImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for SLDTreeLeafPolygon

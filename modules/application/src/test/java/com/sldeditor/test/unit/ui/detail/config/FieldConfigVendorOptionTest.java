@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.ui.detail.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VersionData;
@@ -35,7 +35,7 @@ import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.raster.VendorOptionRasterFactory;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for FieldConfigVendorOption.

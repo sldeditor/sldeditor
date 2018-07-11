@@ -20,8 +20,8 @@
 package com.sldeditor.test.output;
 
 import com.sldeditor.test.SLDTestRunner;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * The Class CheckPolygonValues runs the tests for setting values in polygon slds.
@@ -33,7 +33,7 @@ public class CheckPolygonValues {
     private static SLDTestRunner test = null;
 
     /** Sets the up once. */
-    @BeforeClass
+    @BeforeAll
     public static void setUpOnce() {
         test = new SLDTestRunner();
     }

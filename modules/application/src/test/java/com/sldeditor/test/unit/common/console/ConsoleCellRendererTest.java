@@ -19,14 +19,14 @@
 
 package com.sldeditor.test.unit.common.console;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.common.console.ConsoleCellRenderer;
 import com.sldeditor.common.console.ConsoleData;
 import com.sldeditor.common.console.ConsoleDataEnum;
 import java.awt.Color;
 import javax.swing.JLabel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for ConsoleCellRenderer.

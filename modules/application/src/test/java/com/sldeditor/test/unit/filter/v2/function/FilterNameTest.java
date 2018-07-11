@@ -19,13 +19,13 @@
 
 package com.sldeditor.test.unit.filter.v2.function;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
 import com.sldeditor.filter.v2.function.FilterName;
 import com.sldeditor.filter.v2.function.FilterNameParameter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for FilterName class.

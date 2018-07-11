@@ -19,14 +19,14 @@
 
 package com.sldeditor.test.unit.datasource.extension.filesystem;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for FileSystemUtils.

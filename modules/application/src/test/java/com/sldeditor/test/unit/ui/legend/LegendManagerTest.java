@@ -18,9 +18,9 @@
  */
 package com.sldeditor.test.unit.ui.legend;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDUtils;
@@ -35,7 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.io.IOUtils;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for LegendManager.

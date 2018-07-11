@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.ui.detail.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.undo.UndoEvent;
@@ -48,7 +48,7 @@ import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.FeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.UserLayer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;

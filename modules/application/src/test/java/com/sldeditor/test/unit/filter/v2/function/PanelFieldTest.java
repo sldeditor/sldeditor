@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.filter.v2.function;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.expression.PanelField;
@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.measure.Unit;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 
 /**
@@ -78,7 +78,7 @@ public class PanelFieldTest {
 
             Class<?> expected = expectedValueMap.get(nodeType);
             Class<?> actual = (fieldConfig == null) ? null : fieldConfig.getClass();
-            assertEquals(nodeType.getName(), expected, actual);
+            assertEquals(expected, actual, nodeType.getName());
         }
 
         // Special case
@@ -87,28 +87,28 @@ public class PanelFieldTest {
                 PanelField.getField(classType, valueTextLocalisation, Number.class, null);
         Class<?> expected = FieldConfigInteger.class;
         Class<?> actual = fieldConfig.getClass();
-        assertEquals(Number.class.getName(), expected, actual);
+        assertEquals(expected, actual, Number.class.getName());
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(Float.class);
         fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, null);
         expected = FieldConfigDouble.class;
         actual = fieldConfig.getClass();
-        assertEquals(Number.class.getName() + "/" + Float.class.getName(), expected, actual);
+        assertEquals(expected, actual, Number.class.getName() + "/" + Float.class.getName());
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(Double.class);
         fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, null);
         expected = FieldConfigDouble.class;
         actual = fieldConfig.getClass();
-        assertEquals(Number.class.getName() + "/" + Double.class.getName(), expected, actual);
+        assertEquals(expected, actual, Number.class.getName() + "/" + Double.class.getName());
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(String.class);
         fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, null);
         expected = FieldConfigInteger.class;
         actual = fieldConfig.getClass();
-        assertEquals(Number.class.getName(), expected, actual);
+        assertEquals(expected, actual, Number.class.getName());
 
         TypeManager.getInstance().reset();
     }

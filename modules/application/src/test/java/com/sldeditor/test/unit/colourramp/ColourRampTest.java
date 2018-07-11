@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.colourramp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.sldeditor.colourramp.ColourRamp;
 import com.sldeditor.colourramp.ramp.ColourRampData;
@@ -28,7 +28,7 @@ import com.sldeditor.common.utils.ColourUtils;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import org.geotools.factory.CommonFactoryFinder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 

@@ -19,19 +19,19 @@
 
 package com.sldeditor.test.unit.update;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.update.CheckUpdateGitHub;
 import com.sldeditor.update.UpdateData;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for CheckUpdateGitHub.
@@ -72,7 +72,7 @@ public class CheckUpdateGitHubTest {
     }
 
     /** Test method for {@link com.sldeditor.update.CheckUpdateGitHub#getLatest()}. */
-    @Ignore
+    @Disabled
     @Test
     public void testGetLatest() {
         // Not called because we may not have an internet connection

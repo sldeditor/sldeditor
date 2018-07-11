@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.ui.detail.config.colourmap;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.xml.ui.XMLColourMapEntry;
 import com.sldeditor.ui.detail.config.colourmap.EncodeColourMap;
@@ -29,7 +29,7 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.ColorMap;
 import org.geotools.styling.ColorMapEntryImpl;
 import org.geotools.styling.ColorMapImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 
 /**

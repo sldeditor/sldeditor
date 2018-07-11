@@ -22,8 +22,8 @@ package com.sldeditor.test.output;
 import com.sldeditor.test.SLDTestRunner;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * The Class CheckPointValues runs the tests for setting values in point slds.
@@ -40,7 +40,7 @@ public class CheckPointValues {
      * @throws InvocationTargetException the invocation target exception
      * @throws InterruptedException the interrupted exception
      */
-    @BeforeClass
+    @BeforeAll
     public static void setUpOnce() throws InvocationTargetException, InterruptedException {
         SwingUtilities.invokeAndWait(
                 new Runnable() {

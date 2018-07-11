@@ -19,11 +19,11 @@
 
 package com.sldeditor.test.unit.ui.detail.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -36,7 +36,7 @@ import com.sldeditor.ui.detail.config.FieldConfigTimePeriod;
 import org.geotools.temporal.object.DefaultInstant;
 import org.geotools.temporal.object.DefaultPeriod;
 import org.geotools.temporal.object.DefaultPosition;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.expression.Expression;
 
 /**

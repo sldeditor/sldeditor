@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.filter.v2.function;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.filter.v2.expression.FunctionInterfaceUtils;
 import com.sldeditor.filter.v2.function.FunctionManager;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.geotools.filter.function.DefaultFunctionFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
 
@@ -123,7 +123,7 @@ public class FunctionManagerTest {
         }
 
         if (fail) {
-            fail();
+            fail("FAILED");
         }
     }
 
@@ -160,7 +160,7 @@ public class FunctionManagerTest {
         }
 
         if (fail) {
-            fail();
+            fail("FAILED");
         }
     }
 
@@ -183,7 +183,7 @@ public class FunctionManagerTest {
                 FunctionManager.getInstance().getFunctionNameList(null, null);
         for (FunctionName functionName : functionNameList) {
             returnType = FunctionManager.getInstance().getFunctionType(functionName.getName());
-            assertEquals(functionName.getName(), functionName.getReturn().getType(), returnType);
+            assertEquals(functionName.getReturn().getType(), returnType, functionName.getName());
         }
     }
 
