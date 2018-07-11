@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.ui.detail.config.colourmap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.ui.detail.config.colourmap.MultipleColourMapEntry;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.List;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.ColorMapEntry;
 import org.geotools.styling.ColorMapEntryImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 
 /**

@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.rendertransformation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.rendertransformation.SelectedProcessFunction;
 import java.math.BigInteger;
@@ -38,7 +38,7 @@ import net.opengis.wps10.ProcessDescriptionType;
 import net.opengis.wps10.impl.Wps10FactoryImpl;
 import org.eclipse.emf.common.util.EList;
 import org.geotools.process.function.ProcessFunctionFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.capability.FunctionName;
 
 /**

@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.TreeSelectionData;
 import com.sldeditor.common.xml.ui.SelectedTreeItemEnum;
@@ -32,7 +32,7 @@ import com.sldeditor.ui.detail.PolygonSymbolizerDetails;
 import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.StrokeDetails;
 import com.sldeditor.ui.detail.TextSymbolizerDetails;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for TreeSelectionData class.

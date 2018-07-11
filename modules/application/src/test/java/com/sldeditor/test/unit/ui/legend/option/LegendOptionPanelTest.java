@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.ui.legend.option;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.ui.legend.option.LegendOptionData;
 import com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface;
 import com.sldeditor.ui.legend.option.LegendOptionPanel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for LegendOptionPanel.

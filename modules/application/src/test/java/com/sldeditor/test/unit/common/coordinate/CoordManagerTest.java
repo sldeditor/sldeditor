@@ -19,14 +19,14 @@
 
 package com.sldeditor.test.unit.common.coordinate;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.coordinate.CoordManager;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import java.util.List;
 import org.geotools.referencing.CRS;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;

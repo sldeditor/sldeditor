@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.update;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.sldeditor.update.CheckUpdateClientFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for CheckUpdateClientFactory.

@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.filter.v2.expression;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.expression.FilterPanelv2;
@@ -38,7 +38,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.temporal.object.DefaultInstant;
 import org.geotools.temporal.object.DefaultPosition;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.FilterFactory2;
@@ -588,7 +588,7 @@ public class TestFilterPanelv2 {
         }
 
         if (fail) {
-            fail();
+            fail("FAILED");
         }
     }
 }

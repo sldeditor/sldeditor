@@ -19,11 +19,11 @@
 
 package com.sldeditor.test.unit.extension.filesystem;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.RecursiveUpdateInterface;
@@ -55,7 +55,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for FileSystemExtension class.
@@ -292,8 +292,7 @@ public class FileSystemExtensionTest {
         try {
             f = File.createTempFile(getClass().getSimpleName(), ".tmp");
         } catch (IOException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
         expectedFile = "folder=" + f.getParent();
         extensionArgList.add(expectedFile);
@@ -314,8 +313,7 @@ public class FileSystemExtensionTest {
         try {
             geoServerConnection.setUrl(new URL("http://localhost/geoserver"));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
         geoServerConnection.setUserName("username");
         geoServerConnection.setPassword("password");

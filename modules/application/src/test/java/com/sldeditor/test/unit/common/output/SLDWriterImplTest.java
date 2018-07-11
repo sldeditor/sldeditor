@@ -19,14 +19,14 @@
 
 package com.sldeditor.test.unit.common.output;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.output.impl.SLDWriterImpl;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for SLDWriterImpl.

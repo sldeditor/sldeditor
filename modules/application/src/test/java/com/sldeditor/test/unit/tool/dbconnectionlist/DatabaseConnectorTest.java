@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.tool.dbconnectionlist;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnector;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for DatabaseConnector class.

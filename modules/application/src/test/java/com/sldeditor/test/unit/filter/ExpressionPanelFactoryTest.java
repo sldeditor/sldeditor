@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.filter;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.sldeditor.filter.ExpressionPanelFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for ExpressionPanelFactory class.

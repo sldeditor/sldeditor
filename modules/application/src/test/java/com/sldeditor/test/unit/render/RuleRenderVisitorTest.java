@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.render;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDUtils;
@@ -34,7 +34,7 @@ import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for RuleRenderVisitor class.

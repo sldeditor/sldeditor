@@ -19,10 +19,11 @@
 
 package com.sldeditor.test.unit.ui.tree;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.TreeSelectionData;
 import com.sldeditor.common.data.SLDData;
@@ -56,7 +57,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for SLDTree.
@@ -269,7 +270,7 @@ public class SLDTreeTest {
             e1.printStackTrace();
         }
 
-        org.junit.Assert.assertNotNull("Failed to read test file : " + fileName, br);
+        assertNotNull(br, "Failed to read test file : " + fileName);
 
         try {
             String line = br.readLine();

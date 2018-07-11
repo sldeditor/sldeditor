@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.tool.batchupdatefont;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SelectedSymbol;
@@ -37,7 +37,7 @@ import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.TextSymbolizer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for BatchUpdateFontData.

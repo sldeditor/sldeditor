@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.ui.detail.config.transform;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -39,7 +39,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.ExpressionDOMParser;
 import org.geotools.process.function.ProcessFunction;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.expression.Expression;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;

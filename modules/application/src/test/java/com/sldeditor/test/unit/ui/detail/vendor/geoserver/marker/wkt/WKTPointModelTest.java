@@ -19,16 +19,16 @@
 
 package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.wkt;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPointModel;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTSegmentList;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTType;
 import org.geotools.geometry.DirectPosition2D;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.geometry.DirectPosition;
 
 /**

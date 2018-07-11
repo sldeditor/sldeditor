@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.ui.detail.vendor.geoserver.raster;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.data.SelectedSymbol;
@@ -40,7 +40,7 @@ import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.SelectedChannelType;
 import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.TextSymbolizer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.ContrastMethod;

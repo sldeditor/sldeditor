@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.datasource.extension.filesystem.node;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for FileSystemNodeManager.
@@ -31,7 +31,7 @@ import org.junit.Test;
  *
  * @author Robert Ward (SCISYS)
  */
-@Ignore
+@Disabled
 public class FileSystemNodeManagerTest {
 
     /**

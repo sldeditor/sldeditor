@@ -19,15 +19,15 @@
 
 package com.sldeditor.test.unit.ui.tree;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.tree.SLDTreeSymbolizerButtonState;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for SLDTreeSymbolizerButtonState.

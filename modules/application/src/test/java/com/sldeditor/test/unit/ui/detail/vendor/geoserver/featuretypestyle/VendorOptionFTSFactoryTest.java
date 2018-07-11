@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.ui.detail.vendor.geoserver.featuretypestyle;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.FeatureTypeStyleDetails;
@@ -31,7 +31,7 @@ import java.util.List;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.StyleFactoryImpl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The Class VendorOptionFTSFactoryTest.

@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.ui.detail.config.symboltype;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.ui.detail.PointFillDetails;
@@ -35,7 +35,7 @@ import org.geotools.styling.Stroke;
 import org.geotools.styling.StyleFactoryImpl;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.TextSymbolizer2;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 
 /**

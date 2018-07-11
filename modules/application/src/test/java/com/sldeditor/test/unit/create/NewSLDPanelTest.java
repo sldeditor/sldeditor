@@ -19,24 +19,24 @@
 
 package com.sldeditor.test.unit.create;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.create.NewSLDPanel;
 import java.util.List;
 import javax.swing.ComboBoxModel;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * The Class NewSLDPanelTest.
  *
- * <p>Set to @Ignore currently because it takes focus away from the user when the unit test is run
+ * <p>Set to @Disabled currently because it takes focus away from the user when the unit test is run
  *
  * @author Robert Ward (SCISYS)
  */
-@Ignore
+@Disabled
 public class NewSLDPanelTest {
 
     /** The Class TestNewSLDPanel. */

@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.tool.ysld;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -51,8 +51,7 @@ import javax.swing.JPanel;
 import org.apache.commons.io.IOUtils;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.ysld.Ysld;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for YSLDTool.
@@ -275,7 +274,7 @@ public class YSLDToolTest {
         InputStream inputStream = YSLDToolTest.class.getResourceAsStream(testfile);
 
         if (inputStream == null) {
-            Assert.assertNotNull("Failed to find test file : " + testfile, inputStream);
+            assertNotNull(inputStream, "Failed to find test file : " + testfile);
         } else {
             File f = null;
             try {

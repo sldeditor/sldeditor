@@ -19,6 +19,12 @@
 
 package com.sldeditor.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import com.sldeditor.SLDEditor;
 import com.sldeditor.TreeSelectionData;
 import com.sldeditor.common.utils.OSValidator;
@@ -69,11 +75,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
-import junit.runner.BaseTestRunner;
 import org.apache.commons.io.IOUtils;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.LiteralExpressionImpl;
-import org.junit.Assert;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 
@@ -119,7 +123,7 @@ public class SLDTestRunner {
 
     /** Instantiates a new SLD test runner. */
     public SLDTestRunner() {
-        BaseTestRunner.setPreference("maxmessage", "-1");
+        //      BaseTestRunner.setPreference("maxmessage", "-1");
 
         System.out.println("Operating system is : " + OSValidator.getOS());
         // Populate the list of fields that are colours
@@ -207,7 +211,7 @@ public class SLDTestRunner {
                 (SldEditorTest)
                         ParseXML.parseFile("", fullPath, SCHEMA_RESOURCE, SldEditorTest.class);
 
-        Assert.assertNotNull("Failed to read test config file : " + fullPath, testSuite);
+        assertNotNull(testSuite, "Failed to read test config file : " + fullPath);
 
         String testsldfile = testSuite.getTestsldfile();
         if (!testsldfile.startsWith("/")) {
@@ -236,7 +240,7 @@ public class SLDTestRunner {
         InputStream inputStream = SLDTestRunner.class.getResourceAsStream(testsldfile);
 
         if (inputStream == null) {
-            Assert.assertNotNull("Failed to find sld test file : " + testsldfile, inputStream);
+            assertNotNull(inputStream, "Failed to find sld test file : " + testsldfile);
         } else {
             File f = null;
             try {
@@ -282,21 +286,21 @@ public class SLDTestRunner {
                 try {
                     selectionData.setSelectedPanel(Class.forName(selectedItem.getExpectedPanel()));
                 } catch (ClassNotFoundException e1) {
-                    Assert.fail("Unknown class : " + selectedItem.getExpectedPanel());
+                    fail("Unknown class : " + selectedItem.getExpectedPanel());
                 }
 
                 boolean result = sldEditor.selectTreeItem(selectionData);
 
-                Assert.assertTrue("Failed to select tree item", result);
+                assertTrue(result, "Failed to select tree item");
                 PopulateDetailsInterface panel = sldEditor.getSymbolPanel();
 
                 String panelClassName = panel.getClass().getName();
-                Assert.assertEquals(panelClassName, selectedItem.getExpectedPanel());
+                assertEquals(selectedItem.getExpectedPanel(), panelClassName);
 
-                Assert.assertEquals(
-                        "Check panel data present",
+                assertEquals(
                         panel.isDataPresent(),
-                        selectedItem.getEnabled());
+                        selectedItem.getEnabled(),
+                        "Check panel data present");
 
                 Class<?> panelId = null;
                 try {
@@ -319,57 +323,57 @@ public class SLDTestRunner {
                                                 "Checking multioption group : " + groupId;
 
                                         System.out.println(outputText);
-                                        Assert.assertNotNull(outputText, groupId);
+                                        assertNotNull(groupId, outputText);
 
                                         MultiOptionGroup multiOptionGroup =
                                                 mgr.getMultiOptionGroup(panelId, groupId);
 
-                                        Assert.assertNotNull(
+                                        assertNotNull(
+                                                multiOptionGroup,
                                                 panelId.getName()
                                                         + "/"
                                                         + groupId
-                                                        + " multi option group should exist",
-                                                multiOptionGroup);
+                                                        + " multi option group should exist");
 
                                         multiOptionGroup.setOption(testValue.getOption());
 
                                         OptionGroup optionGroupSelected =
                                                 multiOptionGroup.getSelectedOptionGroup();
 
-                                        Assert.assertTrue(
-                                                groupId + " should be set",
+                                        assertTrue(
                                                 optionGroupSelected.getId()
-                                                        == testValue.getOption());
+                                                        == testValue.getOption(),
+                                                groupId + " should be set");
                                     } else if (xmlTestValueObj instanceof XMLSetGroup) {
                                         XMLSetGroup testValue = (XMLSetGroup) xmlTestValueObj;
                                         GroupIdEnum groupId = testValue.getGroupId();
                                         String outputText = "Checking group : " + groupId;
 
                                         System.out.println(outputText);
-                                        Assert.assertNotNull(outputText, groupId);
+                                        assertNotNull(groupId, outputText);
 
                                         GroupConfigInterface groupConfig =
                                                 mgr.getGroup(panelId, groupId);
 
-                                        Assert.assertNotNull(
+                                        assertNotNull(
+                                                groupConfig,
                                                 panelId.getName()
                                                         + "/"
                                                         + groupId
-                                                        + " group should exist",
-                                                groupConfig);
+                                                        + " group should exist");
 
                                         groupConfig.enable(testValue.getEnable());
 
-                                        Assert.assertTrue(
-                                                groupId + " should be set",
+                                        assertTrue(
                                                 groupConfig.isPanelEnabled()
-                                                        == testValue.getEnable());
+                                                        == testValue.getEnable(),
+                                                groupId + " should be set");
                                     } else {
                                         XMLFieldBase testValue = (XMLFieldBase) xmlTestValueObj;
                                         FieldIdEnum fieldId = testValue.getField();
                                         String outputText = "Checking : " + fieldId;
                                         System.out.println(outputText);
-                                        Assert.assertNotNull(outputText, fieldId);
+                                        assertNotNull(fieldId, outputText);
 
                                         try {
                                             Thread.sleep(100);
@@ -378,11 +382,11 @@ public class SLDTestRunner {
                                         }
                                         FieldConfigBase fieldConfig = mgr.getData(panelId, fieldId);
 
-                                        Assert.assertNotNull(
+                                        assertNotNull(
+                                                fieldConfig,
                                                 String.format(
                                                         "Failed to field panel %s field %s",
-                                                        selectedItem.getExpectedPanel(), fieldId),
-                                                fieldConfig);
+                                                        selectedItem.getExpectedPanel(), fieldId));
 
                                         if (testValue instanceof XMLSetFieldLiteralBase) {
                                             XMLSetFieldLiteralInterface testInterface =
@@ -400,8 +404,8 @@ public class SLDTestRunner {
                                                                 testValue.getField(),
                                                                 testValue);
 
-                                                Assert.assertTrue(
-                                                        fieldId + " should be set", actualResult);
+                                                assertTrue(
+                                                        actualResult, fieldId + " should be set");
                                             }
                                         } else if (testValue instanceof XMLSetFieldAttribute) {
                                             XMLSetFieldLiteralInterface testInterface =
@@ -417,16 +421,15 @@ public class SLDTestRunner {
                                                             testValue.getField(),
                                                             (XMLSetFieldAttribute) testValue);
 
-                                            Assert.assertTrue(
-                                                    fieldId + " should be set", actualResult);
+                                            assertTrue(actualResult, fieldId + " should be set");
                                         } else if (testValue instanceof XMLFieldDisabled) {
-                                            Assert.assertFalse(
-                                                    fieldId + " should be disabled",
-                                                    fieldConfig.isEnabled());
+                                            assertFalse(
+                                                    fieldConfig.isEnabled(),
+                                                    fieldId + " should be disabled");
                                         } else {
-                                            Assert.assertTrue(
-                                                    fieldId + " should be enabled",
-                                                    fieldConfig.isEnabled());
+                                            assertTrue(
+                                                    fieldConfig.isEnabled(),
+                                                    fieldId + " should be enabled");
                                             Expression expression = null;
 
                                             if (fieldConfig.isValueOnly()) {
@@ -464,7 +467,7 @@ public class SLDTestRunner {
                                                                             .getEntry());
                                                     // CHECKSTYLE:ON
                                                 } else {
-                                                    Assert.fail(
+                                                    fail(
                                                             fieldId
                                                                     + " has unsupported type "
                                                                     + testValue
@@ -503,7 +506,7 @@ public class SLDTestRunner {
                                                             (expectedValue.compareTo(actualValue)
                                                                     == 0);
                                                 }
-                                                Assert.assertTrue(msg, condition);
+                                                assertTrue(condition, msg);
                                             } else {
                                                 if (colourFieldsList.contains(fieldId)) {
                                                     FieldConfigColour fieldColour =
@@ -618,7 +621,7 @@ public class SLDTestRunner {
                                                     boolean condition =
                                                             (expectedValue.compareTo(actualValue)
                                                                     == 0);
-                                                    Assert.assertTrue(msg, condition);
+                                                    assertTrue(condition, msg);
                                                 }
                                             }
                                         }
@@ -708,13 +711,13 @@ public class SLDTestRunner {
      * @param expectedValue the expected value
      */
     private void checkLiteralValue(String message, Expression expression, double expectedValue) {
-        Assert.assertEquals(expression.getClass(), LiteralExpressionImpl.class);
+        assertEquals(expression.getClass(), LiteralExpressionImpl.class);
         LiteralExpressionImpl literalExpression = (LiteralExpressionImpl) expression;
         Object value = literalExpression.getValue();
-        Assert.assertEquals(message, value.getClass(), Double.class);
+        assertEquals(value.getClass(), Double.class, message);
         Double actualValue = (Double) value;
         String additional = String.format(" Expected '%f' Actual '%f'", expectedValue, actualValue);
-        Assert.assertTrue(message + additional, Math.abs(expectedValue - actualValue) < epsilon);
+        assertTrue(Math.abs(expectedValue - actualValue) < epsilon, message + additional);
     }
 
     /**
@@ -725,13 +728,13 @@ public class SLDTestRunner {
      * @param expectedValue the expected value
      */
     private void checkLiteralValue(String message, Expression expression, int expectedValue) {
-        Assert.assertEquals(expression.getClass(), LiteralExpressionImpl.class);
+        assertEquals(expression.getClass(), LiteralExpressionImpl.class);
         LiteralExpressionImpl literalExpression = (LiteralExpressionImpl) expression;
         Object value = literalExpression.getValue();
-        Assert.assertEquals(message, value.getClass(), Integer.class);
+        assertEquals(value.getClass(), Integer.class, message);
         Integer actualValue = (Integer) value;
         String additional = String.format(" Expected '%d' Actual '%d'", expectedValue, actualValue);
-        Assert.assertTrue(message + additional, (expectedValue == actualValue));
+        assertTrue((expectedValue == actualValue), message + additional);
     }
 
     /**
@@ -742,17 +745,17 @@ public class SLDTestRunner {
      * @param expectedValue the expected value
      */
     private void checkLiteralValue(String message, Expression expression, String expectedValue) {
-        Assert.assertEquals(expression.getClass(), LiteralExpressionImpl.class);
+        assertEquals(expression.getClass(), LiteralExpressionImpl.class);
         LiteralExpressionImpl literalExpression = (LiteralExpressionImpl) expression;
         Object value = literalExpression.getValue();
         String actualValue = null;
         if (value.getClass() == ValueComboBoxData.class) {
             actualValue = ((ValueComboBoxData) value).getKey();
         } else {
-            Assert.assertEquals(message, value.getClass(), String.class);
+            assertEquals(value.getClass(), String.class, message);
             actualValue = (String) value;
         }
         String additional = String.format(" Expected '%s' Actual '%s'", expectedValue, actualValue);
-        Assert.assertTrue(message + additional, (expectedValue.equals(actualValue)));
+        assertTrue(expectedValue.equals(actualValue), message + additional);
     }
 }

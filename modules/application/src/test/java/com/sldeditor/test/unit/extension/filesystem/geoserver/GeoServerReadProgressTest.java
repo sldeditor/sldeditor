@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.extension.filesystem.geoserver;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
@@ -32,7 +32,7 @@ import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgress;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for GeoServerReadProgress class.

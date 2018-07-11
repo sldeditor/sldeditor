@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.common.watcher;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.data.SLDData;
@@ -29,8 +29,8 @@ import com.sldeditor.common.watcher.ReloadManager;
 import java.io.File;
 import java.nio.file.Path;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for ReloadManager.
@@ -39,7 +39,7 @@ import org.junit.Test;
  *
  * @author Robert Ward (SCISYS)
  */
-@Ignore
+@Disabled
 public class ReloadManagerTest {
 
     class DummyCallback implements LoadSLDInterface {

@@ -19,11 +19,11 @@
 
 package com.sldeditor.test.unit.ui.detail;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.ui.detail.EmptyPanel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for EmptyPanel.

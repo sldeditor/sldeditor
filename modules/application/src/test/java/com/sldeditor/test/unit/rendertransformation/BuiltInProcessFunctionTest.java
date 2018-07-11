@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.rendertransformation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.rendertransformation.BuiltInProcessFunction;
 import com.sldeditor.rendertransformation.ProcessFunctionParameterValue;
@@ -34,7 +34,7 @@ import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.ExpressionDOMParser;
 import org.geotools.process.function.ProcessFunction;
 import org.geotools.process.function.ProcessFunctionFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.parameter.Parameter;
 import org.w3c.dom.Document;
@@ -76,29 +76,29 @@ public class BuiltInProcessFunctionTest {
                 ProcessFunctionParameterValue actualParameter = valueList.get(index);
 
                 assertTrue(
-                        functionName.getName(),
-                        expectedParameter.getName().compareTo(actualParameter.name) == 0);
+                        expectedParameter.getName().compareTo(actualParameter.name) == 0,
+                        functionName.getName());
                 assertEquals(
-                        functionName.getName(), expectedParameter.getType(), actualParameter.type);
+                        expectedParameter.getType(), actualParameter.type, functionName.getName());
                 assertTrue(
-                        functionName.getName(),
                         expectedParameter
                                         .getType()
                                         .getSimpleName()
                                         .compareTo(actualParameter.dataType)
-                                == 0);
+                                == 0,
+                        functionName.getName());
                 assertEquals(
-                        functionName.getName(),
                         !expectedParameter.isRequired(),
-                        actualParameter.optional);
+                        actualParameter.optional,
+                        functionName.getName());
                 assertEquals(
-                        functionName.getName(),
                         expectedParameter.getMinOccurs(),
-                        actualParameter.minOccurences);
+                        actualParameter.minOccurences,
+                        functionName.getName());
                 assertEquals(
-                        functionName.getName(),
                         expectedParameter.getMaxOccurs(),
-                        actualParameter.maxOccurences);
+                        actualParameter.maxOccurences,
+                        functionName.getName());
             }
         }
         System.out.println(String.format("Tested %d functions", functionNameList.size()));

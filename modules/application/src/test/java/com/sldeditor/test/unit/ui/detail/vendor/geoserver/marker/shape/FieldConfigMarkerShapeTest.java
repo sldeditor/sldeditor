@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.shape;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.shape.FieldConfigMarkerShape;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for FieldConfigMarkerShape.

@@ -19,10 +19,10 @@
 
 package com.sldeditor.test.unit.ui.tree.item;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.ui.tree.item.StyledLayerDescriptorTreeItem;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for StyledLayerDescriptorTreeItem.

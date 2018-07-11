@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.filter.v2.envvar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.filter.v2.envvar.EnvVar;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for EnvVar class.

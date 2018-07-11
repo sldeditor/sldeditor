@@ -19,12 +19,12 @@
 
 package com.sldeditor.test.unit.extension.filesystem.file.mapbox;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
@@ -38,8 +38,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for MapBoxFileHandler class.
@@ -75,7 +75,7 @@ public class MapBoxFileHandlerTest {
      * com.sldeditor.extension.filesystem.file.mapbox.MapBoxFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
      */
     @Test
-    @Ignore
+    @Disabled
     public void testGetSLDContents() {
         assertNull(new MapBoxFileHandler().getSLDContents(null));
 

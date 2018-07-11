@@ -19,8 +19,8 @@
 
 package com.sldeditor.test.unit.datasource.connector;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.sldeditor.common.DataSourceConnectorInterface;
 import com.sldeditor.common.DataSourcePropertiesInterface;
@@ -29,7 +29,7 @@ import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.connector.instance.DataSourceConnectorEmpty;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for DataSourceConnectorFactory class.

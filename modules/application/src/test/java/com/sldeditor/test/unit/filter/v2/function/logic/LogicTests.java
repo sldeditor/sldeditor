@@ -19,11 +19,11 @@
 
 package com.sldeditor.test.unit.filter.v2.function.logic;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import com.sldeditor.filter.v2.function.logic.And;
@@ -34,7 +34,7 @@ import java.util.List;
 import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opengis.filter.Filter;
 
 /**
@@ -83,8 +83,7 @@ public class LogicTests {
         try {
             filterList.add(CQL.toFilter("filter1 >= 5"));
         } catch (CQLException e) {
-            e.printStackTrace();
-            fail();
+            fail(e.getStackTrace().toString());
         }
 
         filter = (LogicFilterImpl) objUnderTest.createLogicFilter(filterList);
@@ -94,8 +93,7 @@ public class LogicTests {
             try {
                 filterList.add(CQL.toFilter("filter2 >= 5"));
             } catch (CQLException e) {
-                e.printStackTrace();
-                fail();
+                fail(e.getStackTrace().toString());
             }
             filter = (LogicFilterImpl) objUnderTest.createLogicFilter(filterList);
         }

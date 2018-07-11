@@ -19,9 +19,9 @@
 
 package com.sldeditor.test.unit.tool.mapbox;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for MapBoxTool.
@@ -172,7 +172,7 @@ public class MapBoxToolTest {
          *
          * InputStream inputStream = MapBoxToolTest.class.getResourceAsStream(testfile);
          *
-         * if (inputStream == null) { Assert.assertNotNull("Failed to find test file : " + testfile,
+         * if (inputStream == null) { Assertions.assertNotNull("Failed to find test file : " + testfile,
          * inputStream); } else { File f = null; try { String fileExtension =
          * ExternalFilenames.getFileExtension(testfile); f = stream2file(inputStream,
          * ExternalFilenames.addFileExtensionSeparator(fileExtension)); String sldContents =

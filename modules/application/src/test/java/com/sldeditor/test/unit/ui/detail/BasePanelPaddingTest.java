@@ -19,13 +19,13 @@
 
 package com.sldeditor.test.unit.ui.detail;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.ui.detail.BasePanelPadding;
 import java.awt.Dimension;
 import javax.swing.Box;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for BasePanelPadding.

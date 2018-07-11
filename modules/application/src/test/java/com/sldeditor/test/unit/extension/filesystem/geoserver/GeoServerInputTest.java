@@ -19,11 +19,11 @@
 
 package com.sldeditor.test.unit.extension.filesystem.geoserver;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -48,10 +48,9 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for GeoServerInput class.
@@ -91,14 +90,14 @@ public class GeoServerInputTest {
     }
 
     /** Called before each test. */
-    @Before
+    @BeforeEach
     public void beforeEachTest() {
         GeoServerConnectionManager.destroyInstance();
         PropertyManagerFactory.getInstance().setPropertyFile(configPropertiesFile);
     }
 
     /** Called after each test. */
-    @After
+    @AfterEach
     public void afterEachTest() {
         configPropertiesFile.delete();
         GeoServerConnectionManager.destroyInstance();
@@ -202,16 +201,6 @@ public class GeoServerInputTest {
         GeoServerInput input = new GeoServerInput(null);
 
         assertTrue(input.getNodeTypes().isEmpty());
-    }
-
-    /**
-     * Test method for {@link
-     * com.sldeditor.extension.filesystem.geoserver.GeoServerInput#isConnected(com.sldeditor.common.data.GeoServerConnection)}.
-     */
-    @Ignore
-    @Test
-    public void testIsConnected() {
-        fail("Not yet implemented");
     }
 
     /**

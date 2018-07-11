@@ -19,11 +19,11 @@
 
 package com.sldeditor.test.unit.datasource.extension.filesystem.node.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.datasource.extension.filesystem.dataflavour.DataFlavourManager;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
@@ -35,8 +35,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for FileTreeNode class.
@@ -48,7 +48,7 @@ import org.junit.Test;
 public class FileTreeNodeTest {
 
     /** Test. */
-    @Ignore
+    @Disabled
     @Test
     public void test() {
         Map<String, FileHandlerInterface> fileHandlerMap =

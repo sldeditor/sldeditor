@@ -19,7 +19,7 @@
 
 package com.sldeditor.test.unit.ui.detail.config.sortby;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.ui.detail.config.sortby.SortByPanel;
 import com.sldeditor.ui.detail.config.sortby.SortByUpdateInterface;
@@ -27,7 +27,7 @@ import java.awt.BorderLayout;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JDialog;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * The Class SortByPanelTest.
