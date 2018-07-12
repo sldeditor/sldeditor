@@ -342,11 +342,6 @@
 			            <artifactId>junit-jupiter-engine</artifactId>
 			            <version>5.2.0</version>
 			        </dependency>
-			        <dependency>
-			            <groupId>org.junit.vintage</groupId>
-			            <artifactId>junit-vintage-engine</artifactId>
-			            <version>5.2.0</version>
-			        </dependency>
 			    </dependencies>
 				<configuration>
 					<forkCount>1</forkCount>
