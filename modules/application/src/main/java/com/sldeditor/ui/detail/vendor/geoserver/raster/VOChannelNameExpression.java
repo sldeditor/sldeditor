@@ -80,7 +80,7 @@ public class VOChannelNameExpression extends StandardPanel
     }
 
     /**
-     *  Creates the ui.
+     * Creates the ui.
      *
      * @param panelConfig the panel config
      */

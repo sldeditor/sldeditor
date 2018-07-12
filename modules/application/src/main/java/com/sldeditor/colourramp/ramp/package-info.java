@@ -19,9 +19,7 @@
 
 /**
  * GUI for user to select colour ramps.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
-
 package com.sldeditor.colourramp.ramp;

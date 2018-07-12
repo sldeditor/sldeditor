@@ -22,5 +22,4 @@
  *
  * @author Robert Ward (SCISYS)
  */
-
 package com.sldeditor.update;

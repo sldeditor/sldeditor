@@ -19,9 +19,7 @@
 
 /**
  * Package containing classes to manage the colour ramps.
- * 
- * @author Robert Ward (SCISYS)
  *
+ * @author Robert Ward (SCISYS)
  */
-
 package com.sldeditor.colourramp;

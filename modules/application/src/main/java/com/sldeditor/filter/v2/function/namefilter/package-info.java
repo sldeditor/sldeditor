@@ -18,9 +18,8 @@
  */
 
 /**
- * Classes to determine whether functions apply to raster symbols or vector. 
+ * Classes to determine whether functions apply to raster symbols or vector.
  *
  * @author Robert Ward (SCISYS)
  */
-
 package com.sldeditor.filter.v2.function.namefilter;
