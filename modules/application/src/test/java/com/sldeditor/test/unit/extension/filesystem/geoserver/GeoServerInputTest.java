@@ -21,6 +21,7 @@ package com.sldeditor.test.unit.extension.filesystem.geoserver;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -33,19 +34,28 @@ import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.property.PropertyManagerFactory;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerNode;
+import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleHeadingNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerInput;
+import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
 import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.MenuElement;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import org.junit.jupiter.api.AfterEach;
@@ -157,7 +167,7 @@ public class GeoServerInputTest {
             // Save valid sld data
             assertTrue(input.save(sldData));
 
-            // Try and save to a connection that doe snot exists
+            // Try and save to a connection that does not exist
             GeoServerConnection connection3 = new GeoServerConnection();
             connection2.setConnectionName("test connection 3");
 
@@ -167,6 +177,18 @@ public class GeoServerInputTest {
 
             // Check how many connections we have
             assertEquals(2, input.getConnectionDetails().size());
+
+            // Try the other tree node types
+            GeoServerWorkspaceNode workspaceNode =
+                    new GeoServerWorkspaceNode(input, connection1, "test workspace", true);
+            assertNotNull(input.getSLDContents(workspaceNode));
+
+            GeoServerStyleHeadingNode styleHeadingNode =
+                    new GeoServerStyleHeadingNode(null, null, "test");
+            assertNotNull(input.getSLDContents(styleHeadingNode));
+
+            GeoServerNode geoserverNode = new GeoServerNode(input, connection1);
+            assertNotNull(input.getSLDContents(geoserverNode));
         } catch (SecurityException e) {
             e.printStackTrace();
             fail(e.getMessage());
@@ -189,7 +211,147 @@ public class GeoServerInputTest {
      */
     @Test
     public void testRightMouseButton() {
-        // Hard to test
+        GeoServerInput input = new GeoServerInput(null);
+        GeoServerInput.overrideGeoServerClientClass(DummyGeoServerClient.class);
+
+        FSTree tree = new FSTree();
+
+        DefaultMutableTreeNode rootNode;
+        try {
+            rootNode = new DefaultMutableTreeNode("Root");
+
+            DefaultTreeModel model = new DefaultTreeModel(rootNode);
+
+            input.populate(tree, model, rootNode);
+
+            GeoServerConnection connection1 = new GeoServerConnection();
+            String expectedConnectionName = "test connection 1";
+            connection1.setConnectionName(expectedConnectionName);
+
+            GeoServerNode geoserverNode = new GeoServerNode(input, connection1);
+
+            // Add some GeoServer connections
+            input.addNewConnection(connection1);
+
+            input.rightMouseButton(null, null, null);
+
+            // GeoServer node -- connected to client
+            JPopupMenu menu = new JPopupMenu();
+            input.rightMouseButton(menu, geoserverNode, null);
+
+            int actual = menu.getComponentCount();
+            assertEquals(1, actual);
+            JMenuItem menuItem = (JMenuItem) menu.getComponent(0);
+            String actualString = menuItem.getText();
+            assertEquals(
+                    Localisation.getString(GeoServerInput.class, "GeoServerInput.disconnect"),
+                    actualString);
+
+            // GeoServer node -- not connected to client
+            GeoServerClientInterface client =
+                    GeoServerConnectionManager.getInstance().getConnectionMap().get(connection1);
+            client.disconnect();
+
+            menu = new JPopupMenu();
+            input.rightMouseButton(menu, geoserverNode, null);
+
+            actual = menu.getComponentCount();
+            assertEquals(1, actual);
+            actualString = menuItem.getText();
+            assertEquals(
+                    Localisation.getString(GeoServerInput.class, "GeoServerInput.disconnect"),
+                    actualString);
+
+            // FileTreeNode
+            try {
+                // File tree node with unsupported file name
+                FileTreeNode ftn = new FileTreeNode(new File(""), "unknown file");
+
+                menu = new JPopupMenu();
+                input.rightMouseButton(menu, ftn, null);
+
+                // File tree node with sld file -- disconnected from GeoServer
+                ftn = new FileTreeNode(new File(""), "test.sld");
+
+                menu = new JPopupMenu();
+                input.rightMouseButton(menu, ftn, null);
+
+                actual = menu.getComponentCount();
+                menuItem = (JMenuItem) menu.getComponent(0);
+
+                assertEquals(1, actual);
+                actualString = menuItem.getText();
+                assertEquals(
+                        Localisation.getString(
+                                GeoServerInput.class, "GeoServerInput.uploadToGeoServer"),
+                        actualString);
+
+                MenuElement[] children = menuItem.getSubElements();
+                assertEquals(1, children.length);
+                JMenuItem menuItem2 = (JMenuItem) ((JPopupMenu) children[0]).getComponent(0);
+                actualString = menuItem2.getText();
+                assertEquals(expectedConnectionName, actualString);
+
+                // File tree node with sld file -- connected to GeoServer
+                client.connect();
+                String expectedWorkspace = "workspace1";
+                ((DummyGeoServerClient) client).workspaceList.add(expectedWorkspace);
+                menu = new JPopupMenu();
+                input.rightMouseButton(menu, ftn, null);
+
+                actual = menu.getComponentCount();
+                menuItem = (JMenuItem) menu.getComponent(0);
+
+                assertEquals(1, actual);
+                actualString = menuItem.getText();
+                assertEquals(
+                        Localisation.getString(
+                                GeoServerInput.class, "GeoServerInput.uploadToGeoServer"),
+                        actualString);
+
+                children = menuItem.getSubElements();
+                assertEquals(1, children.length);
+                menuItem2 = (JMenuItem) ((JPopupMenu) children[0]).getComponent(0);
+                actualString = menuItem2.getText();
+                assertEquals(expectedConnectionName, actualString);
+                // Check for workspace names
+                children = menuItem2.getSubElements();
+                assertEquals(1, children.length);
+                JMenuItem menuItem3 = (JMenuItem) ((JPopupMenu) children[0]).getComponent(0);
+                actualString = menuItem3.getText();
+                assertEquals(expectedWorkspace, actualString);
+
+                // File tree node with sld file -- no GeoServer connections
+                GeoServerConnectionManager.getInstance().getConnectionMap().clear();
+                menu = new JPopupMenu();
+                input.rightMouseButton(menu, ftn, null);
+
+                actual = menu.getComponentCount();
+                menuItem = (JMenuItem) menu.getComponent(0);
+
+                assertEquals(1, actual);
+                actualString = menuItem.getText();
+                assertEquals(
+                        Localisation.getString(
+                                GeoServerInput.class, "GeoServerInput.uploadToGeoServer"),
+                        actualString);
+
+                children = menuItem.getSubElements();
+                assertEquals(1, children.length);
+                menuItem2 = (JMenuItem) ((JPopupMenu) children[0]).getComponent(0);
+                actualString = menuItem2.getText();
+                assertEquals(
+                        Localisation.getString(
+                                GeoServerInput.class, "GeoServerInput.noGeoServerConnections"),
+                        actualString);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
     }
 
     /**
@@ -221,19 +383,24 @@ public class GeoServerInputTest {
         connection2.setConnectionName("test connection 2");
         input.addNewConnection(connection2);
 
+        // Try passing null
         input.connect(null);
 
         // Try connecting to one GeoServer
         List<GeoServerConnection> connectionList = new ArrayList<GeoServerConnection>();
         connectionList.add(connection1);
 
-        // Try passing null
+        // Try passing something
         input.connect(connectionList);
 
         // Try connecting to 2
         connectionList.add(connection2);
 
         input.connect(connectionList);
+
+        assertTrue(input.isConnected(connection1));
+        assertTrue(input.isConnected(connection2));
+        assertFalse(input.isConnected(null));
     }
 
     /**

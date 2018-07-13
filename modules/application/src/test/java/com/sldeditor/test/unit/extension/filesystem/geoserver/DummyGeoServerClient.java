@@ -24,6 +24,7 @@ import com.sldeditor.common.data.GeoServerLayer;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.extension.filesystem.geoserver.GeoServerReadProgressInterface;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerClientInterface;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +36,11 @@ public class DummyGeoServerClient implements GeoServerClientInterface {
 
     private GeoServerConnection connection = null;
 
+    private boolean connected = true;
+
     private static final String DEFAULT_WORKSPACE_NAME = "<Test Default Workspace>";
+
+    public List<String> workspaceList = new ArrayList<String>();
 
     @Override
     public void initialise(GeoServerReadProgressInterface parent, GeoServerConnection connection) {
@@ -61,11 +66,14 @@ public class DummyGeoServerClient implements GeoServerClientInterface {
 
     @Override
     public boolean connect() {
+        connected = true;
         return false;
     }
 
     @Override
-    public void disconnect() {}
+    public void disconnect() {
+        connected = false;
+    }
 
     @Override
     public boolean uploadSLD(StyleWrapper styleWrapper, String sldBody) {
@@ -79,7 +87,7 @@ public class DummyGeoServerClient implements GeoServerClientInterface {
 
     @Override
     public List<String> getWorkspaceList() {
-        return null;
+        return workspaceList;
     }
 
     @Override
@@ -94,7 +102,7 @@ public class DummyGeoServerClient implements GeoServerClientInterface {
 
     @Override
     public boolean isConnected() {
-        return true;
+        return connected;
     }
 
     @Override
