@@ -27,7 +27,6 @@ import com.sldeditor.datasource.DataSourceUpdatedInterface;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.filter.ExpressionPanelInterface;
-import com.sldeditor.filter.v2.function.FilterConfigInterface;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -49,22 +48,11 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import org.geotools.data.DataStore;
 import org.geotools.filter.AttributeExpressionImpl;
-import org.geotools.filter.BinaryComparisonAbstract;
-import org.geotools.filter.FidFilterImpl;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
-import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.geotools.filter.function.string.ConcatenateFunction;
-import org.opengis.filter.Filter;
-import org.opengis.filter.Not;
-import org.opengis.filter.PropertyIsBetween;
-import org.opengis.filter.PropertyIsGreaterThan;
-import org.opengis.filter.PropertyIsLike;
-import org.opengis.filter.PropertyIsNull;
 import org.opengis.filter.expression.Expression;
-import org.opengis.filter.spatial.BinarySpatialOperator;
-import org.opengis.filter.temporal.BinaryTemporalOperator;
 
 /**
  * The Class ExpressionPanelv2.
@@ -127,9 +115,6 @@ public class ExpressionPanelv2 extends JDialog
 
     /** The overall expression. */
     private Expression overallExpression;
-
-    /** The overall filter. */
-    private Filter overallFilter;
 
     /** The vendor option list. */
     private List<VersionData> vendorOptionList = null;
@@ -346,101 +331,9 @@ public class ExpressionPanelv2 extends JDialog
             if (overallExpression != null) {
                 result = overallExpression.toString();
             }
-        } else if (rootNode instanceof FilterNode) {
-            overallFilter = addFilter((FilterNode) rootNode);
-
-            try {
-                result = overallFilter.toString();
-            } catch (Exception e) {
-                // Do nothing
-            }
         }
 
         textArea.setText(result);
-    }
-
-    /**
-     * Adds the filter.
-     *
-     * @param node the node
-     * @return the filter
-     */
-    private Filter addFilter(FilterNode node) {
-        Filter filter = node.getFilter();
-
-        FilterConfigInterface filterConfig = node.getFilterConfig();
-
-        if (filter instanceof LogicFilterImpl) {
-            List<Filter> filterList = new ArrayList<Filter>();
-
-            createFilterList(node, filterList);
-
-            return filterConfig.createLogicFilter(filterList);
-        }
-
-        List<Expression> parameterFilter = new ArrayList<Expression>();
-
-        if (filter instanceof FidFilterImpl) {
-            createExpressionParameterList(node, 1, parameterFilter);
-        } else if (filter instanceof BinaryTemporalOperator) {
-            createExpressionParameterList(node, 2, parameterFilter);
-        } else if (filter instanceof PropertyIsBetween) {
-            createExpressionParameterList(node, 3, parameterFilter);
-        } else if (filter instanceof PropertyIsNull) {
-            createExpressionParameterList(node, 1, parameterFilter);
-        } else if (filter instanceof PropertyIsLike) {
-            createExpressionParameterList(node, 6, parameterFilter);
-        } else if (filter instanceof BinarySpatialOperator) {
-            createExpressionParameterList(node, 2, parameterFilter);
-        } else if (filter instanceof BinaryComparisonAbstract) {
-            if (filter instanceof Not) {
-                createExpressionParameterList(node, 1, parameterFilter);
-            } else if (filter instanceof PropertyIsGreaterThan) {
-                createExpressionParameterList(node, 2, parameterFilter);
-            } else {
-                createExpressionParameterList(node, 3, parameterFilter);
-            }
-        } else {
-            return filter;
-        }
-
-        return filterConfig.createFilter(parameterFilter);
-    }
-
-    /**
-     * Creates the parameter list from expressions.
-     *
-     * @param node the node
-     * @param noOfExpressions the no of expressions
-     * @param parameterFilter the parameter filter
-     */
-    private void createExpressionParameterList(
-            FilterNode node, int noOfExpressions, List<Expression> parameterFilter) {
-        if (noOfExpressions <= node.getChildCount()) {
-            for (int index = 0; index < noOfExpressions; index++) {
-                ExpressionNode expressionNode = (ExpressionNode) node.getChildAt(index);
-
-                Expression expression = addExpression(expressionNode);
-
-                parameterFilter.add(expression);
-            }
-        }
-    }
-
-    /**
-     * Creates the filter list.
-     *
-     * @param node the node
-     * @param filterList the filter list
-     */
-    private void createFilterList(FilterNode node, List<Filter> filterList) {
-        for (int index = 0; index < node.getChildCount(); index++) {
-            FilterNode filterNode = (FilterNode) node.getChildAt(index);
-
-            Filter filter = addFilter(filterNode);
-
-            filterList.add(filter);
-        }
     }
 
     /**
@@ -601,9 +494,6 @@ public class ExpressionPanelv2 extends JDialog
                 cardLayout.show(dataPanel, expressionPanel.getClass().getName());
                 expressionPanel.setSelectedNode(node);
             }
-        } else if (node instanceof FilterNode) {
-            cardLayout.show(dataPanel, filterPanel.getClass().getName());
-            filterPanel.setSelectedNode(node);
         } else {
             cardLayout.show(dataPanel, EMPTY_PANEL);
         }
