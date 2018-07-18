@@ -99,5 +99,14 @@ public class BatchUpdateFontUtilsTest {
         actualList = BatchUpdateFontUtils.containsFonts(sldData);
         assertEquals(1, actualList.size());
         assertEquals(rule.getName(), actualList.get(0).getRuleName());
+
+        // Bump up the code coverage
+        @SuppressWarnings("unused")
+        BatchUpdateFontUtils tmp = new BatchUpdateFontUtils();
+        tmp = null;
+
+        sldData = new SLDData(new StyleWrapper("workspace", "layer.sld"), "empty");
+        actualList = BatchUpdateFontUtils.containsFonts(sldData);
+        assertNull(actualList);
     }
 }

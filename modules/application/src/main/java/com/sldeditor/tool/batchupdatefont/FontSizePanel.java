@@ -81,8 +81,14 @@ public class FontSizePanel extends JPanel implements UpdateSymbolInterface {
      * @param entries the entries
      */
     public void populate(List<Font> entries) {
-        value.populateField(0);
-        value.setEnabled((entries != null) && !entries.isEmpty());
+        boolean hasData = (entries != null) && !entries.isEmpty();
+        Integer fontSize = 0;
+        if (hasData) {
+            Font f = entries.get(0);
+            fontSize = Double.valueOf(f.getSize().toString()).intValue();
+        }
+        value.populateField(fontSize);
+        value.setEnabled(hasData);
     }
 
     /**

@@ -541,14 +541,15 @@ public class BatchUpdateFontData {
     /**
      * Update font size.
      *
-     * @param fontSize the font size
+     * @param updatedFontSize the font size to update tp
      */
-    public void updateFontSize(int fontSize) {
+    public void updateFontSize(int updatedFontSize) {
         if (font != null) {
-            if (!(String.valueOf(fontSize).equals(font.getSize().toString()))) {
-                if (font.getSize() instanceof LiteralExpressionImpl) {
+            Expression fontSize = font.getSize();
+            if (!(String.valueOf(updatedFontSize).equals(fontSize.toString()))) {
+                if (fontSize instanceof LiteralExpressionImpl) {
                     int updatedSize =
-                            Double.valueOf(font.getSize().toString()).intValue() + fontSize;
+                            Double.valueOf(fontSize.toString()).intValue() + updatedFontSize;
                     // Make sure we don't get negative sized fonts!
                     if (updatedSize < 1) {
                         updatedSize = 1;
@@ -556,11 +557,11 @@ public class BatchUpdateFontData {
                     Expression exp = ff.literal(updatedSize);
 
                     font.setSize(exp);
-                } else if ((font.getSize() instanceof FunctionExpression)
-                        || (font.getSize() instanceof MathExpressionImpl)
-                        || (font.getSize() instanceof ConstantExpression)
-                        || (font.getSize() instanceof AttributeExpressionImpl)) {
-                    Expression updatedSize = ff.add(font.getSize(), ff.literal(fontSize));
+                } else if ((fontSize instanceof FunctionExpression)
+                        || (fontSize instanceof MathExpressionImpl)
+                        || (fontSize instanceof ConstantExpression)
+                        || (fontSize instanceof AttributeExpressionImpl)) {
+                    Expression updatedSize = ff.add(fontSize, ff.literal(updatedFontSize));
                     font.setSize(updatedSize);
                 }
             }

@@ -43,7 +43,7 @@ public class BatchUpdateFontUtils {
      * Contains font details.
      *
      * @param sldData the sld data
-     * @return the scale sld data
+     * @return the scale sld data, returns null if invalid SLD string supplied.
      */
     public static List<BatchUpdateFontData> containsFonts(SLDDataInterface sldData) {
 

@@ -96,7 +96,7 @@ public class BatchUpdateFontPanel extends JDialog {
     private FontSizePanel fontSizePanel;
 
     /**
-     * Instantiates a new scale tool panel.
+     * Instantiates a new batch update font panel.
      *
      * @param application the application
      */
@@ -219,7 +219,7 @@ public class BatchUpdateFontPanel extends JDialog {
     }
 
     /** Apply data. */
-    private void applyData() {
+    protected void applyData() {
         if (comboBox.getSelectedItem().equals(PANEL_FULL_FONT)) {
             dataModel.applyData(table.getSelectedRows(), fontDetails.getFontData());
         } else if (comboBox.getSelectedItem().equals(PANEL_FONT_SIZE)) {
@@ -231,7 +231,7 @@ public class BatchUpdateFontPanel extends JDialog {
     }
 
     /** Save data. */
-    private void saveData() {
+    protected void saveData() {
         if (dataModel.saveData(application)) {
             if (application != null) {
                 application.refreshPanel(RuleImpl.class, TextSymbolizerImpl.class);
@@ -256,5 +256,35 @@ public class BatchUpdateFontPanel extends JDialog {
             }
         }
         dataModel.loadData(fontDataList);
+    }
+
+    /**
+     * Sets the selected option to update font, used for testing.
+     *
+     * @param font the new update font
+     */
+    protected void setUpdateFont(Font font) {
+        comboBox.setSelectedItem(PANEL_FULL_FONT);
+
+        List<Font> fontList = new ArrayList<Font>();
+        fontList.add(font);
+
+        table.selectAll();
+        fontDetails.populate(fontList);
+    }
+
+    /**
+     * Sets the selected option to update font size, used for testing.
+     *
+     * @param font the new update font size
+     */
+    protected void setUpdateFontSize(Font font) {
+        comboBox.setSelectedItem(PANEL_FONT_SIZE);
+
+        List<Font> fontList = new ArrayList<Font>();
+        fontList.add(font);
+
+        table.selectAll();
+        fontSizePanel.populate(fontList);
     }
 }

@@ -29,7 +29,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumnModel;
 import org.geotools.styling.Font;
 
-/** Table model to allows the viewing and editing of ScaleSLDData objects. */
+/** Table model to allows the viewing and editing of BatchUpdateFontData objects. */
 public class BatchUpdateFontModel extends AbstractTableModel {
 
     /** The Constant serialVersionUID. */
