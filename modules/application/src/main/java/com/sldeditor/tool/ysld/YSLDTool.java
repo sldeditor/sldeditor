@@ -282,45 +282,46 @@ public class YSLDTool implements ToolInterface {
             List<Class<?>> uniqueNodeTypeList,
             List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
-        if (nodeTypeList == null) {
-            return false;
-        }
+        boolean result = false;
+        if (nodeTypeList != null) {
+            for (NodeInterface node : nodeTypeList) {
+                if (node instanceof FileTreeNode) {
+                    FileTreeNode fileTreeNode = (FileTreeNode) node;
 
-        for (NodeInterface node : nodeTypeList) {
-            if (node instanceof FileTreeNode) {
-                FileTreeNode fileTreeNode = (FileTreeNode) node;
-
-                if (fileTreeNode.isDir()) {
-                    // Folder
-                    for (int childIndex = 0;
-                            childIndex < fileTreeNode.getChildCount();
-                            childIndex++) {
-                        FileTreeNode f = (FileTreeNode) fileTreeNode.getChildAt(childIndex);
-                        if (f.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
+                    if (fileTreeNode.isDir()) {
+                        // Folder
+                        for (int childIndex = 0;
+                                childIndex < fileTreeNode.getChildCount();
+                                childIndex++) {
+                            FileTreeNode f = (FileTreeNode) fileTreeNode.getChildAt(childIndex);
+                            if (f.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
+                                String fileExtension =
+                                        ExternalFilenames.getFileExtension(
+                                                f.getFile().getAbsolutePath());
+                                if ((fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0)
+                                        || (fileExtension.compareTo(
+                                                        SLDEditorFile.getSLDFileExtension())
+                                                == 0)) {
+                                    result = true;
+                                }
+                            }
+                        }
+                    } else {
+                        // Single file
+                        if (fileTreeNode.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
                             String fileExtension =
                                     ExternalFilenames.getFileExtension(
-                                            f.getFile().getAbsolutePath());
-                            return (fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0)
+                                            fileTreeNode.getFile().getAbsolutePath());
+                            if ((fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0)
                                     || (fileExtension.compareTo(SLDEditorFile.getSLDFileExtension())
-                                            == 0);
+                                            == 0)) {
+                                result = true;
+                            }
                         }
                     }
-                } else {
-                    // Single file
-                    if (fileTreeNode.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
-                        String fileExtension =
-                                ExternalFilenames.getFileExtension(
-                                        fileTreeNode.getFile().getAbsolutePath());
-                        return (fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0)
-                                || (fileExtension.compareTo(SLDEditorFile.getSLDFileExtension())
-                                        == 0);
-                    }
                 }
-                return false;
-            } else {
-                return true;
             }
         }
-        return true;
+        return result;
     }
 }

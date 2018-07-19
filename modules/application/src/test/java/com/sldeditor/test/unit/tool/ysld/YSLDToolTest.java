@@ -34,7 +34,12 @@ import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.common.utils.ExternalFilenames;
+import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeEnum;
+import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleHeadingNode;
+import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode;
+import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ysld.YSLDTool;
 import java.awt.Component;
@@ -195,18 +200,20 @@ public class YSLDToolTest {
         File testFile2 = null;
         File testFile3 = null;
         try {
-            testFile1 = File.createTempFile("invalid", ".tst");
+            testFile1 = File.createTempFile("invalid", ".shp");
             testFile2 = File.createTempFile("valid", ".sld");
             testFile3 = File.createTempFile("valid", ".ysld");
         } catch (IOException e1) {
             e1.printStackTrace();
         }
 
-        // Try with invalid file
+        // Try with vector file
         try {
             List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
             assertNotNull(testFile1);
-            nodeTypeList.add(new FileTreeNode(testFile1.getParentFile(), testFile1.getName()));
+            FileTreeNode node = new FileTreeNode(testFile1.getParentFile(), testFile1.getName());
+            node.setFileCategory(FileTreeNodeTypeEnum.VECTOR);
+            nodeTypeList.add(node);
             assertFalse(tool.supports(null, nodeTypeList, null));
         } catch (SecurityException | FileNotFoundException e) {
             e.printStackTrace();
@@ -236,10 +243,58 @@ public class YSLDToolTest {
             nodeTypeList.add(new FileTreeNode(testFile1.getParentFile(), testFile1.getName()));
             nodeTypeList.add(new FileTreeNode(testFile2.getParentFile(), testFile2.getName()));
             nodeTypeList.add(new FileTreeNode(testFile3.getParentFile(), testFile3.getName()));
-            assertFalse(tool.supports(null, nodeTypeList, null));
+            assertTrue(tool.supports(null, nodeTypeList, null));
         } catch (SecurityException | FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        // Try with folder
+        try {
+            List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
+            FileTreeNode folder =
+                    new FileTreeNode(
+                            testFile1.getParentFile().getParentFile(),
+                            testFile1.getParentFile().getName());
+
+            FileTreeNode childNode =
+                    new FileTreeNode(testFile1.getParentFile(), testFile1.getName());
+            childNode.setFileCategory(FileTreeNodeTypeEnum.RASTER);
+            folder.add(childNode);
+            folder.add(new FileTreeNode(testFile2.getParentFile(), testFile2.getName()));
+            folder.add(new FileTreeNode(testFile3.getParentFile(), testFile3.getName()));
+
+            nodeTypeList.add(folder);
+            assertTrue(tool.supports(null, nodeTypeList, null));
+        } catch (SecurityException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Try database feature class
+        List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
+        DatabaseFeatureClassNode databaseFeatureClassNode =
+                new DatabaseFeatureClassNode(null, null, "db fc");
+        nodeTypeList.add(databaseFeatureClassNode);
+        assertFalse(tool.supports(null, nodeTypeList, null));
+
+        // Try GeoServerStyleHeading node class
+        nodeTypeList.clear();
+        nodeTypeList.add(new GeoServerStyleHeadingNode(null, null, "test"));
+        assertFalse(tool.supports(null, nodeTypeList, null));
+
+        // Try GeoServerStyleNode node class
+        nodeTypeList.clear();
+        nodeTypeList.add(new GeoServerStyleNode(null, null, new StyleWrapper("test", "")));
+        assertFalse(tool.supports(null, nodeTypeList, null));
+
+        // Try GeoServerWorkspaceNode node class -- not style
+        nodeTypeList.clear();
+        nodeTypeList.add(new GeoServerWorkspaceNode(null, null, "test", false));
+        assertFalse(tool.supports(null, nodeTypeList, null));
+
+        // Try GeoServerWorkspaceNode node class -- style
+        nodeTypeList.clear();
+        nodeTypeList.add(new GeoServerWorkspaceNode(null, null, "test", true));
+        assertFalse(tool.supports(null, nodeTypeList, null));
 
         testFile1.delete();
         testFile2.delete();
