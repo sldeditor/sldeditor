@@ -24,6 +24,7 @@ import com.sldeditor.filter.v2.envvar.EnvVar;
 import com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -183,29 +184,21 @@ public class EnvVarModel extends DefaultTableModel {
     }
 
     /**
-     * Adds the new.
+     * Adds the new environment variables.
      *
      * @param parameterList the parameter list
      */
     public void addNew(List<String> parameterList) {
         if (this.envMgr != null) {
-            for (String parameter : parameterList) {
-                String[] componentList = parameter.split(";");
+            Map<String, String> map = SplitURL.extractEnvVar(parameterList);
 
-                for (String component : componentList) {
-                    String[] childComponentList = component.split(":");
+            for (String envVarName : map.keySet()) {
 
-                    String envVarName = childComponentList[0];
-                    String envVarValue = null;
-                    if (childComponentList.length > 1) {
-                        envVarValue = childComponentList[1];
-                    }
+                String envVarValue = map.get(envVarName);
+                EnvVar envVar = this.envMgr.addNewEnvVar(envVarName, String.class, envVarValue);
 
-                    EnvVar envVar = this.envMgr.addNewEnvVar(envVarName, String.class, envVarValue);
-
-                    if (envVar != null) {
-                        dataList.add(envVar);
-                    }
+                if (envVar != null) {
+                    dataList.add(envVar);
                 }
             }
             this.fireTableDataChanged();
