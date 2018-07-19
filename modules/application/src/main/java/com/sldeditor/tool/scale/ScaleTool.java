@@ -53,7 +53,7 @@ public class ScaleTool implements ToolInterface {
     private static final int PANEL_WIDTH = 60;
 
     /** The Scale button. */
-    private JButton scaleButton;
+    protected JButton scaleButton;
 
     /** The scale panel. */
     private JPanel scaleGroupPanel = null;
@@ -155,7 +155,7 @@ public class ScaleTool implements ToolInterface {
     }
 
     /**
-     * Supports.
+     * Check if the supplied tree node/data file is supported by tool.
      *
      * @param nodeTypeList the node type list
      * @param sldDataList the sld data list
@@ -171,24 +171,28 @@ public class ScaleTool implements ToolInterface {
             List<Class<?>> uniqueNodeTypeList,
             List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
-        for (NodeInterface node : nodeTypeList) {
-            if (node instanceof FileTreeNode) {
-                FileTreeNode fileTreeNode = (FileTreeNode) node;
+        boolean result = false;
 
-                if (fileTreeNode.getFileCategory() != FileTreeNodeTypeEnum.SLD) {
-                    return false;
+        if (nodeTypeList != null) {
+            for (NodeInterface node : nodeTypeList) {
+                if (node instanceof FileTreeNode) {
+                    FileTreeNode fileTreeNode = (FileTreeNode) node;
+
+                    if (fileTreeNode.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
+                        result = true;
+                    }
+                } else if (node instanceof GeoServerStyleNode) {
+                    result = true;
+                } else if (node instanceof GeoServerStyleHeadingNode) {
+                    result = true;
+                } else if (node instanceof GeoServerWorkspaceNode) {
+                    GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) node;
+                    if (workspaceNode.isStyle()) {
+                        result = true;
+                    }
                 }
-            } else if (node instanceof GeoServerStyleNode) {
-                return true;
-            } else if (node instanceof GeoServerStyleHeadingNode) {
-                return true;
-            } else if (node instanceof GeoServerWorkspaceNode) {
-                GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) node;
-                return workspaceNode.isStyle();
-            } else {
-                return true;
             }
         }
-        return true;
+        return result;
     }
 }
