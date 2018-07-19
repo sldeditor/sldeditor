@@ -69,10 +69,10 @@ public class VectorTool implements ToolInterface {
     private JPanel vectorPanel = null;
 
     /** The import vector button. */
-    private JButton importVectorButton;
+    protected JButton importVectorButton;
 
     /** The data source button. */
-    private JButton dataSourceButton;
+    protected JButton dataSourceButton;
 
     /** The node type list. */
     private List<NodeInterface> nodeTypeList = null;

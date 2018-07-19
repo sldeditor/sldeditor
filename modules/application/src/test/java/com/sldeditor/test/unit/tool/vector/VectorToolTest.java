@@ -175,6 +175,14 @@ public class VectorToolTest {
         public void testSetDataSource(DatabaseFeatureClassNode featureClassNode) {
             super.setDataSource(featureClassNode);
         }
+
+        public boolean isImportButtonSelected() {
+            return importVectorButton.isEnabled();
+        }
+
+        public boolean isDataSourceButtonSelected() {
+            return dataSourceButton.isEnabled();
+        }
     }
 
     /** The Class TestMissingSLDAttributes. */
@@ -186,7 +194,8 @@ public class VectorToolTest {
         /*
          * (non-Javadoc)
          *
-         * @see com.sldeditor.datasource.impl.CheckAttributeInterface#checkAttributes(com.sldeditor.datasource.SLDEditorFileInterface)
+         * @see com.sldeditor.datasource.impl.CheckAttributeInterface#checkAttributes(com.sldeditor.
+         * datasource.SLDEditorFileInterface)
          */
         @Override
         public void checkAttributes(SLDEditorFileInterface editorFile) {
@@ -759,6 +768,36 @@ public class VectorToolTest {
         } catch (FileNotFoundException e) {
             fail(e.getStackTrace().toString());
         }
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.tool.vector.VectorTool#setSelected( java.util.List,
+     * java.util.List)}.
+     */
+    @Test
+    public void testSetSelected() {
+
+        List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
+        List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
+
+        TestVectorTool vectorTool = new TestVectorTool(null);
+        assertFalse(vectorTool.isImportButtonSelected());
+        assertFalse(vectorTool.isDataSourceButtonSelected());
+
+        vectorTool.setSelectedItems(nodeTypeList, sldDataList);
+        assertFalse(vectorTool.isImportButtonSelected());
+        assertFalse(vectorTool.isDataSourceButtonSelected());
+
+        // Can only have one file selected
+        nodeTypeList.add(new DatabaseFeatureClassNode(null, null, "db fc"));
+        vectorTool.setSelectedItems(nodeTypeList, sldDataList);
+        assertTrue(vectorTool.isImportButtonSelected());
+        assertTrue(vectorTool.isDataSourceButtonSelected());
+
+        nodeTypeList.add(new DatabaseFeatureClassNode(null, null, "db fc"));
+        vectorTool.setSelectedItems(nodeTypeList, sldDataList);
+        assertFalse(vectorTool.isImportButtonSelected());
+        assertFalse(vectorTool.isDataSourceButtonSelected());
     }
 
     /**
