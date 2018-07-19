@@ -86,8 +86,10 @@ public class ScaleSLDData {
         super();
         this.sld = sld;
         this.sldData = sldData;
-        this.workspace = this.sldData.getStyle().getWorkspace();
-        this.name = this.sldData.getLayerName();
+        if (sldData != null) {
+            this.workspace = this.sldData.getStyle().getWorkspace();
+            this.name = this.sldData.getLayerName();
+        }
     }
 
     /**
@@ -327,7 +329,7 @@ public class ScaleSLDData {
      */
     public boolean updateScales(SLDWriterInterface sldWriter) {
         boolean refreshUI = false;
-        if (rule != null) {
+        if ((rule != null) && (sldWriter != null)) {
             if (isMinimumScaleUpdated()) {
                 rule.setMinScaleDenominator(minScale);
                 minimumScaleUpdated = false;
