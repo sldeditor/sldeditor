@@ -24,7 +24,6 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.filter.v2.envvar.EnvVar;
 import com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface;
-import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -54,16 +53,17 @@ import javax.swing.table.TableColumn;
  */
 public class EnvVarDlg extends JDialog {
 
+    /** The Constant WMS_ENV_PARAMETER. */
     private static final String WMS_ENV_PARAMETER = "env";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /** The table. */
-    private JTable table;
+    protected JTable table;
 
     /** The text field. */
-    private JTextField textField;
+    protected JTextField textField;
 
     /** The data model. */
     private EnvVarModel dataModel = null;
@@ -71,12 +71,17 @@ public class EnvVarDlg extends JDialog {
     /** The ok button pressed. */
     private boolean okButtonPressed = false;
 
+    /** The btn remove. */
     private JButton btnRemove;
 
     /** The environment variable manager. */
     private EnvironmentManagerInterface envVarMgr = null;
 
-    /** Instantiates a new env var dlg. */
+    /**
+     * Instantiates a new env var dlg.
+     *
+     * @param envVarMgr the env var mgr
+     */
     public EnvVarDlg(EnvironmentManagerInterface envVarMgr) {
         super(
                 Controller.getInstance().getFrame(),
@@ -103,10 +108,7 @@ public class EnvVarDlg extends JDialog {
         btnOk.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        okButtonPressed = true;
-
-                        dataModel.updateEnvVarManager();
-                        setVisible(false);
+                        okButtonPressed();
                     }
                 });
         buttonPanel.add(btnOk);
@@ -162,19 +164,7 @@ public class EnvVarDlg extends JDialog {
         btnDecode.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        URL url;
-                        try {
-                            url = new URL(textField.getText());
-                            Map<String, List<String>> parameterMap = SplitURL.splitQuery(url);
-
-                            if (parameterMap.containsKey(WMS_ENV_PARAMETER)) {
-                                dataModel.addNew(parameterMap.get(WMS_ENV_PARAMETER));
-                            }
-                        } catch (MalformedURLException e1) {
-                            ConsoleManager.getInstance().exception(this, e1);
-                        } catch (UnsupportedEncodingException e1) {
-                            ConsoleManager.getInstance().exception(this, e1);
-                        }
+                        decodeButtonPressed();
                     }
                 });
         panelWMS.add(btnDecode);
@@ -190,8 +180,7 @@ public class EnvVarDlg extends JDialog {
         btnAdd.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        dataModel.addNewVariable();
-                        btnRemove.setEnabled(false);
+                        addButtonPressed();
                     }
                 });
         panel_1.add(btnAdd);
@@ -201,11 +190,15 @@ public class EnvVarDlg extends JDialog {
         btnRemove.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        dataModel.removeEnvVar(table.getSelectedRow());
-                        btnRemove.setEnabled(false);
+                        removeButtonPressed();
                     }
                 });
         panel_1.add(btnRemove);
+    }
+
+    /** Internal show dialog. */
+    protected void internalShowDialog() {
+        dataModel.populate();
     }
 
     /**
@@ -214,20 +207,47 @@ public class EnvVarDlg extends JDialog {
      * @return true, if successful
      */
     public boolean showDialog() {
-        dataModel.populate();
+        internalShowDialog();
+
         setVisible(true);
 
         return okButtonPressed;
     }
 
-    /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-        EnvVarDlg dlg = new EnvVarDlg(EnvironmentVariableManager.getInstance());
+    /** Ok button pressed. */
+    protected void okButtonPressed() {
+        okButtonPressed = true;
 
-        dlg.showDialog();
+        dataModel.updateEnvVarManager();
+        setVisible(false);
+    }
+
+    /** Decode button pressed. */
+    protected void decodeButtonPressed() {
+        URL url;
+        try {
+            url = new URL(textField.getText());
+            Map<String, List<String>> parameterMap = SplitURL.splitQuery(url);
+
+            if (parameterMap.containsKey(WMS_ENV_PARAMETER)) {
+                dataModel.addNew(parameterMap.get(WMS_ENV_PARAMETER));
+            }
+        } catch (MalformedURLException e1) {
+            ConsoleManager.getInstance().exception(this, e1);
+        } catch (UnsupportedEncodingException e1) {
+            ConsoleManager.getInstance().exception(this, e1);
+        }
+    }
+
+    /** Adds the button pressed. */
+    protected void addButtonPressed() {
+        dataModel.addNewVariable();
+        btnRemove.setEnabled(false);
+    }
+
+    /** Removes the button pressed. */
+    protected void removeButtonPressed() {
+        dataModel.removeEnvVar(table.getSelectedRow());
+        btnRemove.setEnabled(false);
     }
 }

@@ -34,6 +34,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class EnvVarModel extends DefaultTableModel {
 
+    /** The Constant NEW_ENV_VAR. - The new environment variable */
+    private static final String NEW_ENV_VAR = "NewEnvVar";
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -207,7 +210,7 @@ public class EnvVarModel extends DefaultTableModel {
 
     /** Adds the new variable. */
     public void addNewVariable() {
-        EnvVar envVar = this.envMgr.addNewEnvVar("NewEnvVar", String.class, null);
+        EnvVar envVar = this.envMgr.addNewEnvVar(NEW_ENV_VAR, String.class, null);
 
         if (envVar != null) {
             dataList.add(envVar);
