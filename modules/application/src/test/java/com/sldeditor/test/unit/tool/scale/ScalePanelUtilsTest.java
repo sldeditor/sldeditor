@@ -20,6 +20,7 @@
 package com.sldeditor.test.unit.tool.scale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -55,7 +56,21 @@ class ScalePanelUtilsTest {
         assertEquals(actualList.size(), expectedList.size());
 
         for (int index = 0; index < actualList.size(); index++) {
-            assertTrue(isSame(actualList.get(index), expectedList.get(index)));
+            ScaleSLDData actual = actualList.get(index);
+            assertTrue(isSame(actual, expectedList.get(index)));
+
+            assertNotNull(actual.getFeatureTypeStyle());
+            assertNotNull(actual.getStyle());
+            assertNotNull(actual.getRule());
+            assertNull(actual.getWorkspace());
+            assertNotNull(actual.getNamedLayer());
+            assertNotNull(actual.getName());
+            if (actual.isMinScaleSet()) {
+                assertNotNull(actual.getMinScaleString());
+            }
+            if (actual.isMaxScaleSet()) {
+                assertNotNull(actual.getMaxScaleString());
+            }
         }
 
         assertNull(ScalePanelUtils.containsScales(null));

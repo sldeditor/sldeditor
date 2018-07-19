@@ -53,10 +53,10 @@ public class ScaleSLDModel extends AbstractTableModel {
     private static final int COL_RULE = 5;
 
     /** The minimum scale column index. */
-    private static final int COL_MIN_SCALE = 6;
+    public static final int COL_MIN_SCALE = 6;
 
     /** The maximum scale column index. */
-    private static final int COL_MAX_SCALE = 7;
+    public static final int COL_MAX_SCALE = 7;
 
     /** The column name list. */
     private List<String> columnNameList = new ArrayList<String>();

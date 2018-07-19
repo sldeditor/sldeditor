@@ -50,7 +50,7 @@ public class ScaleToolPanel extends JDialog implements ScaleToolUpdate {
     private JTable table;
 
     /** The table model. */
-    private ScaleSLDModel dataModel = null;
+    protected ScaleSLDModel dataModel = null;
 
     /** The application. */
     private SLDEditorInterface application = null;
@@ -104,7 +104,7 @@ public class ScaleToolPanel extends JDialog implements ScaleToolUpdate {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        dataModel.revertData();
+                        revertData();
                     }
                 });
 
@@ -123,23 +123,12 @@ public class ScaleToolPanel extends JDialog implements ScaleToolUpdate {
     }
 
     /** Save data. */
-    private void saveData() {
+    protected void saveData() {
         if (dataModel.applyData(application)) {
             if (application != null) {
                 application.refreshPanel(FeatureTypeStyleImpl.class, RuleImpl.class);
             }
         }
-    }
-
-    /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-        ScaleToolPanel dlg = new ScaleToolPanel(null);
-
-        dlg.setVisible(true);
     }
 
     /**
@@ -169,5 +158,10 @@ public class ScaleToolPanel extends JDialog implements ScaleToolUpdate {
     public void dataUpdated() {
         btnRevert.setEnabled(true);
         btnSave.setEnabled(true);
+    }
+
+    /** Revert data. */
+    protected void revertData() {
+        dataModel.revertData();
     }
 }

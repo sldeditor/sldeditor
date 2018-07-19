@@ -27,6 +27,8 @@ import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import com.sldeditor.tool.scale.ScaleSLDData;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.geotools.factory.CommonFactoryFinder;
@@ -144,6 +146,15 @@ public class DummyScaleSLDFile implements SLDEditorFileInterface {
         sldData = new SLDData(new StyleWrapper(null, "test.sld"), sldContents);
         sldData.setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());
 
+        File temp = null;
+        try {
+            temp = File.createTempFile("test", ".sld");
+            temp.deleteOnExit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        sldData.setSLDFile(temp);
         sld = SLDUtils.createSLDFromString(sldData);
 
         StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
