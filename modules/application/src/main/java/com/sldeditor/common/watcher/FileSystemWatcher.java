@@ -20,7 +20,6 @@
 package com.sldeditor.common.watcher;
 
 import com.sldeditor.common.console.ConsoleManager;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -183,36 +182,5 @@ public class FileSystemWatcher implements Runnable {
 
         // Close the watcher service
         watchService.close();
-    }
-
-    /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-        // Folder we are going to watch
-        File dir = new File(System.getProperty("user.dir"));
-        System.out.println(dir.getAbsolutePath());
-        FileSystemWatcher.getInstance()
-                .addWatch(
-                        new FileWatcherUpdateInterface() {
-
-                            @Override
-                            public void fileAdded(Path f) {
-                                System.out.println("File Created:" + f.toString());
-                            }
-
-                            @Override
-                            public void fileModified(Path f) {
-                                System.out.println("File Modified:" + f.toString());
-                            }
-
-                            @Override
-                            public void fileDeleted(Path f) {
-                                System.out.println("File Deleted:" + f.toString());
-                            }
-                        },
-                        dir.toPath());
     }
 }

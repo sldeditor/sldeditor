@@ -23,8 +23,6 @@ import com.sldeditor.common.DataTypeEnum;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerWPSClient;
 import com.sldeditor.extension.filesystem.geoserver.client.GeoServerWPSClientInterface;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import net.opengis.wps10.ProcessBriefType;
 
@@ -68,24 +66,5 @@ public class RenderTransformationManager {
         functionList = client.getRenderTransformations(DataTypeEnum.E_RASTER);
 
         return functionList;
-    }
-
-    /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-        GeoServerConnection connection = new GeoServerConnection();
-        connection.setConnectionName("Test");
-        try {
-            connection.setUrl(new URL("http://localhost/geoserver"));
-            connection.setUserName("admin");
-            connection.setPassword("geoserver");
-
-            RenderTransformationManager.getInstance().getRenderTransform(connection);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -28,23 +28,17 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
@@ -268,54 +262,6 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
             d.height = Math.max(d.height, itemD.height);
         }
         return d;
-    }
-
-    /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception evt) {
-            // Do nothing
-        }
-
-        List<ValueComboBoxData> list1 = new ArrayList<ValueComboBoxData>();
-        list1.add(new ValueComboBoxData("circle", "Circle", MenuComboBox.class));
-        ValueComboBoxData square = new ValueComboBoxData("square", "Square", MenuComboBox.class);
-        list1.add(square);
-        list1.add(new ValueComboBoxData("triangle", "Triangle", MenuComboBox.class));
-
-        List<ValueComboBoxData> list2 = new ArrayList<ValueComboBoxData>();
-        list2.add(new ValueComboBoxData("shp://lArrow", "shp://lArrow", MenuComboBox.class));
-        list2.add(new ValueComboBoxData("shp://star", "shp://star", MenuComboBox.class));
-        list2.add(new ValueComboBoxData("shp://dot", "shp://dot", MenuComboBox.class));
-
-        List<ValueComboBoxDataGroup> listAll = new ArrayList<ValueComboBoxDataGroup>();
-        listAll.add(new ValueComboBoxDataGroup("", list1, false));
-        listAll.add(new ValueComboBoxDataGroup("Shapes", list2, true));
-
-        MenuComboBox comboMenu = new MenuComboBox(null);
-        comboMenu.initialiseMenu(listAll);
-
-        comboMenu.setSelectedData(square);
-
-        JFrame frame = new JFrame();
-        JPanel panel = new JPanel();
-        panel.add(comboMenu);
-        frame.getContentPane().setLayout(new FlowLayout());
-        frame.getContentPane().add(panel);
-
-        frame.addWindowListener(
-                new WindowAdapter() {
-                    public void windowClosing(WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-        frame.setSize(370, 100);
-        frame.setVisible(true);
     }
 
     /** The Class ComboMenuItem. */

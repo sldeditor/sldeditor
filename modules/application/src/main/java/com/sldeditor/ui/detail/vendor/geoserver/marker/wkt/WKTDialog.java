@@ -470,37 +470,42 @@ public class WKTDialog extends JDialog {
         multiPanel.add(lblShape, BorderLayout.NORTH);
     }
 
-    /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-        WKTDialog dlg = new WKTDialog();
-
-        dlg.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        // CHECKSTYLE:OFF
-        // String wktString = "wkt://MULTILINESTRING((-0.25 -0.25, -0.125 -0.25), (0.125 -0.25, 0.25
-        // -0.25), (-0.25 0.25, -0.125 0.25), (0.125 0.25,
-        // 0.25 0.25))";
-        // String wktString = "wkt://POINT (30 10)";
-        // String wktString = "wkt://LINESTRING (30 10, 10 30, 40 40)";
-        // String wktString = "wkt://POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))";
-        // String wktString = "wkt://POLYGON ((35 10, 45 45, 15 40, 10 20, 35 10),(20 30, 35 35, 30
-        // 20, 20 30))";
-        // xx String wktString = "wkt://MULTIPOINT ((10 40), (40 30), (20 20), (30 10))";
-        // String wktString = "wkt://MULTIPOINT (10 40, 40 30, 20 20, 30 10)";
-        // String wktString = "wkt://MULTILINESTRING ((10 10, 20 20, 10 40), (40 40, 30 30, 40 20,
-        // 30 10))";
-        // String wktString = "wkt://MULTIPOLYGON (((30 20, 45 40, 10 40, 30 20)), ((15 5, 40 10, 10
-        // 20, 5 10, 15 5)))";
-        // String wktString = "wkt://MULTIPOLYGON (((40 40, 20 45, 45 30, 40 40)), ((20 35, 10 30,
-        // 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25,
-        // 30 20)))";
-        // CHECKSTYLE:ON
-        String wktString = "";
-        dlg.showDialog(wktString);
-    }
+    //    /**
+    //     * The main method.
+    //     *
+    //     * @param args the arguments
+    //     */
+    //    public static void main(String[] args) {
+    //        WKTDialog dlg = new WKTDialog();
+    //
+    //        dlg.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    //        // CHECKSTYLE:OFF
+    //        // String wktString = "wkt://MULTILINESTRING((-0.25 -0.25, -0.125 -0.25), (0.125
+    // -0.25, 0.25
+    //        // -0.25), (-0.25 0.25, -0.125 0.25), (0.125 0.25,
+    //        // 0.25 0.25))";
+    //        // String wktString = "wkt://POINT (30 10)";
+    //        // String wktString = "wkt://LINESTRING (30 10, 10 30, 40 40)";
+    //        // String wktString = "wkt://POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))";
+    //        // String wktString = "wkt://POLYGON ((35 10, 45 45, 15 40, 10 20, 35 10),(20 30, 35
+    // 35, 30
+    //        // 20, 20 30))";
+    //        // xx String wktString = "wkt://MULTIPOINT ((10 40), (40 30), (20 20), (30 10))";
+    //        // String wktString = "wkt://MULTIPOINT (10 40, 40 30, 20 20, 30 10)";
+    //        // String wktString = "wkt://MULTILINESTRING ((10 10, 20 20, 10 40), (40 40, 30 30, 40
+    // 20,
+    //        // 30 10))";
+    //        // String wktString = "wkt://MULTIPOLYGON (((30 20, 45 40, 10 40, 30 20)), ((15 5, 40
+    // 10, 10
+    //        // 20, 5 10, 15 5)))";
+    //        // String wktString = "wkt://MULTIPOLYGON (((40 40, 20 45, 45 30, 40 40)), ((20 35, 10
+    // 30,
+    //        // 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25,
+    //        // 30 20)))";
+    //        // CHECKSTYLE:ON
+    //        String wktString = "";
+    //        dlg.showDialog(wktString);
+    //    }
 
     /**
      * Populate dialog using wkt:// string.
