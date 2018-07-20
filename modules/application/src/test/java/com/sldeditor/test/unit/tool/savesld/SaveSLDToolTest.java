@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.test.unit.tool.scale;
+package com.sldeditor.test.unit.tool.savesld;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
@@ -35,7 +34,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeE
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleHeadingNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
-import com.sldeditor.tool.scale.ScaleTool;
+import com.sldeditor.tool.savesld.SaveSLDTool;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -45,21 +44,17 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit test for ScaleTool class.
  *
- * <p>{@link com.sldeditor.tool.scale.ScaleTool}
+ * <p>{@link com.sldeditor.tool.savesld.SaveSLDTool}
  *
  * @author Robert Ward (SCISYS)
  */
-public class ScaleToolTest {
+public class SaveSLDToolTest {
 
-    class TestScaleTool extends ScaleTool {
+    class TestSaveSLDTool extends SaveSLDTool {
 
-        /**
-         * Instantiates a new test scale tool.
-         *
-         * @param application the application
-         */
-        public TestScaleTool(SLDEditorInterface application) {
-            super(application);
+        /** Instantiates a new test save sld tool. */
+        public TestSaveSLDTool() {
+            super();
         }
 
         /**
@@ -68,33 +63,33 @@ public class ScaleToolTest {
          * @return the bool
          */
         public boolean isButtonEnabled() {
-            return scaleButton.isEnabled();
+            return saveAllSLD.isEnabled();
         }
     }
 
-    /** Test method for {@link com.sldeditor.tool.scale.ScaleTool#getPanel()}. */
+    /** Test method for {@link com.sldeditor.tool.savesld.SaveSLDTool#getPanel()}. */
     @Test
     public void testGetPanel() {
-        ScaleTool tool = new ScaleTool(null);
+        SaveSLDTool tool = new SaveSLDTool();
         assertNotNull(tool.getPanel());
     }
 
     /**
-     * Test method for {@link com.sldeditor.tool.scale.ScaleTool#setSelectedItems(java.util.List,
-     * java.util.List)}.
+     * Test method for {@link
+     * com.sldeditor.tool.savesld.SaveSLDTool#setSelectedItems(java.util.List, java.util.List)}.
      */
     @Test
     public void testSetSelectedItems() {}
 
-    /** Test method for {@link com.sldeditor.tool.scale.ScaleTool#getToolName()}. */
+    /** Test method for {@link com.sldeditor.tool.savesld.SaveSLDTool#getToolName()}. */
     @Test
     public void testGetToolName() {
-        ScaleTool tool = new ScaleTool(null);
+        SaveSLDTool tool = new SaveSLDTool();
         assertNotNull(tool.getToolName());
     }
 
     /**
-     * Test method for {@link com.sldeditor.tool.scale.ScaleTool#supports(java.util.List,
+     * Test method for {@link com.sldeditor.tool.savesld.SaveSLDTool#supports(java.util.List,
      * java.util.List, java.util.List)}.
      */
     @Test
@@ -118,52 +113,52 @@ public class ScaleToolTest {
 
             // Try vector file
             nodeTypeList.add(vectorTreeNode);
-            ScaleTool scaleTool = new ScaleTool(null);
-            assertFalse(scaleTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            SaveSLDTool tool = new SaveSLDTool();
+            assertFalse(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try raster file
             nodeTypeList.clear();
             nodeTypeList.add(rasterTreeNode);
-            assertFalse(scaleTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertFalse(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try SLD file
             nodeTypeList.clear();
             nodeTypeList.add(sldTreeNode);
-            assertTrue(scaleTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertTrue(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try database feature class
             nodeTypeList.clear();
             DatabaseFeatureClassNode databaseFeatureClassNode =
                     new DatabaseFeatureClassNode(null, null, "db fc");
             nodeTypeList.add(databaseFeatureClassNode);
-            assertFalse(scaleTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertFalse(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
-            // Try GeoServerStyleHeading node class
+            // Try GeoServerStyleHeadingNode node class
             nodeTypeList.clear();
             nodeTypeList.add(new GeoServerStyleHeadingNode(null, null, "test"));
-            assertTrue(scaleTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertTrue(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try GeoServerStyleNode node class
             nodeTypeList.clear();
             nodeTypeList.add(new GeoServerStyleNode(null, null, new StyleWrapper("test", "")));
-            assertTrue(scaleTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertTrue(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try GeoServerWorkspaceNode node class -- not style
             nodeTypeList.clear();
             nodeTypeList.add(new GeoServerWorkspaceNode(null, null, "test", false));
-            assertFalse(scaleTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertFalse(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try GeoServerWorkspaceNode node class -- style
             nodeTypeList.clear();
             nodeTypeList.add(new GeoServerWorkspaceNode(null, null, "test", true));
-            assertTrue(scaleTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertTrue(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try with no nodes
             nodeTypeList.clear();
-            assertFalse(scaleTool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertFalse(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try with null
-            assertFalse(scaleTool.supports(uniqueNodeTypeList, null, sldDataList));
+            assertFalse(tool.supports(uniqueNodeTypeList, null, sldDataList));
         } catch (SecurityException e) {
             fail(e.getStackTrace().toString());
         } catch (FileNotFoundException e) {
@@ -187,7 +182,7 @@ public class ScaleToolTest {
             nodeTypeList.add(sldTreeNode);
 
             sldDataList.add(new SLDData(null, ""));
-            TestScaleTool scaleTool = new TestScaleTool(null);
+            TestSaveSLDTool scaleTool = new TestSaveSLDTool();
             assertFalse(scaleTool.isButtonEnabled());
 
             scaleTool.setSelectedItems(nodeTypeList, sldDataList);

@@ -143,12 +143,12 @@ public class DummyScaleSLDFile implements SLDEditorFileInterface {
                         + "  </sld:NamedLayer>"
                         + "</sld:StyledLayerDescriptor>";
 
-        sldData = new SLDData(new StyleWrapper(null, "test.sld"), sldContents);
+        sldData = new SLDData(new StyleWrapper(null, "testscale.sld"), sldContents);
         sldData.setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());
 
         File temp = null;
         try {
-            temp = File.createTempFile("test", ".sld");
+            temp = File.createTempFile("testscale", ".sld");
             temp.deleteOnExit();
         } catch (IOException e) {
             e.printStackTrace();

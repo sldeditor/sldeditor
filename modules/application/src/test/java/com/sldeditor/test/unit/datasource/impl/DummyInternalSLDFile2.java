@@ -72,7 +72,7 @@ public class DummyInternalSLDFile2 implements SLDEditorFileInterface {
                         + "  </sld:NamedLayer>"
                         + "</sld:StyledLayerDescriptor>";
 
-        sldData = new SLDData(new StyleWrapper(null, "test.sld"), sldContents);
+        sldData = new SLDData(new StyleWrapper(null, "testinternalfile2"), sldContents);
         sldData.setDataSourceProperties(DataSourceConnectorFactory.getNoDataSource());
 
         sld = SLDUtils.createSLDFromString(sldData);
