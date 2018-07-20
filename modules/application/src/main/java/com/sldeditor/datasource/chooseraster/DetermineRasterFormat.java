@@ -34,6 +34,9 @@ import org.geotools.factory.GeoTools;
  */
 public class DetermineRasterFormat {
 
+    /** The class under test flag. */
+    private static boolean classUndertest = false;
+
     /**
      * Get user to choose raster format.
      *
@@ -47,7 +50,7 @@ public class DetermineRasterFormat {
             final Set<AbstractGridFormat> formats =
                     GridFormatFinder.findFormats(rasterFile, GeoTools.getDefaultHints());
 
-            if (formats.size() > 1) {
+            if (!classUndertest && (formats.size() > 1)) {
                 if (selectionPanel != null) {
                     AbstractGridFormat selectedFormat = selectionPanel.showPanel(formats);
                     if (selectedFormat != null) {
@@ -63,5 +66,10 @@ public class DetermineRasterFormat {
             }
         }
         return new UnknownFormat();
+    }
+
+    /** Sets the class under test flag to true. */
+    public static void setClassUndertest() {
+        DetermineRasterFormat.classUndertest = true;
     }
 }

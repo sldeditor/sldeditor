@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.test.unit.tool.savesld;
+package com.sldeditor.test.unit.tool.raster;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
@@ -34,7 +35,7 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNodeTypeE
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleHeadingNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerStyleNode;
 import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWorkspaceNode;
-import com.sldeditor.tool.savesld.SaveSLDTool;
+import com.sldeditor.tool.raster.RasterTool;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -42,54 +43,67 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit test for SaveSLDTool class.
+ * Unit test for RasterTool class.
  *
- * <p>{@link com.sldeditor.tool.savesld.SaveSLDTool}
+ * <p>{@link com.sldeditor.tool.raster.RasterTool}
  *
  * @author Robert Ward (SCISYS)
  */
-public class SaveSLDToolTest {
+public class RasterToolTest {
 
-    class TestSaveSLDTool extends SaveSLDTool {
+    class TestRasterTool extends RasterTool {
 
-        /** Instantiates a new test save sld tool. */
-        public TestSaveSLDTool() {
-            super();
+        /**
+         * Instantiates a new test raster tool.
+         *
+         * @param sldEditorInterface the sld editor interface
+         */
+        public TestRasterTool(SLDEditorInterface sldEditorInterface) {
+            super(sldEditorInterface);
         }
 
         /**
-         * Checks if button enabled.
+         * Checks if import raster button enabled.
          *
          * @return the bool
          */
-        public boolean isButtonEnabled() {
-            return saveAllSLD.isEnabled();
+        public boolean isImportRasterButtonEnabled() {
+            return importRasterButton.isEnabled();
+        }
+
+        /**
+         * Checks if data source button enabled.
+         *
+         * @return the bool
+         */
+        public boolean isDataSourceButtonEnabled() {
+            return dataSourceButton.isEnabled();
         }
     }
 
-    /** Test method for {@link com.sldeditor.tool.savesld.SaveSLDTool#getPanel()}. */
+    /** Test method for {@link com.sldeditor.tool.raster.SaveSLDTool#getPanel()}. */
     @Test
     public void testGetPanel() {
-        SaveSLDTool tool = new SaveSLDTool();
+        RasterTool tool = new RasterTool(null);
         assertNotNull(tool.getPanel());
     }
 
     /**
-     * Test method for {@link
-     * com.sldeditor.tool.savesld.SaveSLDTool#setSelectedItems(java.util.List, java.util.List)}.
+     * Test method for {@link com.sldeditor.tool.raster.RasterTool#setSelectedItems(java.util.List,
+     * java.util.List)}.
      */
     @Test
     public void testSetSelectedItems() {}
 
-    /** Test method for {@link com.sldeditor.tool.savesld.SaveSLDTool#getToolName()}. */
+    /** Test method for {@link com.sldeditor.tool.raster.RasterTool#getToolName()}. */
     @Test
     public void testGetToolName() {
-        SaveSLDTool tool = new SaveSLDTool();
+        RasterTool tool = new RasterTool(null);
         assertNotNull(tool.getToolName());
     }
 
     /**
-     * Test method for {@link com.sldeditor.tool.savesld.SaveSLDTool#supports(java.util.List,
+     * Test method for {@link com.sldeditor.tool.raster.RasterTool#supports(java.util.List,
      * java.util.List, java.util.List)}.
      */
     @Test
@@ -113,18 +127,18 @@ public class SaveSLDToolTest {
 
             // Try vector file
             nodeTypeList.add(vectorTreeNode);
-            SaveSLDTool tool = new SaveSLDTool();
+            RasterTool tool = new RasterTool(null);
             assertFalse(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try raster file
             nodeTypeList.clear();
             nodeTypeList.add(rasterTreeNode);
-            assertFalse(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertTrue(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try SLD file
             nodeTypeList.clear();
             nodeTypeList.add(sldTreeNode);
-            assertTrue(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertFalse(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try database feature class
             nodeTypeList.clear();
@@ -136,12 +150,12 @@ public class SaveSLDToolTest {
             // Try GeoServerStyleHeadingNode node class
             nodeTypeList.clear();
             nodeTypeList.add(new GeoServerStyleHeadingNode(null, null, "test"));
-            assertTrue(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertFalse(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try GeoServerStyleNode node class
             nodeTypeList.clear();
             nodeTypeList.add(new GeoServerStyleNode(null, null, new StyleWrapper("test", "")));
-            assertTrue(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertFalse(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try GeoServerWorkspaceNode node class -- not style
             nodeTypeList.clear();
@@ -151,7 +165,7 @@ public class SaveSLDToolTest {
             // Try GeoServerWorkspaceNode node class -- style
             nodeTypeList.clear();
             nodeTypeList.add(new GeoServerWorkspaceNode(null, null, "test", true));
-            assertTrue(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
+            assertFalse(tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList));
 
             // Try with no nodes
             nodeTypeList.clear();
@@ -167,7 +181,7 @@ public class SaveSLDToolTest {
     }
 
     /**
-     * Test method for {@link com.sldeditor.tool.scale.ScaleTool#setSelectedItems(java.util.List,
+     * Test method for {@link com.sldeditor.tool.raster.RasterTool#setSelectedItems(java.util.List,
      * java.util.List)}.
      */
     @Test
@@ -182,11 +196,19 @@ public class SaveSLDToolTest {
             nodeTypeList.add(sldTreeNode);
 
             sldDataList.add(new SLDData(null, ""));
-            TestSaveSLDTool scaleTool = new TestSaveSLDTool();
-            assertFalse(scaleTool.isButtonEnabled());
+            TestRasterTool tool = new TestRasterTool(null);
+            assertFalse(tool.isDataSourceButtonEnabled());
+            assertFalse(tool.isImportRasterButtonEnabled());
 
-            scaleTool.setSelectedItems(nodeTypeList, sldDataList);
-            assertTrue(scaleTool.isButtonEnabled());
+            tool.setSelectedItems(nodeTypeList, sldDataList);
+            assertTrue(tool.isDataSourceButtonEnabled());
+            assertTrue(tool.isImportRasterButtonEnabled());
+
+            nodeTypeList.add(sldTreeNode);
+            tool.setSelectedItems(nodeTypeList, sldDataList);
+            assertFalse(tool.isDataSourceButtonEnabled());
+            assertFalse(tool.isImportRasterButtonEnabled());
+
         } catch (SecurityException e) {
             fail(e.getStackTrace().toString());
         } catch (FileNotFoundException e) {
