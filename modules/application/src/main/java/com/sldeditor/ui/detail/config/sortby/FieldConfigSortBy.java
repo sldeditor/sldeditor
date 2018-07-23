@@ -265,10 +265,12 @@ public class FieldConfigSortBy extends FieldConfigBase
         if (sortbyPanel != null) {
             sortbyPanel.setText(value);
 
-            UndoManager.getInstance()
-                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            if (!isSuppressUndoEvents()) {
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
-            oldValueObj = value;
+                oldValueObj = value;
+            }
 
             valueUpdated();
         }
@@ -312,12 +314,14 @@ public class FieldConfigSortBy extends FieldConfigBase
     public void sortByUpdated(String sortByString) {
         if (!Controller.getInstance().isPopulating()) {
 
-            UndoManager.getInstance()
-                    .addUndoEvent(
-                            new UndoEvent(
-                                    this, getFieldId(), oldValueObj, new String(sortByString)));
+            if (!isSuppressUndoEvents()) {
+                UndoManager.getInstance()
+                        .addUndoEvent(
+                                new UndoEvent(
+                                        this, getFieldId(), oldValueObj, new String(sortByString)));
 
-            oldValueObj = new String(sortByString);
+                oldValueObj = new String(sortByString);
+            }
 
             valueUpdated();
         }

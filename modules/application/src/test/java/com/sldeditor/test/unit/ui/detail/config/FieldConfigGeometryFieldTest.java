@@ -282,7 +282,7 @@ public class FieldConfigGeometryFieldTest {
         FieldConfigGeometryField field =
                 new FieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -309,7 +309,7 @@ public class FieldConfigGeometryFieldTest {
         FieldConfigGeometryField field =
                 new FieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -346,7 +346,7 @@ public class FieldConfigGeometryFieldTest {
         TestFieldConfigGeometryField field =
                 new TestFieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", false));
+                                String.class, FieldIdEnum.NAME, "test label", false, false));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -391,7 +391,7 @@ public class FieldConfigGeometryFieldTest {
         FieldConfigGeometryField field =
                 new FieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         TestDataSource testDataSource = new TestDataSource();
         String expectedDefaultValue = testDataSource.getDefaultGeometryField();
@@ -432,7 +432,7 @@ public class FieldConfigGeometryFieldTest {
         TestFieldConfigGeometryField field =
                 new TestFieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         FieldConfigGeometryField copy = (FieldConfigGeometryField) field.callCreateCopy(null);
         assertNull(copy);
@@ -457,7 +457,7 @@ public class FieldConfigGeometryFieldTest {
         FieldConfigGeometryField field =
                 new FieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         field.undoAction(null);
         field.redoAction(null);
@@ -498,7 +498,7 @@ public class FieldConfigGeometryFieldTest {
         FieldConfigGeometryField field =
                 new FieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         field.attributeSelection("field");
         // Does nothing

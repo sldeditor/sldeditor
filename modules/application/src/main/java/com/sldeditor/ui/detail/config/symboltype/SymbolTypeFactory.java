@@ -108,19 +108,21 @@ public class SymbolTypeFactory {
 
         markerField =
                 new FieldConfigMarker(
-                        new FieldConfigCommonData(panelId, FieldIdEnum.FILL_COLOUR, "", false),
+                        new FieldConfigCommonData(
+                                panelId, FieldIdEnum.FILL_COLOUR, "", false, false),
                         fillFieldConfig,
                         strokeFieldConfig,
                         symbolSelectionField);
         externalImageField =
                 new FieldConfigFilename(
-                        new FieldConfigCommonData(panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true),
+                        new FieldConfigCommonData(
+                                panelId, FieldIdEnum.EXTERNAL_GRAPHIC, "", true, false),
                         fillFieldConfig,
                         strokeFieldConfig,
                         symbolSelectionField);
         ttfField =
                 new FieldConfigTTF(
-                        new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true),
+                        new FieldConfigCommonData(panelId, FieldIdEnum.TTF_SYMBOL, "", true, false),
                         fillFieldConfig,
                         strokeFieldConfig,
                         symbolSelectionField);

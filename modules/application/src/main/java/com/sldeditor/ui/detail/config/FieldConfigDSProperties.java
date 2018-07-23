@@ -110,19 +110,20 @@ public class FieldConfigDSProperties extends FieldConfigBase
                         if (isAttributeComboBoxPopulated()) {
                             if (comboBox.getSelectedItem() != null) {
 
-                                String newValueObj =
-                                        new String((String) comboBox.getSelectedItem());
+                                if (!FieldConfigDSProperties.this.isSuppressUndoEvents()) {
+                                    String newValueObj =
+                                            new String((String) comboBox.getSelectedItem());
 
-                                UndoManager.getInstance()
-                                        .addUndoEvent(
-                                                new UndoEvent(
-                                                        parentObj,
-                                                        getFieldId(),
-                                                        oldValueObj,
-                                                        newValueObj));
+                                    UndoManager.getInstance()
+                                            .addUndoEvent(
+                                                    new UndoEvent(
+                                                            parentObj,
+                                                            getFieldId(),
+                                                            oldValueObj,
+                                                            newValueObj));
 
-                                oldValueObj = new String(newValueObj);
-
+                                    oldValueObj = new String(newValueObj);
+                                }
                                 valueUpdated();
                             }
                         }

@@ -63,9 +63,6 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     /** The button pressed listener list. */
     private List<FieldConfigStringButtonInterface> buttonPressedListenerList = null;
 
-    /** The suppress update on set flag. */
-    private boolean suppressUpdateOnSet = false;
-
     /**
      * Instantiates a new field config string.
      *
@@ -117,7 +114,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
                             String newValueObj = (String) evt.getNewValue();
 
                             if ((originalValue.compareTo(newValueObj) != 0)) {
-                                if (!suppressUpdateOnSet) {
+                                if (!isSuppressUndoEvents()) {
                                     UndoManager.getInstance()
                                             .addUndoEvent(
                                                     new UndoEvent(
@@ -307,7 +304,10 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
             if (undoRedoObject != null) {
                 String oldValue = (String) undoRedoObject.getOldValue();
 
+                boolean prevValue = this.isSuppressUndoEvents();
+                this.setSuppressUndoEvents(true);
                 textField.setText(oldValue);
+                this.setSuppressUndoEvents(prevValue);
             }
         }
     }
@@ -323,7 +323,10 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
             if (undoRedoObject != null) {
                 String newValue = (String) undoRedoObject.getNewValue();
 
+                boolean prevValue = this.isSuppressUndoEvents();
+                this.setSuppressUndoEvents(true);
                 textField.setText(newValue);
+                this.setSuppressUndoEvents(prevValue);
             }
         }
     }
@@ -363,7 +366,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
         if (textField != null) {
             textField.setText(value);
 
-            if (!suppressUpdateOnSet) {
+            if (!isSuppressUndoEvents()) {
                 UndoManager.getInstance()
                         .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
@@ -400,14 +403,5 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
         if (textField != null) {
             textField.setVisible(visible);
         }
-    }
-
-    /**
-     * Sets the suppress updates on set.
-     *
-     * @param suppressUpdateOnSet the new suppress updates on set
-     */
-    public void setSuppressUpdatesOnSet(boolean suppressUpdateOnSet) {
-        this.suppressUpdateOnSet = suppressUpdateOnSet;
     }
 }

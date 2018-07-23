@@ -130,13 +130,15 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
                                 textField.setText(
                                         ParameterFunctionUtils.getString(processFunction));
 
-                                UndoManager.getInstance()
-                                        .addUndoEvent(
-                                                new UndoEvent(
-                                                        parentObj,
-                                                        getFieldId(),
-                                                        oldValueObj,
-                                                        newValueObj));
+                                if (!FieldConfigTransformation.this.isSuppressUndoEvents()) {
+                                    UndoManager.getInstance()
+                                            .addUndoEvent(
+                                                    new UndoEvent(
+                                                            parentObj,
+                                                            getFieldId(),
+                                                            oldValueObj,
+                                                            newValueObj));
+                                }
 
                                 valueUpdated();
                             }
@@ -206,7 +208,8 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -310,11 +313,12 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
         if (textField != null) {
             textField.setText(ParameterFunctionUtils.getString(processFunction));
 
-            UndoManager.getInstance()
-                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            if (!FieldConfigTransformation.this.isSuppressUndoEvents()) {
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
-            oldValueObj = value;
-
+                oldValueObj = value;
+            }
             valueUpdated();
         }
     }
@@ -329,10 +333,12 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
         if (textField != null) {
             textField.setText(value);
 
-            UndoManager.getInstance()
-                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            if (!FieldConfigTransformation.this.isSuppressUndoEvents()) {
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
-            oldValueObj = value;
+                oldValueObj = value;
+            }
 
             valueUpdated();
         }

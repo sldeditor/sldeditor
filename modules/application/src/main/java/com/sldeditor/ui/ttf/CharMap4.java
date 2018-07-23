@@ -444,31 +444,31 @@ public class CharMap4 extends JDialog {
         acmap.put(ACTION_REPORT_SHOW, new CharMap4User(this, ACTION_REPORT_SHOW));
     }
 
-//    /**
-//     * The main method.
-//     *
-//     * @param args the arguments
-//     */
-//    public static void main(String[] args) {
-//        CharMap4 charMap4 = new CharMap4();
-//
-//        charMap4.loadConfig();
-//        // Thread loader; // low-priority thread for loading captions
-//        //
-//        // // It can take several seconds to load the caption strings, because there
-//        // // are so many Unicode character numbers. Rather than delaying the user when
-//        // // this application first starts, or when the mouse first moves over a cell in
-//        // // the display grid, load the captions as a low-priority background task.
-//        //
-//        // loader = new Thread((Runnable) userActions, "loadConfig");
-//        // // re-use the same action listener as above
-//        // loader.setPriority(Thread.MIN_PRIORITY); // low priority has less impact
-//        // loader.start(); // run separate thread to load captions
-//
-//        charMap4.setTTFString("ttf://Symbol#221");
-//
-//        charMap4.showDialog();
-//    }
+    //    /**
+    //     * The main method.
+    //     *
+    //     * @param args the arguments
+    //     */
+    //    public static void main(String[] args) {
+    //        CharMap4 charMap4 = new CharMap4();
+    //
+    //        charMap4.loadConfig();
+    //        // Thread loader; // low-priority thread for loading captions
+    //        //
+    //        // // It can take several seconds to load the caption strings, because there
+    //        // // are so many Unicode character numbers. Rather than delaying the user when
+    //        // // this application first starts, or when the mouse first moves over a cell in
+    //        // // the display grid, load the captions as a low-priority background task.
+    //        //
+    //        // loader = new Thread((Runnable) userActions, "loadConfig");
+    //        // // re-use the same action listener as above
+    //        // loader.setPriority(Thread.MIN_PRIORITY); // low priority has less impact
+    //        // loader.start(); // run separate thread to load captions
+    //
+    //        charMap4.setTTFString("ttf://Symbol#221");
+    //
+    //        charMap4.showDialog();
+    //    }
 
     /**
      * Copy text.

@@ -23,6 +23,10 @@ import com.sldeditor.common.Controller;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.undo.UndoActionInterface;
+import com.sldeditor.common.undo.UndoEvent;
+import com.sldeditor.common.undo.UndoInterface;
+import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.utils.ScaleUtil;
 import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
@@ -53,7 +57,7 @@ import org.opengis.style.Rule;
  * @author Robert Ward (SCISYS)
  */
 public class RuleDetails extends StandardPanel
-        implements PopulateDetailsInterface, UpdateSymbolInterface {
+        implements UndoActionInterface, PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -120,7 +124,8 @@ public class RuleDetails extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * selectedsymbol.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
@@ -135,22 +140,7 @@ public class RuleDetails extends StandardPanel
             if (rule != null) {
                 populateStandardData(rule);
 
-                originalFilter = rule.getFilter();
-                String filterString = "";
-                if (originalFilter != null) {
-                    try {
-                        filterString = originalFilter.toString();
-                    } catch (Exception e) {
-                        ConsoleManager.getInstance()
-                                .error(
-                                        this,
-                                        Localisation.getField(
-                                                        RuleDetails.class,
-                                                        "RuleDetails.filterError")
-                                                + e.getMessage());
-                    }
-                }
-                fieldConfigVisitor.populateTextField(FieldIdEnum.FILTER, filterString);
+                populateFilter(rule.getFilter());
 
                 rangeSet = ScaleUtil.isPresent(rule);
                 minScaleText = ScaleUtil.getValue(rule.getMinScaleDenominator());
@@ -164,6 +154,28 @@ public class RuleDetails extends StandardPanel
         fieldConfigVisitor.populateTextField(FieldIdEnum.MINIMUM_SCALE, minScaleText);
         fieldConfigVisitor.populateTextField(FieldIdEnum.MAXIMUM_SCALE, maxScaleText);
         populateScaleRange(rangeSet);
+    }
+
+    /**
+     * Populate filter filed
+     *
+     * @param filter the filter
+     */
+    private void populateFilter(Filter filter) {
+        originalFilter = filter;
+        String filterString = "";
+        if (originalFilter != null) {
+            try {
+                filterString = originalFilter.toString();
+            } catch (Exception e) {
+                ConsoleManager.getInstance()
+                        .error(
+                                this,
+                                Localisation.getField(RuleDetails.class, "RuleDetails.filterError")
+                                        + e.getMessage());
+            }
+        }
+        fieldConfigVisitor.populateTextField(FieldIdEnum.FILTER, filterString);
     }
 
     /**
@@ -269,7 +281,9 @@ public class RuleDetails extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldIdEnum)
+     * @see
+     * com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.
+     * FieldIdEnum)
      */
     @Override
     public void dataChanged(FieldIdEnum changedField) {
@@ -354,7 +368,8 @@ public class RuleDetails extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(
@@ -379,9 +394,16 @@ public class RuleDetails extends StandardPanel
             filterPanel.populate(rule.getFilter());
         }
 
+        Filter oldValueObj = rule.getFilter();
+
         if (filterPanel.showDialog()) {
             originalFilter = filterPanel.getFilter();
-            fieldConfigVisitor.populateTextField(filterFieldId, filterPanel.getFilterString());
+
+            String newValueObj = filterPanel.getFilterString();
+            fieldConfigVisitor.populateTextField(filterFieldId, newValueObj);
+
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, filterFieldId, oldValueObj, originalFilter));
 
             updateSymbol();
         }
@@ -389,9 +411,44 @@ public class RuleDetails extends StandardPanel
 
     /** Clear filter. */
     protected void clearFilter(FieldIdEnum filterFieldId) {
+        Filter oldValueObj = originalFilter;
         originalFilter = null;
+
         fieldConfigVisitor.populateTextField(filterFieldId, "");
 
+        UndoManager.getInstance()
+                .addUndoEvent(new UndoEvent(this, filterFieldId, oldValueObj, null));
+
         updateSymbol();
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.sldeditor.common.undo.UndoActionInterface#undoAction(com.sldeditor.common.undo.
+     * UndoInterface)
+     */
+    @Override
+    public void undoAction(UndoInterface undoRedoObject) {
+        if (undoRedoObject != null) {
+            Filter oldValueObj = (Filter) undoRedoObject.getOldValue();
+
+            populateFilter(oldValueObj);
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.sldeditor.common.undo.UndoActionInterface#redoAction(com.sldeditor.common.undo.
+     * UndoInterface)
+     */
+    @Override
+    public void redoAction(UndoInterface undoRedoObject) {
+        if (undoRedoObject != null) {
+            Filter newValueObj = (Filter) undoRedoObject.getNewValue();
+
+            populateFilter(newValueObj);
+        }
     }
 }

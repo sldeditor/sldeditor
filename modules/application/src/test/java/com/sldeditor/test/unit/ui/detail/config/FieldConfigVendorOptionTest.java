@@ -60,7 +60,7 @@ public class FieldConfigVendorOptionTest {
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         veList);
 
         // Text field will not have been created
@@ -83,7 +83,7 @@ public class FieldConfigVendorOptionTest {
         FieldConfigVendorOption field2 =
                 new FieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         veList);
 
         // Text field will not have been created
@@ -113,7 +113,7 @@ public class FieldConfigVendorOptionTest {
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         veList);
 
         boolean expectedValue = true;
@@ -139,7 +139,7 @@ public class FieldConfigVendorOptionTest {
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         veList);
 
         assertNull(field.getStringValue());
@@ -157,7 +157,7 @@ public class FieldConfigVendorOptionTest {
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         veList);
 
         field.revertToDefaultValue();
@@ -188,7 +188,7 @@ public class FieldConfigVendorOptionTest {
         TestFieldConfigVendorOption field =
                 new TestFieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         null);
         FieldConfigVendorOption copy = (FieldConfigVendorOption) field.callCreateCopy(null);
         assertNull(copy);
@@ -207,7 +207,8 @@ public class FieldConfigVendorOptionTest {
     public void testAddToOptionBox() {
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
-                        new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", false),
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", false, false),
                         null);
         field.addToOptionBox(null);
     }
@@ -233,7 +234,8 @@ public class FieldConfigVendorOptionTest {
         }
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
-                        new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", false),
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", false, false),
                         veList);
         field.vendorOptionsUpdated(null);
         field.createUI();
@@ -253,7 +255,7 @@ public class FieldConfigVendorOptionTest {
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         null);
         field.attributeSelection(null);
 

@@ -55,7 +55,7 @@ public class FieldConfigSortByTest {
         FieldConfigSortBy field =
                 new FieldConfigSortBy(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -77,7 +77,7 @@ public class FieldConfigSortByTest {
         FieldConfigSortBy field2 =
                 new FieldConfigSortBy(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -105,7 +105,7 @@ public class FieldConfigSortByTest {
         FieldConfigSortBy field =
                 new FieldConfigSortBy(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -138,7 +138,7 @@ public class FieldConfigSortByTest {
         TestFieldConfigSortBy field =
                 new TestFieldConfigSortBy(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -172,7 +172,7 @@ public class FieldConfigSortByTest {
         FieldConfigSortBy field =
                 new FieldConfigSortBy(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         String expectedDefaultValue = "default value";
         field.setDefaultValue(expectedDefaultValue);
@@ -205,7 +205,7 @@ public class FieldConfigSortByTest {
         TestFieldConfigSortBy field =
                 new TestFieldConfigSortBy(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
         FieldConfigSortBy copy = (FieldConfigSortBy) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -225,7 +225,7 @@ public class FieldConfigSortByTest {
         FieldConfigSortBy field =
                 new FieldConfigSortBy(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         field.attributeSelection("field");
         // Does nothing
@@ -243,7 +243,7 @@ public class FieldConfigSortByTest {
         FieldConfigSortBy field =
                 new FieldConfigSortBy(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         field.undoAction(null);
         field.redoAction(null);

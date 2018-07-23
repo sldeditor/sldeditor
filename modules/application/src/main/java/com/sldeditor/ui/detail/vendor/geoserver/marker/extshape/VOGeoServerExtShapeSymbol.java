@@ -68,7 +68,8 @@ public class VOGeoServerExtShapeSymbol implements VOMarkerSymbolInterface {
 
         markerField =
                 new FieldConfigMarkerExtShape(
-                        new FieldConfigCommonData(panelId, FieldIdEnum.VO_EXTSHAPE, "", false),
+                        new FieldConfigCommonData(
+                                panelId, FieldIdEnum.VO_EXTSHAPE, "", false, false),
                         fillFieldConfig,
                         strokeFieldConfig,
                         symbolSelectionField);

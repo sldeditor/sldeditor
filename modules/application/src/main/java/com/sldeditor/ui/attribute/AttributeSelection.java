@@ -218,7 +218,7 @@ public class AttributeSelection extends JPanel
      * @return the j panel
      */
     private DataSourceAttributePanel createDataSourceAttributePanel(Class<?> expectedDataType) {
-        DataSourceAttributePanel panel = new DataSourceAttributePanel(this);
+        DataSourceAttributePanel panel = new DataSourceAttributePanel(this, false);
         panel.setDataType(expectedDataType);
 
         outerPanel.add(panel, DataSourceAttributePanel.getPanelName());

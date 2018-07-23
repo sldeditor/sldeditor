@@ -358,7 +358,8 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -510,11 +511,13 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
             if (valueList != null) {
                 filterModel.populate(valueList);
 
-                UndoManager.getInstance()
-                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, valueList));
+                if (!isSuppressUndoEvents()) {
+                    UndoManager.getInstance()
+                            .addUndoEvent(
+                                    new UndoEvent(this, getFieldId(), oldValueObj, valueList));
 
-                oldValueObj = valueList;
-
+                    oldValueObj = valueList;
+                }
                 valueUpdated();
             }
         }
@@ -561,16 +564,19 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.config.featuretypeconstraint.FeatureTypeConstraintModelUpdateInterface#featureTypeConstraintUpdated()
+     * @see com.sldeditor.ui.detail.config.featuretypeconstraint.
+     * FeatureTypeConstraintModelUpdateInterface#featureTypeConstraintUpdated()
      */
     @Override
     public void featureTypeConstraintUpdated() {
-        List<FeatureTypeConstraint> ftc = filterModel.getFeatureTypeConstraint();
+        if (!isSuppressUndoEvents()) {
+            List<FeatureTypeConstraint> ftc = filterModel.getFeatureTypeConstraint();
 
-        UndoManager.getInstance().addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, ftc));
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, ftc));
 
-        oldValueObj = ftc;
-
+            oldValueObj = ftc;
+        }
         valueUpdated();
     }
 

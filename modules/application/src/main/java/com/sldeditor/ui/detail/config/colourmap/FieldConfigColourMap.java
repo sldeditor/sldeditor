@@ -241,7 +241,8 @@ public class FieldConfigColourMap extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -399,11 +400,12 @@ public class FieldConfigColourMap extends FieldConfigBase
                     colourMapEntryPanel.setSelectedEntry(null);
                 }
 
-                UndoManager.getInstance()
-                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+                if (!isSuppressUndoEvents()) {
+                    UndoManager.getInstance()
+                            .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
 
-                oldValueObj = value;
-
+                    oldValueObj = value;
+                }
                 valueUpdated();
             }
         }
@@ -450,25 +452,28 @@ public class FieldConfigColourMap extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.config.colourmap.ColourMapModelUpdateInterface#colourMapUpdated()
+     * @see
+     * com.sldeditor.ui.detail.config.colourmap.ColourMapModelUpdateInterface#colourMapUpdated()
      */
     @Override
     public void colourMapUpdated() {
-        ColorMap colourMap = model.getColourMap();
+        if (!isSuppressUndoEvents()) {
+            ColorMap colourMap = model.getColourMap();
 
-        UndoManager.getInstance()
-                .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, colourMap));
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, colourMap));
 
-        oldValueObj = colourMap;
-
+            oldValueObj = colourMap;
+        }
         valueUpdated();
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.config.colourmap.ColourMapEntryUpdateInterface#colourMapEntryUpdated(com.sldeditor.ui.detail.config.colourmap.
-     * ColourMapData)
+     * @see
+     * com.sldeditor.ui.detail.config.colourmap.ColourMapEntryUpdateInterface#colourMapEntryUpdated(
+     * com.sldeditor.ui.detail.config.colourmap. ColourMapData)
      */
     @Override
     public void colourMapEntryUpdated(ColourMapData data) {

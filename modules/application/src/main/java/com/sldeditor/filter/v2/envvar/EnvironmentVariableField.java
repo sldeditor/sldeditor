@@ -21,10 +21,6 @@ package com.sldeditor.filter.v2.envvar;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.undo.UndoActionInterface;
-import com.sldeditor.common.undo.UndoEvent;
-import com.sldeditor.common.undo.UndoInterface;
-import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
@@ -52,7 +48,7 @@ import org.opengis.filter.expression.Expression;
  *
  * @author Robert Ward (SCISYS)
  */
-public class EnvironmentVariableField extends JPanel implements UndoActionInterface {
+public class EnvironmentVariableField extends JPanel {
 
     /** The Constant ENVVARFIELD_PANEL. */
     private static final String ENVVARFIELD_PANEL = "EnvVarField";
@@ -65,9 +61,6 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
 
     /** The env var map. */
     private Map<String, EnvVar> envVarMap = new LinkedHashMap<String, EnvVar>();
-
-    /** The old value obj. */
-    private Object oldValueObj = null;
 
     /** The env var mgr. */
     private EnvironmentManagerInterface envVarMgr = null;
@@ -89,7 +82,6 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
      */
     public EnvironmentVariableField(
             SubPanelUpdatedInterface parentObj, EnvironmentManagerInterface envVarMgr) {
-        final UndoActionInterface thisObj = this;
         this.envVarMgr = envVarMgr;
         setPreferredSize(new Dimension(300, BasePanel.WIDGET_HEIGHT));
         setMinimumSize(new Dimension(300, BasePanel.WIDGET_HEIGHT));
@@ -100,12 +92,6 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
         envVarComboBox.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-
-                        String newValueObj = (String) envVarComboBox.getSelectedItem();
-
-                        UndoManager.getInstance()
-                                .addUndoEvent(
-                                        new UndoEvent(thisObj, "EnvVar", oldValueObj, newValueObj));
 
                         if (parentObj != null) {
                             parentObj.updateSymbol();
@@ -174,12 +160,10 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
             EnvFunction envFunction = (EnvFunction) expression;
             LiteralExpressionImpl literal =
                     (LiteralExpressionImpl) envFunction.getParameters().get(0);
-            oldValueObj = literal;
 
             envVarComboBox.setSelectedItem(literal.getValue());
         } else if (expression instanceof LiteralExpressionImpl) {
             LiteralExpressionImpl literal = (LiteralExpressionImpl) expression;
-            oldValueObj = literal;
 
             envVarComboBox.setSelectedItem(literal.getValue());
         } else {
@@ -205,40 +189,6 @@ public class EnvironmentVariableField extends JPanel implements UndoActionInterf
         Expression newExpression = envVarMgr.createExpression(envVar);
 
         return newExpression;
-    }
-
-    /**
-     * Undo action.
-     *
-     * @param undoRedoObject the undo redo object
-     */
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
-     */
-    @Override
-    public void undoAction(UndoInterface undoRedoObject) {
-        String oldValueObj = (String) undoRedoObject.getOldValue();
-
-        envVarComboBox.setSelectedItem(oldValueObj);
-    }
-
-    /**
-     * Redo action.
-     *
-     * @param undoRedoObject the undo redo object
-     */
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
-     */
-    @Override
-    public void redoAction(UndoInterface undoRedoObject) {
-        String newValueObj = (String) undoRedoObject.getNewValue();
-
-        envVarComboBox.setSelectedItem(newValueObj);
     }
 
     /**

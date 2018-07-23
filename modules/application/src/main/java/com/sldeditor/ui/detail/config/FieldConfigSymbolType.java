@@ -461,14 +461,18 @@ public class FieldConfigSymbolType extends FieldConfigBase
                 }
                 containingPanel.setPreferredSize(preferredSize);
 
-                if (oldValueObj == null) {
-                    oldValueObj = comboBox.getDefaultValue();
+                if (!FieldConfigSymbolType.this.isSuppressUndoEvents()) {
+
+                    if (oldValueObj == null) {
+                        oldValueObj = comboBox.getDefaultValue();
+                    }
+
+                    UndoManager.getInstance()
+                            .addUndoEvent(
+                                    new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+
+                    oldValueObj = new String(newValueObj);
                 }
-
-                UndoManager.getInstance()
-                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
-
-                oldValueObj = new String(newValueObj);
 
                 if (symbolSelectedListener != null) {
                     logger.debug(

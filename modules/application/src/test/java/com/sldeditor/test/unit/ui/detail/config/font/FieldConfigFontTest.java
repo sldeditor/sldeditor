@@ -61,7 +61,7 @@ public class FieldConfigFontTest {
         FieldConfigFont field =
                 new FieldConfigFont(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -84,7 +84,7 @@ public class FieldConfigFontTest {
         FieldConfigFont field2 =
                 new FieldConfigFont(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -113,7 +113,7 @@ public class FieldConfigFontTest {
         FieldConfigFont field =
                 new FieldConfigFont(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -142,7 +142,7 @@ public class FieldConfigFontTest {
         FieldConfigFont field =
                 new FieldConfigFont(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         field.setTestValue(FieldIdEnum.UNKNOWN, (String) null);
         field.populateField((String) null);
@@ -179,7 +179,7 @@ public class FieldConfigFontTest {
         FieldConfigFont field =
                 new FieldConfigFont(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         field.revertToDefaultValue();
         String actualValue = field.getStringValue();
@@ -215,7 +215,7 @@ public class FieldConfigFontTest {
         TestFieldConfigFont field =
                 new TestFieldConfigFont(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
         FieldConfigFont copy = (FieldConfigFont) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -235,7 +235,7 @@ public class FieldConfigFontTest {
         FieldConfigFont field =
                 new FieldConfigFont(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         field.attributeSelection("field");
         // Does nothing
@@ -253,7 +253,7 @@ public class FieldConfigFontTest {
         FieldConfigFont field =
                 new FieldConfigFont(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         String expectedDefaultValue1 = fontFamilies[0];
         field.createUI();

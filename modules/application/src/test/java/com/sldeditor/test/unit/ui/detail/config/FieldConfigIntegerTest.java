@@ -55,7 +55,7 @@ public class FieldConfigIntegerTest {
         FieldConfigInteger field =
                 new FieldConfigInteger(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -77,7 +77,7 @@ public class FieldConfigIntegerTest {
         FieldConfigInteger field2 =
                 new FieldConfigInteger(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -106,7 +106,7 @@ public class FieldConfigIntegerTest {
         FieldConfigInteger field =
                 new FieldConfigInteger(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -133,7 +133,7 @@ public class FieldConfigIntegerTest {
         FieldConfigInteger field =
                 new FieldConfigInteger(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         int expectedValue = 1;
         field.populateField(expectedValue);
@@ -187,7 +187,7 @@ public class FieldConfigIntegerTest {
         FieldConfigInteger field =
                 new FieldConfigInteger(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.revertToDefaultValue();
         assertEquals(0, field.getIntValue());
@@ -221,7 +221,7 @@ public class FieldConfigIntegerTest {
         TestFieldConfigInteger field =
                 new TestFieldConfigInteger(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         FieldConfigInteger copy = (FieldConfigInteger) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -241,7 +241,7 @@ public class FieldConfigIntegerTest {
         FieldConfigInteger field =
                 new FieldConfigInteger(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.attributeSelection(null);
 
         field.createUI();
@@ -264,7 +264,7 @@ public class FieldConfigIntegerTest {
         FieldConfigInteger field =
                 new FieldConfigInteger(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.undoAction(null);
         field.redoAction(null);
 
@@ -299,7 +299,7 @@ public class FieldConfigIntegerTest {
         FieldConfigInteger field =
                 new FieldConfigInteger(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.createUI();
         int minValue = 10;

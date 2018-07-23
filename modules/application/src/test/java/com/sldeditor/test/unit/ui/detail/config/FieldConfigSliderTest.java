@@ -54,7 +54,7 @@ public class FieldConfigSliderTest {
         FieldConfigSlider field =
                 new FieldConfigSlider(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -76,7 +76,7 @@ public class FieldConfigSliderTest {
         FieldConfigSlider field2 =
                 new FieldConfigSlider(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -104,7 +104,7 @@ public class FieldConfigSliderTest {
         FieldConfigSlider field =
                 new FieldConfigSlider(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -132,7 +132,7 @@ public class FieldConfigSliderTest {
         FieldConfigSlider field =
                 new FieldConfigSlider(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         double defaultDefaultValue = 0.5;
         double expectedValue = 1.0;
@@ -186,7 +186,7 @@ public class FieldConfigSliderTest {
         FieldConfigSlider field =
                 new FieldConfigSlider(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         double defaultDefaultValue = 0.5;
         field.revertToDefaultValue();
@@ -222,7 +222,7 @@ public class FieldConfigSliderTest {
         TestFieldConfigSlider field =
                 new TestFieldConfigSlider(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
         FieldConfigSlider copy = (FieldConfigSlider) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -242,7 +242,7 @@ public class FieldConfigSliderTest {
         FieldConfigSlider field =
                 new FieldConfigSlider(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.attributeSelection(null);
 
         // Do nothing
@@ -260,7 +260,7 @@ public class FieldConfigSliderTest {
         FieldConfigSlider field =
                 new FieldConfigSlider(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.undoAction(null);
         field.redoAction(null);
 

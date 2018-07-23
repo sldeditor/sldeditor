@@ -574,12 +574,16 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      */
     @SuppressWarnings("rawtypes")
     protected void uiInteraction(final UndoActionInterface parentObj) {
-        Range oldValueObj = previousValue;
-        Range newValueObj = getRangeValues();
+        if (!FieldConfigRange.this.isSuppressUndoEvents()) {
 
-        if (oldValueObj != previousValue) {
-            UndoManager.getInstance()
-                    .addUndoEvent(new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+            Range oldValueObj = previousValue;
+            Range newValueObj = getRangeValues();
+
+            if (oldValueObj != previousValue) {
+                UndoManager.getInstance()
+                        .addUndoEvent(
+                                new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+            }
         }
         valueUpdated();
     }

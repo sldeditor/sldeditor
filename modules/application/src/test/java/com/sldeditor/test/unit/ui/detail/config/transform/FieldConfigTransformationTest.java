@@ -68,7 +68,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -92,7 +92,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field2 =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -124,7 +124,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -163,7 +163,7 @@ public class FieldConfigTransformationTest {
         TestFieldConfigTransformation field =
                 new TestFieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
         Expression actualExpression = field.callGenerateExpression();
@@ -255,7 +255,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -294,7 +294,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -332,7 +332,7 @@ public class FieldConfigTransformationTest {
         TestFieldConfigTransformation field =
                 new TestFieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
         FieldConfigTransformation copy = (FieldConfigTransformation) field.callCreateCopy(null);
@@ -354,7 +354,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -374,7 +374,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 

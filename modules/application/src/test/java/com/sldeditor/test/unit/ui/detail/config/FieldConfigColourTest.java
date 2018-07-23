@@ -61,7 +61,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -84,7 +84,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field2 =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -112,7 +112,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -151,7 +151,7 @@ public class FieldConfigColourTest {
         TestFieldConfigColour field =
                 new TestFieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
         field.setTestValue(FieldIdEnum.UNKNOWN, (String) null);
@@ -224,7 +224,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.revertToDefaultValue();
         assertTrue(field.getStringValue().compareTo("") == 0);
@@ -256,7 +256,7 @@ public class FieldConfigColourTest {
         TestFieldConfigColour field =
                 new TestFieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         FieldConfigColour copy = (FieldConfigColour) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -276,7 +276,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.attributeSelection(null);
 
         // Does nothing
@@ -293,7 +293,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", false));
+                                Geometry.class, FieldIdEnum.NAME, "label", false, false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();

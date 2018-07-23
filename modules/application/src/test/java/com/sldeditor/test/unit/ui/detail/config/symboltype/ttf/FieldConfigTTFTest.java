@@ -68,7 +68,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -93,7 +93,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field2 =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -129,7 +129,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -160,7 +160,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -209,7 +209,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -230,7 +230,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -260,7 +260,7 @@ public class FieldConfigTTFTest {
         TestFieldConfigTTF field =
                 new TestFieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
         FieldConfigTTF copy = (FieldConfigTTF) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -280,7 +280,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -299,7 +299,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -319,7 +319,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -341,7 +341,8 @@ public class FieldConfigTTFTest {
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
@@ -363,7 +364,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         fillConfig,
                         strokeConfig,
                         null);
@@ -393,7 +394,8 @@ public class FieldConfigTTFTest {
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
@@ -415,7 +417,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         fillConfig,
                         strokeConfig,
                         null);
@@ -442,7 +444,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -460,7 +462,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -486,7 +488,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -504,7 +506,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -533,7 +535,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -551,7 +553,7 @@ public class FieldConfigTTFTest {
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);

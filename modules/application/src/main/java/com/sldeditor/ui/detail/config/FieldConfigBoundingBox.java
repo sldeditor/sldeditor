@@ -236,16 +236,17 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
                         String newValueObj = textField.getText();
 
                         if (originalValue.compareTo(newValueObj) != 0) {
-                            UndoManager.getInstance()
-                                    .addUndoEvent(
-                                            new UndoEvent(
-                                                    parentObj,
-                                                    getFieldId(),
-                                                    oldValueObj,
-                                                    newValueObj));
+                            if (!FieldConfigBoundingBox.this.isSuppressUndoEvents()) {
+                                UndoManager.getInstance()
+                                        .addUndoEvent(
+                                                new UndoEvent(
+                                                        parentObj,
+                                                        getFieldId(),
+                                                        oldValueObj,
+                                                        newValueObj));
 
-                            oldValueObj = originalValue;
-
+                                oldValueObj = originalValue;
+                            }
                             valueUpdated();
                         }
                     }
@@ -262,7 +263,8 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -468,9 +470,11 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
 
         crsComboBox.setSelectValueKey(key);
 
-        UndoManager.getInstance()
-                .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
-        oldValueObj = value;
+        if (!FieldConfigBoundingBox.this.isSuppressUndoEvents()) {
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            oldValueObj = value;
+        }
     }
 
     /**

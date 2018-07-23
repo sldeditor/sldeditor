@@ -226,7 +226,8 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
                                 FieldIdEnum.UNKNOWN,
                                 Localisation.getField(
                                         ColourRampConfigPanel.class, "ColourRampPanel.minValue"),
-                                true));
+                                true,
+                                false));
         minValueSpinner.createUI();
         FieldPanel fieldPanel = minValueSpinner.getPanel();
         dataPanel.add(fieldPanel);
@@ -257,7 +258,8 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
                                 FieldIdEnum.UNKNOWN,
                                 Localisation.getField(
                                         ColourRampConfigPanel.class, "ColourRampPanel.maxValue"),
-                                true));
+                                true,
+                                false));
         maxValueSpinner.createUI();
         maxValueSpinner.populateField(100);
         dataPanel.add(maxValueSpinner.getPanel());

@@ -55,7 +55,7 @@ public class FieldConfigBooleanTest {
         FieldConfigBoolean field =
                 new FieldConfigBoolean(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -77,7 +77,7 @@ public class FieldConfigBooleanTest {
         FieldConfigBoolean field2 =
                 new FieldConfigBoolean(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -106,7 +106,7 @@ public class FieldConfigBooleanTest {
         FieldConfigBoolean field =
                 new FieldConfigBoolean(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -127,7 +127,7 @@ public class FieldConfigBooleanTest {
         FieldConfigBoolean field =
                 new FieldConfigBoolean(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.setTestValue(null, true);
         field.populateField((Boolean) null);
@@ -158,7 +158,7 @@ public class FieldConfigBooleanTest {
         FieldConfigBoolean field =
                 new FieldConfigBoolean(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.revertToDefaultValue();
         assertFalse(field.getBooleanValue());
@@ -208,7 +208,7 @@ public class FieldConfigBooleanTest {
         TestFieldConfigBoolean field =
                 new TestFieldConfigBoolean(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         FieldConfigBoolean copy = (FieldConfigBoolean) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -228,7 +228,7 @@ public class FieldConfigBooleanTest {
         FieldConfigBoolean field =
                 new FieldConfigBoolean(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.attributeSelection(null);
 
         // Does nothing
@@ -246,7 +246,7 @@ public class FieldConfigBooleanTest {
         FieldConfigBoolean field =
                 new FieldConfigBoolean(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.undoAction(null);
         field.redoAction(null);
 

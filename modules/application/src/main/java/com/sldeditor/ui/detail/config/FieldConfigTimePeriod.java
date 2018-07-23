@@ -497,7 +497,8 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -743,8 +744,10 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
             populateDuration(start, value.getStart());
             populateDuration(end, value.getEnd());
 
-            UndoManager.getInstance()
-                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            if (!FieldConfigTimePeriod.this.isSuppressUndoEvents()) {
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            }
             oldValueObj = value;
             valueUpdated();
         }

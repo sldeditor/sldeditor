@@ -285,7 +285,7 @@ public class FieldConfigDSPropertiesTest {
         FieldConfigDSProperties field =
                 new FieldConfigDSProperties(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -307,7 +307,7 @@ public class FieldConfigDSPropertiesTest {
         FieldConfigDSProperties field2 =
                 new FieldConfigDSProperties(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -336,7 +336,7 @@ public class FieldConfigDSPropertiesTest {
         FieldConfigDSProperties field =
                 new FieldConfigDSProperties(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -371,7 +371,7 @@ public class FieldConfigDSPropertiesTest {
         FieldConfigDSProperties field =
                 new FieldConfigDSProperties(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.undoAction(null);
         field.redoAction(null);
 
@@ -422,7 +422,7 @@ public class FieldConfigDSPropertiesTest {
         FieldConfigDSProperties field =
                 new FieldConfigDSProperties(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
@@ -449,7 +449,7 @@ public class FieldConfigDSPropertiesTest {
         TestFieldConfigDSProperties field =
                 new TestFieldConfigDSProperties(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         FieldConfigDSProperties copy = (FieldConfigDSProperties) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -475,7 +475,7 @@ public class FieldConfigDSPropertiesTest {
         FieldConfigDSProperties field =
                 new FieldConfigDSProperties(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
         assertNull(field.getStringValue());
 

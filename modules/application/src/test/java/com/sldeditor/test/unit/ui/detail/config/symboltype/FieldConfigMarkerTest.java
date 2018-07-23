@@ -78,7 +78,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -103,7 +103,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field2 =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -134,7 +134,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -159,7 +159,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -179,7 +179,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -215,7 +215,7 @@ public class FieldConfigMarkerTest {
         TestFieldConfigMarker field =
                 new TestFieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -238,7 +238,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -257,7 +257,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -277,7 +277,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -317,7 +317,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         fillConfig,
                         strokeConfig,
                         null);
@@ -342,18 +342,20 @@ public class FieldConfigMarkerTest {
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
 
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField =
-                new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldConfigBase symbolSelectionField =
                 new FieldConfigSymbolType(
-                        new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
@@ -365,7 +367,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field2 =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         fillConfig,
                         strokeConfig,
                         symbolSelectionFieldId);
@@ -394,7 +396,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -415,18 +417,20 @@ public class FieldConfigMarkerTest {
         // Test it with non null values
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField =
-                new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldConfigBase symbolSelectionField =
                 new FieldConfigSymbolType(
-                        new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         symbolSelectionField.createUI();
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
@@ -453,7 +457,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         fillConfig,
                         strokeConfig,
                         null);
@@ -476,18 +480,20 @@ public class FieldConfigMarkerTest {
         Class<?> panelId = PointFillDetails.class;
 
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField =
-                new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldConfigBase symbolSelectionField =
                 new FieldConfigSymbolType(
-                        new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         symbolSelectionField.createUI();
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
@@ -514,7 +520,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         fillConfig,
                         strokeConfig,
                         null);
@@ -535,18 +541,20 @@ public class FieldConfigMarkerTest {
         // Test it with non null values
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField =
-                new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldConfigBase symbolSelectionField =
                 new FieldConfigSymbolType(
-                        new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         symbolSelectionField.createUI();
 
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(panelId);
@@ -574,7 +582,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         fillConfig,
                         strokeConfig,
                         null);
@@ -595,7 +603,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -636,7 +644,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -654,7 +662,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -672,7 +680,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -690,7 +698,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -732,18 +740,20 @@ public class FieldConfigMarkerTest {
         // Test it with non null values
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField =
-                new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldConfigBase symbolSelectionField =
                 new FieldConfigSymbolType(
-                        new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
@@ -770,7 +780,11 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field2 =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                PointSymbolizer.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                PointSymbolizer.class,
+                                FieldIdEnum.NAME,
+                                "test label",
+                                valueOnly,
+                                false),
                         fillConfig,
                         strokeConfig,
                         null);
@@ -809,7 +823,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         fillConfig,
                         strokeConfig,
                         null);
@@ -831,18 +845,20 @@ public class FieldConfigMarkerTest {
 
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField =
-                new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldConfigBase symbolSelectionField =
                 new FieldConfigSymbolType(
-                        new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
@@ -862,7 +878,7 @@ public class FieldConfigMarkerTest {
         FieldConfigMarker field2 =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         fillConfig,
                         strokeConfig,
                         symbolSelectionFieldId);

@@ -113,16 +113,17 @@ public class FieldConfigGeometry extends FieldConfigBase implements UndoActionIn
                             String newValueObj = textField.getText();
 
                             if (originalValue.compareTo(newValueObj) != 0) {
-                                UndoManager.getInstance()
-                                        .addUndoEvent(
-                                                new UndoEvent(
-                                                        parentObj,
-                                                        getFieldId(),
-                                                        oldValueObj,
-                                                        newValueObj));
+                                if (!FieldConfigGeometry.this.isSuppressUndoEvents()) {
+                                    UndoManager.getInstance()
+                                            .addUndoEvent(
+                                                    new UndoEvent(
+                                                            parentObj,
+                                                            getFieldId(),
+                                                            oldValueObj,
+                                                            newValueObj));
 
-                                oldValueObj = originalValue;
-
+                                    oldValueObj = originalValue;
+                                }
                                 valueUpdated();
                             }
                         }

@@ -48,7 +48,7 @@ public class FieldConfigMarkerExtShapeTest {
         FieldConfigMarkerExtShape field =
                 new FieldConfigMarkerExtShape(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);

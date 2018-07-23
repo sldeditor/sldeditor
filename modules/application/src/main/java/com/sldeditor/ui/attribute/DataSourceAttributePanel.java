@@ -88,8 +88,9 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      * Instantiates a new data source attribute panel.
      *
      * @param parentObj the parent obj
+     * @param suppressUndoEvents the suppress undo events
      */
-    public DataSourceAttributePanel(SubPanelUpdatedInterface parentObj) {
+    public DataSourceAttributePanel(SubPanelUpdatedInterface parentObj, boolean suppressUndoEvents) {
         final UndoActionInterface thisObj = this;
 
         setLayout(new BorderLayout(5, 0));
@@ -100,26 +101,22 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
         add(attributeComboBox, BorderLayout.CENTER);
 
         populateAttributeComboBox();
-        attributeComboBox.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
+        attributeComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
 
-                        if (isAttributeComboBoxPopulated()) {
-                            String newValueObj = (String) attributeComboBox.getSelectedItem();
-                            UndoManager.getInstance()
-                                    .addUndoEvent(
-                                            new UndoEvent(
-                                                    thisObj,
-                                                    "DataSourceAttribute",
-                                                    oldValueObj,
-                                                    newValueObj));
-
-                            if (parentObj != null) {
-                                parentObj.updateSymbol();
-                            }
-                        }
+                if (isAttributeComboBoxPopulated()) {
+                    if (!suppressUndoEvents) {
+                        String newValueObj = (String) attributeComboBox.getSelectedItem();
+                        UndoManager.getInstance().addUndoEvent(new UndoEvent(thisObj,
+                                "DataSourceAttribute", oldValueObj, newValueObj));
                     }
-                });
+
+                    if (parentObj != null) {
+                        parentObj.updateSymbol();
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -231,9 +228,8 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
         } else if (expression instanceof AttributeExpressionImpl) {
             propertyName = ((AttributeExpressionImpl) expression).getPropertyName();
         } else if (expression instanceof LiteralExpressionImpl) {
-            propertyName =
-                    AttributeUtils.extract(
-                            (String) ((LiteralExpressionImpl) expression).getValue());
+            propertyName = AttributeUtils
+                    .extract((String) ((LiteralExpressionImpl) expression).getValue());
         }
 
         if (propertyName != null) {

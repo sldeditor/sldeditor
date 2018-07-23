@@ -68,7 +68,7 @@ public class VOGeoServerShapeSymbol implements VOMarkerSymbolInterface {
 
         FieldConfigMarkerShape markerField =
                 new FieldConfigMarkerShape(
-                        new FieldConfigCommonData(panelId, FieldIdEnum.VO_SHAPE, "", false),
+                        new FieldConfigCommonData(panelId, FieldIdEnum.VO_SHAPE, "", false, false),
                         fillFieldConfig,
                         strokeFieldConfig,
                         symbolSelectionField);

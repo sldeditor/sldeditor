@@ -119,15 +119,18 @@ public class FieldConfigGeometryField extends FieldConfigBase
                     new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             if (isAttributeComboBoxPopulated()) {
-                                String newValueObj = (String) attributeComboBox.getSelectedItem();
-                                UndoManager.getInstance()
-                                        .addUndoEvent(
-                                                new UndoEvent(
-                                                        parentObj,
-                                                        "DataSourceAttribute",
-                                                        oldValueObj,
-                                                        newValueObj));
+                                if (!FieldConfigGeometryField.this.isSuppressUndoEvents()) {
 
+                                    String newValueObj =
+                                            (String) attributeComboBox.getSelectedItem();
+                                    UndoManager.getInstance()
+                                            .addUndoEvent(
+                                                    new UndoEvent(
+                                                            parentObj,
+                                                            "DataSourceAttribute",
+                                                            oldValueObj,
+                                                            newValueObj));
+                                }
                                 valueUpdated();
                             }
                         }
@@ -358,7 +361,9 @@ public class FieldConfigGeometryField extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource
+     * .impl.GeometryTypeEnum, boolean)
      */
     @Override
     public void dataSourceLoaded(
@@ -415,7 +420,8 @@ public class FieldConfigGeometryField extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -425,7 +431,9 @@ public class FieldConfigGeometryField extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.
+     * data.DataStore)
      */
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {

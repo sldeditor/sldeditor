@@ -62,7 +62,7 @@ public class FieldConfigDateTest {
         FieldConfigDate field =
                 new FieldConfigDate(
                         new FieldConfigCommonData(
-                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -85,7 +85,7 @@ public class FieldConfigDateTest {
         FieldConfigDate field2 =
                 new FieldConfigDate(
                         new FieldConfigCommonData(
-                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -113,7 +113,7 @@ public class FieldConfigDateTest {
         FieldConfigDate field =
                 new FieldConfigDate(
                         new FieldConfigCommonData(
-                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -152,7 +152,7 @@ public class FieldConfigDateTest {
         TestFieldConfigDate field =
                 new TestFieldConfigDate(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -209,7 +209,7 @@ public class FieldConfigDateTest {
         FieldConfigDate field =
                 new FieldConfigDate(
                         new FieldConfigCommonData(
-                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
@@ -241,7 +241,7 @@ public class FieldConfigDateTest {
         TestFieldConfigDate field =
                 new TestFieldConfigDate(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         FieldConfigDate copy = (FieldConfigDate) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -261,7 +261,7 @@ public class FieldConfigDateTest {
         FieldConfigDate field =
                 new FieldConfigDate(
                         new FieldConfigCommonData(
-                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.attributeSelection(null);
 
         // Does nothing
@@ -277,7 +277,8 @@ public class FieldConfigDateTest {
     public void testUndoAction() {
         FieldConfigDate field =
                 new FieldConfigDate(
-                        new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", false));
+                        new FieldConfigCommonData(
+                                Date.class, FieldIdEnum.NAME, "label", false, false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();

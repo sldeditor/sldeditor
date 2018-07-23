@@ -70,7 +70,7 @@ public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
 
         wktShape =
                 new FieldConfigWKT(
-                        new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true),
+                        new FieldConfigCommonData(panelId, FieldIdEnum.WKT, "", true, false),
                         fillFieldConfig,
                         strokeFieldConfig,
                         symbolSelectionField);

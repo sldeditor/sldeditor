@@ -92,18 +92,21 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
 
                         @Override
                         public void stateChanged(ChangeEvent e) {
-                            JSlider source = (JSlider) e.getSource();
-                            Integer newValueObj = (int) source.getValue();
+                            if (!FieldConfigSlider.this.isSuppressUndoEvents()) {
 
-                            UndoManager.getInstance()
-                                    .addUndoEvent(
-                                            new UndoEvent(
-                                                    parentObj,
-                                                    getFieldId(),
-                                                    oldValueObj,
-                                                    newValueObj));
+                                JSlider source = (JSlider) e.getSource();
+                                Integer newValueObj = (int) source.getValue();
 
-                            oldValueObj = newValueObj;
+                                UndoManager.getInstance()
+                                        .addUndoEvent(
+                                                new UndoEvent(
+                                                        parentObj,
+                                                        getFieldId(),
+                                                        oldValueObj,
+                                                        newValueObj));
+
+                                oldValueObj = newValueObj;
+                            }
                             valueUpdated();
                         }
                     });
@@ -123,7 +126,8 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {

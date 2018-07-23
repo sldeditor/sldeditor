@@ -98,17 +98,19 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
                         @Override
                         public void notify(double oldValue, double newValue) {
 
-                            Integer oldValueObj = Double.valueOf(oldValue).intValue();
-                            Integer newValueObj = Double.valueOf(newValue).intValue();
+                            if (!FieldConfigInteger.this.isSuppressUndoEvents()) {
 
-                            UndoManager.getInstance()
-                                    .addUndoEvent(
-                                            new UndoEvent(
-                                                    parentObj,
-                                                    getFieldId(),
-                                                    oldValueObj,
-                                                    newValueObj));
+                                Integer oldValueObj = Double.valueOf(oldValue).intValue();
+                                Integer newValueObj = Double.valueOf(newValue).intValue();
 
+                                UndoManager.getInstance()
+                                        .addUndoEvent(
+                                                new UndoEvent(
+                                                        parentObj,
+                                                        getFieldId(),
+                                                        oldValueObj,
+                                                        newValueObj));
+                            }
                             valueUpdated();
                         }
                     });
@@ -123,7 +125,8 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {

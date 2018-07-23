@@ -55,7 +55,7 @@ public class FieldConfigDoubleTest {
         FieldConfigDouble field =
                 new FieldConfigDouble(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -77,7 +77,7 @@ public class FieldConfigDoubleTest {
         FieldConfigDouble field2 =
                 new FieldConfigDouble(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -105,7 +105,7 @@ public class FieldConfigDoubleTest {
         FieldConfigDouble field =
                 new FieldConfigDouble(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -133,7 +133,7 @@ public class FieldConfigDoubleTest {
         FieldConfigDouble field =
                 new FieldConfigDouble(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         double expectedValue = 1.0;
         field.populateField(expectedValue);
@@ -191,7 +191,7 @@ public class FieldConfigDoubleTest {
         FieldConfigDouble field =
                 new FieldConfigDouble(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.revertToDefaultValue();
         assertTrue(Math.abs(field.getDoubleValue() - 0.0) < 0.001);
@@ -226,7 +226,7 @@ public class FieldConfigDoubleTest {
         TestFieldConfigDouble field =
                 new TestFieldConfigDouble(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
         FieldConfigDouble copy = (FieldConfigDouble) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -246,7 +246,7 @@ public class FieldConfigDoubleTest {
         FieldConfigDouble field =
                 new FieldConfigDouble(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.attributeSelection(null);
 
         field.createUI();
@@ -269,7 +269,7 @@ public class FieldConfigDoubleTest {
         FieldConfigDouble field =
                 new FieldConfigDouble(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.undoAction(null);
         field.redoAction(null);
@@ -305,7 +305,7 @@ public class FieldConfigDoubleTest {
         FieldConfigDouble field =
                 new FieldConfigDouble(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.createUI();
         double minValue = 10.0;

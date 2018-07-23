@@ -55,7 +55,7 @@ public class FieldConfigGeometryTest {
         FieldConfigGeometry field =
                 new FieldConfigGeometry(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         "button text");
 
         // Text field will not have been created
@@ -78,7 +78,7 @@ public class FieldConfigGeometryTest {
         FieldConfigGeometry field2 =
                 new FieldConfigGeometry(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         "button text");
 
         // Text field will not have been created
@@ -108,7 +108,7 @@ public class FieldConfigGeometryTest {
         FieldConfigGeometry field =
                 new FieldConfigGeometry(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         "button text");
 
         boolean expectedValue = true;
@@ -136,7 +136,8 @@ public class FieldConfigGeometryTest {
     public void testGenerateExpression() {
         FieldConfigGeometry field =
                 new FieldConfigGeometry(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true),
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false),
                         "button text");
 
         field.createUI();
@@ -174,7 +175,7 @@ public class FieldConfigGeometryTest {
         FieldConfigGeometry field =
                 new FieldConfigGeometry(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         "button text");
 
         field.revertToDefaultValue();
@@ -211,7 +212,7 @@ public class FieldConfigGeometryTest {
         TestFieldConfigGeometry field =
                 new TestFieldConfigGeometry(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         "button text");
         FieldConfigGeometry copy = (TestFieldConfigGeometry) field.callCreateCopy(null);
         assertNull(copy);
@@ -232,7 +233,7 @@ public class FieldConfigGeometryTest {
         FieldConfigGeometry field =
                 new FieldConfigGeometry(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         "button text");
         field.attributeSelection(null);
 
@@ -249,7 +250,8 @@ public class FieldConfigGeometryTest {
     public void testUndoAction() {
         FieldConfigGeometry field =
                 new FieldConfigGeometry(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", false),
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", false, false),
                         "button text");
         field.undoAction(null);
         field.redoAction(null);
@@ -302,7 +304,7 @@ public class FieldConfigGeometryTest {
         FieldConfigGeometry field =
                 new FieldConfigGeometry(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         "button text");
 
         field.addButtonPressedListener(null);

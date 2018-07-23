@@ -82,7 +82,8 @@ public class EnvironmentVariablePanel extends JPanel {
                             public void parameterAdded() {
                                 // Do nothing
                             }
-                        });
+                        },
+                        true);
 
         add(dataSourceAttributePanel, BorderLayout.NORTH);
 

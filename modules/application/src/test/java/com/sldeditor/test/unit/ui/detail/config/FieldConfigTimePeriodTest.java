@@ -61,7 +61,8 @@ public class FieldConfigTimePeriodTest {
         boolean valueOnly = true;
         FieldConfigTimePeriod field =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -82,7 +83,8 @@ public class FieldConfigTimePeriodTest {
         valueOnly = false;
         FieldConfigTimePeriod field2 =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -110,7 +112,8 @@ public class FieldConfigTimePeriodTest {
         boolean valueOnly = true;
         FieldConfigTimePeriod field =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -146,7 +149,8 @@ public class FieldConfigTimePeriodTest {
 
         TestFieldConfigTimePeriod field =
                 new TestFieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
         Expression actualExpression = field.callGenerateExpression();
         assertNotNull(actualExpression);
 
@@ -204,7 +208,8 @@ public class FieldConfigTimePeriodTest {
         boolean valueOnly = true;
         FieldConfigTimePeriod field =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
 
         field.revertToDefaultValue();
         assertNotNull(field.getStringValue());
@@ -236,7 +241,8 @@ public class FieldConfigTimePeriodTest {
 
         TestFieldConfigTimePeriod field =
                 new TestFieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
         FieldConfigTimePeriod copy = (FieldConfigTimePeriod) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -255,7 +261,8 @@ public class FieldConfigTimePeriodTest {
         boolean valueOnly = true;
         FieldConfigTimePeriod field =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
         field.attributeSelection(null);
 
         // Does nothing
@@ -271,7 +278,8 @@ public class FieldConfigTimePeriodTest {
     public void testUndoAction() {
         FieldConfigTimePeriod field =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, true));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, true, false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();

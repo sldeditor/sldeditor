@@ -368,9 +368,11 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
         if ((dateModel != null) && (timePicker != null) && (value != null)) {
             dateModel.setValue(value);
             timePicker.setValue(value);
-            UndoManager.getInstance()
-                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
-            oldValueObj = value;
+            if (!FieldConfigDate.this.isSuppressUndoEvents()) {
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+                oldValueObj = value;
+            }
             valueUpdated();
         }
     }

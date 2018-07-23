@@ -60,7 +60,7 @@ public class FieldConfigFontPreviewTest {
         FieldConfigFontPreview field =
                 new FieldConfigFontPreview(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -83,7 +83,7 @@ public class FieldConfigFontPreviewTest {
         FieldConfigFontPreview field2 =
                 new FieldConfigFontPreview(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -112,7 +112,7 @@ public class FieldConfigFontPreviewTest {
         FieldConfigFontPreview field =
                 new FieldConfigFontPreview(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -140,7 +140,7 @@ public class FieldConfigFontPreviewTest {
         FieldConfigFontPreview field =
                 new FieldConfigFontPreview(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         field.setTestValue(FieldIdEnum.UNKNOWN, (String) null);
         field.populateField((String) null);
@@ -188,7 +188,7 @@ public class FieldConfigFontPreviewTest {
         FieldConfigFontPreview field =
                 new FieldConfigFontPreview(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         field.revertToDefaultValue();
         String actualValue = field.getStringValue();
@@ -225,7 +225,7 @@ public class FieldConfigFontPreviewTest {
         TestFieldConfigFontPreview field =
                 new TestFieldConfigFontPreview(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
         FieldConfigFontPreview copy = (FieldConfigFontPreview) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -245,7 +245,7 @@ public class FieldConfigFontPreviewTest {
         FieldConfigFontPreview field =
                 new FieldConfigFontPreview(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
 
         field.attributeSelection("field");
         // Does nothing
@@ -262,7 +262,7 @@ public class FieldConfigFontPreviewTest {
         FieldConfigFontPreview field =
                 new FieldConfigFontPreview(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", false));
+                                String.class, FieldIdEnum.NAME, "test label", false, false));
         field.undoAction(null);
         field.redoAction(null);
 

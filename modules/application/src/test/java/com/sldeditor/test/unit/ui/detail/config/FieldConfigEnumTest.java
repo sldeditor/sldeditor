@@ -60,7 +60,7 @@ public class FieldConfigEnumTest {
         FieldConfigEnum field =
                 new FieldConfigEnum(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -82,7 +82,7 @@ public class FieldConfigEnumTest {
         FieldConfigEnum field2 =
                 new FieldConfigEnum(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -110,7 +110,7 @@ public class FieldConfigEnumTest {
         FieldConfigEnum field =
                 new FieldConfigEnum(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -157,7 +157,7 @@ public class FieldConfigEnumTest {
         FieldConfigEnum field =
                 new FieldConfigEnum(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.undoAction(null);
         field.redoAction(null);
         field.addConfig(null);
@@ -199,7 +199,7 @@ public class FieldConfigEnumTest {
         FieldConfigEnum field =
                 new FieldConfigEnum(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.revertToDefaultValue();
         assertEquals(0, field.getIntValue());
@@ -250,7 +250,7 @@ public class FieldConfigEnumTest {
         TestFieldConfigEnum field =
                 new TestFieldConfigEnum(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         FieldConfigEnum copy = (FieldConfigEnum) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -270,7 +270,7 @@ public class FieldConfigEnumTest {
         FieldConfigEnum field =
                 new FieldConfigEnum(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.attributeSelection(null);
 
         field.createUI();
@@ -300,7 +300,7 @@ public class FieldConfigEnumTest {
         FieldConfigEnum field =
                 new FieldConfigEnum(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.addConfig(configList);
 
@@ -343,7 +343,7 @@ public class FieldConfigEnumTest {
         FieldConfigEnum field =
                 new FieldConfigEnum(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.addConfig(null);
         assertNull(field.getStringValue());
 

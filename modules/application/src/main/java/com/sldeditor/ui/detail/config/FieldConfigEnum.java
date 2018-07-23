@@ -153,22 +153,23 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
                             ValueComboBox comboBox = (ValueComboBox) e.getSource();
                             if (comboBox.getSelectedItem() != null) {
 
-                                Object newValueObj = comboBox.getSelectedValue().getKey();
+                                if (!FieldConfigEnum.this.isSuppressUndoEvents()) {
+                                    Object newValueObj = comboBox.getSelectedValue().getKey();
 
-                                if ((oldValueObj == null) && comboBox.getItemCount() > 0) {
-                                    oldValueObj = comboBox.getFirstItem().getKey();
+                                    if ((oldValueObj == null) && comboBox.getItemCount() > 0) {
+                                        oldValueObj = comboBox.getFirstItem().getKey();
+                                    }
+
+                                    UndoManager.getInstance()
+                                            .addUndoEvent(
+                                                    new UndoEvent(
+                                                            parentObj,
+                                                            getFieldId(),
+                                                            oldValueObj,
+                                                            newValueObj));
+
+                                    oldValueObj = newValueObj;
                                 }
-
-                                UndoManager.getInstance()
-                                        .addUndoEvent(
-                                                new UndoEvent(
-                                                        parentObj,
-                                                        getFieldId(),
-                                                        oldValueObj,
-                                                        newValueObj));
-
-                                oldValueObj = newValueObj;
-
                                 valueUpdated();
                             }
                         }
@@ -184,7 +185,8 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {

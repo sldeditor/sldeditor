@@ -57,7 +57,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         // Text field will not have been created
@@ -80,7 +80,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field2 =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         // Text field will not have been created
@@ -108,7 +108,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         boolean expectedValue = true;
@@ -138,7 +138,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
         field.createUI();
 
@@ -179,7 +179,7 @@ public class FieldConfigRangeTest {
         field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         it.geosolutions.jaiext.range.Range.class);
         field.createUI();
 
@@ -227,7 +227,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         Range expectedDefaultValue = Range.create(0.0, true, 1.0, true);
@@ -289,7 +289,7 @@ public class FieldConfigRangeTest {
         TestFieldConfigRange field =
                 new TestFieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
         FieldConfigRange copy = (FieldConfigRange) field.callCreateCopy(null);
         assertNull(copy);
@@ -310,7 +310,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
         field.attributeSelection(null);
 
@@ -335,7 +335,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         field.undoAction(null);
@@ -405,7 +405,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         field.createUI();

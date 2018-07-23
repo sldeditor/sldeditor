@@ -61,7 +61,7 @@ public class FieldConfigSymbolTypeTest {
         FieldConfigSymbolType field =
                 new FieldConfigSymbolType(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -83,7 +83,7 @@ public class FieldConfigSymbolTypeTest {
         FieldConfigSymbolType field2 =
                 new FieldConfigSymbolType(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -112,7 +112,7 @@ public class FieldConfigSymbolTypeTest {
         FieldConfigSymbolType field =
                 new FieldConfigSymbolType(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -146,7 +146,7 @@ public class FieldConfigSymbolTypeTest {
         FieldConfigSymbolType field =
                 new FieldConfigSymbolType(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.populateExpression(null);
         field.setTestValue(FieldIdEnum.UNKNOWN, (String) null);
@@ -165,7 +165,7 @@ public class FieldConfigSymbolTypeTest {
         FieldConfigMarker marker =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.ANGLE, "label", valueOnly),
+                                String.class, FieldIdEnum.ANGLE, "label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -228,7 +228,7 @@ public class FieldConfigSymbolTypeTest {
         FieldConfigSymbolType field =
                 new FieldConfigSymbolType(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.revertToDefaultValue();
         // Does nothing
@@ -255,7 +255,7 @@ public class FieldConfigSymbolTypeTest {
         TestFieldConfigSymbolType field =
                 new TestFieldConfigSymbolType(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         FieldConfigSymbolType copy = (FieldConfigSymbolType) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -275,7 +275,7 @@ public class FieldConfigSymbolTypeTest {
         FieldConfigSymbolType field =
                 new FieldConfigSymbolType(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.attributeSelection(null);
 
         // Do nothing
@@ -294,7 +294,7 @@ public class FieldConfigSymbolTypeTest {
         FieldConfigSymbolType field =
                 new FieldConfigSymbolType(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.undoAction(null);
         field.redoAction(null);
 
@@ -304,7 +304,7 @@ public class FieldConfigSymbolTypeTest {
         FieldConfigMarker marker =
                 new FieldConfigMarker(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.ANGLE, "label", valueOnly),
+                                String.class, FieldIdEnum.ANGLE, "label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -369,7 +369,7 @@ public class FieldConfigSymbolTypeTest {
         FieldConfigSymbolType field =
                 new FieldConfigSymbolType(
                         new FieldConfigCommonData(
-                                Integer.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.optionSelected(null);
     }
