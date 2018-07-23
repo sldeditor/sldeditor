@@ -208,4 +208,13 @@ public class UndoManager {
     public static void destroyInstance() {
         instance = null;
     }
+
+    /**
+     * Gets the number of times in the undo list.
+     *
+     * @return the undo list size
+     */
+    public int getUndoListSize() {
+        return undoList.size();
+    }
 }

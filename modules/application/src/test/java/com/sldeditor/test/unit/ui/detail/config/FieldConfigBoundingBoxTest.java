@@ -33,6 +33,7 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigBoundingBox;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
@@ -258,6 +259,8 @@ public class FieldConfigBoundingBoxTest {
         field.createUI();
         field.createUI();
 
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+
         CoordinateReferenceSystem crs = CoordManager.getInstance().getWGS84();
         ReferencedEnvelope envelope1 = new ReferencedEnvelope(0.0, 1.0, 51.0, 51.1, crs);
         field.populateField(envelope1);
@@ -275,9 +278,76 @@ public class FieldConfigBoundingBoxTest {
         actualValue = field.getStringValue();
         assertTrue(actualValue.compareTo(envelope2.toString()) == 0);
 
+        assertEquals(undoListSize + 2, UndoManager.getInstance().getUndoListSize());
+
+        // Suppress undo events
+        field.setSuppressUndoEvents(true);
+        field.populateField(envelope2);
+        assertEquals(undoListSize + 2, UndoManager.getInstance().getUndoListSize());
+
         field.undoAction(null);
         field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
+    }
+
+    @Test
+    public void testValueStored() {
+        boolean valueOnly = true;
+
+        class TestFieldConfigBoundingBox extends FieldConfigBoundingBox {
+            public TestFieldConfigBoundingBox(FieldConfigCommonData commonData) {
+                super(commonData);
+            }
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see com.sldeditor.ui.detail.config.FieldConfigBoundingBox#valueStored()
+             */
+            @Override
+            protected void valueStored(String textValue) {
+                super.valueStored(textValue);
+            }
+        }
+
+        TestFieldConfigBoundingBox field =
+                new TestFieldConfigBoundingBox(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        class TestUpdateSymbol implements UpdateSymbolInterface {
+            public boolean dataChanged = false;
+
+            @Override
+            public void dataChanged(FieldIdEnum changedField) {
+                dataChanged = true;
+            }
+        };
+        TestUpdateSymbol update = new TestUpdateSymbol();
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored("test value");
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+        update.dataChanged = false;
+
+        // now suppress undo events
+        field =
+                new TestFieldConfigBoundingBox(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, true));
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored("test value again");
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }

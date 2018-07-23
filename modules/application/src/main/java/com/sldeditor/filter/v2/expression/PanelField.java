@@ -60,7 +60,7 @@ public class PanelField {
         if (value != null) {
             String valueText = Localisation.getString(classType, valueTextLocalisation);
             FieldIdEnum fieldId = FieldIdEnum.FUNCTION;
-            
+
             // Suppress undo events
             FieldConfigCommonData commonData =
                     new FieldConfigCommonData(null, fieldId, valueText, true, true);

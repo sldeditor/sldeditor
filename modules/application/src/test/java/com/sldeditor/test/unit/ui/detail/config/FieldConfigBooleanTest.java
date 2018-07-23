@@ -31,6 +31,7 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigBoolean;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 
@@ -133,6 +134,7 @@ public class FieldConfigBooleanTest {
         field.populateField((Boolean) null);
         field.populateField(Boolean.TRUE);
         field.populateExpression(null);
+        field.populateExpression(Integer.valueOf(99));
 
         field.createUI();
         field.createUI();
@@ -269,5 +271,89 @@ public class FieldConfigBooleanTest {
         field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
+    }
+
+    /**
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#undoAction(com.sldeditor.common.undo.UndoInterface)}.
+     * Test method for {@link
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#redoAction(com.sldeditor.common.undo.UndoInterface)}.
+     */
+    @Test
+    public void testUndoActionSuppressed() {
+        boolean valueOnly = true;
+        FieldConfigBoolean field =
+                new FieldConfigBoolean(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, true));
+        field.createUI();
+        field.populateField(Boolean.TRUE);
+        field.populateField(Boolean.FALSE);
+        assertFalse(field.getBooleanValue());
+
+        UndoManager.getInstance().undo();
+        assertFalse(field.getBooleanValue());
+        UndoManager.getInstance().redo();
+        assertFalse(field.getBooleanValue());
+    }
+
+    @Test
+    public void testCheckboxSelected() {
+        boolean valueOnly = true;
+
+        class TestFieldConfigBoolean extends FieldConfigBoolean {
+            public TestFieldConfigBoolean(FieldConfigCommonData commonData) {
+                super(commonData);
+            }
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see com.sldeditor.ui.detail.config.FieldConfigBoolean#checkBoxSelected()
+             */
+            @Override
+            protected void checkBoxSelected() {
+                super.checkBoxSelected();
+            }
+        }
+
+        TestFieldConfigBoolean field =
+                new TestFieldConfigBoolean(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        class TestUpdateSymbol implements UpdateSymbolInterface {
+            public boolean dataChanged = false;
+
+            @Override
+            public void dataChanged(FieldIdEnum changedField) {
+                dataChanged = true;
+            }
+        };
+        TestUpdateSymbol update = new TestUpdateSymbol();
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.checkBoxSelected();
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+        update.dataChanged = false;
+
+        // now suppress undo events
+        field =
+                new TestFieldConfigBoolean(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, true));
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.checkBoxSelected();
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }
