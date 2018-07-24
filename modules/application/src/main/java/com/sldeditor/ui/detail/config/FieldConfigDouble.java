@@ -81,8 +81,6 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
     @Override
     public void createUI() {
         if (spinner == null) {
-            final UndoActionInterface parentObj = this;
-
             int xPos = getXPos();
             FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
@@ -107,19 +105,7 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
                     new SpinnerNotifyInterface() {
                         @Override
                         public void notify(double oldValue, double newValue) {
-                            if (!FieldConfigDouble.this.isSuppressUndoEvents()) {
-                                Double oldValueObj = Double.valueOf(oldValue);
-                                Double newValueObj = Double.valueOf(newValue);
-
-                                UndoManager.getInstance()
-                                        .addUndoEvent(
-                                                new UndoEvent(
-                                                        parentObj,
-                                                        getFieldId(),
-                                                        oldValueObj,
-                                                        newValueObj));
-                            }
-                            valueUpdated();
+                            valueStored(oldValue, newValue);
                         }
                     });
         }
@@ -402,5 +388,22 @@ public class FieldConfigDouble extends FieldConfigBase implements UndoActionInte
         if (spinner != null) {
             spinner.setVisible(visible);
         }
+    }
+
+    /**
+     * Value stored.
+     *
+     * @param oldValue the old value
+     * @param newValue the new value
+     */
+    protected void valueStored(double oldValue, double newValue) {
+        if (!FieldConfigDouble.this.isSuppressUndoEvents()) {
+            Double oldValueObj = Double.valueOf(oldValue);
+            Double newValueObj = Double.valueOf(newValue);
+
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+        }
+        valueUpdated();
     }
 }

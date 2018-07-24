@@ -80,6 +80,12 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     private JSpinner.DateEditor timeEditor;
 
     /**
+     * Flag indicating whether class is being populated, prevents multiple undo events being
+     * triggered when setting a date value.
+     */
+    private boolean isPopulating = false;
+
+    /**
      * Instantiates a new field config slider.
      *
      * @param commonData the common data
@@ -115,7 +121,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
 
                         @Override
                         public void stateChanged(ChangeEvent e) {
-                            valueUpdated();
+                            valueStored();
                         }
                     });
 
@@ -133,7 +139,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
                     new ChangeListener() {
                         @Override
                         public void stateChanged(ChangeEvent e) {
-                            valueUpdated();
+                            valueStored();
                         }
                     });
             fieldPanel.add(timePicker);
@@ -148,6 +154,19 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
                         fieldPanel.internalCreateAttrButton(Double.class, this, isRasterSymbol()));
             }
         }
+    }
+
+    /** Value stored. */
+    protected void valueStored() {
+        if (!isSuppressUndoEvents() && !isPopulating) {
+            Date newValueObj = getDate();
+
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+
+            oldValueObj = newValueObj;
+        }
+        valueUpdated();
     }
 
     /**
@@ -291,6 +310,10 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
         DateModel<?> model = datePicker.getModel();
         Date selectedDate = (Date) model.getValue();
 
+        if (selectedDate == null) {
+            return null;
+        }
+
         Date time = (Date) timePicker.getValue();
 
         Calendar cal = Calendar.getInstance();
@@ -366,14 +389,16 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     @Override
     public void populateField(Date value) {
         if ((dateModel != null) && (timePicker != null) && (value != null)) {
+            isPopulating = true;
             dateModel.setValue(value);
             timePicker.setValue(value);
-            if (!FieldConfigDate.this.isSuppressUndoEvents()) {
+            if (!isSuppressUndoEvents()) {
                 UndoManager.getInstance()
                         .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
                 oldValueObj = value;
             }
-            valueUpdated();
+
+            isPopulating = false;
         }
     }
 
