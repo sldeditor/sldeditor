@@ -92,8 +92,6 @@ public class FieldConfigDSProperties extends FieldConfigBase
     @Override
     public void createUI() {
 
-        final UndoActionInterface parentObj = this;
-
         int xPos = getXPos();
         comboBox.setBounds(
                 xPos + BasePanel.WIDGET_X_START,
@@ -107,26 +105,7 @@ public class FieldConfigDSProperties extends FieldConfigBase
         comboBox.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (isAttributeComboBoxPopulated()) {
-                            if (comboBox.getSelectedItem() != null) {
-
-                                if (!FieldConfigDSProperties.this.isSuppressUndoEvents()) {
-                                    String newValueObj =
-                                            new String((String) comboBox.getSelectedItem());
-
-                                    UndoManager.getInstance()
-                                            .addUndoEvent(
-                                                    new UndoEvent(
-                                                            parentObj,
-                                                            getFieldId(),
-                                                            oldValueObj,
-                                                            newValueObj));
-
-                                    oldValueObj = new String(newValueObj);
-                                }
-                                valueUpdated();
-                            }
-                        }
+                        valueStored();
                     }
                 });
     }
@@ -436,5 +415,24 @@ public class FieldConfigDSProperties extends FieldConfigBase
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {
         // Do nothing
+    }
+
+    /** Value stored. */
+    protected void valueStored() {
+        if (isAttributeComboBoxPopulated()) {
+            if (comboBox.getSelectedItem() != null) {
+
+                if (!FieldConfigDSProperties.this.isSuppressUndoEvents()) {
+                    String newValueObj = new String((String) comboBox.getSelectedItem());
+
+                    UndoManager.getInstance()
+                            .addUndoEvent(
+                                    new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+
+                    oldValueObj = new String(newValueObj);
+                }
+                valueUpdated();
+            }
+        }
     }
 }

@@ -20,6 +20,7 @@
 package com.sldeditor.test.unit.ui.detail.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -40,6 +41,7 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDSProperties;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -280,6 +282,10 @@ public class FieldConfigDSPropertiesTest {
      */
     @Test
     public void testSetEnabled() {
+        TestDataSource testDataSource = new TestDataSource();
+        @SuppressWarnings("unused")
+        DataSourceInterface dataSource = DataSourceFactory.createDataSource(testDataSource);
+
         // Value only, no attribute/expression dropdown
         boolean valueOnly = true;
         FieldConfigDSProperties field =
@@ -295,6 +301,7 @@ public class FieldConfigDSPropertiesTest {
 
         // Create text field
         field.createUI();
+        field.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
@@ -316,6 +323,7 @@ public class FieldConfigDSPropertiesTest {
 
         // Create text field
         field2.createUI();
+        field2.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
 
         assertEquals(expectedValue, field2.isEnabled());
 
@@ -324,6 +332,8 @@ public class FieldConfigDSPropertiesTest {
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(expectedValue, field2.isEnabled());
+
+        DataSourceFactory.reset();
     }
 
     /**
@@ -406,6 +416,9 @@ public class FieldConfigDSPropertiesTest {
         actualValueString = field.getStringValue();
         assertTrue(expectedValue4.compareTo(actualValueString) == 0);
 
+        field.attributeSelection(null);
+        field.attributeSelection("String_1");
+
         DataSourceFactory.reset();
     }
 
@@ -418,14 +431,30 @@ public class FieldConfigDSPropertiesTest {
      */
     @Test
     public void testRevertToDefaultValue() {
+
+        TestDataSource testDataSource = new TestDataSource();
+        @SuppressWarnings("unused")
+        DataSourceInterface dataSource = DataSourceFactory.createDataSource(testDataSource);
+
         boolean valueOnly = true;
         FieldConfigDSProperties field =
                 new FieldConfigDSProperties(
                         new FieldConfigCommonData(
                                 Integer.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
+        field.createUI();
+        field.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
+
         field.revertToDefaultValue();
-        assertNull(field.getStringValue());
+        assertEquals("", field.getStringValue());
+
+        String defaultValue = "Integer_1";
+        field.setDefaultValue(defaultValue);
+
+        field.revertToDefaultValue();
+        assertEquals(defaultValue, field.getStringValue());
+
+        DataSourceFactory.reset();
     }
 
     /**
@@ -502,6 +531,75 @@ public class FieldConfigDSPropertiesTest {
         field.redoAction(null);
         field.redoAction(
                 new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(0), Double.valueOf(54)));
+
+        DataSourceFactory.reset();
+    }
+
+    @Test
+    public void testValueStored() {
+        TestDataSource testDataSource = new TestDataSource();
+        @SuppressWarnings("unused")
+        DataSourceInterface dataSource = DataSourceFactory.createDataSource(testDataSource);
+
+        boolean valueOnly = true;
+
+        class TestFFieldConfigDSProperties extends FieldConfigDSProperties {
+            public TestFFieldConfigDSProperties(FieldConfigCommonData commonData) {
+                super(commonData);
+            }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.FieldConfigDSProperties#valueStored()
+             */
+            @Override
+            protected void valueStored() {
+                super.valueStored();
+            }
+        }
+
+        TestFFieldConfigDSProperties field =
+                new TestFFieldConfigDSProperties(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        class TestUpdateSymbol implements UpdateSymbolInterface {
+            public boolean dataChanged = false;
+
+            @Override
+            public void dataChanged(FieldIdEnum changedField) {
+                dataChanged = true;
+            }
+        };
+        TestUpdateSymbol update = new TestUpdateSymbol();
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored();
+        assertFalse(update.dataChanged);
+        field.populateField("Integer_1");
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+        update.dataChanged = false;
+
+        // now suppress undo events
+        field =
+                new TestFFieldConfigDSProperties(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, true));
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.populateField("Integer_1");
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
 
         DataSourceFactory.reset();
     }
