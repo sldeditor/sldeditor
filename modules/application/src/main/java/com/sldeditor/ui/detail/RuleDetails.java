@@ -390,11 +390,11 @@ public class RuleDetails extends StandardPanel
                 panelTitle, Object.class, SelectedSymbol.getInstance().isRasterSymbol());
 
         Rule rule = SelectedSymbol.getInstance().getRule();
+        Filter oldValueObj = null;
         if (rule != null) {
             filterPanel.populate(rule.getFilter());
+            oldValueObj = rule.getFilter();
         }
-
-        Filter oldValueObj = rule.getFilter();
 
         if (filterPanel.showDialog()) {
             originalFilter = filterPanel.getFilter();

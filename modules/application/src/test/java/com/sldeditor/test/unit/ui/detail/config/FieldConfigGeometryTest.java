@@ -31,6 +31,10 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigGeometry;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.awt.Component;
+import javax.swing.JButton;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 
@@ -290,8 +294,12 @@ public class FieldConfigGeometryTest {
         // Increase the code coverage
         field.undoAction(null);
         field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
+        field.undoAction(
+                new UndoEvent(null, FieldIdEnum.NAME, Integer.valueOf(1), Integer.valueOf(2)));
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
+        field.redoAction(
+                new UndoEvent(null, FieldIdEnum.NAME, Integer.valueOf(8), Integer.valueOf(2)));
     }
 
     /**
@@ -300,13 +308,119 @@ public class FieldConfigGeometryTest {
      */
     @Test
     public void testAddButtonPressedListener() {
+        class TestFieldConfigGeometry extends FieldConfigGeometry {
+            /**
+             * Instantiates a new test field config geometry.
+             *
+             * @param commonData the common data
+             * @param buttonText the button text
+             */
+            public TestFieldConfigGeometry(FieldConfigCommonData commonData, String buttonText) {
+                super(commonData, buttonText);
+            }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.FieldConfigGeometry#externalButtonPressed(javax.swing.JButton)
+             */
+            @Override
+            protected void externalButtonPressed(JButton buttonExternal) {
+                super.externalButtonPressed(buttonExternal);
+            }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.FieldConfigGeometry#valueStored(java.lang.String)
+             */
+            @Override
+            protected void valueStored(String text) {
+                super.valueStored(text);
+            }
+        }
+
+        class TestFieldConfigStringButtonInterface implements FieldConfigStringButtonInterface {
+
+            public boolean buttonPressed = false;
+
+            @Override
+            public void buttonPressed(Component buttonExternal) {
+                buttonPressed = true;
+            }
+        };
+
+        TestFieldConfigStringButtonInterface buttonPressedInterface =
+                new TestFieldConfigStringButtonInterface();
+
         boolean valueOnly = true;
-        FieldConfigGeometry field =
-                new FieldConfigGeometry(
+        TestFieldConfigGeometry field =
+                new TestFieldConfigGeometry(
                         new FieldConfigCommonData(
                                 Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         "button text");
 
         field.addButtonPressedListener(null);
+
+        field.addButtonPressedListener(buttonPressedInterface);
+        assertFalse(buttonPressedInterface.buttonPressed);
+        field.externalButtonPressed(null);
+        assertTrue(buttonPressedInterface.buttonPressed);
+    }
+
+    @Test
+    public void testValueStored() {
+        boolean valueOnly = true;
+
+        class TestFieldConfigGeometry extends FieldConfigGeometry {
+            public TestFieldConfigGeometry(FieldConfigCommonData commonData) {
+                super(commonData, "Button");
+            }
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see com.sldeditor.ui.detail.config.FieldConfigBoundingBox#valueStored()
+             */
+            @Override
+            protected void valueStored(String textValue) {
+                super.valueStored(textValue);
+            }
+        }
+
+        TestFieldConfigGeometry field =
+                new TestFieldConfigGeometry(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        class TestUpdateSymbol implements UpdateSymbolInterface {
+            public boolean dataChanged = false;
+
+            @Override
+            public void dataChanged(FieldIdEnum changedField) {
+                dataChanged = true;
+            }
+        };
+        TestUpdateSymbol update = new TestUpdateSymbol();
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored("test value");
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+        update.dataChanged = false;
+
+        // now suppress undo events
+        field =
+                new TestFieldConfigGeometry(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, true));
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored("test value again");
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }

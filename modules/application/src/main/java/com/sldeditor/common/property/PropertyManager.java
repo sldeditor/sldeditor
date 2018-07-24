@@ -91,8 +91,6 @@ public class PropertyManager implements PropertyManagerInterface {
                     if (stringValue.compareTo(value) != 0) {
                         dataUpdated = true;
                     }
-                } else if (stringValue.compareTo(value) != 0) {
-                    dataUpdated = true;
                 }
             }
         } else {

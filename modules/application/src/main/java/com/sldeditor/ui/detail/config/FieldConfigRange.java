@@ -149,7 +149,6 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      */
     private void createRow(
             FieldPanel fieldPanel, int xPos, int y, RangeData rangeConfig, String label) {
-        final UndoActionInterface parentObj = this;
 
         if (configurationSet) {
             rangeConfig.spinner =
@@ -181,7 +180,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        uiInteraction(parentObj);
+                        valueStored();
                     }
                 });
         rangeConfig.includedCheckBox.setBounds(
@@ -195,7 +194,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
                 new SpinnerNotifyInterface() {
                     @Override
                     public void notify(double oldValue, double newValue) {
-                        uiInteraction(parentObj);
+                        valueStored();
                     }
                 });
     }
@@ -406,7 +405,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
     @Override
     public void populateField(Range value) {
         internalSetValue(value);
-        uiInteraction(this);
+        valueStored();
     }
 
     /**
@@ -567,22 +566,17 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
         return isPopulating;
     }
 
-    /**
-     * Ui interaction.
-     *
-     * @param parentObj the parent obj
-     */
+    /** Value stored. */
     @SuppressWarnings("rawtypes")
-    protected void uiInteraction(final UndoActionInterface parentObj) {
-        if (!FieldConfigRange.this.isSuppressUndoEvents()) {
+    protected void valueStored() {
+        if (!isSuppressUndoEvents()) {
 
             Range oldValueObj = previousValue;
             Range newValueObj = getRangeValues();
 
             if (oldValueObj != previousValue) {
                 UndoManager.getInstance()
-                        .addUndoEvent(
-                                new UndoEvent(parentObj, getFieldId(), oldValueObj, newValueObj));
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
             }
         }
         valueUpdated();

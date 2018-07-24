@@ -73,7 +73,6 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
     @Override
     public void createUI() {
         if (slider == null) {
-            final UndoActionInterface parentObj = this;
 
             int xPos = getXPos();
 
@@ -92,22 +91,10 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
 
                         @Override
                         public void stateChanged(ChangeEvent e) {
-                            if (!FieldConfigSlider.this.isSuppressUndoEvents()) {
+                            JSlider source = (JSlider) e.getSource();
+                            Integer newValueObj = (int) source.getValue();
 
-                                JSlider source = (JSlider) e.getSource();
-                                Integer newValueObj = (int) source.getValue();
-
-                                UndoManager.getInstance()
-                                        .addUndoEvent(
-                                                new UndoEvent(
-                                                        parentObj,
-                                                        getFieldId(),
-                                                        oldValueObj,
-                                                        newValueObj));
-
-                                oldValueObj = newValueObj;
-                            }
-                            valueUpdated();
+                            valueStored(newValueObj);
                         }
                     });
 
@@ -354,5 +341,21 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
         if (slider != null) {
             slider.setVisible(visible);
         }
+    }
+
+    /**
+     * Value stored.
+     *
+     * @param newValueObj the new value obj
+     */
+    protected void valueStored(Integer newValueObj) {
+        if (!FieldConfigSlider.this.isSuppressUndoEvents()) {
+
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+
+            oldValueObj = newValueObj;
+        }
+        valueUpdated();
     }
 }

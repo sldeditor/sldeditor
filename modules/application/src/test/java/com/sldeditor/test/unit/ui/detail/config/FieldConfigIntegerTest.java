@@ -31,6 +31,7 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -174,6 +175,15 @@ public class FieldConfigIntegerTest {
         field.populateExpression(expectedValue3e);
         int intValue = Double.valueOf(expectedValue3e).intValue();
         assertEquals(intValue, field.getIntValue());
+
+        Float expectedValue3f = Float.valueOf(6987.0f);
+        field.populateExpression(expectedValue3f);
+        intValue = expectedValue3f.intValue();
+        assertEquals(intValue, field.getIntValue());
+
+        String expectedValue3g = "Completely not valid at all";
+        field.populateExpression(expectedValue3g);
+        assertEquals(0, field.getIntValue());
     }
 
     /**
@@ -317,5 +327,64 @@ public class FieldConfigIntegerTest {
         int expectedValue2 = 41;
         field.populateField(expectedValue2);
         assertEquals(maxValue, field.getIntValue());
+    }
+
+    @Test
+    public void testValueStored() {
+        boolean valueOnly = true;
+
+        class TestFieldConfigInteger extends FieldConfigInteger {
+            public TestFieldConfigInteger(FieldConfigCommonData commonData) {
+                super(commonData);
+            }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.FieldConfigInteger#valueStored(double, double)
+             */
+            @Override
+            protected void valueStored(double oldValue, double newValue) {
+                super.valueStored(oldValue, newValue);
+            }
+        }
+
+        TestFieldConfigInteger field =
+                new TestFieldConfigInteger(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        class TestUpdateSymbol implements UpdateSymbolInterface {
+            public boolean dataChanged = false;
+
+            @Override
+            public void dataChanged(FieldIdEnum changedField) {
+                dataChanged = true;
+            }
+        };
+        TestUpdateSymbol update = new TestUpdateSymbol();
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored(1.0, 2.1);
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+        update.dataChanged = false;
+
+        // now suppress undo events
+        field =
+                new TestFieldConfigInteger(
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, true));
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored(3.0, 2.1);
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }

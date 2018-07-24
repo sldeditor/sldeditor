@@ -42,6 +42,7 @@ import org.opengis.filter.identity.Identifier;
 public class FidFilter extends FilterBase implements FilterConfigInterface {
 
     /** The Class FidFilterExtended. */
+    @SuppressWarnings("unchecked")
     public class FidFilterExtended extends FidFilterImpl implements FilterExtendedInterface {
 
         /** Instantiates a new fid filter extended. */

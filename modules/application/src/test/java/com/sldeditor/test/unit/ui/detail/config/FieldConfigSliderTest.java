@@ -31,7 +31,9 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import org.junit.jupiter.api.Test;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * The unit test for FieldConfigSlider.
@@ -283,5 +285,65 @@ public class FieldConfigSliderTest {
         field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
+    }
+
+    @Test
+    public void testValueStored() {
+        boolean valueOnly = true;
+
+        class TestFieldConfigSlider extends FieldConfigSlider {
+            public TestFieldConfigSlider(FieldConfigCommonData commonData) {
+                super(commonData);
+            }
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see com.sldeditor.ui.detail.config.FieldConfigBoundingBox#valueStored()
+             */
+            @Override
+            protected void valueStored(Integer value) {
+                super.valueStored(value);
+            }
+        }
+
+        TestFieldConfigSlider field =
+                new TestFieldConfigSlider(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        class TestUpdateSymbol implements UpdateSymbolInterface {
+            public boolean dataChanged = false;
+
+            @Override
+            public void dataChanged(FieldIdEnum changedField) {
+                dataChanged = true;
+            }
+        };
+        TestUpdateSymbol update = new TestUpdateSymbol();
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored(12);
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+        update.dataChanged = false;
+
+        // now suppress undo events
+        field =
+                new TestFieldConfigSlider(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, true));
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored(34);
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }
