@@ -359,6 +359,51 @@ public class FieldConfigSymbolTypeTest {
         UndoManager.getInstance().setPopulationCheck(null);
     }
 
+    @Test
+    public void testUndoActionSuppress() {
+        UndoManager.getInstance().setPopulationCheck(Controller.getInstance());
+        boolean valueOnly = true;
+        FieldConfigSymbolType field =
+                new FieldConfigSymbolType(
+                        new FieldConfigCommonData(
+                                Integer.class, FieldIdEnum.NAME, "label", valueOnly, true));
+        field.undoAction(null);
+        field.redoAction(null);
+
+        field.createUI();
+        field.createUI();
+
+        FieldConfigMarker marker =
+                new FieldConfigMarker(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.ANGLE, "label", valueOnly, false),
+                        null,
+                        null,
+                        null);
+        marker.createUI();
+
+        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
+        dataList.add(new ValueComboBoxData("key 1", "Value 1", FieldConfigMarker.class));
+        dataList.add(new ValueComboBoxData("key 2", "Value 2", FieldConfigMarker.class));
+        dataList.add(new ValueComboBoxData("key 3", "Value 3", FieldConfigMarker.class));
+
+        List<ValueComboBoxDataGroup> combinedSymbolList = new ArrayList<ValueComboBoxDataGroup>();
+        combinedSymbolList.add(new ValueComboBoxDataGroup(dataList));
+
+        field.createUI();
+        field.addField(marker);
+        field.populate(null, combinedSymbolList);
+
+        int undoSizeList = UndoManager.getInstance().getUndoListSize();
+
+        String expectedValue2 = "key 2";
+        field.populateExpression(expectedValue2);
+        String actualValue2 = field.getStringValue();
+        assertTrue(actualValue2.compareTo(field.getStringValue()) == 0);
+
+        assertEquals(undoSizeList, UndoManager.getInstance().getUndoListSize());
+    }
+
     /**
      * Test method for {@link
      * com.sldeditor.ui.detail.config.FieldConfigSymbolType#optionSelected(com.sldeditor.ui.widgets.ValueComboBoxData)}.

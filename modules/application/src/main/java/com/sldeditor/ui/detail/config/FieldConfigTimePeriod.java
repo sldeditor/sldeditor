@@ -760,27 +760,26 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      * @param duration the duration
      */
     private void populateDuration(TimePeriodPanel timePeriodPanel, Duration duration) {
-        if (timePeriodPanel == null) {
-            return;
-        }
+        if (timePeriodPanel != null) {
 
-        if (timePeriodPanel.areFieldsConfigured()) {
-            if (timePeriodPanel.dateModel != null) {
-                if (duration.isDate()) {
-                    timePeriodPanel.dateRadioButton.setSelected(true);
-                    timePeriodPanel.dateModel.setValue(duration.getDate());
-                    timePeriodPanel.timePicker.setValue(duration.getDate());
-                } else {
-                    timePeriodPanel.durationRadioButton.setSelected(true);
-                    timePeriodPanel.yearSpinner.setValue(duration.getDurationYears());
-                    timePeriodPanel.monthSpinner.setValue(duration.getDurationMonths());
-                    timePeriodPanel.daySpinner.setValue(duration.getDurationDays());
-                    timePeriodPanel.hourSpinner.setValue(duration.getDurationHours());
-                    timePeriodPanel.minuteSpinner.setValue(duration.getDurationMinutes());
-                    timePeriodPanel.secondSpinner.setValue(duration.getDurationSeconds());
+            if (timePeriodPanel.areFieldsConfigured()) {
+                if (timePeriodPanel.dateModel != null) {
+                    if (duration.isDate()) {
+                        timePeriodPanel.dateRadioButton.setSelected(true);
+                        timePeriodPanel.dateModel.setValue(duration.getDate());
+                        timePeriodPanel.timePicker.setValue(duration.getDate());
+                    } else {
+                        timePeriodPanel.durationRadioButton.setSelected(true);
+                        timePeriodPanel.yearSpinner.setValue(duration.getDurationYears());
+                        timePeriodPanel.monthSpinner.setValue(duration.getDurationMonths());
+                        timePeriodPanel.daySpinner.setValue(duration.getDurationDays());
+                        timePeriodPanel.hourSpinner.setValue(duration.getDurationHours());
+                        timePeriodPanel.minuteSpinner.setValue(duration.getDurationMinutes());
+                        timePeriodPanel.secondSpinner.setValue(duration.getDurationSeconds());
+                    }
+
+                    updateFields(timePeriodPanel);
                 }
-
-                updateFields(timePeriodPanel);
             }
         }
     }
