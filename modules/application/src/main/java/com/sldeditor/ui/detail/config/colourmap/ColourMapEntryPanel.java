@@ -88,18 +88,21 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
      *
      * @param panelId the panel id
      * @param parent the parent
+     * @param suppressUndoEvents the suppress undo events
      */
-    public ColourMapEntryPanel(Class<?> panelId, ColourMapEntryUpdateInterface parent) {
+    public ColourMapEntryPanel(
+            Class<?> panelId, ColourMapEntryUpdateInterface parent, boolean suppressUndoEvents) {
         this.parentObj = parent;
-        createUI(panelId);
+        createUI(panelId, suppressUndoEvents);
     }
 
     /**
      * Creates the UI.
      *
      * @param panelId the panel id
+     * @param suppressUndoEvents the suppress undo events
      */
-    private void createUI(Class<?> panelId) {
+    private void createUI(Class<?> panelId, boolean suppressUndoEvents) {
 
         TitledBorder title =
                 BorderFactory.createTitledBorder(
@@ -132,7 +135,7 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
                                         FieldConfigBase.class, "ColourMapEntryPanel.colour"),
                                 false,
                                 true,
-                                true));
+                                suppressUndoEvents));
         colour.createUI();
         colour.addDataChangedListener(this);
         fieldList.add(colour);
@@ -147,7 +150,7 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
                                         FieldConfigBase.class, "ColourMapEntryPanel.opacity"),
                                 false,
                                 true,
-                                true));
+                                suppressUndoEvents));
         opacity.createUI();
         opacity.addDataChangedListener(this);
         fieldList.add(opacity);
@@ -162,7 +165,7 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
                                         FieldConfigBase.class, "ColourMapEntryPanel.quantity"),
                                 false,
                                 true,
-                                true));
+                                suppressUndoEvents));
         quantity.createUI();
         quantity.addDataChangedListener(this);
         fieldList.add(quantity);
