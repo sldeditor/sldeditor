@@ -95,8 +95,6 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     @Override
     public void createUI() {
         if (textField == null) {
-            final UndoActionInterface parentObj = this;
-
             int xPos = getXPos();
 
             int width = BasePanel.FIELD_PANEL_WIDTH - xPos - 20;
@@ -123,25 +121,7 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
                         public void actionPerformed(ActionEvent e) {
                             ProcessFunction expression = showTransformationDialog(processFunction);
 
-                            if (expression != null) {
-                                ProcessFunction newValueObj = processFunction;
-                                processFunction = expression;
-
-                                textField.setText(
-                                        ParameterFunctionUtils.getString(processFunction));
-
-                                if (!FieldConfigTransformation.this.isSuppressUndoEvents()) {
-                                    UndoManager.getInstance()
-                                            .addUndoEvent(
-                                                    new UndoEvent(
-                                                            parentObj,
-                                                            getFieldId(),
-                                                            oldValueObj,
-                                                            newValueObj));
-                                }
-
-                                valueUpdated();
-                            }
+                            transformationDialogResult(expression);
                         }
                     });
 
@@ -160,16 +140,7 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
                     new ActionListener() {
 
                         public void actionPerformed(ActionEvent e) {
-                            processFunction = null;
-
-                            textField.setText("");
-
-                            UndoManager.getInstance()
-                                    .addUndoEvent(
-                                            new UndoEvent(
-                                                    parentObj, getFieldId(), oldValueObj, null));
-
-                            valueUpdated();
+                            clearButtonPressed();
                         }
                     });
 
@@ -310,17 +281,7 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     public void populateField(ProcessFunction value) {
         processFunction = value;
 
-        if (textField != null) {
-            textField.setText(ParameterFunctionUtils.getString(processFunction));
-
-            if (!FieldConfigTransformation.this.isSuppressUndoEvents()) {
-                UndoManager.getInstance()
-                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
-
-                oldValueObj = value;
-            }
-            valueUpdated();
-        }
+        populateField(ParameterFunctionUtils.getString(processFunction));
     }
 
     /**
@@ -453,5 +414,33 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     @Override
     public ProcessFunction getProcessFunction() {
         return processFunction;
+    }
+
+    /**
+     * Transformation dialog result.
+     *
+     * @param expression the expression
+     */
+    protected void transformationDialogResult(ProcessFunction expression) {
+        if (expression != null) {
+            populateField(expression);
+        }
+    }
+
+    /** Clear button pressed. */
+    protected void clearButtonPressed() {
+        processFunction = null;
+
+        if (textField != null) {
+            textField.setText("");
+        }
+
+        if (!isSuppressUndoEvents()) {
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, null));
+
+            oldValueObj = null;
+        }
+        valueUpdated();
     }
 }
