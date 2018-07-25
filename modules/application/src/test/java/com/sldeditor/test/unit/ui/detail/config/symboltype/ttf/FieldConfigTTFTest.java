@@ -21,6 +21,7 @@ package com.sldeditor.test.unit.ui.detail.config.symboltype.ttf;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,15 +35,22 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Map;
 import org.geotools.styling.ExternalGraphicImpl;
+import org.geotools.styling.LineSymbolizerImpl;
 import org.geotools.styling.Mark;
+import org.geotools.styling.PointSymbolizerImpl;
+import org.geotools.styling.PolygonSymbolizerImpl;
+import org.geotools.styling.RasterSymbolizerImpl;
 import org.geotools.styling.StyleBuilder;
+import org.geotools.styling.TextSymbolizerImpl;
 import org.junit.jupiter.api.Test;
 import org.opengis.style.GraphicalSymbol;
 
@@ -54,6 +62,26 @@ import org.opengis.style.GraphicalSymbol;
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigTTFTest {
+
+    class TestFieldConfigTTF extends FieldConfigTTF {
+
+        public TestFieldConfigTTF(FieldConfigCommonData commonData) {
+            super(commonData, null, null, null);
+        }
+
+        public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
+            return createCopy(fieldConfigBase);
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.symboltype.ttf.FieldConfigTTF#populateVendorOptionFieldMap(java.util.Map)
+         */
+        @Override
+        protected void populateVendorOptionFieldMap(
+                Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+            super.populateVendorOptionFieldMap(fieldEnableMap);
+        }
+    }
 
     /**
      * Test method for {@link
@@ -246,17 +274,6 @@ public class FieldConfigTTFTest {
     public void testCreateCopy() {
         boolean valueOnly = true;
 
-        class TestFieldConfigTTF extends FieldConfigTTF {
-
-            public TestFieldConfigTTF(FieldConfigCommonData commonData) {
-                super(commonData, null, null, null);
-            }
-
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
-                return createCopy(fieldConfigBase);
-            }
-        }
-
         TestFieldConfigTTF field =
                 new TestFieldConfigTTF(
                         new FieldConfigCommonData(
@@ -431,6 +448,9 @@ public class FieldConfigTTFTest {
 
         actualValue = field.getValue(fieldConfigManager, null, false, false);
         assertTrue(actualValue.size() == 1);
+
+        actualValue = field.getValue(fieldConfigManager, null, true, false);
+        assertTrue(actualValue.size() == 1);
     }
 
     /**
@@ -441,15 +461,42 @@ public class FieldConfigTTFTest {
     @Test
     public void testGetFill() {
         boolean valueOnly = true;
+        GraphicPanelFieldManager fieldConfigManager = null;
+
+        Class<?> panelId = PointFillDetails.class;
+        fieldConfigManager = new GraphicPanelFieldManager(panelId);
+        FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
+        FieldConfigColour colourField =
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
+        colourField.createUI();
+        String expectedColourValue = "#012345";
+        colourField.setTestValue(null, expectedColourValue);
+        fieldConfigManager.add(colourFieldId, colourField);
+
+        ColourFieldConfig fillConfig =
+                new ColourFieldConfig(
+                        GroupIdEnum.FILL,
+                        FieldIdEnum.FILL_COLOUR,
+                        FieldIdEnum.OVERALL_OPACITY,
+                        FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig =
+                new ColourFieldConfig(
+                        GroupIdEnum.STROKE,
+                        FieldIdEnum.STROKE_STROKE_COLOUR,
+                        FieldIdEnum.OVERALL_OPACITY,
+                        FieldIdEnum.STROKE_FILL_WIDTH);
+
         FieldConfigTTF field =
                 new FieldConfigTTF(
                         new FieldConfigCommonData(
                                 String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
-                        null,
-                        null,
+                        fillConfig,
+                        strokeConfig,
                         null);
 
         assertNull(field.getFill(null, null));
+        assertNotNull(field.getFill(null, fieldConfigManager));
     }
 
     /**
@@ -476,7 +523,33 @@ public class FieldConfigTTFTest {
      * com.sldeditor.ui.detail.FieldEnableState)}.
      */
     @Test
-    public void testPopulateFieldOverrideMap() {}
+    public void testPopulateFieldOverrideMap() {
+        boolean valueOnly = true;
+        TestFieldConfigTTF field =
+                new TestFieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
+
+        field.populateVendorOptionFieldMap(null);
+
+        field.getMinimumVersion(null, null, null);
+        assertNull(field.getVendorOptionInfo());
+    }
+
+    @Test
+    public void testIsOverallOpacity() {
+        boolean valueOnly = true;
+        TestFieldConfigTTF field =
+                new TestFieldConfigTTF(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
+
+        assertTrue(field.isOverallOpacity(LineSymbolizerImpl.class));
+        assertFalse(field.isOverallOpacity(RasterSymbolizerImpl.class));
+        assertFalse(field.isOverallOpacity(PointSymbolizerImpl.class));
+        assertFalse(field.isOverallOpacity(TextSymbolizerImpl.class));
+        assertFalse(field.isOverallOpacity(PolygonSymbolizerImpl.class));
+    }
 
     /**
      * Test method for {@link

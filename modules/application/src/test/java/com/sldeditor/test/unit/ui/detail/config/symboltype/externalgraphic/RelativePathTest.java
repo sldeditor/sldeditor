@@ -116,4 +116,38 @@ public class RelativePathTest {
         actualResult = RelativePath.getRelativePath(file, folder);
         assertEquals(filename, actualResult);
     }
+
+    @Test
+    public void testIsLocalFile() {
+        assertFalse(RelativePath.isLocalFile(null));
+
+        String urlString = "http://example.com/test";
+        try {
+            URL httpURL = new URL(urlString);
+            assertFalse(RelativePath.isLocalFile(httpURL));
+
+            File f = File.createTempFile("tst", ".txt");
+            URL fileURL = f.toURI().toURL();
+            assertTrue(RelativePath.isLocalFile(fileURL));
+            f.delete();
+        } catch (MalformedURLException e) {
+            fail(e.getMessage());
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testHasHost() {
+        assertFalse(RelativePath.hasHost(null));
+
+        try {
+            String urlString = "http://example.com/test";
+            URL httpURL = new URL(urlString);
+            assertTrue(RelativePath.hasHost(httpURL));
+
+        } catch (MalformedURLException e) {
+            fail(e.getMessage());
+        }
+    }
 }

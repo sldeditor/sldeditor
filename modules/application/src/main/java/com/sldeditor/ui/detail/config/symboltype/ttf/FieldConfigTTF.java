@@ -114,7 +114,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
         if (ttfPanel == null) {
             FieldPanel fieldPanel = createFieldPanel(0, "");
             fieldPanel.setLayout(new BorderLayout());
-            ttfPanel = new TTFDetails(this);
+            ttfPanel = new TTFDetails(this, this.isSuppressUndoEvents());
 
             fieldPanel.add(ttfPanel, BorderLayout.CENTER);
 

@@ -34,11 +34,13 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Map;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Mark;
@@ -55,6 +57,26 @@ import org.opengis.style.GraphicalSymbol;
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigFilenameTest {
+
+    class TestFieldConfigFilename extends FieldConfigFilename {
+
+        public TestFieldConfigFilename(FieldConfigCommonData commonData) {
+            super(commonData, null, null, null);
+        }
+
+        public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
+            return createCopy(fieldConfigBase);
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#populateVendorOptionFieldMap(java.util.Map)
+         */
+        @Override
+        protected void populateVendorOptionFieldMap(
+                Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+            super.populateVendorOptionFieldMap(fieldEnableMap);
+        }
+    }
 
     /**
      * Test method for {@link
@@ -243,17 +265,6 @@ public class FieldConfigFilenameTest {
     @Test
     public void testCreateCopy() {
         boolean valueOnly = true;
-
-        class TestFieldConfigFilename extends FieldConfigFilename {
-
-            public TestFieldConfigFilename(FieldConfigCommonData commonData) {
-                super(commonData, null, null, null);
-            }
-
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
-                return createCopy(fieldConfigBase);
-            }
-        }
 
         TestFieldConfigFilename field =
                 new TestFieldConfigFilename(
@@ -540,5 +551,19 @@ public class FieldConfigFilenameTest {
                         null);
 
         field.setUpdateSymbolListener(null);
+    }
+
+    @Test
+    public void testIncreaseCodeCoverage() {
+        boolean valueOnly = true;
+        TestFieldConfigFilename field =
+                new TestFieldConfigFilename(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
+
+        assertTrue(field.isOverallOpacity(null));
+        field.getMinimumVersion(null, null, null);
+        assertNull(field.getVendorOptionInfo());
+        field.populateVendorOptionFieldMap(null);
     }
 }

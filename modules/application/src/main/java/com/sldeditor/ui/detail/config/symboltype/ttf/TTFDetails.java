@@ -62,15 +62,19 @@ public class TTFDetails extends StandardPanel
     /** The old value obj. */
     private Object oldValueObj = null;
 
+    /** The suppress undo events flag. */
+    private boolean suppressUndoEvents = false;
+
     /**
      * Instantiates a new feature type style details.
      *
      * @param parentObj the parent obj
      */
-    public TTFDetails(TTFUpdateInterface parentObj) {
+    public TTFDetails(TTFUpdateInterface parentObj, boolean suppressUndoEvents) {
         super(TTFDetails.class);
 
         this.parentObj = parentObj;
+        this.suppressUndoEvents = suppressUndoEvents;
         createUI();
     }
 
@@ -89,7 +93,8 @@ public class TTFDetails extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
@@ -195,9 +200,13 @@ public class TTFDetails extends StandardPanel
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        Object oldValue = undoRedoObject.getOldValue();
+        if (undoRedoObject != null) {
+            if (undoRedoObject.getOldValue() instanceof String) {
+                Object oldValue = undoRedoObject.getOldValue();
 
-        fieldConfigVisitor.populateTextField(FieldIdEnum.TTF_SYMBOL, (String) oldValue);
+                fieldConfigVisitor.populateTextField(FieldIdEnum.TTF_SYMBOL, (String) oldValue);
+            }
+        }
     }
 
     /**
@@ -207,9 +216,13 @@ public class TTFDetails extends StandardPanel
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        String newValue = (String) undoRedoObject.getNewValue();
+        if (undoRedoObject != null) {
+            if (undoRedoObject.getNewValue() instanceof String) {
+                String newValue = (String) undoRedoObject.getNewValue();
 
-        fieldConfigVisitor.populateTextField(FieldIdEnum.TTF_SYMBOL, (String) newValue);
+                fieldConfigVisitor.populateTextField(FieldIdEnum.TTF_SYMBOL, (String) newValue);
+            }
+        }
     }
 
     /**
@@ -230,11 +243,14 @@ public class TTFDetails extends StandardPanel
         if (selectedChar != null) {
             fieldConfigVisitor.populateTextField(FieldIdEnum.TTF_SYMBOL, selectedChar);
 
-            UndoManager.getInstance()
-                    .addUndoEvent(
-                            new UndoEvent(this, FieldIdEnum.TTF_SYMBOL, oldValueObj, selectedChar));
+            if (!suppressUndoEvents) {
+                UndoManager.getInstance()
+                        .addUndoEvent(
+                                new UndoEvent(
+                                        this, FieldIdEnum.TTF_SYMBOL, oldValueObj, selectedChar));
 
-            oldValueObj = selectedChar;
+                oldValueObj = selectedChar;
+            }
 
             EventQueue.invokeLater(
                     new Runnable() {
@@ -256,8 +272,11 @@ public class TTFDetails extends StandardPanel
         setAllDefaultValues();
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(
