@@ -30,9 +30,12 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.font.FieldConfigFontPreview;
 import java.awt.GraphicsEnvironment;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Font;
 import org.geotools.styling.StyleBuilder;
 import org.junit.jupiter.api.Test;
+import org.opengis.filter.FilterFactory;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The unit test for FieldConfigFontPreview.
@@ -149,6 +152,7 @@ public class FieldConfigFontPreviewTest {
 
         String expectedValue = fontFamilies[0];
         field.createUI();
+        field.populateField((Font) null);
         field.populateField(expectedValue);
         String actualValue = field.getStringValue();
         assertNotNull(actualValue);
@@ -173,6 +177,22 @@ public class FieldConfigFontPreviewTest {
 
         Font f4 = styleBuilder.createFont(expectedValue, false, false, 24.0);
         field.populateField(f4);
+        assertNotNull(field.getStringValue());
+
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+        Font f5 = styleBuilder.createFont(expectedValue, false, false, 24.0);
+        f5.setWeight(null);
+        field.populateField(f5);
+        assertEquals(field.getStringValue(), "");
+
+        Font f6 = styleBuilder.createFont(expectedValue, false, false, 24.0);
+        f6.setSize(ff.literal("24"));
+        field.populateField(f6);
+        assertNotNull(field.getStringValue());
+
+        Font f7 = styleBuilder.createFont(expectedValue, false, false, 24.0);
+        f7.setSize(ff.property("property"));
+        field.populateField(f7);
         assertNotNull(field.getStringValue());
     }
 
@@ -220,6 +240,14 @@ public class FieldConfigFontPreviewTest {
             public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
                 return createCopy(fieldConfigBase);
             }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.font.FieldConfigFontPreview#generateExpression()
+             */
+            @Override
+            protected Expression generateExpression() {
+                return super.generateExpression();
+            }
         }
 
         TestFieldConfigFontPreview field =
@@ -233,6 +261,9 @@ public class FieldConfigFontPreviewTest {
         assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
+
+        // Increase code coverage
+        assertNull(field.generateExpression());
     }
 
     /**

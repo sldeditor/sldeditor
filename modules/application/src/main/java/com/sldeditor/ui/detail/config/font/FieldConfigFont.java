@@ -86,7 +86,6 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
     @Override
     public void createUI() {
         if (comboBox == null) {
-            final UndoActionInterface parentObj = this;
 
             populateFontFamilyList();
 
@@ -113,26 +112,9 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
                             ValueComboBox comboBox = (ValueComboBox) e.getSource();
                             if (comboBox.getSelectedItem() != null) {
 
-                                if (!FieldConfigFont.this.isSuppressUndoEvents()) {
+                                String selectedKey = comboBox.getSelectedValue().getKey();
 
-                                    Object newValueObj = comboBox.getSelectedValue().getKey();
-
-                                    if ((oldValueObj == null) && comboBox.getItemCount() > 0) {
-                                        oldValueObj = comboBox.getFirstItem().getKey();
-                                    }
-
-                                    UndoManager.getInstance()
-                                            .addUndoEvent(
-                                                    new UndoEvent(
-                                                            parentObj,
-                                                            getFieldId(),
-                                                            oldValueObj,
-                                                            newValueObj));
-
-                                    oldValueObj = newValueObj;
-                                }
-
-                                valueUpdated();
+                                valueStored(selectedKey);
                             }
                         }
                     });
@@ -430,10 +412,12 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
         currentFont = font;
 
         if (differentFamilyName) {
-            UndoManager.getInstance()
-                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, fontName));
+            if (!isSuppressUndoEvents()) {
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, fontName));
 
-            oldValueObj = fontName;
+                oldValueObj = fontName;
+            }
         }
 
         return differentFamilyName;
@@ -457,5 +441,28 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
             }
         }
         return fontName;
+    }
+
+    /**
+     * Value stored.
+     *
+     * @param selectedKey the selected key
+     */
+    protected void valueStored(String selectedKey) {
+        if (!isSuppressUndoEvents()) {
+
+            Object newValueObj = selectedKey;
+
+            if ((oldValueObj == null) && comboBox.getItemCount() > 0) {
+                oldValueObj = comboBox.getFirstItem().getKey();
+            }
+
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+
+            oldValueObj = newValueObj;
+        }
+
+        valueUpdated();
     }
 }

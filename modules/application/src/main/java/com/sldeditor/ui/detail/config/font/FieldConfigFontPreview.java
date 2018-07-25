@@ -264,8 +264,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
         if ((textField != null) && (font != null)) {
             if (font.getFamily().isEmpty()) {
                 textField.setText("");
-            } else if (font.getFamily().isEmpty()
-                    || (font.getStyle() == null)
+            } else if ((font.getStyle() == null)
                     || (font.getWeight() == null)
                     || (font.getSize() == null)) {
                 textField.setText("");
