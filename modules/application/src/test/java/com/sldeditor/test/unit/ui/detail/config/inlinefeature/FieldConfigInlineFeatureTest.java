@@ -260,6 +260,10 @@ public class FieldConfigInlineFeatureTest {
         actualValue = field.getStringValue();
         assertTrue(actualValue.compareTo(expectedValue2) == 0);
 
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.inlineFeatureUpdated();
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+
         // Increase the code coverage
         field.undoAction(null);
         field.undoAction(
@@ -267,5 +271,32 @@ public class FieldConfigInlineFeatureTest {
         field.redoAction(null);
         field.redoAction(
                 new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(454.0), Integer.valueOf(69)));
+    }
+
+    @Test
+    public void testUndoActionSuppress() {
+        FieldConfigInlineFeature field =
+                new FieldConfigInlineFeature(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, null, true, true));
+        field.createUI();
+
+        DummyInlineSLDFile testData1 = new DummyInlineSLDFile();
+
+        UserLayer userLayer1 = (UserLayer) testData1.getSLD().layers().get(0);
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.populateField(userLayer1);
+        String expectedValue1 = InlineFeatureUtils.getInlineFeaturesText(userLayer1);
+        String actualValue = field.getStringValue();
+        assertTrue(actualValue.compareTo(expectedValue1) == 0);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
+
+        Controller.getInstance().setPopulating(false);
+        field.inlineFeatureUpdated();
+        Controller.getInstance().setPopulating(true);
+        field.inlineFeatureUpdated();
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }

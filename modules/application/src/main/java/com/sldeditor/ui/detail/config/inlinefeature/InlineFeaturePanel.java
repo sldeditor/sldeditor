@@ -19,24 +19,17 @@
 
 package com.sldeditor.ui.detail.config.inlinefeature;
 
-import com.sldeditor.common.coordinate.CoordManager;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.ui.detail.BasePanel;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.menucombobox.ArrowIcon;
-import com.sldeditor.ui.widgets.ValueComboBox;
-import com.sldeditor.ui.widgets.ValueComboBoxData;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -54,8 +47,17 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
+
 import org.geotools.styling.UserLayer;
 import org.opengis.feature.simple.SimpleFeatureType;
+
+import com.sldeditor.common.coordinate.CoordManager;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.ui.detail.BasePanel;
+import com.sldeditor.ui.detail.config.FieldConfigBase;
+import com.sldeditor.ui.menucombobox.ArrowIcon;
+import com.sldeditor.ui.widgets.ValueComboBox;
+import com.sldeditor.ui.widgets.ValueComboBoxData;
 
 /**
  * The Class InlineFeaturePanel.
@@ -91,6 +93,7 @@ public class InlineFeaturePanel extends JPanel {
     /** The populating flag. */
     private boolean populatingFlag = false;
 
+    /** The remove feature button. */
     private JButton removeFeatureButton;
 
     /**
@@ -167,8 +170,7 @@ public class InlineFeaturePanel extends JPanel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        model.addNewFeature();
-                        removeFeatureButton.setEnabled(false);
+                        addButtonPressed();
                     }
                 });
         addFeaturePanel.add(addButton);
@@ -182,9 +184,7 @@ public class InlineFeaturePanel extends JPanel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        int selectedRow = featureTable.getSelectedRow();
-                        model.removeFeature(selectedRow);
-                        removeFeatureButton.setEnabled(false);
+                        removeFeatureButtonPressed();
                     }
                 });
         addFeaturePanel.add(removeFeatureButton);
@@ -221,27 +221,7 @@ public class InlineFeaturePanel extends JPanel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        JPopupMenu popupMenu = new JPopupMenu();
-
-                        List<String> columnNames = model.getColumnNames();
-
-                        for (String columnName : columnNames) {
-                            JMenuItem menuItem = new JMenuItem(columnName);
-                            menuItem.addActionListener(
-                                    new ActionListener() {
-                                        public void actionPerformed(ActionEvent event) {
-                                            model.removeColumn(columnName);
-                                        }
-                                    });
-                            popupMenu.add(menuItem);
-                        }
-
-                        if (e != null) {
-                            popupMenu.show(
-                                    removeColumnButton,
-                                    removeColumnButton.getX() - removeColumnButton.getWidth(),
-                                    removeColumnButton.getY());
-                        }
+                        removeColumnButton(removeColumnButton, e);
                     }
                 });
         attributePanel.add(removeColumnButton);
@@ -258,7 +238,10 @@ public class InlineFeaturePanel extends JPanel {
                     @Override
                     public void mouseClicked(MouseEvent event) {
                         if (event.getClickCount() == 2) {
-                            editColumnAt(event.getPoint());
+                            
+                            int columnIndex = columnHeader.columnAtPoint(event.getPoint());
+
+                            editColumnAt(columnIndex);
                         }
                     }
                 });
@@ -364,12 +347,11 @@ public class InlineFeaturePanel extends JPanel {
     }
 
     /**
-     * Edits the column at.
+     * Edits the column at the supplied index.
      *
-     * @param p the point at which the mouse was clicked
+     * @param columnIndex the column index
      */
-    private void editColumnAt(Point p) {
-        int columnIndex = columnHeader.columnAtPoint(p);
+    private void editColumnAt(int columnIndex) {
 
         if ((columnIndex != -1) && (columnIndex != model.getGeometryFieldIndex())) {
             tableColumn = columnHeader.getColumnModel().getColumn(columnIndex);
@@ -399,5 +381,52 @@ public class InlineFeaturePanel extends JPanel {
      */
     public String getInlineFeatures() {
         return model.getInlineFeatures();
+    }
+
+    /**
+     * Remove column button pressed.
+     *
+     * @param removeColumnButton the remove column button
+     * @param e the e
+     */
+    protected void removeColumnButton(JButton removeColumnButton, ActionEvent e) {
+        JPopupMenu popupMenu = new JPopupMenu();
+
+        List<String> columnNames = model.getColumnNames();
+
+        for (String columnName : columnNames) {
+            JMenuItem menuItem = new JMenuItem(columnName);
+            menuItem.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent event) {
+                            model.removeColumn(columnName);
+                        }
+                    });
+            popupMenu.add(menuItem);
+        }
+
+        if (e != null) {
+            popupMenu.show(
+                    removeColumnButton,
+                    removeColumnButton.getX() - removeColumnButton.getWidth(),
+                    removeColumnButton.getY());
+        }
+    }
+
+    /**
+     * Removes the feature button pressed.
+     */
+    protected void removeFeatureButtonPressed() {
+        int selectedRow = featureTable.getSelectedRow();
+        model.removeFeature(selectedRow);
+        removeFeatureButton.setEnabled(false);
+    }
+
+    /**
+     * Adds the button pressed.
+     */
+    protected void addButtonPressed() {
+        model.addNewFeature();
+        removeFeatureButton.setEnabled(false);
     }
 }
