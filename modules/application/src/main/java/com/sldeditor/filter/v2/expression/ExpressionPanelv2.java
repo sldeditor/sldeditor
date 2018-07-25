@@ -121,17 +121,22 @@ public class ExpressionPanelv2 extends JDialog
 
     private JButton btnOk;
 
+    /** The in test mode flag. */
+    private boolean inTestMode = false;
+
     /**
      * Instantiates a new expression panel.
      *
      * @param vendorOptionList the vendor option list
+     * @param inTestMode the in test mode
      */
-    public ExpressionPanelv2(List<VersionData> vendorOptionList) {
+    public ExpressionPanelv2(List<VersionData> vendorOptionList, boolean inTestMode) {
 
         super(Controller.getInstance().getFrame(), "", true);
 
         this.setResizable(false);
         this.vendorOptionList = vendorOptionList;
+        this.inTestMode = inTestMode;
 
         setPreferredSize(new Dimension(800, 450));
 
@@ -408,7 +413,11 @@ public class ExpressionPanelv2 extends JDialog
     public boolean showDialog() {
         showExpressionDialog(fieldType, expression);
 
-        setVisible(true);
+        if (!inTestMode) {
+            setVisible(true);
+        } else {
+            okButtonPressed = true;
+        }
         return okButtonPressed;
     }
 

@@ -45,6 +45,9 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
     /** The vendor option list. */
     private List<VersionData> vendorOptionVersionsList = null;
 
+    /** The in test mode flag. */
+    private static boolean inTestMode = false;
+
     /**
      * Gets the single instance of ExpressionPanelFactory.
      *
@@ -74,7 +77,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @return the filter panel
      */
     private FilterPanelInterface internal_getFilterPanel(String hints) {
-        return new FilterPanelv2(this.vendorOptionVersionsList);
+        return new FilterPanelv2(this.vendorOptionVersionsList, inTestMode);
     }
 
     /**
@@ -84,7 +87,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @return the expression panel
      */
     private ExpressionPanelInterface internal_getExpressionPanel(String hints) {
-        return new ExpressionPanelv2(this.vendorOptionVersionsList);
+        return new ExpressionPanelv2(this.vendorOptionVersionsList, inTestMode);
     }
 
     /**
@@ -125,7 +128,9 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
+     * @see
+     * com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(
+     * java.util.List)
      */
     @Override
     public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
@@ -140,5 +145,21 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
     @Override
     public void backgroundColourUpdate(Color backgroundColour) {
         // Do nothing
+    }
+
+    /** Sets the test mode. */
+    public static void setTestMode() {
+        inTestMode = true;
+    }
+
+    /** Destroy instance. */
+    public static void destroyInstance() {
+        PrefManager.destroyInstance();
+        VendorOptionManager.destroyInstance();
+
+        EnvironmentVariableManager.destroyInstance();
+        ExpressionNode.setEnvMgr(null);
+
+        instance = null;
     }
 }

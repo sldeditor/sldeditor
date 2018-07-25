@@ -27,9 +27,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.filter.ExpressionPanelFactory;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +40,7 @@ import org.geotools.styling.StyleFactoryImpl;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 import org.opengis.filter.Filter;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The unit test for FieldConfigFeatureTypeConstraint.
@@ -49,6 +50,108 @@ import org.opengis.filter.Filter;
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigFeatureTypeConstraintTest {
+
+    class TestFieldConfigFeatureTypeConstraint extends FieldConfigFeatureTypeConstraint {
+
+        /**
+         * Instantiates a new test field config feature type constraint.
+         *
+         * @param commonData the common data
+         */
+        public TestFieldConfigFeatureTypeConstraint(FieldConfigCommonData commonData) {
+            super(commonData);
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#addEntry()
+         */
+        @Override
+        protected void addEntry() {
+            super.addEntry();
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#removeEntry()
+         */
+        @Override
+        protected void removeEntry() {
+            super.removeEntry();
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#addExtentEntry()
+         */
+        @Override
+        protected void addExtentEntry() {
+            super.addExtentEntry();
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#removeExtentEntry()
+         */
+        @Override
+        protected void removeExtentEntry() {
+            super.removeExtentEntry();
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#generateExpression()
+         */
+        @Override
+        protected Expression generateExpression() {
+            return super.generateExpression();
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#createCopy(com.sldeditor.ui.detail.config.FieldConfigBase)
+         */
+        @Override
+        protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
+            return super.createCopy(fieldConfigBase);
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#filterTableItemSelected()
+         */
+        @Override
+        protected void filterTableItemSelected() {
+            super.filterTableItemSelected();
+        }
+
+        /** The filter table. */
+        public void selectFilterTableRow(int fromRow, int toRow) {
+            filterTable.setColumnSelectionInterval(1, 1);
+            filterTable.setRowSelectionInterval(fromRow, toRow);
+        }
+
+        public void selectExtentTableRow(int fromRow, int toRow) {
+            extentTable.setRowSelectionInterval(fromRow, toRow);
+        }
+
+        public boolean isAddFTCButtonEnabled() {
+            return addFTCButton.isEnabled();
+        }
+
+        public boolean isRemoveFTCButtonEnabled() {
+            return removeFTCButton.isEnabled();
+        }
+
+        public boolean isAddExtentButtonEnabled() {
+            return addExtentButton.isEnabled();
+        }
+
+        public boolean isRemoveExtentButtonEnabled() {
+            return removeExtentButton.isEnabled();
+        }
+
+        public int getFilterRowCount() {
+            return filterModel.getRowCount();
+        }
+
+        public int getExtentRowCount() {
+            return extentModel.getRowCount();
+        }
+    }
 
     /**
      * Test method for {@link
@@ -166,25 +269,16 @@ public class FieldConfigFeatureTypeConstraintTest {
      */
     @Test
     public void testCreateCopy() {
-        class TestFieldConfigFeatureTypeConstraint extends FieldConfigFeatureTypeConstraint {
-            public TestFieldConfigFeatureTypeConstraint(FieldConfigCommonData commonData) {
-                super(commonData);
-            }
-
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
-                return createCopy(fieldConfigBase);
-            }
-        }
 
         TestFieldConfigFeatureTypeConstraint field =
                 new TestFieldConfigFeatureTypeConstraint(
                         new FieldConfigCommonData(
                                 Geometry.class, FieldIdEnum.NAME, "label", false, false));
         FieldConfigFeatureTypeConstraint copy =
-                (FieldConfigFeatureTypeConstraint) field.callCreateCopy(null);
+                (FieldConfigFeatureTypeConstraint) field.createCopy(null);
         assertNull(copy);
 
-        copy = (FieldConfigFeatureTypeConstraint) field.callCreateCopy(field);
+        copy = (FieldConfigFeatureTypeConstraint) field.createCopy(field);
         assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
@@ -250,6 +344,92 @@ public class FieldConfigFeatureTypeConstraintTest {
         field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
+    }
+
+    @Test
+    public void testUndoActionSuppress() {
+        FieldConfigFeatureTypeConstraint field =
+                new FieldConfigFeatureTypeConstraint(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, true));
+        field.createUI();
+
+        StyleFactoryImpl styleFactory = (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
+        FeatureTypeConstraint expectedValue1 =
+                styleFactory.createFeatureTypeConstraint("Feature", Filter.INCLUDE, new Extent[0]);
+
+        List<FeatureTypeConstraint> testValue = new ArrayList<FeatureTypeConstraint>();
+
+        testValue.add(expectedValue1);
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.populateField(testValue);
+        assertEquals(expectedValue1, field.getFeatureTypeConstraint().get(0));
+
+        FeatureTypeConstraint expectedValue2 =
+                styleFactory.createFeatureTypeConstraint("Feature2", Filter.INCLUDE, new Extent[0]);
+        List<FeatureTypeConstraint> testValue2 = new ArrayList<FeatureTypeConstraint>();
+        testValue2.add(expectedValue1);
+        testValue2.add(expectedValue2);
+        field.populateField(testValue2);
+        field.featureTypeConstraintUpdated();
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
+    }
+
+    @Test
+    public void testAddRemoveEntry() {
+        ExpressionPanelFactory.setTestMode();
+
+        TestFieldConfigFeatureTypeConstraint field =
+                new TestFieldConfigFeatureTypeConstraint(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false));
+        field.createUI();
+
+        assertTrue(field.isAddFTCButtonEnabled());
+        assertFalse(field.isRemoveFTCButtonEnabled());
+        assertFalse(field.isAddExtentButtonEnabled());
+        assertFalse(field.isRemoveExtentButtonEnabled());
+
+        // Add an entry
+        field.addEntry();
+
+        assertEquals(1, field.getFilterRowCount());
+        assertEquals(0, field.getExtentRowCount());
+
+        assertFalse(field.isRemoveFTCButtonEnabled());
+        assertFalse(field.isAddExtentButtonEnabled());
+        assertFalse(field.isRemoveExtentButtonEnabled());
+
+        // Select filter row
+        field.selectFilterTableRow(0, 0);
+        assertTrue(field.isRemoveFTCButtonEnabled());
+        assertTrue(field.isAddExtentButtonEnabled());
+
+        // Add 2 extent entries
+        field.addExtentEntry();
+        field.addExtentEntry();
+        assertFalse(field.isRemoveExtentButtonEnabled());
+        assertEquals(2, field.getExtentRowCount());
+
+        // Remove 1 extent entry
+        field.selectExtentTableRow(1, 1);
+        assertTrue(field.isRemoveExtentButtonEnabled());
+
+        field.removeExtentEntry();
+        assertEquals(1, field.getExtentRowCount());
+        assertFalse(field.isRemoveExtentButtonEnabled());
+
+        // Remove filter row
+        field.removeEntry();
+        assertEquals(1, field.getFilterRowCount());
+        assertEquals(0, field.getExtentRowCount());
+
+        assertTrue(field.isAddFTCButtonEnabled());
+        assertFalse(field.isRemoveFTCButtonEnabled());
+        assertFalse(field.isAddExtentButtonEnabled());
+        assertFalse(field.isRemoveExtentButtonEnabled());
+
+        ExpressionPanelFactory.destroyInstance();
     }
 
     /**

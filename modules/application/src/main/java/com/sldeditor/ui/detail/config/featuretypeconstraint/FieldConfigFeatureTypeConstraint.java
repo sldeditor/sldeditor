@@ -58,31 +58,31 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
         implements UndoActionInterface, FeatureTypeConstraintModelUpdateInterface {
 
     /** The filter table. */
-    private JTable filterTable;
+    protected JTable filterTable;
 
     /** The extent table. */
-    private JTable extentTable;
+    protected JTable extentTable;
 
     /** The old value obj. */
     private List<FeatureTypeConstraint> oldValueObj = null;
 
     /** The add feature type button. */
-    private JButton addFTCButton;
+    protected JButton addFTCButton;
 
     /** The remove feature type button. */
-    private JButton removeFTCButton;
+    protected JButton removeFTCButton;
 
     /** The add extent button. */
-    private JButton addExtentButton;
+    protected JButton addExtentButton;
 
     /** The remove extent button. */
-    private JButton removeExtentButton;
+    protected JButton removeExtentButton;
 
     /** The feature type constraint map data model. */
-    private FeatureTypeConstraintModel filterModel = null;
+    protected FeatureTypeConstraintModel filterModel = null;
 
     /** The extent model. */
-    private ExtentModel extentModel = null;
+    protected ExtentModel extentModel = null;
 
     /**
      * Instantiates a new field config string.
@@ -223,40 +223,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
                             @Override
                             public void valueChanged(ListSelectionEvent e) {
                                 if (!e.getValueIsAdjusting()) {
-                                    FeatureTypeConstraint ftc =
-                                            filterModel.getFeatureTypeConstraint(
-                                                    filterTable.getSelectedRow());
-                                    if (ftc != null) {
-                                        extentModel.populate(ftc.getExtents());
-                                        addExtentButton.setEnabled(true);
-                                        removeFTCButton.setEnabled(true);
-
-                                        int[] selectedColumns = filterTable.getSelectedColumns();
-
-                                        if (filterModel.isFilterColumn(selectedColumns)) {
-                                            FilterPanelInterface filterPanel =
-                                                    ExpressionPanelFactory.getFilterPanel(null);
-
-                                            String panelTitle =
-                                                    Localisation.getString(
-                                                            FieldConfigBase.class,
-                                                            "FieldConfigFeatureTypeConstraint.filterPanel");
-                                            filterPanel.configure(
-                                                    panelTitle,
-                                                    Object.class,
-                                                    SelectedSymbol.getInstance().isRasterSymbol());
-
-                                            filterPanel.populate(ftc.getFilter());
-
-                                            if (filterPanel.showDialog()) {
-                                                ftc.setFilter(filterPanel.getFilter());
-
-                                                filterModel.fireTableDataChanged();
-
-                                                featureTypeConstraintUpdated();
-                                            }
-                                        }
-                                    }
+                                    filterTableItemSelected();
                                 }
                             }
                         });
@@ -317,7 +284,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
     }
 
     /** Adds a new feature type constraint entry. */
-    private void addEntry() {
+    protected void addEntry() {
         filterModel.addNewEntry();
         extentModel.populate(null);
         removeFTCButton.setEnabled(false);
@@ -326,7 +293,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
     }
 
     /** Removes the selected feature type constraint entries. */
-    private void removeEntry() {
+    protected void removeEntry() {
         filterModel.removeEntries(
                 filterTable.getSelectionModel().getMinSelectionIndex(),
                 filterTable.getSelectionModel().getMaxSelectionIndex());
@@ -337,13 +304,13 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
     }
 
     /** Adds a new extent entry. */
-    private void addExtentEntry() {
+    protected void addExtentEntry() {
         extentModel.addNewEntry();
         removeExtentButton.setEnabled(false);
     }
 
     /** Removes the selected extent entries. */
-    private void removeExtentEntry() {
+    protected void removeExtentEntry() {
         extentModel.removeEntries(
                 extentTable.getSelectionModel().getMinSelectionIndex(),
                 extentTable.getSelectionModel().getMaxSelectionIndex());
@@ -507,19 +474,16 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
      */
     @Override
     public void populateField(List<FeatureTypeConstraint> valueList) {
-        if (filterModel != null) {
-            if (valueList != null) {
-                filterModel.populate(valueList);
+        if (valueList != null) {
+            filterModel.populate(valueList);
 
-                if (!isSuppressUndoEvents()) {
-                    UndoManager.getInstance()
-                            .addUndoEvent(
-                                    new UndoEvent(this, getFieldId(), oldValueObj, valueList));
+            if (!isSuppressUndoEvents()) {
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, valueList));
 
-                    oldValueObj = valueList;
-                }
-                valueUpdated();
+                oldValueObj = valueList;
             }
+            valueUpdated();
         }
     }
 
@@ -590,6 +554,40 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
             }
 
             featureTypeConstraintUpdated();
+        }
+    }
+
+    /** Filter table item selected. */
+    protected void filterTableItemSelected() {
+        FeatureTypeConstraint ftc =
+                filterModel.getFeatureTypeConstraint(filterTable.getSelectedRow());
+        if (ftc != null) {
+            extentModel.populate(ftc.getExtents());
+            addExtentButton.setEnabled(true);
+            removeFTCButton.setEnabled(true);
+
+            int[] selectedColumns = filterTable.getSelectedColumns();
+
+            if (filterModel.isFilterColumn(selectedColumns)) {
+                FilterPanelInterface filterPanel = ExpressionPanelFactory.getFilterPanel(null);
+
+                String panelTitle =
+                        Localisation.getString(
+                                FieldConfigBase.class,
+                                "FieldConfigFeatureTypeConstraint.filterPanel");
+                filterPanel.configure(
+                        panelTitle, Object.class, SelectedSymbol.getInstance().isRasterSymbol());
+
+                filterPanel.populate(ftc.getFilter());
+
+                if (filterPanel.showDialog()) {
+                    ftc.setFilter(filterPanel.getFilter());
+
+                    filterModel.fireTableDataChanged();
+
+                    featureTypeConstraintUpdated();
+                }
+            }
         }
     }
 }

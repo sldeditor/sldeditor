@@ -57,7 +57,7 @@ public class ExpressionPanelv2Test {
          * @param vendorOptionList the vendor option list
          */
         public TestExpressionPanelv2(List<VersionData> vendorOptionList) {
-            super(vendorOptionList);
+            super(vendorOptionList, false);
         }
 
         public void testShowExpressionDialog(Class<?> type, Expression expression) {
