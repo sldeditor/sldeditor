@@ -76,6 +76,9 @@ public class ConnectorDetailsPanel extends JPanel {
     /** The ok. */
     private boolean ok = false;
 
+    /** The in test mode flag. */
+    private static boolean inTestModeFlag = false;
+
     /**
      * Instantiates a new geo server connector panel.
      *
@@ -228,9 +231,11 @@ public class ConnectorDetailsPanel extends JPanel {
 
         Controller.getInstance().centreDialog(dialog);
 
-        dialog.setVisible(true);
+        if (!isInTestMode()) {
+            dialog.setVisible(true);
+        }
 
-        if (panel.okButtonPressed()) {
+        if (panel.okButtonPressed() || isInTestMode()) {
             return panel.getConnectionDetails();
         }
         return null;
@@ -283,5 +288,23 @@ public class ConnectorDetailsPanel extends JPanel {
         }
         textFieldUsername.setText(connectionDetails.getUserName());
         textFieldPassword.setText(connectionDetails.getPassword());
+    }
+
+    /**
+     * Checks if is in test mode.
+     *
+     * @return the inTestMode
+     */
+    public static boolean isInTestMode() {
+        return inTestModeFlag;
+    }
+
+    /**
+     * Sets the in test mode.
+     *
+     * @param inTestMode the inTestMode to set
+     */
+    public static void setInTestMode(boolean inTestMode) {
+        inTestModeFlag = inTestMode;
     }
 }

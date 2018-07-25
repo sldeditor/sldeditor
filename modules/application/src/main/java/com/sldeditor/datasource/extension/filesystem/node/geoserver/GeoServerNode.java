@@ -57,7 +57,7 @@ public class GeoServerNode extends DefaultMutableTreeNode implements NodeInterfa
      * @param connection the connection
      */
     public GeoServerNode(FileSystemInterface handler, GeoServerConnection connection) {
-        super(connection.getConnectionName());
+        super((connection == null) ? "" : connection.getConnectionName());
         this.connection = connection;
         this.handler = handler;
     }
