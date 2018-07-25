@@ -21,6 +21,7 @@ package com.sldeditor.test.unit.ui.detail.config.sortby;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.sldeditor.datasource.impl.GeometryTypeEnum;
 import com.sldeditor.ui.detail.config.sortby.SortByPanel;
 import com.sldeditor.ui.detail.config.sortby.SortByUpdateInterface;
 import java.awt.BorderLayout;
@@ -184,6 +185,7 @@ public class SortByPanelTest {
         List<String> fieldList = Arrays.asList("Field1", "Field2", "Field3", "Field4", "Field5");
         String selectedFieldList = "Field2 D, Field4 A";
         panel.populateFieldNames(fieldList);
+        panel.setText("");
         panel.setText(selectedFieldList);
 
         assertEquals(selectedFieldList, panel.getText());
@@ -227,6 +229,13 @@ public class SortByPanelTest {
         fieldList = Arrays.asList("Field1", "Field2", "Field3", "Field4");
         panel.populateFieldNames(fieldList);
         assertEquals("Field4 A, Field3 A", output.text);
+
+        // Increase code coverage
+        panel.dataSourceLoaded(GeometryTypeEnum.POINT, false);
+        panel.dataSourceAboutToUnloaded(null);
+
+        panel = new TestSortByPanel(null, 6);
+        panel.sortOrderUpdated();
 
         // If the next is uncommented the unit test stops being unattended
         // dialog.setVisible(true);

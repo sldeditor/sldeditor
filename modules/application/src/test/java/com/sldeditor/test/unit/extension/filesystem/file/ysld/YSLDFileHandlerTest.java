@@ -21,10 +21,12 @@ package com.sldeditor.test.unit.extension.filesystem.file.ysld;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import com.google.common.io.Files;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
@@ -38,6 +40,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.Icon;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -76,6 +79,10 @@ public class YSLDFileHandlerTest {
     @Test
     public void testGetSLDContentsFile() {
         assertNull(new YSLDFileHandler().getSLDContents(null));
+        assertNull(new YSLDFileHandler().open(null));
+        File tempFolder = Files.createTempDir();
+        assertNull(new YSLDFileHandler().open(tempFolder));
+        tempFolder.delete();
 
         URL url = YSLDFileHandlerTest.class.getResource("/point/ysld");
 
@@ -188,5 +195,18 @@ public class YSLDFileHandlerTest {
             e.printStackTrace();
             fail(e.getMessage());
         }
+    }
+
+    @Test
+    public void testGetIcon() {
+        YSLDFileHandler handler = new YSLDFileHandler();
+
+        Icon actualValue = handler.getIcon(null, null);
+
+        assertNotNull(actualValue);
+
+        Icon actualValue2 = handler.getIcon(null, null);
+
+        assertEquals(actualValue, actualValue2);
     }
 }

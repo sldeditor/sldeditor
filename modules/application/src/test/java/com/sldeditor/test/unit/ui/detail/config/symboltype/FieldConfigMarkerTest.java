@@ -35,15 +35,19 @@ import com.sldeditor.ui.detail.PointSymbolizerDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
@@ -51,7 +55,9 @@ import org.geotools.styling.Mark;
 import org.geotools.styling.MarkImpl;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.StyleBuilder;
+import org.geotools.styling.StyleFactory;
 import org.junit.jupiter.api.Test;
+import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 import org.opengis.style.GraphicFill;
 import org.opengis.style.GraphicalSymbol;
@@ -64,6 +70,30 @@ import org.opengis.style.GraphicalSymbol;
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigMarkerTest {
+
+    class TestFieldConfigMarker extends FieldConfigMarker {
+
+        public TestFieldConfigMarker(
+                FieldConfigCommonData commonData,
+                ColourFieldConfig fillFieldConfig,
+                ColourFieldConfig strokeFieldConfig,
+                FieldIdEnum symbolSelectionField) {
+            super(commonData, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
+        }
+
+        public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
+            return createCopy(fieldConfigBase);
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#populateVendorOptionFieldMap(java.util.Map)
+         */
+        @Override
+        protected void populateVendorOptionFieldMap(
+                Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+            super.populateVendorOptionFieldMap(fieldEnableMap);
+        }
+    }
 
     /**
      * Test method for {@link
@@ -196,21 +226,6 @@ public class FieldConfigMarkerTest {
     @Test
     public void testCreateCopy() {
         boolean valueOnly = true;
-
-        class TestFieldConfigMarker extends FieldConfigMarker {
-
-            public TestFieldConfigMarker(
-                    FieldConfigCommonData commonData,
-                    ColourFieldConfig fillFieldConfig,
-                    ColourFieldConfig strokeFieldConfig,
-                    FieldIdEnum symbolSelectionField) {
-                super(commonData, fillFieldConfig, strokeFieldConfig, symbolSelectionField);
-            }
-
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
-                return createCopy(fieldConfigBase);
-            }
-        }
 
         TestFieldConfigMarker field =
                 new TestFieldConfigMarker(
@@ -632,6 +647,17 @@ public class FieldConfigMarkerTest {
         assertTrue(field.accept(marker));
         field.populateSymbolList(PointFillDetails.class, groupList);
         assertTrue(field.accept(marker));
+
+        // Try some invalid values
+        StyleFactory sf = CommonFactoryFinder.getStyleFactory();
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+        marker = sf.createMark();
+        marker.setWellKnownName(ff.property("testproperty"));
+        assertFalse(field.accept(marker));
+
+        marker = sf.createMark();
+        marker.setWellKnownName(ff.literal(12));
+        assertFalse(field.accept(marker));
     }
 
     /**
@@ -734,7 +760,7 @@ public class FieldConfigMarkerTest {
 
         GraphicPanelFieldManager fieldConfigManager = null;
 
-        Class<?> panelId = PointFillDetails.class;
+        Class<?> panelId = PointSymbolizer.class;
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
 
         // Test it with non null values
@@ -795,6 +821,16 @@ public class FieldConfigMarkerTest {
         StyleBuilder styleBuilder = new StyleBuilder();
         Mark marker = styleBuilder.createMark("shape://plus");
         field2.setValue(null, null, null, null, marker);
+        field2.setValue(PointSymbolizer.class, fieldConfigManager, null, null, marker);
+
+        GroupConfig strokeGroup = new GroupConfig();
+        strokeGroup.setId(strokeConfig.getGroup());
+        fieldConfigManager.addGroup(strokeGroup);
+
+        GroupConfig fillGroup = new GroupConfig();
+        fillGroup.setId(fillConfig.getGroup());
+        fieldConfigManager.addGroup(fillGroup);
+
         field2.setValue(PointSymbolizer.class, fieldConfigManager, null, null, marker);
     }
 
@@ -861,11 +897,20 @@ public class FieldConfigMarkerTest {
                         new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         symbolSelectionField.createUI();
 
+        double expectedFillWidth = 5.6;
+        FieldConfigDouble widthField =
+                new FieldConfigDouble(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
+        widthField.createUI();
+        widthField.populateField(expectedFillWidth);
+
         fieldConfigManager.add(colourFieldId, colourField);
         FieldIdEnum opacityFieldId = FieldIdEnum.OVERALL_OPACITY;
         fieldConfigManager.add(opacityFieldId, opacityField);
         FieldIdEnum symbolSelectionFieldId = FieldIdEnum.SYMBOL_TYPE;
         fieldConfigManager.add(symbolSelectionFieldId, symbolSelectionField);
+        FieldIdEnum symbolFilLWidthFieldId = fillConfig.getWidth();
+        fieldConfigManager.add(symbolFilLWidthFieldId, widthField);
 
         // Try without setting any fields
         actualValue = field.getValue(fieldConfigManager, symbolType, false, false);
@@ -919,5 +964,41 @@ public class FieldConfigMarkerTest {
         assertTrue(actualSymbol.getWellKnownName().toString().compareTo(actualMarkerSymbol) == 0);
         assertNull(actualSymbol.getFill());
         assertNotNull(actualSymbol.getStroke());
+    }
+
+    @Test
+    void testVendorOptions() {
+        boolean valueOnly = true;
+        ColourFieldConfig fillConfig =
+                new ColourFieldConfig(
+                        GroupIdEnum.FILL,
+                        FieldIdEnum.FILL_COLOUR,
+                        FieldIdEnum.OVERALL_OPACITY,
+                        FieldIdEnum.STROKE_WIDTH);
+        ColourFieldConfig strokeConfig =
+                new ColourFieldConfig(
+                        GroupIdEnum.STROKE,
+                        FieldIdEnum.STROKE_STROKE_COLOUR,
+                        FieldIdEnum.OVERALL_OPACITY,
+                        FieldIdEnum.STROKE_FILL_WIDTH);
+
+        TestFieldConfigMarker field =
+                new TestFieldConfigMarker(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
+                        fillConfig,
+                        strokeConfig,
+                        null);
+
+        assertNull(field.getVendorOptionInfo());
+        field.populateVendorOptionFieldMap(null);
+
+        // Set null vendor option info
+        field.setVendorOptionVersion(null);
+
+        // Expecting the default vendor option info
+        assertEquals(
+                field.getVendorOption(),
+                VendorOptionManager.getInstance().getDefaultVendorOptionVersion());
     }
 }

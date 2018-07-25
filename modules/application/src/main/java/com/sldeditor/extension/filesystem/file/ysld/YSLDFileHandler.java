@@ -145,8 +145,9 @@ public class YSLDFileHandler implements FileHandlerInterface {
      */
     @Override
     public List<SLDDataInterface> open(File f) {
+        List<SLDDataInterface> list = null;
         if (f != null) {
-            List<SLDDataInterface> list = new ArrayList<SLDDataInterface>();
+            list = new ArrayList<SLDDataInterface>();
 
             if (f.isDirectory()) {
                 File[] listFiles = f.listFiles();
@@ -160,12 +161,10 @@ public class YSLDFileHandler implements FileHandlerInterface {
             }
 
             if (list.isEmpty()) {
-                return null;
+                list = null;
             }
-
-            return list;
         }
-        return null;
+        return list;
     }
 
     /**

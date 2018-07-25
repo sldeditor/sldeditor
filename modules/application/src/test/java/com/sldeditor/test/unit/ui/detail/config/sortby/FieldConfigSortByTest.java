@@ -24,7 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.undo.UndoEvent;
+import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
@@ -153,6 +155,10 @@ public class FieldConfigSortByTest {
         actualExpression = field.callGenerateExpression();
         assertTrue(expectedValue.compareTo(actualExpression.toString()) == 0);
 
+        field.populateExpression(Integer.valueOf(1));
+        actualExpression = field.callGenerateExpression();
+        assertTrue(expectedValue.compareTo(actualExpression.toString()) == 0);
+
         expectedValue = "test A, test2 D, test3 D";
         field.populateField(expectedValue);
         field.sortByUpdated(expectedValue);
@@ -268,5 +274,31 @@ public class FieldConfigSortByTest {
 
         field.redoAction(undoEvent);
         assertTrue(expectedRedoTestValue.compareTo(field.getStringValue()) == 0);
+    }
+
+    @Test
+    public void testUndoActionSuppressed() {
+        boolean valueOnly = true;
+        FieldConfigSortBy field =
+                new FieldConfigSortBy(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, true));
+
+        field.createUI();
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        String expectedTestValue = "test A, test2 D";
+        field.populateField(expectedTestValue);
+        assertTrue(expectedTestValue.compareTo(field.getStringValue()) == 0);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
+
+        Controller.getInstance().setPopulating(true);
+        field.sortByUpdated(null);
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
+
+        Controller.getInstance().setPopulating(false);
+        field.sortByUpdated("test");
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }
