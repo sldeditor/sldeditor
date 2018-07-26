@@ -39,7 +39,7 @@ import org.apache.commons.io.IOUtils;
 import org.geotools.styling.StyledLayerDescriptor;
 
 /**
- * Exports a list of SLD object to html.
+ * Exports a list of SLD objects to html.
  *
  * @author Robert Ward (SCISYS)
  */

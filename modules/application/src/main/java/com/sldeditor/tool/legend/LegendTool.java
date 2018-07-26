@@ -62,10 +62,10 @@ public class LegendTool implements ToolInterface {
     private static final String INDEX_HTML = "index.html";
 
     /** The save all legend button. */
-    private JButton saveAllLegend;
+    protected JButton saveAllLegend;
 
     /** The export all html button. */
-    private JButton exportAllHTML;
+    protected JButton exportAllHTML;
 
     /** The legend panel. */
     private JPanel legendPanel = null;
@@ -144,7 +144,7 @@ public class LegendTool implements ToolInterface {
                         // Disable the "All files" option.
                         //
                         chooser.setAcceptAllFileFilterUsed(false);
-                        //
+
                         if (chooser.showSaveDialog(exportAllHTML) == JFileChooser.APPROVE_OPTION) {
 
                             saveAllHTMLToFolder(chooser.getSelectedFile());
@@ -169,7 +169,7 @@ public class LegendTool implements ToolInterface {
      *
      * @param destinationFolder the destination folder
      */
-    private void saveAllHTMLToFolder(File destinationFolder) {
+    protected void saveAllHTMLToFolder(File destinationFolder) {
         if (!destinationFolder.exists()) {
             destinationFolder.mkdirs();
         }
@@ -186,7 +186,7 @@ public class LegendTool implements ToolInterface {
      *
      * @param destinationFolder the destination folder
      */
-    private void saveAllLegendToFolder(File destinationFolder) {
+    protected void saveAllLegendToFolder(File destinationFolder) {
         if (!destinationFolder.exists()) {
             destinationFolder.mkdirs();
         }
@@ -250,17 +250,19 @@ public class LegendTool implements ToolInterface {
             List<Class<?>> uniqueNodeTypeList,
             List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
-        for (NodeInterface node : nodeTypeList) {
-            if (node instanceof FileTreeNode) {
-                FileTreeNode fileTreeNode = (FileTreeNode) node;
+        boolean supported = false;
 
-                if (fileTreeNode.getFileCategory() != FileTreeNodeTypeEnum.SLD) {
-                    return false;
+        if (nodeTypeList != null) {
+            for (NodeInterface node : nodeTypeList) {
+                if (node instanceof FileTreeNode) {
+                    FileTreeNode fileTreeNode = (FileTreeNode) node;
+
+                    if (fileTreeNode.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
+                        supported = true;
+                    }
                 }
-            } else {
-                return true;
             }
         }
-        return true;
+        return supported;
     }
 }
