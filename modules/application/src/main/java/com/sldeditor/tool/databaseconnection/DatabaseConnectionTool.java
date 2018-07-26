@@ -51,10 +51,10 @@ public class DatabaseConnectionTool implements ToolInterface {
     private static final int PANEL_WIDTH = 110;
 
     /** The connect button. */
-    private JButton connectButton;
+    protected JButton connectButton;
 
     /** The disconnect button. */
-    private JButton disconnectButton;
+    protected JButton disconnectButton;
 
     /** The panel. */
     private JPanel panel;
@@ -185,16 +185,8 @@ public class DatabaseConnectionTool implements ToolInterface {
             }
         }
 
-        boolean connectedEnabled = false;
-        boolean disconnectedEnabled = false;
-
-        if ((connected == 0) || (disconnected == 0)) {
-            if (connected > 0) {
-                disconnectedEnabled = true;
-            } else if (disconnected > 0) {
-                connectedEnabled = true;
-            }
-        }
+        boolean connectedEnabled = (disconnected > 0);
+        boolean disconnectedEnabled = (connected > 0);
 
         connectButton.setEnabled(connectedEnabled);
         disconnectButton.setEnabled(disconnectedEnabled);
@@ -220,16 +212,22 @@ public class DatabaseConnectionTool implements ToolInterface {
             List<Class<?>> uniqueNodeTypeList,
             List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
-        if (uniqueNodeTypeList.size() == 1) {
-            NodeInterface node = nodeTypeList.get(0);
-            if (node instanceof FileTreeNode) {
-                FileTreeNode fileNode = (FileTreeNode) node;
+        boolean supported = false;
+        if (uniqueNodeTypeList != null) {
+            if (uniqueNodeTypeList.size() == 1) {
+                if (nodeTypeList.size() > 0) {
+                    NodeInterface node = nodeTypeList.get(0);
+                    if (node instanceof FileTreeNode) {
+                        FileTreeNode fileNode = (FileTreeNode) node;
 
-                return (fileNode.getFileCategory() == FileTreeNodeTypeEnum.DATABASE);
+                        if (fileNode.getFileCategory() == FileTreeNodeTypeEnum.DATABASE) {
+                            supported = true;
+                        }
+                    }
+                }
             }
-            return true;
         }
-        return false;
+        return supported;
     }
 
     /**

@@ -200,8 +200,10 @@ public class GeoServerConnectionTool implements ToolInterface {
             List<Class<?>> uniqueNodeTypeList,
             List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
-        if (uniqueNodeTypeList.size() == 1) {
-            return true;
+        if (uniqueNodeTypeList != null) {
+            if (uniqueNodeTypeList.size() == 1) {
+                return true;
+            }
         }
         return false;
     }
