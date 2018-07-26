@@ -288,6 +288,7 @@
 						<exclude>com/sldeditor/common/xml/envvar/*.class</exclude>
 						<exclude>com/sldeditor/common/xml/ui/*.class</exclude>
 						<exclude>com/sldeditor/generated/*.class</exclude>
+						<exclude>org/geoserver/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>

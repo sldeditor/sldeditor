@@ -62,10 +62,10 @@ public class GeoServerLayerUpdateTool implements ToolInterface {
     private GeoServerLayerUpdateInterface geoServerLayerUpdate = null;
 
     /** The layer list. */
-    private List<GeoServerLayer> layerList = new ArrayList<GeoServerLayer>();
+    protected List<GeoServerLayer> layerList = new ArrayList<GeoServerLayer>();
 
     /** The connection data. */
-    private GeoServerConnection connection = null;
+    protected GeoServerConnection connection = null;
 
     /** The supported node type list. */
     private static List<Class<?>> supportedNodeTypeList = new ArrayList<Class<?>>();
@@ -112,14 +112,7 @@ public class GeoServerLayerUpdateTool implements ToolInterface {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
 
-                        ConfigureLayerStyleDialog dlg = new ConfigureLayerStyleDialog();
-
-                        Map<String, List<StyleWrapper>> styleMap =
-                                geoServerLayerUpdate.getStyleMap(connection);
-
-                        if (dlg.populate(styleMap, layerList)) {
-                            geoServerLayerUpdate.updateLayerStyle(dlg.getUpdatedLayerStyles());
-                        }
+                        layerUpdateButtonPressed();
                     }
                 });
 
@@ -233,5 +226,18 @@ public class GeoServerLayerUpdateTool implements ToolInterface {
             }
         }
         return false;
+    }
+
+    /** Layer update button pressed. */
+    protected void layerUpdateButtonPressed() {
+        ConfigureLayerStyleDialog dlg = new ConfigureLayerStyleDialog();
+
+        if (geoServerLayerUpdate != null) {
+            Map<String, List<StyleWrapper>> styleMap = geoServerLayerUpdate.getStyleMap(connection);
+
+            if (dlg.populate(styleMap, layerList)) {
+                geoServerLayerUpdate.updateLayerStyle(dlg.getUpdatedLayerStyles());
+            }
+        }
     }
 }

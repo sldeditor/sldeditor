@@ -20,6 +20,7 @@
 package com.sldeditor.tool.layerstyle;
 
 import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.localisation.Localisation;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -52,7 +53,8 @@ public class GeoServerStyleTree extends JPanel {
     private static final String CONNECTED_GEOSERVER = "GeoServer";
 
     /** The Constant NOT_CONNECTED. */
-    private static final String NOT_CONNECTED = "Not Connected";
+    private static final String NOT_CONNECTED =
+            Localisation.getString(GeoServerStyleTree.class, "common.notConnected");
 
     /** The tree model. */
     private DefaultTreeModel treeModel = null;
@@ -64,10 +66,10 @@ public class GeoServerStyleTree extends JPanel {
     private JTree geoserverStyleTree = null;
 
     /** The btn apply. */
-    private JButton btnApply;
+    protected JButton btnApply;
 
     /** The btn revert. */
-    private JButton btnRevert;
+    protected JButton btnRevert;
 
     /** The style card panel. */
     private JPanel styleCardPanel;
@@ -126,29 +128,25 @@ public class GeoServerStyleTree extends JPanel {
         JPanel styleButtonsPanel = new JPanel();
         styleTreePanel.add(styleButtonsPanel, BorderLayout.SOUTH);
 
-        btnApply = new JButton("Apply");
+        btnApply = new JButton(Localisation.getString(GeoServerStyleTree.class, "common.apply"));
+
         btnApply.addActionListener(
                 new ActionListener() {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        LayerStyleNode node =
-                                (LayerStyleNode) geoserverStyleTree.getLastSelectedPathComponent();
-
-                        if (parentObj != null) {
-                            parentObj.selectedStyle(node.getStyleWrapper());
-                        }
+                        apply();
                     }
                 });
         styleButtonsPanel.add(btnApply);
 
-        btnRevert = new JButton("Revert");
+        btnRevert = new JButton(Localisation.getString(GeoServerStyleTree.class, "common.revert"));
         btnRevert.addActionListener(
                 new ActionListener() {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        showSelectedStyle(originalStyleWrapper);
+                        revert();
                     }
                 });
         styleButtonsPanel.add(btnRevert);
@@ -159,6 +157,11 @@ public class GeoServerStyleTree extends JPanel {
         JPanel emptyPanel = new JPanel();
         emptyPanel.setLayout(new BorderLayout());
         styleCardPanel.add(emptyPanel, EMPTY_PANEL);
+    }
+
+    /** Revert button pressed. */
+    protected void revert() {
+        showSelectedStyle(originalStyleWrapper);
     }
 
     /**
@@ -235,7 +238,7 @@ public class GeoServerStyleTree extends JPanel {
     }
 
     /** Clear selection. */
-    public void clearSelection() {
+    protected void clearSelection() {
         geoserverStyleTree.clearSelection();
     }
 
@@ -244,7 +247,7 @@ public class GeoServerStyleTree extends JPanel {
      *
      * @param styleWrapper the style wrapper
      */
-    public void select(StyleWrapper styleWrapper) {
+    protected void select(StyleWrapper styleWrapper) {
         originalStyleWrapper = styleWrapper;
 
         showSelectedStyle(styleWrapper);
@@ -262,6 +265,17 @@ public class GeoServerStyleTree extends JPanel {
 
         setButtonState(false);
 
+        selectStyleInTree(styleWrapper);
+
+        populating = false;
+    }
+
+    /**
+     * Select style in tree.
+     *
+     * @param styleWrapper the style wrapper
+     */
+    protected void selectStyleInTree(StyleWrapper styleWrapper) {
         DefaultMutableTreeNode node = null;
 
         if (styleWrapper != null) {
@@ -291,7 +305,6 @@ public class GeoServerStyleTree extends JPanel {
             geoserverStyleTree.setSelectionPath(path);
             geoserverStyleTree.scrollPathToVisible(path);
         }
-        populating = false;
     }
 
     /**
@@ -304,17 +317,22 @@ public class GeoServerStyleTree extends JPanel {
         TreePath selectedStylePath = geoserverStyleTree.getSelectionPath();
 
         if ((selectedStylePath != null) && (selectedStylePath.getPathCount() == 3)) {
-            selectedStyle = new StyleWrapper();
-            selectedStyle.setWorkspace(
-                    (String)
-                            ((DefaultMutableTreeNode) selectedStylePath.getPathComponent(1))
-                                    .getUserObject());
-            selectedStyle.setStyle(
-                    (String)
-                            ((DefaultMutableTreeNode) selectedStylePath.getPathComponent(2))
-                                    .getUserObject());
+            LayerStyleNode leaf = (LayerStyleNode) selectedStylePath.getLastPathComponent();
+
+            if (leaf.getStyleWrapper() != null) {
+                selectedStyle = leaf.getStyleWrapper().clone();
+            }
         }
 
         return selectedStyle;
+    }
+
+    /** Apply button pressed. */
+    protected void apply() {
+        LayerStyleNode node = (LayerStyleNode) geoserverStyleTree.getLastSelectedPathComponent();
+
+        if ((parentObj != null) && (node != null)) {
+            parentObj.selectedStyle(node.getStyleWrapper());
+        }
     }
 }

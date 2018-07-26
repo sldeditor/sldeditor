@@ -43,7 +43,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
- * The Class GeoServerConnectionListToolTest.
+ * The Class GeoServerConnectionListToolTest, unit test for GeoServerConnectionListTool
  *
  * @author Robert Ward (SCISYS)
  */
@@ -52,7 +52,7 @@ class GeoServerConnectionListToolTest {
     class TestTool extends GeoServerConnectionListTool {
 
         /**
-         * Instantiates a new test scale tool.
+         * Instantiates a new test GeoServer Connection List tool.
          *
          * @param application the application
          */
