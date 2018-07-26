@@ -63,30 +63,30 @@ import javax.xml.bind.annotation.XmlType;
 public class XMLGroupConfig extends XMLGroupConfigData {
 
     @XmlElements({
-        @XmlElement(name = "FieldConfigInteger", type = XMLFieldConfigInteger.class),
-        @XmlElement(name = "FieldConfigColour", type = XMLFieldConfigColour.class),
-        @XmlElement(name = "Group", type = XMLGroupConfig.class),
-        @XmlElement(name = "FieldConfigDouble", type = XMLFieldConfigDouble.class),
-        @XmlElement(name = "FieldConfigInlineFeature", type = XMLFieldConfigInlineFeature.class),
-        @XmlElement(name = "FieldConfigDSProperties", type = XMLFieldConfigDSProperties.class),
-        @XmlElement(name = "FieldConfigFont", type = XMLFieldConfigFont.class),
-        @XmlElement(name = "FieldConfigVendorOption", type = XMLFieldConfigVendorOption.class),
-        @XmlElement(name = "FieldConfigSlider", type = XMLFieldConfigSlider.class),
-        @XmlElement(name = "FieldConfigMapUnit", type = XMLFieldConfigMapUnit.class),
-        @XmlElement(name = "FieldConfigSortBy", type = XMLFieldConfigSortBy.class),
-        @XmlElement(name = "FieldConfigColourMap", type = XMLFieldConfigColourMap.class),
-        @XmlElement(name = "FieldConfigString", type = XMLFieldConfigString.class),
-        @XmlElement(name = "FieldConfigGeometry", type = XMLFieldConfigGeometry.class),
         @XmlElement(name = "FieldConfigSymbolType", type = XMLFieldConfigSymbolType.class),
-        @XmlElement(name = "FieldConfigBoolean", type = XMLFieldConfigBoolean.class),
+        @XmlElement(name = "FieldConfigGeometry", type = XMLFieldConfigGeometry.class),
+        @XmlElement(name = "FieldConfigFontPreview", type = XMLFieldConfigFontPreview.class),
+        @XmlElement(name = "FieldConfigInteger", type = XMLFieldConfigInteger.class),
         @XmlElement(name = "FieldConfigGeometryField", type = XMLFieldConfigGeometryField.class),
-        @XmlElement(name = "FieldConfigTransformation", type = XMLFieldConfigTransformation.class),
-        @XmlElement(name = "MultiOptionGroup", type = XMLMultiOptionGroup.class),
+        @XmlElement(name = "FieldConfigInlineFeature", type = XMLFieldConfigInlineFeature.class),
+        @XmlElement(name = "FieldConfigDouble", type = XMLFieldConfigDouble.class),
         @XmlElement(name = "FieldConfigEnum", type = XMLFieldConfigEnum.class),
+        @XmlElement(name = "FieldConfigTransformation", type = XMLFieldConfigTransformation.class),
+        @XmlElement(name = "FieldConfigString", type = XMLFieldConfigString.class),
+        @XmlElement(name = "Group", type = XMLGroupConfig.class),
+        @XmlElement(name = "MultiOptionGroup", type = XMLMultiOptionGroup.class),
+        @XmlElement(name = "FieldConfigFont", type = XMLFieldConfigFont.class),
+        @XmlElement(name = "FieldConfigColourMap", type = XMLFieldConfigColourMap.class),
+        @XmlElement(name = "FieldConfigColour", type = XMLFieldConfigColour.class),
+        @XmlElement(name = "FieldConfigDSProperties", type = XMLFieldConfigDSProperties.class),
+        @XmlElement(name = "FieldConfigMapUnit", type = XMLFieldConfigMapUnit.class),
+        @XmlElement(name = "FieldConfigVendorOption", type = XMLFieldConfigVendorOption.class),
+        @XmlElement(name = "FieldConfigBoolean", type = XMLFieldConfigBoolean.class),
+        @XmlElement(name = "FieldConfigSortBy", type = XMLFieldConfigSortBy.class),
         @XmlElement(
                 name = "FieldConfigFeatureTypeConstraint",
                 type = XMLFieldConfigFeatureTypeConstraint.class),
-        @XmlElement(name = "FieldConfigFontPreview", type = XMLFieldConfigFontPreview.class)
+        @XmlElement(name = "FieldConfigSlider", type = XMLFieldConfigSlider.class)
     })
     protected List<Object> fieldList;
 
@@ -103,15 +103,16 @@ public class XMLGroupConfig extends XMLGroupConfigData {
      *    getFieldList().add(newItem);
      * </pre>
      *
-     * <p>Objects of the following type(s) are allowed in the list {@link XMLFieldConfigInteger }
-     * {@link XMLFieldConfigColour } {@link XMLGroupConfig } {@link XMLFieldConfigDouble } {@link
-     * XMLFieldConfigInlineFeature } {@link XMLFieldConfigDSProperties } {@link XMLFieldConfigFont }
-     * {@link XMLFieldConfigVendorOption } {@link XMLFieldConfigSlider } {@link
-     * XMLFieldConfigMapUnit } {@link XMLFieldConfigSortBy } {@link XMLFieldConfigColourMap } {@link
-     * XMLFieldConfigString } {@link XMLFieldConfigGeometry } {@link XMLFieldConfigSymbolType }
-     * {@link XMLFieldConfigBoolean } {@link XMLFieldConfigGeometryField } {@link
-     * XMLFieldConfigTransformation } {@link XMLMultiOptionGroup } {@link XMLFieldConfigEnum }
-     * {@link XMLFieldConfigFeatureTypeConstraint } {@link XMLFieldConfigFontPreview }
+     * <p>Objects of the following type(s) are allowed in the list {@link XMLFieldConfigSymbolType }
+     * {@link XMLFieldConfigGeometry } {@link XMLFieldConfigFontPreview } {@link
+     * XMLFieldConfigInteger } {@link XMLFieldConfigGeometryField } {@link
+     * XMLFieldConfigInlineFeature } {@link XMLFieldConfigDouble } {@link XMLFieldConfigEnum }
+     * {@link XMLFieldConfigTransformation } {@link XMLFieldConfigString } {@link XMLGroupConfig }
+     * {@link XMLMultiOptionGroup } {@link XMLFieldConfigFont } {@link XMLFieldConfigColourMap }
+     * {@link XMLFieldConfigColour } {@link XMLFieldConfigDSProperties } {@link
+     * XMLFieldConfigMapUnit } {@link XMLFieldConfigVendorOption } {@link XMLFieldConfigBoolean }
+     * {@link XMLFieldConfigSortBy } {@link XMLFieldConfigFeatureTypeConstraint } {@link
+     * XMLFieldConfigSlider }
      */
     public List<Object> getFieldList() {
         if (fieldList == null) {
