@@ -48,10 +48,10 @@ public class GeoServerConnectionTool implements ToolInterface {
     private static final int PANEL_WIDTH = 110;
 
     /** The connect button. */
-    private JButton connectButton;
+    protected JButton connectButton;
 
     /** The disconnect button. */
-    private JButton disconnectButton;
+    protected JButton disconnectButton;
 
     /** The panel. */
     private JPanel panel;
@@ -99,17 +99,7 @@ public class GeoServerConnectionTool implements ToolInterface {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (geoServerConnectState != null) {
-                            connectButton.setEnabled(false);
-                            disconnectButton.setEnabled(false);
-                            geoServerConnectState.connect(connectionList);
-
-                            for (GeoServerConnection connection : connectionList) {
-                                if (!geoServerConnectState.isConnected(connection)) {
-                                    connectButton.setEnabled(true);
-                                }
-                            }
-                        }
+                        connectButtonPressed();
                     }
                 });
 
@@ -129,11 +119,7 @@ public class GeoServerConnectionTool implements ToolInterface {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (geoServerConnectState != null) {
-                            connectButton.setEnabled(false);
-                            disconnectButton.setEnabled(false);
-                            geoServerConnectState.disconnect(connectionList);
-                        }
+                        disconnectButtonPressed();
                     }
                 });
 
@@ -187,16 +173,8 @@ public class GeoServerConnectionTool implements ToolInterface {
             }
         }
 
-        boolean connectedEnabled = false;
-        boolean disconnectedEnabled = false;
-
-        if ((connected == 0) || (disconnected == 0)) {
-            if (connected > 0) {
-                disconnectedEnabled = true;
-            } else if (disconnected > 0) {
-                connectedEnabled = true;
-            }
-        }
+        boolean connectedEnabled = (disconnected > 0);
+        boolean disconnectedEnabled = (connected > 0);
 
         connectButton.setEnabled(connectedEnabled);
         disconnectButton.setEnabled(disconnectedEnabled);
@@ -235,5 +213,29 @@ public class GeoServerConnectionTool implements ToolInterface {
      */
     public void populateComplete(GeoServerConnection connection) {
         updateButtonState();
+    }
+
+    /** Connect button pressed. */
+    protected void connectButtonPressed() {
+        if (geoServerConnectState != null) {
+            connectButton.setEnabled(false);
+            disconnectButton.setEnabled(false);
+            geoServerConnectState.connect(connectionList);
+
+            for (GeoServerConnection connection : connectionList) {
+                if (!geoServerConnectState.isConnected(connection)) {
+                    connectButton.setEnabled(true);
+                }
+            }
+        }
+    }
+
+    /** Disconnect button pressed. */
+    protected void disconnectButtonPressed() {
+        if (geoServerConnectState != null) {
+            connectButton.setEnabled(false);
+            disconnectButton.setEnabled(false);
+            geoServerConnectState.disconnect(connectionList);
+        }
     }
 }
