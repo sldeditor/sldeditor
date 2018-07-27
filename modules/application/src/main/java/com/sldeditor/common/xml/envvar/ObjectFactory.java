@@ -28,14 +28,14 @@ public class ObjectFactory {
      */
     public ObjectFactory() {}
 
-    /** Create an instance of {@link XMLBuiltInEnvVarList } */
-    public XMLBuiltInEnvVarList createXMLBuiltInEnvVarList() {
-        return new XMLBuiltInEnvVarList();
-    }
-
     /** Create an instance of {@link XMLEnvVarTypeList } */
     public XMLEnvVarTypeList createXMLEnvVarTypeList() {
         return new XMLEnvVarTypeList();
+    }
+
+    /** Create an instance of {@link XMLEnvVarType } */
+    public XMLEnvVarType createXMLEnvVarType() {
+        return new XMLEnvVarType();
     }
 
     /** Create an instance of {@link EnvironmentVariables } */
@@ -48,8 +48,8 @@ public class ObjectFactory {
         return new XMLEnvVar();
     }
 
-    /** Create an instance of {@link XMLEnvVarType } */
-    public XMLEnvVarType createXMLEnvVarType() {
-        return new XMLEnvVarType();
+    /** Create an instance of {@link XMLBuiltInEnvVarList } */
+    public XMLBuiltInEnvVarList createXMLBuiltInEnvVarList() {
+        return new XMLBuiltInEnvVarList();
     }
 }

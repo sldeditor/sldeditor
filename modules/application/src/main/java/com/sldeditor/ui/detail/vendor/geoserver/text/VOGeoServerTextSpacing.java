@@ -19,7 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.text;
 
-import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -28,8 +27,7 @@ import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigDouble;
+import com.sldeditor.ui.detail.vendor.VOPopulation;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
@@ -48,7 +46,7 @@ import org.geotools.styling.TextSymbolizer;
  *
  * @author Robert Ward (SCISYS)
  */
-public class VOGeoServerTextSpacing extends StandardPanel
+public class VOGeoServerTextSpacing extends VOPopulation
         implements VendorOptionInterface, PopulateDetailsInterface, UpdateSymbolInterface {
 
     /** The Constant PANEL_CONFIG. */
@@ -214,49 +212,6 @@ public class VOGeoServerTextSpacing extends StandardPanel
         return this.fieldConfigManager;
     }
 
-    /**
-     * Internal populate.
-     *
-     * @param options the options
-     * @param field the field
-     * @param key the key
-     */
-    private void internalPopulate(Map<String, String> options, FieldIdEnum field, String key) {
-        FieldConfigBase fieldConfig = fieldConfigManager.get(field);
-
-        if (fieldConfig != null) {
-            if (fieldConfig instanceof FieldConfigDouble) {
-                internal_populateDoubleField(options, field, key);
-            } else {
-                ConsoleManager.getInstance()
-                        .error(
-                                this,
-                                "Unsupported field type : "
-                                        + field
-                                        + " "
-                                        + fieldConfig.getClass().getName());
-            }
-        }
-    }
-
-    /**
-     * Internal_populate double field.
-     *
-     * @param options the options
-     * @param fieldId the field id
-     * @param key the key
-     */
-    private void internal_populateDoubleField(
-            Map<String, String> options, FieldIdEnum fieldId, String key) {
-        if ((options != null) && options.containsKey(key)) {
-            String storedValue = options.get(key);
-            Double value = Double.valueOf(storedValue);
-            fieldConfigVisitor.populateDoubleField(fieldId, value);
-        } else {
-            setDefaultValue(fieldId);
-        }
-    }
-
     /*
      * (non-Javadoc)
      *
@@ -319,49 +274,6 @@ public class VOGeoServerTextSpacing extends StandardPanel
     @Override
     public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
         // Do nothing
-    }
-
-    /**
-     * Internal update symbol.
-     *
-     * @param options the options
-     * @param field the field
-     * @param key the key
-     */
-    private void internalUpdateSymbol(Map<String, String> options, FieldIdEnum field, String key) {
-        FieldConfigBase fieldConfig = fieldConfigManager.get(field);
-
-        if (fieldConfig instanceof FieldConfigDouble) {
-            internal_updateSymbolDoubleField(options, field, key);
-        } else {
-            ConsoleManager.getInstance()
-                    .error(
-                            this,
-                            "Unsupported field type : "
-                                    + field
-                                    + " "
-                                    + fieldConfig.getClass().getName());
-        }
-    }
-
-    /**
-     * Internal_update symbol double field.
-     *
-     * @param options the options
-     * @param field the field
-     * @param key the key
-     */
-    private void internal_updateSymbolDoubleField(
-            Map<String, String> options, FieldIdEnum field, String key) {
-        double value = fieldConfigVisitor.getDouble(field);
-
-        Double defaultValue = (Double) getDefaultFieldValue(field);
-
-        if (defaultValue == null) {
-            ConsoleManager.getInstance().error(this, "Failed to find default for field : " + field);
-        } else if (value != defaultValue) {
-            options.put(key, String.valueOf(value));
-        }
     }
 
     /**
