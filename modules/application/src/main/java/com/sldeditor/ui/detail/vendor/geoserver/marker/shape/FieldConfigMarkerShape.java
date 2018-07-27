@@ -73,7 +73,9 @@ public class FieldConfigMarkerShape extends FieldConfigMarker {
             Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
-        vendorOptionsPresentList.add(voPresent);
+        if (vendorOptionsPresentList != null) {
+            vendorOptionsPresentList.add(voPresent);
+        }
     }
 
     /*

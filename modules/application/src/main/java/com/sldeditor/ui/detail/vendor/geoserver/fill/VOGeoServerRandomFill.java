@@ -457,12 +457,14 @@ public class VOGeoServerRandomFill extends StandardPanel
      */
     @Override
     public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
-        Map<String, String> options = polygonSymbolizer.getOptions();
+        if (polygonSymbolizer != null) {
+            Map<String, String> options = polygonSymbolizer.getOptions();
 
-        options.clear();
+            options.clear();
 
-        for (FieldIdEnum key : fieldMap.keySet()) {
-            internalUpdateSymbol(options, key, fieldMap.get(key));
+            for (FieldIdEnum key : fieldMap.keySet()) {
+                internalUpdateSymbol(options, key, fieldMap.get(key));
+            }
         }
     }
 
@@ -562,22 +564,32 @@ public class VOGeoServerRandomFill extends StandardPanel
                     VendorOptionPresent voPresent =
                             new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
-                    vendorOptionsPresentList.add(voPresent);
+                    if (vendorOptionsPresentList != null) {
+                        vendorOptionsPresentList.add(voPresent);
+                    }
                 }
             }
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.SelectedChannelType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * SelectedChannelType)
      */
     @Override
     public void populate(SelectedChannelType channelType) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.SelectedChannelType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.SelectedChannelType)
      */
     @Override
     public void updateSymbol(SelectedChannelType channelType) {

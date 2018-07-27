@@ -21,9 +21,12 @@ package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.extshape;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.extshape.FieldConfigMarkerExtShape;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -54,5 +57,10 @@ public class FieldConfigMarkerExtShapeTest {
                         null);
 
         assertNotNull(field);
+
+        field.getMinimumVersion(null, null, null);
+
+        List<VendorOptionPresent> vendorOptionsPresentList = new ArrayList<VendorOptionPresent>();
+        field.getMinimumVersion(null, "", vendorOptionsPresentList);
     }
 }

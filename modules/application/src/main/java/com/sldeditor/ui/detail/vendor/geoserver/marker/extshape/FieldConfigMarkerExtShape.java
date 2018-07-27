@@ -66,14 +66,17 @@ public class FieldConfigMarkerExtShape extends FieldConfigMarker {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(
             Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
         VendorOptionPresent voPresent = new VendorOptionPresent(sldObj, getVendorOptionInfo());
 
-        vendorOptionsPresentList.add(voPresent);
+        if (vendorOptionsPresentList != null) {
+            vendorOptionsPresentList.add(voPresent);
+        }
     }
 
     /*
