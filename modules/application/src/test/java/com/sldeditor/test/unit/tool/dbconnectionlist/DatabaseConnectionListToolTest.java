@@ -260,7 +260,6 @@ class DatabaseConnectionListToolTest {
         TestDatabaseConnectionListTool testTool = new TestDatabaseConnectionListTool(receiver);
 
         // Try a DatabaseNode -- supports duplication
-        DatabaseConnection dbConnection = DatabaseConnectionFactory.createPostgres();
         nodeTypeList.add(new DatabaseOverallNode(null, "PostGIS (JNDI)", null));
         testTool.setSelectedItems(nodeTypeList, sldDataList);
 
