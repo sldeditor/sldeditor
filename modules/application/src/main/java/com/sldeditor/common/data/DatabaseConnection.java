@@ -107,7 +107,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
             boolean supportsDuplication,
             List<DatabaseConnectionField> detailList,
             DatabaseConnectionName databaseConnectionName) {
-        this.databaseType = (String) databaseType.sample;
+        this.databaseType = (databaseType == null) ? "" : (String) databaseType.sample;
         this.databaseTypeLabel = databaseTypeLabel;
         this.detailList = detailList;
         this.databaseConnectionName = databaseConnectionName;
@@ -117,9 +117,11 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
 
         this.connectionDataMap = this.initialValues;
 
-        for (DatabaseConnectionField param : detailList) {
-            if (!param.isOptional() && !(param.isPassword() || param.isUsername())) {
-                expectedKeys.add(param.getKey());
+        if (detailList != null) {
+            for (DatabaseConnectionField param : detailList) {
+                if (!param.isOptional() && !(param.isPassword() || param.isUsername())) {
+                    expectedKeys.add(param.getKey());
+                }
             }
         }
     }
@@ -127,13 +129,15 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
     /** Creates the initial values. */
     private void createInitialValues() {
         initialValues.put(DatabaseConnectionFactory.DATABASE_TYPE_KEY, databaseType);
-        for (DatabaseConnectionField detail : detailList) {
-            String defaultValue = "";
+        if (detailList != null) {
+            for (DatabaseConnectionField detail : detailList) {
+                String defaultValue = "";
 
-            if (detail.getDefaultValue() != null) {
-                defaultValue = detail.getDefaultValue().toString();
+                if (detail.getDefaultValue() != null) {
+                    defaultValue = detail.getDefaultValue().toString();
+                }
+                initialValues.put(detail.getKey(), defaultValue);
             }
-            initialValues.put(detail.getKey(), defaultValue);
         }
     }
 
@@ -512,6 +516,10 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
                 return false;
             }
         } else if (!userName.equals(other.userName)) {
+            return false;
+        }
+
+        if (this.supportsDuplication != other.supportsDuplication) {
             return false;
         }
         return true;

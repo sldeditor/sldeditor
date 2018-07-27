@@ -20,6 +20,7 @@
 package com.sldeditor.test.unit.common.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -35,6 +36,7 @@ import org.junit.jupiter.api.Test;
  */
 public class StyleWrapperTest {
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void test() {
         StyleWrapper styleWrapper = new StyleWrapper();
@@ -55,5 +57,15 @@ public class StyleWrapperTest {
 
         assertTrue(styleWrapper.compareTo(null) != 0);
         assertTrue(styleWrapper.compareTo(clone) == 0);
+
+        StyleWrapper styleWrapper2 = new StyleWrapper(null, expectedStyle);
+        assertEquals(styleWrapper2.toString(), expectedStyle);
+
+        assertFalse(styleWrapper.hashCode() == styleWrapper2.hashCode());
+
+        assertFalse(styleWrapper2.equals(null));
+        assertFalse(styleWrapper2.equals(""));
+        assertFalse(new StyleWrapper(expectedWorkspace, null).equals(styleWrapper2));
+        assertFalse(new StyleWrapper(null, expectedStyle).equals(styleWrapper));
     }
 }

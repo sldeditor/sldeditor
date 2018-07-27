@@ -99,6 +99,7 @@ public class VendorOptionVersion {
      * @return the vendor option version
      */
     public static VendorOptionVersion fromString(String value) {
+        VendorOptionVersion vendorOptionVersion = null;
         String[] components = value.split(DELIMETER);
 
         if (components.length == 3) {
@@ -115,6 +116,7 @@ public class VendorOptionVersion {
                                 "Unknown VendorOption class : " + components[0]);
                 return null;
             }
+
             if (components[1].compareTo(NULL_STRING) != 0) {
                 minimumVersion = VersionData.getDecodedString(components[1]);
             }
@@ -122,13 +124,11 @@ public class VendorOptionVersion {
             if (components[2].compareTo(NULL_STRING) != 0) {
                 maximumVersion = VersionData.getDecodedString(components[2]);
             }
-            VendorOptionVersion vendorOptionVersion =
+            vendorOptionVersion =
                     new VendorOptionVersion(classType, minimumVersion, maximumVersion);
-
-            return vendorOptionVersion;
         }
 
-        return null;
+        return vendorOptionVersion;
     }
 
     /**

@@ -89,6 +89,10 @@ public class VersionDataTest {
         String expectedVersionString9 = "1.2.3-SNAPSHOT";
         VersionData versionData9 = VersionData.decode(getClass(), expectedVersionString9);
         assertEquals(expectedVersionString9, versionData9.getVersionString());
+
+        String expectedVersionString10 = "NotSet";
+        VersionData versionData10 = VersionData.decode(getClass(), expectedVersionString10);
+        assertEquals(expectedVersionString10, versionData10.getVersionString());
     }
 
     /**
@@ -97,6 +101,7 @@ public class VersionDataTest {
      * Test method for {@link
      * com.sldeditor.common.vendoroption.VersionData#equals(java.lang.Object)}.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testCompareTo() {
         VersionData versionData1 = VersionData.decode(getClass(), "1.2.3");
@@ -109,6 +114,9 @@ public class VersionDataTest {
         VersionData versionData7 = VersionData.decode(getClass(), "8.1.2");
         VersionData versionData8 = VersionData.decode(getClass(), "8.3.4");
         VersionData versionData9 = VersionData.decode(getClass(), "8.3.4-SNAPSHOT");
+        VersionData versionData10 = VersionData.decode(getClass(), "8.3.4.1");
+        VersionData versionData11 = VersionData.decode(getClass(), "8.3.4.2");
+        VersionData versionData12 = VersionData.decode(null, "8.3.4.2");
         // CHECKSTYLE:ON
 
         assertTrue(versionData1.compareTo(versionData2) == 0);
@@ -127,6 +135,9 @@ public class VersionDataTest {
         assertFalse(versionData4.equals(versionData7));
         assertTrue(versionData4.compareTo(versionData8) != 0);
         assertFalse(versionData4.equals(versionData8));
+        assertTrue(versionData10.compareTo(versionData11) != 0);
+        assertFalse(versionData10.equals(versionData11));
+        assertFalse(versionData12.equals(versionData11));
 
         assertFalse(versionData4.equals(null));
         assertFalse(versionData4.equals(new String()));
@@ -134,7 +145,7 @@ public class VersionDataTest {
         assertTrue(versionData1.hashCode() == versionData2.hashCode());
         assertFalse(versionData1.hashCode() == versionData4.hashCode());
 
-        // SNAPSHOT versions come before non-SNAPSHOT versions if the numbes are the same
+        // SNAPSHOT versions come before non-SNAPSHOT versions if the numbers are the same
         assertTrue(versionData8.compareTo(versionData9) == 1);
         assertFalse(versionData8.equals(versionData9));
     }
