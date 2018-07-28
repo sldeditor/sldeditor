@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2016, SCISYS UK Limited
+ * Copyright (C) 2018, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.create.NewSLDPanel;
 import java.util.List;
 import javax.swing.ComboBoxModel;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,7 +35,6 @@ import org.junit.jupiter.api.Test;
  *
  * @author Robert Ward (SCISYS)
  */
-@Disabled
 public class NewSLDPanelTest {
 
     /** The Class TestNewSLDPanel. */
@@ -69,36 +67,22 @@ public class NewSLDPanelTest {
 
         /** Ok button. */
         public void okButton() {
-            Thread one =
-                    new Thread() {
-                        public void run() {
-                            try {
-                                Thread.sleep(1000);
-                                okButtonPressed();
-                            } catch (InterruptedException v) {
-                                System.out.println(v);
-                            }
-                        }
-                    };
-
-            one.start();
+            okButtonPressed();
         }
 
         /** Cancel button. */
         public void cancelButton() {
-            Thread one =
-                    new Thread() {
-                        public void run() {
-                            try {
-                                Thread.sleep(1000);
-                                cancelButtonPressed();
-                            } catch (InterruptedException v) {
-                                System.out.println(v);
-                            }
-                        }
-                    };
+            cancelButtonPressed();
+        }
 
-            one.start();
+        /*
+         * (non-Javadoc)
+         *
+         * @see com.sldeditor.create.NewSLDPanel#getSelectedSLD()
+         */
+        @Override
+        protected List<SLDDataInterface> getSelectedSLD() {
+            return super.getSelectedSLD();
         }
     }
 
@@ -111,12 +95,12 @@ public class NewSLDPanelTest {
 
         // Press cancel
         panel.cancelButton();
-        assertNull(panel.showDialog(null));
+        assertNull(panel.getSelectedSLD());
 
         for (int index = 0; index < panel.getData().getSize(); index++) {
             panel.setData(index);
             panel.okButton();
-            List<SLDDataInterface> sldData = panel.showDialog(null);
+            List<SLDDataInterface> sldData = panel.getSelectedSLD();
             assertEquals(1, sldData.size());
             assertEquals(panel.getData().getElementAt(index), sldData.get(0).getLayerName());
         }

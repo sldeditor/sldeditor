@@ -398,4 +398,16 @@ public class VOGeoServerTextSymbolizer2Test {
         SelectedChannelType channelType = null;
         testObj.updateSymbol(channelType);
     }
+
+    /**
+     * Test method for {@link
+     * com.sldeditor.ui.detail.vendor.geoserver.text.VOGeoServerTextSymbolizer2#populate(org.geotools.styling.FeatureTypeStyle)}.
+     */
+    @Test
+    void testPopulateFeatureTypeStyle() {
+        TextSymbolizerDetails panel = new TextSymbolizerDetails();
+        VOGeoServerTextSymbolizer2 testObj = new VOGeoServerTextSymbolizer2(panel.getClass());
+        FeatureTypeStyle symbol = null;
+        testObj.populate(symbol);
+    }
 }
