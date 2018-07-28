@@ -19,19 +19,6 @@
 
 package com.sldeditor.ui.detail.vendor.geoserver.text;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.SelectedChannelType;
-import org.geotools.styling.TextSymbolizer;
-import org.geotools.styling.TextSymbolizer2;
-
-import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -40,15 +27,19 @@ import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
-import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigBoolean;
-import com.sldeditor.ui.detail.config.FieldConfigDouble;
-import com.sldeditor.ui.detail.config.FieldConfigEnum;
-import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.detail.vendor.VOPopulation;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
+import org.geotools.styling.SelectedChannelType;
+import org.geotools.styling.TextSymbolizer;
+import org.geotools.styling.TextSymbolizer2;
 
 /**
  * Class to handle the getting and setting of GeoServer labelling vendor option data.
@@ -72,50 +63,6 @@ public class VOGeoServerLabelling extends VOPopulation
 
     /** The vendor option info. */
     private VendorOptionInfo vendorOptionInfo = null;
-
-    /** The Class DefaultOverride. */
-    class DefaultOverride {
-
-        /** The field. */
-        private FieldIdEnum field;
-
-        /** The legal values. */
-        private List<String> legalValues;
-
-        /**
-         * Instantiates a new default override.
-         *
-         * @param field the field
-         * @param legalValues the legal values
-         */
-        public DefaultOverride(FieldIdEnum field, String[] legalValues) {
-            super();
-            this.field = field;
-            this.legalValues = Arrays.asList(legalValues);
-        }
-
-        /**
-         * Gets the field.
-         *
-         * @return the field
-         */
-        public FieldIdEnum getField() {
-            return field;
-        }
-
-        /**
-         * Gets the legal values.
-         *
-         * @return the legalValues
-         */
-        public List<String> getLegalValues() {
-            return legalValues;
-        }
-    }
-
-    /** The override map. */
-    private Map<FieldIdEnum, DefaultOverride> overrideMap =
-            new HashMap<FieldIdEnum, DefaultOverride>();
 
     /**
      * Constructor.
@@ -146,7 +93,7 @@ public class VOGeoServerLabelling extends VOPopulation
         fieldMap.put(FieldIdEnum.LABEL_SPACE_AROUND, TextSymbolizer2.SPACE_AROUND_KEY);
 
         String[] graphicResizeValues = {"Proportional", "Stretch"};
-        overrideMap.put(
+        addOverride(
                 FieldIdEnum.LABEL_GRAPHIC_MARGIN,
                 new DefaultOverride(FieldIdEnum.LABEL_GRAPHIC_RESIZE, graphicResizeValues));
         createUI();
@@ -257,10 +204,12 @@ public class VOGeoServerLabelling extends VOPopulation
      */
     @Override
     public void populate(TextSymbolizer textSymbolizer) {
-        Map<String, String> options = textSymbolizer.getOptions();
+        if (textSymbolizer != null) {
+            Map<String, String> options = textSymbolizer.getOptions();
 
-        for (FieldIdEnum key : fieldMap.keySet()) {
-            internalPopulate(options, key, fieldMap.get(key));
+            for (FieldIdEnum key : fieldMap.keySet()) {
+                internalPopulate(options, key, fieldMap.get(key));
+            }
         }
     }
 
@@ -327,53 +276,13 @@ public class VOGeoServerLabelling extends VOPopulation
      */
     @Override
     public void updateSymbol(TextSymbolizer textSymbolizer) {
-        Map<String, String> options = textSymbolizer.getOptions();
+        if (textSymbolizer != null) {
+            Map<String, String> options = textSymbolizer.getOptions();
 
-        for (FieldIdEnum key : fieldMap.keySet()) {
-            internalUpdateSymbol(options, key, fieldMap.get(key));
-        }
-    }
-
-    /**
-     * Find out whether to include value based on the value of another field.
-     *
-     * @param field the field
-     * @return true, if successful
-     */
-    protected boolean includeValue(FieldIdEnum field) {
-        DefaultOverride override = overrideMap.get(field);
-
-        if (override != null) {
-            String value = null;
-            FieldConfigBase fieldConfig = fieldConfigManager.get(override.getField());
-            if (fieldConfig instanceof FieldConfigBoolean) {
-                value = String.valueOf(fieldConfigVisitor.getBoolean(override.getField()));
-            } else if (fieldConfig instanceof FieldConfigInteger) {
-                value = String.valueOf(fieldConfigVisitor.getInteger(override.getField()));
-            } else if (fieldConfig instanceof FieldConfigDouble) {
-                value = String.valueOf(fieldConfigVisitor.getDouble(override.getField()));
-            } else if (fieldConfig instanceof FieldConfigEnum) {
-                value = String.valueOf(fieldConfigVisitor.getComboBox(override.getField()));
-            } else {
-                ConsoleManager.getInstance()
-                        .error(
-                                this,
-                                "Unsupported field type : "
-                                        + field
-                                        + " "
-                                        + fieldConfig.getClass().getName());
-            }
-
-            if (value != null) {
-                for (String legalValue : override.getLegalValues()) {
-                    if (value.compareToIgnoreCase(legalValue) == 0) {
-                        return true;
-                    }
-                }
+            for (FieldIdEnum key : fieldMap.keySet()) {
+                internalUpdateSymbol(options, key, fieldMap.get(key));
             }
         }
-
-        return false;
     }
 
     /**

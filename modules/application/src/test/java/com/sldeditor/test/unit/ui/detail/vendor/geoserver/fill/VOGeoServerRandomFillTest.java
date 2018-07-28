@@ -133,14 +133,6 @@ class VOGeoServerRandomFillTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.vendor.geoserver.fill.VOGeoServerRandomFill#internalPopulate(java.util.Map,
-     * com.sldeditor.common.xml.ui.FieldIdEnum, java.lang.String)}.
-     */
-    @Test
-    void testInternalPopulate() {}
-
-    /**
-     * Test method for {@link
      * com.sldeditor.ui.detail.vendor.geoserver.fill.VOGeoServerRandomFill#getPanel()}.
      */
     @Test

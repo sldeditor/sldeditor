@@ -28,6 +28,9 @@ import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.TextSymbolizer.PolygonAlignOptions;
@@ -41,6 +44,50 @@ public class VOPopulation extends StandardPanel {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+
+    /** The Class DefaultOverride. */
+    protected class DefaultOverride {
+
+        /** The field. */
+        private FieldIdEnum field;
+
+        /** The legal values. */
+        private List<String> legalValues;
+
+        /**
+         * Instantiates a new default override.
+         *
+         * @param field the field
+         * @param legalValues the legal values
+         */
+        public DefaultOverride(FieldIdEnum field, String[] legalValues) {
+            super();
+            this.field = field;
+            this.legalValues = Arrays.asList(legalValues);
+        }
+
+        /**
+         * Gets the field.
+         *
+         * @return the field
+         */
+        public FieldIdEnum getField() {
+            return field;
+        }
+
+        /**
+         * Gets the legal values.
+         *
+         * @return the legalValues
+         */
+        public List<String> getLegalValues() {
+            return legalValues;
+        }
+    }
+
+    /** The override map. */
+    private Map<FieldIdEnum, DefaultOverride> overrideMap =
+            new HashMap<FieldIdEnum, DefaultOverride>();
 
     /**
      * Instantiates a new VO population.
@@ -272,12 +319,54 @@ public class VOPopulation extends StandardPanel {
     }
 
     /**
-     * Include value.
+     * Adds an override.
+     *
+     * @param fieldId the field id
+     * @param override the override
+     */
+    protected void addOverride(FieldIdEnum fieldId, DefaultOverride override) {
+        overrideMap.put(fieldId, override);
+    }
+
+    /**
+     * Find out whether to include value based on the value of another field.
      *
      * @param field the field
      * @return true, if successful
      */
-    protected boolean includeValue(FieldIdEnum field) {
-        return true;
+    private boolean includeValue(FieldIdEnum field) {
+        DefaultOverride override = overrideMap.get(field);
+
+        if (override != null) {
+            String value = null;
+            FieldConfigBase fieldConfig = fieldConfigManager.get(override.getField());
+            if (fieldConfig instanceof FieldConfigBoolean) {
+                value = String.valueOf(fieldConfigVisitor.getBoolean(override.getField()));
+            } else if (fieldConfig instanceof FieldConfigInteger) {
+                value = String.valueOf(fieldConfigVisitor.getInteger(override.getField()));
+            } else if (fieldConfig instanceof FieldConfigDouble) {
+                value = String.valueOf(fieldConfigVisitor.getDouble(override.getField()));
+            } else if (fieldConfig instanceof FieldConfigEnum) {
+                value = String.valueOf(fieldConfigVisitor.getComboBox(override.getField()));
+            } else {
+                ConsoleManager.getInstance()
+                        .error(
+                                this,
+                                "Unsupported field type : "
+                                        + field
+                                        + " "
+                                        + fieldConfig.getClass().getName());
+            }
+
+            if (value != null) {
+                for (String legalValue : override.getLegalValues()) {
+                    if (value.compareToIgnoreCase(legalValue) == 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
