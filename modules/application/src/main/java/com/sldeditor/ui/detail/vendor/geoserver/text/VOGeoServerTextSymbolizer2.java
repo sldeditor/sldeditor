@@ -601,9 +601,15 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
      * @param selectedItem the selected item
      */
     private void setSymbolTypeVisibility(Class<?> panelId, String selectedItem) {
+        if (panelId == null) {
+            return;
+        }
         Map<GroupIdEnum, Boolean> groupList =
                 fieldEnableState.getGroupIdList(panelId.getName(), selectedItem);
 
+        if (groupList == null) {
+            return;
+        }
         for (GroupIdEnum groupId : groupList.keySet()) {
             boolean groupEnabled = groupList.get(groupId);
             GroupConfigInterface groupConfig = fieldConfigManager.getGroup(getPanelId(), groupId);
@@ -617,6 +623,10 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
 
         Map<FieldIdEnum, Boolean> fieldList =
                 fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
+
+        if (fieldList == null) {
+            return;
+        }
 
         for (FieldIdEnum fieldId : fieldList.keySet()) {
             boolean fieldEnabled = fieldList.get(fieldId);

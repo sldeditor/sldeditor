@@ -146,10 +146,12 @@ public class VOGeoServerLabellingUnderline extends VOPopulation
      */
     @Override
     public void populate(TextSymbolizer textSymbolizer) {
-        Map<String, String> options = textSymbolizer.getOptions();
+        if (textSymbolizer != null) {
+            Map<String, String> options = textSymbolizer.getOptions();
 
-        for (FieldIdEnum key : fieldMap.keySet()) {
-            internalPopulate(options, key, fieldMap.get(key));
+            for (FieldIdEnum key : fieldMap.keySet()) {
+                internalPopulate(options, key, fieldMap.get(key));
+            }
         }
     }
 
@@ -252,10 +254,12 @@ public class VOGeoServerLabellingUnderline extends VOPopulation
      */
     @Override
     public void updateSymbol(TextSymbolizer textSymbolizer) {
-        Map<String, String> options = textSymbolizer.getOptions();
+        if (textSymbolizer != null) {
+            Map<String, String> options = textSymbolizer.getOptions();
 
-        for (FieldIdEnum key : fieldMap.keySet()) {
-            internalUpdateSymbol(options, key, fieldMap.get(key));
+            for (FieldIdEnum key : fieldMap.keySet()) {
+                internalUpdateSymbol(options, key, fieldMap.get(key));
+            }
         }
     }
 
