@@ -177,7 +177,7 @@ public class AboutDialog extends JDialog {
      * @return the byte[]
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public static BufferedImage mergeImageAndText(URL imageFilePath, List<TextPosition> textList)
+    private static BufferedImage mergeImageAndText(URL imageFilePath, List<TextPosition> textList)
             throws IOException {
         BufferedImage im = ImageIO.read(imageFilePath);
         Graphics2D g2 = im.createGraphics();

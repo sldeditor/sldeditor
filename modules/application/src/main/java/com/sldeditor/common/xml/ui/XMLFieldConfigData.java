@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;attribute name="valueOnly" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
  *       &lt;attribute name="default" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="multipleValues" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
+ *       &lt;attribute name="suppressUpdateOnSet" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -70,6 +71,7 @@ public class XMLFieldConfigData {
     protected String _default;
 
     @XmlAttribute protected Boolean multipleValues;
+    @XmlAttribute protected Boolean suppressUpdateOnSet;
 
     /**
      * Gets the value of the id property.
@@ -167,5 +169,27 @@ public class XMLFieldConfigData {
      */
     public void setMultipleValues(Boolean value) {
         this.multipleValues = value;
+    }
+
+    /**
+     * Gets the value of the suppressUpdateOnSet property.
+     *
+     * @return possible object is {@link Boolean }
+     */
+    public boolean getSuppressUpdateOnSet() {
+        if (suppressUpdateOnSet == null) {
+            return false;
+        } else {
+            return suppressUpdateOnSet;
+        }
+    }
+
+    /**
+     * Sets the value of the suppressUpdateOnSet property.
+     *
+     * @param value allowed object is {@link Boolean }
+     */
+    public void setSuppressUpdateOnSet(Boolean value) {
+        this.suppressUpdateOnSet = value;
     }
 }

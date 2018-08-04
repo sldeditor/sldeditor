@@ -378,7 +378,7 @@ public class FilterManager implements FilterNameInterface {
 
                 FieldConfigBase fieldConfig = null;
                 FieldConfigCommonData commonData =
-                        new FieldConfigCommonData(panelId, id, label, valueOnly);
+                        new FieldConfigCommonData(panelId, id, label, valueOnly, true);
                 if (type == java.lang.Number.class) {
                     fieldConfig = new FieldConfigDouble(commonData);
                 } else if (type == Double.class) {

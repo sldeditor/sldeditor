@@ -19,10 +19,6 @@
 
 package com.sldeditor.filter.v2.function;
 
-import com.sldeditor.common.undo.UndoActionInterface;
-import com.sldeditor.common.undo.UndoEvent;
-import com.sldeditor.common.undo.UndoInterface;
-import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.ui.attribute.SubPanelUpdatedInterface;
 import com.sldeditor.ui.iface.ValueComboBoxDataSelectedInterface;
@@ -43,8 +39,7 @@ import org.opengis.filter.Filter;
  *
  * @author Robert Ward (SCISYS)
  */
-public class FilterField extends JPanel
-        implements UndoActionInterface, ValueComboBoxDataSelectedInterface {
+public class FilterField extends JPanel implements ValueComboBoxDataSelectedInterface {
 
     /** The Constant FILTER_PANEL. */
     private static final String FILTER_PANEL = "Filter";
@@ -58,9 +53,6 @@ public class FilterField extends JPanel
     /** The filter name map. */
     private Map<String, FilterConfigInterface> filterNameMap =
             new LinkedHashMap<String, FilterConfigInterface>();
-
-    /** The old value obj. */
-    private Object oldValueObj = null;
 
     /** The filter name manager. */
     private FilterNameInterface filterNameMgr = null;
@@ -180,48 +172,12 @@ public class FilterField extends JPanel
      */
     public void setFilter(Filter filter, FilterConfigInterface filterConfig) {
 
-        oldValueObj = filterConfig;
+        String key = null;
 
-        if (filterConfig == null) {
-            filterComboBox.setSelectedDataKey(null);
-        } else {
-            filterComboBox.setSelectedDataKey(
-                    filterConfig.getFilterConfiguration().getFilterName());
+        if (filterConfig != null) {
+            key = filterConfig.getFilterConfiguration().getFilterName();
         }
-    }
-
-    /**
-     * Undo action.
-     *
-     * @param undoRedoObject the undo redo object
-     */
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
-     */
-    @Override
-    public void undoAction(UndoInterface undoRedoObject) {
-        String oldValueObj = (String) undoRedoObject.getOldValue();
-
-        filterComboBox.setSelectedDataKey(oldValueObj);
-    }
-
-    /**
-     * Redo action.
-     *
-     * @param undoRedoObject the undo redo object
-     */
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
-     */
-    @Override
-    public void redoAction(UndoInterface undoRedoObject) {
-        String newValueObj = (String) undoRedoObject.getNewValue();
-
-        filterComboBox.setSelectedDataKey(newValueObj);
+        filterComboBox.setSelectedDataKey(key);
     }
 
     /**
@@ -251,13 +207,11 @@ public class FilterField extends JPanel
         return filterConfig;
     }
 
+    /* (non-Javadoc)
+     * @see com.sldeditor.ui.iface.ValueComboBoxDataSelectedInterface#optionSelected(com.sldeditor.ui.widgets.ValueComboBoxData)
+     */
     @Override
     public void optionSelected(ValueComboBoxData selectedData) {
-        String newValueObj = (String) filterComboBox.getSelectedItem();
-
-        UndoManager.getInstance()
-                .addUndoEvent(new UndoEvent(this, "Function", oldValueObj, newValueObj));
-
         if (parentObj != null) {
             parentObj.updateSymbol();
         }

@@ -110,8 +110,6 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     @Override
     public void createUI() {
         if (comboBox == null) {
-            final UndoActionInterface parentObj = this;
-
             List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
 
             for (String key : keyList) {
@@ -141,36 +139,14 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
                         fieldPanel.internalCreateAttrButton(String.class, this, isRasterSymbol()));
             }
 
-            if (dataList != null) {
-                for (ValueComboBoxData data : dataList) {
-                    this.comboDataMap.put(data.getKey(), data);
-                }
+            for (ValueComboBoxData data : dataList) {
+                this.comboDataMap.put(data.getKey(), data);
             }
 
             comboBox.addActionListener(
                     new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                            ValueComboBox comboBox = (ValueComboBox) e.getSource();
-                            if (comboBox.getSelectedItem() != null) {
-
-                                Object newValueObj = comboBox.getSelectedValue().getKey();
-
-                                if ((oldValueObj == null) && comboBox.getItemCount() > 0) {
-                                    oldValueObj = comboBox.getFirstItem().getKey();
-                                }
-
-                                UndoManager.getInstance()
-                                        .addUndoEvent(
-                                                new UndoEvent(
-                                                        parentObj,
-                                                        getFieldId(),
-                                                        oldValueObj,
-                                                        newValueObj));
-
-                                oldValueObj = newValueObj;
-
-                                valueUpdated();
-                            }
+                            valueStored();
                         }
                     });
         }
@@ -184,7 +160,8 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -480,5 +457,25 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      */
     public boolean isValidOption(String optionToTest) {
         return keyList.contains(optionToTest);
+    }
+
+    /** Value stored. */
+    protected void valueStored() {
+        if (comboBox.getSelectedItem() != null) {
+
+            if (!isSuppressUndoEvents()) {
+                Object newValueObj = comboBox.getSelectedValue().getKey();
+
+                if ((oldValueObj == null) && comboBox.getItemCount() > 0) {
+                    oldValueObj = comboBox.getFirstItem().getKey();
+                }
+
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+
+                oldValueObj = newValueObj;
+            }
+            valueUpdated();
+        }
     }
 }

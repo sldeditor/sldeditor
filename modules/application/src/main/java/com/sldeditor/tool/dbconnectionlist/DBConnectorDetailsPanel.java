@@ -57,6 +57,9 @@ public class DBConnectorDetailsPanel extends JPanel {
 
     private DatabaseConnectionConfigInterface selectedPanel;
 
+    /** The in test mode flag. */
+    private static boolean inTestModeFlag = false;
+
     /**
      * Instantiates a new database connector panel.
      *
@@ -134,7 +137,13 @@ public class DBConnectorDetailsPanel extends JPanel {
      */
     public static DatabaseConnection showDialog(
             JDialog parentPanel, DatabaseConnection connectionDetails) {
-        JDialog dialog = new JDialog(parentPanel, connectionDetails.getDatabaseTypeLabel(), true);
+        JDialog dialog =
+                new JDialog(
+                        parentPanel,
+                        (connectionDetails == null)
+                                ? "DB"
+                                : connectionDetails.getDatabaseTypeLabel(),
+                        true);
         dialog.setResizable(false);
 
         DBConnectorDetailsPanel panel = new DBConnectorDetailsPanel(dialog);
@@ -146,9 +155,11 @@ public class DBConnectorDetailsPanel extends JPanel {
 
         Controller.getInstance().centreDialog(dialog);
 
-        dialog.setVisible(true);
+        if (!inTestModeFlag) {
+            dialog.setVisible(true);
+        }
 
-        if (panel.okButtonPressed()) {
+        if (panel.okButtonPressed() || inTestModeFlag) {
             return panel.getConnectionDetails();
         }
         return null;
@@ -196,5 +207,14 @@ public class DBConnectorDetailsPanel extends JPanel {
                 }
             }
         }
+    }
+
+    /**
+     * Sets the in test mode.
+     *
+     * @param testMode the new in test mode
+     */
+    public static void setInTestMode(boolean testMode) {
+        inTestModeFlag = testMode;
     }
 }

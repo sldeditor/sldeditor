@@ -62,6 +62,9 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
     /** The model. */
     private LayerStyleModel dataModel = new LayerStyleModel();
 
+    /** The in test mode flag. */
+    private static boolean inTestModeFlag = false;
+
     /** Instantiates a new update layer style dialog. */
     public ConfigureLayerStyleDialog() {
         setResizable(true);
@@ -97,27 +100,7 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
                             return;
                         }
 
-                        // Get selected rows and find the selected style.
-                        // If the selected layers all don't use the same style
-                        // then set to null
-                        int[] selectedRows = table.getSelectedRows();
-
-                        StyleWrapper selectedLayerStyle = null;
-                        boolean isUniqueStyle = true;
-
-                        for (int index = 0; index < selectedRows.length; index++) {
-                            GeoServerLayer layer = dataModel.getLayer(selectedRows[index]);
-
-                            if (selectedLayerStyle == null) {
-                                selectedLayerStyle = layer.getStyle();
-                            } else if (isUniqueStyle) {
-                                if (selectedLayerStyle.compareTo(layer.getStyle()) != 0) {
-                                    isUniqueStyle = false;
-                                }
-                            }
-                        }
-
-                        geoServerStyleTree.select(isUniqueStyle ? selectedLayerStyle : null);
+                        itemSelected();
                     }
                 });
 
@@ -170,7 +153,7 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
      *
      * @param styleMap the style map
      * @param layerList the layer list
-     * @return true, if successful
+     * @return true, if ok button pressed
      */
     public boolean populate(
             Map<String, List<StyleWrapper>> styleMap, List<GeoServerLayer> layerList) {
@@ -186,7 +169,11 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
         }
         geoServerStyleTree.populate(geoserverName, styleMap);
 
-        setVisible(true);
+        if (!isInTestMode()) {
+            setVisible(true);
+        } else {
+            okButtonPressed = true;
+        }
 
         return okButtonPressed;
     }
@@ -210,5 +197,48 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
         int[] selectedRows = table.getSelectedRows();
 
         dataModel.updateStyle(selectedRows, styleWrapper);
+    }
+
+    /** Item selected. */
+    protected void itemSelected() {
+        // Get selected rows and find the selected style.
+        // If the selected layers all don't use the same style
+        // then set to null
+        int[] selectedRows = table.getSelectedRows();
+
+        StyleWrapper selectedLayerStyle = null;
+        boolean isUniqueStyle = true;
+
+        for (int index = 0; index < selectedRows.length; index++) {
+            GeoServerLayer layer = dataModel.getLayer(selectedRows[index]);
+
+            if (selectedLayerStyle == null) {
+                selectedLayerStyle = layer.getStyle();
+            } else if (isUniqueStyle) {
+                if (selectedLayerStyle.compareTo(layer.getStyle()) != 0) {
+                    isUniqueStyle = false;
+                }
+            }
+        }
+
+        geoServerStyleTree.select(isUniqueStyle ? selectedLayerStyle : null);
+    }
+
+    /**
+     * Checks if is in test mode.
+     *
+     * @return the inTestModeFlag
+     */
+    private static boolean isInTestMode() {
+        return inTestModeFlag;
+    }
+
+    /**
+     * Sets the in test mode flag.
+     *
+     * @param inTestMode the new in test mode
+     */
+    public static void setInTestMode(boolean inTestMode) {
+        inTestModeFlag = inTestMode;
     }
 }

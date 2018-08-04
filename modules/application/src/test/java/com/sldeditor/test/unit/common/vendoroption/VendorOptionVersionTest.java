@@ -21,6 +21,8 @@ package com.sldeditor.test.unit.common.vendoroption;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
@@ -105,5 +107,56 @@ public class VendorOptionVersionTest {
 
         assertEquals(vo.getLatest(), decoded.getLatest());
         assertEquals(vo.toString(), decoded.toString());
+
+        // Try with invalid data -- wrong number of components
+        String invalidTestData =
+                "com.sldeditor.test.unit.common.vendoroption.VendorOptionVersionTest;com.sldeditor.test.unit.common.vendoroption.VendorOptionVersionTest@2.4.1";
+        assertNull(VendorOptionVersion.fromString(invalidTestData));
+
+        // Invalid class name
+        invalidTestData =
+                "com.sldeditor.test.unit.common.vendoroption.Invalid;com.sldeditor.test.unit.common.vendoroption.VendorOptionVersionTest@2.4.1;com.sldeditor.test.unit.common.vendoroption.VendorOptionVersionTest@2.4.1";
+        assertNull(VendorOptionVersion.fromString(invalidTestData));
+
+        VendorOptionVersion vo2 = new VendorOptionVersion(getClass(), null, null);
+        assertNotNull(vo2.toString());
+    }
+
+    @SuppressWarnings("unlikely-arg-type")
+    @Test
+    public void testEquals() {
+        VersionData versionDataMin = VersionData.decode(getClass(), "2.4.1");
+        VersionData versionDataMax = VersionData.decode(getClass(), "2.8.3");
+
+        VendorOptionVersion vo =
+                new VendorOptionVersion(getClass(), versionDataMin, versionDataMax);
+        String actualString = vo.toString();
+
+        VendorOptionVersion decoded = VendorOptionVersion.fromString(actualString);
+
+        assertFalse(decoded.equals(versionDataMax));
+        String testData =
+                "com.sldeditor.test.unit.common.vendoroption.VendorOptionStatusTest;com.sldeditor.test.unit.common.vendoroption.VendorOptionVersionTest@2.4.1;com.sldeditor.test.unit.common.vendoroption.VendorOptionVersionTest@2.4.1";
+        assertFalse(decoded.equals(VendorOptionVersion.fromString(testData)));
+        assertFalse(VendorOptionVersion.fromString(testData).equals(decoded));
+
+        testData =
+                "com.sldeditor.test.unit.common.vendoroption.VendorOptionStatusTest;;com.sldeditor.test.unit.common.vendoroption.VendorOptionVersionTest@2.8.3";
+        assertFalse(decoded.equals(VendorOptionVersion.fromString(testData)));
+        assertFalse(VendorOptionVersion.fromString(testData).equals(decoded));
+
+        testData =
+                "com.sldeditor.test.unit.common.vendoroption.VendorOptionStatusTest;com.sldeditor.test.unit.common.vendoroption.VendorOptionVersionTest@2.4.1;";
+        assertFalse(decoded.equals(VendorOptionVersion.fromString(testData)));
+        assertNull(VendorOptionVersion.fromString(testData));
+        assertFalse(new VendorOptionVersion(null, versionDataMin, versionDataMax).equals(decoded));
+        assertFalse(new VendorOptionVersion(getClass(), null, versionDataMax).equals(decoded));
+        assertFalse(new VendorOptionVersion(getClass(), versionDataMin, null).equals(decoded));
+        assertFalse(
+                vo.equals(
+                        new VendorOptionVersion(
+                                getClass(),
+                                versionDataMin,
+                                VersionData.decode(getClass(), "2.8.4"))));
     }
 }

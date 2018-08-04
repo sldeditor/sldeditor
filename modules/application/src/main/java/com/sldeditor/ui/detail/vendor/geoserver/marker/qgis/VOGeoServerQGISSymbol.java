@@ -69,7 +69,7 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
 
         markerField =
                 new FieldConfigMarkerQGIS(
-                        new FieldConfigCommonData(panelId, FieldIdEnum.VO_QGIS, "", false),
+                        new FieldConfigCommonData(panelId, FieldIdEnum.VO_QGIS, "", false, false),
                         fillFieldConfig,
                         strokeFieldConfig,
                         symbolSelectionField);

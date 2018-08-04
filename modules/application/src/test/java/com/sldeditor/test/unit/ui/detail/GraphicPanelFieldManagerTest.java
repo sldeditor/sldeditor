@@ -81,7 +81,7 @@ public class GraphicPanelFieldManagerTest {
         FieldConfigString stringField =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, expectedFieldId, "test label", false),
+                                String.class, expectedFieldId, "test label", false, false),
                         "button text");
 
         mgr.addField(null);
@@ -109,7 +109,7 @@ public class GraphicPanelFieldManagerTest {
         FieldConfigString stringField =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, expectedFieldId, "test label", false),
+                                String.class, expectedFieldId, "test label", false, false),
                         "button text");
         mgr.addField(stringField);
         assertTrue(mgr.getFields(FieldConfigBoolean.class).isEmpty());
@@ -132,7 +132,7 @@ public class GraphicPanelFieldManagerTest {
         FieldConfigString stringField =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, expectedFieldId, "test label", false),
+                                String.class, expectedFieldId, "test label", false, false),
                         "button text");
         mgr1.addField(stringField);
         assertTrue(mgr1.getFields(FieldConfigBoolean.class).isEmpty());
@@ -147,7 +147,7 @@ public class GraphicPanelFieldManagerTest {
         FieldConfigDouble doubleField =
                 new FieldConfigDouble(
                         new FieldConfigCommonData(
-                                Double.class, expectedFieldId2, "test label", false));
+                                Double.class, expectedFieldId2, "test label", false, false));
         mgr2.addField(doubleField);
         assertEquals(1, mgr2.getFields(FieldConfigDouble.class).size());
 
@@ -177,7 +177,7 @@ public class GraphicPanelFieldManagerTest {
         FieldConfigString stringField =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, expectedFieldId, "test label", false),
+                                String.class, expectedFieldId, "test label", false, false),
                         "button text");
         mgr.addField(stringField);
 
@@ -208,7 +208,7 @@ public class GraphicPanelFieldManagerTest {
         FieldConfigString stringField =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, expectedFieldId, "test label", false),
+                                String.class, expectedFieldId, "test label", false, false),
                         "button text");
         mgr.addField(stringField);
 
@@ -237,7 +237,7 @@ public class GraphicPanelFieldManagerTest {
         FieldConfigString stringField =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, expectedFieldId, "test label", false),
+                                String.class, expectedFieldId, "test label", false, false),
                         "button text");
 
         mgr.removeField(null);

@@ -297,7 +297,8 @@ public class ExpressionSubPanel extends JPanel {
                             public void parameterAdded() {
                                 // Do nothing
                             }
-                        });
+                        },
+                        true);
 
         panelAttribute.add(dataSourceAttributePanel);
         box.add(panelAttribute);

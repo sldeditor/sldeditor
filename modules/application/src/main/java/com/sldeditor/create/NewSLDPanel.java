@@ -131,7 +131,6 @@ public class NewSLDPanel extends JDialog {
      */
     public List<SLDDataInterface> showDialog(JFrame parent) {
 
-        List<SLDDataInterface> newSLDList = null;
         selected = null;
 
         if (parent != null) {
@@ -143,6 +142,16 @@ public class NewSLDPanel extends JDialog {
 
         setVisible(true);
 
+        return getSelectedSLD();
+    }
+
+    /**
+     * Gets the selected SLD.
+     *
+     * @return the selected SLD
+     */
+    protected List<SLDDataInterface> getSelectedSLD() {
+        List<SLDDataInterface> newSLDList = null;
         if (selected != null) {
             newSLDList = new ArrayList<SLDDataInterface>();
 
@@ -155,10 +164,8 @@ public class NewSLDPanel extends JDialog {
             newSLDList.add(
                     new SLDData(
                             new StyleWrapper(selected.getName()), sldWriter.encodeSLD(null, sld)));
-            return newSLDList;
         }
-
-        return null;
+        return newSLDList;
     }
 
     /** Ok button pressed. */

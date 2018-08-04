@@ -315,7 +315,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
                 boolean valueOnly = true;
 
                 FieldConfigCommonData commonData =
-                        new FieldConfigCommonData(panelId, id, label, valueOnly);
+                        new FieldConfigCommonData(panelId, id, label, valueOnly, false);
 
                 List<VendorOptionInterface> veList = null;
 
@@ -375,10 +375,11 @@ public class ReadPanelConfig implements PanelConfigInterface {
         boolean valueOnly = xmlFieldConfig.getValueOnly();
         String defaultValue = xmlFieldConfig.getDefault();
         boolean multipleValues = xmlFieldConfig.getMultipleValues();
+        boolean suppress = xmlFieldConfig.getSuppressUpdateOnSet();
 
         FieldConfigCommonData commonData =
                 new FieldConfigCommonData(
-                        panelId, id, label, valueOnly, isRasterSymbol, multipleValues);
+                        panelId, id, label, valueOnly, isRasterSymbol, multipleValues, suppress);
 
         if (xmlFieldConfig instanceof XMLFieldConfigString) {
             XMLFieldConfigString xmlStringFieldConfig = (XMLFieldConfigString) xmlFieldConfig;
@@ -389,7 +390,6 @@ public class ReadPanelConfig implements PanelConfigInterface {
                             getLocalisedText(
                                     localisationClass, xmlStringFieldConfig.getButtonText()));
 
-            stringConfig.setSuppressUpdatesOnSet(xmlStringFieldConfig.getSuppressUpdateOnSet());
             groupConfig.addField(stringConfig);
 
             String defaultValueObj = ConfigDefaultFactory.getString(defaultValue);

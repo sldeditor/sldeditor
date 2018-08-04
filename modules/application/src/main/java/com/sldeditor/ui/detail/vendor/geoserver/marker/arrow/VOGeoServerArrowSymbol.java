@@ -62,7 +62,7 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
         arrowShape =
                 new FieldConfigArrow(
                         new FieldConfigCommonData(
-                                FieldConfigArrow.class, FieldIdEnum.VO_ARROW, "", true),
+                                FieldConfigArrow.class, FieldIdEnum.VO_ARROW, "", true, false),
                         fillFieldConfig,
                         strokeFieldConfig,
                         symbolSelectionField);

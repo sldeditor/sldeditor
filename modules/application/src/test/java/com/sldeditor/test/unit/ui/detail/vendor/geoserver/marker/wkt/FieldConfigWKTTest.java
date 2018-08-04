@@ -71,7 +71,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -96,7 +96,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field2 =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -127,7 +127,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -155,7 +155,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -188,7 +188,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -210,7 +210,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -240,7 +240,7 @@ public class FieldConfigWKTTest {
         TestFieldConfigWKT field =
                 new TestFieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
         FieldConfigWKT copy = (FieldConfigWKT) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -260,7 +260,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -279,7 +279,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -299,7 +299,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -336,7 +336,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         fillConfig,
                         strokeConfig,
                         null);
@@ -362,18 +362,20 @@ public class FieldConfigWKTTest {
 
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField =
-                new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldConfigBase symbolSelectionField =
                 new FieldConfigSymbolType(
-                        new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
@@ -423,7 +425,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -445,18 +447,20 @@ public class FieldConfigWKTTest {
 
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField =
-                new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldConfigBase symbolSelectionField =
                 new FieldConfigSymbolType(
-                        new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
@@ -487,7 +491,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field2 =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         fillConfig,
                         strokeConfig,
                         null);
@@ -539,7 +543,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -557,7 +561,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -583,7 +587,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -601,7 +605,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -634,7 +638,7 @@ public class FieldConfigWKTTest {
         FieldConfigWKT field =
                 new FieldConfigWKT(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);

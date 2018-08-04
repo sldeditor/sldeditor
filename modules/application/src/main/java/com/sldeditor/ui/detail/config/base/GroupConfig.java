@@ -448,7 +448,9 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
                 groupCheckbox.setEnabled(groupEnabled);
                 isSelected = groupCheckbox.isSelected();
             } else {
-                groupTitle.setEnabled(groupEnabled);
+                if (groupTitle != null) {
+                    groupTitle.setEnabled(groupEnabled);
+                }
             }
         }
 

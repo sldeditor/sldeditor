@@ -113,7 +113,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigBoolean booleanField =
                 new FieldConfigBoolean(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false));
         booleanField.createUI();
         fieldConfigManager.add(fieldId, booleanField);
 
@@ -158,7 +158,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigEnum enumField =
                 new FieldConfigEnum(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false));
         enumField.addConfig(configList);
         enumField.createUI();
         GraphicPanelFieldManager fieldConfigManager = new GraphicPanelFieldManager(String.class);
@@ -194,7 +194,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigColour colourField =
                 new FieldConfigColour(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false));
         colourField.createUI();
         colourField.createUI();
         fieldConfigManager.add(fieldId, colourField);
@@ -226,7 +226,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigColourMap colourMapField =
                 new FieldConfigColourMap(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false));
         colourMapField.createUI();
         fieldConfigManager.add(fieldId, colourMapField);
 
@@ -263,7 +263,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigFont fontField =
                 new FieldConfigFont(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false));
         fontField.createUI();
         fieldConfigManager.add(fieldId, fontField);
 
@@ -298,7 +298,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigString stringField =
                 new FieldConfigString(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true),
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false),
                         "button text");
         stringField.createUI();
         fieldConfigManager.add(fieldId, stringField);
@@ -335,7 +335,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigDouble doubleField =
                 new FieldConfigDouble(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false));
         doubleField.createUI();
         fieldConfigManager.add(fieldId, doubleField);
 
@@ -371,7 +371,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigInteger intField =
                 new FieldConfigInteger(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false));
         intField.createUI();
         fieldConfigManager.add(fieldId, intField);
 
@@ -409,7 +409,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigInteger intField =
                 new FieldConfigInteger(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false));
         intField.createUI();
         fieldConfigManager.add(fieldId, intField);
 
@@ -450,7 +450,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigString stringField =
                 new FieldConfigString(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true),
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false),
                         "button text");
         stringField.createUI();
         fieldConfigManager.add(fieldId, stringField);
@@ -493,7 +493,7 @@ public class FieldConfigPopulationTest {
 
         FieldConfigInteger intField =
                 new FieldConfigInteger(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true));
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false));
         intField.createUI();
         fieldConfigManager.add(fieldId, intField);
 

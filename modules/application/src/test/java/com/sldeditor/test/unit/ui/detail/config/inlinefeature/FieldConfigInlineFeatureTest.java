@@ -60,7 +60,8 @@ public class FieldConfigInlineFeatureTest {
     public void testSetEnabled() {
         FieldConfigInlineFeature field =
                 new FieldConfigInlineFeature(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, null, true, false));
 
         // Field will not have been created
         boolean expectedValue = true;
@@ -87,7 +88,8 @@ public class FieldConfigInlineFeatureTest {
     public void testSetVisible() {
         FieldConfigInlineFeature field =
                 new FieldConfigInlineFeature(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, null, true, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -114,7 +116,8 @@ public class FieldConfigInlineFeatureTest {
     public void testGenerateExpression() {
         FieldConfigInlineFeature field =
                 new FieldConfigInlineFeature(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, null, true, false));
         String testValue = null;
         field.populate(null);
         field.setTestValue(FieldIdEnum.UNKNOWN, testValue);
@@ -158,7 +161,8 @@ public class FieldConfigInlineFeatureTest {
     public void testRevertToDefaultValue() {
         FieldConfigInlineFeature field =
                 new FieldConfigInlineFeature(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, null, true, false));
 
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
@@ -192,7 +196,8 @@ public class FieldConfigInlineFeatureTest {
 
         TestFieldConfigInlineFeature field =
                 new TestFieldConfigInlineFeature(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "", true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "", true, false));
         FieldConfigInlineFeature copy = (FieldConfigInlineFeature) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -210,7 +215,8 @@ public class FieldConfigInlineFeatureTest {
     public void testAttributeSelection() {
         FieldConfigInlineFeature field =
                 new FieldConfigInlineFeature(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, null, true, false));
         field.attributeSelection(null);
 
         // Does nothing
@@ -226,7 +232,8 @@ public class FieldConfigInlineFeatureTest {
     public void testUndoAction() {
         FieldConfigInlineFeature field =
                 new FieldConfigInlineFeature(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, null, true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, null, true, false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
@@ -253,6 +260,10 @@ public class FieldConfigInlineFeatureTest {
         actualValue = field.getStringValue();
         assertTrue(actualValue.compareTo(expectedValue2) == 0);
 
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.inlineFeatureUpdated();
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+
         // Increase the code coverage
         field.undoAction(null);
         field.undoAction(
@@ -260,5 +271,32 @@ public class FieldConfigInlineFeatureTest {
         field.redoAction(null);
         field.redoAction(
                 new UndoEvent(null, FieldIdEnum.NAME, Double.valueOf(454.0), Integer.valueOf(69)));
+    }
+
+    @Test
+    public void testUndoActionSuppress() {
+        FieldConfigInlineFeature field =
+                new FieldConfigInlineFeature(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, null, true, true));
+        field.createUI();
+
+        DummyInlineSLDFile testData1 = new DummyInlineSLDFile();
+
+        UserLayer userLayer1 = (UserLayer) testData1.getSLD().layers().get(0);
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.populateField(userLayer1);
+        String expectedValue1 = InlineFeatureUtils.getInlineFeaturesText(userLayer1);
+        String actualValue = field.getStringValue();
+        assertTrue(actualValue.compareTo(expectedValue1) == 0);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
+
+        Controller.getInstance().setPopulating(false);
+        field.inlineFeatureUpdated();
+        Controller.getInstance().setPopulating(true);
+        field.inlineFeatureUpdated();
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }

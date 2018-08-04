@@ -95,7 +95,6 @@ public class FieldConfigGeometryField extends FieldConfigBase
     @Override
     public void createUI() {
         if (attributeComboBox == null) {
-            final UndoActionInterface parentObj = this;
 
             int xPos = getXPos();
             FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
@@ -118,18 +117,7 @@ public class FieldConfigGeometryField extends FieldConfigBase
             attributeComboBox.addActionListener(
                     new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                            if (isAttributeComboBoxPopulated()) {
-                                String newValueObj = (String) attributeComboBox.getSelectedItem();
-                                UndoManager.getInstance()
-                                        .addUndoEvent(
-                                                new UndoEvent(
-                                                        parentObj,
-                                                        "DataSourceAttribute",
-                                                        oldValueObj,
-                                                        newValueObj));
-
-                                valueUpdated();
-                            }
+                            valueStored();
                         }
                     });
         }
@@ -215,8 +203,7 @@ public class FieldConfigGeometryField extends FieldConfigBase
 
         if (objValue instanceof PropertyExistsFunction) {
             Expression e = ((PropertyExistsFunction) objValue).getParameters().get(0);
-            Object value = ((LiteralExpressionImpl) e).getValue();
-            propertyName = ((AttributeExpressionImpl) value).getPropertyName();
+            propertyName = e.toString();
         } else if (objValue instanceof AttributeExpressionImpl) {
             propertyName = ((AttributeExpressionImpl) objValue).getPropertyName();
         } else if (objValue instanceof LiteralExpressionImpl) {
@@ -224,14 +211,7 @@ public class FieldConfigGeometryField extends FieldConfigBase
                     AttributeUtils.extract((String) ((LiteralExpressionImpl) objValue).getValue());
         }
 
-        if (propertyName != null) {
-            oldValueObj = propertyName;
-
-            attributeComboBox.setSelectedItem(propertyName);
-        } else {
-            oldValueObj = propertyName;
-            attributeComboBox.setSelectedIndex(-1);
-        }
+        populateField(propertyName);
     }
 
     /**
@@ -358,7 +338,9 @@ public class FieldConfigGeometryField extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource
+     * .impl.GeometryTypeEnum, boolean)
      */
     @Override
     public void dataSourceLoaded(
@@ -415,7 +397,8 @@ public class FieldConfigGeometryField extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -425,10 +408,27 @@ public class FieldConfigGeometryField extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.
+     * data.DataStore)
      */
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {
         // Does nothing
+    }
+
+    /** Value stored. */
+    protected void valueStored() {
+        if (isAttributeComboBoxPopulated()) {
+            if (!isSuppressUndoEvents()) {
+
+                String newValueObj = (String) attributeComboBox.getSelectedItem();
+                UndoManager.getInstance()
+                        .addUndoEvent(
+                                new UndoEvent(
+                                        this, "DataSourceAttribute", oldValueObj, newValueObj));
+            }
+            valueUpdated();
+        }
     }
 }

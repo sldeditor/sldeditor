@@ -30,10 +30,12 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionName;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.geotools.data.DataAccessFactory.Param;
+import org.geotools.data.Parameter;
 import org.geotools.geopkg.GeoPkgDataStoreFactory;
 import org.junit.jupiter.api.Test;
 
@@ -138,6 +140,86 @@ public class DatabaseConnectionTest {
         String actualString = test.encodeAsString();
         DatabaseConnection newTest = DatabaseConnection.decodeString(actualString);
         assertTrue(newTest.equals(test));
+    }
+
+    @SuppressWarnings("unlikely-arg-type")
+    @Test
+    void testEquals() {
+        Param param = GeoPkgDataStoreFactory.DBTYPE;
+        List<DatabaseConnectionField> expectedDetailList = new ArrayList<DatabaseConnectionField>();
+
+        expectedDetailList.add(new DatabaseConnectionField(GeoPkgDataStoreFactory.DATABASE));
+        expectedDetailList.add(new DatabaseConnectionField(GeoPkgDataStoreFactory.USER));
+        String expectedDatabaseTypeLabel = "GeoPackage";
+        boolean expectedSupportsDuplication = false;
+
+        DatabaseConnection test =
+                new DatabaseConnection(
+                        param,
+                        expectedDatabaseTypeLabel,
+                        expectedSupportsDuplication,
+                        expectedDetailList,
+                        null);
+
+        assertTrue(test.equals(test));
+        assertFalse(test.equals(""));
+        assertFalse(test.equals(null));
+        assertFalse(
+                new DatabaseConnection(
+                                null,
+                                expectedDatabaseTypeLabel,
+                                expectedSupportsDuplication,
+                                expectedDetailList,
+                                null)
+                        .equals(test));
+        assertFalse(
+                new DatabaseConnection(
+                                param, null, expectedSupportsDuplication, expectedDetailList, null)
+                        .equals(test));
+        assertFalse(
+                new DatabaseConnection(
+                                param,
+                                expectedDatabaseTypeLabel,
+                                expectedSupportsDuplication,
+                                null,
+                                null)
+                        .equals(test));
+
+        assertFalse(
+                new DatabaseConnection(
+                                new Param(
+                                        "differetdbtype",
+                                        String.class,
+                                        "Type",
+                                        true,
+                                        "testgeopkg",
+                                        Collections.singletonMap(Parameter.LEVEL, "program")),
+                                expectedDatabaseTypeLabel,
+                                expectedSupportsDuplication,
+                                expectedDetailList,
+                                null)
+                        .equals(test));
+        assertFalse(
+                new DatabaseConnection(
+                                param, "", expectedSupportsDuplication, expectedDetailList, null)
+                        .equals(test));
+        assertFalse(
+                new DatabaseConnection(
+                                param,
+                                expectedDatabaseTypeLabel,
+                                !expectedSupportsDuplication,
+                                expectedDetailList,
+                                null)
+                        .equals(test));
+
+        assertFalse(
+                new DatabaseConnection(
+                                param,
+                                expectedDatabaseTypeLabel,
+                                expectedSupportsDuplication,
+                                new ArrayList<DatabaseConnectionField>(),
+                                null)
+                        .equals(test));
     }
 
     /**

@@ -63,9 +63,6 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     /** The button pressed listener list. */
     private List<FieldConfigStringButtonInterface> buttonPressedListenerList = null;
 
-    /** The suppress update on set flag. */
-    private boolean suppressUpdateOnSet = false;
-
     /**
      * Instantiates a new field config string.
      *
@@ -87,8 +84,6 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     @Override
     public void createUI() {
         if (textField == null) {
-            final UndoActionInterface parentObj = this;
-
             int xPos = getXPos();
             FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
@@ -109,28 +104,15 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
                         /*
                          * (non-Javadoc)
                          *
-                         * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+                         * @see java.beans.PropertyChangeListener#propertyChange(java.beans.
+                         * PropertyChangeEvent)
                          */
                         @Override
                         public void propertyChange(PropertyChangeEvent evt) {
                             String originalValue = (String) evt.getOldValue();
                             String newValueObj = (String) evt.getNewValue();
 
-                            if ((originalValue.compareTo(newValueObj) != 0)) {
-                                if (!suppressUpdateOnSet) {
-                                    UndoManager.getInstance()
-                                            .addUndoEvent(
-                                                    new UndoEvent(
-                                                            parentObj,
-                                                            getFieldId(),
-                                                            oldValueObj,
-                                                            newValueObj));
-
-                                    oldValueObj = originalValue;
-                                }
-
-                                valueUpdated();
-                            }
+                            valueStored(originalValue, newValueObj);
                         }
                     });
 
@@ -140,14 +122,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
                         new ActionListener() {
 
                             public void actionPerformed(ActionEvent e) {
-                                if (buttonPressedListenerList != null) {
-                                    // CHECKSTYLE:OFF
-                                    for (FieldConfigStringButtonInterface listener :
-                                            buttonPressedListenerList) {
-                                        listener.buttonPressed(buttonExternal);
-                                    }
-                                    // CHECKSTYLE:ON
-                                }
+                                externalButtonPressed(buttonExternal);
                             }
                         });
 
@@ -176,7 +151,8 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -307,7 +283,10 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
             if (undoRedoObject != null) {
                 String oldValue = (String) undoRedoObject.getOldValue();
 
+                boolean prevValue = this.isSuppressUndoEvents();
+                this.setSuppressUndoEvents(true);
                 textField.setText(oldValue);
+                this.setSuppressUndoEvents(prevValue);
             }
         }
     }
@@ -323,7 +302,10 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
             if (undoRedoObject != null) {
                 String newValue = (String) undoRedoObject.getNewValue();
 
+                boolean prevValue = this.isSuppressUndoEvents();
+                this.setSuppressUndoEvents(true);
                 textField.setText(newValue);
+                this.setSuppressUndoEvents(prevValue);
             }
         }
     }
@@ -339,7 +321,9 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
             buttonPressedListenerList = new ArrayList<FieldConfigStringButtonInterface>();
         }
 
-        buttonPressedListenerList.add(listener);
+        if (listener != null) {
+            buttonPressedListenerList.add(listener);
+        }
     }
 
     /**
@@ -362,15 +346,6 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     public void populateField(String value) {
         if (textField != null) {
             textField.setText(value);
-
-            if (!suppressUpdateOnSet) {
-                UndoManager.getInstance()
-                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
-
-                oldValueObj = value;
-
-                valueUpdated();
-            }
         }
     }
 
@@ -403,11 +378,36 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     }
 
     /**
-     * Sets the suppress updates on set.
+     * Value stored.
      *
-     * @param suppressUpdateOnSet the new suppress updates on set
+     * @param originalValue the original value
+     * @param newValueObj the new value obj
      */
-    public void setSuppressUpdatesOnSet(boolean suppressUpdateOnSet) {
-        this.suppressUpdateOnSet = suppressUpdateOnSet;
+    protected void valueStored(String originalValue, String newValueObj) {
+        if ((originalValue.compareTo(newValueObj) != 0)) {
+            if (!isSuppressUndoEvents()) {
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+
+                oldValueObj = originalValue;
+            }
+
+            valueUpdated();
+        }
+    }
+
+    /**
+     * External button pressed.
+     *
+     * @param buttonExternal the button external
+     */
+    protected void externalButtonPressed(final JButton buttonExternal) {
+        if (buttonPressedListenerList != null) {
+            // CHECKSTYLE:OFF
+            for (FieldConfigStringButtonInterface listener : buttonPressedListenerList) {
+                listener.buttonPressed(buttonExternal);
+            }
+            // CHECKSTYLE:ON
+        }
     }
 }

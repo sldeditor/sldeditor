@@ -168,17 +168,19 @@ public class AttributeSelection extends JPanel
                         String selected = (String) cb.getSelectedItem();
                         showPanel(selected);
 
-                        if ((oldValueObj == null) && cb.getItemCount() > 0) {
-                            oldValueObj = cb.getItemAt(0);
-                        }
+                        if (!field.isSuppressUndoEvents()) {
+                            if ((oldValueObj == null) && cb.getItemCount() > 0) {
+                                oldValueObj = cb.getItemAt(0);
+                            }
 
-                        UndoManager.getInstance()
-                                .addUndoEvent(
-                                        new UndoEvent(
-                                                thisObj,
-                                                "DataSourceAttribute",
-                                                oldValueObj,
-                                                selected));
+                            UndoManager.getInstance()
+                                    .addUndoEvent(
+                                            new UndoEvent(
+                                                    thisObj,
+                                                    "DataSourceAttribute",
+                                                    oldValueObj,
+                                                    selected));
+                        }
 
                         updateSymbol();
                     }
@@ -218,7 +220,8 @@ public class AttributeSelection extends JPanel
      * @return the j panel
      */
     private DataSourceAttributePanel createDataSourceAttributePanel(Class<?> expectedDataType) {
-        DataSourceAttributePanel panel = new DataSourceAttributePanel(this);
+        DataSourceAttributePanel panel =
+                new DataSourceAttributePanel(this, field.isSuppressUndoEvents());
         panel.setDataType(expectedDataType);
 
         outerPanel.add(panel, DataSourceAttributePanel.getPanelName());
@@ -324,7 +327,9 @@ public class AttributeSelection extends JPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource
+     * .impl.GeometryTypeEnum, boolean)
      */
     @Override
     public void dataSourceLoaded(
@@ -439,7 +444,9 @@ public class AttributeSelection extends JPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.
+     * data.DataStore)
      */
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {

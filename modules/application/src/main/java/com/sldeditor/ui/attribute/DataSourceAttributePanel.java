@@ -88,8 +88,10 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      * Instantiates a new data source attribute panel.
      *
      * @param parentObj the parent obj
+     * @param suppressUndoEvents the suppress undo events
      */
-    public DataSourceAttributePanel(SubPanelUpdatedInterface parentObj) {
+    public DataSourceAttributePanel(
+            SubPanelUpdatedInterface parentObj, boolean suppressUndoEvents) {
         final UndoActionInterface thisObj = this;
 
         setLayout(new BorderLayout(5, 0));
@@ -105,14 +107,16 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
                     public void actionPerformed(ActionEvent e) {
 
                         if (isAttributeComboBoxPopulated()) {
-                            String newValueObj = (String) attributeComboBox.getSelectedItem();
-                            UndoManager.getInstance()
-                                    .addUndoEvent(
-                                            new UndoEvent(
-                                                    thisObj,
-                                                    "DataSourceAttribute",
-                                                    oldValueObj,
-                                                    newValueObj));
+                            if (!suppressUndoEvents) {
+                                String newValueObj = (String) attributeComboBox.getSelectedItem();
+                                UndoManager.getInstance()
+                                        .addUndoEvent(
+                                                new UndoEvent(
+                                                        thisObj,
+                                                        "DataSourceAttribute",
+                                                        oldValueObj,
+                                                        newValueObj));
+                            }
 
                             if (parentObj != null) {
                                 parentObj.updateSymbol();

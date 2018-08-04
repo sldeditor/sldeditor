@@ -150,16 +150,21 @@ public class FilterPanelv2 extends JDialog
 
     private JCheckBox optionalCheckBox;
 
+    /** The in test mode flag. */
+    private boolean inTestMode = false;
+
     /**
      * Instantiates a new expression panel.
      *
      * @param vendorOptionList the vendor option list
+     * @param inTestMode the in test mode
      */
-    public FilterPanelv2(List<VersionData> vendorOptionList) {
+    public FilterPanelv2(List<VersionData> vendorOptionList, boolean inTestMode) {
 
         super(Controller.getInstance().getFrame(), "", true);
 
         this.vendorOptionList = vendorOptionList;
+        this.inTestMode = inTestMode;
 
         setPreferredSize(new Dimension(800, 415));
 
@@ -340,7 +345,11 @@ public class FilterPanelv2 extends JDialog
 
         internalFilterDialog(type, filter);
 
-        setVisible(true);
+        if (!inTestMode) {
+            setVisible(true);
+        } else {
+            okButtonPressed = true;
+        }
         return okButtonPressed;
     }
 
@@ -675,7 +684,9 @@ public class FilterPanelv2 extends JDialog
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools. data.DataStore)
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.
+     * data.DataStore)
      */
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {

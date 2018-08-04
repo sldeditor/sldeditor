@@ -32,6 +32,7 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigColour;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
@@ -61,7 +62,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -84,7 +85,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field2 =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -112,7 +113,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -151,7 +152,7 @@ public class FieldConfigColourTest {
         TestFieldConfigColour field =
                 new TestFieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
         field.setTestValue(FieldIdEnum.UNKNOWN, (String) null);
@@ -224,7 +225,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.revertToDefaultValue();
         assertTrue(field.getStringValue().compareTo("") == 0);
@@ -256,7 +257,7 @@ public class FieldConfigColourTest {
         TestFieldConfigColour field =
                 new TestFieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         FieldConfigColour copy = (FieldConfigColour) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -276,7 +277,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.attributeSelection(null);
 
         // Does nothing
@@ -293,7 +294,7 @@ public class FieldConfigColourTest {
         FieldConfigColour field =
                 new FieldConfigColour(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", false));
+                                Geometry.class, FieldIdEnum.NAME, "label", false, false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
@@ -318,5 +319,64 @@ public class FieldConfigColourTest {
         field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
+    }
+
+    /** Test value stored. */
+    @Test
+    public void testValueStored() {
+        boolean valueOnly = true;
+
+        class TestFieldConfigColour extends FieldConfigColour {
+            public TestFieldConfigColour(FieldConfigCommonData commonData) {
+                super(commonData);
+            }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.FieldConfigColour#valueStored()
+             */
+            @Override
+            protected void valueStored() {
+                super.valueStored();
+            }
+        }
+
+        TestFieldConfigColour field =
+                new TestFieldConfigColour(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        class TestUpdateSymbol implements UpdateSymbolInterface {
+            public boolean dataChanged = false;
+
+            @Override
+            public void dataChanged(FieldIdEnum changedField) {
+                dataChanged = true;
+            }
+        };
+        TestUpdateSymbol update = new TestUpdateSymbol();
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored();
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+        update.dataChanged = false;
+
+        // now suppress undo events
+        field =
+                new TestFieldConfigColour(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, true));
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored();
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }

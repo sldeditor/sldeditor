@@ -69,7 +69,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -94,7 +94,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field2 =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -125,7 +125,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -153,7 +153,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -184,7 +184,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -205,7 +205,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -223,7 +223,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -252,7 +252,7 @@ public class FieldConfigWindBarbsTest {
         TestFieldConfigWindBarbs field =
                 new TestFieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
         FieldConfigWindBarbs copy = (FieldConfigWindBarbs) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -272,7 +272,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -291,7 +291,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -311,7 +311,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -333,7 +333,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -385,7 +385,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -407,18 +407,20 @@ public class FieldConfigWindBarbsTest {
 
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(null, expectedColourValue);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField =
-                new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldConfigBase symbolSelectionField =
                 new FieldConfigSymbolType(
-                        new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         symbolSelectionField.createUI();
 
         fieldConfigManager.add(colourFieldId, colourField);
@@ -448,7 +450,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -466,7 +468,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -484,7 +486,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -502,7 +504,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -531,7 +533,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -549,7 +551,7 @@ public class FieldConfigWindBarbsTest {
         FieldConfigWindBarbs field =
                 new FieldConfigWindBarbs(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);

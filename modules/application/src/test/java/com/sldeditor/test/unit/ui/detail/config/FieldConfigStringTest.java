@@ -25,12 +25,18 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.undo.UndoEvent;
+import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.FieldConfigString;
+import com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
+import java.awt.Component;
+import javax.swing.JButton;
 import org.junit.jupiter.api.Test;
+import org.locationtech.jts.geom.Geometry;
 import org.opengis.filter.expression.Expression;
 
 /**
@@ -55,7 +61,7 @@ public class FieldConfigStringTest {
         FieldConfigString field =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "button text");
 
         // Text field will not have been created
@@ -78,7 +84,7 @@ public class FieldConfigStringTest {
         FieldConfigString field2 =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "button text");
 
         // Text field will not have been created
@@ -107,7 +113,7 @@ public class FieldConfigStringTest {
         FieldConfigString field =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "button text");
 
         boolean expectedValue = true;
@@ -141,7 +147,7 @@ public class FieldConfigStringTest {
         TestFieldConfigString field =
                 new TestFieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "button text");
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
@@ -154,6 +160,11 @@ public class FieldConfigStringTest {
 
         expectedValue = "test string value as expression";
         field.populateExpression(expectedValue);
+        actualExpression = field.callGenerateExpression();
+        assertTrue(expectedValue.compareTo(actualExpression.toString()) == 0);
+
+        // Try with unsupported type
+        field.populateExpression(Integer.valueOf(0));
         actualExpression = field.callGenerateExpression();
         assertTrue(expectedValue.compareTo(actualExpression.toString()) == 0);
     }
@@ -170,7 +181,7 @@ public class FieldConfigStringTest {
         FieldConfigString field =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "button text");
 
         String expectedDefaultValue = "default value";
@@ -194,7 +205,7 @@ public class FieldConfigStringTest {
         FieldConfigString field =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "button text");
 
         String expectedTestValue = "test value";
@@ -228,7 +239,7 @@ public class FieldConfigStringTest {
         TestFieldConfigString field =
                 new TestFieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "button text");
         FieldConfigString copy = (FieldConfigString) field.callCreateCopy(null);
         assertNull(copy);
@@ -249,7 +260,7 @@ public class FieldConfigStringTest {
         FieldConfigString field =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "button text");
 
         field.attributeSelection("field");
@@ -268,7 +279,7 @@ public class FieldConfigStringTest {
         FieldConfigString field =
                 new FieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "button text");
 
         field.undoAction(null);
@@ -302,12 +313,120 @@ public class FieldConfigStringTest {
      */
     @Test
     public void testAddButtonPressedListener() {
+        class TestFieldConfigString extends FieldConfigString {
+            /**
+             * Instantiates a new test field config string.
+             *
+             * @param commonData the common data
+             * @param buttonText the button text
+             */
+            public TestFieldConfigString(FieldConfigCommonData commonData, String buttonText) {
+                super(commonData, buttonText);
+            }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.FieldConfigGeometry#externalButtonPressed(javax.swing.JButton)
+             */
+            @Override
+            protected void externalButtonPressed(JButton buttonExternal) {
+                super.externalButtonPressed(buttonExternal);
+            }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.FieldConfigString#valueStored(java.lang.String, java.lang.String)
+             */
+            @Override
+            protected void valueStored(String prev, String text) {
+                super.valueStored(prev, text);
+            }
+        }
+
+        class TestFieldConfigStringButtonInterface implements FieldConfigStringButtonInterface {
+
+            public boolean buttonPressed = false;
+
+            @Override
+            public void buttonPressed(Component buttonExternal) {
+                buttonPressed = true;
+            }
+        };
+
+        TestFieldConfigStringButtonInterface buttonPressedInterface =
+                new TestFieldConfigStringButtonInterface();
+
         boolean valueOnly = true;
-        FieldConfigString field =
-                new FieldConfigString(
+        TestFieldConfigString field =
+                new TestFieldConfigString(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         "button text");
+
         field.addButtonPressedListener(null);
+
+        field.addButtonPressedListener(buttonPressedInterface);
+        assertFalse(buttonPressedInterface.buttonPressed);
+        field.externalButtonPressed(null);
+        assertTrue(buttonPressedInterface.buttonPressed);
+    }
+
+    @Test
+    public void testValueStored() {
+        boolean valueOnly = true;
+
+        class TestFieldConfigString extends FieldConfigString {
+            public TestFieldConfigString(FieldConfigCommonData commonData) {
+                super(commonData, "Button");
+            }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.FieldConfigString#valueStored(java.lang.String, java.lang.String)
+             */
+            @Override
+            protected void valueStored(String prev, String text) {
+                super.valueStored(prev, text);
+            }
+        }
+
+        TestFieldConfigString field =
+                new TestFieldConfigString(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        class TestUpdateSymbol implements UpdateSymbolInterface {
+            public boolean dataChanged = false;
+
+            @Override
+            public void dataChanged(FieldIdEnum changedField) {
+                dataChanged = true;
+            }
+        };
+        TestUpdateSymbol update = new TestUpdateSymbol();
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored("prev value", "test value");
+        assertTrue(update.dataChanged);
+        update.dataChanged = false;
+        field.valueStored("same value", "same value");
+        assertFalse(update.dataChanged);
+
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+        update.dataChanged = false;
+
+        // now suppress undo events
+        field =
+                new TestFieldConfigString(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, true));
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored("prev value", "test value again");
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }

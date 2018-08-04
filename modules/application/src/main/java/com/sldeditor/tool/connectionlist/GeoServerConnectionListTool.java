@@ -52,13 +52,13 @@ public class GeoServerConnectionListTool implements ToolInterface {
     private JButton btnNew;
 
     /** The btn duplicate. */
-    private JButton btnDuplicate;
+    protected JButton btnDuplicate;
 
     /** The btn edit. */
-    private JButton btnEdit;
+    protected JButton btnEdit;
 
     /** The btn delete. */
-    private JButton btnDelete;
+    protected JButton btnDelete;
 
     /** The panel. */
     private JPanel panel;
@@ -104,16 +104,7 @@ public class GeoServerConnectionListTool implements ToolInterface {
         btnNew.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (geoServerConnectUpdate != null) {
-                            GeoServerConnection connectionDetails = new GeoServerConnection();
-
-                            GeoServerConnection newConnectionDetails =
-                                    ConnectorDetailsPanel.showDialog(null, connectionDetails);
-
-                            if (newConnectionDetails != null) {
-                                geoServerConnectUpdate.addNewConnection(newConnectionDetails);
-                            }
-                        }
+                        addNewButtonPressed();
                     }
                 });
 
@@ -129,17 +120,7 @@ public class GeoServerConnectionListTool implements ToolInterface {
         btnDuplicate.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (geoServerConnectUpdate != null) {
-                            if (!connectionList.isEmpty()) {
-                                GeoServerConnection selectedConnectionDetails =
-                                        connectionList.get(0);
-
-                                GeoServerConnection duplicateItem =
-                                        selectedConnectionDetails.duplicate();
-
-                                geoServerConnectUpdate.addNewConnection(duplicateItem);
-                            }
-                        }
+                        duplicateButtonPressed();
                     }
                 });
 
@@ -155,20 +136,7 @@ public class GeoServerConnectionListTool implements ToolInterface {
         btnEdit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (geoServerConnectUpdate != null) {
-                            if (!connectionList.isEmpty()) {
-                                GeoServerConnection selectedConnectionDetails =
-                                        connectionList.get(0);
-                                GeoServerConnection newConnectionDetails =
-                                        ConnectorDetailsPanel.showDialog(
-                                                null, selectedConnectionDetails);
-
-                                if (newConnectionDetails != null) {
-                                    geoServerConnectUpdate.updateConnectionDetails(
-                                            selectedConnectionDetails, newConnectionDetails);
-                                }
-                            }
-                        }
+                        editButtonPressed();
                     }
                 });
 
@@ -184,9 +152,7 @@ public class GeoServerConnectionListTool implements ToolInterface {
         btnDelete.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (geoServerConnectUpdate != null) {
-                            geoServerConnectUpdate.deleteConnections(connectionList);
-                        }
+                        deleteButtonPressed();
                     }
                 });
 
@@ -254,5 +220,55 @@ public class GeoServerConnectionListTool implements ToolInterface {
             return true;
         }
         return false;
+    }
+
+    /** Add new button pressed. */
+    protected void addNewButtonPressed() {
+        if (geoServerConnectUpdate != null) {
+            GeoServerConnection connectionDetails = new GeoServerConnection();
+
+            GeoServerConnection newConnectionDetails =
+                    ConnectorDetailsPanel.showDialog(null, connectionDetails);
+
+            if (newConnectionDetails != null) {
+                geoServerConnectUpdate.addNewConnection(newConnectionDetails);
+            }
+        }
+    }
+
+    /** Duplicate button pressed. */
+    protected void duplicateButtonPressed() {
+        if (geoServerConnectUpdate != null) {
+            if (!connectionList.isEmpty()) {
+                GeoServerConnection selectedConnectionDetails = connectionList.get(0);
+
+                GeoServerConnection duplicateItem = selectedConnectionDetails.duplicate();
+
+                geoServerConnectUpdate.addNewConnection(duplicateItem);
+            }
+        }
+    }
+
+    /** Edit button pressed. */
+    protected void editButtonPressed() {
+        if (geoServerConnectUpdate != null) {
+            if (!connectionList.isEmpty()) {
+                GeoServerConnection selectedConnectionDetails = connectionList.get(0);
+                GeoServerConnection newConnectionDetails =
+                        ConnectorDetailsPanel.showDialog(null, selectedConnectionDetails);
+
+                if (newConnectionDetails != null) {
+                    geoServerConnectUpdate.updateConnectionDetails(
+                            selectedConnectionDetails, newConnectionDetails);
+                }
+            }
+        }
+    }
+
+    /** */
+    protected void deleteButtonPressed() {
+        if (geoServerConnectUpdate != null) {
+            geoServerConnectUpdate.deleteConnections(connectionList);
+        }
     }
 }

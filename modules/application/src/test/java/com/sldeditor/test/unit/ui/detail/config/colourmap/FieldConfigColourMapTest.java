@@ -38,6 +38,81 @@ import org.opengis.filter.FilterFactory;
  */
 public class FieldConfigColourMapTest {
 
+    /** The Class TestFieldConfigColourMap, exposes protected methods for testing. */
+    class TestFieldConfigColourMap extends FieldConfigColourMap {
+
+        /**
+         * Instantiates a new test field config colour map.
+         *
+         * @param commonData the common data
+         */
+        public TestFieldConfigColourMap(FieldConfigCommonData commonData) {
+            super(commonData);
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#addEntry()
+         */
+        @Override
+        protected void addEntry() {
+            super.addEntry();
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#removeEntry()
+         */
+        @Override
+        protected void removeEntry() {
+            super.removeEntry();
+        }
+
+        /**
+         * Checks if is removes the button enabled.
+         *
+         * @return true, if is removes the button enabled
+         */
+        public boolean isRemoveButtonEnabled() {
+            return removeButton.isEnabled();
+        }
+
+        /**
+         * Gets the row count.
+         *
+         * @return the row count
+         */
+        public int getRowCount() {
+            return model.getRowCount();
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#itemsSelected()
+         */
+        @Override
+        protected void itemsSelected() {
+            super.itemsSelected();
+        }
+
+        /**
+         * Select row.
+         *
+         * @param rowFrom the row from
+         * @param rowTo the row to
+         */
+        public void selectRow(int rowFrom, int rowTo) {
+            table.setRowSelectionInterval(rowFrom, rowTo);
+        }
+
+        /**
+         * Call create copy.
+         *
+         * @param fieldConfigBase the field config base
+         * @return the field config populate
+         */
+        public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
+            return createCopy(fieldConfigBase);
+        }
+    }
+
     /**
      * Test method for {@link
      * com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#internal_setEnabled(boolean)}.
@@ -48,7 +123,8 @@ public class FieldConfigColourMapTest {
     public void testSetEnabled() {
         FieldConfigColourMap field =
                 new FieldConfigColourMap(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false));
 
         // Field will not have been created
         boolean expectedValue = true;
@@ -75,7 +151,8 @@ public class FieldConfigColourMapTest {
     public void testSetVisible() {
         FieldConfigColourMap field =
                 new FieldConfigColourMap(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -103,7 +180,8 @@ public class FieldConfigColourMapTest {
 
         FieldConfigColourMap field =
                 new FieldConfigColourMap(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false));
         ColorMap testValue = null;
         field.populate(null);
         field.setTestValue(FieldIdEnum.UNKNOWN, testValue);
@@ -137,7 +215,8 @@ public class FieldConfigColourMapTest {
     public void testRevertToDefaultValue() {
         FieldConfigColourMap field =
                 new FieldConfigColourMap(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false));
 
         field.revertToDefaultValue();
         assertNull(field.getColourMap());
@@ -155,19 +234,10 @@ public class FieldConfigColourMapTest {
     @Test
     public void testCreateCopy() {
 
-        class TestFieldConfigColourMap extends FieldConfigColourMap {
-            public TestFieldConfigColourMap(FieldConfigCommonData commonData) {
-                super(commonData);
-            }
-
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
-                return createCopy(fieldConfigBase);
-            }
-        }
-
         TestFieldConfigColourMap field =
                 new TestFieldConfigColourMap(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false));
         FieldConfigColourMap copy = (FieldConfigColourMap) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -185,7 +255,8 @@ public class FieldConfigColourMapTest {
     public void testAttributeSelection() {
         FieldConfigColourMap field =
                 new FieldConfigColourMap(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false));
         field.attributeSelection(null);
 
         // Does nothing
@@ -201,7 +272,8 @@ public class FieldConfigColourMapTest {
     public void testUndoAction() {
         FieldConfigColourMap field =
                 new FieldConfigColourMap(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
@@ -234,6 +306,37 @@ public class FieldConfigColourMapTest {
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
     }
 
+    /** Test undo action suppressed. */
+    @Test
+    public void testUndoActionSuppressed() {
+        // Suppress undo events
+        TestFieldConfigColourMap field =
+                new TestFieldConfigColourMap(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, true));
+        field.createUI();
+
+        ColorMap expectedValue1 = new ColorMapImpl();
+        field.populateField(expectedValue1);
+        assertEquals(expectedValue1, field.getColourMap());
+
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+
+        ColorMap expectedValue2 = new ColorMapImpl();
+        ColorMapEntryImpl entry = new ColorMapEntryImpl();
+        entry.setColor(ff.literal("#001122"));
+        expectedValue2.addColorMapEntry(entry);
+
+        int undoSizeList = UndoManager.getInstance().getUndoListSize();
+        field.populateField(expectedValue2);
+
+        field.addEntry();
+        field.selectRow(0, 0);
+        field.removeEntry();
+
+        assertEquals(undoSizeList, UndoManager.getInstance().getUndoListSize());
+    }
+
     /**
      * Test method for {@link
      * com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#getStringValue()}.
@@ -259,7 +362,8 @@ public class FieldConfigColourMapTest {
 
         FieldConfigColourMap field =
                 new FieldConfigColourMap(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false));
         field.populateField(expectedValue);
 
         assertTrue(field.getStringValue().compareTo(EncodeColourMap.encode(expectedValue)) == 0);
@@ -273,9 +377,56 @@ public class FieldConfigColourMapTest {
     public void testColourMapUpdated() {
         FieldConfigColourMap field =
                 new FieldConfigColourMap(
-                        new FieldConfigCommonData(Geometry.class, FieldIdEnum.NAME, "label", true));
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false));
 
         field.createUI();
         field.colourMapUpdated();
+    }
+
+    /** Test add entry. */
+    @Test
+    public void testAddEntry() {
+
+        TestFieldConfigColourMap field =
+                new TestFieldConfigColourMap(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", true, false));
+
+        field.createUI();
+        assertFalse(field.isRemoveButtonEnabled());
+        assertEquals(0, field.getRowCount());
+
+        // Add entry
+        field.addEntry();
+        assertEquals(1, field.getRowCount());
+        assertFalse(field.isRemoveButtonEnabled());
+
+        // Remove row
+        field.selectRow(0, 0);
+        assertTrue(field.isRemoveButtonEnabled());
+        field.removeEntry();
+        assertEquals(0, field.getRowCount());
+        assertFalse(field.isRemoveButtonEnabled());
+
+        // Add multiple rows
+        field.addEntry();
+        field.addEntry();
+        field.addEntry();
+        field.addEntry();
+        field.addEntry();
+        assertEquals(5, field.getRowCount());
+
+        // Remove 3 row
+        field.selectRow(1, 3);
+        assertTrue(field.isRemoveButtonEnabled());
+        field.removeEntry();
+        assertEquals(2, field.getRowCount());
+        assertFalse(field.isRemoveButtonEnabled());
+
+        // Check colour map entry
+        field.selectRow(0, 0);
+        field.colourMapEntryUpdated(null);
+        assertFalse(field.isRemoveButtonEnabled());
     }
 }

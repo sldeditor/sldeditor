@@ -5,7 +5,7 @@
         <FieldConfigString id="NAME" label="rule.name"
             valueOnly="true" />
         <FieldConfigString id="FILTER" label="rule.filter"
-            valueOnly="true" />
+            valueOnly="true" suppressUpdateOnSet="true" />
         <FieldConfigString id="TITLE" label="rule.titleField"
             valueOnly="true" />
         <FieldConfigString id="DESCRIPTION" label="rule.description"

@@ -69,7 +69,7 @@ public class TestFilterPanelv2 {
         private static final long serialVersionUID = 1L;
 
         public TestFilterPanelv2Dialog(List<VersionData> vendorOptionList) {
-            super(vendorOptionList);
+            super(vendorOptionList, false);
         }
 
         protected void filterDialog(Class<?> type, Filter filter) {

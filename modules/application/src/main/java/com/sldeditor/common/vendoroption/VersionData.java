@@ -487,7 +487,7 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
                 }
 
                 if (versionComponents.length > 3) {
-                    this.subPointNumber = decodeNumber(versionComponents[2]);
+                    this.subPointNumber = decodeNumber(versionComponents[3]);
                 }
             } catch (NumberFormatException e) {
                 return false;

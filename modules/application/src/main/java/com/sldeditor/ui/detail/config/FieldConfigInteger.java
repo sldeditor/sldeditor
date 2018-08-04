@@ -75,8 +75,6 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     @Override
     public void createUI() {
         if (spinner == null) {
-            final UndoActionInterface parentObj = this;
-
             int xPos = getXPos();
             FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
@@ -98,18 +96,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
                         @Override
                         public void notify(double oldValue, double newValue) {
 
-                            Integer oldValueObj = Double.valueOf(oldValue).intValue();
-                            Integer newValueObj = Double.valueOf(newValue).intValue();
-
-                            UndoManager.getInstance()
-                                    .addUndoEvent(
-                                            new UndoEvent(
-                                                    parentObj,
-                                                    getFieldId(),
-                                                    oldValueObj,
-                                                    newValueObj));
-
-                            valueUpdated();
+                            valueStored(oldValue, newValue);
                         }
                     });
         }
@@ -123,7 +110,8 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -222,11 +210,14 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
         } else if (objValue instanceof Double) {
             Double d = (Double) objValue;
             newValue = d.intValue();
+        } else if (objValue instanceof Float) {
+            Float f = (Float) objValue;
+            newValue = f.intValue();
         } else if (objValue instanceof String) {
-            newValue = Double.valueOf((String) objValue).intValue();
-        } else {
-            if (objValue != null) {
-                newValue = Double.valueOf(objValue.toString()).intValue();
+            try {
+                newValue = Double.valueOf((String) objValue).intValue();
+            } catch (NumberFormatException e) {
+                // Just ignore
             }
         }
 
@@ -380,5 +371,23 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.stepSize = stepSize;
+    }
+
+    /**
+     * Value stored.
+     *
+     * @param oldValue the old value
+     * @param newValue the new value
+     */
+    protected void valueStored(double oldValue, double newValue) {
+        if (!FieldConfigInteger.this.isSuppressUndoEvents()) {
+
+            Integer oldValueObj = Double.valueOf(oldValue).intValue();
+            Integer newValueObj = Double.valueOf(newValue).intValue();
+
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+        }
+        valueUpdated();
     }
 }

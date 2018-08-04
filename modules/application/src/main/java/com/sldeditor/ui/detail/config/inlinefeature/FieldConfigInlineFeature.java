@@ -119,7 +119,8 @@ public class FieldConfigInlineFeature extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -316,12 +317,17 @@ public class FieldConfigInlineFeature extends FieldConfigBase
             inlineFeature.setInlineFeatures(value);
         }
 
-        UndoManager.getInstance()
-                .addUndoEvent(
-                        new UndoEvent(
-                                this, getFieldId(), oldValueObj, new String(inlineFeaturesText)));
+        if (!isSuppressUndoEvents()) {
+            UndoManager.getInstance()
+                    .addUndoEvent(
+                            new UndoEvent(
+                                    this,
+                                    getFieldId(),
+                                    oldValueObj,
+                                    new String(inlineFeaturesText)));
 
-        oldValueObj = new String(inlineFeaturesText);
+            oldValueObj = new String(inlineFeaturesText);
+        }
 
         valueUpdated();
     }
@@ -356,19 +362,24 @@ public class FieldConfigInlineFeature extends FieldConfigBase
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUpdateInterface#inlineFeatureUpdated()
+     * @see com.sldeditor.ui.detail.config.inlinefeature.InlineFeatureUpdateInterface#
+     * inlineFeatureUpdated()
      */
     @Override
     public void inlineFeatureUpdated() {
         if (!Controller.getInstance().isPopulating()) {
             String value = "";
             if (inlineFeature != null) {
-                value = inlineFeature.getInlineFeatures();
-                UndoManager.getInstance()
-                        .addUndoEvent(
-                                new UndoEvent(this, getFieldId(), oldValueObj, new String(value)));
+                if (!isSuppressUndoEvents()) {
 
-                oldValueObj = new String(value);
+                    value = inlineFeature.getInlineFeatures();
+                    UndoManager.getInstance()
+                            .addUndoEvent(
+                                    new UndoEvent(
+                                            this, getFieldId(), oldValueObj, new String(value)));
+
+                    oldValueObj = new String(value);
+                }
 
                 if (inlineGML != null) {
                     inlineGML.setInlineFeatures(value);

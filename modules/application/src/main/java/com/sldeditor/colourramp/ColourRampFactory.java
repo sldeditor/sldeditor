@@ -43,8 +43,12 @@ public class ColourRampFactory {
     private static Map<ColourRampPanelInterface, List<ColourRamp>> colourRampMap =
             new HashMap<ColourRampPanelInterface, List<ColourRamp>>();
 
-    /** Populate. */
-    private static void populate() {
+    /**
+     * Populate.
+     *
+     * @param suppressUndoEvents the suppress undo events
+     */
+    private static void populate(boolean suppressUndoEvents) {
         if (colourRampMap.isEmpty()) {
             ColourRampPresets colourRampXML =
                     (ColourRampPresets)
@@ -54,7 +58,8 @@ public class ColourRampFactory {
                                     OUTPUT_SCHEMA_RESOURCE,
                                     ColourRampPresets.class);
 
-            ColourRampPanel panel = new ColourRampPanel(colourRampXML.getTwoColourRampList());
+            ColourRampPanel panel =
+                    new ColourRampPanel(colourRampXML.getTwoColourRampList(), suppressUndoEvents);
 
             colourRampMap.put(panel, panel.getColourRampList());
         }
@@ -63,10 +68,12 @@ public class ColourRampFactory {
     /**
      * Gets the colour ramp map.
      *
+     * @param suppressUndoEvents the suppress undo events
      * @return the colourRampMap
      */
-    public static Map<ColourRampPanelInterface, List<ColourRamp>> getColourRampMap() {
-        populate();
+    public static Map<ColourRampPanelInterface, List<ColourRamp>> getColourRampMap(
+            boolean suppressUndoEvents) {
+        populate(suppressUndoEvents);
 
         return colourRampMap;
     }

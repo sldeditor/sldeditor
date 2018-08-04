@@ -2,11 +2,13 @@
 package com.sldeditor.test.unit.ui.detail.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.undo.UndoEvent;
+import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.DataSourceUpdatedInterface;
@@ -21,6 +23,7 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigGeometryField;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -29,6 +32,7 @@ import java.util.Map;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.data.FeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.filter.function.DefaultFunctionFactory;
 import org.geotools.styling.UserLayer;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
@@ -37,6 +41,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.PropertyDescriptor;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Function;
 
 /**
  * The unit test for FieldConfigGeometryField.
@@ -50,7 +55,7 @@ public class FieldConfigGeometryFieldTest {
     /** The Class TestDataSourceImpl. */
     public class TestDataSource implements DataSourceInterface {
 
-        private static final String GEOMETRY_FIELD = "Geometry_1";
+        public static final String GEOMETRY_FIELD = "Geometry_1";
 
         /** The listener list. */
         private List<DataSourceUpdatedInterface> listenerList =
@@ -282,7 +287,7 @@ public class FieldConfigGeometryFieldTest {
         FieldConfigGeometryField field =
                 new FieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -309,7 +314,7 @@ public class FieldConfigGeometryFieldTest {
         FieldConfigGeometryField field =
                 new FieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -346,7 +351,7 @@ public class FieldConfigGeometryFieldTest {
         TestFieldConfigGeometryField field =
                 new TestFieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", false));
+                                String.class, FieldIdEnum.NAME, "test label", false, false));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -375,8 +380,24 @@ public class FieldConfigGeometryFieldTest {
         actualExpression = field.callGenerateExpression();
         assertTrue(expectedExpression.toString().compareTo(actualExpression.toString()) == 0);
 
+        // Property exists
+        DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
+
+        List<Expression> expList = new ArrayList<Expression>();
+        expList.add(ff.literal(TestDataSource.GEOMETRY_FIELD));
+        Function func = functionFactory.function("PropertyExists", expList, null);
+        expectedExpression = func;
+        field.populateExpression(func);
+        actualExpression = field.callGenerateExpression();
+        assertTrue(TestDataSource.GEOMETRY_FIELD.compareTo(actualExpression.toString()) == 0);
+
+        // Set null values
         field.populateField((String) null);
         String stringValue = field.getStringValue();
+        assertNull(stringValue);
+
+        field.populateExpression((String) null);
+        stringValue = field.getStringValue();
         assertNull(stringValue);
     }
 
@@ -391,7 +412,7 @@ public class FieldConfigGeometryFieldTest {
         FieldConfigGeometryField field =
                 new FieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         TestDataSource testDataSource = new TestDataSource();
         String expectedDefaultValue = testDataSource.getDefaultGeometryField();
@@ -432,7 +453,7 @@ public class FieldConfigGeometryFieldTest {
         TestFieldConfigGeometryField field =
                 new TestFieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         FieldConfigGeometryField copy = (FieldConfigGeometryField) field.callCreateCopy(null);
         assertNull(copy);
@@ -457,7 +478,7 @@ public class FieldConfigGeometryFieldTest {
         FieldConfigGeometryField field =
                 new FieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         field.undoAction(null);
         field.redoAction(null);
@@ -487,6 +508,12 @@ public class FieldConfigGeometryFieldTest {
 
         field.redoAction(undoEvent);
         assertTrue(expectedRedoTestValue.compareTo(field.getStringValue()) == 0);
+
+        // Try invalid values
+        undoEvent =
+                new UndoEvent(null, FieldIdEnum.UNKNOWN, Integer.valueOf(1), Double.valueOf(1.9));
+        field.undoAction(undoEvent);
+        field.redoAction(undoEvent);
     }
 
     /**
@@ -498,9 +525,69 @@ public class FieldConfigGeometryFieldTest {
         FieldConfigGeometryField field =
                 new FieldConfigGeometryField(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", true));
+                                String.class, FieldIdEnum.NAME, "test label", true, false));
 
         field.attributeSelection("field");
         // Does nothing
+    }
+
+    @Test
+    public void testValueStored() {
+        TestDataSource testDataSource = new TestDataSource();
+        @SuppressWarnings("unused")
+        DataSourceInterface dataSource = DataSourceFactory.createDataSource(testDataSource);
+        boolean valueOnly = true;
+
+        class TestFieldConfigGeometryField extends FieldConfigGeometryField {
+            public TestFieldConfigGeometryField(FieldConfigCommonData commonData) {
+                super(commonData);
+            }
+        }
+
+        TestFieldConfigGeometryField field =
+                new TestFieldConfigGeometryField(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        class TestUpdateSymbol implements UpdateSymbolInterface {
+            public boolean dataChanged = false;
+
+            @Override
+            public void dataChanged(FieldIdEnum changedField) {
+                dataChanged = true;
+            }
+        };
+        TestUpdateSymbol update = new TestUpdateSymbol();
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+
+        field.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.populateExpression(ff.literal(testDataSource.getDefaultGeometryField()));
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+        update.dataChanged = false;
+
+        // now suppress undo events
+        field =
+                new TestFieldConfigGeometryField(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, true));
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.dataSourceLoaded(GeometryTypeEnum.POLYGON, false);
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.populateExpression(ff.literal(testDataSource.getDefaultGeometryField()));
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
+
+        DataSourceFactory.reset();
     }
 }

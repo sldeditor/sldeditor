@@ -198,7 +198,9 @@ public class RenderTransformationDialog extends JDialog {
         selectionModel.addListSelectionListener(
                 new ListSelectionListener() {
                     public void valueChanged(ListSelectionEvent e) {
-                        handleTableSelectionEvent(e);
+                        if (!e.getValueIsAdjusting()) {
+                            handleTableSelectionEvent();
+                        }
                     }
                 });
 
@@ -375,43 +377,37 @@ public class RenderTransformationDialog extends JDialog {
         lblError.setText(message);
     }
 
-    /**
-     * Handle table selection event.
-     *
-     * @param e the list selection event
-     */
-    private void handleTableSelectionEvent(ListSelectionEvent e) {
-        if (!e.getValueIsAdjusting()) {
-            int row = functionParameterTable.getSelectedRow();
-            int column = functionParameterTable.getSelectedColumn();
+    /** Handle table selection event. */
+    private void handleTableSelectionEvent() {
+        int row = functionParameterTable.getSelectedRow();
+        int column = functionParameterTable.getSelectedColumn();
 
-            ProcessFunctionParameterValue value = functionParameterTableModel.getValue(row);
+        ProcessFunctionParameterValue value = functionParameterTableModel.getValue(row);
 
-            if (value != null) {
-                int count = functionParameterTableModel.getNoOfOccurences(value);
-                btnAdd.setEnabled(count < value.maxOccurences);
-                btnRemove.setEnabled((count > value.minOccurences) && (count > 1));
-            } else {
-                btnAdd.setEnabled(false);
-                btnRemove.setEnabled(false);
-            }
+        if (value != null) {
+            int count = functionParameterTableModel.getNoOfOccurences(value);
+            btnAdd.setEnabled(count < value.maxOccurences);
+            btnRemove.setEnabled((count > value.minOccurences) && (count > 1));
+        } else {
+            btnAdd.setEnabled(false);
+            btnRemove.setEnabled(false);
+        }
 
-            if (column == 3) {
-                String title =
-                        String.format(
-                                "%s - %s : %s",
-                                value.name,
-                                Localisation.getString(
-                                        RenderTransformationDialog.class,
-                                        "RenderTransformationDialog.type"),
-                                value.dataType);
-                expressionPanel.configure(title, value.type, false);
-                expressionPanel.populate(value.objectValue.getExpression());
-                if (expressionPanel.showDialog()) {
-                    Expression expression = expressionPanel.getExpression();
+        if (column == 3) {
+            String title =
+                    String.format(
+                            "%s - %s : %s",
+                            value.name,
+                            Localisation.getString(
+                                    RenderTransformationDialog.class,
+                                    "RenderTransformationDialog.type"),
+                            value.dataType);
+            expressionPanel.configure(title, value.type, false);
+            expressionPanel.populate(value.objectValue.getExpression());
+            if (expressionPanel.showDialog()) {
+                Expression expression = expressionPanel.getExpression();
 
-                    functionParameterTableModel.update(expression, row);
-                }
+                functionParameterTableModel.update(expression, row);
             }
         }
     }

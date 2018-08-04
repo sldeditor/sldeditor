@@ -65,7 +65,7 @@ public class VOGeoServerWindbarbSymbol implements VOMarkerSymbolInterface {
 
         windBarbs =
                 new FieldConfigWindBarbs(
-                        new FieldConfigCommonData(panelId, FieldIdEnum.WINDBARBS, "", true),
+                        new FieldConfigCommonData(panelId, FieldIdEnum.WINDBARBS, "", true, false),
                         fillFieldConfig,
                         strokeFieldConfig,
                         symbolSelectionField);

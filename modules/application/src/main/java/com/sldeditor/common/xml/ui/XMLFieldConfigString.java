@@ -25,7 +25,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{}XMLFieldConfigData">
  *       &lt;attribute name="buttonText" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="suppressUpdateOnSet" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" />
  *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -36,7 +35,6 @@ import javax.xml.bind.annotation.XmlType;
 public class XMLFieldConfigString extends XMLFieldConfigData {
 
     @XmlAttribute protected String buttonText;
-    @XmlAttribute protected Boolean suppressUpdateOnSet;
 
     /**
      * Gets the value of the buttonText property.
@@ -54,27 +52,5 @@ public class XMLFieldConfigString extends XMLFieldConfigData {
      */
     public void setButtonText(String value) {
         this.buttonText = value;
-    }
-
-    /**
-     * Gets the value of the suppressUpdateOnSet property.
-     *
-     * @return possible object is {@link Boolean }
-     */
-    public boolean getSuppressUpdateOnSet() {
-        if (suppressUpdateOnSet == null) {
-            return false;
-        } else {
-            return suppressUpdateOnSet;
-        }
-    }
-
-    /**
-     * Sets the value of the suppressUpdateOnSet property.
-     *
-     * @param value allowed object is {@link Boolean }
-     */
-    public void setSuppressUpdateOnSet(Boolean value) {
-        this.suppressUpdateOnSet = value;
     }
 }

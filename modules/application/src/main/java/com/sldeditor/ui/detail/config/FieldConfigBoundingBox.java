@@ -76,6 +76,12 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     /** The old value obj. */
     private Object oldValueObj;
 
+    /** The text field. */
+    private JTextField textField;
+
+    /** The original value. */
+    private String originalValue = "";
+
     /**
      * Instantiates a new field config boolean.
      *
@@ -205,14 +211,13 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      * @return the j text field
      */
     private JTextField createRow(String label, int xPos, FieldPanel fieldPanel, int row) {
-        final UndoActionInterface parentObj = this;
 
         JLabel lbl = new JLabel(label);
         lbl.setHorizontalAlignment(SwingConstants.TRAILING);
         lbl.setBounds(xPos, getRowY(row), BasePanel.LABEL_WIDTH, BasePanel.WIDGET_HEIGHT);
         fieldPanel.add(lbl);
 
-        JTextField textField = new JTextField();
+        textField = new JTextField();
         textField.setBounds(
                 xPos + BasePanel.WIDGET_X_START,
                 getRowY(row),
@@ -224,7 +229,6 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
 
         textField.addFocusListener(
                 new FocusListener() {
-                    private String originalValue = "";
 
                     @Override
                     public void focusGained(FocusEvent e) {
@@ -233,21 +237,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
 
                     @Override
                     public void focusLost(FocusEvent e) {
-                        String newValueObj = textField.getText();
-
-                        if (originalValue.compareTo(newValueObj) != 0) {
-                            UndoManager.getInstance()
-                                    .addUndoEvent(
-                                            new UndoEvent(
-                                                    parentObj,
-                                                    getFieldId(),
-                                                    oldValueObj,
-                                                    newValueObj));
-
-                            oldValueObj = originalValue;
-
-                            valueUpdated();
-                        }
+                        valueStored(textField.getText());
                     }
                 });
 
@@ -262,7 +252,8 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -468,9 +459,11 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
 
         crsComboBox.setSelectValueKey(key);
 
-        UndoManager.getInstance()
-                .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
-        oldValueObj = value;
+        if (!FieldConfigBoundingBox.this.isSuppressUndoEvents()) {
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            oldValueObj = value;
+        }
     }
 
     /**
@@ -497,6 +490,25 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
     public void setVisible(boolean visible) {
         if (crsComboBox != null) {
             crsComboBox.setVisible(visible);
+        }
+    }
+
+    /**
+     * Value stored.
+     *
+     * @param textValue the text value
+     */
+    protected void valueStored(String textValue) {
+        String newValueObj = textValue;
+
+        if (originalValue.compareTo(newValueObj) != 0) {
+            if (!FieldConfigBoundingBox.this.isSuppressUndoEvents()) {
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+
+                oldValueObj = originalValue;
+            }
+            valueUpdated();
         }
     }
 }

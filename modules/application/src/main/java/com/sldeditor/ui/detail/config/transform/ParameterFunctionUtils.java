@@ -34,6 +34,9 @@ import org.opengis.filter.expression.Expression;
  */
 public class ParameterFunctionUtils {
 
+    /** The Constant GET_PARAMETERS. */
+    private static final String GET_PARAMETERS = "getParameters";
+
     /** The Constant PARAMETER_NOT_SET. */
     private static final String PARAMETER_NOT_SET = ":<not set>";
 
@@ -49,20 +52,22 @@ public class ParameterFunctionUtils {
     public static List<Expression> getExpressionList(Expression parameter) {
         List<Expression> parameterList = null;
 
-        for (Method method : parameter.getClass().getMethods()) {
-            if (method.getName().compareTo("getParameters") == 0) {
-                try {
-                    method.setAccessible(true);
-                    Object[] args = null;
-                    parameterList = (List<Expression>) method.invoke(parameter, args);
+        if (parameter != null) {
+            for (Method method : parameter.getClass().getMethods()) {
+                if (method.getName().compareTo(GET_PARAMETERS) == 0) {
+                    try {
+                        method.setAccessible(true);
+                        Object[] args = null;
+                        parameterList = (List<Expression>) method.invoke(parameter, args);
 
-                    return parameterList;
-                } catch (IllegalAccessException e) {
-                    ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
-                } catch (IllegalArgumentException e) {
-                    ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
-                } catch (InvocationTargetException e) {
-                    ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
+                        return parameterList;
+                    } catch (IllegalAccessException e) {
+                        ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
+                    } catch (IllegalArgumentException e) {
+                        ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
+                    } catch (InvocationTargetException e) {
+                        ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
+                    }
                 }
             }
         }

@@ -34,11 +34,13 @@ import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.FieldConfigSlider;
 import com.sldeditor.ui.detail.config.FieldConfigSymbolType;
+import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Map;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Mark;
@@ -56,6 +58,26 @@ import org.opengis.style.GraphicalSymbol;
  */
 public class FieldConfigFilenameTest {
 
+    class TestFieldConfigFilename extends FieldConfigFilename {
+
+        public TestFieldConfigFilename(FieldConfigCommonData commonData) {
+            super(commonData, null, null, null);
+        }
+
+        public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
+            return createCopy(fieldConfigBase);
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#populateVendorOptionFieldMap(java.util.Map)
+         */
+        @Override
+        protected void populateVendorOptionFieldMap(
+                Map<Class<?>, List<SymbolTypeConfig>> fieldEnableMap) {
+            super.populateVendorOptionFieldMap(fieldEnableMap);
+        }
+    }
+
     /**
      * Test method for {@link
      * com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#internal_setEnabled(boolean)}.
@@ -69,7 +91,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -95,7 +117,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field2 =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -126,7 +148,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -156,7 +178,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -207,7 +229,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -228,7 +250,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -244,21 +266,10 @@ public class FieldConfigFilenameTest {
     public void testCreateCopy() {
         boolean valueOnly = true;
 
-        class TestFieldConfigFilename extends FieldConfigFilename {
-
-            public TestFieldConfigFilename(FieldConfigCommonData commonData) {
-                super(commonData, null, null, null);
-            }
-
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
-                return createCopy(fieldConfigBase);
-            }
-        }
-
         TestFieldConfigFilename field =
                 new TestFieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly));
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
         FieldConfigFilename copy = (FieldConfigFilename) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -278,7 +289,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -297,7 +308,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -317,7 +328,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -342,7 +353,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -393,7 +404,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -416,7 +427,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -428,18 +439,20 @@ public class FieldConfigFilenameTest {
         Class<?> panelId = PointFillDetails.class;
         FieldIdEnum colourFieldId = FieldIdEnum.FILL_COLOUR;
         FieldConfigColour colourField =
-                new FieldConfigColour(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigColour(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         colourField.createUI();
         String expectedColourValue = "#012345";
         colourField.setTestValue(FieldIdEnum.UNKNOWN, expectedColourValue);
         double expectedOpacityValue = 0.72;
         FieldConfigSlider opacityField =
-                new FieldConfigSlider(new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                new FieldConfigSlider(
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         opacityField.createUI();
         opacityField.populateField(expectedOpacityValue);
         FieldConfigBase symbolSelectionField =
                 new FieldConfigSymbolType(
-                        new FieldConfigCommonData(panelId, colourFieldId, "", false));
+                        new FieldConfigCommonData(panelId, colourFieldId, "", false, false));
         symbolSelectionField.createUI();
 
         fieldConfigManager = new GraphicPanelFieldManager(panelId);
@@ -470,7 +483,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -488,7 +501,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -506,7 +519,7 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
@@ -532,11 +545,25 @@ public class FieldConfigFilenameTest {
         FieldConfigFilename field =
                 new FieldConfigFilename(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
 
         field.setUpdateSymbolListener(null);
+    }
+
+    @Test
+    public void testIncreaseCodeCoverage() {
+        boolean valueOnly = true;
+        TestFieldConfigFilename field =
+                new TestFieldConfigFilename(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false));
+
+        assertTrue(field.isOverallOpacity(null));
+        field.getMinimumVersion(null, null, null);
+        assertNull(field.getVendorOptionInfo());
+        field.populateVendorOptionFieldMap(null);
     }
 }

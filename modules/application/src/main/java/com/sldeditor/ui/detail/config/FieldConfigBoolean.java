@@ -70,8 +70,6 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
     @Override
     public void createUI() {
         if (checkBox == null) {
-            final UndoActionInterface parentObj = this;
-
             int xPos = getXPos();
             FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
@@ -85,19 +83,8 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
             checkBox.addActionListener(
                     new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                            boolean isSelected = checkBox.isSelected();
-                            Boolean oldValueObj = Boolean.valueOf(!isSelected);
-                            Boolean newValueObj = Boolean.valueOf(isSelected);
 
-                            UndoManager.getInstance()
-                                    .addUndoEvent(
-                                            new UndoEvent(
-                                                    parentObj,
-                                                    getFieldId(),
-                                                    oldValueObj,
-                                                    newValueObj));
-
-                            valueUpdated();
+                            checkBoxSelected();
                         }
                     });
 
@@ -116,7 +103,8 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see
+     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -298,9 +286,10 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
         if ((value != null) && (this.checkBox != null)) {
             checkBox.setSelected(value);
 
-            UndoManager.getInstance()
-                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
-
+            if (!FieldConfigBoolean.this.isSuppressUndoEvents()) {
+                UndoManager.getInstance()
+                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
+            }
             oldValueObj = value;
         }
     }
@@ -331,5 +320,18 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
         if (checkBox != null) {
             checkBox.setVisible(visible);
         }
+    }
+
+    /** Check box selected. */
+    protected void checkBoxSelected() {
+        if (!FieldConfigBoolean.this.isSuppressUndoEvents()) {
+            boolean isSelected = checkBox.isSelected();
+            Boolean oldValueObj = Boolean.valueOf(!isSelected);
+            Boolean newValueObj = Boolean.valueOf(isSelected);
+
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+        }
+        valueUpdated();
     }
 }

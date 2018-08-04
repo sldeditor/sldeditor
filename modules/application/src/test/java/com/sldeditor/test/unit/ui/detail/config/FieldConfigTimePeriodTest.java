@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.temporal.Duration;
@@ -61,7 +62,8 @@ public class FieldConfigTimePeriodTest {
         boolean valueOnly = true;
         FieldConfigTimePeriod field =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -82,7 +84,8 @@ public class FieldConfigTimePeriodTest {
         valueOnly = false;
         FieldConfigTimePeriod field2 =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -110,12 +113,16 @@ public class FieldConfigTimePeriodTest {
         boolean valueOnly = true;
         FieldConfigTimePeriod field =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
 
         expectedValue = false;
+        field.setVisible(expectedValue);
+
+        field.createUI();
         field.setVisible(expectedValue);
     }
 
@@ -146,7 +153,8 @@ public class FieldConfigTimePeriodTest {
 
         TestFieldConfigTimePeriod field =
                 new TestFieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
         Expression actualExpression = field.callGenerateExpression();
         assertNotNull(actualExpression);
 
@@ -204,7 +212,8 @@ public class FieldConfigTimePeriodTest {
         boolean valueOnly = true;
         FieldConfigTimePeriod field =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
 
         field.revertToDefaultValue();
         assertNotNull(field.getStringValue());
@@ -236,7 +245,8 @@ public class FieldConfigTimePeriodTest {
 
         TestFieldConfigTimePeriod field =
                 new TestFieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
         FieldConfigTimePeriod copy = (FieldConfigTimePeriod) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -255,7 +265,8 @@ public class FieldConfigTimePeriodTest {
         boolean valueOnly = true;
         FieldConfigTimePeriod field =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, valueOnly));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, valueOnly, false));
         field.attributeSelection(null);
 
         // Does nothing
@@ -271,7 +282,8 @@ public class FieldConfigTimePeriodTest {
     public void testUndoAction() {
         FieldConfigTimePeriod field =
                 new FieldConfigTimePeriod(
-                        new FieldConfigCommonData(String.class, FieldIdEnum.NAME, null, true));
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, true, false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
@@ -302,5 +314,30 @@ public class FieldConfigTimePeriodTest {
         UndoManager.getInstance().redo();
         actualValue = field.getStringValue();
         assertTrue(actualValue.replace(" ", "").compareTo(expectedPeriod2.replace(" ", "")) == 0);
+
+        // Increase code coverage
+        UndoEvent undoEvent =
+                new UndoEvent(null, FieldIdEnum.UNKNOWN, Integer.valueOf(0), Integer.valueOf(2));
+        field.undoAction(undoEvent);
+        field.redoAction(undoEvent);
+    }
+
+    @Test
+    public void testUndoActionSuppress() {
+        FieldConfigTimePeriod field =
+                new FieldConfigTimePeriod(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, null, true, true));
+        field.createUI();
+
+        // Time period values
+        String timePeriod1 = "07-07-2016T17:42:27Z / 07-07-2016T17:42:27Z";
+        TimePeriod period1 = new TimePeriod();
+        period1.decode(timePeriod1);
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.populateField(period1);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }

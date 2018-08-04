@@ -71,19 +71,23 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
      *
      * @param parent the parent
      * @param model the model
+     * @param suppressUndoEvents the suppress undo events
      */
-    public ColourRampConfigPanel(ColourMapModelUpdateInterface parent, ColourMapModel model) {
+    public ColourRampConfigPanel(
+            ColourMapModelUpdateInterface parent,
+            ColourMapModel model,
+            boolean suppressUndoEvents) {
         parentObj = parent;
         colourMapModel = model;
 
-        createUI();
+        createUI(suppressUndoEvents);
     }
 
     /** Creates the UI. */
-    private void createUI() {
+    private void createUI(boolean suppressUndoEvents) {
         setLayout(new BorderLayout());
 
-        colourRampMap = ColourRampFactory.getColourRampMap();
+        colourRampMap = ColourRampFactory.getColourRampMap(suppressUndoEvents);
 
         createTopPanel();
         createEditPanel();

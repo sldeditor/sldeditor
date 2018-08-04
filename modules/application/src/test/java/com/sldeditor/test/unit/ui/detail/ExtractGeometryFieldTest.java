@@ -55,7 +55,7 @@ public class ExtractGeometryFieldTest {
 
         FieldConfigGeometry geometryField =
                 new FieldConfigGeometry(
-                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true),
+                        new FieldConfigCommonData(Geometry.class, fieldId, "label", true, false),
                         "button");
         geometryField.createUI();
         fieldConfigManager.add(fieldId, geometryField);

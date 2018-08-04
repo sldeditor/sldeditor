@@ -31,6 +31,7 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDate;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,7 +63,7 @@ public class FieldConfigDateTest {
         FieldConfigDate field =
                 new FieldConfigDate(
                         new FieldConfigCommonData(
-                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         boolean expectedValue = true;
@@ -85,7 +86,7 @@ public class FieldConfigDateTest {
         FieldConfigDate field2 =
                 new FieldConfigDate(
                         new FieldConfigCommonData(
-                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         // Text field will not have been created
         expectedValue = true;
@@ -113,7 +114,7 @@ public class FieldConfigDateTest {
         FieldConfigDate field =
                 new FieldConfigDate(
                         new FieldConfigCommonData(
-                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         boolean expectedValue = true;
         field.setVisible(expectedValue);
@@ -152,7 +153,7 @@ public class FieldConfigDateTest {
         TestFieldConfigDate field =
                 new TestFieldConfigDate(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         Expression actualExpression = field.callGenerateExpression();
         assertNull(actualExpression);
 
@@ -209,7 +210,7 @@ public class FieldConfigDateTest {
         FieldConfigDate field =
                 new FieldConfigDate(
                         new FieldConfigCommonData(
-                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly, false));
 
         field.revertToDefaultValue();
         assertNull(field.getStringValue());
@@ -241,7 +242,7 @@ public class FieldConfigDateTest {
         TestFieldConfigDate field =
                 new TestFieldConfigDate(
                         new FieldConfigCommonData(
-                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
         FieldConfigDate copy = (FieldConfigDate) field.callCreateCopy(null);
         assertNull(copy);
 
@@ -261,7 +262,7 @@ public class FieldConfigDateTest {
         FieldConfigDate field =
                 new FieldConfigDate(
                         new FieldConfigCommonData(
-                                Date.class, FieldIdEnum.NAME, "label", valueOnly));
+                                Date.class, FieldIdEnum.NAME, "label", valueOnly, false));
         field.attributeSelection(null);
 
         // Does nothing
@@ -277,7 +278,8 @@ public class FieldConfigDateTest {
     public void testUndoAction() {
         FieldConfigDate field =
                 new FieldConfigDate(
-                        new FieldConfigCommonData(Date.class, FieldIdEnum.NAME, "label", false));
+                        new FieldConfigCommonData(
+                                Date.class, FieldIdEnum.NAME, "label", false, false));
         field.undoAction(null);
         field.redoAction(null);
         field.createUI();
@@ -319,5 +321,83 @@ public class FieldConfigDateTest {
         field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
         field.redoAction(null);
         field.redoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
+    }
+
+    /** Test value stored. */
+    @Test
+    public void testValueStored() {
+        UndoManager.destroyInstance();
+        boolean valueOnly = true;
+
+        class TestFieldConfigDate extends FieldConfigDate {
+            public TestFieldConfigDate(FieldConfigCommonData commonData) {
+                super(commonData);
+            }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.FieldConfigColour#valueStored()
+             */
+            @Override
+            protected void valueStored() {
+                super.valueStored();
+            }
+        }
+
+        TestFieldConfigDate field =
+                new TestFieldConfigDate(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        class TestUpdateSymbol implements UpdateSymbolInterface {
+            public boolean dataChanged = false;
+
+            @Override
+            public void dataChanged(FieldIdEnum changedField) {
+                dataChanged = true;
+            }
+        };
+        TestUpdateSymbol update = new TestUpdateSymbol();
+
+        field.createUI();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+
+        // Check what happens if we have not set a date
+        field.valueStored();
+        assertNull(field.getStringValue());
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+
+        SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String dateString1 = "10-01-2012 23:13:26";
+        Date dateTime1 = null;
+        try {
+            dateTime1 = f.parse(dateString1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        field.populateField(dateTime1);
+
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+        update.dataChanged = false;
+
+        // now suppress undo events
+        field =
+                new TestFieldConfigDate(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, true));
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.populateField(dateTime1);
+        field.valueStored();
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }

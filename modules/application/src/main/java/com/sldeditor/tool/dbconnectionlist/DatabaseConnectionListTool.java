@@ -50,16 +50,16 @@ public class DatabaseConnectionListTool implements ToolInterface {
     private static final int PANEL_WIDTH = 225;
 
     /** The btn new. */
-    private JButton btnNew;
+    protected JButton btnNew;
 
     /** The btn duplicate. */
-    private JButton btnDuplicate;
+    protected JButton btnDuplicate;
 
     /** The btn edit. */
-    private JButton btnEdit;
+    protected JButton btnEdit;
 
     /** The btn delete. */
-    private JButton btnDelete;
+    protected JButton btnDelete;
 
     /** The panel. */
     private JPanel panel;
@@ -107,18 +107,7 @@ public class DatabaseConnectionListTool implements ToolInterface {
         btnNew.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (databaseConnectUpdate != null) {
-                            DatabaseConnection connectionDetails =
-                                    DatabaseConnectionFactory.getNewConnection(
-                                            selectedDatabaseType);
-
-                            DatabaseConnection newConnectionDetails =
-                                    DBConnectorDetailsPanel.showDialog(null, connectionDetails);
-
-                            if (newConnectionDetails != null) {
-                                databaseConnectUpdate.addNewConnection(newConnectionDetails);
-                            }
-                        }
+                        newButtonPressed();
                     }
                 });
 
@@ -134,17 +123,7 @@ public class DatabaseConnectionListTool implements ToolInterface {
         btnDuplicate.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (databaseConnectUpdate != null) {
-                            if (!connectionList.isEmpty()) {
-                                DatabaseConnection selectedConnectionDetails =
-                                        connectionList.get(0);
-
-                                DatabaseConnection duplicateItem =
-                                        selectedConnectionDetails.duplicate();
-
-                                databaseConnectUpdate.addNewConnection(duplicateItem);
-                            }
-                        }
+                        duplicateButtonPressed();
                     }
                 });
 
@@ -160,20 +139,7 @@ public class DatabaseConnectionListTool implements ToolInterface {
         btnEdit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (databaseConnectUpdate != null) {
-                            if (!connectionList.isEmpty()) {
-                                DatabaseConnection selectedConnectionDetails =
-                                        connectionList.get(0);
-                                DatabaseConnection newConnectionDetails =
-                                        DBConnectorDetailsPanel.showDialog(
-                                                null, selectedConnectionDetails);
-
-                                if (newConnectionDetails != null) {
-                                    databaseConnectUpdate.updateConnectionDetails(
-                                            selectedConnectionDetails, newConnectionDetails);
-                                }
-                            }
-                        }
+                        editButtonPressed();
                     }
                 });
 
@@ -189,9 +155,7 @@ public class DatabaseConnectionListTool implements ToolInterface {
         btnDelete.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (databaseConnectUpdate != null) {
-                            databaseConnectUpdate.deleteConnections(connectionList);
-                        }
+                        deleteButtonPressed();
                     }
                 });
 
@@ -223,21 +187,23 @@ public class DatabaseConnectionListTool implements ToolInterface {
         boolean databaseNodesSelected = false;
         boolean canDuplicate = true;
 
-        for (NodeInterface nodeType : nodeTypeList) {
-            if (nodeType instanceof DatabaseNode) {
-                DatabaseNode databaseNode = (DatabaseNode) nodeType;
+        if (nodeTypeList != null) {
+            for (NodeInterface nodeType : nodeTypeList) {
+                if (nodeType instanceof DatabaseNode) {
+                    DatabaseNode databaseNode = (DatabaseNode) nodeType;
 
-                DatabaseConnection connection = databaseNode.getConnection();
-                connectionList.add(connection);
-                databaseNodesSelected = true;
+                    DatabaseConnection connection = databaseNode.getConnection();
+                    connectionList.add(connection);
+                    databaseNodesSelected = true;
 
-                if (!connection.isSupportsDuplication()) {
+                    if (!connection.isSupportsDuplication()) {
+                        canDuplicate = false;
+                    }
+                } else if (nodeType instanceof DatabaseOverallNode) {
+                    DatabaseOverallNode databaseOverallNode = (DatabaseOverallNode) nodeType;
+                    selectedDatabaseType = databaseOverallNode.toString();
                     canDuplicate = false;
                 }
-            } else if (nodeType instanceof DatabaseOverallNode) {
-                DatabaseOverallNode databaseOverallNode = (DatabaseOverallNode) nodeType;
-                selectedDatabaseType = databaseOverallNode.toString();
-                canDuplicate = false;
             }
         }
 
@@ -267,9 +233,62 @@ public class DatabaseConnectionListTool implements ToolInterface {
             List<Class<?>> uniqueNodeTypeList,
             List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
-        if (uniqueNodeTypeList.size() == 1) {
-            return true;
+        if (uniqueNodeTypeList != null) {
+            if (uniqueNodeTypeList.size() == 1) {
+                return true;
+            }
         }
         return false;
+    }
+
+    /** New button pressed. */
+    protected void newButtonPressed() {
+        if (databaseConnectUpdate != null) {
+            DatabaseConnection connectionDetails =
+                    DatabaseConnectionFactory.getNewConnection(selectedDatabaseType);
+
+            DatabaseConnection newConnectionDetails =
+                    DBConnectorDetailsPanel.showDialog(null, connectionDetails);
+
+            if (newConnectionDetails != null) {
+                databaseConnectUpdate.addNewConnection(newConnectionDetails);
+            }
+        }
+    }
+
+    /** Duplicate button pressed. */
+    protected void duplicateButtonPressed() {
+        if (databaseConnectUpdate != null) {
+            if (!connectionList.isEmpty()) {
+                DatabaseConnection selectedConnectionDetails = connectionList.get(0);
+
+                DatabaseConnection duplicateItem = selectedConnectionDetails.duplicate();
+
+                databaseConnectUpdate.addNewConnection(duplicateItem);
+            }
+        }
+    }
+
+    /** Edit button pressed. */
+    protected void editButtonPressed() {
+        if (databaseConnectUpdate != null) {
+            if (!connectionList.isEmpty()) {
+                DatabaseConnection selectedConnectionDetails = connectionList.get(0);
+                DatabaseConnection newConnectionDetails =
+                        DBConnectorDetailsPanel.showDialog(null, selectedConnectionDetails);
+
+                if (newConnectionDetails != null) {
+                    databaseConnectUpdate.updateConnectionDetails(
+                            selectedConnectionDetails, newConnectionDetails);
+                }
+            }
+        }
+    }
+
+    /** Delete button pressed. */
+    protected void deleteButtonPressed() {
+        if (databaseConnectUpdate != null) {
+            databaseConnectUpdate.deleteConnections(connectionList);
+        }
     }
 }

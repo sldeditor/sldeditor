@@ -30,12 +30,14 @@ import com.sldeditor.ui.detail.RasterSymbolizerDetails;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
+import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldConfigVendorOption;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.raster.VendorOptionRasterFactory;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The unit test for FieldConfigVendorOption.
@@ -60,7 +62,7 @@ public class FieldConfigVendorOptionTest {
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         veList);
 
         // Text field will not have been created
@@ -83,7 +85,7 @@ public class FieldConfigVendorOptionTest {
         FieldConfigVendorOption field2 =
                 new FieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         veList);
 
         // Text field will not have been created
@@ -113,7 +115,7 @@ public class FieldConfigVendorOptionTest {
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         veList);
 
         boolean expectedValue = true;
@@ -136,14 +138,31 @@ public class FieldConfigVendorOptionTest {
     public void testGenerateExpression() {
         boolean valueOnly = true;
         List<VendorOptionInterface> veList = null;
-        FieldConfigVendorOption field =
-                new FieldConfigVendorOption(
+
+        class TestFieldConfigVendorOption extends FieldConfigVendorOption {
+            public TestFieldConfigVendorOption(
+                    FieldConfigCommonData commonData, List<VendorOptionInterface> veList) {
+                super(commonData, veList);
+            }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.FieldConfigVendorOption#generateExpression()
+             */
+            @Override
+            protected Expression generateExpression() {
+                return super.generateExpression();
+            }
+        }
+
+        TestFieldConfigVendorOption field =
+                new TestFieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         veList);
 
         assertNull(field.getStringValue());
         field.populateExpression(null);
+        assertNull(field.generateExpression());
     }
 
     /**
@@ -157,7 +176,7 @@ public class FieldConfigVendorOptionTest {
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         veList);
 
         field.revertToDefaultValue();
@@ -188,7 +207,7 @@ public class FieldConfigVendorOptionTest {
         TestFieldConfigVendorOption field =
                 new TestFieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         null);
         FieldConfigVendorOption copy = (FieldConfigVendorOption) field.callCreateCopy(null);
         assertNull(copy);
@@ -197,6 +216,18 @@ public class FieldConfigVendorOptionTest {
         assertEquals(field.getFieldId(), copy.getFieldId());
         assertTrue(field.getLabel().compareTo(copy.getLabel()) == 0);
         assertEquals(field.isValueOnly(), copy.isValueOnly());
+
+        // Try and copy something that isn't a FieldConfigVendorOption
+        assertNull(
+                field.callCreateCopy(
+                        new FieldConfigString(
+                                new FieldConfigCommonData(
+                                        String.class,
+                                        FieldIdEnum.NAME,
+                                        "test label",
+                                        valueOnly,
+                                        false),
+                                "button text")));
     }
 
     /**
@@ -207,7 +238,8 @@ public class FieldConfigVendorOptionTest {
     public void testAddToOptionBox() {
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
-                        new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", false),
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", false, false),
                         null);
         field.addToOptionBox(null);
     }
@@ -233,7 +265,8 @@ public class FieldConfigVendorOptionTest {
         }
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
-                        new FieldConfigCommonData(Double.class, FieldIdEnum.NAME, "label", false),
+                        new FieldConfigCommonData(
+                                Double.class, FieldIdEnum.NAME, "label", false, false),
                         veList);
         field.vendorOptionsUpdated(null);
         field.createUI();
@@ -253,7 +286,7 @@ public class FieldConfigVendorOptionTest {
         FieldConfigVendorOption field =
                 new FieldConfigVendorOption(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         null);
         field.attributeSelection(null);
 

@@ -45,7 +45,7 @@ public class EnvironmentVariablePanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /** The data source attribute panel. */
-    private DataSourceAttributePanel dataSourceAttributePanel;
+    protected DataSourceAttributePanel dataSourceAttributePanel;
 
     /** The selected node. */
     private ExpressionNode selectedNode = null;
@@ -82,7 +82,8 @@ public class EnvironmentVariablePanel extends JPanel {
                             public void parameterAdded() {
                                 // Do nothing
                             }
-                        });
+                        },
+                        true);
 
         add(dataSourceAttributePanel, BorderLayout.NORTH);
 
@@ -118,16 +119,7 @@ public class EnvironmentVariablePanel extends JPanel {
         btnApply.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        Expression expression = dataSourceAttributePanel.getExpression();
-
-                        if (expression != null) {
-                            selectedNode.setExpression(expression);
-                        }
-
-                        if (parent != null) {
-                            parent.dataApplied();
-                        }
-                        updateButtonState(false);
+                        applyButton();
                     }
                 });
         panel.add(btnApply);
@@ -136,8 +128,7 @@ public class EnvironmentVariablePanel extends JPanel {
         btnRevert.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        displayExpression(selectedNode);
-                        updateButtonState(false);
+                        revertButton();
                     }
                 });
         panel.add(btnRevert);
@@ -153,9 +144,7 @@ public class EnvironmentVariablePanel extends JPanel {
     public void setSelectedNode(DefaultMutableTreeNode node) {
         selectedNode = (ExpressionNode) node;
 
-        displayExpression(selectedNode);
-
-        updateButtonState(false);
+        revertButton();
     }
 
     /**
@@ -175,5 +164,27 @@ public class EnvironmentVariablePanel extends JPanel {
      */
     public void dataSourceLoaded(DataSourceInterface dataSource) {
         dataSourceAttributePanel.dataSourceLoaded(dataSource);
+    }
+
+    /** Apply button. */
+    protected void applyButton() {
+        Expression expression = dataSourceAttributePanel.getExpression();
+
+        if (expression != null) {
+            if (selectedNode != null) {
+                selectedNode.setExpression(expression);
+            }
+        }
+
+        if (parent != null) {
+            parent.dataApplied();
+        }
+        updateButtonState(false);
+    }
+
+    /** Revert button. */
+    protected void revertButton() {
+        displayExpression(selectedNode);
+        updateButtonState(false);
     }
 }

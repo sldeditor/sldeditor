@@ -31,8 +31,10 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.FieldConfigRange;
+import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import org.jaitools.numeric.Range;
 import org.junit.jupiter.api.Test;
+import org.locationtech.jts.geom.Geometry;
 import org.opengis.filter.expression.Expression;
 
 /**
@@ -57,7 +59,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         // Text field will not have been created
@@ -80,7 +82,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field2 =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         // Text field will not have been created
@@ -108,7 +110,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         boolean expectedValue = true;
@@ -138,7 +140,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
         field.createUI();
 
@@ -179,7 +181,7 @@ public class FieldConfigRangeTest {
         field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         it.geosolutions.jaiext.range.Range.class);
         field.createUI();
 
@@ -227,7 +229,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         Range expectedDefaultValue = Range.create(0.0, true, 1.0, true);
@@ -289,7 +291,7 @@ public class FieldConfigRangeTest {
         TestFieldConfigRange field =
                 new TestFieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
         FieldConfigRange copy = (FieldConfigRange) field.callCreateCopy(null);
         assertNull(copy);
@@ -310,7 +312,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
         field.attributeSelection(null);
 
@@ -335,7 +337,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         field.undoAction(null);
@@ -405,7 +407,7 @@ public class FieldConfigRangeTest {
         FieldConfigRange field =
                 new FieldConfigRange(
                         new FieldConfigCommonData(
-                                Double.class, FieldIdEnum.NAME, "label", valueOnly),
+                                Double.class, FieldIdEnum.NAME, "label", valueOnly, false),
                         org.jaitools.numeric.Range.class);
 
         field.createUI();
@@ -451,5 +453,65 @@ public class FieldConfigRangeTest {
         actualValue = field.getRange();
         assertTrue(Math.abs(actualValue.getMin().doubleValue() - minValue) < 0.001);
         assertTrue(Math.abs(actualValue.getMax().doubleValue() - minValue) < 0.001);
+    }
+
+    @Test
+    public void testValueStored() {
+        boolean valueOnly = true;
+
+        class TestFieldConfigRange extends FieldConfigRange {
+            public TestFieldConfigRange(FieldConfigCommonData commonData) {
+                super(commonData, org.jaitools.numeric.Range.class);
+            }
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see com.sldeditor.ui.detail.config.FieldConfigBoundingBox#valueStored()
+             */
+            @Override
+            protected void valueStored() {
+                super.valueStored();
+            }
+        }
+
+        TestFieldConfigRange field =
+                new TestFieldConfigRange(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        class TestUpdateSymbol implements UpdateSymbolInterface {
+            public boolean dataChanged = false;
+
+            @Override
+            public void dataChanged(FieldIdEnum changedField) {
+                dataChanged = true;
+            }
+        };
+        TestUpdateSymbol update = new TestUpdateSymbol();
+
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.createUI();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored();
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize + 1, UndoManager.getInstance().getUndoListSize());
+        update.dataChanged = false;
+
+        // now suppress undo events
+        field =
+                new TestFieldConfigRange(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, true));
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.addDataChangedListener(update);
+        assertFalse(update.dataChanged);
+        field.valueStored();
+        assertTrue(update.dataChanged);
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
 }

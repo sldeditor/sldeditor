@@ -21,9 +21,12 @@ package com.sldeditor.test.unit.ui.detail.vendor.geoserver.marker.qgis;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.vendor.geoserver.marker.qgis.FieldConfigMarkerQGIS;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -48,11 +51,16 @@ public class FieldConfigMarkerQGISTest {
         FieldConfigMarkerQGIS field =
                 new FieldConfigMarkerQGIS(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         null,
                         null,
                         null);
 
         assertNotNull(field);
+
+        field.getMinimumVersion(null, null, null);
+
+        List<VendorOptionPresent> vendorOptionsPresentList = new ArrayList<VendorOptionPresent>();
+        field.getMinimumVersion(null, "", vendorOptionsPresentList);
     }
 }

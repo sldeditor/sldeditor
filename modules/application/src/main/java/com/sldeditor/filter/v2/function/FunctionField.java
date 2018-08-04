@@ -21,10 +21,6 @@ package com.sldeditor.filter.v2.function;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.common.undo.UndoActionInterface;
-import com.sldeditor.common.undo.UndoEvent;
-import com.sldeditor.common.undo.UndoInterface;
-import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.filter.v2.expression.ExpressionNode;
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.expression.FunctionInterfaceUtils;
@@ -57,7 +53,7 @@ import org.opengis.parameter.Parameter;
  *
  * @author Robert Ward (SCISYS)
  */
-public class FunctionField extends JPanel implements UndoActionInterface {
+public class FunctionField extends JPanel {
 
     /** The Constant FUNCTION_PANEL. */
     private static final String FUNCTIONFIELD_PANEL = "FunctionField";
@@ -70,9 +66,6 @@ public class FunctionField extends JPanel implements UndoActionInterface {
 
     /** The function name map. */
     private Map<String, FunctionName> functionNameMap = new LinkedHashMap<String, FunctionName>();
-
-    /** The old value obj. */
-    private Object oldValueObj = null;
 
     /** The function name mgr. */
     private FunctionNameInterface functionNameMgr = null;
@@ -109,7 +102,6 @@ public class FunctionField extends JPanel implements UndoActionInterface {
      */
     public FunctionField(
             SubPanelUpdatedInterface parentObj, FunctionNameInterface functionNameMgr) {
-        final UndoActionInterface thisObj = this;
         this.functionNameMgr = functionNameMgr;
 
         setLayout(new BorderLayout(5, 0));
@@ -140,11 +132,6 @@ public class FunctionField extends JPanel implements UndoActionInterface {
                     public void actionPerformed(ActionEvent e) {
 
                         String newValueObj = (String) functionComboBox.getSelectedItem();
-
-                        UndoManager.getInstance()
-                                .addUndoEvent(
-                                        new UndoEvent(
-                                                thisObj, "Function", oldValueObj, newValueObj));
 
                         FunctionName functionName = functionNameMap.get(newValueObj);
                         boolean variableNoOfParameters = false;
@@ -294,7 +281,6 @@ public class FunctionField extends JPanel implements UndoActionInterface {
                 FunctionName function = functionExpression.getFunctionName();
 
                 String functionName = function.getName();
-                oldValueObj = functionName;
 
                 functionComboBox.setSelectedItem(functionName);
             } else if (expression instanceof ConcatenateFunction) {
@@ -302,7 +288,6 @@ public class FunctionField extends JPanel implements UndoActionInterface {
                 FunctionName function = concatenateExpression.getFunctionName();
 
                 String functionName = function.getName();
-                oldValueObj = functionName;
 
                 functionComboBox.setSelectedItem(functionName);
             } else if (expression instanceof Function) {
@@ -310,7 +295,6 @@ public class FunctionField extends JPanel implements UndoActionInterface {
                 FunctionName function = functionExpression.getFunctionName();
 
                 String functionName = function.getName();
-                oldValueObj = functionName;
 
                 functionComboBox.setSelectedItem(functionName);
             } else {
@@ -390,40 +374,6 @@ public class FunctionField extends JPanel implements UndoActionInterface {
         }
 
         return newExpression;
-    }
-
-    /**
-     * Undo action.
-     *
-     * @param undoRedoObject the undo redo object
-     */
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.sldeditor.undo.UndoActionInterface#undoAction(com.sldeditor.undo.UndoInterface)
-     */
-    @Override
-    public void undoAction(UndoInterface undoRedoObject) {
-        String oldValueObj = (String) undoRedoObject.getOldValue();
-
-        functionComboBox.setSelectedItem(oldValueObj);
-    }
-
-    /**
-     * Redo action.
-     *
-     * @param undoRedoObject the undo redo object
-     */
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.sldeditor.undo.UndoActionInterface#redoAction(com.sldeditor.undo.UndoInterface)
-     */
-    @Override
-    public void redoAction(UndoInterface undoRedoObject) {
-        String newValueObj = (String) undoRedoObject.getNewValue();
-
-        functionComboBox.setSelectedItem(newValueObj);
     }
 
     /**

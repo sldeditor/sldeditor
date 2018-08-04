@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.undo.UndoEvent;
+import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
@@ -54,6 +55,37 @@ import org.xml.sax.SAXException;
  */
 public class FieldConfigTransformationTest {
 
+    class TestFieldConfigTransformation extends FieldConfigTransformation {
+        public TestFieldConfigTransformation(
+                FieldConfigCommonData commonData, String editButtonText, String clearButtonText) {
+            super(commonData, editButtonText, clearButtonText);
+        }
+
+        public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
+            return createCopy(fieldConfigBase);
+        }
+
+        public Expression callGenerateExpression() {
+            return generateExpression();
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#transformationDialogResult(org.geotools.process.function.ProcessFunction)
+         */
+        @Override
+        protected void transformationDialogResult(ProcessFunction expression) {
+            super.transformationDialogResult(expression);
+        }
+
+        /* (non-Javadoc)
+         * @see com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#clearButtonPressed()
+         */
+        @Override
+        protected void clearButtonPressed() {
+            super.clearButtonPressed();
+        }
+    }
+
     /**
      * Test method for {@link
      * com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#internal_setEnabled(boolean)}.
@@ -68,7 +100,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -92,7 +124,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field2 =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -124,7 +156,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -147,23 +179,10 @@ public class FieldConfigTransformationTest {
     public void testGenerateExpression() {
         boolean valueOnly = true;
 
-        class TestFieldConfigTransformation extends FieldConfigTransformation {
-            public TestFieldConfigTransformation(
-                    FieldConfigCommonData commonData,
-                    String editButtonText,
-                    String clearButtonText) {
-                super(commonData, editButtonText, clearButtonText);
-            }
-
-            public Expression callGenerateExpression() {
-                return generateExpression();
-            }
-        }
-
         TestFieldConfigTransformation field =
                 new TestFieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
         Expression actualExpression = field.callGenerateExpression();
@@ -182,6 +201,19 @@ public class FieldConfigTransformationTest {
         assertNull(actualExpression);
 
         // Create process function
+        ProcessFunction processFunction = createProcessFunction();
+        field.populateExpression((ProcessFunction) null);
+        field.populateExpression(processFunction);
+
+        actualExpression = field.callGenerateExpression();
+        String expectedValue3 = ParameterFunctionUtils.getString(processFunction);
+        String string = actualExpression.toString();
+        assertTrue(expectedValue3.compareTo(string) != 0);
+        assertEquals(processFunction, field.getProcessFunction());
+    }
+
+    /** @return */
+    protected ProcessFunction createProcessFunction() {
         String testData =
                 "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
                         + "<StyledLayerDescriptor version=\"1.0.0\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns=\"http://www.opengis.net/sld\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
@@ -231,14 +263,7 @@ public class FieldConfigTransformationTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        field.populateExpression((ProcessFunction) null);
-        field.populateExpression(processFunction);
-
-        actualExpression = field.callGenerateExpression();
-        String expectedValue3 = ParameterFunctionUtils.getString(processFunction);
-        String string = actualExpression.toString();
-        assertTrue(expectedValue3.compareTo(string) != 0);
-        assertEquals(processFunction, field.getProcessFunction());
+        return processFunction;
     }
 
     /**
@@ -255,7 +280,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -271,17 +296,46 @@ public class FieldConfigTransformationTest {
 
     /**
      * Test method for {@link
+     * com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#populateField(org.geotools.process.function.ProcessFunction)}.
+     * Test method for {@link
      * com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#populateField(java.lang.String)}.
      */
     @Test
-    public void testPopulateFieldString() {}
+    public void testPopulateFieldProcessFunction() {
+        boolean valueOnly = true;
+        TestFieldConfigTransformation field =
+                new TestFieldConfigTransformation(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
+                        "edit",
+                        "clear");
+        field.createUI();
 
-    /**
-     * Test method for {@link
-     * com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#populateField(org.geotools.process.function.ProcessFunction)}.
-     */
-    @Test
-    public void testPopulateFieldProcessFunction() {}
+        int undoListSize = UndoManager.getInstance().getUndoListSize();
+        ProcessFunction processFunction = createProcessFunction();
+        field.populateField(processFunction);
+        field.transformationDialogResult(null);
+        field.transformationDialogResult(processFunction);
+        field.clearButtonPressed();
+        assertEquals(undoListSize + 3, UndoManager.getInstance().getUndoListSize());
+
+        // Suppress events
+        field =
+                new TestFieldConfigTransformation(
+                        new FieldConfigCommonData(
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, true),
+                        "edit",
+                        "clear");
+        field.createUI();
+
+        undoListSize = UndoManager.getInstance().getUndoListSize();
+        field.populateField(processFunction);
+        field.transformationDialogResult(null);
+        field.transformationDialogResult(processFunction);
+        field.clearButtonPressed();
+
+        assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
+    }
 
     /**
      * Test method for {@link
@@ -294,7 +348,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -315,24 +369,10 @@ public class FieldConfigTransformationTest {
     public void testCreateCopy() {
         boolean valueOnly = true;
 
-        class TestFieldConfigTransformation extends FieldConfigTransformation {
-
-            public TestFieldConfigTransformation(
-                    FieldConfigCommonData commonData,
-                    String editButtonText,
-                    String clearButtonText) {
-                super(commonData, editButtonText, clearButtonText);
-            }
-
-            public FieldConfigPopulate callCreateCopy(FieldConfigBase fieldConfigBase) {
-                return createCopy(fieldConfigBase);
-            }
-        }
-
         TestFieldConfigTransformation field =
                 new TestFieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
         FieldConfigTransformation copy = (FieldConfigTransformation) field.callCreateCopy(null);
@@ -354,7 +394,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
@@ -374,7 +414,7 @@ public class FieldConfigTransformationTest {
         FieldConfigTransformation field =
                 new FieldConfigTransformation(
                         new FieldConfigCommonData(
-                                String.class, FieldIdEnum.NAME, "test label", valueOnly),
+                                String.class, FieldIdEnum.NAME, "test label", valueOnly, false),
                         "edit",
                         "clear");
 
