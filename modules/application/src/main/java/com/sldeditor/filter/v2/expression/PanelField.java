@@ -25,6 +25,7 @@ import com.sldeditor.rendertransformation.types.RenderTransformValueFactory;
 import com.sldeditor.rendertransformation.types.RenderTransformValueInterface;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigString;
 import java.util.List;
 
 /**
@@ -41,13 +42,17 @@ public class PanelField {
      * @param valueTextLocalisation the value text localisation
      * @param nodeType the node type
      * @param enumList the enumerated list values
+     * @param maximumStringSize the maximum string size
+     * @param isRegExpString the is regular expression string flag
      * @return the field
      */
     public static FieldConfigBase getField(
             Class<?> classType,
             String valueTextLocalisation,
             Class<?> nodeType,
-            List<String> enumList) {
+            List<String> enumList,
+            int maximumStringSize,
+            boolean isRegExpString) {
         FieldConfigBase fieldConfig = null;
 
         RenderTransformValueInterface value = null;
@@ -66,6 +71,16 @@ public class PanelField {
                     new FieldConfigCommonData(null, fieldId, valueText, true, true);
 
             fieldConfig = value.getField(commonData);
+            if (fieldConfig instanceof FieldConfigString) {
+                FieldConfigString stringField = (FieldConfigString) fieldConfig;
+                if ((maximumStringSize != ExpressionNode.UNLIMITED_STRING_SIZE)) {
+                    stringField.setMaximumStringSize(maximumStringSize);
+                }
+
+                if (isRegExpString) {
+                    stringField.setRegExpString(true);
+                }
+            }
         } else {
             System.err.println("Unknown field type : " + nodeType);
         }

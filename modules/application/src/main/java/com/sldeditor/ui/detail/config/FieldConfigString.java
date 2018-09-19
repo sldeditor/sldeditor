@@ -19,6 +19,7 @@
 
 package com.sldeditor.ui.detail.config;
 
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
@@ -34,11 +35,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 import org.opengis.filter.expression.Expression;
 
 /**
  * The Class FieldConfigString wraps a text field GUI component and an optional
- * value/attribute/expression drop down,
+ * value/attribute/expression drop down, Can restrict the maximum number of characters in the
+ * string. Able to mark the string as being a regular expression which removes a preceding '.'
+ * before display and prepends when field is applied.
  *
  * <p>Supports undo/redo functionality.
  *
@@ -62,6 +68,70 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
 
     /** The button pressed listener list. */
     private List<FieldConfigStringButtonInterface> buttonPressedListenerList = null;
+
+    /** The maximum string size. */
+    private int maximumStringSize = -1;
+
+    /** The regular expression string flag. */
+    private boolean isRegExpString = false;
+
+    /** The Class JTextFieldLimit. */
+    public class JTextFieldLimit extends PlainDocument {
+
+        /** The Constant serialVersionUID. */
+        private static final long serialVersionUID = 1L;
+
+        /** The limit. */
+        private int limit;
+
+        /**
+         * Instantiates a new j text field limit.
+         *
+         * @param fieldConfigString
+         * @param limit the limit
+         */
+        JTextFieldLimit(FieldConfigString fieldConfigString, int limit) {
+            super();
+            this.limit = limit;
+        }
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see javax.swing.text.PlainDocument#insertString(int, java.lang.String,
+         * javax.swing.text.AttributeSet)
+         */
+        public void insertString(int offset, String str, AttributeSet attr)
+                throws BadLocationException {
+            if (str == null) return;
+
+            if ((getLength() + str.length()) <= limit) {
+                String oldValue = this.getText(0, getLength());
+                super.insertString(offset, str, attr);
+                String newValue = this.getText(0, getLength());
+
+                valueStored(oldValue, newValue);
+            }
+        }
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see javax.swing.text.AbstractDocument#remove(int, int)
+         */
+        @Override
+        public void remove(int offs, int len) throws BadLocationException {
+            try {
+                String oldValue = this.getText(0, getLength());
+                super.remove(offs, len);
+                String newValue = this.getText(0, getLength());
+
+                valueStored(oldValue, newValue);
+            } catch (BadLocationException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            }
+        }
+    }
 
     /**
      * Instantiates a new field config string.
@@ -115,6 +185,10 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
                             valueStored(originalValue, newValueObj);
                         }
                     });
+
+            if (maximumStringSize > 0) {
+                textField.setDocument(new JTextFieldLimit(this, maximumStringSize));
+            }
 
             if (buttonText != null) {
                 final JButton buttonExternal = new JButton(buttonText);
@@ -266,7 +340,13 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     public String getStringValue() {
         if (textField != null) {
             if (getPanel().isValueReadable()) {
-                return textField.getText();
+                String value = textField.getText();
+
+                // Prepend the regular expression special character
+                if (isRegExpString) {
+                    value = "." + value;
+                }
+                return value;
             }
         }
         return null;
@@ -344,8 +424,17 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void populateField(String value) {
+        String tmpValue;
+
+        // If regular expression string remove initial '.'
+        if (isRegExpString && value.length() > 1) {
+            tmpValue = value.substring(1, 2);
+        } else {
+            tmpValue = value;
+        }
+
         if (textField != null) {
-            textField.setText(value);
+            textField.setText(tmpValue);
         }
     }
 
@@ -361,6 +450,8 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
 
         if (fieldConfigBase != null) {
             copy = new FieldConfigString(fieldConfigBase.getCommonData(), this.buttonText);
+            copy.setMaximumStringSize(this.maximumStringSize);
+            copy.setRegExpString(this.isRegExpString);
         }
         return copy;
     }
@@ -409,5 +500,23 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
             }
             // CHECKSTYLE:ON
         }
+    }
+
+    /**
+     * Sets the maximum string size.
+     *
+     * @param maximumStringSize the new maximum string size
+     */
+    public void setMaximumStringSize(int maximumStringSize) {
+        this.maximumStringSize = maximumStringSize;
+    }
+
+    /**
+     * Sets the reg exp string.
+     *
+     * @param isRegExpString the isRegExpString to set
+     */
+    public void setRegExpString(boolean isRegExpString) {
+        this.isRegExpString = isRegExpString;
     }
 }

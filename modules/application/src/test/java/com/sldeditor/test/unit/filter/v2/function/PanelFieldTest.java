@@ -21,6 +21,7 @@ package com.sldeditor.test.unit.filter.v2.function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.sldeditor.filter.v2.expression.ExpressionNode;
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.expression.PanelField;
 import com.sldeditor.filter.v2.expression.TypeManager;
@@ -74,7 +75,13 @@ public class PanelFieldTest {
 
         for (Class<?> nodeType : expectedValueMap.keySet()) {
             FieldConfigPopulate fieldConfig =
-                    PanelField.getField(classType, valueTextLocalisation, nodeType, null);
+                    PanelField.getField(
+                            classType,
+                            valueTextLocalisation,
+                            nodeType,
+                            null,
+                            ExpressionNode.UNLIMITED_STRING_SIZE,
+                            false);
 
             Class<?> expected = expectedValueMap.get(nodeType);
             Class<?> actual = (fieldConfig == null) ? null : fieldConfig.getClass();
@@ -84,31 +91,67 @@ public class PanelFieldTest {
         // Special case
         // Number.class
         FieldConfigPopulate fieldConfig =
-                PanelField.getField(classType, valueTextLocalisation, Number.class, null);
+                PanelField.getField(
+                        classType,
+                        valueTextLocalisation,
+                        Number.class,
+                        null,
+                        ExpressionNode.UNLIMITED_STRING_SIZE,
+                        false);
         Class<?> expected = FieldConfigInteger.class;
         Class<?> actual = fieldConfig.getClass();
         assertEquals(expected, actual, Number.class.getName());
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(Float.class);
-        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, null);
+        fieldConfig =
+                PanelField.getField(
+                        classType,
+                        valueTextLocalisation,
+                        Number.class,
+                        null,
+                        ExpressionNode.UNLIMITED_STRING_SIZE,
+                        false);
         expected = FieldConfigDouble.class;
         actual = fieldConfig.getClass();
         assertEquals(expected, actual, Number.class.getName() + "/" + Float.class.getName());
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(Double.class);
-        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, null);
+        fieldConfig =
+                PanelField.getField(
+                        classType,
+                        valueTextLocalisation,
+                        Number.class,
+                        null,
+                        ExpressionNode.UNLIMITED_STRING_SIZE,
+                        false);
         expected = FieldConfigDouble.class;
         actual = fieldConfig.getClass();
         assertEquals(expected, actual, Number.class.getName() + "/" + Double.class.getName());
 
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(String.class);
-        fieldConfig = PanelField.getField(classType, valueTextLocalisation, Number.class, null);
+        fieldConfig =
+                PanelField.getField(
+                        classType,
+                        valueTextLocalisation,
+                        Number.class,
+                        null,
+                        ExpressionNode.UNLIMITED_STRING_SIZE,
+                        false);
         expected = FieldConfigInteger.class;
         actual = fieldConfig.getClass();
         assertEquals(expected, actual, Number.class.getName());
+
+        // Try single character string
+        TypeManager.getInstance().reset();
+        TypeManager.getInstance().setDataType(String.class);
+        fieldConfig =
+                PanelField.getField(classType, valueTextLocalisation, String.class, null, 1, true);
+        expected = FieldConfigString.class;
+        actual = fieldConfig.getClass();
+        assertEquals(expected, actual, String.class.getName());
 
         TypeManager.getInstance().reset();
     }
