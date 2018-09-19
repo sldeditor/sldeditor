@@ -51,44 +51,79 @@
     <!-- Properties -->
     <!-- =========================================================== -->
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <geotools.version>20-SNAPSHOT</geotools.version>
-        <geoserver.version>2.14-SNAPSHOT</geoserver.version>
-        <log4j.version>1.2.17</log4j.version>
-        <junit.version>5.1.0</junit.version>
-        <surefire.version>2.22.0</surefire.version>
-        <jdatepicker.version>1.3.2</jdatepicker.version>
-
-        <geoserver_manager.version>1.7.0</geoserver_manager.version>
-
+        <app.name>SLDEditor</app.name>
         <app.main.class>com.sldeditor.SLDEditor</app.main.class>
         <app.version.file>src/main/java/com/sldeditor/generated/Version</app.version.file>
-        <maven.javadoc.plugin.version>2.10.4</maven.javadoc.plugin.version>
-        <javadoc.maxHeapSize>1536M</javadoc.maxHeapSize>
-
-        <app.name>SLDEditor</app.name>
         <sldeditor.dest.folder>../../bin</sldeditor.dest.folder>
 
-        <fmt.action>format</fmt.action>
-        <fmt.skip>false</fmt.skip>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- Java -->
+		<java.version>1.8</java.version>
+
+		<!-- Maven -->
+	    <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
+	    <maven.enforcer.plugin.version>3.0.0-M1</maven.enforcer.plugin.version>
+        <maven.enforcer.required.version>3.5.0</maven.enforcer.required.version>
+
+		<!-- GeoTools -->
+        <geotools.version>20-RC</geotools.version>
+
+		<!-- GeoServer -->
+        <geoserver.version>2.14-RC</geoserver.version>
+        
+        <!-- Log4j -->
+        <log4j.version>1.2.17</log4j.version>
+        
+        <!-- JUnit -->
+        <junit-jupiter-engine.version>5.3.1</junit-jupiter-engine.version>
+        <surefire.version>2.22.0</surefire.version>
+        
+        <!-- JDatePicker -->
+        <jdatepicker.version>1.3.2</jdatepicker.version>
+
+		<!-- GeoServer Manager -->
+        <geoserver_manager.version>1.7.0</geoserver_manager.version>
+
+		<!-- JavaDoc -->
+        <maven.eclipse.version>2.10</maven.eclipse.version>
+        <maven.report.version>2.9</maven.report.version>
+        <maven.javadoc.plugin.version>2.10.4</maven.javadoc.plugin.version>
+        <javadoc.maxHeapSize>1536M</javadoc.maxHeapSize>
+        
+        <!-- Maven clean -->
+        <maven.clean.version>3.0.0</maven.clean.version>
+
+		<!-- Coveo Code formatting -->
+        <coveo.fmt.version>2.5.1</coveo.fmt.version>
+        <coveo.fmt.action>format</coveo.fmt.action>
+        <coveo.fmt.skip>false</coveo.fmt.skip>
     
         <!-- Jacoco coverage -->
         <jacoco.version>0.8.1</jacoco.version>
 
         <!-- CheckStyle -->
+        <maven.checkstyle.version>2.17</maven.checkstyle.version>
         <checkstyle.config.location>build/checkstyle/sldeditor_checkstyle.xml</checkstyle.config.location>
         <checkstyle.suppressions.location>build/checkstyle/sldeditor_checkstyle_suppressions.xml</checkstyle.suppressions.location>
         <checkstyle.console.output>true</checkstyle.console.output>
+        <puppycrawl.checkstyle.version>8.12</puppycrawl.checkstyle.version>
     </properties>
 
     <!-- =========================================================== -->
     <!-- Dependencies -->
     <!-- =========================================================== -->
     <dependencies>
+	    <dependency>
+	        <groupId>org.junit.jupiter</groupId>
+	        <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-jupiter-engine.version}</version>
+	        <scope>test</scope>
+	    </dependency>
 		<dependency>
 		    <groupId>org.junit.jupiter</groupId>
 		    <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
+            <version>${junit-jupiter-engine.version}</version>
 		    <scope>test</scope>
 		</dependency>
     </dependencies>
@@ -197,7 +232,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
+                <version>${maven.checkstyle.version}</version>
                 <configuration>
                     <failOnViolation>true</failOnViolation>
                     <linkXRef>false</linkXRef>
@@ -220,10 +255,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>1.8</source>  <!-- The -source argument for the Java compiler. -->
-                    <target>1.8</target>  <!-- The -target argument for the Java compiler. -->
+                    <source>${java.version}</source>  <!-- The -source argument for the Java compiler. -->
+                    <target>${java.version}</target>  <!-- The -target argument for the Java compiler. -->
                     <debug>true</debug>   <!-- Whether to include debugging information. -->
                     <encoding>UTF-8</encoding> <!-- The -encoding argument for the Java compiler. -->
                 </configuration>
@@ -231,7 +266,7 @@
              <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M1</version>
+                <version>${maven.enforcer.plugin.version}</version>
                 <executions>
                   <execution>
                     <id>enforce-versions</id>
@@ -249,10 +284,10 @@
                           <message>Please consider using the maven-invoker-plugin (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
                         </bannedPlugins>
                         <requireMavenVersion>
-                          <version>3.5.0</version>
+                          <version>${maven.enforcer.required.version}</version>
                         </requireMavenVersion>
                         <requireJavaVersion>
-                          <version>1.8</version>
+                          <version>${java.version}</version>
                         </requireJavaVersion>
                       </rules>
                     </configuration>
@@ -264,33 +299,33 @@
               <plugin>
                 <groupId>com.coveo</groupId>
                 <artifactId>fmt-maven-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>${coveo.fmt.version}</version>
                 <configuration>
                     <verbose>true</verbose>
                     <filesNamePattern>.*\.java</filesNamePattern>
-                    <skip>${fmt.skip}</skip>
+                    <skip>${coveo.fmt.skip}</skip>
                     <style>aosp</style>
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>${fmt.action}</goal>
+                            <goal>${coveo.fmt.action}</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
               
-           </plugins>
+        </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-eclipse-plugin</artifactId>
-                    <version>2.10</version>
+                    <version>${maven.eclipse.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>2.9</version>
+                    <version>${maven.report.version}</version>
                 </plugin>
                 <!-- ======================================================= -->
                 <!-- Javadoc generation. -->
@@ -300,7 +335,7 @@
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven.javadoc.plugin.version}</version>
                     <configuration>
-                        <source>1.8</source>
+                        <source>${java.version}</source>
                         <!-- Shuts off non-error and non-warning messages. -->
                         <quiet>true</quiet>
                         <!-- The maximum Java heap size to be used to run javadoc. -->
@@ -336,7 +371,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>${maven.clean.version}</version>
                     <configuration>
                         <filesets>
                             <fileset>
@@ -353,12 +388,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.17</version>
+                    <version>${maven.checkstyle.version}</version>
                     <dependencies>
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.11</version>
+                            <version>${puppycrawl.checkstyle.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>

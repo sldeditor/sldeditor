@@ -77,6 +77,15 @@ public class ExpressionNode extends DefaultMutableTreeNode {
     /** The expression node parameter. */
     private Parameter<?> expressionNodeParameter = null;
 
+    /** The Constant UNLIMITED_STRING_SIZE. */
+    public static final int UNLIMITED_STRING_SIZE = -1;
+
+    /** The maximum string size value (initialised to unlimited). */
+    private int maxStringSize = UNLIMITED_STRING_SIZE;
+
+    /** The regular expression string flag. */
+    private boolean regExpString = false;
+
     /** The math expression map. */
     private static Map<Class<?>, String> mathExpressionMap = new HashMap<Class<?>, String>();
 
@@ -437,13 +446,57 @@ public class ExpressionNode extends DefaultMutableTreeNode {
         return optionalParam;
     }
 
-    /** @return the optionalParamUsed */
+    /**
+     * Checks if is optional param used.
+     *
+     * @return the optionalParamUsed
+     */
     public boolean isOptionalParamUsed() {
         return optionalParamUsed;
     }
 
-    /** @param optionalParamUsed the optionalParamUsed to set */
+    /**
+     * Sets the optional param used.
+     *
+     * @param optionalParamUsed the optionalParamUsed to set
+     */
     public void setOptionalParamUsed(boolean optionalParamUsed) {
         this.optionalParamUsed = optionalParamUsed;
+    }
+
+    /**
+     * Gets the max string size.
+     *
+     * @return the maxStringSize
+     */
+    public int getMaxStringSize() {
+        return maxStringSize;
+    }
+
+    /**
+     * Sets the max characters.
+     *
+     * @param maxStringSize the maximum string size to set
+     */
+    public void setMaxStringSize(int maxStringSize) {
+        this.maxStringSize = maxStringSize;
+    }
+
+    /**
+     * Returns is regular expression string flag.
+     *
+     * @return the regExpString
+     */
+    public boolean isRegExpString() {
+        return regExpString;
+    }
+
+    /**
+     * Sets the regular expression string flag.
+     *
+     * @param regExpString the regExpString to set
+     */
+    public void setRegExpString(boolean regExpString) {
+        this.regExpString = regExpString;
     }
 }

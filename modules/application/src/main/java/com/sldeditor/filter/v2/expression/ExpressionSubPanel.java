@@ -411,7 +411,9 @@ public class ExpressionSubPanel extends JPanel {
                         ExpressionPanelv2.class,
                         "ExpressionSubPanel.value",
                         node.getType(),
-                        enumList);
+                        enumList,
+                        node.getMaxStringSize(),
+                        node.isRegExpString());
 
         if (fieldConfig != null) {
             fieldConfig.createUI();

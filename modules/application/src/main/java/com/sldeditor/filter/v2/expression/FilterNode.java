@@ -201,15 +201,21 @@ public class FilterNode extends DefaultMutableTreeNode {
                 setExpressionParameter(
                         ff.literal(((PropertyIsLike) filter).getLiteral()),
                         filterName.getParameter(1));
-                setExpressionParameter(
+                setExpressionStringSizeParameter(
                         ff.literal(((PropertyIsLike) filter).getWildCard()),
-                        filterName.getParameter(2));
-                setExpressionParameter(
+                        filterName.getParameter(2),
+                        1,
+                        true);
+                setExpressionStringSizeParameter(
                         ff.literal(((PropertyIsLike) filter).getSingleChar()),
-                        filterName.getParameter(3));
-                setExpressionParameter(
+                        filterName.getParameter(3),
+                        1,
+                        true);
+                setExpressionStringSizeParameter(
                         ff.literal(((PropertyIsLike) filter).getEscape()),
-                        filterName.getParameter(4));
+                        filterName.getParameter(4),
+                        1,
+                        true);
                 setExpressionParameter(
                         ff.literal(((PropertyIsLike) filter).isMatchingCase()),
                         filterName.getParameter(5));
@@ -275,16 +281,52 @@ public class FilterNode extends DefaultMutableTreeNode {
      *
      * @param expression the expression
      * @param parameter the parameter
+     * @param maxStringSize the max string size
+     * @param regExpString the regular expression string
+     */
+    private void internal_setExpressionParameter(
+            Expression expression,
+            FilterNameParameter parameter,
+            int maxStringSize,
+            boolean regExpString) {
+
+        ExpressionNode childNode = new ExpressionNode();
+        childNode.setName(parameter.getName());
+        childNode.setType(parameter.getDataType());
+        childNode.setExpression(expression);
+        childNode.setExpressionType(parameter.getExpressionType());
+        childNode.setMaxStringSize(maxStringSize);
+        childNode.setRegExpString(regExpString);
+
+        this.insert(childNode, this.getChildCount());
+    }
+
+    /**
+     * Sets the expression parameter.
+     *
+     * @param expression the expression
+     * @param parameter the parameter
      */
     private void setExpressionParameter(Expression expression, FilterNameParameter parameter) {
 
-        ExpressionNode childNode = new ExpressionNode();
-        childNode.setType(parameter.getDataType());
-        childNode.setName(parameter.getName());
-        childNode.setExpression(expression);
-        childNode.setExpressionType(parameter.getExpressionType());
+        internal_setExpressionParameter(
+                expression, parameter, ExpressionNode.UNLIMITED_STRING_SIZE, false);
+    }
 
-        this.insert(childNode, this.getChildCount());
+    /**
+     * Sets the string expression setting the maximum string size.
+     *
+     * @param expression the expression
+     * @param parameter the parameter
+     * @param maxStringSize the maximum string size
+     * @param regExpString the regular expression string
+     */
+    private void setExpressionStringSizeParameter(
+            Expression expression,
+            FilterNameParameter parameter,
+            int maxStringSize,
+            boolean regExpString) {
+        internal_setExpressionParameter(expression, parameter, maxStringSize, regExpString);
     }
 
     /**

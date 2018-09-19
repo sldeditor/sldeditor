@@ -429,4 +429,41 @@ public class FieldConfigStringTest {
 
         assertEquals(undoListSize, UndoManager.getInstance().getUndoListSize());
     }
+
+    @Test
+    public void testValueStoredRegExp() {
+        boolean valueOnly = true;
+
+        class TestFieldConfigString extends FieldConfigString {
+            public TestFieldConfigString(FieldConfigCommonData commonData) {
+                super(commonData, "Button");
+            }
+
+            /* (non-Javadoc)
+             * @see com.sldeditor.ui.detail.config.FieldConfigString#valueStored(java.lang.String, java.lang.String)
+             */
+            @Override
+            protected void valueStored(String prev, String text) {
+                super.valueStored(prev, text);
+            }
+        }
+
+        TestFieldConfigString field =
+                new TestFieldConfigString(
+                        new FieldConfigCommonData(
+                                Geometry.class, FieldIdEnum.NAME, "label", valueOnly, false));
+
+        field.setMaximumStringSize(1);
+        field.setRegExpString(true);
+
+        field.createUI();
+        String testValue = ".a";
+        field.setTestValue(FieldIdEnum.NAME, testValue);
+        assertEquals(testValue, field.getStringValue());
+
+        field.setTestValue(FieldIdEnum.NAME, "");
+        assertEquals(".", field.getStringValue());
+        field.setTestValue(FieldIdEnum.NAME, ".^");
+        assertEquals(".^", field.getStringValue());
+    }
 }
