@@ -332,18 +332,6 @@
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-surefire-plugin</artifactId>
 			    <version>${surefire.version}</version>
-			    <dependencies>
-			        <dependency>
-			            <groupId>org.junit.platform</groupId>
-			            <artifactId>junit-platform-surefire-provider</artifactId>
-			            <version>1.2.0</version>
-			        </dependency>
-			        <dependency>
-			            <groupId>org.junit.jupiter</groupId>
-			            <artifactId>junit-jupiter-engine</artifactId>
-			            <version>5.2.0</version>
-			        </dependency>
-			    </dependencies>
 				<configuration>
 					<forkCount>1</forkCount>
 					<reuseForks>true</reuseForks>
