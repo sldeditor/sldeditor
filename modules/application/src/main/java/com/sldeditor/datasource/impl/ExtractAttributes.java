@@ -255,8 +255,8 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
     /**
      * (non-Javadoc)
      *
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.
-     *     FeatureTypeStyle)
+     * @see
+     *     org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.FeatureTypeStyle)
      */
     public void visit(FeatureTypeStyle fts) {
 

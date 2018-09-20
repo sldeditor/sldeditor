@@ -88,7 +88,7 @@
 		<!-- JavaDoc -->
         <maven.eclipse.version>2.10</maven.eclipse.version>
         <maven.report.version>2.9</maven.report.version>
-        <maven.javadoc.plugin.version>2.10.4</maven.javadoc.plugin.version>
+        <maven.javadoc.plugin.version>3.0.1</maven.javadoc.plugin.version>
         <javadoc.maxHeapSize>1536M</javadoc.maxHeapSize>
         
         <!-- Maven clean -->
@@ -343,11 +343,10 @@
                         <!-- Specifies the encoding name of the source files. -->
                         <encoding>UTF-8</encoding>
                         <!-- Set an additional parameter for the command line. -->
-                        <additionalparam>-keywords</additionalparam>
-                        <additionalparam>-Xdoclint:none</additionalparam>
+                        <keywords>true</keywords>
+                        <doclint>none</doclint>
                         <breakiterator>true</breakiterator>
                         <sourcepath>src/main/java</sourcepath>
-                        <subpackage>com/sldeditor</subpackage>
 
                         <!-- Creates links to existing javadoc-generated -->
                         <!-- documentation of external referenced classes. -->
@@ -385,19 +384,7 @@
                         </filesets>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${maven.checkstyle.version}</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.puppycrawl.tools</groupId>
-                            <artifactId>checkstyle</artifactId>
-                            <version>${puppycrawl.checkstyle.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                 <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
@@ -419,7 +406,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore></ignore>
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
