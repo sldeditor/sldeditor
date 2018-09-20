@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>true</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>.\SLDEditor.jar</jar>
+  <outfile>..\..\bin\SLDEditor.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>true</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>SLDEditor.ico</icon>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion>1.8.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+    <opt>--add-modules=java.xml.bind --add-modules=java.activation -XX:+IgnoreUnrecognizedVMOptions</opt>
+  </jre>
+  <versionInfo>
+    <fileVersion>0.7.9.0</fileVersion>
+    <txtFileVersion>0.7.9</txtFileVersion>
+    <fileDescription>OGC SLD file editor</fileDescription>
+    <copyright>SCISYS</copyright>
+    <productVersion>0.7.9.0</productVersion>
+    <txtProductVersion>0.7.9</txtProductVersion>
+    <productName>SLD Editor</productName>
+    <companyName>SCISYS</companyName>
+    <internalName>SLD Editor</internalName>
+    <originalFilename>SLDEditor.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>ENGLISH_UK</language>
+  </versionInfo>
+</launch4jConfig>
