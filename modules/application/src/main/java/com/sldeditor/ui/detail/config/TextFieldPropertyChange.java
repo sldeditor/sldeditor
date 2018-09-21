@@ -46,7 +46,7 @@ public class TextFieldPropertyChange extends JTextField {
     /**
      * Instantiates a new text field.
      *
-     * @param nbColumns the nb columns
+     * @param nbColumns the number of columns
      */
     public TextFieldPropertyChange(int nbColumns) {
         super("", nbColumns);

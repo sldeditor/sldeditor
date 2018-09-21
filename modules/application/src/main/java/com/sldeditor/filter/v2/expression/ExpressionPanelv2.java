@@ -264,7 +264,7 @@ public class ExpressionPanelv2 extends JDialog
      */
     protected void showExpressionDialog(Class<?> type, Expression expression) {
 
-        rootNode = new ExpressionNode();
+        rootNode = createExpressionNode();
         if (model != null) {
             model.setRoot(rootNode);
             ExpressionNode expressionNode = (ExpressionNode) rootNode;
@@ -281,6 +281,16 @@ public class ExpressionPanelv2 extends JDialog
         }
     }
 
+    /**
+     * Creates the expression node.
+     *
+     * @return the expression node
+     */
+    protected ExpressionNode createExpressionNode()
+    {
+        return new ExpressionNode();
+    }
+    
     /**
      * Populate expression.
      *

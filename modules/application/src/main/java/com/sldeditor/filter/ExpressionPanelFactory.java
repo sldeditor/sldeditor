@@ -91,6 +91,16 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
     }
 
     /**
+     * Creates and returns the expression panel for the RenderTransformation dialog.
+     *
+     * @param hints the hints
+     * @return the expression panel
+     */
+    private ExpressionPanelInterface internal_getRenderTransformationPanel(String hints) {
+        return new RenderTransformationExpressionPanelv2(this.vendorOptionVersionsList, inTestMode);
+    }
+    
+    /**
      * Creates and returns the filter panel.
      *
      * @param hints the hints
@@ -108,6 +118,16 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      */
     public static ExpressionPanelInterface getExpressionPanel(String hints) {
         return getInstance().internal_getExpressionPanel(hints);
+    }
+
+    /**
+     * Gets the render transformation panel.
+     *
+     * @param hints the hints
+     * @return the render transformation panel
+     */
+    public static ExpressionPanelInterface getRenderTransformationPanel(String hints) {
+        return getInstance().internal_getRenderTransformationPanel(hints);
     }
 
     /**
@@ -162,4 +182,4 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
 
         instance = null;
     }
-}
+ }
