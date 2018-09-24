@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2017, SCISYS UK Limited
+ * Copyright (C) 2018, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,11 @@ package com.sldeditor.rendertransformation.types;
 
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
-import com.sldeditor.ui.detail.config.FieldConfigDouble;
+import com.sldeditor.ui.detail.config.FieldConfigTextArea;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import java.util.Arrays;
 import java.util.List;
+import org.bouncycastle.util.StringList;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
@@ -32,26 +33,28 @@ import org.geotools.filter.MathExpressionImpl;
 import org.opengis.filter.expression.Expression;
 
 /**
- * The Class DoubleValues.
+ * The Class TextAreaValues.
  *
  * @author Robert Ward (SCISYS)
  */
-public class DoubleValues extends BaseValue implements RenderTransformValueInterface {
+public class TextAreaValues extends BaseValue implements RenderTransformValueInterface {
 
     /** The value. */
-    private Double value = null;
+    private String value = null;
 
-    /** Instantiates a new double values. */
-    public DoubleValues() {}
+    /** Instantiates a new string values. */
+    public TextAreaValues() {}
 
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.lang.Object)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.
+     * lang.Object)
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.value = (Double) defaultValue;
+        this.value = (String) defaultValue;
     }
 
     /**
@@ -84,22 +87,28 @@ public class DoubleValues extends BaseValue implements RenderTransformValueInter
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.Object)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.
+     * Object)
      */
     @Override
     public void setValue(Object aValue) {
         this.value = null;
         this.expression = null;
 
-        if (aValue instanceof Double) {
-            this.value = (Double) aValue;
-        } else if (aValue instanceof LiteralExpressionImpl) {
-            LiteralExpressionImpl literal = (LiteralExpressionImpl) aValue;
-            value = literal.evaluate(value, Double.class);
-        } else if ((aValue instanceof AttributeExpressionImpl)
-                || (aValue instanceof FunctionExpressionImpl)
-                || (aValue instanceof MathExpressionImpl)) {
-            this.expression = (Expression) aValue;
+        if (aValue != null) {
+            if (aValue instanceof String) {
+                this.value = (String) aValue;
+            } else if (aValue instanceof LiteralExpressionImpl) {
+                LiteralExpressionImpl literal = (LiteralExpressionImpl) aValue;
+                value = literal.evaluate(value, String.class);
+            } else if ((aValue instanceof AttributeExpressionImpl)
+                    || (aValue instanceof FunctionExpressionImpl)
+                    || (aValue instanceof MathExpressionImpl)) {
+                this.expression = (Expression) aValue;
+            } else {
+                this.value = aValue.toString();
+            }
         }
     }
 
@@ -110,17 +119,19 @@ public class DoubleValues extends BaseValue implements RenderTransformValueInter
      */
     @Override
     public List<Class<?>> getType() {
-        return Arrays.asList(double.class, Double.class);
+        return Arrays.asList(StringList.class);
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor
+     * .ui.detail.config.FieldConfigCommonData)
      */
     @Override
     public FieldConfigBase getField(FieldConfigCommonData commonData) {
-        return new FieldConfigDouble(commonData);
+        return new FieldConfigTextArea(commonData, null);
     }
 
     /*
@@ -130,6 +141,6 @@ public class DoubleValues extends BaseValue implements RenderTransformValueInter
      */
     @Override
     public RenderTransformValueInterface createInstance() {
-        return new DoubleValues();
+        return new TextAreaValues();
     }
 }

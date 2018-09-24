@@ -85,7 +85,9 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.lang.Object)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.
+     * lang.Object)
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
@@ -98,8 +100,10 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
      * @param symbolTypeConfig the symbol type config
      */
     protected void populateSymbolType(SymbolTypeConfig symbolTypeConfig) {
-        for (Class<? extends Interpolation> key : interpolationMap.keySet()) {
-            symbolTypeConfig.addOption(key.getSimpleName(), interpolationMap.get(key));
+        if (symbolTypeConfig != null) {
+            for (Class<? extends Interpolation> key : interpolationMap.keySet()) {
+                symbolTypeConfig.addOption(key.getSimpleName(), interpolationMap.get(key));
+            }
         }
     }
 
@@ -126,7 +130,9 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.Object)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.
+     * Object)
      */
     @Override
     public void setValue(Object aValue) {
@@ -191,7 +197,9 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor
+     * .ui.detail.config.FieldConfigCommonData)
      */
     @Override
     public FieldConfigBase getField(FieldConfigCommonData commonData) {

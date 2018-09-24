@@ -146,7 +146,7 @@ public class RenderTransformationDialog extends JDialog {
         this.geoServerConnectionManager = geoServerConnectionManager;
 
         if (expressionPanel == null) {
-            expressionPanel = ExpressionPanelFactory.getExpressionPanel("v2");
+            expressionPanel = ExpressionPanelFactory.getRenderTransformationPanel("v2");
         }
 
         createUI();

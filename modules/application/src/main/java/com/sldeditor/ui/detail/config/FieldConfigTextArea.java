@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2016, SCISYS UK Limited
+ * Copyright (C) 2018, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,22 +29,18 @@ import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.text.AttributeSet;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
 import org.opengis.filter.expression.Expression;
 
 /**
- * The Class FieldConfigString wraps a text field GUI component and an optional
- * value/attribute/expression drop down, Can restrict the maximum number of characters in the
- * string. Able to mark the string as being a regular expression which removes a preceding '.'
- * before display and prepends when field is applied.
+ * The Class FieldConfigTextArea wraps a text area GUI component
  *
  * <p>Supports undo/redo functionality.
  *
@@ -52,16 +48,20 @@ import org.opengis.filter.expression.Expression;
  *
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigString extends FieldConfigBase implements UndoActionInterface {
+public class FieldConfigTextArea extends FieldConfigBase implements UndoActionInterface {
 
-    /** The text field. */
-    private JTextField textField;
+    /** */
+    private static final int NO_OF_COLUMNS = 80;
+
+    private static final int NO_OF_VISIBLE_ROWS = 10;
+    /** The text area. */
+    private JTextArea textArea;
 
     /** The default value. */
     private String defaultValue = "";
 
     /** The old value obj. */
-    private Object oldValueObj = null;
+    private String oldValueObj = "";
 
     /** The button text. */
     private String buttonText = null;
@@ -69,77 +69,13 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     /** The button pressed listener list. */
     private List<FieldConfigStringButtonInterface> buttonPressedListenerList = null;
 
-    /** The maximum string size. */
-    private int maximumStringSize = -1;
-
-    /** The regular expression string flag. */
-    private boolean isRegExpString = false;
-
-    /** The Class JTextFieldLimit. */
-    public class JTextFieldLimit extends PlainDocument {
-
-        /** The Constant serialVersionUID. */
-        private static final long serialVersionUID = 1L;
-
-        /** The maximum number of characters. */
-        private int limit;
-
-        /**
-         * Instantiates a new j text field limit.
-         *
-         * @param fieldConfigString
-         * @param limit the limit
-         */
-        JTextFieldLimit(FieldConfigString fieldConfigString, int limit) {
-            super();
-            this.limit = limit;
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see javax.swing.text.PlainDocument#insertString(int, java.lang.String,
-         * javax.swing.text.AttributeSet)
-         */
-        public void insertString(int offset, String str, AttributeSet attr)
-                throws BadLocationException {
-            if (str == null) return;
-
-            if ((getLength() + str.length()) <= limit) {
-                String oldValue = this.getText(0, getLength());
-                super.insertString(offset, str, attr);
-                String newValue = this.getText(0, getLength());
-
-                valueStored(oldValue, newValue);
-            }
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see javax.swing.text.AbstractDocument#remove(int, int)
-         */
-        @Override
-        public void remove(int offs, int len) throws BadLocationException {
-            try {
-                String oldValue = this.getText(0, getLength());
-                super.remove(offs, len);
-                String newValue = this.getText(0, getLength());
-
-                valueStored(oldValue, newValue);
-            } catch (BadLocationException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            }
-        }
-    }
-
     /**
-     * Instantiates a new field config string.
+     * Instantiates a new field config text area.
      *
      * @param commonData the common data
      * @param buttonText the button text
      */
-    public FieldConfigString(FieldConfigCommonData commonData, String buttonText) {
+    public FieldConfigTextArea(FieldConfigCommonData commonData, String buttonText) {
         super(commonData);
 
         this.buttonText = buttonText;
@@ -153,42 +89,54 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void createUI() {
-        if (textField == null) {
+        if (textArea == null) {
             int xPos = getXPos();
-            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            FieldPanel fieldPanel =
+                    createFieldPanel(
+                            xPos, NO_OF_VISIBLE_ROWS * BasePanel.WIDGET_HEIGHT, getLabel());
 
-            textField = new TextFieldPropertyChange();
-            textField.setBounds(
+            textArea = new JTextArea(NO_OF_COLUMNS, NO_OF_VISIBLE_ROWS);
+            textArea.setEditable(true);
+
+            JScrollPane sp = new JScrollPane(textArea);
+            sp.setBounds(
                     xPos + BasePanel.WIDGET_X_START,
                     0,
-                    this.isValueOnly()
-                            ? BasePanel.WIDGET_EXTENDED_WIDTH
-                            : BasePanel.WIDGET_STANDARD_WIDTH,
-                    BasePanel.WIDGET_HEIGHT);
-            fieldPanel.add(textField);
+                    this.isValueOnly() ? 270 : BasePanel.WIDGET_EXTENDED_WIDTH,
+                    NO_OF_VISIBLE_ROWS * BasePanel.WIDGET_HEIGHT);
+            fieldPanel.add(sp);
 
-            textField.addPropertyChangeListener(
-                    TextFieldPropertyChange.TEXT_PROPERTY,
-                    new PropertyChangeListener() {
+            textArea.getDocument()
+                    .addDocumentListener(
+                            new DocumentListener() {
 
-                        /*
-                         * (non-Javadoc)
-                         *
-                         * @see java.beans.PropertyChangeListener#propertyChange(java.beans.
-                         * PropertyChangeEvent)
-                         */
-                        @Override
-                        public void propertyChange(PropertyChangeEvent evt) {
-                            String originalValue = (String) evt.getOldValue();
-                            String newValueObj = (String) evt.getNewValue();
+                                @Override
+                                public void changedUpdate(DocumentEvent arg0) {
+                                    // Won't get called when using a PlainDocument
+                                }
 
-                            valueStored(originalValue, newValueObj);
-                        }
-                    });
+                                @Override
+                                public void insertUpdate(DocumentEvent arg0) {
+                                    try {
+                                        valueStored(
+                                                arg0.getDocument().getText(0, arg0.getLength()));
+                                    } catch (BadLocationException e) {
+                                        ConsoleManager.getInstance()
+                                                .exception(FieldConfigTextArea.class, e);
+                                    }
+                                }
 
-            if (maximumStringSize > 0) {
-                textField.setDocument(new JTextFieldLimit(this, maximumStringSize));
-            }
+                                @Override
+                                public void removeUpdate(DocumentEvent arg0) {
+                                    try {
+                                        valueStored(
+                                                arg0.getDocument().getText(0, arg0.getLength()));
+                                    } catch (BadLocationException e) {
+                                        ConsoleManager.getInstance()
+                                                .exception(FieldConfigTextArea.class, e);
+                                    }
+                                }
+                            });
 
             if (buttonText != null) {
                 final JButton buttonExternal = new JButton(buttonText);
@@ -203,7 +151,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
                 int buttonWidth = 26;
                 int padding = 3;
                 buttonExternal.setBounds(
-                        xPos + textField.getX() - buttonWidth - padding,
+                        xPos + textArea.getX() - buttonWidth - padding,
                         0,
                         buttonWidth,
                         BasePanel.WIDGET_HEIGHT);
@@ -245,8 +193,8 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void internal_setEnabled(boolean enabled) {
-        if (textField != null) {
-            textField.setEnabled(enabled);
+        if (textArea != null) {
+            textArea.setEnabled(enabled);
         }
     }
 
@@ -264,8 +212,8 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     protected Expression generateExpression() {
         Expression expression = null;
 
-        if (this.textField != null) {
-            expression = getFilterFactory().literal(textField.getText());
+        if (this.textArea != null) {
+            expression = getFilterFactory().literal(textArea.getText());
         }
         return expression;
     }
@@ -285,8 +233,8 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
         if ((attributeSelectionPanel != null) && !isValueOnly()) {
             return attributeSelectionPanel.isEnabled();
         } else {
-            if (textField != null) {
-                return textField.isEnabled();
+            if (textArea != null) {
+                return textArea.isEnabled();
             }
         }
         return false;
@@ -338,14 +286,10 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public String getStringValue() {
-        if (textField != null) {
+        if (textArea != null) {
             if (getPanel().isValueReadable()) {
-                String value = textField.getText();
+                String value = textArea.getText();
 
-                // Prepend the regular expression special character
-                if (isRegExpString) {
-                    value = "." + value;
-                }
                 return value;
             }
         }
@@ -359,13 +303,13 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        if (textField != null) {
+        if (textArea != null) {
             if (undoRedoObject != null) {
                 String oldValue = (String) undoRedoObject.getOldValue();
 
                 boolean prevValue = this.isSuppressUndoEvents();
                 this.setSuppressUndoEvents(true);
-                textField.setText(oldValue);
+                textArea.setText(oldValue);
                 this.setSuppressUndoEvents(prevValue);
             }
         }
@@ -378,13 +322,13 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        if (textField != null) {
+        if (textArea != null) {
             if (undoRedoObject != null) {
                 String newValue = (String) undoRedoObject.getNewValue();
 
                 boolean prevValue = this.isSuppressUndoEvents();
                 this.setSuppressUndoEvents(true);
-                textField.setText(newValue);
+                textArea.setText(newValue);
                 this.setSuppressUndoEvents(prevValue);
             }
         }
@@ -424,17 +368,9 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void populateField(String value) {
-        String tmpValue;
 
-        // If regular expression string remove initial '.'
-        if (isRegExpString && value.length() > 1) {
-            tmpValue = value.substring(1, 2);
-        } else {
-            tmpValue = value;
-        }
-
-        if (textField != null) {
-            textField.setText(tmpValue);
+        if (textArea != null) {
+            textArea.setText(value);
         }
     }
 
@@ -446,12 +382,10 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     protected FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
-        FieldConfigString copy = null;
+        FieldConfigTextArea copy = null;
 
         if (fieldConfigBase != null) {
-            copy = new FieldConfigString(fieldConfigBase.getCommonData(), this.buttonText);
-            copy.setMaximumStringSize(this.maximumStringSize);
-            copy.setRegExpString(this.isRegExpString);
+            copy = new FieldConfigTextArea(fieldConfigBase.getCommonData(), this.buttonText);
         }
         return copy;
     }
@@ -463,8 +397,8 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public void setVisible(boolean visible) {
-        if (textField != null) {
-            textField.setVisible(visible);
+        if (textArea != null) {
+            textArea.setVisible(visible);
         }
     }
 
@@ -474,13 +408,13 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      * @param originalValue the original value
      * @param newValueObj the new value obj
      */
-    protected void valueStored(String originalValue, String newValueObj) {
-        if ((originalValue.compareTo(newValueObj) != 0)) {
+    protected void valueStored(String newValueObj) {
+        if ((oldValueObj.compareTo(newValueObj) != 0)) {
             if (!isSuppressUndoEvents()) {
                 UndoManager.getInstance()
                         .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
 
-                oldValueObj = originalValue;
+                oldValueObj = newValueObj;
             }
 
             valueUpdated();
@@ -500,23 +434,5 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
             }
             // CHECKSTYLE:ON
         }
-    }
-
-    /**
-     * Sets the maximum string size.
-     *
-     * @param maximumStringSize the new maximum string size
-     */
-    public void setMaximumStringSize(int maximumStringSize) {
-        this.maximumStringSize = maximumStringSize;
-    }
-
-    /**
-     * Sets the reg exp string.
-     *
-     * @param isRegExpString the isRegExpString to set
-     */
-    public void setRegExpString(boolean isRegExpString) {
-        this.isRegExpString = isRegExpString;
     }
 }

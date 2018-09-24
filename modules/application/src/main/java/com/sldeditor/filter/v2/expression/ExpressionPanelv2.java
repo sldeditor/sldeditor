@@ -249,6 +249,7 @@ public class ExpressionPanelv2 extends JDialog
         resultPanel.setLayout(new BorderLayout(0, 0));
 
         JScrollPane scrollPane_1 = new JScrollPane();
+        scrollPane_1.setPreferredSize(new Dimension(800, 30));
         resultPanel.add(scrollPane_1);
 
         textArea = new JTextArea();
@@ -264,7 +265,7 @@ public class ExpressionPanelv2 extends JDialog
      */
     protected void showExpressionDialog(Class<?> type, Expression expression) {
 
-        rootNode = new ExpressionNode();
+        rootNode = createExpressionNode();
         if (model != null) {
             model.setRoot(rootNode);
             ExpressionNode expressionNode = (ExpressionNode) rootNode;
@@ -279,6 +280,15 @@ public class ExpressionPanelv2 extends JDialog
                 tree.setSelectionRow(0);
             }
         }
+    }
+
+    /**
+     * Creates the expression node.
+     *
+     * @return the expression node
+     */
+    protected ExpressionNode createExpressionNode() {
+        return new ExpressionNode();
     }
 
     /**

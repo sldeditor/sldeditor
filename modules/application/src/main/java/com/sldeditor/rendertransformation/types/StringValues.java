@@ -47,7 +47,9 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.lang.Object)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.
+     * lang.Object)
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
@@ -73,30 +75,39 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
         if (expression != null) {
             return expression;
         }
-        return filterFactory.literal(value);
+
+        if (value != null) {
+            return filterFactory.literal(value);
+        }
+
+        return null;
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.Object)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.
+     * Object)
      */
     @Override
     public void setValue(Object aValue) {
         this.value = null;
         this.expression = null;
 
-        if (aValue instanceof String) {
-            this.value = (String) aValue;
-        } else if (aValue instanceof LiteralExpressionImpl) {
-            LiteralExpressionImpl literal = (LiteralExpressionImpl) aValue;
-            value = literal.evaluate(value, String.class);
-        } else if ((aValue instanceof AttributeExpressionImpl)
-                || (aValue instanceof FunctionExpressionImpl)
-                || (aValue instanceof MathExpressionImpl)) {
-            this.expression = (Expression) aValue;
-        } else {
-            this.value = aValue.toString();
+        if (aValue != null) {
+            if (aValue instanceof String) {
+                this.value = (String) aValue;
+            } else if (aValue instanceof LiteralExpressionImpl) {
+                LiteralExpressionImpl literal = (LiteralExpressionImpl) aValue;
+                value = literal.evaluate(value, String.class);
+            } else if ((aValue instanceof AttributeExpressionImpl)
+                    || (aValue instanceof FunctionExpressionImpl)
+                    || (aValue instanceof MathExpressionImpl)) {
+                this.expression = (Expression) aValue;
+            } else {
+                this.value = aValue.toString();
+            }
         }
     }
 
@@ -113,7 +124,9 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor
+     * .ui.detail.config.FieldConfigCommonData)
      */
     @Override
     public FieldConfigBase getField(FieldConfigCommonData commonData) {
