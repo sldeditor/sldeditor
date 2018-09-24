@@ -19,12 +19,11 @@
 
 package com.sldeditor.filter;
 
-import java.util.List;
-
 import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.filter.v2.expression.ExpressionNode;
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.expression.ExpressionTypeEnum;
+import java.util.List;
 
 /**
  * The Class RenderTransformationExpressionPanelv2.
@@ -43,8 +42,8 @@ public class RenderTransformationExpressionPanelv2 extends ExpressionPanelv2
      * @param vendorOptionList the vendor option list
      * @param inTestMode the in test mode
      */
-    public RenderTransformationExpressionPanelv2(List<VersionData> vendorOptionList,
-            boolean inTestMode) {
+    public RenderTransformationExpressionPanelv2(
+            List<VersionData> vendorOptionList, boolean inTestMode) {
         super(vendorOptionList, inTestMode);
     }
 
@@ -53,13 +52,11 @@ public class RenderTransformationExpressionPanelv2 extends ExpressionPanelv2
      *
      * @return the expression node
      */
-    protected ExpressionNode createExpressionNode()
-    {
+    protected ExpressionNode createExpressionNode() {
         ExpressionNode node = new ExpressionNode();
-        
+
         node.setExpressionType(ExpressionTypeEnum.LITERAL);
 
         return node;
     }
-    
 }

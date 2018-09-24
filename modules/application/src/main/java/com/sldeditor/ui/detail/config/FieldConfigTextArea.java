@@ -19,19 +19,6 @@
 
 package com.sldeditor.ui.detail.config;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
-
-import org.opengis.filter.expression.Expression;
-
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.undo.UndoActionInterface;
 import com.sldeditor.common.undo.UndoEvent;
@@ -40,6 +27,17 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import org.opengis.filter.expression.Expression;
 
 /**
  * The Class FieldConfigTextArea wraps a text area GUI component
@@ -52,6 +50,10 @@ import com.sldeditor.ui.widgets.FieldPanel;
  */
 public class FieldConfigTextArea extends FieldConfigBase implements UndoActionInterface {
 
+    /** */
+    private static final int NO_OF_COLUMNS = 80;
+
+    private static final int NO_OF_VISIBLE_ROWS = 10;
     /** The text area. */
     private JTextArea textArea;
 
@@ -89,43 +91,52 @@ public class FieldConfigTextArea extends FieldConfigBase implements UndoActionIn
     public void createUI() {
         if (textArea == null) {
             int xPos = getXPos();
-            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            FieldPanel fieldPanel =
+                    createFieldPanel(
+                            xPos, NO_OF_VISIBLE_ROWS * BasePanel.WIDGET_HEIGHT, getLabel());
 
-            int rows = 10;
-            textArea = new JTextArea(30, rows);
-            textArea.setBounds(xPos + BasePanel.WIDGET_X_START, 0,
-                    this.isValueOnly() ? BasePanel.WIDGET_EXTENDED_WIDTH
-                            : BasePanel.WIDGET_STANDARD_WIDTH,
-                    rows * BasePanel.WIDGET_HEIGHT);
-            
+            textArea = new JTextArea(NO_OF_COLUMNS, NO_OF_VISIBLE_ROWS);
             textArea.setEditable(true);
 
-            fieldPanel.add(textArea);
+            JScrollPane sp = new JScrollPane(textArea);
+            sp.setBounds(
+                    xPos + BasePanel.WIDGET_X_START,
+                    0,
+                    this.isValueOnly() ? 270 : BasePanel.WIDGET_EXTENDED_WIDTH,
+                    NO_OF_VISIBLE_ROWS * BasePanel.WIDGET_HEIGHT);
+            fieldPanel.add(sp);
 
-            textArea.getDocument().addDocumentListener(new DocumentListener() {
+            textArea.getDocument()
+                    .addDocumentListener(
+                            new DocumentListener() {
 
-                @Override
-                public void changedUpdate(DocumentEvent arg0) {
-                    // Won't get called when using a PlainDocument
-                }
+                                @Override
+                                public void changedUpdate(DocumentEvent arg0) {
+                                    // Won't get called when using a PlainDocument
+                                }
 
-                @Override
-                public void insertUpdate(DocumentEvent arg0) {
-                    try {
-                        valueStored(arg0.getDocument().getText(0, arg0.getLength()));
-                    } catch (BadLocationException e) {
-                        ConsoleManager.getInstance().exception(FieldConfigTextArea.class, e);
-                    }
-                }
+                                @Override
+                                public void insertUpdate(DocumentEvent arg0) {
+                                    try {
+                                        valueStored(
+                                                arg0.getDocument().getText(0, arg0.getLength()));
+                                    } catch (BadLocationException e) {
+                                        ConsoleManager.getInstance()
+                                                .exception(FieldConfigTextArea.class, e);
+                                    }
+                                }
 
-                @Override
-                public void removeUpdate(DocumentEvent arg0) {
-                    try {
-                        valueStored(arg0.getDocument().getText(0, arg0.getLength()));
-                    } catch (BadLocationException e) {
-                        ConsoleManager.getInstance().exception(FieldConfigTextArea.class, e);
-                    }
-                }});
+                                @Override
+                                public void removeUpdate(DocumentEvent arg0) {
+                                    try {
+                                        valueStored(
+                                                arg0.getDocument().getText(0, arg0.getLength()));
+                                    } catch (BadLocationException e) {
+                                        ConsoleManager.getInstance()
+                                                .exception(FieldConfigTextArea.class, e);
+                                    }
+                                }
+                            });
 
             if (buttonText != null) {
                 final JButton buttonExternal = new JButton(buttonText);

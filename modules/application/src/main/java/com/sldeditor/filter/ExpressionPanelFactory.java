@@ -99,7 +99,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
     private ExpressionPanelInterface internal_getRenderTransformationPanel(String hints) {
         return new RenderTransformationExpressionPanelv2(this.vendorOptionVersionsList, inTestMode);
     }
-    
+
     /**
      * Creates and returns the filter panel.
      *
@@ -182,4 +182,4 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
 
         instance = null;
     }
- }
+}

@@ -29,7 +29,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import org.bouncycastle.util.StringList;
 import org.opengis.filter.expression.Expression;
 
@@ -94,7 +93,7 @@ public class LiteralPanel extends JPanel {
                 PanelField.getField(
                         ExpressionPanelv2.class,
                         "LiteralPanel.value",
-                        node.getType(), //(node.getType() == String.class) ? StringList.class : node.getType(),
+                        (node.getType() == String.class) ? StringList.class : node.getType(),
                         null,
                         node.getMaxStringSize(),
                         node.isRegExpString());

@@ -249,6 +249,7 @@ public class ExpressionPanelv2 extends JDialog
         resultPanel.setLayout(new BorderLayout(0, 0));
 
         JScrollPane scrollPane_1 = new JScrollPane();
+        scrollPane_1.setPreferredSize(new Dimension(800, 30));
         resultPanel.add(scrollPane_1);
 
         textArea = new JTextArea();
@@ -286,11 +287,10 @@ public class ExpressionPanelv2 extends JDialog
      *
      * @return the expression node
      */
-    protected ExpressionNode createExpressionNode()
-    {
+    protected ExpressionNode createExpressionNode() {
         return new ExpressionNode();
     }
-    
+
     /**
      * Populate expression.
      *
