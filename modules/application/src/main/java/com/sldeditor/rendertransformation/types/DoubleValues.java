@@ -73,7 +73,12 @@ public class DoubleValues extends BaseValue implements RenderTransformValueInter
         if (expression != null) {
             return expression;
         }
-        return filterFactory.literal(value);
+
+        if (value != null) {
+            return filterFactory.literal(value);
+        }
+
+        return null;
     }
 
     /*

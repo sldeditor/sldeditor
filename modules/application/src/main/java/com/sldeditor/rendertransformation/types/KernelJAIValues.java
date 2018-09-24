@@ -65,7 +65,9 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.lang.Object)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setDefaultValue(java.
+     * lang.Object)
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
@@ -78,8 +80,10 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
      * @param symbolTypeConfig the symbol type config
      */
     protected void populateSymbolType(SymbolTypeConfig symbolTypeConfig) {
-        for (String enumValue : kernelJAIMap.values()) {
-            symbolTypeConfig.addOption(enumValue, enumValue);
+        if (symbolTypeConfig != null) {
+            for (String enumValue : kernelJAIMap.values()) {
+                symbolTypeConfig.addOption(enumValue, enumValue);
+            }
         }
     }
 
@@ -93,13 +97,19 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
         if (value != null) {
             return filterFactory.literal(value.getClass().getSimpleName());
         }
+
+        if (expression != null) {
+            return expression;
+        }
         return null;
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.Object)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#setValue(java.lang.
+     * Object)
      */
     @Override
     public void setValue(Object aValue) {
@@ -129,7 +139,9 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor.ui.detail.config.FieldConfigCommonData)
+     * @see
+     * com.sldeditor.rendertransformation.types.RenderTransformValueInterface#getField(com.sldeditor
+     * .ui.detail.config.FieldConfigCommonData)
      */
     @Override
     public FieldConfigBase getField(FieldConfigCommonData commonData) {
