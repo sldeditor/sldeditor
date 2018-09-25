@@ -25,6 +25,7 @@ import com.sldeditor.common.utils.ColourUtils;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.iface.ColourNotifyInterface;
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -145,14 +146,19 @@ public class ColourButton extends JButton {
 
         Graphics2D g2 = image.createGraphics();
         g2.setColor(colour);
-        g2.fillRect(0, 0, BasePanel.WIDGET_STANDARD_WIDTH, BasePanel.WIDGET_HEIGHT);
+        g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 
+        // Display colour text
         g2.setColor(ColourUtils.getTextColour(colour));
         String htmlColour = ColourUtils.fromColour(colour);
-        int width = g2.getFontMetrics().stringWidth(htmlColour);
-        int height = g2.getFontMetrics().getHeight();
-        int x = (this.getWidth() / 2) - (width / 2);
-        int y = this.getHeight() - ((this.getHeight() / 2) - (height / 2));
+        
+        FontMetrics fm = g2.getFontMetrics();
+        int totalWidth = (fm.stringWidth(htmlColour) * 2) + 4;
+
+        int x = (getWidth() - totalWidth) / 2;
+        int y = (getHeight() - fm.getHeight()) / 2;
+
+        y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
         g2.drawString(htmlColour, x, y);
         setContentAreaFilled(false);
         setOpaque(true);

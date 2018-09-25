@@ -32,6 +32,8 @@ import com.sldeditor.common.vendoroption.selection.VersionCellEditor;
 import com.sldeditor.common.vendoroption.selection.VersionCellRenderer;
 import com.sldeditor.help.Help;
 import com.sldeditor.ui.layout.UILayoutFactory;
+import com.sldeditor.ui.widgets.ColourButton;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -97,6 +99,8 @@ public class PrefPanel extends JDialog {
     /** The populating dialog flag. */
     private boolean populatingDialog = false;
 
+    private ColourButton colourButton;
+
     /** Default constructor. */
     public PrefPanel() {
         setTitle(Localisation.getString(PrefPanel.class, "PrefPanel.title"));
@@ -136,6 +140,19 @@ public class PrefPanel extends JDialog {
                                 PrefPanel.class, "PrefPanel.checkAppVersionOnStartUp"));
         chckbxCheckAppVersionOnStartUpPanel.add(chckbxCheckAppVersionOnStartUp);
         panel.add(chckbxCheckAppVersionOnStartUpPanel);
+
+        // Background render colour
+        JPanel renderBackgroundPanel = new JPanel();
+        renderBackgroundPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+        JLabel label =
+                new JLabel(
+                        Localisation.getField(
+                                PrefPanel.class, "PrefPanel.backgroundRenderColour"));
+        renderBackgroundPanel.add(label);
+        colourButton = new ColourButton();
+        renderBackgroundPanel.add(colourButton);
+
+        panel.add(renderBackgroundPanel);
 
         // Ui layout class
         uiLayoutMap = UILayoutFactory.getAllLayouts();
@@ -283,7 +300,8 @@ public class PrefPanel extends JDialog {
             chckbxUseAntiAlias.setSelected(prefData.isUseAntiAlias());
             chckbxSetSaveLastFolderViewed.setSelected(prefData.isSaveLastFolderView());
             model.setSelectedVendorOptionVersions(prefData.getVendorOptionVersionList());
-
+            colourButton.setColour(prefData.getBackgroundColour());
+            
             for (String displayName : uiLayoutMap.keySet()) {
                 String className = uiLayoutMap.get(displayName);
 
@@ -313,6 +331,7 @@ public class PrefPanel extends JDialog {
         String uiLayoutClass = uiLayoutMap.get(uiLayoutComboBox.getSelectedItem());
         prefData.setUiLayoutClass(uiLayoutClass);
         prefData.setSaveLastFolderView(chckbxSetSaveLastFolderViewed.isSelected());
+        prefData.setBackgroundColour(colourButton.getColour());
 
         return prefData;
     }
