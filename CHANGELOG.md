@@ -1,24 +1,82 @@
 # Change Log
 
-## [0.7.7](https://github.com/robward-scisys/sldeditor/tree/0.7.8) (2018-02-23)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.7...0.7.8)
+## [0.8.0](https://github.com/robward-scisys/sldeditor/tree/0.8.0) (2018-09-25)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.8...0.8.0)
+
+Integrated with GeoTools 20.0
 
 **Fixed bugs:**
 
-- Iss366 Expression and filter panbels not populated with datasource fields [\#366](https://github.com/robward-scisys/sldeditor/pull/366) ([robward-scisys](https://github.com/robward-scisys))
+- Process function parameters are literals only [\#396](https://github.com/robward-scisys/sldeditor/issues/396)
+- Raster data sources not displayed correctly in the map panel [\#265](https://github.com/robward-scisys/sldeditor/issues/265)
 
-## [0.7.7](https://github.com/robward-scisys/sldeditor/tree/0.7.7) (2017-10-23)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.6...0.7.7)
+**Closed issues:**
+
+- Migrate to use JUnit5 [\#391](https://github.com/robward-scisys/sldeditor/issues/391)
+- Create a GeoServer VM to allow unit testing [\#389](https://github.com/robward-scisys/sldeditor/issues/389)
+- Remove unused dependencies from pom/classpath [\#387](https://github.com/robward-scisys/sldeditor/issues/387)
+- Update project to reformat all source code [\#385](https://github.com/robward-scisys/sldeditor/issues/385)
+- RasterSymbolizer SelectedChannelType changed to an expression [\#383](https://github.com/robward-scisys/sldeditor/issues/383)
+- Field names not extracted from functions [\#381](https://github.com/robward-scisys/sldeditor/issues/381)
+- Get the Concatenate function working [\#378](https://github.com/robward-scisys/sldeditor/issues/378)
+- Direct link of download to .jar is not working [\#376](https://github.com/robward-scisys/sldeditor/issues/376)
+- Make filter combobox into submenus [\#375](https://github.com/robward-scisys/sldeditor/issues/375)
+- Bad filter processing with 'in' function. [\#370](https://github.com/robward-scisys/sldeditor/issues/370)
+- Bad filter processing with 'in' function. [\#369](https://github.com/robward-scisys/sldeditor/issues/369)
+- Unknown field type class: java.sql.timestamp [\#358](https://github.com/robward-scisys/sldeditor/issues/358)
+
+**Merged pull requests:**
+
+- Added colour button to preferences panel [\#399](https://github.com/robward-scisys/sldeditor/pull/399) ([robward-scisys](https://github.com/robward-scisys))
+- Iss396 process function parameters [\#397](https://github.com/robward-scisys/sldeditor/pull/397) ([robward-scisys](https://github.com/robward-scisys))
+- Iss280 PropertyIsLike single characters [\#395](https://github.com/robward-scisys/sldeditor/pull/395) ([robward-scisys](https://github.com/robward-scisys))
+- Iss393 filter panel undo redo events [\#394](https://github.com/robward-scisys/sldeditor/pull/394) ([robward-scisys](https://github.com/robward-scisys))
+- Fixed an issue in Geotools with Collection\_CountFunction. [\#382](https://github.com/robward-scisys/sldeditor/pull/382) ([robward-scisys](https://github.com/robward-scisys))
+- All functions now can be edited in the Filter dialog. [\#380](https://github.com/robward-scisys/sldeditor/pull/380) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.7.8](https://github.com/robward-scisys/sldeditor/tree/v0.7.8) (2018-02-23)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.7.8...v0.7.8)
+
+## [0.7.8](https://github.com/robward-scisys/sldeditor/tree/0.7.8) (2018-02-23)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.7...0.7.8)
 
 **Implemented enhancements:**
 
-- Added data source field type support for java.sql.Timestamps [\#360](https://github.com/robward-scisys/sldeditor/pull/360) ([robward-scisys](https://github.com/robward-scisys))
-- Added support for label/character spacing vendor option in GeoTools 18 [\#361](https://github.com/robward-scisys/sldeditor/pull/361) ([robward-scisys](https://github.com/robward-scisys))
+- Create release 0.7.7 [\#364](https://github.com/robward-scisys/sldeditor/issues/364)
+
+**Closed issues:**
+
+- Can't filter rule [\#366](https://github.com/robward-scisys/sldeditor/issues/366)
+
+**Merged pull requests:**
+
+- Updated to version 0.7.8 [\#368](https://github.com/robward-scisys/sldeditor/pull/368) ([robward-scisys](https://github.com/robward-scisys))
+- Properties now populated in the filer and expression panel [\#367](https://github.com/robward-scisys/sldeditor/pull/367) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.7.7](https://github.com/robward-scisys/sldeditor/tree/v0.7.7) (2017-10-23)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.6...v0.7.7)
+
+**Implemented enhancements:**
+
+- Add Feedback button to main window [\#362](https://github.com/robward-scisys/sldeditor/issues/362)
+- Add new GeoTools 18-beta vendor option [\#356](https://github.com/robward-scisys/sldeditor/issues/356)
+- Create release 0.7.6 [\#352](https://github.com/robward-scisys/sldeditor/issues/352)
 - Added Feedback button to console window [\#363](https://github.com/robward-scisys/sldeditor/pull/363) ([robward-scisys](https://github.com/robward-scisys))
+- Added support for label/character spacing vendor option in GeoTools 18 [\#361](https://github.com/robward-scisys/sldeditor/pull/361) ([robward-scisys](https://github.com/robward-scisys))
+- Added data source field type support for java.sql.Timestamps [\#360](https://github.com/robward-scisys/sldeditor/pull/360) ([robward-scisys](https://github.com/robward-scisys))
+- Create 0.7.6 for Ubuntu PPA [\#354](https://github.com/robward-scisys/sldeditor/pull/354) ([robward-scisys](https://github.com/robward-scisys))
 
 **Fixed bugs:**
 
 - Iss357 legend image size [\#359](https://github.com/robward-scisys/sldeditor/pull/359) ([robward-scisys](https://github.com/robward-scisys))
+
+**Closed issues:**
+
+- Image size does not work when creating legend image [\#357](https://github.com/robward-scisys/sldeditor/issues/357)
+
+**Merged pull requests:**
+
+- Updated version to 0.7.7 [\#365](https://github.com/robward-scisys/sldeditor/pull/365) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [v0.7.6](https://github.com/robward-scisys/sldeditor/tree/v0.7.6) (2017-08-02)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.5...v0.7.6)
