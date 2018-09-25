@@ -67,10 +67,10 @@
         <maven.enforcer.required.version>3.5.0</maven.enforcer.required.version>
 
 		<!-- GeoTools -->
-        <geotools.version>20-RC</geotools.version>
+        <geotools.version>20.0</geotools.version>
 
 		<!-- GeoServer -->
-        <geoserver.version>2.14-RC</geoserver.version>
+        <geoserver.version>2.14.0</geoserver.version>
         
         <!-- Log4j -->
         <log4j.version>1.2.17</log4j.version>
