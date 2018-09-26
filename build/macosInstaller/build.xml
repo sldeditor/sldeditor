@@ -64,7 +64,6 @@
         <option value="-Dcom.apple.macos.useScreenMenuBar=true"/>
         <option value="-Dapple.awt.application.name=SLDEditor"/>
         <option value="-Dcom.apple.smallTabs=true"/>
-        <option value="--add-modules=java.xml.bind --add-modules=java.activation -XX:+IgnoreUnrecognizedVMOptions"/>
 
     </bundleapp>
   </target>
