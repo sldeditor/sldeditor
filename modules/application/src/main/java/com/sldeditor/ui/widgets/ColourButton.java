@@ -151,7 +151,7 @@ public class ColourButton extends JButton {
         // Display colour text
         g2.setColor(ColourUtils.getTextColour(colour));
         String htmlColour = ColourUtils.fromColour(colour);
-        
+
         FontMetrics fm = g2.getFontMetrics();
         int totalWidth = (fm.stringWidth(htmlColour) * 2) + 4;
 

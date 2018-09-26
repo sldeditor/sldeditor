@@ -33,7 +33,6 @@ import com.sldeditor.common.vendoroption.selection.VersionCellRenderer;
 import com.sldeditor.help.Help;
 import com.sldeditor.ui.layout.UILayoutFactory;
 import com.sldeditor.ui.widgets.ColourButton;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -146,8 +145,7 @@ public class PrefPanel extends JDialog {
         renderBackgroundPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
         JLabel label =
                 new JLabel(
-                        Localisation.getField(
-                                PrefPanel.class, "PrefPanel.backgroundRenderColour"));
+                        Localisation.getField(PrefPanel.class, "PrefPanel.backgroundRenderColour"));
         renderBackgroundPanel.add(label);
         colourButton = new ColourButton();
         renderBackgroundPanel.add(colourButton);
@@ -301,7 +299,7 @@ public class PrefPanel extends JDialog {
             chckbxSetSaveLastFolderViewed.setSelected(prefData.isSaveLastFolderView());
             model.setSelectedVendorOptionVersions(prefData.getVendorOptionVersionList());
             colourButton.setColour(prefData.getBackgroundColour());
-            
+
             for (String displayName : uiLayoutMap.keySet()) {
                 String className = uiLayoutMap.get(displayName);
 
