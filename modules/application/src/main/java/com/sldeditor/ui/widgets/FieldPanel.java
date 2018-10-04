@@ -55,32 +55,40 @@ public class FieldPanel extends JPanel {
      * @param obj the obj
      */
     public FieldPanel(FieldConfigBase obj) {
-        this(0, null, 1, false, obj);
+        this(0, 0, null, 1, false, obj);
     }
 
     /**
      * Instantiates a new field panel with only one row.
      *
      * @param xPos the x pos
+     * @param yOffset the y offset
      * @param labelString the label string
      * @param optionalField the optional field
      * @param obj the obj
      */
-    public FieldPanel(int xPos, String labelString, boolean optionalField, FieldConfigBase obj) {
-        this(xPos, labelString, BasePanel.WIDGET_HEIGHT, optionalField, obj);
+    public FieldPanel(
+            int xPos, int yOffset, String labelString, boolean optionalField, FieldConfigBase obj) {
+        this(xPos, yOffset, labelString, BasePanel.WIDGET_HEIGHT, optionalField, obj);
     }
 
     /**
      * Instantiates a new field panel, allows multiple rows.
      *
      * @param xPos the x pos
+     * @param yOffset the y offset
      * @param labelString the label string
      * @param height the height
      * @param optionalField the optional field
      * @param obj the obj
      */
     public FieldPanel(
-            int xPos, String labelString, int height, boolean optionalField, FieldConfigBase obj) {
+            int xPos,
+            int yOffset,
+            String labelString,
+            int height,
+            boolean optionalField,
+            FieldConfigBase obj) {
         thisObj = obj;
 
         this.xPos = xPos;
@@ -88,7 +96,7 @@ public class FieldPanel extends JPanel {
         setLayout(null);
 
         if (labelString != null) {
-            internalCreateLabel(xPos, labelString);
+            internalCreateLabel(xPos, yOffset, labelString);
         }
 
         if (optionalField) {
@@ -126,11 +134,12 @@ public class FieldPanel extends JPanel {
      * Internal create label.
      *
      * @param xPos the x pos
+     * @param yOffset the y offset
      * @param label the label
      */
-    private void internalCreateLabel(int xPos, String label) {
+    private void internalCreateLabel(int xPos, int yOffset, String label) {
         JLabel lblLabel = new JLabel(label);
-        lblLabel.setBounds(xPos + 5, 0, BasePanel.LABEL_WIDTH, BasePanel.WIDGET_HEIGHT);
+        lblLabel.setBounds(xPos + 5, yOffset, BasePanel.LABEL_WIDTH, BasePanel.WIDGET_HEIGHT);
         lblLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 
         add(lblLabel);

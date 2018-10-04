@@ -166,7 +166,7 @@ public class FilterPanelv2 extends JDialog
         this.vendorOptionList = vendorOptionList;
         this.inTestMode = inTestMode;
 
-        setPreferredSize(new Dimension(800, 415));
+        setPreferredSize(new Dimension(850, 415));
 
         createUI();
 
@@ -330,6 +330,7 @@ public class FilterPanelv2 extends JDialog
         resultPanel.add(scrollPane_1);
 
         textArea = new JTextArea();
+        textArea.setRows(2);
         textArea.setEditable(false);
         scrollPane_1.setViewportView(textArea);
     }

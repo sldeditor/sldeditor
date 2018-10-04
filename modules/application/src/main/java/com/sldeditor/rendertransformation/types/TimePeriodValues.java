@@ -19,9 +19,10 @@
 
 package com.sldeditor.rendertransformation.types;
 
+import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigBoundingBox;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigTimePeriod;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import java.util.Arrays;
 import java.util.List;
@@ -29,24 +30,20 @@ import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpressionImpl;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.MathExpressionImpl;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.filter.expression.Expression;
-import org.opengis.geometry.BoundingBox;
-import org.opengis.geometry.Envelope;
 
 /**
- * The Class ReferencedEnvelopeValues.
+ * The Class TimePeriodValues.
  *
  * @author Robert Ward (SCISYS)
  */
-public class ReferencedEnvelopeValues extends BaseValue implements RenderTransformValueInterface {
+public class TimePeriodValues extends BaseValue implements RenderTransformValueInterface {
 
     /** The value. */
-    @SuppressWarnings("unused")
-    private Envelope value = null;
+    private TimePeriod value = null;
 
-    /** Instantiates a new referenced envelope values. */
-    public ReferencedEnvelopeValues() {}
+    /** Instantiates a new date values. */
+    public TimePeriodValues() {}
 
     /*
      * (non-Javadoc)
@@ -55,7 +52,7 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
      */
     @Override
     public void setDefaultValue(Object defaultValue) {
-        this.value = (Envelope) defaultValue;
+        this.value = (TimePeriod) defaultValue;
     }
 
     /**
@@ -74,7 +71,15 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
      */
     @Override
     public Expression getExpression() {
-        return expression;
+        if (expression != null) {
+            return expression;
+        }
+
+        if (value != null) {
+            return filterFactory.literal(value);
+        }
+
+        return null;
     }
 
     /*
@@ -87,11 +92,11 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
         this.value = null;
         this.expression = null;
 
-        if (aValue instanceof Envelope) {
-            this.value = (Envelope) aValue;
+        if (aValue instanceof TimePeriod) {
+            this.value = (TimePeriod) aValue;
         } else if ((aValue instanceof AttributeExpressionImpl)
-                || (aValue instanceof FunctionExpressionImpl)
                 || (aValue instanceof LiteralExpressionImpl)
+                || (aValue instanceof FunctionExpressionImpl)
                 || (aValue instanceof MathExpressionImpl)) {
             this.expression = (Expression) aValue;
         }
@@ -104,7 +109,7 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
      */
     @Override
     public List<Class<?>> getType() {
-        return Arrays.asList(ReferencedEnvelope.class, Envelope.class, BoundingBox.class);
+        return Arrays.asList(TimePeriod.class);
     }
 
     /*
@@ -114,7 +119,7 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
      */
     @Override
     public FieldConfigBase getField(FieldConfigCommonData commonData) {
-        return new FieldConfigBoundingBox(commonData);
+        return new FieldConfigTimePeriod(commonData);
     }
 
     /*
@@ -124,6 +129,6 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
      */
     @Override
     public RenderTransformValueInterface createInstance() {
-        return new ReferencedEnvelopeValues();
+        return new TimePeriodValues();
     }
 }

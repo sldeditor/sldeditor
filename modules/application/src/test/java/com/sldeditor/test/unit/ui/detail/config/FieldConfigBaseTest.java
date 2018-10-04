@@ -36,7 +36,7 @@ import com.sldeditor.ui.iface.ExpressionUpdateInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ExpressionTypeEnum;
 import java.awt.Component;
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -601,7 +601,7 @@ public class FieldConfigBaseTest {
         field.setTestValue(expectedFieldId, 3.142);
         assertTrue(Math.abs(field.getDoubleValue()) < 0.0001);
 
-        field.populateField(new Date());
+        field.populateField(ZonedDateTime.now());
         field.populateField((ReferencedEnvelope) null);
         field.setTestValue(expectedFieldId, (ReferencedEnvelope) null);
         field.populateField((Id) null);

@@ -96,7 +96,8 @@ public class LiteralPanel extends JPanel {
                         (node.getType() == String.class) ? StringList.class : node.getType(),
                         null,
                         node.getMaxStringSize(),
-                        node.isRegExpString());
+                        node.isRegExpString(),
+                        true);
 
         if (fieldConfig != null) {
             fieldConfig.createUI();

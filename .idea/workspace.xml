@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4ae0cc8-5d8e-4825-a4e3-ad53b7b9d1c4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/application/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/ObjectFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/ObjectFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/ObjectFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/ObjectFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLGroupConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLGroupConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/datasource/impl/ExtractAttributes.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/datasource/impl/ExtractAttributes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/.classpath" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/modules/import/target/" />
     <ignored path="$PROJECT_DIR$/modules/application/target/" />
@@ -28,10 +20,11 @@
     <session id="-1754795995">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -61,11 +54,11 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
+            <state relative-caret-position="5933">
               <caret line="349" selection-start-line="349" selection-end-line="349" />
             </state>
           </provider>
@@ -84,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/datasource/impl/ExtractAttributes.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="34">
-              <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
+              <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -92,7 +85,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/application/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
+            <state relative-caret-position="5729">
               <caret line="337" selection-start-line="337" selection-end-line="337" />
             </state>
           </provider>
@@ -144,6 +137,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -206,7 +200,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -279,7 +272,7 @@
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1216" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18123667" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18283582" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -347,24 +340,24 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/application/pom.xml">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="337" selection-start-line="337" selection-end-line="337" />
+        <state relative-caret-position="5933">
+          <caret line="349" selection-start-line="349" selection-end-line="349" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/datasource/impl/ExtractAttributes.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
-          <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
+          <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/modules/application/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="349" selection-start-line="349" selection-end-line="349" />
+        <state relative-caret-position="5729">
+          <caret line="337" selection-start-line="337" selection-end-line="337" />
         </state>
       </provider>
     </entry>

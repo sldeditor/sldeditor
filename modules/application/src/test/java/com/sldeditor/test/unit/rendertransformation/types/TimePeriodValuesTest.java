@@ -23,36 +23,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
-import com.sldeditor.rendertransformation.types.ReferencedEnvelopeValues;
+import com.sldeditor.filter.v2.function.temporal.TimePeriod;
+import com.sldeditor.rendertransformation.types.TimePeriodValues;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
-import com.sldeditor.ui.detail.config.FieldConfigBoundingBox;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
+import com.sldeditor.ui.detail.config.FieldConfigTimePeriod;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import java.util.Arrays;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
-import org.opengis.geometry.BoundingBox;
-import org.opengis.geometry.Envelope;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
- * Unit test for ReferencedEnvelopeValues class.
+ * Unit test for TimerPeriodValues class.
  *
- * <p>{@link com.sldeditor.rendertransformation.test.ReferencedEnvelopeValues}
+ * <p>{@link com.sldeditor.rendertransformation.test.TimerPeriodValues}
  *
  * @author Robert Ward (SCISYS)
  */
-class ReferencedEnvlopeValuesTest {
+class TimePeriodValuesTest {
 
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
-    class TestReferencedEnvelopeValues extends ReferencedEnvelopeValues {
+    class TestTimePeriodValues extends TimePeriodValues {
 
         /* (non-Javadoc)
-         * @see com.sldeditor.rendertransformation.types.ReferencedEnvelopeValues#populateSymbolType(com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig)
+         * @see com.sldeditor.rendertransformation.types.TimePeriodValues#populateSymbolType(com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig)
          */
         @Override
         protected void populateSymbolType(SymbolTypeConfig symbolTypeConfig) {
@@ -62,31 +59,31 @@ class ReferencedEnvlopeValuesTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.rendertransformation.types.ReferencedEnvelopeValues#ReferencedEnvelopeValues()}.
+     * com.sldeditor.rendertransformation.types.TimePeriodValues#TimePeriodValues()}.
      */
     @Test
-    void testReferencedEnvelopeValues() {
-        ReferencedEnvelopeValues testObj = new ReferencedEnvelopeValues();
+    void testTimePeriodValues() {
+        TimePeriodValues testObj = new TimePeriodValues();
         testObj.createInstance();
 
-        assertEquals(
-                Arrays.asList(ReferencedEnvelope.class, Envelope.class, BoundingBox.class),
-                testObj.getType());
+        assertEquals(Arrays.asList(TimePeriod.class), testObj.getType());
 
-        CoordinateReferenceSystem crs = null;
+        String timePeriodString = "2016-07-07T17:42:27+01:00 / 2016-08-07T17:42:27+01:00";
 
-        ReferencedEnvelope envelope = new ReferencedEnvelope(-1.0, 1.0, -1.0, 1.0, crs);
-        testObj.setDefaultValue(envelope);
-        assertNull(testObj.getExpression());
+        TimePeriod expectedTimePeriod = new TimePeriod();
+        expectedTimePeriod.decode(timePeriodString);
 
-        // ReferencedEnvelope value
-        testObj.setValue((Envelope) crs);
-        assertNull(testObj.getExpression());
+        testObj.setDefaultValue(expectedTimePeriod);
+        assertEquals(testObj.getExpression().toString(), expectedTimePeriod.toString());
+
+        // TimePeriod value
+        testObj.setValue(expectedTimePeriod);
+        assertEquals(testObj.getExpression().toString(), expectedTimePeriod.toString());
 
         // Literal expression
-        Expression expectedExpression = ff.literal(crs);
+        Expression expectedExpression = ff.literal(expectedTimePeriod);
         testObj.setValue(expectedExpression);
-        assertEquals(expectedExpression, testObj.getExpression());
+        assertEquals(testObj.getExpression().toString(), expectedTimePeriod.toString());
 
         // Attribute expression
         expectedExpression = ff.property("test");
@@ -100,16 +97,16 @@ class ReferencedEnvlopeValuesTest {
         FieldConfigBase field =
                 testObj.getField(
                         new FieldConfigCommonData(
-                                ReferencedEnvelopeValues.class,
+                                TimePeriodValues.class,
                                 FieldIdEnum.INITIAL_GAP,
                                 "label",
                                 true,
                                 false,
                                 false));
-        assertEquals(FieldConfigBoundingBox.class, field.getClass());
+        assertEquals(FieldConfigTimePeriod.class, field.getClass());
 
         // Increase code coverage
-        TestReferencedEnvelopeValues testObj2 = new TestReferencedEnvelopeValues();
+        TestTimePeriodValues testObj2 = new TestTimePeriodValues();
         testObj2.populateSymbolType(null);
     }
 }

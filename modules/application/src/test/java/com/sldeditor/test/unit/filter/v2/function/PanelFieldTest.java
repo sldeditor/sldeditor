@@ -81,7 +81,8 @@ public class PanelFieldTest {
                             nodeType,
                             null,
                             ExpressionNode.UNLIMITED_STRING_SIZE,
-                            false);
+                            false,
+                            true);
 
             Class<?> expected = expectedValueMap.get(nodeType);
             Class<?> actual = (fieldConfig == null) ? null : fieldConfig.getClass();
@@ -97,7 +98,8 @@ public class PanelFieldTest {
                         Number.class,
                         null,
                         ExpressionNode.UNLIMITED_STRING_SIZE,
-                        false);
+                        false,
+                        true);
         Class<?> expected = FieldConfigInteger.class;
         Class<?> actual = fieldConfig.getClass();
         assertEquals(expected, actual, Number.class.getName());
@@ -111,7 +113,8 @@ public class PanelFieldTest {
                         Number.class,
                         null,
                         ExpressionNode.UNLIMITED_STRING_SIZE,
-                        false);
+                        false,
+                        true);
         expected = FieldConfigDouble.class;
         actual = fieldConfig.getClass();
         assertEquals(expected, actual, Number.class.getName() + "/" + Float.class.getName());
@@ -125,7 +128,8 @@ public class PanelFieldTest {
                         Number.class,
                         null,
                         ExpressionNode.UNLIMITED_STRING_SIZE,
-                        false);
+                        false,
+                        true);
         expected = FieldConfigDouble.class;
         actual = fieldConfig.getClass();
         assertEquals(expected, actual, Number.class.getName() + "/" + Double.class.getName());
@@ -139,7 +143,8 @@ public class PanelFieldTest {
                         Number.class,
                         null,
                         ExpressionNode.UNLIMITED_STRING_SIZE,
-                        false);
+                        false,
+                        true);
         expected = FieldConfigInteger.class;
         actual = fieldConfig.getClass();
         assertEquals(expected, actual, Number.class.getName());
@@ -148,7 +153,8 @@ public class PanelFieldTest {
         TypeManager.getInstance().reset();
         TypeManager.getInstance().setDataType(String.class);
         fieldConfig =
-                PanelField.getField(classType, valueTextLocalisation, String.class, null, 1, true);
+                PanelField.getField(
+                        classType, valueTextLocalisation, String.class, null, 1, true, true);
         expected = FieldConfigString.class;
         actual = fieldConfig.getClass();
         assertEquals(expected, actual, String.class.getName());

@@ -25,18 +25,16 @@ import com.google.gson.JsonParser;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.filter.v2.function.temporal.DateUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -189,10 +187,10 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
             JsonParser parser = new JsonParser();
             JsonArray o = parser.parse(jsonString).getAsJsonArray();
 
-            Map<Calendar, String> map = new HashMap<Calendar, String>();
-            Map<Calendar, JsonObject> jsonMap = new HashMap<Calendar, JsonObject>();
+            Map<ZonedDateTime, String> map = new HashMap<ZonedDateTime, String>();
+            Map<ZonedDateTime, JsonObject> jsonMap = new HashMap<ZonedDateTime, JsonObject>();
             Map<String, String> descriptionMap = new HashMap<String, String>();
-            List<Calendar> calList = new ArrayList<Calendar>();
+            List<ZonedDateTime> calList = new ArrayList<ZonedDateTime>();
 
             for (int index = 0; index < o.size(); index++) {
                 JsonObject obj = o.get(index).getAsJsonObject();
@@ -203,7 +201,7 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
                 }
                 String published = obj.get(PUBLISHED_AT).getAsString();
 
-                Calendar cal = ISO8601toCalendar(published);
+                ZonedDateTime cal = ISO8601toCalendar(published);
 
                 map.put(cal, tagName);
                 jsonMap.put(cal, obj);
@@ -213,11 +211,11 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
             Collections.sort(calList, Collections.reverseOrder());
 
-            Calendar latestTime = calList.get(0);
+            ZonedDateTime latestTime = calList.get(0);
             String latest = map.get(latestTime);
             StringBuilder description = new StringBuilder();
 
-            for (Calendar time : calList) {
+            for (ZonedDateTime time : calList) {
                 String tag = map.get(time);
                 formatDescription(description, tag, descriptionMap.get(tag));
             }
@@ -252,24 +250,18 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
     }
 
     /**
-     * Transform ISO 8601 string to Calendar.
+     * Transform ISO 8601 string to ZonedDateTime.
      *
      * @param iso8601string the iso 8601 string
-     * @return the calendar
+     * @return the zoned date time
      * @throws ParseException the parse exception
      */
-    private static Calendar ISO8601toCalendar(final String iso8601string) throws ParseException {
-        Calendar calendar = GregorianCalendar.getInstance();
-        String s = iso8601string.replace("Z", "+00:00");
-        try {
-            s = s.substring(0, 22) + s.substring(23); // to get rid of the ":"
-        } catch (IndexOutOfBoundsException e) {
-            throw new ParseException("Invalid length", 0);
-        }
-        Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(s);
-        calendar.setTime(date);
+    private static ZonedDateTime ISO8601toCalendar(final String iso8601string)
+            throws ParseException {
 
-        return calendar;
+        ZonedDateTime zonedDateTime = DateUtils.getZonedDateTime(iso8601string);
+
+        return zonedDateTime;
     }
 
     /*

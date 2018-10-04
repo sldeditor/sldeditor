@@ -32,8 +32,7 @@ import com.sldeditor.ui.widgets.FieldPanel;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.ZonedDateTime;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -41,15 +40,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.DateFormatter;
-import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-import net.sourceforge.jdatepicker.impl.UtilDateModel;
-import org.geotools.temporal.object.DefaultPeriod;
 import org.opengis.filter.expression.Expression;
 
 /**
@@ -62,24 +55,20 @@ import org.opengis.filter.expression.Expression;
  *
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigTimePeriod extends FieldConfigBase implements UndoActionInterface {
+public class FieldConfigTimePeriod extends FieldConfigBase
+        implements UndoActionInterface, DateTimePanelUpdateInterface {
+
+    /** The Constant Y_OFFSET. */
+    private static final int Y_OFFSET = 13;
 
     /** The old value obj. */
     private TimePeriod oldValueObj = null;
 
     /** The Class TimePeriodPanel. */
     private static class TimePeriodPanel {
-        /** The date model. */
-        private UtilDateModel dateModel = new UtilDateModel();
 
-        /** The date picker. */
-        private JDatePickerImpl datePicker;
-
-        /** The time picker. */
-        private JSpinner timePicker;
-
-        /** The time editor. */
-        private JSpinner.DateEditor timeEditor;
+        /** The date time panel. */
+        private DateTimePanel dateTimePanel = null;
 
         /** The radio button group. */
         private ButtonGroup buttonGroup = new ButtonGroup();
@@ -123,9 +112,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
          * @return true, if successful
          */
         public boolean areFieldsConfigured() {
-            return ((datePicker != null)
-                    && (timePicker != null)
-                    && (timeEditor != null)
+            return ((dateTimePanel != null)
                     && (yearSpinner != null)
                     && (monthSpinner != null)
                     && (daySpinner != null)
@@ -160,7 +147,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
     public void createUI() {
 
         if (!start.areFieldsConfigured()) {
-            FieldPanel fieldPanel = createFieldPanel(getXPos(), getLabel());
+            FieldPanel fieldPanel = createFieldPanel(getXPos(), Y_OFFSET, "");
 
             createUIPanel(
                     fieldPanel,
@@ -193,7 +180,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      * @return the row y
      */
     private int getRowY(int row) {
-        return (row * BasePanel.WIDGET_HEIGHT) + 13;
+        return (row * BasePanel.WIDGET_HEIGHT) + Y_OFFSET;
     }
 
     /**
@@ -203,7 +190,6 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      * @param panelData the panel
      * @param index the index
      * @param title the title
-     * @return the int
      */
     private void createUIPanel(
             FieldPanel fieldPanel, TimePeriodPanel panelData, int index, String title) {
@@ -225,55 +211,14 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         panelData.panel.add(panelData.dateRadioButton);
         panelData.buttonGroup.add(panelData.dateRadioButton);
 
-        JDatePanelImpl datePanel = new JDatePanelImpl(panelData.dateModel);
-        panelData.datePicker = new JDatePickerImpl(datePanel);
         int xPos = getXPos();
-        panelData.datePicker.setBounds(
-                xPos + BasePanel.WIDGET_X_START,
-                getRowY(row),
-                BasePanel.WIDGET_STANDARD_WIDTH,
-                BasePanel.WIDGET_HEIGHT);
-        panelData.panel.add(panelData.datePicker);
-
-        panelData.dateModel.addChangeListener(
-                new ChangeListener() {
-
-                    @Override
-                    public void stateChanged(ChangeEvent e) {
-                        valueUpdated();
-                    }
-                });
-
-        // Time picker
-        SpinnerDateModel model = new SpinnerDateModel();
-        Calendar calendar = Calendar.getInstance();
-        model.setValue(calendar.getTime());
-        panelData.timePicker = new JSpinner(model);
-        panelData.timePicker.setBounds(
-                panelData.datePicker.getX() + panelData.datePicker.getWidth() + 10,
-                getRowY(row),
-                (int) (BasePanel.WIDGET_STANDARD_WIDTH * 0.75),
-                BasePanel.WIDGET_HEIGHT);
-        panelData.timePicker.addChangeListener(
-                new ChangeListener() {
-
-                    @Override
-                    public void stateChanged(ChangeEvent e) {
-                        valueUpdated();
-                    }
-                });
-        panelData.panel.add(panelData.timePicker);
-        panelData.timeEditor = new JSpinner.DateEditor(panelData.timePicker, "HH:mm:ss");
-        panelData.timePicker.setEditor(panelData.timeEditor);
-        DateFormatter formatter =
-                (DateFormatter) panelData.timeEditor.getTextField().getFormatter();
-        formatter.setAllowsInvalid(false);
-        formatter.setOverwriteMode(true);
+        panelData.dateTimePanel = new DateTimePanel(this);
+        panelData.dateTimePanel.createUI(xPos, getIndent(), Y_OFFSET, panelData.panel);
 
         //
         // Date
         //
-        row++;
+        row += 2;
 
         panelData.durationRadioButton = new JRadioButton();
         panelData.durationRadioButton.setBounds(2, getRowY(row), 20, BasePanel.WIDGET_HEIGHT);
@@ -517,8 +462,8 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      */
     @Override
     public void internal_setEnabled(boolean enabled) {
-        if (start.datePicker != null) {
-            start.datePicker.setEnabled(enabled);
+        if (start.dateTimePanel != null) {
+            start.dateTimePanel.setEnabled(enabled);
         }
     }
 
@@ -554,8 +499,8 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         if ((attributeSelectionPanel != null) && !isValueOnly()) {
             return attributeSelectionPanel.isEnabled();
         } else {
-            if (start.datePicker != null) {
-                return start.datePicker.isEnabled();
+            if (start.dateTimePanel != null) {
+                return start.dateTimePanel.isEnabled();
             }
         }
         return false;
@@ -590,8 +535,8 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
 
         if (objValue instanceof String) {
             timePeriod.decode((String) objValue);
-        } else if (objValue instanceof DefaultPeriod) {
-            timePeriod.decode((DefaultPeriod) objValue);
+        } else if (objValue instanceof TimePeriod) {
+            timePeriod = ((TimePeriod) objValue);
         }
 
         populateField(timePeriod);
@@ -655,7 +600,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      * @param panel the panel
      * @return the date
      */
-    private Date getDate(TimePeriodPanel panel) {
+    private ZonedDateTime getDate(TimePeriodPanel panel) {
         if (panel == null) {
             return null;
         }
@@ -663,23 +608,10 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         if (!panel.areFieldsConfigured()) {
             return null;
         }
-        Date selectedDate = (Date) panel.datePicker.getModel().getValue();
 
-        Date time = (Date) panel.timePicker.getValue();
+        ZonedDateTime zonedDateTime = panel.dateTimePanel.getDate();
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(time);
-
-        int hour = cal.get(Calendar.HOUR);
-        int minute = cal.get(Calendar.MINUTE);
-        int seconds = cal.get(Calendar.SECOND);
-
-        cal.setTime(selectedDate);
-        cal.set(Calendar.HOUR, hour);
-        cal.set(Calendar.MINUTE, minute);
-        cal.set(Calendar.SECOND, seconds);
-
-        return cal.getTime();
+        return zonedDateTime;
     }
 
     /**
@@ -763,11 +695,11 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         if (timePeriodPanel != null) {
 
             if (timePeriodPanel.areFieldsConfigured()) {
-                if (timePeriodPanel.dateModel != null) {
+                if (timePeriodPanel.dateTimePanel != null) {
                     if (duration.isDate()) {
                         timePeriodPanel.dateRadioButton.setSelected(true);
-                        timePeriodPanel.dateModel.setValue(duration.getDate());
-                        timePeriodPanel.timePicker.setValue(duration.getDate());
+
+                        timePeriodPanel.dateTimePanel.populateUI(duration.getDate());
                     } else {
                         timePeriodPanel.durationRadioButton.setSelected(true);
                         timePeriodPanel.yearSpinner.setValue(duration.getDurationYears());
@@ -806,11 +738,11 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
      */
     @Override
     public void setVisible(boolean visible) {
-        if (start.datePicker != null) {
-            start.datePicker.setVisible(visible);
+        if (start.dateTimePanel != null) {
+            start.dateTimePanel.setVisible(visible);
         }
-        if (end.datePicker != null) {
-            end.datePicker.setVisible(visible);
+        if (end.dateTimePanel != null) {
+            end.dateTimePanel.setVisible(visible);
         }
     }
 
@@ -827,8 +759,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
         if (panel.areFieldsConfigured()) {
             boolean dateEnabled = panel.dateRadioButton.isSelected();
 
-            panel.datePicker.setEnabled(dateEnabled);
-            panel.timePicker.setEnabled(dateEnabled);
+            panel.dateTimePanel.setEnabled(dateEnabled);
 
             if (panel.durationRadioButton.isSelected()) {
                 panel.dateCheckbox.setEnabled(true);
@@ -856,5 +787,15 @@ public class FieldConfigTimePeriod extends FieldConfigBase implements UndoAction
                 panel.secondSpinner.setEnabled(false);
             }
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.sldeditor.ui.detail.config.DateTimePanelUpdateInterface#dateTimeValueUpdated()
+     */
+    @Override
+    public void dateTimeValueUpdated() {
+        valueUpdated();
     }
 }

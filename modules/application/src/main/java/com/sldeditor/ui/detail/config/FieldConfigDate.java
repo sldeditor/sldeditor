@@ -25,23 +25,11 @@ import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoInterface;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.filter.v2.function.temporal.DateUtils;
 import com.sldeditor.ui.detail.BasePanel;
 import com.sldeditor.ui.widgets.FieldPanel;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.text.DateFormatter;
-import net.sourceforge.jdatepicker.DateModel;
-import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-import net.sourceforge.jdatepicker.impl.UtilDateModel;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import org.opengis.filter.expression.Expression;
 
 /**
@@ -53,31 +41,14 @@ import org.opengis.filter.expression.Expression;
  *
  * @author Robert Ward (SCISYS)
  */
-public class FieldConfigDate extends FieldConfigBase implements UndoActionInterface {
+public class FieldConfigDate extends FieldConfigBase
+        implements UndoActionInterface, DateTimePanelUpdateInterface {
 
     /** The old value obj. */
     private Object oldValueObj = null;
 
-    /** The date picker. */
-    private JDatePickerImpl datePicker;
-
-    /** The time picker. */
-    private JSpinner timePicker;
-
-    /** The date format. */
-    private DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-
-    /** The time format. */
-    private DateFormat tf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-
-    /** The date/time format. */
-    private DateFormat dtf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
-
-    /** The date model. */
-    private UtilDateModel dateModel = new UtilDateModel();
-
-    /** The time editor. */
-    private JSpinner.DateEditor timeEditor;
+    /** The date time panel. */
+    private DateTimePanel dateTimePanel;
 
     /**
      * Flag indicating whether class is being populated, prevents multiple undo events being
@@ -86,7 +57,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     private boolean isPopulating = false;
 
     /**
-     * Instantiates a new field config slider.
+     * Instantiates a new field config date.
      *
      * @param commonData the common data
      */
@@ -102,52 +73,13 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void createUI() {
-        if (datePicker == null) {
-            int xPos = getXPos();
+        if (dateTimePanel == null) {
+            dateTimePanel = new DateTimePanel(this);
 
-            FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
+            FieldPanel fieldPanel =
+                    createFieldPanel(getXPos(), 2 * BasePanel.WIDGET_HEIGHT, getLabel());
 
-            JDatePanelImpl datePanel = new JDatePanelImpl(dateModel);
-            datePicker = new JDatePickerImpl(datePanel);
-            datePicker.setBounds(
-                    xPos + BasePanel.WIDGET_X_START,
-                    0,
-                    BasePanel.WIDGET_STANDARD_WIDTH,
-                    BasePanel.WIDGET_HEIGHT);
-            fieldPanel.add(datePicker);
-
-            dateModel.addChangeListener(
-                    new ChangeListener() {
-
-                        @Override
-                        public void stateChanged(ChangeEvent e) {
-                            valueStored();
-                        }
-                    });
-
-            // Time picker
-            SpinnerDateModel model = new SpinnerDateModel();
-            Calendar calendar = Calendar.getInstance();
-            model.setValue(calendar.getTime());
-            timePicker = new JSpinner(model);
-            timePicker.setBounds(
-                    datePicker.getX() + datePicker.getWidth() + 10,
-                    0,
-                    BasePanel.WIDGET_STANDARD_WIDTH,
-                    BasePanel.WIDGET_HEIGHT);
-            timePicker.addChangeListener(
-                    new ChangeListener() {
-                        @Override
-                        public void stateChanged(ChangeEvent e) {
-                            valueStored();
-                        }
-                    });
-            fieldPanel.add(timePicker);
-            timeEditor = new JSpinner.DateEditor(timePicker, "HH:mm:ss");
-            timePicker.setEditor(timeEditor);
-            DateFormatter formatter = (DateFormatter) timeEditor.getTextField().getFormatter();
-            formatter.setAllowsInvalid(false);
-            formatter.setOverwriteMode(true);
+            dateTimePanel.createUI(getXPos(), getIndent(), 0, fieldPanel);
 
             if (!isValueOnly()) {
                 setAttributeSelectionPanel(
@@ -159,7 +91,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     /** Value stored. */
     protected void valueStored() {
         if (!isSuppressUndoEvents() && !isPopulating) {
-            Date newValueObj = getDate();
+            ZonedDateTime newValueObj = dateTimePanel.getDate();
 
             UndoManager.getInstance()
                     .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
@@ -177,8 +109,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     /*
      * (non-Javadoc)
      *
-     * @see
-     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -197,8 +128,8 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void internal_setEnabled(boolean enabled) {
-        if (datePicker != null) {
-            datePicker.setEnabled(enabled);
+        if (dateTimePanel != null) {
+            dateTimePanel.setEnabled(enabled);
         }
     }
 
@@ -216,8 +147,8 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
     protected Expression generateExpression() {
         Expression expression = null;
 
-        if (datePicker != null) {
-            expression = getFilterFactory().literal(getStringValue());
+        if (dateTimePanel != null) {
+            expression = getFilterFactory().literal(dateTimePanel.getStringValue());
         }
         return expression;
     }
@@ -237,8 +168,8 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
         if ((attributeSelectionPanel != null) && !isValueOnly()) {
             return attributeSelectionPanel.isEnabled();
         } else {
-            if (datePicker != null) {
-                return datePicker.isEnabled();
+            if (dateTimePanel != null) {
+                return dateTimePanel.isEnabled();
             }
         }
         return false;
@@ -252,7 +183,7 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void revertToDefaultValue() {
-        Date currentDate = new Date();
+        ZonedDateTime currentDate = null;
 
         populateField(currentDate);
     }
@@ -269,14 +200,14 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void populateExpression(Object objValue) {
-        Date value = null;
+        ZonedDateTime value = null;
 
-        if (objValue instanceof Date) {
-            value = (Date) objValue;
+        if (objValue instanceof ZonedDateTime) {
+            value = (ZonedDateTime) objValue;
         } else if (objValue instanceof String) {
             try {
-                value = dtf.parse((String) objValue);
-            } catch (ParseException e) {
+                value = DateUtils.getZonedDateTime((String) objValue);
+            } catch (DateTimeParseException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
         }
@@ -291,44 +222,15 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public String getStringValue() {
-        Date date = getDate();
+        if (dateTimePanel == null) {
+            return null;
+        }
+        ZonedDateTime date = dateTimePanel.getDate();
         if (date == null) {
             return null;
         }
-        return String.format("%sT%sZ", df.format(date), tf.format(date));
-    }
 
-    /**
-     * Gets the date.
-     *
-     * @return the date
-     */
-    private Date getDate() {
-        if ((datePicker == null) || (timePicker == null)) {
-            return null;
-        }
-        DateModel<?> model = datePicker.getModel();
-        Date selectedDate = (Date) model.getValue();
-
-        if (selectedDate == null) {
-            return null;
-        }
-
-        Date time = (Date) timePicker.getValue();
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(time);
-
-        int hour = cal.get(Calendar.HOUR);
-        int minute = cal.get(Calendar.MINUTE);
-        int seconds = cal.get(Calendar.SECOND);
-
-        cal.setTime(selectedDate);
-        cal.set(Calendar.HOUR, hour);
-        cal.set(Calendar.MINUTE, minute);
-        cal.set(Calendar.SECOND, seconds);
-
-        return cal.getTime();
+        return DateUtils.getString(date);
     }
 
     /**
@@ -338,12 +240,11 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        if ((dateModel != null) && (timePicker != null) && (undoRedoObject != null)) {
-            if (undoRedoObject.getOldValue() instanceof Date) {
-                Date oldValue = (Date) undoRedoObject.getOldValue();
+        if ((dateTimePanel != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getOldValue() instanceof ZonedDateTime) {
+                ZonedDateTime oldValue = (ZonedDateTime) undoRedoObject.getOldValue();
 
-                dateModel.setValue(oldValue);
-                timePicker.setValue(oldValue);
+                dateTimePanel.populateUI(oldValue);
             }
         }
     }
@@ -355,12 +256,11 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
-        if ((dateModel != null) && (timePicker != null) && (undoRedoObject != null)) {
-            if (undoRedoObject.getNewValue() instanceof Date) {
-                Date newValue = (Date) undoRedoObject.getNewValue();
+        if ((dateTimePanel != null) && (undoRedoObject != null)) {
+            if (undoRedoObject.getNewValue() instanceof ZonedDateTime) {
+                ZonedDateTime newValue = (ZonedDateTime) undoRedoObject.getNewValue();
 
-                dateModel.setValue(newValue);
-                timePicker.setValue(newValue);
+                dateTimePanel.populateUI(newValue);
             }
         }
     }
@@ -373,12 +273,9 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void setTestValue(FieldIdEnum fieldId, String testValue) {
-        try {
-            Date date = dtf.parse(testValue);
-            populateField(date);
-        } catch (ParseException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        }
+        ZonedDateTime date = DateUtils.getZonedDateTime(testValue);
+
+        populateField(date);
     }
 
     /**
@@ -387,11 +284,12 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      * @param value the value
      */
     @Override
-    public void populateField(Date value) {
-        if ((dateModel != null) && (timePicker != null) && (value != null)) {
+    public void populateField(ZonedDateTime value) {
+        if ((dateTimePanel != null) && (value != null)) {
             isPopulating = true;
-            dateModel.setValue(value);
-            timePicker.setValue(value);
+
+            dateTimePanel.populateUI(value);
+
             if (!isSuppressUndoEvents()) {
                 UndoManager.getInstance()
                         .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, value));
@@ -424,8 +322,18 @@ public class FieldConfigDate extends FieldConfigBase implements UndoActionInterf
      */
     @Override
     public void setVisible(boolean visible) {
-        if (datePicker != null) {
-            datePicker.setVisible(visible);
+        if (dateTimePanel != null) {
+            dateTimePanel.setVisible(visible);
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.sldeditor.ui.detail.config.DateTimePanelUpdateInterface#dateTimeValueUpdated()
+     */
+    @Override
+    public void dateTimeValueUpdated() {
+        valueStored();
     }
 }

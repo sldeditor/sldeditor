@@ -80,6 +80,7 @@ public class RenderTransformValueFactory {
         internal_populate(new StyleValues());
         internal_populate(new FilterValues());
         internal_populate(new TextAreaValues());
+        internal_populate(new TimePeriodValues());
     }
 
     /**

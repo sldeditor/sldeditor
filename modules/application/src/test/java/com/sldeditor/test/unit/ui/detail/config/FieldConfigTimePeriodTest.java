@@ -34,9 +34,6 @@ import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.detail.config.FieldConfigTimePeriod;
-import org.geotools.temporal.object.DefaultInstant;
-import org.geotools.temporal.object.DefaultPeriod;
-import org.geotools.temporal.object.DefaultPosition;
 import org.junit.jupiter.api.Test;
 import org.opengis.filter.expression.Expression;
 
@@ -172,7 +169,7 @@ public class FieldConfigTimePeriodTest {
         assertNotNull(actualExpression);
 
         // Time period values
-        String timePeriod = "07-07-2016T17:42:27Z / 08-07-2016T17:42:27Z";
+        String timePeriod = "2016-07-07T17:42:27+01:00 / 2016-08-07T17:42:27+01:00";
 
         field.setTestValue(FieldIdEnum.UNKNOWN, (String) null);
         field.setTestValue(FieldIdEnum.UNKNOWN, timePeriod);
@@ -192,13 +189,11 @@ public class FieldConfigTimePeriodTest {
 
         TimePeriod timePeriodObj = new TimePeriod();
         timePeriodObj.decode(timePeriod);
-        DefaultPeriod defaultPeriod =
-                new DefaultPeriod(
-                        new DefaultInstant(new DefaultPosition(timePeriodObj.getStart().getDate())),
-                        new DefaultInstant(new DefaultPosition(timePeriodObj.getEnd().getDate())));
 
-        field.populateExpression(defaultPeriod);
+        field.populateExpression(timePeriodObj);
         actualExpression = field.callGenerateExpression();
+        System.out.println(timePeriod);
+        System.out.println(actualExpression.toString());
         assertTrue(timePeriod.compareTo(actualExpression.toString()) == 0);
     }
 
@@ -289,7 +284,7 @@ public class FieldConfigTimePeriodTest {
         field.createUI();
 
         // Time period values
-        String timePeriod1 = "07-07-2016T17:42:27Z / 07-07-2016T17:42:27Z";
+        String timePeriod1 = "2016-07-07T17:42:27Z / 2016-07-07T17:42:27Z";
         TimePeriod period1 = new TimePeriod();
         period1.decode(timePeriod1);
         // CHECKSTYLE:OFF
@@ -298,7 +293,7 @@ public class FieldConfigTimePeriodTest {
 
         field.populateField(period1);
 
-        String timePeriod2 = "P 1 D 32 M 9 S / 08-07-2016T09:42:06Z";
+        String timePeriod2 = "P 1 D 32 M 9 S / 2016-08-07T09:42:06Z";
         TimePeriod period2 = new TimePeriod();
         period2.decode(timePeriod2);
         // CHECKSTYLE:OFF

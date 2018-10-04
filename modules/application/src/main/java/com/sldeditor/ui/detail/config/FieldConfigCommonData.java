@@ -20,6 +20,7 @@
 package com.sldeditor.ui.detail.config;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.ui.detail.BasePanel;
 
 /**
  * The Class FieldConfigCommonData.
@@ -44,6 +45,8 @@ public class FieldConfigCommonData {
      *   <li>true - do not display a value/attribute/expression drop down list
      *   <li>false- display a value/attribute/expression drop down list
      * </ul>
+     *
+     * .
      */
     private boolean valueOnly = false;
 
@@ -55,6 +58,9 @@ public class FieldConfigCommonData {
 
     /** The suppress undo events flag. */
     private boolean suppressUndoEvents = false;
+
+    /** The indent flag. */
+    private boolean indent = false;
 
     /**
      * Instantiates a new field config common data.
@@ -148,6 +154,7 @@ public class FieldConfigCommonData {
             this.rasterSymbol = commonData.rasterSymbol;
             this.optionalField = commonData.optionalField;
             this.suppressUndoEvents = commonData.suppressUndoEvents;
+            this.indent = commonData.indent;
         }
     }
 
@@ -230,5 +237,23 @@ public class FieldConfigCommonData {
      */
     public void setSuppressUndoEvents(boolean suppressUndoEvents) {
         this.suppressUndoEvents = suppressUndoEvents;
+    }
+
+    /**
+     * Return the is indent x offset.
+     *
+     * @return the indent
+     */
+    public int getIndent() {
+        return indent ? BasePanel.WIDGET_X_START : 0;
+    }
+
+    /**
+     * Sets the indent flag
+     *
+     * @param indent the indent value to set
+     */
+    public void setIndent(boolean indent) {
+        this.indent = indent;
     }
 }

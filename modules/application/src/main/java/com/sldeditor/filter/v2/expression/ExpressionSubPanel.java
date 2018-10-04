@@ -255,7 +255,6 @@ public class ExpressionSubPanel extends JPanel {
     protected void setUpLiteralPanel() {
         panelLiteral = new JPanel();
         panelLiteral.setBorder(null);
-        box.add(panelLiteral);
         panelLiteral.setLayout(new BoxLayout(panelLiteral, BoxLayout.X_AXIS));
 
         rdbtnLiteral =
@@ -267,6 +266,7 @@ public class ExpressionSubPanel extends JPanel {
         panelLiteral.add(rdbtnLiteral);
         rdbtnLiteral.setActionCommand(LITERAL);
         buttonGroup.add(rdbtnLiteral);
+        box.add(panelLiteral);
     }
 
     /** Sets the up property panel. */
@@ -413,7 +413,8 @@ public class ExpressionSubPanel extends JPanel {
                         node.getType(),
                         enumList,
                         node.getMaxStringSize(),
-                        node.isRegExpString());
+                        node.isRegExpString(),
+                        false);
 
         if (fieldConfig != null) {
             fieldConfig.createUI();

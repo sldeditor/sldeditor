@@ -194,7 +194,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
 
         box.add(GroupConfig.createSeparator());
 
-        fieldPanel = new FieldPanel(0, "", BasePanel.WIDGET_HEIGHT * 2, false, null);
+        fieldPanel = new FieldPanel(0, 0, "", BasePanel.WIDGET_HEIGHT * 2, false, null);
         // Set up title
         if (isOptional()) {
             groupTitleCheckbox = new JCheckBox(getLabel());

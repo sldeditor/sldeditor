@@ -260,9 +260,9 @@
 			<version>${geoserver_manager.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.jdatepicker</groupId>
-			<artifactId>jdatepicker</artifactId>
-			<version>${jdatepicker.version}</version>
+			<groupId>com.github.lgooddatepicker</groupId>
+			<artifactId>LGoodDatePicker</artifactId>
+			<version>10.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.dockingframes</groupId>
