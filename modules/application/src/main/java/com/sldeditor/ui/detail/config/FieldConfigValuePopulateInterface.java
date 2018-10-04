@@ -21,7 +21,7 @@ package com.sldeditor.ui.detail.config;
 
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.process.function.ProcessFunction;
@@ -73,7 +73,7 @@ public interface FieldConfigValuePopulateInterface {
      *
      * @param value the value
      */
-    public void populateField(Date value);
+    public void populateField(ZonedDateTime value);
 
     /**
      * Populate field.

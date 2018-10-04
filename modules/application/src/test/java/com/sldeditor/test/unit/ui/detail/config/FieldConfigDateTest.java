@@ -21,22 +21,21 @@ package com.sldeditor.test.unit.ui.detail.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.common.undo.UndoEvent;
 import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.filter.v2.function.temporal.DateUtils;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigDate;
 import com.sldeditor.ui.detail.config.FieldConfigPopulate;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.Date;
-import java.util.Locale;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 import org.opengis.filter.expression.Expression;
@@ -161,43 +160,32 @@ public class FieldConfigDateTest {
         field.createUI();
         field.populateExpression("");
 
-        SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        String dateString = "10-01-2012 23:13:26";
-        Date dateTime1 = null;
-        try {
-            dateTime1 = f.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        field.populateExpression("invalid date");
+
+        // Increase code coverage
+        @SuppressWarnings("unused")
+        DateUtils x = new DateUtils();
+        assertNull(DateUtils.getZonedDateTime(null));
+        assertNull(DateUtils.getZonedDateTime("invalid date"));
+        assertNull(DateUtils.getZonedDateTime("20A2-05-01T23:13:26+05:00"));
+
+        String dateString = "2012-10-01T23:13:26+05:00";
+        ZonedDateTime dateTime1 = DateUtils.getZonedDateTime(dateString);
 
         field.populateExpression(dateTime1);
         actualExpression = field.callGenerateExpression();
 
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-        DateFormat tf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-        String dateFormat1String =
-                String.format("%sT%sZ", df.format(dateTime1), tf.format(dateTime1));
-        assertTrue(dateFormat1String.compareTo(actualExpression.toString()) == 0);
+        assertTrue(dateString.compareTo(actualExpression.toString()) == 0);
 
         field.populateExpression(dateString);
         actualExpression = field.callGenerateExpression();
-        String dateFormat1aString =
-                String.format("%sT%sZ", df.format(dateTime1), tf.format(dateTime1));
-        assertTrue(dateFormat1aString.compareTo(actualExpression.toString()) == 0);
+        assertTrue(dateString.compareTo(actualExpression.toString()) == 0);
 
-        String dateTime2 = "23-05-2015 11:56:47";
-        field.setTestValue(FieldIdEnum.UNKNOWN, dateTime2);
-        Date dateTime21 = null;
-        try {
-            dateTime21 = f.parse(dateTime2);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String dateFormat2String =
-                String.format("%sT%sZ", df.format(dateTime21), tf.format(dateTime21));
+        String dateTime2String = "2015-02-23T11:56:47Z";
+        field.setTestValue(FieldIdEnum.UNKNOWN, dateTime2String);
 
         actualExpression = field.callGenerateExpression();
-        assertTrue(dateFormat2String.compareTo(actualExpression.toString()) == 0);
+        assertTrue(dateTime2String.compareTo(actualExpression.toString()) == 0);
     }
 
     /**
@@ -217,8 +205,7 @@ public class FieldConfigDateTest {
 
         field.createUI();
         field.revertToDefaultValue();
-        String expectedDefaultValue = "default value";
-        assertTrue(expectedDefaultValue.compareTo(field.getStringValue()) != 0);
+        assertNotNull(field.getStringValue());
     }
 
     /**
@@ -284,38 +271,24 @@ public class FieldConfigDateTest {
         field.redoAction(null);
         field.createUI();
 
-        SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        String dateString1 = "10-01-2012 23:13:26";
-        String dateString2 = "05-06-2018 12:34:56";
-        Date dateTime1 = null;
-        Date dateTime2 = null;
-        try {
-            dateTime1 = f.parse(dateString1);
-            dateTime2 = f.parse(dateString2);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        String dateString1 = "2012-10-01T23:13:26Z";
+        String dateString2 = "2018-05-06T12:34:56Z";
+        ZonedDateTime dateTime1 = DateUtils.getZonedDateTime(dateString1);
+        ZonedDateTime dateTime2 = DateUtils.getZonedDateTime(dateString2);
 
         field.populateField(dateTime1);
-
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-        DateFormat tf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-        String dateFormat1String =
-                String.format("%sT%sZ", df.format(dateTime1), tf.format(dateTime1));
-        assertTrue(dateFormat1String.compareTo(field.getStringValue()) == 0);
+        assertTrue(dateString1.compareTo(field.getStringValue()) == 0);
 
         field.populateField(dateTime2);
-        String dateFormat2String =
-                String.format("%sT%sZ", df.format(dateTime2), tf.format(dateTime2));
-        assertTrue(dateFormat2String.compareTo(field.getStringValue()) == 0);
+        assertTrue(dateString2.compareTo(field.getStringValue()) == 0);
 
         UndoManager.getInstance().undo();
         String actualValue = field.getStringValue();
-        assertTrue(actualValue.compareTo(dateFormat1String) == 0);
+        assertTrue(actualValue.compareTo(dateString1) == 0);
 
         UndoManager.getInstance().redo();
         actualValue = field.getStringValue();
-        assertTrue(actualValue.compareTo(dateFormat2String) == 0);
+        assertTrue(actualValue.compareTo(dateString2) == 0);
 
         field.undoAction(null);
         field.undoAction(new UndoEvent(null, FieldIdEnum.NAME, "", "new"));
@@ -364,19 +337,12 @@ public class FieldConfigDateTest {
 
         // Check what happens if we have not set a date
         field.valueStored();
-        assertNull(field.getStringValue());
+        assertNotNull(field.getStringValue());
 
         int undoListSize = UndoManager.getInstance().getUndoListSize();
 
-        SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        String dateString1 = "10-01-2012 23:13:26";
-        Date dateTime1 = null;
-        try {
-            dateTime1 = f.parse(dateString1);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        String dateString1 = "2012-10-01T23:13:26Z";
+        ZonedDateTime dateTime1 = DateUtils.getZonedDateTime(dateString1);
         field.populateField(dateTime1);
 
         assertTrue(update.dataChanged);

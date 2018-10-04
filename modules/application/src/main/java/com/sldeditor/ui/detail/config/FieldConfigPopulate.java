@@ -23,7 +23,7 @@ import com.sldeditor.common.xml.TestValueVisitor;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.filter.v2.function.temporal.TimePeriod;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.process.function.ProcessFunction;
@@ -109,7 +109,7 @@ public abstract class FieldConfigPopulate extends FieldConfigCommonData
      * @param value the value
      */
     @Override
-    public void populateField(Date value) {
+    public void populateField(ZonedDateTime value) {
         // Do nothing
     }
 

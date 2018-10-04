@@ -44,6 +44,7 @@ public class PanelField {
      * @param enumList the enumerated list values
      * @param maximumStringSize the maximum string size
      * @param isRegExpString the is regular expression string flag
+     * @param isFieldIndented the is field indented
      * @return the field
      */
     public static FieldConfigBase getField(
@@ -52,7 +53,8 @@ public class PanelField {
             Class<?> nodeType,
             List<String> enumList,
             int maximumStringSize,
-            boolean isRegExpString) {
+            boolean isRegExpString,
+            boolean isFieldIndented) {
         FieldConfigBase fieldConfig = null;
 
         RenderTransformValueInterface value = null;
@@ -69,6 +71,8 @@ public class PanelField {
             // Suppress undo events
             FieldConfigCommonData commonData =
                     new FieldConfigCommonData(null, fieldId, valueText, true, true);
+
+            commonData.setIndent(isFieldIndented);
 
             fieldConfig = value.getField(commonData);
             if (fieldConfig instanceof FieldConfigString) {

@@ -60,12 +60,18 @@ public class DurationTest {
         test("P1M6M", 0, 1, 0, 0, 0, 0, "P1M"); // This is not valid
         test("T10H", 0, 0, 0, 10, 0, 0, null);
 
-        String dateString = "20-09-2016T17:42:27Z";
+        String dateString = "2016-09-20T17:42:27Z";
         Duration duration = new Duration(dateString);
         assertTrue(duration.isDate());
         String actual = duration.getString();
 
         assertTrue(dateString.compareTo(actual) == 0, dateString);
+
+        // Try an invalid date string
+        dateString = "invalid date";
+        duration = new Duration(dateString);
+        assertTrue(duration.isDate());
+        assertTrue("".compareTo(duration.getString()) == 0, dateString);
     }
 
     private void test(

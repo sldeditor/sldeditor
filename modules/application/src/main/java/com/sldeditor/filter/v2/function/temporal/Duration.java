@@ -20,14 +20,10 @@
 package com.sldeditor.filter.v2.function.temporal;
 
 import com.sldeditor.common.console.ConsoleManager;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,14 +58,8 @@ public class Duration {
     /** The Constant YEAR_SUFFIX. */
     private static final String YEAR_SUFFIX = "Y";
 
-    /** The date format. */
-    private DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-
-    /** The time format. */
-    private DateFormat tf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-
     /** The date. */
-    private Date date = new Date();
+    private ZonedDateTime date = ZonedDateTime.now();
 
     /** The duration years. */
     private int durationYears = 0;
@@ -154,25 +144,12 @@ public class Duration {
 
             setDuration(year, month, day, hour, minute, second);
         } else {
-            String[] components = string.split(DURATION_TIME_PREFIX);
-
             try {
-                Date date = df.parse((String) components[0]);
-                Date time = tf.parse((String) components[1]);
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(time);
 
-                int hour = cal.get(Calendar.HOUR_OF_DAY);
-                int minute = cal.get(Calendar.MINUTE);
-                int seconds = cal.get(Calendar.SECOND);
+                ZonedDateTime localDateTime = DateUtils.getZonedDateTime(string);
 
-                cal.setTime(date);
-                cal.set(Calendar.HOUR, hour);
-                cal.set(Calendar.MINUTE, minute);
-                cal.set(Calendar.SECOND, seconds);
-
-                setDate(cal.getTime());
-            } catch (ParseException e) {
+                setDate(localDateTime);
+            } catch (DateTimeParseException e) {
                 ConsoleManager.getInstance().exception(this, e);
             }
         }
@@ -216,7 +193,7 @@ public class Duration {
      *
      * @param date the date to set
      */
-    public void setDate(Date date) {
+    public void setDate(ZonedDateTime date) {
         this.date = date;
         isDate = true;
     }
@@ -249,7 +226,7 @@ public class Duration {
      */
     public String getString() {
         if (isDate) {
-            return String.format("%sT%sZ", df.format(date), tf.format(date));
+            return DateUtils.getString(date);
         } else {
             List<String> list = new ArrayList<String>();
 
@@ -320,7 +297,7 @@ public class Duration {
      *
      * @return the date
      */
-    public Date getDate() {
+    public ZonedDateTime getDate() {
         return date;
     }
 

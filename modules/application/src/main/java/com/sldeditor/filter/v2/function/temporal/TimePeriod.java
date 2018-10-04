@@ -19,6 +19,7 @@
 
 package com.sldeditor.filter.v2.function.temporal;
 
+import java.time.ZoneId;
 import org.geotools.temporal.object.DefaultPeriod;
 import org.opengis.temporal.Instant;
 
@@ -105,12 +106,13 @@ public class TimePeriod {
         DefaultPeriod defaultPeriod = (DefaultPeriod) objValue;
         Instant beginning = defaultPeriod.getBeginning();
         Duration startDuration = new Duration();
-        startDuration.setDate(beginning.getPosition().getDate());
+        startDuration.setDate(
+                beginning.getPosition().getDate().toInstant().atZone(ZoneId.systemDefault()));
         setStart(startDuration);
 
         Instant end = defaultPeriod.getEnding();
         Duration endDuration = new Duration();
-        endDuration.setDate(end.getPosition().getDate());
+        endDuration.setDate(end.getPosition().getDate().toInstant().atZone(ZoneId.systemDefault()));
         setEnd(endDuration);
     }
 }

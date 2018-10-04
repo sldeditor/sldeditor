@@ -514,8 +514,22 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      * @return the field panel
      */
     protected FieldPanel createFieldPanel(int xPos, String fieldLabel) {
+        return createFieldPanel(xPos, 0, fieldLabel);
+    }
+
+    /**
+     * Creates the field panel with the supplied label.
+     *
+     * @param xPos the x pos
+     * @param yOffset the y offset
+     * @param fieldLabel the field label
+     * @return the field panel
+     */
+    protected FieldPanel createFieldPanel(int xPos, int yOffset, String fieldLabel) {
         if (fieldPanel == null) {
-            fieldPanel = new FieldPanel(xPos, fieldLabel, getCommonData().isOptionalField(), this);
+            fieldPanel =
+                    new FieldPanel(
+                            xPos, yOffset, fieldLabel, getCommonData().isOptionalField(), this);
         }
 
         return fieldPanel;
@@ -530,21 +544,6 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
         if (fieldPanel == null) {
             fieldPanel = new FieldPanel(this);
         }
-
-        return fieldPanel;
-    }
-
-    /**
-     * Creates the field panel.
-     *
-     * @param xPos the x pos
-     * @param height the height
-     * @param fieldLabel the field label
-     * @return the field panel
-     */
-    protected FieldPanel createFieldPanel(int xPos, int height, String fieldLabel) {
-        fieldPanel =
-                new FieldPanel(xPos, fieldLabel, height, getCommonData().isOptionalField(), this);
 
         return fieldPanel;
     }
