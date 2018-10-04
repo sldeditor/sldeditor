@@ -234,6 +234,9 @@ public class TTFDetails extends StandardPanel
     public void buttonPressed(Component buttonExternal) {
         CharMap4 charMap4 = new CharMap4();
 
+        // Centre the dialog within the application window
+        Controller.getInstance().centreDialog(charMap4);
+        
         charMap4.loadConfig();
 
         charMap4.setTTFString(fieldConfigVisitor.getText(FieldIdEnum.TTF_SYMBOL));
