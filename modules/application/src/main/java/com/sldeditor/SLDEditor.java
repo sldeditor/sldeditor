@@ -412,7 +412,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     public void chooseNewSLD() {
         NewSLDPanel panel = new NewSLDPanel();
 
-        List<SLDDataInterface> newSLDList = panel.showDialog(Controller.getInstance().getFrame());
+        List<SLDDataInterface> newSLDList = panel.showDialog();
 
         if (newSLDList != null) {
             SelectedFiles selectedFiles = new SelectedFiles();
