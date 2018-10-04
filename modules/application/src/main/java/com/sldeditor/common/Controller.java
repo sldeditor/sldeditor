@@ -103,8 +103,8 @@ public class Controller implements PopulatingInterface {
      */
     public void centreDialog(JDialog dialog) {
         if ((frame != null) && (dialog != null)) {
-            final int x = (frame.getWidth() - dialog.getWidth()) / 2;
-            final int y = (frame.getHeight() - dialog.getHeight()) / 2;
+            final int x = frame.getX() + (frame.getWidth() - dialog.getWidth()) / 2;
+            final int y = frame.getY() + (frame.getHeight() - dialog.getHeight()) / 2;
             dialog.setLocation(x, y);
         }
     }

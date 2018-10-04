@@ -19,6 +19,23 @@
 
 package com.sldeditor.create;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import org.geotools.styling.StyledLayerDescriptor;
+
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
@@ -27,21 +44,6 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
 import com.sldeditor.create.sld.NewSLDInterface;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * Dialog to allow the user to create a new SLD symbol.
@@ -126,19 +128,13 @@ public class NewSLDPanel extends JDialog {
     /**
      * Show dialog.
      *
-     * @param parent the parent
      * @return the created SLD if selected
      */
-    public List<SLDDataInterface> showDialog(JFrame parent) {
+    public List<SLDDataInterface> showDialog() {
 
         selected = null;
 
-        if (parent != null) {
-            this.setLocationRelativeTo(parent);
-            int x = ((parent.getWidth() - getWidth()) / 2);
-            int y = ((parent.getHeight() - getHeight()) / 2);
-            this.setLocation(x, y);
-        }
+        Controller.getInstance().centreDialog(this);
 
         setVisible(true);
 
