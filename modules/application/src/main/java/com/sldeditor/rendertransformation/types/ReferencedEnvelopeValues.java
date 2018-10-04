@@ -31,6 +31,7 @@ import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.MathExpressionImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.opengis.filter.expression.Expression;
+import org.opengis.geometry.BoundingBox;
 import org.opengis.geometry.Envelope;
 
 /**
@@ -103,7 +104,7 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
      */
     @Override
     public List<Class<?>> getType() {
-        return Arrays.asList(ReferencedEnvelope.class, Envelope.class);
+        return Arrays.asList(ReferencedEnvelope.class, Envelope.class, BoundingBox.class);
     }
 
     /*

@@ -34,6 +34,7 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
+import org.opengis.geometry.BoundingBox;
 import org.opengis.geometry.Envelope;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -68,7 +69,9 @@ class ReferencedEnvlopeValuesTest {
         ReferencedEnvelopeValues testObj = new ReferencedEnvelopeValues();
         testObj.createInstance();
 
-        assertEquals(Arrays.asList(ReferencedEnvelope.class, Envelope.class), testObj.getType());
+        assertEquals(
+                Arrays.asList(ReferencedEnvelope.class, Envelope.class, BoundingBox.class),
+                testObj.getType());
 
         CoordinateReferenceSystem crs = null;
 
