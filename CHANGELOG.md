@@ -1,9 +1,18 @@
 # Change Log
 
-## [0.8.0](https://github.com/robward-scisys/sldeditor/tree/0.8.0) (2018-09-25)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.8...0.8.0)
+## [0.8.1](https://github.com/robward-scisys/sldeditor/tree/0.8.1) (2018-10-05)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.0...0.8.1)
 
-Integrated with GeoTools 20.0
+**Fixed bugs:**
+
+- Support multiple monitors [\#403](https://github.com/robward-scisys/sldeditor/issues/403)
+
+**Closed issues:**
+
+- Update date picker ui component [\#401](https://github.com/robward-scisys/sldeditor/issues/401)
+
+## [0.8.0](https://github.com/robward-scisys/sldeditor/tree/0.8.0) (2018-09-25)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.7.8...0.8.0)
 
 **Fixed bugs:**
 
@@ -21,24 +30,35 @@ Integrated with GeoTools 20.0
 - Get the Concatenate function working [\#378](https://github.com/robward-scisys/sldeditor/issues/378)
 - Direct link of download to .jar is not working [\#376](https://github.com/robward-scisys/sldeditor/issues/376)
 - Make filter combobox into submenus [\#375](https://github.com/robward-scisys/sldeditor/issues/375)
+- Integrate Geotools 19.0 [\#372](https://github.com/robward-scisys/sldeditor/issues/372)
+- sldeditor JAR file missing [\#371](https://github.com/robward-scisys/sldeditor/issues/371)
 - Bad filter processing with 'in' function. [\#370](https://github.com/robward-scisys/sldeditor/issues/370)
 - Bad filter processing with 'in' function. [\#369](https://github.com/robward-scisys/sldeditor/issues/369)
-- Unknown field type class: java.sql.timestamp [\#358](https://github.com/robward-scisys/sldeditor/issues/358)
+- unknown filed type class: java.sql.timestamp [\#358](https://github.com/robward-scisys/sldeditor/issues/358)
 
 **Merged pull requests:**
 
+- Updated version number to 0.8.0 [\#400](https://github.com/robward-scisys/sldeditor/pull/400) ([robward-scisys](https://github.com/robward-scisys))
 - Added colour button to preferences panel [\#399](https://github.com/robward-scisys/sldeditor/pull/399) ([robward-scisys](https://github.com/robward-scisys))
 - Iss396 process function parameters [\#397](https://github.com/robward-scisys/sldeditor/pull/397) ([robward-scisys](https://github.com/robward-scisys))
 - Iss280 PropertyIsLike single characters [\#395](https://github.com/robward-scisys/sldeditor/pull/395) ([robward-scisys](https://github.com/robward-scisys))
 - Iss393 filter panel undo redo events [\#394](https://github.com/robward-scisys/sldeditor/pull/394) ([robward-scisys](https://github.com/robward-scisys))
+- Migrated project to JUnit5 [\#392](https://github.com/robward-scisys/sldeditor/pull/392) ([robward-scisys](https://github.com/robward-scisys))
+- Iss389 geoserver vm [\#390](https://github.com/robward-scisys/sldeditor/pull/390) ([robward-scisys](https://github.com/robward-scisys))
+- Removed unused dependencies from pom/classpath [\#388](https://github.com/robward-scisys/sldeditor/pull/388) ([robward-scisys](https://github.com/robward-scisys))
+- Iss385 reformat source code [\#386](https://github.com/robward-scisys/sldeditor/pull/386) ([robward-scisys](https://github.com/robward-scisys))
+- Iss383 rastersymbolizer selectedchanneltype expression [\#384](https://github.com/robward-scisys/sldeditor/pull/384) ([robward-scisys](https://github.com/robward-scisys))
 - Fixed an issue in Geotools with Collection\_CountFunction. [\#382](https://github.com/robward-scisys/sldeditor/pull/382) ([robward-scisys](https://github.com/robward-scisys))
 - All functions now can be edited in the Filter dialog. [\#380](https://github.com/robward-scisys/sldeditor/pull/380) ([robward-scisys](https://github.com/robward-scisys))
-
-## [v0.7.8](https://github.com/robward-scisys/sldeditor/tree/v0.7.8) (2018-02-23)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.7.8...v0.7.8)
+- Added sub menus and categories for filters [\#377](https://github.com/robward-scisys/sldeditor/pull/377) ([robward-scisys](https://github.com/robward-scisys))
+- in function now works. [\#374](https://github.com/robward-scisys/sldeditor/pull/374) ([robward-scisys](https://github.com/robward-scisys))
+- Iss372 geotools 19 [\#373](https://github.com/robward-scisys/sldeditor/pull/373) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [0.7.8](https://github.com/robward-scisys/sldeditor/tree/0.7.8) (2018-02-23)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.7...0.7.8)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.8...0.7.8)
+
+## [v0.7.8](https://github.com/robward-scisys/sldeditor/tree/v0.7.8) (2018-02-23)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.7...v0.7.8)
 
 **Implemented enhancements:**
 
