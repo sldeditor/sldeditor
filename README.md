@@ -51,25 +51,23 @@ Main features include:
 
 A compiled single executable jar is available here, runs on macOS, Windows and Linux:
 
-* [SLDEditor Release 0.8.0](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.0/SLDEditor.jar) Released 25 Sep 2018
+* [SLDEditor Release 0.8.1](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.1/SLDEditor.jar) Released 05 Oct 2018
 
 and can be started:
 
     java -jar SLDEditor.jar
 
-Due to the changes in Java 9 double clicking on the executable jar file does not work any more, specific OS installers/applications are available here:
+Due to the changes in Java double clicking on the executable jar file does not work any more, specific OS installers/applications are available here:
 
 ### MacOS
 
-An installer is available here: [SLDEditor DMG Installer](https://github.com/robward-scisys/sldeditor/releases/download/0.8.0/SLDEditor-Installer.dmg)
+An installer is available here: [SLDEditor DMG Installer](https://github.com/robward-scisys/sldeditor/releases/download/0.8.1/SLDEditor-Installer.dmg)
 
 ### Windows
 
-An installer is available here: [SLDEditor Windows Installer](https://github.com/robward-scisys/sldeditor/releases/download/0.8.0/SLDEditor_installer.exe)
+An installer is available here: [SLDEditor Windows Installer](https://github.com/robward-scisys/sldeditor/releases/download/0.8.1/SLDEditor_installer.exe)
 
 ### Ubuntu
-
-NOTE : 0.8.0 not available just yet, I'm working on it
 
 A debian package installation has been created:
 
