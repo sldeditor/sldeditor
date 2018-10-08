@@ -75,7 +75,11 @@
                   <CssParameter name="fill">#0033CC</CssParameter>
                 </Fill>
               </Mark>
-              <Size>16</Size>
+              <Size>
+                <ogc:Function name="env">
+                  <ogc:Literal>size</ogc:Literal>
+                </ogc:Function>
+              </Size>
             </Graphic>
           </PointSymbolizer>
         </Rule>

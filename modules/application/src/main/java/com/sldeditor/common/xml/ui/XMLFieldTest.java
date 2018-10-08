@@ -57,22 +57,22 @@ import javax.xml.bind.annotation.XmlType;
 public class XMLFieldTest {
 
     @XmlElements({
-        @XmlElement(name = "SetMultiOptionGroup", type = XMLSetMultiOptionGroup.class),
-        @XmlElement(name = "SetExpression", type = XMLSetFieldExpressionEx.class),
-        @XmlElement(name = "Disabled", type = XMLFieldDisabled.class),
-        @XmlElement(name = "ColourMapEntries", type = XMLColourMapEntries.class),
+        @XmlElement(name = "Attribute", type = XMLFieldAttribute.class),
         @XmlElement(name = "SetLiteralBool", type = XMLSetFieldLiteralBooleanEx.class),
         @XmlElement(name = "LiteralString", type = XMLFieldLiteralString.class),
-        @XmlElement(name = "LiteralDouble", type = XMLFieldLiteralDouble.class),
+        @XmlElement(name = "Disabled", type = XMLFieldDisabled.class),
+        @XmlElement(name = "Expression", type = XMLFieldExpression.class),
         @XmlElement(name = "SetLiteralInt", type = XMLSetFieldLiteralIntEx.class),
         @XmlElement(name = "LiteralBool", type = XMLFieldLiteralBoolean.class),
-        @XmlElement(name = "SetAttribute", type = XMLSetFieldAttributeEx.class),
-        @XmlElement(name = "LiteralInt", type = XMLFieldLiteralInt.class),
-        @XmlElement(name = "SetLiteralDouble", type = XMLSetFieldLiteralDoubleEx.class),
-        @XmlElement(name = "Expression", type = XMLFieldExpression.class),
         @XmlElement(name = "SetGroup", type = XMLSetGroup.class),
-        @XmlElement(name = "Attribute", type = XMLFieldAttribute.class),
-        @XmlElement(name = "SetLiteralString", type = XMLSetFieldLiteralStringEx.class)
+        @XmlElement(name = "LiteralDouble", type = XMLFieldLiteralDouble.class),
+        @XmlElement(name = "ColourMapEntries", type = XMLColourMapEntries.class),
+        @XmlElement(name = "SetLiteralDouble", type = XMLSetFieldLiteralDoubleEx.class),
+        @XmlElement(name = "LiteralInt", type = XMLFieldLiteralInt.class),
+        @XmlElement(name = "SetLiteralString", type = XMLSetFieldLiteralStringEx.class),
+        @XmlElement(name = "SetExpression", type = XMLSetFieldExpressionEx.class),
+        @XmlElement(name = "SetAttribute", type = XMLSetFieldAttributeEx.class),
+        @XmlElement(name = "SetMultiOptionGroup", type = XMLSetMultiOptionGroup.class)
     })
     protected List<Object> disabledOrLiteralStringOrLiteralInt;
 
@@ -90,12 +90,12 @@ public class XMLFieldTest {
      *    getDisabledOrLiteralStringOrLiteralInt().add(newItem);
      * </pre>
      *
-     * <p>Objects of the following type(s) are allowed in the list {@link XMLSetMultiOptionGroup }
-     * {@link XMLSetFieldExpression } {@link XMLFieldDisabled } {@link XMLColourMapEntries } {@link
-     * XMLSetFieldLiteralBoolean } {@link XMLFieldLiteralString } {@link XMLFieldLiteralDouble }
-     * {@link XMLSetFieldLiteralInt } {@link XMLFieldLiteralBoolean } {@link XMLSetFieldAttribute }
-     * {@link XMLFieldLiteralInt } {@link XMLSetFieldLiteralDouble } {@link XMLFieldExpression }
-     * {@link XMLSetGroup } {@link XMLFieldAttribute } {@link XMLSetFieldLiteralString }
+     * <p>Objects of the following type(s) are allowed in the list {@link XMLFieldAttribute } {@link
+     * XMLSetFieldLiteralBoolean } {@link XMLFieldLiteralString } {@link XMLFieldDisabled } {@link
+     * XMLFieldExpression } {@link XMLSetFieldLiteralInt } {@link XMLFieldLiteralBoolean } {@link
+     * XMLSetGroup } {@link XMLFieldLiteralDouble } {@link XMLColourMapEntries } {@link
+     * XMLSetFieldLiteralDouble } {@link XMLFieldLiteralInt } {@link XMLSetFieldLiteralString }
+     * {@link XMLSetFieldExpression } {@link XMLSetFieldAttribute } {@link XMLSetMultiOptionGroup }
      */
     public List<Object> getDisabledOrLiteralStringOrLiteralInt() {
         if (disabledOrLiteralStringOrLiteralInt == null) {

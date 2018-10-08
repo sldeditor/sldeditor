@@ -21,22 +21,28 @@ package com.sldeditor.test.unit.extension.filesystem.file.sldeditor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 import com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler;
+import com.sldeditor.filter.v2.envvar.EnvVar;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.Icon;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -66,6 +72,36 @@ public class SLDFileEditorHandlerTest {
     @Test
     public void testPopulate() {
         assertFalse(new SLDEditorFileHandler().populate(null, null, null));
+    }
+
+    @Test
+    public void testIsDataSource() {
+        assertFalse(new SLDEditorFileHandler().isDataSource());
+    }
+
+    @Test
+    public void testGetSLDName() {
+        SLDEditorFileHandler sldEditorFileHandler = new SLDEditorFileHandler();
+
+        // Try with null parameter
+        assertEquals(sldEditorFileHandler.getSLDName(null), "");
+
+        // Try with populated data
+        StyleWrapper sldWrapper = new StyleWrapper("workspace", "style");
+        SLDData sldData = new SLDData(sldWrapper, "");
+
+        assertEquals(sldEditorFileHandler.getSLDName(sldData), "style.sld");
+    }
+
+    @Test
+    public void testGetIcon() {
+        SLDEditorFileHandler sldEditorFileHandler = new SLDEditorFileHandler();
+
+        Icon icon1 = sldEditorFileHandler.getIcon(null, null);
+        assertNotNull(icon1);
+        Icon icon2 = sldEditorFileHandler.getIcon(null, null);
+        assertNotNull(icon2);
+        assertEquals(icon1, icon2);
     }
 
     /**
@@ -101,6 +137,14 @@ public class SLDFileEditorHandlerTest {
 
             SLDData sldData = (SLDData) sldDataList.get(0);
 
+            List<EnvVar> envVarList = new ArrayList<EnvVar>();
+            envVarList.add(new EnvVar("test", String.class, false));
+            sldData.setEnvVarList(envVarList);
+
+            List<VersionData> vendorOptionList = new ArrayList<VersionData>();
+            vendorOptionList.add(VersionData.decode(getClass(), "1.2.3"));
+
+            sldData.setVendorOptionList(vendorOptionList);
             sldData.setSldEditorFile(sldEditorFile);
 
             SLDEditorFileHandler editorFileHandler = new SLDEditorFileHandler();

@@ -236,7 +236,7 @@ public class TTFDetails extends StandardPanel
 
         // Centre the dialog within the application window
         Controller.getInstance().centreDialog(charMap4);
-        
+
         charMap4.loadConfig();
 
         charMap4.setTTFString(fieldConfigVisitor.getText(FieldIdEnum.TTF_SYMBOL));
