@@ -26,10 +26,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.vendoroption.VersionData;
+import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
 import com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler;
@@ -124,7 +126,7 @@ public class SLDFileEditorHandlerTest {
 
         System.out.println(url.toString());
         try {
-            FileTreeNode fileTreeNode = new FileTreeNode(parent, "point_attribute.sld");
+            FileTreeNode fileTreeNode = new FileTreeNode(parent, "point_attribute_sldeditor.sld");
 
             SLDFileHandler handler = new SLDFileHandler();
 
@@ -137,19 +139,36 @@ public class SLDFileEditorHandlerTest {
 
             SLDData sldData = (SLDData) sldDataList.get(0);
 
+            // Environment variables
             List<EnvVar> envVarList = new ArrayList<EnvVar>();
-            envVarList.add(new EnvVar("test", String.class, false));
+            envVarList.add(new EnvVar("notset", String.class, false));
+            EnvVar envVar = new EnvVar("test", String.class, false);
+            envVar.setValue("value");
+            envVarList.add(envVar);
+
+            EnvVar envVarBuiltIn = new EnvVar("wms_width", Integer.class, true);
+            envVarBuiltIn.setValue(42);
+            envVarList.add(envVarBuiltIn);
+
             sldData.setEnvVarList(envVarList);
 
+            // Vendor options
             List<VersionData> vendorOptionList = new ArrayList<VersionData>();
             vendorOptionList.add(VersionData.decode(getClass(), "1.2.3"));
 
             sldData.setVendorOptionList(vendorOptionList);
+
+            // Data sources
+            DataSourcePropertiesInterface dataSourceProperties =
+                    DataSourceConnectorFactory.getDataSourceProperties("test.shp");
+
+            sldData.setDataSourceProperties(dataSourceProperties);
+
             sldData.setSldEditorFile(sldEditorFile);
 
             SLDEditorFileHandler editorFileHandler = new SLDEditorFileHandler();
 
-            assertFalse(handler.save(null));
+            assertFalse(editorFileHandler.save(null));
             assertTrue(editorFileHandler.save(sldData));
 
             SLDEditorFileHandler editorFileHandler2 = new SLDEditorFileHandler();
