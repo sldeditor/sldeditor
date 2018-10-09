@@ -31,8 +31,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * The unit test for RenderTransformValueFactory.
- * 
- * Ensures that all filter parameters can be displayed in the ui.
+ *
+ * <p>Ensures that all filter parameters can be displayed in the ui.
  *
  * @author Robert Ward (SCISYS)
  */

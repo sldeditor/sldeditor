@@ -151,6 +151,7 @@ public class SLDFileHandlerTest {
 
             List<String> expectedLayerNameList =
                     Arrays.asList(
+                            "point_attribute_sldeditor.sld",
                             "point_attribute.sld",
                             "point_pointasgraphic.sld",
                             "point_pointasgraphichttp.sld",

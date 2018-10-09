@@ -267,16 +267,16 @@ public class RenderTransformationDialog extends JDialog {
         panel_2.setLayout(new BorderLayout(0, 0));
         getContentPane().add(panel_2, BorderLayout.NORTH);
 
-//        btnEditConnection =
-//                new JButton(
-//                        Localisation.getString(
-//                                RenderTransformationDialog.class,
-//                                "RenderTransformationDialog.editConnection"));
-//        panel_2.add(btnEditConnection, BorderLayout.EAST);
-//        btnEditConnection.addActionListener(
-//                new ActionListener() {
-//                    public void actionPerformed(ActionEvent e) {}
-//                });
+        //        btnEditConnection =
+        //                new JButton(
+        //                        Localisation.getString(
+        //                                RenderTransformationDialog.class,
+        //                                "RenderTransformationDialog.editConnection"));
+        //        panel_2.add(btnEditConnection, BorderLayout.EAST);
+        //        btnEditConnection.addActionListener(
+        //                new ActionListener() {
+        //                    public void actionPerformed(ActionEvent e) {}
+        //                });
 
         //
         // Connect button
