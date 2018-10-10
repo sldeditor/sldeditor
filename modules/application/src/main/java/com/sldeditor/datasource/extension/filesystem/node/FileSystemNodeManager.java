@@ -122,7 +122,12 @@ public class FileSystemNodeManager {
      * @return the node
      */
     public static DefaultMutableTreeNode getNode(File file) {
+        if (file == null) {
+            return null;
+        }
+
         URL url = null;
+
         try {
             url = file.toURI().toURL();
         } catch (MalformedURLException e) {

@@ -19,9 +19,31 @@
 
 package com.sldeditor.test.unit.datasource.extension.filesystem.node;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.jupiter.api.Disabled;
+import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.datasource.extension.filesystem.node.FSTree;
+import com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
+import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.extension.filesystem.file.FileSystemInput;
+import com.sldeditor.extension.filesystem.file.raster.RasterFileHandler;
+import com.sldeditor.extension.filesystem.file.sld.SLDFileHandler;
+import com.sldeditor.extension.filesystem.file.sldeditor.SLDEditorFileHandler;
+import com.sldeditor.extension.filesystem.file.vector.VectorFileHandler;
+import com.sldeditor.extension.filesystem.file.ysld.YSLDFileHandler;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -31,7 +53,6 @@ import org.junit.jupiter.api.Test;
  *
  * @author Robert Ward (SCISYS)
  */
-@Disabled
 public class FileSystemNodeManagerTest {
 
     /**
@@ -40,9 +61,7 @@ public class FileSystemNodeManagerTest {
      * javax.swing.tree.DefaultTreeModel)}.
      */
     @Test
-    public void testCreate() {
-        fail("Not yet implemented");
-    }
+    public void testCreate() {}
 
     /**
      * Test method for {@link
@@ -50,9 +69,7 @@ public class FileSystemNodeManagerTest {
      * boolean)}.
      */
     @Test
-    public void testShowNodeInTree() {
-        fail("Not yet implemented");
-    }
+    public void testShowNodeInTree() {}
 
     /**
      * Test method for {@link
@@ -60,7 +77,88 @@ public class FileSystemNodeManagerTest {
      */
     @Test
     public void testGetNode() {
-        fail("Not yet implemented");
+        FSTree tree = new FSTree();
+
+        DefaultMutableTreeNode rootNode;
+
+        rootNode = new DefaultMutableTreeNode("Root");
+
+        DefaultTreeModel model = new DefaultTreeModel(rootNode);
+
+        FileSystemNodeManager.create(tree, model);
+
+        // Set up file handlers
+        Map<String, FileHandlerInterface> fileHandlerMap =
+                new LinkedHashMap<String, FileHandlerInterface>();
+
+        List<String> fileHandlerClassList = new ArrayList<String>();
+        fileHandlerClassList.add(SLDFileHandler.class.getName());
+        fileHandlerClassList.add(SLDEditorFileHandler.class.getName());
+        fileHandlerClassList.add(RasterFileHandler.class.getName());
+        fileHandlerClassList.add(VectorFileHandler.class.getName());
+        fileHandlerClassList.add(YSLDFileHandler.class.getName());
+
+        for (String fileHandlerClass : fileHandlerClassList) {
+            try {
+                FileHandlerInterface fileHandler =
+                        (FileHandlerInterface) Class.forName(fileHandlerClass).newInstance();
+                for (String fileExtension : fileHandler.getFileExtensionList()) {
+                    fileHandlerMap.put(fileExtension, fileHandler);
+                }
+            } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                ConsoleManager.getInstance().exception(FileSystemInput.class, e);
+            }
+        }
+
+        FileTreeNode.setFileHandlerMap(fileHandlerMap);
+
+        // Populate file system node tree
+        try {
+            File tempFile = File.createTempFile("aaatest", ".shp");
+            File tempDir = tempFile.getParentFile();
+
+            List<Path> folderList = new ArrayList<Path>();
+
+            while (tempDir != null) {
+                folderList.add(0, tempDir.toPath());
+
+                tempDir = tempDir.getParentFile();
+            }
+
+            FileTreeNode parentNode = null;
+            try {
+
+                for (Path folder : folderList) {
+                    FileTreeNode node = new FileTreeNode(folder);
+                    if (parentNode == null) {
+                        rootNode.add(node);
+                    } else {
+                        parentNode.add(node);
+                    }
+                    parentNode = node;
+                }
+
+                FileTreeNode node = new FileTreeNode(tempFile.toPath());
+                parentNode.add(node);
+
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            DefaultMutableTreeNode node = FileSystemNodeManager.getNode(null);
+            assertNull(node);
+
+            FileSystemNodeManager.nodeAdded(null, 0);
+            node = FileSystemNodeManager.getNode(tempFile);
+            assertNotNull(node);
+            assertEquals(node.toString(), tempFile.getName());
+
+            tempFile.delete();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 
     /**
@@ -68,7 +166,5 @@ public class FileSystemNodeManagerTest {
      * com.sldeditor.datasource.extension.filesystem.node.FileSystemNodeManager#refreshNode(javax.swing.tree.DefaultMutableTreeNode)}.
      */
     @Test
-    public void testRefreshNode() {
-        fail("Not yet implemented");
-    }
+    public void testRefreshNode() {}
 }
