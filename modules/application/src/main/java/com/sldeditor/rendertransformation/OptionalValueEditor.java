@@ -65,10 +65,7 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tableModel.setValueAt(
-                                checkBox.isSelected(),
-                                selectedIndex,
-                                FunctionTableModel.COL_OPTIONAL);
+                        setValue();
                     }
                 });
     }
@@ -124,5 +121,13 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
         }
 
         return null;
+    }
+
+    /** Sets the value. */
+    protected void setValue() {
+        if (this.tableModel != null) {
+            this.tableModel.setValueAt(
+                    checkBox.isSelected(), selectedIndex, FunctionTableModel.COL_OPTIONAL);
+        }
     }
 }
