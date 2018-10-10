@@ -205,7 +205,6 @@ public class RenderTransformationDialog extends JDialog {
                 functionParameterTable
                         .getColumnModel()
                         .getColumn(FunctionTableModel.getValueColumn());
-        // col.setCellEditor(new ExpressionEditor(functionParameterTableModel));
 
         col =
                 functionParameterTable
