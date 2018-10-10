@@ -46,7 +46,7 @@ public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
      *
      * @param tableModel the table model
      */
-    CheckBoxRenderer(FunctionTableModel tableModel) {
+    public CheckBoxRenderer(FunctionTableModel tableModel) {
         this.tableModel = tableModel;
         setHorizontalAlignment(JLabel.CENTER);
     }
@@ -64,6 +64,14 @@ public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
      */
     public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+        if (table == null) {
+            return null;
+        }
+
+        if (tableModel == null) {
+            return null;
+        }
 
         ProcessFunctionParameterValue valueObj = tableModel.getValue(row);
 
