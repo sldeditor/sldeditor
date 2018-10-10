@@ -21,14 +21,18 @@ package com.sldeditor.test.unit.extension.filesystem.file.vector;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
+import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseFeatureClassNode;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
+import com.sldeditor.extension.filesystem.file.FileSystemInput;
 import com.sldeditor.extension.filesystem.file.vector.VectorFileHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -137,10 +141,39 @@ public class VectorFileHandlerTest {
     }
 
     /**
-     * Supply a folder name and retrieve all the sld files in it
+     * Database
      *
      * <p>Test method for {@link
      * com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getSLDContents(com.sldeditor.common.NodeInterface)}.
+     */
+    @Test
+    public void testGetSLDContentsFileDatabase() {
+        assertNull(new VectorFileHandler().getSLDContents(null));
+
+        try {
+            FileSystemInput fileSystemInput = new FileSystemInput(null);
+            DatabaseConnection connectData = null;
+            String featureClass = "fc";
+
+            DatabaseFeatureClassNode databaseTreeNode =
+                    new DatabaseFeatureClassNode(fileSystemInput, connectData, featureClass);
+
+            VectorFileHandler handler = new VectorFileHandler();
+
+            List<SLDDataInterface> sldDataList = handler.getSLDContents(databaseTreeNode);
+
+            assertNotNull(sldDataList);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+    }
+
+    /**
+     * Supply a folder name and retrieve all the sld files in it
+     *
+     * <p>Test method for {@link
+     * com.sldeditor.extension.filesystem.file.vector.VectorFileHandler#getSLDName(com.sldeditor.common.NodeInterface)}.
      */
     @Test
     public void testGetSLDName() {
@@ -151,5 +184,12 @@ public class VectorFileHandlerTest {
         SLDData sldData = new SLDData(new StyleWrapper("workspace", "layer.sld"), "sldContents");
         String sldName = handler.getSLDName(sldData);
         assertTrue(sldName.compareTo("layer.sld") == 0);
+    }
+
+    @Test
+    public void testGetIcon() {
+        VectorFileHandler handler = new VectorFileHandler();
+
+        assertNotNull(handler.getIcon(new File(".").getPath(), ""));
     }
 }
