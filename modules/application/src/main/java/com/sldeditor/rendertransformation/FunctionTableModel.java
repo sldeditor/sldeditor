@@ -92,7 +92,7 @@ public class FunctionTableModel extends AbstractTableModel {
      */
     @Override
     public int getRowCount() {
-        return selectedFunction.getRowCount();
+        return valueList.size();
     }
 
     /**
