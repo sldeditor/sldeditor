@@ -76,6 +76,10 @@ import org.apache.log4j.Logger;
  * @author Robert Ward (SCISYS)
  */
 public class FileSystemInput implements FileSystemInterface {
+
+    /** The Constant COPY_OF. */
+    private static final String COPY_OF = "Copy of ";
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7208594826312684233L;
 
@@ -228,12 +232,13 @@ public class FileSystemInput implements FileSystemInterface {
             connectMenuItem.addActionListener(
                     new ActionListener() {
                         public void actionPerformed(ActionEvent event) {
-                            StringSelection selection = new StringSelection(file.getAbsolutePath());
-                            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                            clipboard.setContents(selection, selection);
+                            copyPathToClipboard(file);
                         }
                     });
-            popupMenu.add(connectMenuItem);
+
+            if (popupMenu != null) {
+                popupMenu.add(connectMenuItem);
+            }
         }
     }
 
@@ -418,7 +423,7 @@ public class FileSystemInput implements FileSystemInterface {
                     File existingFolder = new File(sldFilename).getParentFile();
 
                     if (existingFolder.equals(destinationFolder)) {
-                        sldName = "Copy of " + sldName;
+                        sldName = COPY_OF + sldName;
                     }
 
                     File updateFile = new File(destinationFolder, sldName);
@@ -513,6 +518,19 @@ public class FileSystemInput implements FileSystemInterface {
                 // Enable the tree selection
                 tree.setIgnoreSelection(false);
             }
+        }
+    }
+
+    /**
+     * Copy path to clipboard.
+     *
+     * @param file the file
+     */
+    protected void copyPathToClipboard(File file) {
+        if (file != null) {
+            StringSelection selection = new StringSelection(file.getAbsolutePath());
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(selection, selection);
         }
     }
 }

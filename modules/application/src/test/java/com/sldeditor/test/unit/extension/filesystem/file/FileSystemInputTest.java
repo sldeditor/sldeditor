@@ -26,11 +26,18 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.ToolSelectionInterface;
 import com.sldeditor.common.data.SLDData;
+import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.extension.filesystem.node.FSTree;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.extension.filesystem.file.FileSystemInput;
 import com.sldeditor.test.unit.extension.filesystem.file.sld.SLDFileHandlerTest;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,6 +48,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import org.junit.jupiter.api.Test;
@@ -95,11 +103,12 @@ public class FileSystemInputTest {
 
             // Changes where the file is to be saved to
             File saveFile = File.createTempFile(getClass().getSimpleName(), ".sld");
+            File sldEditorFile = File.createTempFile(getClass().getSimpleName(), ".sldeditor");
 
             SLDData sldData = (SLDData) sldDataContentsList.get(0);
 
             sldData.setSLDFile(saveFile);
-
+            sldData.setSldEditorFile(sldEditorFile);
             assertFalse(input.save(null));
             assertTrue(input.save(sldData));
 
@@ -127,12 +136,123 @@ public class FileSystemInputTest {
 
     /**
      * Test method for {@link
+     * com.sldeditor.extension.filesystem.file.FileSystemInput#getDestinationText(NodeInterface)}.
+     */
+    @Test
+    public void testGetDestinationText() {
+        FileSystemInput input = new FileSystemInput(null);
+
+        assertEquals(
+                input.getDestinationText(null),
+                Localisation.getString(FileSystemInput.class, "FileSystemInput.unknown"));
+
+        FileTreeNode fileTreeNode;
+        try {
+            File file = new File(".", "test.shp");
+            fileTreeNode = new FileTreeNode(file.getParentFile(), file.getName());
+            assertEquals(input.getDestinationText(fileTreeNode), file.getAbsolutePath());
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+    }
+
+    /**
+     * Test method for {@link
      * com.sldeditor.extension.filesystem.file.FileSystemInput#rightMouseButton(java.lang.Object,
      * java.awt.event.MouseEvent)}.
      */
     @Test
     public void testRightMouseButton() {
-        // Hard to test
+        class TestFileSystemInput extends FileSystemInput {
+
+            /** The Constant serialVersionUID. */
+            private static final long serialVersionUID = 1L;
+
+            /**
+             * Instantiates a new test file system input.
+             *
+             * @param toolMgr the tool mgr
+             */
+            public TestFileSystemInput(ToolSelectionInterface toolMgr) {
+                super(toolMgr);
+            }
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see
+             * com.sldeditor.extension.filesystem.file.FileSystemInput#copyPathToClipboard(java.io.
+             * File)
+             */
+            @Override
+            protected void copyPathToClipboard(File file) {
+                super.copyPathToClipboard(file);
+            }
+        }
+        TestFileSystemInput input = new TestFileSystemInput(null);
+
+        FSTree tree = new FSTree();
+
+        DefaultMutableTreeNode rootNode;
+
+        rootNode = new DefaultMutableTreeNode("Root");
+
+        DefaultTreeModel model = new DefaultTreeModel(rootNode);
+
+        input.populate(tree, model, rootNode);
+
+        URL url = SLDFileHandlerTest.class.getResource("/point/sld/point_attribute.sld");
+
+        List<SLDDataInterface> sldDataList = input.open(url);
+
+        assertEquals(1, sldDataList.size());
+
+        File parent = null;
+        try {
+            parent = new File(url.toURI());
+            parent = parent.getParentFile();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+
+        FileTreeNode fileTreeNode = null;
+        try {
+            fileTreeNode = new FileTreeNode(parent, "point_attribute.sld");
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+
+        JPopupMenu popupMenu = new JPopupMenu();
+
+        input.rightMouseButton(popupMenu, fileTreeNode, null);
+
+        input.copyPathToClipboard(null);
+        input.copyPathToClipboard(fileTreeNode.getFile());
+
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        String result = null;
+        Transferable contents = clipboard.getContents(null);
+        boolean hasTransferableText =
+                (contents != null) && contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasTransferableText) {
+            try {
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException | IOException ex) {
+                ex.printStackTrace();
+                fail(ex.getMessage());
+            }
+        }
+        assertEquals(fileTreeNode.getFile().getAbsolutePath(), result);
     }
 
     /**
@@ -147,7 +267,9 @@ public class FileSystemInputTest {
     }
 
     /**
-     * Test method for {@link
+     * Copy file to new folder
+     *
+     * <p>Test method for {@link
      * com.sldeditor.extension.filesystem.file.FileSystemInput#copyNodes(com.sldeditor.common.NodeInterface,
      * java.util.Map)}.
      */
@@ -173,10 +295,14 @@ public class FileSystemInputTest {
 
             copyDataMap.put(destinationTreeNode, sldDataList);
             assertTrue(input.copyNodes(destinationTreeNode, copyDataMap));
+            assertFalse(input.copyNodes(null, copyDataMap));
+            assertFalse(input.copyNodes(destinationTreeNode, null));
+            assertFalse(input.copyNodes(null, null));
 
             SLDData sldData = (SLDData) sldDataList.get(0);
             sldData.setSLDFile(new File(tempFolderFile, "point_attribute.sld"));
 
+            input.deleteNodes(destinationTreeNode, null);
             input.deleteNodes(destinationTreeNode, sldDataList);
 
             tempFolderFile.deleteOnExit();
