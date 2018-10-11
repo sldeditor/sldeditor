@@ -46,11 +46,15 @@ public class CheckAttributeFactory {
     }
 
     /**
-     * Sets the overide check list.
+     * Sets the override check list.
      *
      * @param checkList the checkList to set
      */
-    public static void setOverideCheckList(List<CheckAttributeInterface> checkList) {
-        CheckAttributeFactory.checkList = checkList;
+    public static void setOverrideCheckList(List<CheckAttributeInterface> checkList) {
+        if (checkList == null) {
+            CheckAttributeFactory.checkList = new ArrayList<CheckAttributeInterface>();
+        } else {
+            CheckAttributeFactory.checkList = checkList;
+        }
     }
 }

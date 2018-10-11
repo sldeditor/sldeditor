@@ -19,6 +19,7 @@
 
 package com.sldeditor.datasource.checks;
 
+import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.SLDEditorFileInterface;
@@ -35,20 +36,32 @@ import org.geotools.styling.StyledLayerDescriptor;
  */
 public class MissingSLDAttributes implements CheckAttributeInterface {
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.datasource.impl.CheckAttributeInterface#checkAttributes(com.sldeditor.datasource.SLDEditorFileInterface)
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.sldeditor.datasource.impl.CheckAttributeInterface#checkAttributes(com.sldeditor.
+     * datasource.SLDEditorFileInterface)
      */
     @Override
     public void checkAttributes(SLDEditorFileInterface editorFile) {
+        if (editorFile == null) {
+            return;
+        }
+
         ExtractAttributes extract = new ExtractAttributes();
         StyledLayerDescriptor sld = editorFile.getSLD();
         extract.extractDefaultFields(sld);
         List<DataSourceAttributeData> sldFieldList = extract.getFields();
 
-        List<DataSourceAttributeData> dataSourceList = editorFile.getSLDData().getFieldList();
+        SLDDataInterface sldData = editorFile.getSLDData();
+        List<DataSourceAttributeData> dataSourceList = null;
+
+        if (sldData != null) {
+            dataSourceList = sldData.getFieldList();
+        }
 
         for (DataSourceAttributeData sldField : sldFieldList) {
-            if (!dataSourceList.contains(sldField)) {
+            if ((dataSourceList == null) || !dataSourceList.contains(sldField)) {
                 ConsoleManager.getInstance()
                         .error(
                                 this,
