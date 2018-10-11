@@ -120,7 +120,7 @@ public class VectorToolTest {
     @AfterAll
     public static void cleanUp() {
         List<CheckAttributeInterface> checkList = new ArrayList<CheckAttributeInterface>();
-        CheckAttributeFactory.setOverideCheckList(checkList);
+        CheckAttributeFactory.setOverrideCheckList(checkList);
 
         RenderPanelImpl.setUnderTest(false);
         clearDown();
@@ -294,7 +294,7 @@ public class VectorToolTest {
         TestMissingSLDAttributes testAttribute = new TestMissingSLDAttributes();
         List<CheckAttributeInterface> checkList = new ArrayList<CheckAttributeInterface>();
         checkList.add(testAttribute);
-        CheckAttributeFactory.setOverideCheckList(checkList);
+        CheckAttributeFactory.setOverrideCheckList(checkList);
 
         String testsldfile = "/polygon/sld/polygon_polygonwithdefaultlabel.sld";
         TestSLDEditor testSLDEditor = null;
@@ -450,7 +450,7 @@ public class VectorToolTest {
         TestMissingSLDAttributes testAttribute = new TestMissingSLDAttributes();
         List<CheckAttributeInterface> checkList = new ArrayList<CheckAttributeInterface>();
         checkList.add(testAttribute);
-        CheckAttributeFactory.setOverideCheckList(checkList);
+        CheckAttributeFactory.setOverrideCheckList(checkList);
 
         String testsldfile = "/polygon/sld/polygon_polygonwithdefaultlabel.sld";
         TestSLDEditor testSLDEditor = null;

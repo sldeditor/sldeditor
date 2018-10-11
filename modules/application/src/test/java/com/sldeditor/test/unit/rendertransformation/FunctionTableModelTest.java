@@ -143,11 +143,10 @@ class FunctionTableModelTest {
     }
 
     /**
-     * 
      * Test all the methods using a ProcessBriefType.
-     * 
-     * Not tested because it needs to interact with GeoServer to create a receive
-     * a remote custom WPS function.
+     *
+     * <p>Not tested because it needs to interact with GeoServer to create a receive a remote custom
+     * WPS function.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Disabled
