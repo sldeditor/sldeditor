@@ -55,8 +55,10 @@ public class DatabaseClient implements DatabaseClientInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#initialise(com.sldeditor.extension.filesystem.database.
-     * DatabaseReadProgressInterface, com.sldeditor.common.data.DatabaseConnection)
+     * @see
+     * com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#initialise(com.
+     * sldeditor.extension.filesystem.database. DatabaseReadProgressInterface,
+     * com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public void initialise(DatabaseReadProgressInterface parent, DatabaseConnection connection) {
@@ -67,7 +69,8 @@ public class DatabaseClient implements DatabaseClientInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#retrieveData()
+     * @see
+     * com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#retrieveData()
      */
     @Override
     public void retrieveData() {
@@ -114,7 +117,9 @@ public class DatabaseClient implements DatabaseClientInterface {
                                 "%s : %s",
                                 Localisation.getString(
                                         DatabaseClient.class, "DatabaseClient.noDriver"),
-                                connection.getConnectionName());
+                                (connection == null)
+                                        ? "No connection"
+                                        : connection.getConnectionName());
                 ConsoleManager.getInstance().error(this, message);
             }
         } catch (IOException e) {
@@ -159,7 +164,8 @@ public class DatabaseClient implements DatabaseClientInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#getFeatureClassList()
+     * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#
+     * getFeatureClassList()
      */
     @Override
     public List<String> getFeatureClassList() {
@@ -179,7 +185,8 @@ public class DatabaseClient implements DatabaseClientInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#getConnection()
+     * @see
+     * com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#getConnection()
      */
     @Override
     public DatabaseConnection getConnection() {
@@ -189,7 +196,8 @@ public class DatabaseClient implements DatabaseClientInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#accept(com.sldeditor.common.data.DatabaseConnection)
+     * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#accept(com.
+     * sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public boolean accept(DatabaseConnection connection) {
@@ -205,10 +213,15 @@ public class DatabaseClient implements DatabaseClientInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#getDBConnectionParams()
+     * @see com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface#
+     * getDBConnectionParams()
      */
     @Override
     public Map<String, Object> getDBConnectionParams() {
-        return connection.getDBConnectionParams();
+        if (connection != null) {
+            return connection.getDBConnectionParams();
+        } else {
+            return null;
+        }
     }
 }
