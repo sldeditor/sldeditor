@@ -277,6 +277,10 @@ public class FunctionTableModel extends AbstractTableModel {
      * @return the expression
      */
     public ProcessFunction getExpression(FunctionFactory factory) {
+        if (factory == null) {
+            return null;
+        }
+
         List<Expression> overallParameterList = new ArrayList<Expression>();
 
         for (ProcessFunctionParameterValue value : valueList) {

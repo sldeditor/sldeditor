@@ -22,6 +22,7 @@ package com.sldeditor.test.unit.rendertransformation;
 import static org.geotools.filter.capability.FunctionNameImpl.parameter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,13 +33,21 @@ import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import net.opengis.wps10.ProcessBriefType;
+import net.opengis.wps10.Wps10Factory;
+import net.opengis.wps10.impl.ProcessDescriptionTypeImpl;
 import org.geotools.data.Parameter;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.feature.NameImpl;
 import org.geotools.filter.ExpressionDOMParser;
 import org.geotools.filter.capability.FunctionNameImpl;
 import org.geotools.process.function.ProcessFunction;
+import org.geotools.process.function.ProcessFunctionFactory;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.opengis.filter.FilterFactory;
 import org.opengis.filter.capability.FunctionName;
+import org.opengis.filter.expression.Expression;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -50,13 +59,10 @@ import org.xml.sax.SAXException;
  */
 class FunctionTableModelTest {
 
-    /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#isCellEditable(int, int)}.
-     */
+    /** Test all the methods using a ProcessFunction */
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Test
-    void testIsCellEditable() {
+    void testProcessFunction() {
         FunctionTableModel model = new FunctionTableModel();
 
         assertEquals(0, model.getRowCount());
@@ -66,7 +72,7 @@ class FunctionTableModelTest {
 
         FunctionName name =
                 new FunctionNameImpl(
-                        "Test",
+                        new NameImpl("vec", "PointStacker"),
                         parameter("cellSize", Double.class),
                         new Parameter(
                                 "outputBBOX", Number.class, null, null, false, 0, 100, null, null),
@@ -117,102 +123,133 @@ class FunctionTableModelTest {
         // Remove value
         model.removeValue(3);
         assertEquals(3, model.getRowCount());
+
+        // Get expression
+        ProcessFunction actualFunction = model.getExpression(null);
+        assertNull(actualFunction);
+
+        model.setValueAt(true, 0, FunctionTableModel.getOptionalColumn());
+
+        ProcessFunctionFactory factory = new ProcessFunctionFactory();
+        actualFunction = model.getExpression(factory);
+        assertNotNull(actualFunction);
+
+        // Update expression
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+
+        Expression expression = ff.literal(4.2);
+        model.update(expression, 0);
+        model.update(null, 1);
     }
 
     /**
-     * Test method for {@link com.sldeditor.rendertransformation.FunctionTableModel#getValueAt(int,
-     * int)}.
+     * 
+     * Test all the methods using a ProcessBriefType.
+     * 
+     * Not tested because it needs to interact with GeoServer to create a receive
+     * a remote custom WPS function.
      */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Disabled
     @Test
-    void testGetValueAt() {}
+    void testProcessBriefType() {
+        FunctionTableModel model = new FunctionTableModel();
+
+        assertEquals(0, model.getRowCount());
+
+        model.addNewValue(0);
+        ProcessBriefType customFunction = createCustomFunction();
+
+        FunctionName name =
+                new FunctionNameImpl(
+                        new NameImpl("vec", "PointStacker"),
+                        parameter("cellSize", Double.class),
+                        new Parameter(
+                                "outputBBOX", Number.class, null, null, false, 0, 100, null, null),
+                        parameter("outputWidth", Number.class),
+                        parameter("outputHeight", Number.class));
+
+        assertFalse(name.getArguments().get(0).isRequired());
+        assertTrue(name.getArguments().get(1).isRequired());
+
+        model.populate(customFunction);
+
+        assertEquals(3, model.getRowCount());
+        assertEquals(4, model.getColumnCount());
+
+        // Get value
+        assertEquals("outputBBOX", model.getValueAt(0, 0));
+        assertEquals(Number.class.getSimpleName(), model.getValueAt(0, 1));
+        assertEquals(true, model.getValueAt(0, 2));
+        assertEquals("env([wms_bbox])", model.getValueAt(0, 3));
+        assertNull(model.getValueAt(0, 4));
+
+        // Is editable
+        assertFalse(model.isCellEditable(0, 0));
+        assertFalse(model.isCellEditable(0, 1));
+        assertTrue(model.isCellEditable(0, FunctionTableModel.getOptionalColumn()));
+        assertFalse(model.isCellEditable(0, 3));
+        assertFalse(model.isCellEditable(0, 4));
+
+        // Set value
+        model.setValueAt(true, 0, 2);
+        assertTrue((Boolean) model.getValueAt(0, FunctionTableModel.getOptionalColumn()));
+        model.setValueAt(false, 0, 2);
+        assertFalse((Boolean) model.getValueAt(0, FunctionTableModel.getOptionalColumn()));
+
+        // Get row
+        assertNull(model.getValue(-1));
+        assertNull(model.getValue(10));
+
+        // Add a new value
+        assertEquals(0, model.getNoOfOccurences(null));
+        ProcessFunctionParameterValue value = model.getValue(0);
+        assertEquals(1, model.getNoOfOccurences(value));
+        model.addNewValue(0);
+        assertEquals(4, model.getRowCount());
+
+        assertEquals(2, model.getNoOfOccurences(value));
+
+        // Remove value
+        model.removeValue(3);
+        assertEquals(3, model.getRowCount());
+
+        // Get expression
+        ProcessFunction actualFunction = model.getExpression(null);
+        assertNull(actualFunction);
+
+        model.setValueAt(true, 0, FunctionTableModel.getOptionalColumn());
+
+        ProcessFunctionFactory factory = new ProcessFunctionFactory();
+        actualFunction = model.getExpression(factory);
+        assertNotNull(actualFunction);
+
+        // Update expression
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+
+        Expression expression = ff.literal(4.2);
+        model.update(expression, 0);
+        model.update(null, 1);
+    }
 
     /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#getValueColumn()}.
+     * Creates the custom function.
+     *
+     * @return the process brief type
      */
-    @Test
-    void testGetValueColumn() {}
+    private ProcessBriefType createCustomFunction() {
+        ProcessDescriptionTypeImpl processDescription =
+                (ProcessDescriptionTypeImpl) Wps10Factory.eINSTANCE.createProcessDescriptionType();
+
+        return processDescription;
+    }
 
     /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#getColumnName(int)}.
+     * Creates the process function.
+     *
+     * @return the process function
      */
-    @Test
-    void testGetColumnNameInt() {}
-
-    /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#setValueAt(java.lang.Object, int,
-     * int)}.
-     */
-    @Test
-    void testSetValueAtObjectIntInt() {}
-
-    /**
-     * Test method for {@link com.sldeditor.rendertransformation.FunctionTableModel#getValue(int)}.
-     */
-    @Test
-    void testGetValue() {}
-
-    /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#getOptionalColumn()}.
-     */
-    @Test
-    void testGetOptionalColumn() {}
-
-    /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#getNoOfOccurences(com.sldeditor.rendertransformation.ProcessFunctionParameterValue)}.
-     */
-    @Test
-    void testGetNoOfOccurences() {}
-
-    /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#addNewValue(int)}.
-     */
-    @Test
-    void testAddNewValue() {}
-
-    /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#removeValue(int)}.
-     */
-    @Test
-    void testRemoveValue() {}
-
-    /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#getExpression(org.geotools.filter.FunctionFactory)}.
-     */
-    @Test
-    void testGetExpression() {}
-
-    /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#populate(org.opengis.filter.capability.FunctionName,
-     * org.geotools.process.function.ProcessFunction)}.
-     */
-    @Test
-    void testPopulateFunctionNameProcessFunction() {}
-
-    /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#populate(net.opengis.wps10.ProcessBriefType)}.
-     */
-    @Test
-    void testPopulateProcessBriefType() {}
-
-    /**
-     * Test method for {@link
-     * com.sldeditor.rendertransformation.FunctionTableModel#update(org.opengis.filter.expression.Expression,
-     * int)}.
-     */
-    @Test
-    void testUpdate() {}
-
-    protected ProcessFunction createProcessFunction() {
+    private ProcessFunction createProcessFunction() {
         String testData =
                 "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
                         + "<StyledLayerDescriptor version=\"1.0.0\" xsi:schemaLocation=\"http://www.opengis.net/sld StyledLayerDescriptor.xsd\" xmlns=\"http://www.opengis.net/sld\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
