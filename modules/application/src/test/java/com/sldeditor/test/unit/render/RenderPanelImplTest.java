@@ -67,6 +67,8 @@ class RenderPanelImplTest {
         render.backgroundColourUpdate(Color.BLUE);
 
         RenderPanelImpl.setUnderTest(true);
+        DataSourceFactory.reset();
+        SelectedSymbol.destroyInstance();
     }
 
     /** Test method for {@link com.sldeditor.render.RenderPanelImpl#RenderPanelImpl()}. */
@@ -96,5 +98,7 @@ class RenderPanelImplTest {
         render.backgroundColourUpdate(Color.WHITE);
 
         RenderPanelImpl.setUnderTest(true);
+        DataSourceFactory.reset();
+        SelectedSymbol.destroyInstance();
     }
 }
