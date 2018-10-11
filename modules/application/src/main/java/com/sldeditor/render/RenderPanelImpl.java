@@ -589,7 +589,9 @@ public class RenderPanelImpl extends JPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource
+     * .impl.GeometryTypeEnum, boolean)
      */
     @Override
     public void dataSourceLoaded(
@@ -619,13 +621,17 @@ public class RenderPanelImpl extends JPanel
      */
     @Override
     public void backgroundColourUpdate(Color backgroundColour) {
-        this.backgroundColour = backgroundColour;
+        if (backgroundColour != null) {
+            this.backgroundColour = backgroundColour;
+        }
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     * @see
+     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.
+     * data.DataStore)
      */
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {
@@ -644,7 +650,9 @@ public class RenderPanelImpl extends JPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
+     * @see
+     * com.sldeditor.common.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(
+     * java.util.List)
      */
     @Override
     public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {
