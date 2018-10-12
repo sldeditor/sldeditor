@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -119,10 +120,7 @@ public class FunctionField extends JPanel {
         btnAddParameter.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        addParameter();
-                        if (parentObj != null) {
-                            parentObj.parameterAdded();
-                        }
+                        addButtonPressed(parentObj);
                     }
                 });
         panel.add(btnAddParameter);
@@ -133,17 +131,7 @@ public class FunctionField extends JPanel {
 
                         String newValueObj = (String) functionComboBox.getSelectedItem();
 
-                        FunctionName functionName = functionNameMap.get(newValueObj);
-                        boolean variableNoOfParameters = false;
-                        if (functionName != null) {
-                            variableNoOfParameters = (functionName.getArgumentCount() < 0);
-                        }
-
-                        btnAddParameter.setVisible(preSelectedFunction && variableNoOfParameters);
-
-                        if (parentObj != null) {
-                            parentObj.updateSymbol();
-                        }
+                        functionSelected(parentObj, newValueObj);
                     }
                 });
     }
@@ -166,8 +154,10 @@ public class FunctionField extends JPanel {
                 Expression newExpression = functionExpression.getParameters().get(argCount - 1);
                 childNode.setExpression(newExpression);
                 functionExpression.getParameters().add(newExpression);
-                currentExpressionNode.insert(childNode, currentExpressionNode.getChildCount());
-                currentExpressionNode.setDisplayString();
+                if (currentExpressionNode != null) {
+                    currentExpressionNode.insert(childNode, currentExpressionNode.getChildCount());
+                    currentExpressionNode.setDisplayString();
+                }
             }
         } else if (currentExpression instanceof ConcatenateFunction) {
             ConcatenateFunction functionExpression = (ConcatenateFunction) currentExpression;
@@ -191,8 +181,10 @@ public class FunctionField extends JPanel {
             List<Expression> parameters = functionExpression.getParameters();
             parameters.add(newExpression);
             functionExpression.setParameters(parameters);
-            currentExpressionNode.insert(childNode, currentExpressionNode.getChildCount());
-            currentExpressionNode.setDisplayString();
+            if (currentExpressionNode != null) {
+                currentExpressionNode.insert(childNode, currentExpressionNode.getChildCount());
+                currentExpressionNode.setDisplayString();
+            }
         }
     }
 
@@ -241,6 +233,22 @@ public class FunctionField extends JPanel {
             }
             functionComboBox.setModel(model);
         }
+    }
+
+    /**
+     * Gets the function list.
+     *
+     * @return the function list
+     */
+    protected List<String> getFunctionList() {
+        List<String> functionList = new ArrayList<String>();
+
+        ComboBoxModel<String> model = functionComboBox.getModel();
+        for (int i = 0; i < model.getSize(); i++) {
+            functionList.add(model.getElementAt(i));
+        }
+
+        return functionList;
     }
 
     /**
@@ -319,6 +327,11 @@ public class FunctionField extends JPanel {
         String functionNameString = (String) functionComboBox.getSelectedItem();
 
         FunctionName functionName = functionNameMap.get(functionNameString);
+
+        if (functionName == null) {
+            return null;
+        }
+
         Expression newExpression = functionNameMgr.createExpression(functionName);
 
         int argCount = functionName.getArgumentCount();
@@ -383,5 +396,46 @@ public class FunctionField extends JPanel {
      */
     public void setIsRasterSymbol(boolean isRasterSymbol) {
         this.isRasterSymbol = isRasterSymbol;
+    }
+
+    /**
+     * Adds the button pressed.
+     *
+     * @param parentObj the parent obj
+     */
+    protected void addButtonPressed(SubPanelUpdatedInterface parentObj) {
+        addParameter();
+        if (parentObj != null) {
+            parentObj.parameterAdded();
+        }
+    }
+
+    /**
+     * Sets the selected function.
+     *
+     * @param selectedFunction the new selected function
+     */
+    protected void setSelectedFunction(String selectedFunction) {
+        functionComboBox.setSelectedItem(selectedFunction);
+    }
+
+    /**
+     * Function selected.
+     *
+     * @param parentObj the parent obj
+     * @param newValueObj the new value obj
+     */
+    private void functionSelected(SubPanelUpdatedInterface parentObj, String newValueObj) {
+        FunctionName functionName = functionNameMap.get(newValueObj);
+        boolean variableNoOfParameters = false;
+        if (functionName != null) {
+            variableNoOfParameters = (functionName.getArgumentCount() < 0);
+        }
+
+        btnAddParameter.setVisible(preSelectedFunction && variableNoOfParameters);
+
+        if (parentObj != null) {
+            parentObj.updateSymbol();
+        }
     }
 }
