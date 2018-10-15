@@ -39,6 +39,7 @@ public class EnvVarTest {
      * Test method for {@link com.sldeditor.filter.v2.envvar.EnvVar#EnvVar(java.lang.String,
      * java.lang.Class, boolean)}.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testEnvVar() {
         String actualName = "string_var";
@@ -65,5 +66,27 @@ public class EnvVarTest {
         assertEquals(Integer.class, envVar3.getType());
         assertFalse(envVar3.isPredefined());
         assertEquals(actualValue, envVar3.getValue());
+
+        // Increase code coverage
+
+        // Check hash code
+        assertTrue(envVar3.hashCode() != 0);
+
+        // Check null values
+        assertFalse(envVar3.equals(null));
+        assertFalse(envVar3.equals(new String("")));
+
+        EnvVar envVar4 = new EnvVar(envVar3);
+        envVar4.setName(null);
+        assertFalse(envVar4.equals(envVar3));
+
+        envVar4 = new EnvVar(envVar3);
+        envVar4.setType(null);
+        assertFalse(envVar4.equals(envVar3));
+
+        envVar4 = new EnvVar(envVar3);
+        envVar3.setValue("value1");
+        envVar4.setValue("value2");
+        assertFalse(envVar3.equals(envVar4));
     }
 }

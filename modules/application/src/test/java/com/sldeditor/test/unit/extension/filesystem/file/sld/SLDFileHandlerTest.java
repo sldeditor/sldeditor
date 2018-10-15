@@ -195,4 +195,9 @@ public class SLDFileHandlerTest {
         String sldName = handler.getSLDName(sldData);
         assertTrue(sldName.compareTo("layer.sld") == 0);
     }
+
+    @Test
+    public void testOpen() {
+        assertNull(new SLDFileHandler().open(null));
+    }
 }
