@@ -25,14 +25,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.geotools.data.FeatureSource;
-import org.geotools.renderer.style.SLDStyleFactory;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.styling.Symbolizer;
 import org.geotools.styling.UserLayerImpl;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -60,8 +58,6 @@ public class ExtractValidFieldTypes {
     public static boolean fieldTypesUpdated() {
         boolean fieldsUpdated = false;
 
-        SLDStyleFactory styleFactory = new SLDStyleFactory();
-
         StyledLayerDescriptor sld = SelectedSymbol.getInstance().getSld();
 
         if (sld != null) {
@@ -81,43 +77,46 @@ public class ExtractValidFieldTypes {
                 }
 
                 if (styleList != null) {
-                    for (Style style : styleList) {
-                        for (FeatureTypeStyle fts : style.featureTypeStyles()) {
-                            for (Rule rule : fts.rules()) {
-                                for (Symbolizer symbolizer : rule.symbolizers()) {
-                                    FeatureSource<SimpleFeatureType, SimpleFeature> featureList =
-                                            DataSourceFactory.getDataSource().getFeatureSource();
+                    FeatureSource<SimpleFeatureType, SimpleFeature> featureList =
+                            DataSourceFactory.getDataSource().getFeatureSource();
 
-                                    if (featureList != null) {
-                                        Object drawMe = null;
-                                        try {
-                                            drawMe = featureList.getFeatures().features().next();
-                                        } catch (NoSuchElementException e) {
-                                            e.printStackTrace();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
+                    if (featureList != null) {
+
+                        for (Style style : styleList) {
+                            for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                                for (Rule rule : fts.rules()) {
+                                    Object drawMe = null;
+                                    try {
+                                        drawMe = featureList.getFeatures().features().next();
+                                    } catch (NoSuchElementException e) {
+                                        ConsoleManager.getInstance()
+                                                .exception(ExtractValidFieldTypes.class, e);
+                                    } catch (IOException e) {
+                                        ConsoleManager.getInstance()
+                                                .exception(ExtractValidFieldTypes.class, e);
+                                    }
+
+                                    try {
+                                        if (rule.getFilter() != null) {
+                                            rule.getFilter().evaluate(drawMe);
                                         }
+                                    } catch (IllegalArgumentException e) {
+                                        String message = e.getMessage();
+                                        if (message.startsWith(UNABLE_TO_DECODE_PREFIX)
+                                                && message.endsWith(UNABLE_TO_DECODE_SUFFIX)) {
+                                            String fieldName =
+                                                    message.substring(
+                                                            UNABLE_TO_DECODE_PREFIX.length(),
+                                                            message.length()
+                                                                    - UNABLE_TO_DECODE_SUFFIX
+                                                                            .length());
 
-                                        try {
-                                            styleFactory.createStyle(drawMe, symbolizer);
-                                        } catch (IllegalArgumentException e) {
-                                            String message = e.getMessage();
-                                            if (message.startsWith(UNABLE_TO_DECODE_PREFIX)
-                                                    && message.endsWith(UNABLE_TO_DECODE_SUFFIX)) {
-                                                String fieldName =
-                                                        message.substring(
-                                                                UNABLE_TO_DECODE_PREFIX.length(),
-                                                                message.length()
-                                                                        - UNABLE_TO_DECODE_SUFFIX
-                                                                                .length());
-
-                                                DataSourceFactory.getDataSource()
-                                                        .updateFieldType(fieldName, Long.class);
-                                                fieldsUpdated = true;
-                                            } else {
-                                                ConsoleManager.getInstance()
-                                                        .exception(ExtractValidFieldTypes.class, e);
-                                            }
+                                            DataSourceFactory.getDataSource()
+                                                    .updateFieldType(fieldName, Long.class);
+                                            fieldsUpdated = true;
+                                        } else {
+                                            ConsoleManager.getInstance()
+                                                    .exception(ExtractValidFieldTypes.class, e);
                                         }
                                     }
                                 }
