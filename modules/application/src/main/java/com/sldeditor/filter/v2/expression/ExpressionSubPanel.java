@@ -38,6 +38,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -49,6 +50,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.geotools.filter.AttributeExpressionImpl;
 import org.geotools.filter.FunctionExpression;
 import org.geotools.filter.FunctionExpressionImpl;
+import org.geotools.filter.MathExpressionImpl;
 import org.geotools.filter.function.EnvFunction;
 import org.geotools.filter.function.string.ConcatenateFunction;
 import org.opengis.filter.capability.FunctionName;
@@ -81,6 +83,9 @@ public class ExpressionSubPanel extends JPanel {
     /** The Constant ENVVAR. */
     private static final String ENVVAR = "Env";
 
+    /** The Constant MATHS. */
+    private static final String MATHS = "Math";
+
     /** The box. */
     private Box box;
 
@@ -102,6 +107,9 @@ public class ExpressionSubPanel extends JPanel {
     /** The radio button environment variable. */
     private JRadioButton rdbtnEnvVar;
 
+    /** The radio button maths. */
+    private JRadioButton rdbtnMaths;
+
     /** The panel literal. */
     private JPanel panelLiteral;
 
@@ -114,11 +122,17 @@ public class ExpressionSubPanel extends JPanel {
     /** The panel environment variable. */
     private JPanel panelEnvVar;
 
+    /** The panel maths. */
+    private JPanel panelMaths;
+
     /** The data source attribute panel. */
     private DataSourceAttributePanel dataSourceAttributePanel;
 
     /** The function panel. */
     private FunctionField functionPanel;
+
+    /** The math expression panel. */
+    private MathsExpressionPanel mathsExpressionPanel;
 
     /** The selected node. */
     private ExpressionNode selectedNode = null;
@@ -204,6 +218,12 @@ public class ExpressionSubPanel extends JPanel {
         // Function panel
         //
         setUpFunctionPanel();
+        box.add(Box.createVerticalStrut(VERTICAL_STRUCT_SIZE));
+
+        //
+        // Maths panel
+        //
+        setUpMathsPanel();
         box.add(Box.createVerticalStrut(VERTICAL_STRUCT_SIZE));
 
         panelRemoveParameter = new JPanel();
@@ -356,6 +376,39 @@ public class ExpressionSubPanel extends JPanel {
 
         panelFunction.add(functionPanel);
         box.add(panelFunction);
+    }
+
+    /** Sets the up maths panel. */
+    protected void setUpMathsPanel() {
+        panelMaths = new JPanel();
+        panelMaths.setBorder(null);
+        panelMaths.setLayout(new BoxLayout(panelMaths, BoxLayout.X_AXIS));
+        rdbtnMaths =
+                new JRadioButton(
+                        Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.maths"));
+        panelMaths.add(rdbtnMaths);
+        rdbtnMaths.setMinimumSize(new Dimension(100, 20));
+        rdbtnMaths.setPreferredSize(new Dimension(100, 20));
+        rdbtnMaths.setActionCommand(MATHS);
+        buttonGroup.add(rdbtnMaths);
+
+        mathsExpressionPanel =
+                new MathsExpressionPanel(
+                        new SubPanelUpdatedInterface() {
+                            @Override
+                            public void updateSymbol() {
+                                buttonGroup.setSelected(rdbtnMaths.getModel(), true);
+                                updateButtonState(true);
+                            }
+
+                            @Override
+                            public void parameterAdded() {
+                                // Do nothing
+                            }
+                        });
+
+        panelMaths.add(mathsExpressionPanel);
+        box.add(panelMaths);
     }
 
     /**
@@ -590,6 +643,8 @@ public class ExpressionSubPanel extends JPanel {
             expression = functionPanel.getExpression();
         } else if (actionCommand.compareTo(ENVVAR) == 0) {
             expression = envVarField.getExpression();
+        } else if (actionCommand.compareTo(MATHS) == 0) {
+            expression = mathsExpressionPanel.getExpression();
         }
 
         if (expression != null) {
@@ -611,6 +666,18 @@ public class ExpressionSubPanel extends JPanel {
                     List<Expression> parameterList = functionExpression.getParameters();
                     parameterList.remove(index);
                     parameterList.add(index, expression);
+                } else if (parentNode.getExpression() instanceof MathExpressionImpl) {
+                    MathExpressionImpl mathExpression =
+                            (MathExpressionImpl) parentNode.getExpression();
+
+                    List<Expression> parameterList = new ArrayList<Expression>();
+
+                    parameterList.add(mathExpression.getExpression1());
+                    parameterList.add(mathExpression.getExpression2());
+
+                    parameterList.remove(index);
+                    parameterList.add(index, expression);
+
                 } else {
                     FunctionInterfaceUtils.handleFunctionInterface(parentNode, index, expression);
                 }
