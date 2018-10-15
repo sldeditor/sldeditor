@@ -405,7 +405,6 @@ public class FieldConfigTextArea extends FieldConfigBase implements UndoActionIn
     /**
      * Value stored.
      *
-     * @param originalValue the original value
      * @param newValueObj the new value obj
      */
     protected void valueStored(String newValueObj) {
