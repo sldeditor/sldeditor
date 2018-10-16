@@ -27,6 +27,7 @@ import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.checks.CheckAttributeFactory;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.ExtractValidFieldTypes;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -34,6 +35,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Robert Ward (SCISYS)
  */
+@Disabled
 class ExtractValidFieldTypesTest {
 
     /**
@@ -62,5 +64,7 @@ class ExtractValidFieldTypesTest {
         SelectedSymbol.getInstance().setSld(userLayerTestObj.getSLD());
 
         assertFalse(ExtractValidFieldTypes.fieldTypesUpdated());
+
+        SelectedSymbol.destroyInstance();
     }
 }
