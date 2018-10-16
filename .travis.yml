@@ -15,7 +15,6 @@ cache:
 script : 
   - mvn clean test
   - mvn test -P IntegrationTests
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
 before_script:

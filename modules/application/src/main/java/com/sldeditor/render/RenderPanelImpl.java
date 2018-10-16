@@ -128,13 +128,13 @@ public class RenderPanelImpl extends JPanel
     private static final int ST_HEIGHT = 200;
 
     /** The image to display. */
-    private BufferedImage bImage = null;
+    private transient BufferedImage bImage = null;
 
     /** The feature list. */
-    private FeatureSource<SimpleFeatureType, SimpleFeature> featureList = null;
+    private transient FeatureSource<SimpleFeatureType, SimpleFeature> featureList = null;
 
     /** The sld output list. */
-    private List<SLDOutputInterface> sldOutputList = new ArrayList<SLDOutputInterface>();
+    private transient List<SLDOutputInterface> sldOutputList = new ArrayList<SLDOutputInterface>();
 
     /** The use anti alias. */
     private boolean useAntiAlias = false;
@@ -146,7 +146,7 @@ public class RenderPanelImpl extends JPanel
     private boolean dataLoaded = false;
 
     /** The renderer. */
-    private GTRenderer renderer = new StreamingRenderer();
+    private transient GTRenderer renderer = new StreamingRenderer();
 
     /** The geometry type. */
     private GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
@@ -155,7 +155,7 @@ public class RenderPanelImpl extends JPanel
     private boolean validSymbol = false;
 
     /** The WMS environment variable values. */
-    private WMSEnvVarValues wmsEnvVarValues = new WMSEnvVarValues();
+    private transient WMSEnvVarValues wmsEnvVarValues = new WMSEnvVarValues();
 
     /** The background colour. */
     private Color backgroundColour = Color.WHITE;
