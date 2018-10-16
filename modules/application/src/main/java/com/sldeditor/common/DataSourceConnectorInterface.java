@@ -30,7 +30,7 @@ import javax.swing.JPanel;
 public interface DataSourceConnectorInterface {
 
     /** The file map key. */
-    public static String FILE_MAP_KEY = "url";
+    public static final String FILE_MAP_KEY = "url";
 
     /**
      * Gets the display name.

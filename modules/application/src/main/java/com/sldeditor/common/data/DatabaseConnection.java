@@ -72,7 +72,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
     private static boolean useEncrpytion = true;
 
     /** The detail list. */
-    private List<DatabaseConnectionField> detailList = null;
+    private transient List<DatabaseConnectionField> detailList = null;
 
     /** The database type. */
     private String databaseType;

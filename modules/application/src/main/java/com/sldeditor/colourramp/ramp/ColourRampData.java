@@ -41,7 +41,9 @@ public class ColourRampData {
     private boolean reverseColours = false;
 
     /** Instantiates a new colour ramp data. */
-    public ColourRampData() {}
+    public ColourRampData() {
+        // Default constructor
+    }
 
     /**
      * Gets the colour ramp.

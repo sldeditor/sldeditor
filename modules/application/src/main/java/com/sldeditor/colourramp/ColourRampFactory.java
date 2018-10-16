@@ -44,6 +44,14 @@ public class ColourRampFactory {
             new HashMap<ColourRampPanelInterface, List<ColourRamp>>();
 
     /**
+     * Instantiates a new colour ramp factory.
+     */
+    private ColourRampFactory()
+    {
+        throw new IllegalStateException("ColourRampFactory class");
+    }
+    
+    /**
      * Populate.
      *
      * @param suppressUndoEvents the suppress undo events
