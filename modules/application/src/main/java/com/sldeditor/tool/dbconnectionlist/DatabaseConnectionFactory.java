@@ -93,6 +93,9 @@ public class DatabaseConnectionFactory {
                         list,
                         new DatabaseConnectionName() {
 
+                            /** The Constant serialVersionUID. */
+                            private static final long serialVersionUID = 1L;
+
                             @Override
                             public String getConnectionName(
                                     String duplicatePrefix,
@@ -161,6 +164,8 @@ public class DatabaseConnectionFactory {
                         false,
                         list,
                         new DatabaseConnectionName() {
+                            /** The Constant serialVersionUID. */
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public String getConnectionName(
@@ -214,6 +219,8 @@ public class DatabaseConnectionFactory {
                         true,
                         list,
                         new DatabaseConnectionName() {
+                            /** The Constant serialVersionUID. */
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public String getConnectionName(
@@ -258,6 +265,8 @@ public class DatabaseConnectionFactory {
                         false,
                         list,
                         new DatabaseConnectionName() {
+                            /** The Constant serialVersionUID. */
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public String getConnectionName(
@@ -310,6 +319,8 @@ public class DatabaseConnectionFactory {
                         true,
                         list,
                         new DatabaseConnectionName() {
+                            /** The Constant serialVersionUID. */
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public String getConnectionName(
@@ -357,6 +368,8 @@ public class DatabaseConnectionFactory {
                         true,
                         list,
                         new DatabaseConnectionName() {
+                            /** The Constant serialVersionUID. */
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public String getConnectionName(
@@ -409,6 +422,8 @@ public class DatabaseConnectionFactory {
                         true,
                         list,
                         new DatabaseConnectionName() {
+                            /** The Constant serialVersionUID. */
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public String getConnectionName(
@@ -461,6 +476,8 @@ public class DatabaseConnectionFactory {
                         true,
                         list,
                         new DatabaseConnectionName() {
+                            /** The Constant serialVersionUID. */
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public String getConnectionName(
@@ -510,6 +527,8 @@ public class DatabaseConnectionFactory {
                         true,
                         list,
                         new DatabaseConnectionName() {
+                            /** The Constant serialVersionUID. */
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public String getConnectionName(

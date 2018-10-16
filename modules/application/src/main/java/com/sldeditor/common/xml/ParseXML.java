@@ -67,42 +67,6 @@ public class ParseXML {
         logger.debug("Reading : " + fullResourceName);
         InputStream inputStream = ParseXML.class.getResourceAsStream(fullResourceName);
 
-        //        if (inputStream == null) {
-        //            File file = new File(fullResourceName);
-        //
-        //            if (!file.exists()) {
-        //                ConsoleManager.getInstance()
-        //                        .error(
-        //                                ParseXML.class,
-        //                                Localisation.getField(
-        //                                                ParseXML.class,
-        // "ParseXML.failedToFindResource")
-        //                                        + fullResourceName);
-        //                return null;
-        //            }
-        //            try {
-        //                inputStream = new FileInputStream(file);
-        //            } catch (FileNotFoundException e) {
-        //                ConsoleManager.getInstance()
-        //                        .error(
-        //                                ParseXML.class,
-        //                                Localisation.getField(
-        //                                                ParseXML.class,
-        // "ParseXML.failedToFindResource")
-        //                                        + fullResourceName);
-        //                return null;
-        //            } finally {
-        //                try {
-        //                    if (inputStream != null) {
-        //                        inputStream.close();
-        //                    }
-        //                } catch (IOException e) {
-        //                    ConsoleManager.getInstance().error(ParseXML.class, e.getMessage());
-        //                    return null;
-        //                }
-        //            }
-        //        }
-
         ValidationEventCollector vec = new ValidationEventCollector();
         URL xsdURL = ParseXML.class.getResource(schemaResource);
         try {

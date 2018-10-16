@@ -7,6 +7,7 @@
 
 package com.sldeditor.tool.dbconnectionlist;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Map;
  *
  * @author Robert Ward (SCISYS)
  */
-public interface DatabaseConnectionName {
+public interface DatabaseConnectionName extends Serializable {
 
     /**
      * Gets the connection name.

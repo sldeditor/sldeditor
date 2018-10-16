@@ -398,7 +398,7 @@ public class RenderTransformationDialog extends JDialog {
                                     "RenderTransformationDialog.type"),
                             (value != null) ? value.dataType : "unknown");
             expressionPanel.configure(title, (value != null) ? value.type : Object.class, false);
-            expressionPanel.populate(value.objectValue.getExpression());
+            expressionPanel.populate((value != null) ? value.objectValue.getExpression() : null);
             if (expressionPanel.showDialog()) {
                 Expression expression = expressionPanel.getExpression();
 

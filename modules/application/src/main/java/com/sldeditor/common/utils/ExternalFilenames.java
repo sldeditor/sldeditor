@@ -51,7 +51,9 @@ public class ExternalFilenames {
     private static Map<String, String> formatMap = new HashMap<String, String>();
 
     /** Default constructor. */
-    public ExternalFilenames() {}
+    public ExternalFilenames() {
+        // Default constructor
+    }
 
     /** Initialise. */
     private static void initialise() {

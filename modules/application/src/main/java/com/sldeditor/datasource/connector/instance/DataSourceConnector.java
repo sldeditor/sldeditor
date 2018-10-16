@@ -20,6 +20,7 @@
 package com.sldeditor.datasource.connector.instance;
 
 import com.sldeditor.common.DataSourceConnectorInterface;
+import com.sldeditor.common.DataSourceConstants;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import com.sldeditor.datasource.impl.DataSourceProperties;
@@ -143,7 +144,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
 
         Map<String, Object> propertyMap = new HashMap<String, Object>();
 
-        propertyMap.put(DataSourceConnectorInterface.FILE_MAP_KEY, filename);
+        propertyMap.put(DataSourceConstants.FILE_MAP_KEY, filename);
 
         return propertyMap;
     }

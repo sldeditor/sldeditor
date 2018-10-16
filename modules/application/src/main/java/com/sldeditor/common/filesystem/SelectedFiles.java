@@ -47,7 +47,9 @@ public class SelectedFiles {
     private GeoServerConnection connectionData = null;
 
     /** Instantiates a new selected files. */
-    public SelectedFiles() {}
+    public SelectedFiles() {
+        // Default constructor
+    }
 
     /**
      * Gets the sld data.

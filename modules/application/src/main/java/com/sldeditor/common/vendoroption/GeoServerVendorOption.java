@@ -30,6 +30,9 @@ import java.util.List;
  */
 public class GeoServerVendorOption implements VendorOptionTypeInterface {
 
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 7843746323615224955L;
+
     /** The version list. */
     private List<VersionData> versionList = new ArrayList<VersionData>();
 

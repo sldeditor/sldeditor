@@ -35,7 +35,9 @@ import org.geotools.styling.StyledLayerDescriptor;
 public class SLDWriterImpl implements SLDWriterInterface {
 
     /** Default constructor. */
-    public SLDWriterImpl() {}
+    public SLDWriterImpl() {
+        // Default constructor
+    }
 
     /**
      * Encode sld to a string.

@@ -46,10 +46,10 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
     private static final long serialVersionUID = 1L;
 
     /** The encrypter. */
-    private Cipher encrypter = null;
+    private transient Cipher encrypter = null;
 
     /** The decrypter. */
-    private Cipher decrypter = null;
+    private transient Cipher decrypter = null;
 
     /** The salt. */
     private static byte[] salt = {(byte) 0x03, 0x0F, 0x12, 0x0D, 0x03, 0x0F, 0x12, 0x0D};

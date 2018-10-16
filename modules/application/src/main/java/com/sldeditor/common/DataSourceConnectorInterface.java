@@ -29,9 +29,6 @@ import javax.swing.JPanel;
  */
 public interface DataSourceConnectorInterface {
 
-    /** The file map key. */
-    public static final String FILE_MAP_KEY = "url";
-
     /**
      * Gets the display name.
      *

@@ -21,13 +21,18 @@ package com.sldeditor.common.vendoroption;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
+import java.io.Serializable;
 
 /**
  * Class that represents the vendor option versions supported.
  *
  * @author Robert Ward (SCISYS)
  */
-public class VersionData implements Comparable<VersionData> {
+public class VersionData implements Comparable<VersionData>, Serializable {
+
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 8993434365556056358L;
+
     private static final String SNAPSHOT_SUFFIX = "-SNAPSHOT";
 
     /** The Constant EARLIEST. */
@@ -79,7 +84,9 @@ public class VersionData implements Comparable<VersionData> {
     private boolean isLatest = false;
 
     /** Default constructor. */
-    public VersionData() {}
+    public VersionData() {
+        // Default constructor
+    }
 
     /**
      * Copy constructor

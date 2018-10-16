@@ -20,6 +20,7 @@
 package com.sldeditor.datasource.impl;
 
 import com.sldeditor.common.DataSourceConnectorInterface;
+import com.sldeditor.common.DataSourceConstants;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import java.util.LinkedHashMap;
@@ -97,7 +98,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
      */
     @Override
     public void setFilename(String filename) {
-        propertyMap.put(DataSourceConnectorInterface.FILE_MAP_KEY, filename);
+        propertyMap.put(DataSourceConstants.FILE_MAP_KEY, filename);
     }
 
     /**
@@ -125,7 +126,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
      */
     @Override
     public String getFilename() {
-        return (String) propertyMap.get(DataSourceConnectorInterface.FILE_MAP_KEY);
+        return (String) propertyMap.get(DataSourceConstants.FILE_MAP_KEY);
     }
 
     /**
@@ -208,7 +209,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
     public static Map<String, Object> encodeFilename(String filename) {
         Map<String, Object> propertyMap = new LinkedHashMap<String, Object>();
 
-        propertyMap.put(DataSourceConnectorInterface.FILE_MAP_KEY, filename);
+        propertyMap.put(DataSourceConstants.FILE_MAP_KEY, filename);
 
         return propertyMap;
     }
@@ -221,7 +222,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
      */
     public static String decodeFilename(Map<String, Object> map) {
         if (map != null) {
-            return (String) map.get(DataSourceConnectorInterface.FILE_MAP_KEY);
+            return (String) map.get(DataSourceConstants.FILE_MAP_KEY);
         }
 
         return null;

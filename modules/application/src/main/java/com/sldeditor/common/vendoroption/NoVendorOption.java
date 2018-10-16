@@ -28,6 +28,9 @@ import java.util.List;
  */
 public class NoVendorOption implements VendorOptionTypeInterface {
 
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = -7129548014168264204L;
+
     /*
      * (non-Javadoc)
      *
