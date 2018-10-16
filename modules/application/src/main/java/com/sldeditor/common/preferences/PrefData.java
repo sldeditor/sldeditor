@@ -76,7 +76,7 @@ public class PrefData {
         this.checkAppVersionOnStartUp = clone.checkAppVersionOnStartUp;
 
         if (clone.vendorOptionList != null) {
-            this.vendorOptionList = new ArrayList<VersionData>();
+            this.vendorOptionList = new ArrayList<>();
 
             for (VersionData versionData : clone.vendorOptionList) {
                 this.vendorOptionList.add(new VersionData(versionData));

@@ -215,20 +215,10 @@ public class SLDFileHandler implements FileHandlerInterface {
         File fileToSave = sldData.getSLDFile();
         String sldString = sldData.getSld();
 
-        BufferedWriter out = null;
-        try {
-            out = new BufferedWriter(new FileWriter(fileToSave));
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(fileToSave))) {
             out.write(sldString);
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
-        } finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            }
         }
 
         sldData.setSLDFile(fileToSave);

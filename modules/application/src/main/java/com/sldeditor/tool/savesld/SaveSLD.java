@@ -109,20 +109,10 @@ public class SaveSLD implements SaveSLDInterface {
                                         + sldData.getLayerName());
 
                 // Write SLD string to file
-                BufferedWriter out = null;
-                try {
-                    out = new BufferedWriter(new FileWriter(fileToSave));
+                try (BufferedWriter out = new BufferedWriter(new FileWriter(fileToSave))) {
                     out.write(sldString);
                 } catch (IOException e) {
                     ConsoleManager.getInstance().exception(this, e);
-                } finally {
-                    try {
-                        if (out != null) {
-                            out.close();
-                        }
-                    } catch (IOException e) {
-                        ConsoleManager.getInstance().exception(this, e);
-                    }
                 }
 
                 // Save external images if requested
@@ -149,64 +139,68 @@ public class SaveSLD implements SaveSLDInterface {
                         }
 
                         if (parentFolder.exists()) {
-                            boolean writeOutputFile = true;
+                            boolean writeOutputFileFlag = true;
 
                             if (output.exists()) {
                                 if (!yesToAll) {
                                     overwriteDestinationDlg.overwrite(output);
 
                                     yesToAll = overwriteDestinationDlg.isYesToAll();
-                                    writeOutputFile = overwriteDestinationDlg.isWriteOutputFile();
+                                    writeOutputFileFlag =
+                                            overwriteDestinationDlg.isWriteOutputFile();
                                 }
                             }
 
-                            if (writeOutputFile) {
-                                FileOutputStream outputStream = null;
-                                BufferedReader in = null;
-                                try {
-                                    URL input =
-                                            URLs.extendUrl(
-                                                    sldData.getResourceLocator(), externalImage);
-                                    URLConnection connection = input.openConnection();
-
-                                    InputStream inputStream = connection.getInputStream();
-                                    in = new BufferedReader(new InputStreamReader(inputStream));
-
-                                    byte[] buffer = new byte[BUFFER_SIZE];
-                                    int n = -1;
-
-                                    outputStream = new FileOutputStream(output);
-                                    while ((n = inputStream.read(buffer)) != -1) {
-                                        outputStream.write(buffer, 0, n);
-                                    }
-                                    ConsoleManager.getInstance()
-                                            .information(
-                                                    this,
-                                                    Localisation.getField(
-                                                                    SaveSLDTool.class,
-                                                                    "SaveSLDTool.savingExternalImage")
-                                                            + " "
-                                                            + externalImage);
-                                } catch (MalformedURLException e) {
-                                    ConsoleManager.getInstance().exception(this, e);
-                                } catch (IOException e) {
-                                    ConsoleManager.getInstance().exception(this, e);
-                                } finally {
-                                    try {
-                                        if (in != null) {
-                                            in.close();
-                                        }
-                                        if (outputStream != null) {
-                                            outputStream.close();
-                                        }
-                                    } catch (IOException e) {
-                                        ConsoleManager.getInstance().exception(this, e);
-                                    }
-                                }
+                            if (writeOutputFileFlag) {
+                                writeOutputFile(sldData, externalImage, output);
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Write output file.
+     *
+     * @param sldData the sld data
+     * @param externalImage the external image
+     * @param output the output
+     */
+    private void writeOutputFile(SLDDataInterface sldData, String externalImage, File output) {
+        URL input;
+        InputStream inputStream = null;
+        try {
+            input = URLs.extendUrl(sldData.getResourceLocator(), externalImage);
+            URLConnection connection = input.openConnection();
+
+            inputStream = connection.getInputStream();
+        } catch (MalformedURLException e) {
+            ConsoleManager.getInstance().exception(this, e);
+        } catch (IOException e) {
+            ConsoleManager.getInstance().exception(this, e);
+        }
+
+        if (inputStream != null) {
+            try (FileOutputStream outputStream = new FileOutputStream(output);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(inputStream)); ) {
+                byte[] buffer = new byte[BUFFER_SIZE];
+                int n = -1;
+
+                while ((n = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, n);
+                }
+                ConsoleManager.getInstance()
+                        .information(
+                                this,
+                                Localisation.getField(
+                                                SaveSLDTool.class,
+                                                "SaveSLDTool.savingExternalImage")
+                                        + " "
+                                        + externalImage);
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(this, e);
             }
         }
     }

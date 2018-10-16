@@ -478,7 +478,13 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
     private boolean saveGridImage(
             BufferedImage image, String formatName, File destinationFile, int dpi)
             throws IOException {
-        destinationFile.delete();
+        if (!destinationFile.delete()) {
+            ConsoleManager.getInstance()
+                    .information(
+                            this,
+                            String.format(
+                                    "Failed to delete '%s'", destinationFile.getAbsolutePath()));
+        }
 
         for (Iterator<ImageWriter> iw = ImageIO.getImageWritersByFormatName(formatName);
                 iw.hasNext(); ) {

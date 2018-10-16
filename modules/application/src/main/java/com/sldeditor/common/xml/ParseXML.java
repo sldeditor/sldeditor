@@ -21,10 +21,6 @@ package com.sldeditor.common.xml;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import javax.xml.XMLConstants;
@@ -71,38 +67,41 @@ public class ParseXML {
         logger.debug("Reading : " + fullResourceName);
         InputStream inputStream = ParseXML.class.getResourceAsStream(fullResourceName);
 
-        if (inputStream == null) {
-            File file = new File(fullResourceName);
-
-            if (!file.exists()) {
-                ConsoleManager.getInstance()
-                        .error(
-                                ParseXML.class,
-                                Localisation.getField(
-                                                ParseXML.class, "ParseXML.failedToFindResource")
-                                        + fullResourceName);
-                return null;
-            }
-            try {
-                inputStream = new FileInputStream(file);
-            } catch (FileNotFoundException e) {
-                ConsoleManager.getInstance()
-                        .error(
-                                ParseXML.class,
-                                Localisation.getField(
-                                                ParseXML.class, "ParseXML.failedToFindResource")
-                                        + fullResourceName);
-                return null;
-            } finally {
-                try {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                } catch (IOException e) {
-                    ConsoleManager.getInstance().error(ParseXML.class, e.getMessage());
-                }
-            }
-        }
+        //        if (inputStream == null) {
+        //            File file = new File(fullResourceName);
+        //
+        //            if (!file.exists()) {
+        //                ConsoleManager.getInstance()
+        //                        .error(
+        //                                ParseXML.class,
+        //                                Localisation.getField(
+        //                                                ParseXML.class,
+        // "ParseXML.failedToFindResource")
+        //                                        + fullResourceName);
+        //                return null;
+        //            }
+        //            try {
+        //                inputStream = new FileInputStream(file);
+        //            } catch (FileNotFoundException e) {
+        //                ConsoleManager.getInstance()
+        //                        .error(
+        //                                ParseXML.class,
+        //                                Localisation.getField(
+        //                                                ParseXML.class,
+        // "ParseXML.failedToFindResource")
+        //                                        + fullResourceName);
+        //                return null;
+        //            } finally {
+        //                try {
+        //                    if (inputStream != null) {
+        //                        inputStream.close();
+        //                    }
+        //                } catch (IOException e) {
+        //                    ConsoleManager.getInstance().error(ParseXML.class, e.getMessage());
+        //                    return null;
+        //                }
+        //            }
+        //        }
 
         ValidationEventCollector vec = new ValidationEventCollector();
         URL xsdURL = ParseXML.class.getResource(schemaResource);
@@ -121,33 +120,43 @@ public class ParseXML {
         } catch (SAXException e) {
             ConsoleManager.getInstance().exception(ParseXML.class, e);
         } catch (javax.xml.bind.UnmarshalException ex) {
-
-            if (vec != null && vec.hasEvents()) {
-
-                for (ValidationEvent ve : vec.getEvents()) {
-                    String msg = ve.getMessage();
-                    ValidationEventLocator vel = ve.getLocator();
-
-                    String message =
-                            String.format(
-                                    "%s %s %s %s %s %d %s %d %s",
-                                    Localisation.getField(
-                                            ParseXML.class, "ParseXML.failedToValidate"),
-                                    fullResourceName,
-                                    Localisation.getField(ParseXML.class, "ParseXML.usingXSD"),
-                                    xsdURL.toString(),
-                                    Localisation.getField(ParseXML.class, "ParseXML.line"),
-                                    vel.getLineNumber(),
-                                    Localisation.getField(ParseXML.class, "ParseXML.column"),
-                                    vel.getColumnNumber(),
-                                    msg);
-                    ConsoleManager.getInstance().error(ParseXML.class, message);
-                }
-            }
+            outputParseErrors(fullResourceName, vec, xsdURL);
         } catch (JAXBException e) {
             ConsoleManager.getInstance().exception(ParseXML.class, e);
         }
         return null;
+    }
+
+    /**
+     * Output parse errors.
+     *
+     * @param fullResourceName the full resource name
+     * @param vec the vec
+     * @param xsdURL the xsd URL
+     */
+    private static void outputParseErrors(
+            String fullResourceName, ValidationEventCollector vec, URL xsdURL) {
+        if (vec != null && vec.hasEvents()) {
+
+            for (ValidationEvent ve : vec.getEvents()) {
+                String msg = ve.getMessage();
+                ValidationEventLocator vel = ve.getLocator();
+
+                String message =
+                        String.format(
+                                "%s %s %s %s %s %d %s %d %s",
+                                Localisation.getField(ParseXML.class, "ParseXML.failedToValidate"),
+                                fullResourceName,
+                                Localisation.getField(ParseXML.class, "ParseXML.usingXSD"),
+                                xsdURL.toString(),
+                                Localisation.getField(ParseXML.class, "ParseXML.line"),
+                                vel.getLineNumber(),
+                                Localisation.getField(ParseXML.class, "ParseXML.column"),
+                                vel.getColumnNumber(),
+                                msg);
+                ConsoleManager.getInstance().error(ParseXML.class, message);
+            }
+        }
     }
 
     /**

@@ -50,7 +50,7 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
     private static DatabaseConnectionManagerInterface instance = null;
 
     /** The DatabaseClientInterface class to create. */
-    public List<DatabaseClientInterface> databaseClientClassList =
+    private List<DatabaseClientInterface> databaseClientClassList =
             new ArrayList<DatabaseClientInterface>();
 
     /** The connection map. */

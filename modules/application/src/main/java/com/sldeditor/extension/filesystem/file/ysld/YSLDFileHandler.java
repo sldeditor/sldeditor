@@ -221,24 +221,13 @@ public class YSLDFileHandler implements FileHandlerInterface {
             ysldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.YSLD);
         }
 
-        BufferedWriter out = null;
-        try {
-            out = new BufferedWriter(new FileWriter(fileToSave));
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(fileToSave))) {
             String contents =
                     ysldWriter.encodeSLD(
                             sldData.getResourceLocator(), SelectedSymbol.getInstance().getSld());
             out.write(contents);
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
-        } finally {
-
-            try {
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            }
         }
 
         sldData.setSLDFile(fileToSave);

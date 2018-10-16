@@ -50,7 +50,7 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
     private static GeoServerConnectionManagerInterface instance = null;
 
     /** The GeoServerClientInterface class to create. */
-    public static Class<?> geoServerClientClass = GeoServerClient.class;
+    private static Class<?> geoServerClientClass = GeoServerClient.class;
 
     /** The connection map. */
     private Map<GeoServerConnection, GeoServerClientInterface> connectionMap =
@@ -198,5 +198,23 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
     /** Destroy instance. */
     public static void destroyInstance() {
         instance = null;
+    }
+
+    /**
+     * Override geo server client class.
+     *
+     * @param overrideGeoServerClientClass the override geo server client class
+     */
+    public static void overrideGeoServerClientClass(Class<?> overrideGeoServerClientClass) {
+        geoServerClientClass = overrideGeoServerClientClass;
+    }
+
+    /**
+     * Gets the geo server client class.
+     *
+     * @return the geoServerClientClass
+     */
+    public static Class<?> getGeoServerClientClass() {
+        return geoServerClientClass;
     }
 }
