@@ -1,6 +1,6 @@
 addons:
   sonarcloud:
-    organization: "robward-scisys-github"
+    organization: "robward-scisys-github" # the key of the org you chose at step #3
 
 jdk :
   - oraclejdk8
