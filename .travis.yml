@@ -1,6 +1,8 @@
 addons:
   sonarcloud:
-    organization: "robward-scisys-github" # the key of the org you chose at step #3
+    organization: "robward-scisys-github"
+    token:
+      secure: "$SONAR_TOKEN"
 
 jdk :
   - oraclejdk8
