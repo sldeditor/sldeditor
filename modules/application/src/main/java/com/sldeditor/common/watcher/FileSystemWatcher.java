@@ -33,8 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class that implements a file watcher to inform the file system tree whether files have been added
- * or deleted.
+ * Class that implements a file watcher to inform the file system tree whether files have been added or deleted.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -48,6 +47,9 @@ public class FileSystemWatcher implements Runnable {
 
     /** The instance. */
     private static FileSystemWatcher instance = null;
+
+    /** The stop polling flag. */
+    private boolean stopPolling = false;
 
     /** Default constructor. */
     private FileSystemWatcher() {
@@ -74,12 +76,8 @@ public class FileSystemWatcher implements Runnable {
             // Register three events. i.e. whenever a file is created, deleted or
             // modified the watcher gets informed
             try {
-                WatchKey key =
-                        path.register(
-                                watchService,
-                                StandardWatchEventKinds.ENTRY_CREATE,
-                                StandardWatchEventKinds.ENTRY_DELETE,
-                                StandardWatchEventKinds.ENTRY_MODIFY);
+                WatchKey key = path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
+                        StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
 
                 watcherMap.put(key, parent);
 
@@ -125,9 +123,8 @@ public class FileSystemWatcher implements Runnable {
     private void internal_watchDirectoryPath() throws IOException {
         WatchKey key = null;
 
-        boolean stopPolling = false;
         // Poll for events in an infinite loop
-        for (; ; ) {
+        for (;;) {
             try {
                 // The take method waits till watch service receives a
                 // notification
@@ -137,8 +134,10 @@ public class FileSystemWatcher implements Runnable {
             }
 
             // once a key is obtained, we poll for events on that key
-            List<WatchEvent<?>> keys = key.pollEvents();
-            handleWatchEvents(key, keys);
+            if (key != null) {
+                List<WatchEvent<?>> keys = key.pollEvents();
+                handleWatchEvents(key, keys);
+            }
 
             if (stopPolling) {
                 break;

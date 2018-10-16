@@ -307,7 +307,7 @@ public class FileSystemExtension
                         combinedFiles.setFolderName(selectedFiles.getFolderName());
                         combinedFiles.setConnectionData(selectedFiles.getConnectionData());
                         combinedFiles.setIsFolder(
-                                combinedFiles.isFolder() | selectedFiles.isFolder());
+                                combinedFiles.isFolder() || selectedFiles.isFolder());
 
                         List<SLDDataInterface> handlerDataList = selectedFiles.getSldData();
                         if (handlerDataList != null) {

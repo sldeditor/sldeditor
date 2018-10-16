@@ -54,3 +54,5 @@ modules/application/v8\.6\.0\.0/
 /build/vagrant-geoserver/.vagrant
 
 bin/SLDEditor_installer\.exe
+
+build/macosInstaller/SLDEditor-Installer\.dmg
