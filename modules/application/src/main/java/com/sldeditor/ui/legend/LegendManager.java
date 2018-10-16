@@ -335,7 +335,9 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
         if (selectedStyle.getName() != null) {
             styleName = selectedStyle.getName();
         } else {
-            styleName = String.format("Style %d", styleList.indexOf(selectedStyle));
+            styleName =
+                    String.format(
+                            "Style %d", (styleList != null) ? styleList.indexOf(selectedStyle) : 0);
         }
 
         styleMap.put(styleName, selectedStyle);

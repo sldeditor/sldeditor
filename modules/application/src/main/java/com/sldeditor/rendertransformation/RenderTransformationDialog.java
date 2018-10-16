@@ -392,7 +392,7 @@ public class RenderTransformationDialog extends JDialog {
             String title =
                     String.format(
                             "%s - %s : %s",
-                            value.name,
+                            (value != null) ? value.name : "unknown",
                             Localisation.getString(
                                     RenderTransformationDialog.class,
                                     "RenderTransformationDialog.type"),

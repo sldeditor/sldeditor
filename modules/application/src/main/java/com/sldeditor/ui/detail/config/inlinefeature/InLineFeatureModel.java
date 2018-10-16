@@ -281,11 +281,7 @@ public class InLineFeatureModel extends AbstractTableModel {
         SimpleFeature feature = getFeature(rowIndex);
 
         if (feature != null) {
-            if (columnIndex == getGeometryFieldIndex()) {
-                feature.setAttribute(columnIndex, aValue);
-            } else {
-                feature.setAttribute(columnIndex, aValue);
-            }
+            feature.setAttribute(columnIndex, aValue);
         }
 
         if (parentObj != null) {

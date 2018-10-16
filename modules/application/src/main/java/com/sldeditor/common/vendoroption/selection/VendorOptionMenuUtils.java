@@ -61,25 +61,28 @@ public class VendorOptionMenuUtils {
             if (versionDataList != null) {
                 for (VersionData versionData : versionDataList) {
 
-                    String key = getKey(versionData);
-                    List<ValueComboBoxData> dataList = map.get(key);
+                    if (versionData != null) {
+                        String key = getKey(versionData);
+                        List<ValueComboBoxData> dataList = map.get(key);
 
-                    if (dataList == null) {
-                        dataList = new ArrayList<ValueComboBoxData>();
-                        map.put(key, dataList);
-                        keyOrderList.add(key);
+                        if (dataList == null) {
+                            dataList = new ArrayList<ValueComboBoxData>();
+                            map.put(key, dataList);
+                            keyOrderList.add(key);
+                        }
+
+                        VendorOptionVersion vendorOptionVersion =
+                                new VendorOptionVersion(
+                                        versionData.getVendorOptionType(), versionData);
+                        ValueComboBoxData value =
+                                new ValueComboBoxData(
+                                        versionData.getVersionString(),
+                                        versionData.getVersionString(),
+                                        vendorOptionVersion,
+                                        String.class);
+                        dataList.add(value);
+                        valueMap.put(versionData.getVersionString(), value);
                     }
-
-                    VendorOptionVersion vendorOptionVersion =
-                            new VendorOptionVersion(versionData.getVendorOptionType(), versionData);
-                    ValueComboBoxData value =
-                            new ValueComboBoxData(
-                                    versionData.getVersionString(),
-                                    versionData.getVersionString(),
-                                    vendorOptionVersion,
-                                    String.class);
-                    dataList.add(value);
-                    valueMap.put(versionData.getVersionString(), value);
                 }
 
                 // Add groups to menu combo

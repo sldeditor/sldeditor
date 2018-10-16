@@ -207,17 +207,25 @@ public class FileTreeNode extends DefaultMutableTreeNode
                 try {
                     Path pathPath = Paths.get(path);
                     stream = Files.newDirectoryStream(pathPath);
+
+                    if (stream != null) {
+                        for (Path path : stream) {
+                            names.add(path.getFileName());
+                        }
+                    }
                 } catch (AccessDeniedException e) {
                     // Access was denied
                 } catch (NotDirectoryException e) {
                     // Ignore
                 } catch (IOException e) {
                     ConsoleManager.getInstance().exception(this, e);
-                }
-
-                if (stream != null) {
-                    for (Path path : stream) {
-                        names.add(path.getFileName());
+                } finally {
+                    try {
+                        if (stream != null) {
+                            stream.close();
+                        }
+                    } catch (IOException e) {
+                        ConsoleManager.getInstance().exception(this, e);
                     }
                 }
 

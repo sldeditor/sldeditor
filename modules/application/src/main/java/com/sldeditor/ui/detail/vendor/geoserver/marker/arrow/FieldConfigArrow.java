@@ -337,7 +337,9 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
                     field = fieldConfigManager.get(FieldIdEnum.STROKE_WIDTH);
                     if (field != null) {
                         Expression strokeWidth = field.getExpression();
-                        stroke.setWidth(strokeWidth);
+                        if (stroke != null) {
+                            stroke.setWidth(strokeWidth);
+                        }
                     }
 
                     Expression symbolSize = null;
@@ -539,7 +541,9 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(java.util.Map)
+     * @see
+     * com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(
+     * java.util.Map)
      */
     @Override
     protected void populateVendorOptionFieldMap(
@@ -573,7 +577,8 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(

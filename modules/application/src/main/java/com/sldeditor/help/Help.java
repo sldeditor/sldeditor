@@ -76,7 +76,9 @@ public class Help {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
             Desktop desktop = Desktop.getDesktop();
             try {
-                desktop.browse(url.toURI());
+                if (url != null) {
+                    desktop.browse(url.toURI());
+                }
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
             }

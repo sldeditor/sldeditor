@@ -358,7 +358,9 @@ public class BatchUpdateFontData {
                     }
                 }
             }
-            sldData.updateSLDContents(sldContents);
+            if (sldData != null) {
+                sldData.updateSLDContents(sldContents);
+            }
 
             setOriginalData(font);
         }

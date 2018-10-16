@@ -150,7 +150,9 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.FieldId)
+     * @see
+     * com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.ui.detail.config.xml.
+     * FieldId)
      */
     @Override
     public void dataChanged(FieldIdEnum changedField) {
@@ -177,15 +179,21 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.RasterSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.RasterSymbolizer)
      */
     @Override
     public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.FeatureTypeStyle)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.FeatureTypeStyle)
      */
     @Override
     public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
@@ -200,7 +208,9 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.PolygonSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.PolygonSymbolizer)
      */
     @Override
     public void updateSymbol(PolygonSymbolizer polygonSymbolizer) {
@@ -215,7 +225,9 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.TextSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.TextSymbolizer)
      */
     @Override
     public void updateSymbol(TextSymbolizer textSymbolizer) {
@@ -330,7 +342,9 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.ui.iface.UpdateSymbolInterface)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#setParentPanel(com.sldeditor.
+     * ui.iface.UpdateSymbolInterface)
      */
     @Override
     public void setParentPanel(UpdateSymbolInterface parent) {
@@ -360,7 +374,9 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.PolygonSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * PolygonSymbolizer)
      */
     @Override
     public void populate(PolygonSymbolizer polygonSymbolizer) {
@@ -375,7 +391,8 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * selectedsymbol.SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
@@ -385,15 +402,21 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.RasterSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * RasterSymbolizer)
      */
     @Override
     public void populate(RasterSymbolizer rasterSymbolizer) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.FeatureTypeStyle)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * FeatureTypeStyle)
      */
     @Override
     public void populate(FeatureTypeStyle featureTypeStyle) {
@@ -408,7 +431,9 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.TextSymbolizer)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * TextSymbolizer)
      */
     @Override
     public void populate(TextSymbolizer textSymbolizer) {
@@ -504,7 +529,7 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
                 fillGroup.enable(enableFill);
             }
             GroupConfigInterface strokeGroup = getGroup(GroupIdEnum.VO_TEXTSYMBOLIZER_2_STROKE);
-            if (strokeGroup != null) {
+            if ((strokeGroup != null) && (group != null)) {
                 group.enable(enableStroke);
             }
 
@@ -559,7 +584,8 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(
@@ -583,7 +609,8 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.MultiOptionSelectedInterface#optionSelected(java.lang.Class, java.lang.String)
+     * @see com.sldeditor.ui.iface.MultiOptionSelectedInterface#optionSelected(java.lang.Class,
+     * java.lang.String)
      */
     @Override
     public void optionSelected(Class<?> fieldPanelId, String selectedItem) {
@@ -642,16 +669,24 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.SelectedChannelType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#populate(org.geotools.styling.
+     * SelectedChannelType)
      */
     @Override
     public void populate(SelectedChannelType channelType) {
         // Do nothing
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.styling.SelectedChannelType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface#updateSymbol(org.geotools.
+     * styling.SelectedChannelType)
      */
     @Override
     public void updateSymbol(SelectedChannelType channelType) {

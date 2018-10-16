@@ -664,11 +664,12 @@ public class DatabaseConnectionFactory {
 
                         DatabaseConnection dbConnection = createDefault(dbConnectionType);
 
-                        Map<String, String> connectionDataMap = new HashMap<String, String>();
+                        if (dbConnection != null) {
+                            Map<String, String> connectionDataMap = new HashMap<String, String>();
 
-                        connectionDataMap.put(JDBCDataStoreFactory.DATABASE.key, filename);
-                        dbConnection.setConnectionDataMap(connectionDataMap);
-
+                            connectionDataMap.put(JDBCDataStoreFactory.DATABASE.key, filename);
+                            dbConnection.setConnectionDataMap(connectionDataMap);
+                        }
                         return dbConnection;
                     }
                 }

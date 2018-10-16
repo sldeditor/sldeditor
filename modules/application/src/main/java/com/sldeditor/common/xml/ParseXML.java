@@ -24,6 +24,7 @@ import com.sldeditor.common.localisation.Localisation;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import javax.xml.XMLConstants;
@@ -92,6 +93,12 @@ public class ParseXML {
                                                 ParseXML.class, "ParseXML.failedToFindResource")
                                         + fullResourceName);
                 return null;
+            } finally {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    ConsoleManager.getInstance().error(ParseXML.class, e.getMessage());
+                }
             }
         }
 

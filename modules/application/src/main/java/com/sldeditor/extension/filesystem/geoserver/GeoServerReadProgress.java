@@ -148,8 +148,9 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.input.geoserver.GeoServerReadProgressInterface#readStylesComplete(com.sldeditor.extension.input.geoserver.
-     * GeoServerConnection, java.util.Map, boolean)
+     * @see
+     * com.sldeditor.extension.input.geoserver.GeoServerReadProgressInterface#readStylesComplete(com
+     * .sldeditor.extension.input.geoserver. GeoServerConnection, java.util.Map, boolean)
      */
     @Override
     public void readStylesComplete(
@@ -264,6 +265,10 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
      */
     private void refreshWorkspace(
             GeoServerConnection connection, GeoServerWorkspaceNode workspaceNode) {
+        if ((connection == null) || workspaceNode == null) {
+            return;
+        }
+
         workspaceNode.removeAllChildren();
 
         Map<String, List<StyleWrapper>> styleMap = geoServerStyleMap.get(connection);
@@ -363,7 +368,8 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.input.GeoServerInputInterface#readLayersProgress(com.sldeditor.extension.input.GeoServerConnection, int, int)
+     * @see com.sldeditor.extension.input.GeoServerInputInterface#readLayersProgress(com.sldeditor.
+     * extension.input.GeoServerConnection, int, int)
      */
     @Override
     public void readLayersProgress(GeoServerConnection connection, int count, int total) {
@@ -379,7 +385,9 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.input.GeoServerInputInterface#populateLayers(com.sldeditor.extension.input.GeoServerConnection, java.util.Map)
+     * @see
+     * com.sldeditor.extension.input.GeoServerInputInterface#populateLayers(com.sldeditor.extension.
+     * input.GeoServerConnection, java.util.Map)
      */
     @Override
     public void readLayersComplete(
@@ -399,8 +407,8 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.input.geoserver.GeoServerInputInterface#readStylesProgress(com.sldeditor.extension.input.geoserver.GeoServerConnection,
-     * int, int)
+     * @see com.sldeditor.extension.input.geoserver.GeoServerInputInterface#readStylesProgress(com.
+     * sldeditor.extension.input.geoserver.GeoServerConnection, int, int)
      */
     @Override
     public void readStylesProgress(GeoServerConnection connection, int count, int total) {

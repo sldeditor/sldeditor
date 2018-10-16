@@ -93,7 +93,7 @@ public class ParameterFunctionUtils {
                 sb.append("\n  ");
                 List<Expression> subParameterList = getExpressionList(expression);
 
-                if (!subParameterList.isEmpty()) {
+                if ((subParameterList != null) && !subParameterList.isEmpty()) {
                     if (subParameterList.size() == 1) {
                         sb.append(subParameterList.get(0).toString());
                         sb.append(PARAMETER_NOT_SET);

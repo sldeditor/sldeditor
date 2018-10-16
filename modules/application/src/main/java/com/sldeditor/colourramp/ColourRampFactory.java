@@ -43,14 +43,11 @@ public class ColourRampFactory {
     private static Map<ColourRampPanelInterface, List<ColourRamp>> colourRampMap =
             new HashMap<ColourRampPanelInterface, List<ColourRamp>>();
 
-    /**
-     * Instantiates a new colour ramp factory.
-     */
-    private ColourRampFactory()
-    {
+    /** Instantiates a new colour ramp factory. */
+    private ColourRampFactory() {
         throw new IllegalStateException("ColourRampFactory class");
     }
-    
+
     /**
      * Populate.
      *

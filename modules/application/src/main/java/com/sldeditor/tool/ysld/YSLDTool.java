@@ -200,13 +200,20 @@ public class YSLDTool implements ToolInterface {
                                                     YSLDTool.class, "YSLDTool.exportToYSLDMsg")
                                             + " "
                                             + ysldFilename);
-                    BufferedWriter out;
+                    BufferedWriter out = null;
                     try {
                         out = new BufferedWriter(new FileWriter(fileToSave));
                         out.write(sldString);
-                        out.close();
                     } catch (IOException e) {
                         ConsoleManager.getInstance().exception(this, e);
+                    } finally {
+                        try {
+                            if (out != null) {
+                                out.close();
+                            }
+                        } catch (IOException e) {
+                            ConsoleManager.getInstance().exception(this, e);
+                        }
                     }
                 }
             }
@@ -249,13 +256,20 @@ public class YSLDTool implements ToolInterface {
                                     Localisation.getField(YSLDTool.class, "YSLDTool.exportToSLDMsg")
                                             + " "
                                             + sldFilename);
-                    BufferedWriter out;
+                    BufferedWriter out = null;
                     try {
                         out = new BufferedWriter(new FileWriter(fileToSave));
                         out.write(sldString);
-                        out.close();
                     } catch (IOException e) {
                         ConsoleManager.getInstance().exception(this, e);
+                    } finally {
+                        try {
+                            if (out != null) {
+                                out.close();
+                            }
+                        } catch (IOException e) {
+                            ConsoleManager.getInstance().exception(this, e);
+                        }
                     }
                 }
             }

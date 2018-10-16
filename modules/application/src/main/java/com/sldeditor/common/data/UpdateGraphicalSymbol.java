@@ -42,7 +42,9 @@ public class UpdateGraphicalSymbol implements ProcessGraphicSymbolInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.common.data.ProcessGraphicSymbolInterface#processGraphicalSymbol(java.net.URL, java.util.List, java.util.List)
+     * @see
+     * com.sldeditor.common.data.ProcessGraphicSymbolInterface#processGraphicalSymbol(java.net.URL,
+     * java.util.List, java.util.List)
      */
     @Override
     public void processGraphicalSymbol(
@@ -62,6 +64,10 @@ public class UpdateGraphicalSymbol implements ProcessGraphicSymbolInterface {
                     currentValue = currentValueURL.toExternalForm();
                 } catch (MalformedURLException e) {
                     ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
+                }
+
+                if (currentValueURL == null) {
+                    continue;
                 }
 
                 if ((resourceLocator == null) || RelativePath.hasHost(currentValueURL)) {

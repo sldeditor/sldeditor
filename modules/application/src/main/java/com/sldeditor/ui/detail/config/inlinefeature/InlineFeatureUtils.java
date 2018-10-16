@@ -337,11 +337,7 @@ public class InlineFeatureUtils {
      */
     public static GeometryTypeEnum combineGeometryType(List<GeometryTypeEnum> geometryFeatures) {
         if (geometryFeatures != null) {
-            if (geometryFeatures.size() == 1) {
-                return geometryFeatures.get(0);
-            } else {
-                return geometryFeatures.get(0);
-            }
+            return geometryFeatures.get(0);
         }
         return GeometryTypeEnum.UNKNOWN;
     }

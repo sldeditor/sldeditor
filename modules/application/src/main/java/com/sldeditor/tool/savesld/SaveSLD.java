@@ -109,13 +109,20 @@ public class SaveSLD implements SaveSLDInterface {
                                         + sldData.getLayerName());
 
                 // Write SLD string to file
-                BufferedWriter out;
+                BufferedWriter out = null;
                 try {
                     out = new BufferedWriter(new FileWriter(fileToSave));
                     out.write(sldString);
-                    out.close();
                 } catch (IOException e) {
                     ConsoleManager.getInstance().exception(this, e);
+                } finally {
+                    try {
+                        if (out != null) {
+                            out.close();
+                        }
+                    } catch (IOException e) {
+                        ConsoleManager.getInstance().exception(this, e);
+                    }
                 }
 
                 // Save external images if requested
@@ -154,6 +161,8 @@ public class SaveSLD implements SaveSLDInterface {
                             }
 
                             if (writeOutputFile) {
+                                FileOutputStream outputStream = null;
+                                BufferedReader in = null;
                                 try {
                                     URL input =
                                             URLs.extendUrl(
@@ -161,18 +170,15 @@ public class SaveSLD implements SaveSLDInterface {
                                     URLConnection connection = input.openConnection();
 
                                     InputStream inputStream = connection.getInputStream();
-                                    BufferedReader in =
-                                            new BufferedReader(new InputStreamReader(inputStream));
+                                    in = new BufferedReader(new InputStreamReader(inputStream));
 
                                     byte[] buffer = new byte[BUFFER_SIZE];
                                     int n = -1;
 
-                                    FileOutputStream outputStream = new FileOutputStream(output);
+                                    outputStream = new FileOutputStream(output);
                                     while ((n = inputStream.read(buffer)) != -1) {
                                         outputStream.write(buffer, 0, n);
                                     }
-                                    in.close();
-                                    outputStream.close();
                                     ConsoleManager.getInstance()
                                             .information(
                                                     this,
@@ -185,6 +191,17 @@ public class SaveSLD implements SaveSLDInterface {
                                     ConsoleManager.getInstance().exception(this, e);
                                 } catch (IOException e) {
                                     ConsoleManager.getInstance().exception(this, e);
+                                } finally {
+                                    try {
+                                        if (in != null) {
+                                            in.close();
+                                        }
+                                        if (outputStream != null) {
+                                            outputStream.close();
+                                        }
+                                    } catch (IOException e) {
+                                        ConsoleManager.getInstance().exception(this, e);
+                                    }
                                 }
                             }
                         }
