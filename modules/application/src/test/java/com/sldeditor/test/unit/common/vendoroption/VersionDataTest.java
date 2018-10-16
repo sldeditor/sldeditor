@@ -40,7 +40,7 @@ public class VersionDataTest {
     @Test
     public void testClone() {
         VersionData versionData1 = VersionData.decode(getClass(), "1.2.3");
-        VersionData versionData2 = versionData1.clone();
+        VersionData versionData2 = new VersionData(versionData1);
         assertEquals(versionData1, versionData2);
     }
 

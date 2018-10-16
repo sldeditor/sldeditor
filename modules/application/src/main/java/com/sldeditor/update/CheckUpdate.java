@@ -66,7 +66,7 @@ public class CheckUpdate {
 
                 int result = current.compareTo(latestData.getVersion());
 
-                return (result == -1);
+                return (result < 0);
             }
         }
         return false;

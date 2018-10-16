@@ -53,7 +53,7 @@ public class StyleWrapperTest {
         assertEquals(styleWrapper.getWorkspace().compareTo(expectedWorkspace), 0);
 
         // Clone
-        StyleWrapper clone = styleWrapper.clone();
+        StyleWrapper clone = new StyleWrapper(styleWrapper);
 
         assertTrue(styleWrapper.compareTo(null) != 0);
         assertTrue(styleWrapper.compareTo(clone) == 0);

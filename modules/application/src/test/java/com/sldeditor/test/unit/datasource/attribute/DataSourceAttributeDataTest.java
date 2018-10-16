@@ -66,7 +66,7 @@ public class DataSourceAttributeDataTest {
         DataSourceAttributeData dsa =
                 new DataSourceAttributeData(expectedName, expectedType, expectedValue);
 
-        DataSourceAttributeData cloneDsa = dsa.clone();
+        DataSourceAttributeData cloneDsa = new DataSourceAttributeData(dsa);
 
         assertTrue(expectedName.compareTo(cloneDsa.getName()) == 0);
         assertEquals(expectedType, cloneDsa.getType());

@@ -252,7 +252,7 @@ public class GeoServerClientTest {
             styleWrapper.setStyle(styleName);
             assertTrue(client.uploadSLD(styleWrapper, sldContents));
             List<StyleWrapper> stylesToDeleteList = new ArrayList<StyleWrapper>();
-            stylesToDeleteList.add(styleWrapper.clone());
+            stylesToDeleteList.add(new StyleWrapper(styleWrapper));
 
             // Replace the existing style
             StyledLayer styledLayer = sld.layers().get(0);
@@ -271,7 +271,7 @@ public class GeoServerClientTest {
             String expectedWorkspace = TEST_PREFIX + "Test_workspace_" + timeString;
             styleWrapper.setWorkspace(expectedWorkspace);
             assertTrue(client.uploadSLD(styleWrapper, updatedSLDBody));
-            stylesToDeleteList.add(styleWrapper.clone());
+            stylesToDeleteList.add(new StyleWrapper(styleWrapper));
 
             actualWorkspaceList = client.getWorkspaceList();
             assertTrue(actualWorkspaceList.contains(expectedWorkspace));
@@ -347,11 +347,11 @@ public class GeoServerClientTest {
             assertFalse(client.deleteStyle(null));
             assertFalse(client.deleteStyle(new StyleWrapper()));
 
-            StyleWrapper tmpStyle = styleWrapper.clone();
+            StyleWrapper tmpStyle = new StyleWrapper(styleWrapper);
             tmpStyle.setStyle("invalid");
             assertFalse(client.deleteStyle(tmpStyle));
 
-            tmpStyle = styleWrapper.clone();
+            tmpStyle = new StyleWrapper(styleWrapper);
             tmpStyle.setWorkspace("invalid");
             assertFalse(client.deleteStyle(tmpStyle));
 

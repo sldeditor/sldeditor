@@ -26,7 +26,7 @@ import java.io.Serializable;
  *
  * @author Robert Ward (SCISYS)
  */
-public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Cloneable {
+public class StyleWrapper implements Comparable<StyleWrapper>, Serializable {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2100490761170323010L;
 
@@ -121,17 +121,13 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable, Clo
     }
 
     /**
-     * Clone.
+     * Copy constructor.
      *
-     * @return the style wrapper
+     * @return the style wrapper to copy
      */
-    @Override
-    public StyleWrapper clone() {
-        StyleWrapper clonedStyleWrapper = new StyleWrapper();
-        clonedStyleWrapper.setWorkspace(this.workspace);
-        clonedStyleWrapper.setStyle(this.style);
-
-        return clonedStyleWrapper;
+    public StyleWrapper(StyleWrapper clone) {
+        this.workspace = clone.getWorkspace();
+        this.style = clone.getStyle();
     }
 
     /*

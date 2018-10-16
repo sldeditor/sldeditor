@@ -95,9 +95,6 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     /** The Constant APPLICATION_FRAME_HEIGHT. */
     private static final int APPLICATION_FRAME_HEIGHT = 800;
 
-    /** The Constant NO_SLDEDITOR_FILE_SET. */
-    private static final String NO_SLDEDITOR_FILE_SET = "Not set";
-
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 

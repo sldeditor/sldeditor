@@ -95,7 +95,9 @@ public class ParseXML {
                 return null;
             } finally {
                 try {
-                    inputStream.close();
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
                 } catch (IOException e) {
                     ConsoleManager.getInstance().error(ParseXML.class, e.getMessage());
                 }

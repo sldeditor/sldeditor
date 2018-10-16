@@ -232,8 +232,8 @@ public class RenderPanelImpl extends JPanel
             String displayString = dataLoaded ? INVALID_SYMBOL_STRING : NO_DATA_SOURCE;
             g.setColor(Color.black);
             Rectangle2D bounds = g.getFontMetrics().getStringBounds(displayString, g);
-            double x = (width / 2) - (bounds.getWidth() / 2);
-            double y = (height / 2) - (bounds.getHeight() / 2);
+            double x = ((double) width / 2.0) - (bounds.getWidth() / 2.0);
+            double y = ((double) height / 2.0) - (bounds.getHeight() / 2.0);
             g.drawString(displayString, (int) x, (int) y);
         }
         g.setColor(Color.black);

@@ -434,7 +434,7 @@ public class PrefManagerTest {
 
         PrefManager.getInstance().setPrefData(prefData);
 
-        PrefData copy = prefData.clone();
+        PrefData copy = new PrefData(prefData);
         copy.setLastViewedKey(PrefDataLastViewedEnum.GEOSERVER);
         PrefManager.getInstance().setPrefData(copy);
 

@@ -246,7 +246,7 @@ public class PrefManager implements UndoActionInterface {
      * @param newPrefData the new pref data
      */
     public void setPrefData(PrefData newPrefData) {
-        oldValueObj = prefData.clone();
+        oldValueObj = new PrefData(prefData);
 
         setUseAntiAlias(newPrefData.isUseAntiAlias());
         setVendorOptionList(newPrefData.getVendorOptionVersionList(), true);
@@ -479,6 +479,6 @@ public class PrefManager implements UndoActionInterface {
      * @return the pref data
      */
     public PrefData getPrefData() {
-        return prefData.clone();
+        return new PrefData(prefData);
     }
 }
