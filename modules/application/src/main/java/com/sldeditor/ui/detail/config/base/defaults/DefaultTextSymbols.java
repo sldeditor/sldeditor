@@ -19,6 +19,7 @@
 
 package com.sldeditor.ui.detail.config.base.defaults;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -112,13 +113,13 @@ public class DefaultTextSymbols extends DefaultBase {
 
                 return obj;
             } catch (NoSuchFieldException e) {
-                e.printStackTrace();
+                ConsoleManager.getInstance().exception(DefaultTextSymbols.class, e);
             } catch (SecurityException e) {
-                e.printStackTrace();
+                ConsoleManager.getInstance().exception(DefaultTextSymbols.class, e);
             } catch (IllegalArgumentException e) {
-                e.printStackTrace();
+                ConsoleManager.getInstance().exception(DefaultTextSymbols.class, e);
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                ConsoleManager.getInstance().exception(DefaultTextSymbols.class, e);
             }
         }
 

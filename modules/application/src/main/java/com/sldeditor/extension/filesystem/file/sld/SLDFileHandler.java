@@ -195,7 +195,7 @@ public class SLDFileHandler implements FileHandlerInterface {
 
                 list.add(sldData);
             } catch (IOException e) {
-                e.printStackTrace();
+                ConsoleManager.getInstance().exception(this, e);
             }
         }
     }

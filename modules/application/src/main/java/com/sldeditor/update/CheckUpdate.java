@@ -19,6 +19,7 @@
 
 package com.sldeditor.update;
 
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import java.awt.Desktop;
 import java.awt.Desktop.Action;
@@ -91,7 +92,7 @@ public class CheckUpdate {
                 try {
                     desktop.browse(url.toURI());
                 } catch (IOException | URISyntaxException e) {
-                    e.printStackTrace();
+                    ConsoleManager.getInstance().exception(this, e);
                 }
             }
         }

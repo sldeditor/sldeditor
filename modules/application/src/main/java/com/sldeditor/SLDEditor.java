@@ -794,7 +794,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         try {
             buff = ImageIO.read(getClass().getResourceAsStream(filename));
         } catch (IOException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         }
 
         return buff;

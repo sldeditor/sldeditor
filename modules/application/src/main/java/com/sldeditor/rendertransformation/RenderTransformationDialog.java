@@ -22,6 +22,7 @@ package com.sldeditor.rendertransformation;
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.DataTypeEnum;
 import com.sldeditor.common.connection.GeoServerConnectionManagerInterface;
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
@@ -549,7 +550,7 @@ public class RenderTransformationDialog extends JDialog {
 
                             list.add(connection);
                         } catch (MalformedURLException e) {
-                            e.printStackTrace();
+                            ConsoleManager.getInstance().exception(this, e);
                         }
                         return list;
                     }

@@ -19,6 +19,7 @@
 
 package com.sldeditor.help;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.awt.Desktop;
 import java.awt.Desktop.Action;
 import java.io.IOException;
@@ -69,8 +70,8 @@ public class Help {
             } else {
                 url = new URL(USER_GUIDE_URL + "#" + section);
             }
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
+        } catch (MalformedURLException e) {
+            ConsoleManager.getInstance().exception(this, e);
         }
 
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
@@ -80,7 +81,7 @@ public class Help {
                     desktop.browse(url.toURI());
                 }
             } catch (IOException | URISyntaxException e) {
-                e.printStackTrace();
+                ConsoleManager.getInstance().exception(this, e);
             }
         }
     }

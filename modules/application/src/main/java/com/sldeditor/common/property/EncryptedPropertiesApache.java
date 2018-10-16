@@ -19,6 +19,7 @@
 
 package com.sldeditor.common.property;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
@@ -73,15 +74,15 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
             encrypter.init(Cipher.ENCRYPT_MODE, k, ps);
             decrypter.init(Cipher.DECRYPT_MODE, k, ps);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         } catch (InvalidKeyException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         } catch (InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         }
     }
 
@@ -96,11 +97,11 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
             byte[] utf8 = decrypter.doFinal(dec);
             return new String(utf8, "UTF-8");
         } catch (IOException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         } catch (BadPaddingException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         }
 
         return str;
@@ -117,11 +118,11 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
             byte[] enc = encrypter.doFinal(utf8);
             return new Base64().encodeToString(enc);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         } catch (BadPaddingException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         }
 
         return "";

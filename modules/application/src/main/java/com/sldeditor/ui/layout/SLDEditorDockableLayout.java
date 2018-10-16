@@ -146,7 +146,7 @@ public class SLDEditorDockableLayout implements UILayoutInterface {
             try {
                 control.read(file);
             } catch (IOException e) {
-                e.printStackTrace();
+                ConsoleManager.getInstance().exception(this, e);
             }
         }
     }
@@ -175,7 +175,7 @@ public class SLDEditorDockableLayout implements UILayoutInterface {
         try {
             control.write(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         }
     }
 

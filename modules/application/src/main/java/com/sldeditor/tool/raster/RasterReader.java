@@ -179,7 +179,7 @@ public class RasterReader implements RasterReaderInterface {
                         valueList.add(dest);
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    ConsoleManager.getInstance().exception(this, e);
                 }
             }
         }

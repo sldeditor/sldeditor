@@ -65,7 +65,7 @@ public class EncryptedPropertiesFactory {
 
                 instance.initialise(password);
             } catch (Exception e) {
-                e.printStackTrace();
+                ConsoleManager.getInstance().exception(EncryptedPropertiesFactory.class, e);
             }
         }
 

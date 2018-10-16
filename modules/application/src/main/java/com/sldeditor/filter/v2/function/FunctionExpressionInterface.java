@@ -19,6 +19,7 @@
 
 package com.sldeditor.filter.v2.function;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
@@ -131,9 +132,11 @@ public class FunctionExpressionInterface {
                     try {
                         newObj = type.newInstance();
                     } catch (InstantiationException e) {
-                        e.printStackTrace();
+                        ConsoleManager.getInstance()
+                                .exception(FunctionExpressionInterface.class, e);
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        ConsoleManager.getInstance()
+                                .exception(FunctionExpressionInterface.class, e);
                     }
 
                     parameters.add(ff.literal(newObj));

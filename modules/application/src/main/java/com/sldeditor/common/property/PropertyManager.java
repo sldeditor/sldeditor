@@ -19,6 +19,7 @@
 
 package com.sldeditor.common.property;
 
+import com.sldeditor.common.console.ConsoleManager;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
@@ -190,7 +191,7 @@ public class PropertyManager implements PropertyManagerInterface {
                 out.close();
 
             } catch (Exception e) {
-                e.printStackTrace();
+                ConsoleManager.getInstance().exception(this, e);
             }
         }
     }
@@ -212,9 +213,9 @@ public class PropertyManager implements PropertyManagerInterface {
                     // we have loaded the properties, so close the file handle
                     file.close();
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    ConsoleManager.getInstance().exception(this, e);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    ConsoleManager.getInstance().exception(this, e);
                 }
             }
         }
