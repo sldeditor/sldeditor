@@ -98,10 +98,10 @@ public class PolygonSymbolizerDetails extends StandardPanel
                     (PolygonSymbolizer) SelectedSymbol.getInstance().getSymbolizer();
 
             if (polygonSymbolizer != null) {
-                polygonSymbolizer.setName(standardData.name);
-                polygonSymbolizer.setDescription(standardData.description);
+                polygonSymbolizer.setName(standardData.getName());
+                polygonSymbolizer.setDescription(standardData.getDescription());
                 polygonSymbolizer.setUnitOfMeasure(
-                        (standardData.unit != null) ? standardData.unit.getUnit() : null);
+                        (standardData.getUnit() != null) ? standardData.getUnit().getUnit() : null);
 
                 polygonSymbolizer.setDisplacement(displacement);
                 polygonSymbolizer.setGeometry(geometryField);

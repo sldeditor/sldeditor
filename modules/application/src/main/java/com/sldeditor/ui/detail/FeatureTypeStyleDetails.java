@@ -141,9 +141,9 @@ public class FeatureTypeStyleDetails extends StandardPanel
                         (FeatureTypeStyle)
                                 getStyleFactory()
                                         .featureTypeStyle(
-                                                standardData.name,
+                                                standardData.getName(),
                                                 (org.opengis.style.Description)
-                                                        standardData.description,
+                                                        standardData.getDescription(),
                                                 existingFTS.getFeatureInstanceIDs(),
                                                 existingFTS.featureTypeNames(),
                                                 existingFTS.semanticTypeIdentifiers(),

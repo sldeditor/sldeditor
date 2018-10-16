@@ -80,9 +80,9 @@ public class BuiltInProcessFunction {
                     if ((parameterList.size() > 1) && (value != null)) {
                         Expression paramValue = parameterList.get(1);
 
-                        value.objectValue.setValue(paramValue);
-                        if (value.optional) {
-                            value.included = true;
+                        value.getObjectValue().setValue(paramValue);
+                        if (value.isOptional()) {
+                            value.setIncluded(true);
                         }
                     }
                 }
@@ -102,7 +102,7 @@ public class BuiltInProcessFunction {
     private ProcessFunctionParameterValue findParameterValue(
             List<ProcessFunctionParameterValue> valueList, String parameterName) {
         for (ProcessFunctionParameterValue paramValue : valueList) {
-            if (paramValue.name.compareTo(parameterName) == 0) {
+            if (paramValue.getName().compareTo(parameterName) == 0) {
                 return paramValue;
             }
         }
@@ -118,30 +118,30 @@ public class BuiltInProcessFunction {
     private void populateParameterDefinition(
             Parameter<?> parameter, ProcessFunctionParameterValue value) {
         if (parameter != null) {
-            value.name = parameter.getName();
-            value.type = parameter.getType();
+            value.setName(parameter.getName());
+            value.setType(parameter.getType());
             if (parameter.getType().isEnum()) {
-                value.objectValue =
+                value.setObjectValue(
                         valueFactory.getEnum(
                                 parameter.getType(),
-                                Arrays.asList(parameter.getType().getEnumConstants()));
+                                Arrays.asList(parameter.getType().getEnumConstants())));
 
                 if (parameter.getDefaultValue() != null) {
-                    value.objectValue.setDefaultValue(parameter.getDefaultValue().toString());
+                    value.getObjectValue().setDefaultValue(parameter.getDefaultValue().toString());
                 }
             } else {
 
-                value.objectValue = valueFactory.getValue(value.type);
+                value.setObjectValue(valueFactory.getValue(value.getType()));
 
-                if (value.objectValue != null) {
-                    value.objectValue.setDefaultValue(parameter.getDefaultValue());
+                if (value.getObjectValue() != null) {
+                    value.getObjectValue().setDefaultValue(parameter.getDefaultValue());
                 }
             }
-            value.optional = !parameter.isRequired();
-            value.dataType = parameter.getType().getSimpleName();
+            value.setOptional(!parameter.isRequired());
+            value.setDataType(parameter.getType().getSimpleName());
 
-            value.minOccurences = parameter.getMinOccurs();
-            value.maxOccurences = parameter.getMaxOccurs();
+            value.setMinOccurences(parameter.getMinOccurs());
+            value.setMaxOccurences(parameter.getMaxOccurs());
         }
     }
 }

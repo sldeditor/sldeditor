@@ -111,8 +111,8 @@ public class StyleDetails extends StandardPanel
                         (Style)
                                 getStyleFactory()
                                         .style(
-                                                standardData.name,
-                                                standardData.description,
+                                                standardData.getName(),
+                                                standardData.getDescription(),
                                                 isDefault,
                                                 newFTSList,
                                                 defaultSymbolizer);

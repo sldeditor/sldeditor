@@ -76,79 +76,81 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
     @Override
     public List<DataSourceInfo> connect(
             String typeName, String geometryFieldName, SLDEditorFileInterface editorFile) {
-        List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
+        List<DataSourceInfo> dataSourceInfoList = new ArrayList<>();
         dataSourceInfoList.add(dsInfo);
 
         dsInfo.reset();
 
-        if (editorFile != null) {
-            StyledLayerDescriptor sld = editorFile.getSLD();
-
-            determineGeometryType(sld);
-
-            ExtendedSimpleFeatureTypeBuilder b = new ExtendedSimpleFeatureTypeBuilder();
-
-            // set the name
-            typeName = INTERNAL_SCHEMA_NAME;
-            dsInfo.setTypeName(typeName);
-            b.setName(typeName);
-
-            String namespace = null;
-            b.setNamespaceURI(namespace);
-
-            // add a geometry property
-            b.setCRS(DefaultGeographicCRS.WGS84); // set crs first
-
-            SLDDataInterface sldData = editorFile.getSLDData();
-            List<DataSourceAttributeData> fieldList = sldData.getFieldList();
-
-            // Set the geometry field by default
-            geometryField.reset();
-            if (geometryFieldName != null) {
-                geometryField.setGeometryFieldName(geometryFieldName);
-            }
-
-            List<AttributeDescriptor> attrDescList = new ArrayList<AttributeDescriptor>();
-
-            if ((fieldList == null) || fieldList.isEmpty()) {
-                // Read the fields from the SLD
-                ExtractAttributes extract = new ExtractAttributes();
-                extract.extractDefaultFields(sld);
-                fieldList = extract.getFields();
-
-                // Add non-geometry fields to the feature type builder
-                for (DataSourceAttributeData dsAttribute : fieldList) {
-                    if (dsAttribute.getName() != null) {
-                        b.add(dsAttribute.getName(), dsAttribute.getType());
-                    }
-                }
-
-                List<String> geometryFields = extract.getGeometryFields();
-                for (String localGeometryFieldName : geometryFields) {
-                    geometryField.setGeometryFieldName(localGeometryFieldName);
-                }
-            } else {
-                addFields(attrDescList, b, fieldList);
-            }
-            attrDescList.add(addGeometryField(b, geometryField.getGeometryFieldName()));
-
-            b.addAll(attrDescList);
-
-            // Store the fields
-            sldData.setFieldList(fieldList);
-
-            // Build the feature type
-            SimpleFeatureType schema = b.buildFeatureType();
-            dsInfo.setSchema(schema);
-
-            CreateSampleData sampleData = new CreateSampleData();
-            sampleData.create(schema, fieldList);
-            MemoryDataStore dataStore = sampleData.getDataStore();
-
-            dsInfo.setDataStore(dataStore);
-
-            dsInfo.populateFieldMap();
+        if (editorFile == null) {
+            return dataSourceInfoList;
         }
+
+        StyledLayerDescriptor sld = editorFile.getSLD();
+
+        determineGeometryType(sld);
+
+        ExtendedSimpleFeatureTypeBuilder b = new ExtendedSimpleFeatureTypeBuilder();
+
+        // set the name
+        typeName = INTERNAL_SCHEMA_NAME;
+        dsInfo.setTypeName(typeName);
+        b.setName(typeName);
+
+        String namespace = null;
+        b.setNamespaceURI(namespace);
+
+        // add a geometry property
+        b.setCRS(DefaultGeographicCRS.WGS84); // set crs first
+
+        SLDDataInterface sldData = editorFile.getSLDData();
+        List<DataSourceAttributeData> fieldList = sldData.getFieldList();
+
+        // Set the geometry field by default
+        geometryField.reset();
+        if (geometryFieldName != null) {
+            geometryField.setGeometryFieldName(geometryFieldName);
+        }
+
+        List<AttributeDescriptor> attrDescList = new ArrayList<>();
+
+        if ((fieldList == null) || fieldList.isEmpty()) {
+            // Read the fields from the SLD
+            ExtractAttributes extract = new ExtractAttributes();
+            extract.extractDefaultFields(sld);
+            fieldList = extract.getFields();
+
+            // Add non-geometry fields to the feature type builder
+            for (DataSourceAttributeData dsAttribute : fieldList) {
+                if (dsAttribute.getName() != null) {
+                    b.add(dsAttribute.getName(), dsAttribute.getType());
+                }
+            }
+
+            List<String> geometryFields = extract.getGeometryFields();
+            for (String localGeometryFieldName : geometryFields) {
+                geometryField.setGeometryFieldName(localGeometryFieldName);
+            }
+        } else {
+            addFields(attrDescList, b, fieldList);
+        }
+        attrDescList.add(addGeometryField(b, geometryField.getGeometryFieldName()));
+
+        b.addAll(attrDescList);
+
+        // Store the fields
+        sldData.setFieldList(fieldList);
+
+        // Build the feature type
+        SimpleFeatureType schema = b.buildFeatureType();
+        dsInfo.setSchema(schema);
+
+        CreateSampleData sampleData = new CreateSampleData();
+        sampleData.create(schema, fieldList);
+        MemoryDataStore dataStore = sampleData.getDataStore();
+
+        dsInfo.setDataStore(dataStore);
+
+        dsInfo.populateFieldMap();
 
         return dataSourceInfoList;
     }

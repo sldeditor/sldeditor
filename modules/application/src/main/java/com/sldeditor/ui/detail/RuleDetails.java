@@ -258,9 +258,9 @@ public class RuleDetails extends StandardPanel
                         getStyleFactory()
                                 .createRule(
                                         symbolizerArray,
-                                        standardData.description,
+                                        standardData.getDescription(),
                                         legendGraphics,
-                                        standardData.name,
+                                        standardData.getName(),
                                         filter,
                                         isElseFilter,
                                         maxScale,

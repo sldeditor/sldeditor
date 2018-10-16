@@ -140,7 +140,7 @@ public class RenderPanelImpl extends JPanel
     private boolean useAntiAlias = false;
 
     /** The render symbol. */
-    private RenderSymbol renderSymbol = new RenderSymbol();
+    private transient RenderSymbol renderSymbol = new RenderSymbol();
 
     /** The data loaded. */
     private boolean dataLoaded = false;
@@ -278,10 +278,7 @@ public class RenderPanelImpl extends JPanel
      */
     private void renderSymbol(Style style) {
         if (!underTest) {
-            // if(!dataLoaded)
-            {
-                createFeature();
-            }
+            createFeature();
 
             Rectangle imageSize = new Rectangle(0, 0, this.getWidth(), this.getHeight());
 
@@ -320,7 +317,7 @@ public class RenderPanelImpl extends JPanel
 
         GridReaderLayer rasterLayer = null;
         MapViewport viewport = null;
-        List<Layer> layerList = new ArrayList<Layer>();
+        List<Layer> layerList = new ArrayList<>();
         if (style != null) {
             rasterLayer = new GridReaderLayer(gridCoverage, style);
             layerList.add(rasterLayer);
@@ -333,7 +330,7 @@ public class RenderPanelImpl extends JPanel
         map.addLayers(layerList);
         map.setViewport(viewport);
         try {
-            Map<Object, Object> hints = new HashMap<Object, Object>();
+            Map<Object, Object> hints = new HashMap<>();
             if (OVERRIDE_DPI) {
                 hints.put(StreamingRenderer.DPI_KEY, dpi);
             }
@@ -440,38 +437,46 @@ public class RenderPanelImpl extends JPanel
             }
 
             if (bounds != null) {
-                Unit<?> unit =
-                        CRSUtilities.getUnit(
-                                bounds.getCoordinateReferenceSystem().getCoordinateSystem());
-
-                double width;
-                double height;
-                if (unit == NonSI.DEGREE_ANGLE) {
-                    width =
-                            (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE)
-                                    ? BOUNDINGBOX_BUFFER_MIN_ANGLE
-                                    : (bounds.getWidth() * BOUNDINGBOX_BUFFER_ANGLE);
-                    height =
-                            (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE)
-                                    ? BOUNDINGBOX_BUFFER_MIN_ANGLE
-                                    : (bounds.getHeight() * BOUNDINGBOX_BUFFER_ANGLE);
-                } else {
-                    width =
-                            (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR)
-                                    ? BOUNDINGBOX_BUFFER_MIN_LINEAR
-                                    : (bounds.getWidth() * BOUNDINGBOX_BUFFER_LINEAR);
-                    height =
-                            (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR)
-                                    ? BOUNDINGBOX_BUFFER_MIN_LINEAR
-                                    : (bounds.getHeight() * BOUNDINGBOX_BUFFER_LINEAR);
-                }
-
-                bounds.expandBy(width, height);
+                expandEnvelope(bounds);
             }
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
         return bounds;
+    }
+
+    /**
+     * Expand envelope.
+     *
+     * @param bounds the bounds
+     */
+    private void expandEnvelope(ReferencedEnvelope bounds) {
+        Unit<?> unit =
+                CRSUtilities.getUnit(bounds.getCoordinateReferenceSystem().getCoordinateSystem());
+
+        double width;
+        double height;
+        if (unit == NonSI.DEGREE_ANGLE) {
+            width =
+                    (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE)
+                            ? BOUNDINGBOX_BUFFER_MIN_ANGLE
+                            : (bounds.getWidth() * BOUNDINGBOX_BUFFER_ANGLE);
+            height =
+                    (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_ANGLE)
+                            ? BOUNDINGBOX_BUFFER_MIN_ANGLE
+                            : (bounds.getHeight() * BOUNDINGBOX_BUFFER_ANGLE);
+        } else {
+            width =
+                    (bounds.getWidth() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR)
+                            ? BOUNDINGBOX_BUFFER_MIN_LINEAR
+                            : (bounds.getWidth() * BOUNDINGBOX_BUFFER_LINEAR);
+            height =
+                    (bounds.getHeight() < BOUNDINGBOX_BUFFER_THRESHOLD_LINEAR)
+                            ? BOUNDINGBOX_BUFFER_MIN_LINEAR
+                            : (bounds.getHeight() * BOUNDINGBOX_BUFFER_LINEAR);
+        }
+
+        bounds.expandBy(width, height);
     }
 
     /**
@@ -492,7 +497,7 @@ public class RenderPanelImpl extends JPanel
         MapContent map = new MapContent();
         map.addLayers(layers);
         try {
-            Map<Object, Object> hints = new HashMap<Object, Object>();
+            Map<Object, Object> hints = new HashMap<>();
             if (OVERRIDE_DPI) {
                 hints.put(StreamingRenderer.DPI_KEY, dpi);
             }

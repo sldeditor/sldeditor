@@ -49,13 +49,67 @@ public class StandardPanel extends BasePanel {
     /** Internal class containing SLD common data. */
     protected class StandardData {
         /** The name. */
-        public String name;
+        private String name;
 
         /** The description. */
-        public Description description = null;
+        private Description description = null;
 
         /** The unit. */
-        public UomOgcMapping unit = null;
+        private UomOgcMapping unit = null;
+
+        /**
+         * Gets the name.
+         *
+         * @return the name
+         */
+        public String getName() {
+            return name;
+        }
+
+        /**
+         * Sets the name.
+         *
+         * @param name the name to set
+         */
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        /**
+         * Gets the description.
+         *
+         * @return the description
+         */
+        public Description getDescription() {
+            return description;
+        }
+
+        /**
+         * Sets the description.
+         *
+         * @param description the description to set
+         */
+        public void setDescription(Description description) {
+            this.description = description;
+        }
+
+        /**
+         * Gets the unit.
+         *
+         * @return the unit
+         */
+        public UomOgcMapping getUnit() {
+            return unit;
+        }
+
+        /**
+         * Sets the unit.
+         *
+         * @param unit the unit to set
+         */
+        public void setUnit(UomOgcMapping unit) {
+            this.unit = unit;
+        }
     }
 
     /**

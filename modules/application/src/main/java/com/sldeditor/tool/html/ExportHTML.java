@@ -163,7 +163,12 @@ public class ExportHTML {
             }
 
             if (file != null) {
-                file.delete();
+                if (!file.delete()) {
+                    ConsoleManager.getInstance()
+                            .information(
+                                    ExportHTML.class,
+                                    String.format("Failed to deleted %s", file.getAbsolutePath()));
+                }
             }
         }
     }

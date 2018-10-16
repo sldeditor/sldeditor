@@ -108,16 +108,16 @@ public class ExpressionPanelv2 extends JDialog
     private JPanel emptyPanel = new JPanel();
 
     /** The expression. */
-    private Expression expression = null;
+    private transient Expression expression = null;
 
     /** The field type. */
     private Class<?> fieldType = null;
 
     /** The overall expression. */
-    private Expression overallExpression;
+    private transient Expression overallExpression;
 
     /** The vendor option list. */
-    private List<VersionData> vendorOptionList = null;
+    private transient List<VersionData> vendorOptionList = null;
 
     private JButton btnOk;
 

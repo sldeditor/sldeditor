@@ -100,7 +100,7 @@ public class ParseXML {
      */
     private static void outputParseErrors(
             String fullResourceName, ValidationEventCollector vec, URL xsdURL) {
-        if (vec != null && vec.hasEvents()) {
+        if (vec.hasEvents()) {
 
             for (ValidationEvent ve : vec.getEvents()) {
                 String msg = ve.getMessage();

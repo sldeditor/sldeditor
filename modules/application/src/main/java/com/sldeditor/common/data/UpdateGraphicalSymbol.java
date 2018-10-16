@@ -42,9 +42,7 @@ public class UpdateGraphicalSymbol implements ProcessGraphicSymbolInterface {
     /*
      * (non-Javadoc)
      *
-     * @see
-     * com.sldeditor.common.data.ProcessGraphicSymbolInterface#processGraphicalSymbol(java.net.URL,
-     * java.util.List, java.util.List)
+     * @see com.sldeditor.common.data.ProcessGraphicSymbolInterface#processGraphicalSymbol(java.net.URL, java.util.List, java.util.List)
      */
     @Override
     public void processGraphicalSymbol(
@@ -66,37 +64,35 @@ public class UpdateGraphicalSymbol implements ProcessGraphicSymbolInterface {
                     ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
                 }
 
-                if (currentValueURL == null) {
-                    continue;
-                }
+                if (currentValueURL != null) {
+                    if ((resourceLocator == null) || RelativePath.hasHost(currentValueURL)) {
+                        // Just report back the external image
+                        URI uri = null;
+                        try {
+                            uri = new URI(currentValue);
+                            externalImageList.add(uri.toASCIIString());
+                        } catch (URISyntaxException e) {
+                            ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
+                        }
+                    } else {
+                        try {
+                            File file = new File(currentValueURL.getFile());
+                            File folder = new File(resourceLocator.getFile());
+                            currentValue = RelativePath.getRelativePath(file, folder);
 
-                if ((resourceLocator == null) || RelativePath.hasHost(currentValueURL)) {
-                    // Just report back the external image
-                    URI uri = null;
-                    try {
-                        uri = new URI(currentValue);
-                        externalImageList.add(uri.toASCIIString());
-                    } catch (URISyntaxException e) {
-                        ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
-                    }
-                } else {
-                    try {
-                        File file = new File(currentValueURL.getFile());
-                        File folder = new File(resourceLocator.getFile());
-                        currentValue = RelativePath.getRelativePath(file, folder);
+                            // If the backslashes are not converted to forward slashes
+                            // creating the URI does not work
+                            currentValue = currentValue.replace('\\', '/');
+                            OnLineResourceImpl updatedOnlineResource = new OnLineResourceImpl();
+                            URI uri = new URI(currentValue);
+                            updatedOnlineResource.setLinkage(uri);
+                            externalGraphic.setOnlineResource(updatedOnlineResource);
 
-                        // If the backslashes are not converted to forward slashes
-                        // creating the URI does not work
-                        currentValue = currentValue.replace('\\', '/');
-                        OnLineResourceImpl updatedOnlineResource = new OnLineResourceImpl();
-                        URI uri = new URI(currentValue);
-                        updatedOnlineResource.setLinkage(uri);
-                        externalGraphic.setOnlineResource(updatedOnlineResource);
-
-                        externalGraphic.setURI(uri.toASCIIString());
-                        externalImageList.add(uri.toASCIIString());
-                    } catch (URISyntaxException e) {
-                        ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
+                            externalGraphic.setURI(uri.toASCIIString());
+                            externalImageList.add(uri.toASCIIString());
+                        } catch (URISyntaxException e) {
+                            ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
+                        }
                     }
                 }
             }

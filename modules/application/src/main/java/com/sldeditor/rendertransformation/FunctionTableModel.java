@@ -118,17 +118,17 @@ public class FunctionTableModel extends AbstractTableModel {
 
         switch (columnIndex) {
             case COL_PARAMETER:
-                return value.name;
+                return value.getName();
             case COL_TYPE:
-                return value.dataType;
+                return value.getDataType();
             case COL_OPTIONAL:
-                if (value.optional) {
-                    return value.included;
+                if (value.isOptional()) {
+                    return value.isIncluded();
                 }
                 break;
             case COL_VALUE:
-                if (value.objectValue != null) {
-                    Expression expression = value.objectValue.getExpression();
+                if (value.getObjectValue() != null) {
+                    Expression expression = value.getObjectValue().getExpression();
                     if (expression != null) {
                         return expression.toString();
                     }
@@ -173,7 +173,7 @@ public class FunctionTableModel extends AbstractTableModel {
 
         switch (columnIndex) {
             case COL_OPTIONAL:
-                return value.optional;
+                return value.isOptional();
             case COL_VALUE:
             case COL_PARAMETER:
             case COL_TYPE:
@@ -194,10 +194,10 @@ public class FunctionTableModel extends AbstractTableModel {
         ProcessFunctionParameterValue value = valueList.get(rowIndex);
 
         if (columnIndex == COL_OPTIONAL) {
-            value.included = (Boolean) aValue;
+            value.setIncluded((Boolean) aValue);
         } else {
-            if (value.objectValue != null) {
-                value.objectValue.setValue(aValue);
+            if (value.getObjectValue() != null) {
+                value.getObjectValue().setValue(aValue);
             }
         }
     }
@@ -235,7 +235,7 @@ public class FunctionTableModel extends AbstractTableModel {
         int count = 0;
         if (value != null) {
             for (ProcessFunctionParameterValue v : valueList) {
-                if (v.name.compareTo(value.name) == 0) {
+                if (v.getName().compareTo(value.getName()) == 0) {
                     count++;
                 }
             }
@@ -285,16 +285,16 @@ public class FunctionTableModel extends AbstractTableModel {
 
         for (ProcessFunctionParameterValue value : valueList) {
             List<Expression> parameterList = new ArrayList<Expression>();
-            parameterList.add(ff.literal(value.name));
+            parameterList.add(ff.literal(value.getName()));
 
             boolean setValue = true;
-            if (value.optional) {
-                setValue = value.included;
+            if (value.isOptional()) {
+                setValue = value.isIncluded();
             }
 
             if (setValue) {
-                if (value.objectValue != null) {
-                    Expression expression = value.objectValue.getExpression();
+                if (value.getObjectValue() != null) {
+                    Expression expression = value.getObjectValue().getExpression();
                     if (expression != null) {
                         parameterList.add(expression);
                     }
@@ -350,12 +350,12 @@ public class FunctionTableModel extends AbstractTableModel {
     public void update(Expression expression, int row) {
         ProcessFunctionParameterValue value = valueList.get(row);
 
-        if (value.optional) {
-            value.included = true;
+        if (value.isOptional()) {
+            value.setIncluded(true);
         }
 
-        if (value.objectValue != null) {
-            value.objectValue.setValue(expression);
+        if (value.getObjectValue() != null) {
+            value.getObjectValue().setValue(expression);
         }
     }
 }

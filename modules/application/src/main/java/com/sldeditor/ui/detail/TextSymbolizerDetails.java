@@ -384,11 +384,11 @@ public class TextSymbolizerDetails extends StandardPanel
                     (TextSymbolizer)
                             getStyleFactory()
                                     .textSymbolizer(
-                                            standardData.name,
+                                            standardData.getName(),
                                             defaultGeometryField,
-                                            standardData.description,
-                                            (standardData.unit != null)
-                                                    ? standardData.unit.getUnit()
+                                            standardData.getDescription(),
+                                            (standardData.getUnit() != null)
+                                                    ? standardData.getUnit().getUnit()
                                                     : null,
                                             label,
                                             font,

@@ -382,8 +382,8 @@ public class RenderTransformationDialog extends JDialog {
 
         if (value != null) {
             int count = functionParameterTableModel.getNoOfOccurences(value);
-            btnAdd.setEnabled(count < value.maxOccurences);
-            btnRemove.setEnabled((count > value.minOccurences) && (count > 1));
+            btnAdd.setEnabled(count < value.getMaxOccurences());
+            btnRemove.setEnabled((count > value.getMinOccurences()) && (count > 1));
         } else {
             btnAdd.setEnabled(false);
             btnRemove.setEnabled(false);
@@ -393,13 +393,15 @@ public class RenderTransformationDialog extends JDialog {
             String title =
                     String.format(
                             "%s - %s : %s",
-                            (value != null) ? value.name : "unknown",
+                            (value != null) ? value.getName() : "unknown",
                             Localisation.getString(
                                     RenderTransformationDialog.class,
                                     "RenderTransformationDialog.type"),
-                            (value != null) ? value.dataType : "unknown");
-            expressionPanel.configure(title, (value != null) ? value.type : Object.class, false);
-            expressionPanel.populate((value != null) ? value.objectValue.getExpression() : null);
+                            (value != null) ? value.getDataType() : "unknown");
+            expressionPanel.configure(
+                    title, (value != null) ? value.getType() : Object.class, false);
+            expressionPanel.populate(
+                    (value != null) ? value.getObjectValue().getExpression() : null);
             if (expressionPanel.showDialog()) {
                 Expression expression = expressionPanel.getExpression();
 

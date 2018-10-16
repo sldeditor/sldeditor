@@ -96,11 +96,10 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
 
         Symbolizer[] symsCopy = null;
 
-        if (!displayOverall) {
-            if ((symbolizerIndex >= 0) && (symbolizerIndex < rule.getSymbolizers().length)) {
-                symsCopy = new Symbolizer[1];
-                symsCopy[0] = copy(rule.getSymbolizers()[symbolizerIndex]);
-            }
+        if (!displayOverall
+                && ((symbolizerIndex >= 0) && (symbolizerIndex < rule.getSymbolizers().length))) {
+            symsCopy = new Symbolizer[1];
+            symsCopy[0] = copy(rule.getSymbolizers()[symbolizerIndex]);
         }
 
         // As a catch all copy everything
@@ -143,8 +142,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     /*
      * (non-Javadoc)
      *
-     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.
-     * FeatureTypeStyle)
+     * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling. FeatureTypeStyle)
      */
     @SuppressWarnings("deprecation")
     @Override
@@ -171,11 +169,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         } else {
             rulesCopy = new Rule[1];
             for (int i = 0; i < length; i++) {
-                if (rules[i] != null) {
-                    if (renderRule(rules[i])) {
-                        rules[i].accept(this);
-                        rulesCopy[0] = (Rule) pages.pop();
-                    }
+                if ((rules[i] != null) && (renderRule(rules[i]))) {
+                    rules[i].accept(this);
+                    rulesCopy[0] = (Rule) pages.pop();
                 }
             }
         }
@@ -377,7 +373,9 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         return copy;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.RasterSymbolizer)
      */
     // CHECKSTYLE:OFF

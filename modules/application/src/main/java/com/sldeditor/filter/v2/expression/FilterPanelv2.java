@@ -134,13 +134,13 @@ public class FilterPanelv2 extends JDialog
     private JPanel emptyPanel = new JPanel();
 
     /** The filter. */
-    private Filter filter = null;
+    private transient Filter filter = null;
 
     /** The overall filter. */
-    private Filter overallFilter;
+    private transient Filter overallFilter;
 
     /** The vendor option list. */
-    private List<VersionData> vendorOptionList = null;
+    private transient List<VersionData> vendorOptionList = null;
 
     /** The Ok button. */
     private JButton btnOk;
@@ -217,28 +217,7 @@ public class FilterPanelv2 extends JDialog
                 new TreeSelectionListener() {
 
                     public void valueChanged(TreeSelectionEvent e) {
-                        selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-                        selectedParentNode = null;
-                        if (selectedNode != null) {
-                            selectedParentNode = (DefaultMutableTreeNode) selectedNode.getParent();
-                        }
-
-                        CardLayout cardLayout = (CardLayout) dataPanel.getLayout();
-
-                        optionalCheckBox.setVisible(false);
-                        if (selectedNode instanceof ExpressionNode) {
-                            ExpressionNode expressionNode = (ExpressionNode) selectedNode;
-
-                            optionalCheckBox.setVisible(expressionNode.isOptionalParam());
-                            optionalCheckBox.setSelected(expressionNode.isOptionalParamUsed());
-
-                            showDataPanel(cardLayout, expressionNode);
-                        } else if (selectedNode instanceof FilterNode) {
-                            cardLayout.show(dataPanel, filterPanel.getClass().getName());
-                            filterPanel.setSelectedNode(selectedNode);
-                        } else {
-                            cardLayout.show(dataPanel, EMPTY_PANEL);
-                        }
+                        treeSelected();
                     }
                 });
         scrollPane.setViewportView(tree);
@@ -252,31 +231,7 @@ public class FilterPanelv2 extends JDialog
         optionalCheckBox.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        if (selectedNode instanceof ExpressionNode) {
-                            ExpressionNode expressionNode = (ExpressionNode) selectedNode;
-                            expressionNode.setOptionalParamUsed(optionalCheckBox.isSelected());
-
-                            CardLayout cardLayout = (CardLayout) dataPanel.getLayout();
-
-                            showDataPanel(cardLayout, expressionNode);
-
-                            if (!optionalCheckBox.isSelected()) {
-                                if (selectedNode.getParent() instanceof ExpressionNode) {
-                                    ExpressionNode parentNode =
-                                            (ExpressionNode) selectedNode.getParent();
-                                    if (parentNode != null) {
-
-                                        int index = parentNode.getIndex(selectedNode);
-
-                                        FunctionInterfaceUtils.handleFunctionInterface(
-                                                parentNode, index);
-
-                                        parentNode.setDisplayString();
-                                        displayResult();
-                                    }
-                                }
-                            }
-                        }
+                        optionalCheckBoxSelected();
                     }
                 });
         optionPanel.add(optionalCheckBox, BorderLayout.NORTH);
@@ -454,19 +409,19 @@ public class FilterPanelv2 extends JDialog
      * @return the filter
      */
     private Filter addFilter(FilterNode node) {
-        Filter filter = node.getFilter();
+        Filter nodeFilter = node.getFilter();
 
         FilterConfigInterface filterConfig = node.getFilterConfig();
 
-        if (filter instanceof LogicFilterImpl) {
-            List<Filter> filterList = new ArrayList<Filter>();
+        if (nodeFilter instanceof LogicFilterImpl) {
+            List<Filter> filterList = new ArrayList<>();
 
             createFilterList(node, filterList);
 
             return filterConfig.createLogicFilter(filterList);
         }
 
-        List<Expression> parameterFilter = new ArrayList<Expression>();
+        List<Expression> parameterFilter = new ArrayList<>();
 
         if (filter instanceof FidFilterImpl) {
             createExpressionParameterList(node, 1, parameterFilter);
@@ -489,7 +444,7 @@ public class FilterPanelv2 extends JDialog
                 createExpressionParameterList(node, 3, parameterFilter);
             }
         } else {
-            return filter;
+            return nodeFilter;
         }
 
         return filterConfig.createFilter(parameterFilter);
@@ -685,9 +640,7 @@ public class FilterPanelv2 extends JDialog
     /*
      * (non-Javadoc)
      *
-     * @see
-     * com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.
-     * data.DataStore)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools. data.DataStore)
      */
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {
@@ -716,6 +669,58 @@ public class FilterPanelv2 extends JDialog
             } else {
                 cardLayout.show(dataPanel, expressionPanel.getClass().getName());
                 expressionPanel.setSelectedNode(selectedNode);
+            }
+        }
+    }
+
+    /** Tree selected. */
+    private void treeSelected() {
+        selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+        selectedParentNode = null;
+        if (selectedNode != null) {
+            selectedParentNode = (DefaultMutableTreeNode) selectedNode.getParent();
+        }
+
+        CardLayout cardLayout = (CardLayout) dataPanel.getLayout();
+
+        optionalCheckBox.setVisible(false);
+        if (selectedNode instanceof ExpressionNode) {
+            ExpressionNode expressionNode = (ExpressionNode) selectedNode;
+
+            optionalCheckBox.setVisible(expressionNode.isOptionalParam());
+            optionalCheckBox.setSelected(expressionNode.isOptionalParamUsed());
+
+            showDataPanel(cardLayout, expressionNode);
+        } else if (selectedNode instanceof FilterNode) {
+            cardLayout.show(dataPanel, filterPanel.getClass().getName());
+            filterPanel.setSelectedNode(selectedNode);
+        } else {
+            cardLayout.show(dataPanel, EMPTY_PANEL);
+        }
+    }
+
+    /** Optional check box selected. */
+    private void optionalCheckBoxSelected() {
+        if (selectedNode instanceof ExpressionNode) {
+            ExpressionNode expressionNode = (ExpressionNode) selectedNode;
+            expressionNode.setOptionalParamUsed(optionalCheckBox.isSelected());
+
+            CardLayout cardLayout = (CardLayout) dataPanel.getLayout();
+
+            showDataPanel(cardLayout, expressionNode);
+
+            if (!optionalCheckBox.isSelected()
+                    && (selectedNode.getParent() instanceof ExpressionNode)) {
+                ExpressionNode parentNode = (ExpressionNode) selectedNode.getParent();
+                if (parentNode != null) {
+
+                    int index = parentNode.getIndex(selectedNode);
+
+                    FunctionInterfaceUtils.handleFunctionInterface(parentNode, index);
+
+                    parentNode.setDisplayString();
+                    displayResult();
+                }
             }
         }
     }

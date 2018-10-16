@@ -42,21 +42,21 @@ public class ProcessFunctionParameterValueTest {
     @Test
     public void testProcessFunctionParameterValueProcessFunctionParameterValue() {
         ProcessFunctionParameterValue obj1 = new ProcessFunctionParameterValue();
-        obj1.name = "test";
-        obj1.dataType = "datatype";
-        obj1.type = Date.class;
-        obj1.minOccurences = 10;
-        obj1.maxOccurences = 78;
-        obj1.included = true;
-        obj1.optional = true;
+        obj1.setName("test");
+        obj1.setDataType("datatype");
+        obj1.setType(Date.class);
+        obj1.setMinOccurences(10);
+        obj1.setMaxOccurences(78);
+        obj1.setIncluded(true);
+        obj1.setOptional(true);
 
         ProcessFunctionParameterValue obj2 = new ProcessFunctionParameterValue(obj1);
-        assertTrue(obj1.name.compareTo(obj2.name) == 0);
-        assertTrue(obj1.dataType.compareTo(obj2.dataType) == 0);
-        assertEquals(obj1.included, obj2.included);
-        assertEquals(obj1.type, obj2.type);
-        assertEquals(obj1.minOccurences, obj2.minOccurences);
-        assertEquals(obj1.maxOccurences, obj2.maxOccurences);
-        assertEquals(obj1.optional, obj2.optional);
+        assertTrue(obj1.getName().compareTo(obj2.getName()) == 0);
+        assertTrue(obj1.getDataType().compareTo(obj2.getDataType()) == 0);
+        assertEquals(obj1.isIncluded(), obj2.isIncluded());
+        assertEquals(obj1.getType(), obj2.getType());
+        assertEquals(obj1.getMinOccurences(), obj2.getMinOccurences());
+        assertEquals(obj1.getMaxOccurences(), obj2.getMaxOccurences());
+        assertEquals(obj1.isOptional(), obj2.isOptional());
     }
 }

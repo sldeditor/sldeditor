@@ -77,13 +77,13 @@ public class CustomProcessFunction {
 
                 ProcessFunctionParameterValue value = new ProcessFunctionParameterValue();
 
-                value.name = input.getIdentifier().getValue();
+                value.setName(input.getIdentifier().getValue());
                 getType(input, value);
-                value.optional = isOptional(input);
-                value.type = dataTypeMap.get(value.dataType);
+                value.setOptional(isOptional(input));
+                value.setType(dataTypeMap.get(value.getDataType()));
 
-                value.minOccurences = input.getMinOccurs().intValue();
-                value.maxOccurences = input.getMaxOccurs().intValue();
+                value.setMinOccurences(input.getMinOccurs().intValue());
+                value.setMaxOccurences(input.getMaxOccurs().intValue());
 
                 valueList.add(value);
             }
@@ -132,19 +132,19 @@ public class CustomProcessFunction {
         if (literal != null) {
             RenderTransformValueFactory.getInstance().getValueCustomProcess(value, literal);
 
-            if (value.objectValue instanceof EnumValues) {
-                value.dataType = ENUMERATION_NAME;
+            if (value.getObjectValue() instanceof EnumValues) {
+                value.setDataType(ENUMERATION_NAME);
             }
         } else {
             SupportedCRSsType bbox = inputDescription.getBoundingBoxData();
             if (bbox != null) {
-                value.dataType = BBOX_NAME;
+                value.setDataType(BBOX_NAME);
             } else {
                 SupportedComplexDataType complex = inputDescription.getComplexData();
                 if (complex != null) {
                     // ComplexDataCombinationsType parameterDataType = complex.getSupported();
 
-                    value.dataType = GEOMETRY_NAME;
+                    value.setDataType(GEOMETRY_NAME);
                 }
             }
         }

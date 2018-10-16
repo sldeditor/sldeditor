@@ -76,28 +76,30 @@ public class BuiltInProcessFunctionTest {
                 ProcessFunctionParameterValue actualParameter = valueList.get(index);
 
                 assertTrue(
-                        expectedParameter.getName().compareTo(actualParameter.name) == 0,
+                        expectedParameter.getName().compareTo(actualParameter.getName()) == 0,
                         functionName.getName());
                 assertEquals(
-                        expectedParameter.getType(), actualParameter.type, functionName.getName());
+                        expectedParameter.getType(),
+                        actualParameter.getType(),
+                        functionName.getName());
                 assertTrue(
                         expectedParameter
                                         .getType()
                                         .getSimpleName()
-                                        .compareTo(actualParameter.dataType)
+                                        .compareTo(actualParameter.getDataType())
                                 == 0,
                         functionName.getName());
                 assertEquals(
                         !expectedParameter.isRequired(),
-                        actualParameter.optional,
+                        actualParameter.isOptional(),
                         functionName.getName());
                 assertEquals(
                         expectedParameter.getMinOccurs(),
-                        actualParameter.minOccurences,
+                        actualParameter.getMinOccurences(),
                         functionName.getName());
                 assertEquals(
                         expectedParameter.getMaxOccurs(),
-                        actualParameter.maxOccurences,
+                        actualParameter.getMaxOccurences(),
                         functionName.getName());
             }
         }

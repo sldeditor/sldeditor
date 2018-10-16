@@ -61,27 +61,27 @@ public class CustomProcessFunctionTest {
         obj.extractParameters(null);
 
         ProcessFunctionParameterValue value = createProcessDescription("xs:int", "1234", 0, 1);
-        assertEquals("1234", value.objectValue.getExpression().toString());
+        assertEquals("1234", value.getObjectValue().getExpression().toString());
         value = createProcessDescription("xs:boolean", "true", 1, 1);
-        assertEquals("true", value.objectValue.getExpression().toString());
+        assertEquals("true", value.getObjectValue().getExpression().toString());
         value = createProcessDescription("xs:double", "3.141", 1, 2);
         assertTrue(
                 Math.abs(
                                 Double.valueOf("3.141")
                                         - Double.valueOf(
-                                                value.objectValue.getExpression().toString()))
+                                                value.getObjectValue().getExpression().toString()))
                         < 0.001);
         value = createProcessDescription("xs:float", "1.234", 0, 1);
         assertTrue(
                 Math.abs(
                                 Float.valueOf("1.234")
                                         - Float.valueOf(
-                                                value.objectValue.getExpression().toString()))
+                                                value.getObjectValue().getExpression().toString()))
                         < 0.001);
         value = createProcessDescription("xs:long", "9876", 1, 1);
-        assertEquals("9876", value.objectValue.getExpression().toString());
+        assertEquals("9876", value.getObjectValue().getExpression().toString());
         value = createProcessDescription("xs:xxx", "string", 1, 1);
-        assertEquals("string", value.objectValue.getExpression().toString());
+        assertEquals("string", value.getObjectValue().getExpression().toString());
     }
 
     /**
@@ -127,8 +127,8 @@ public class CustomProcessFunctionTest {
 
         assertEquals(1, valueList.size(), type);
         ProcessFunctionParameterValue value = valueList.get(0);
-        assertEquals(minOccurs, value.minOccurences, type);
-        assertEquals(maxOccurs, value.maxOccurences, type);
+        assertEquals(minOccurs, value.getMinOccurences(), type);
+        assertEquals(maxOccurs, value.getMaxOccurences(), type);
         return value;
     }
 
@@ -177,11 +177,11 @@ public class CustomProcessFunctionTest {
 
         assertEquals(1, valueList.size());
         ProcessFunctionParameterValue value = valueList.get(0);
-        assertEquals(1, value.minOccurences);
-        assertEquals(1, value.maxOccurences);
+        assertEquals(1, value.getMinOccurences());
+        assertEquals(1, value.getMaxOccurences());
     }
 
-    /** Test the process description boundaing box values. */
+    /** Test the process description bounding box values. */
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Test
     public void createProcessDescriptionBBox() {
@@ -214,9 +214,9 @@ public class CustomProcessFunctionTest {
 
         assertEquals(1, valueList.size());
         ProcessFunctionParameterValue value = valueList.get(0);
-        assertEquals(1, value.minOccurences);
-        assertEquals(1, value.maxOccurences);
-        assertTrue(value.dataType.compareTo("BBOX") == 0);
+        assertEquals(1, value.getMinOccurences());
+        assertEquals(1, value.getMaxOccurences());
+        assertTrue(value.getDataType().compareTo("BBOX") == 0);
 
         SupportedComplexDataInputType complex =
                 Wps10FactoryImpl.init().createSupportedComplexDataInputType();
@@ -227,8 +227,8 @@ public class CustomProcessFunctionTest {
 
         assertEquals(1, valueList.size());
         value = valueList.get(0);
-        assertEquals(1, value.minOccurences);
-        assertEquals(1, value.maxOccurences);
-        assertTrue(value.dataType.compareTo("Geometry") == 0);
+        assertEquals(1, value.getMinOccurences());
+        assertEquals(1, value.getMaxOccurences());
+        assertTrue(value.getDataType().compareTo("Geometry") == 0);
     }
 }

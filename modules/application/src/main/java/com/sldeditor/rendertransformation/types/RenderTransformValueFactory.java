@@ -141,33 +141,33 @@ public class RenderTransformValueFactory {
         if (literal != null) {
             String defaultValue = literal.getDefaultValue();
             if (literal.getDataType() != null) {
-                value.dataType = literal.getDataType().getValue();
+                value.setDataType(literal.getDataType().getValue());
                 if (defaultValue != null) {
-                    if (value.dataType.compareTo("xs:int") == 0) {
-                        value.objectValue = new IntegerValues();
-                        value.objectValue.setDefaultValue(Integer.valueOf(defaultValue));
-                    } else if (value.dataType.compareTo("xs:boolean") == 0) {
-                        value.objectValue = new BooleanValues();
-                        value.objectValue.setDefaultValue(Boolean.valueOf(defaultValue));
-                    } else if (value.dataType.compareTo("xs:double") == 0) {
-                        value.objectValue = new DoubleValues();
-                        value.objectValue.setDefaultValue(Double.valueOf(defaultValue));
-                    } else if (value.dataType.compareTo("xs:float") == 0) {
-                        value.objectValue = new FloatValues();
-                        value.objectValue.setDefaultValue(Float.valueOf(defaultValue));
-                    } else if (value.dataType.compareTo("xs:long") == 0) {
-                        value.objectValue = new LongValues();
-                        value.objectValue.setDefaultValue(Long.valueOf(defaultValue));
+                    if (value.getDataType().compareTo("xs:int") == 0) {
+                        value.setObjectValue(new IntegerValues());
+                        value.getObjectValue().setDefaultValue(Integer.valueOf(defaultValue));
+                    } else if (value.getDataType().compareTo("xs:boolean") == 0) {
+                        value.setObjectValue(new BooleanValues());
+                        value.getObjectValue().setDefaultValue(Boolean.valueOf(defaultValue));
+                    } else if (value.getDataType().compareTo("xs:double") == 0) {
+                        value.setObjectValue(new DoubleValues());
+                        value.getObjectValue().setDefaultValue(Double.valueOf(defaultValue));
+                    } else if (value.getDataType().compareTo("xs:float") == 0) {
+                        value.setObjectValue(new FloatValues());
+                        value.getObjectValue().setDefaultValue(Float.valueOf(defaultValue));
+                    } else if (value.getDataType().compareTo("xs:long") == 0) {
+                        value.setObjectValue(new LongValues());
+                        value.getObjectValue().setDefaultValue(Long.valueOf(defaultValue));
                     } else {
-                        value.type = String.class;
-                        value.objectValue = new StringValues();
-                        value.objectValue.setDefaultValue(defaultValue);
+                        value.setType(String.class);
+                        value.setObjectValue(new StringValues());
+                        value.getObjectValue().setDefaultValue(defaultValue);
                     }
                 }
             } else if (literal.getAllowedValues() != null) {
                 EnumValues enumValues = new EnumValues(StringBuilder.class);
-                value.objectValue = enumValues;
-                value.objectValue.setDefaultValue(defaultValue);
+                value.setObjectValue(enumValues);
+                value.getObjectValue().setDefaultValue(defaultValue);
                 List<String> enumValueList = new ArrayList<String>();
 
                 for (Object valueTypeObj : literal.getAllowedValues().getValue()) {

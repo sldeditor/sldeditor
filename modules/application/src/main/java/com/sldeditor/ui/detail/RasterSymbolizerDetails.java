@@ -412,11 +412,11 @@ public class RasterSymbolizerDetails extends StandardPanel
                 (RasterSymbolizer)
                         getStyleFactory()
                                 .rasterSymbolizer(
-                                        standardData.name,
+                                        standardData.getName(),
                                         geometryField,
-                                        standardData.description,
-                                        (standardData.unit != null)
-                                                ? standardData.unit.getUnit()
+                                        standardData.getDescription(),
+                                        (standardData.getUnit() != null)
+                                                ? standardData.getUnit().getUnit()
                                                 : null,
                                         opacityExpression,
                                         channelSelection,

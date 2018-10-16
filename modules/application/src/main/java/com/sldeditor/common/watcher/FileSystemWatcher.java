@@ -41,8 +41,7 @@ import java.util.Map;
 public class FileSystemWatcher implements Runnable {
 
     /** The watcher map. */
-    private Map<WatchKey, FileWatcherUpdateInterface> watcherMap =
-            new HashMap<WatchKey, FileWatcherUpdateInterface>();
+    private Map<WatchKey, FileWatcherUpdateInterface> watcherMap = new HashMap<>();
 
     /** The watch service. */
     private WatchService watchService = null;
@@ -139,41 +138,7 @@ public class FileSystemWatcher implements Runnable {
 
             // once a key is obtained, we poll for events on that key
             List<WatchEvent<?>> keys = key.pollEvents();
-            for (WatchEvent<?> watchEvent : keys) {
-
-                Kind<?> watchEventKind = watchEvent.kind();
-                // Sometimes events are created faster than they are registered
-                // or the implementation may specify a maximum number of events
-                // and further events are discarded. In these cases an event of
-                // kind overflow is returned. We ignore this case for now
-                if (watchEventKind == StandardWatchEventKinds.OVERFLOW) {
-                    continue;
-                }
-
-                Path dir = (Path) key.watchable();
-                Path fullPath = dir.resolve((Path) watchEvent.context());
-
-                FileWatcherUpdateInterface parentObj = watcherMap.get(key);
-                if (watchEventKind == StandardWatchEventKinds.ENTRY_CREATE) {
-                    // A new file has been created
-                    if (parentObj != null) {
-                        parentObj.fileAdded(fullPath);
-                    }
-                } else if (watchEventKind == StandardWatchEventKinds.ENTRY_MODIFY) {
-                    ReloadManager.getInstance().fileModified(fullPath);
-                    // The file has been modified.
-                    if (parentObj != null) {
-                        parentObj.fileModified(fullPath);
-                    }
-                } else if (watchEventKind == StandardWatchEventKinds.ENTRY_DELETE) {
-
-                    if (parentObj != null) {
-                        parentObj.fileDeleted(fullPath);
-                    }
-                }
-                // Reset the key so the further key events may be polled
-                key.reset();
-            }
+            handleWatchEvents(key, keys);
 
             if (stopPolling) {
                 break;
@@ -182,5 +147,44 @@ public class FileSystemWatcher implements Runnable {
 
         // Close the watcher service
         watchService.close();
+    }
+
+    /**
+     * Handle watch events.
+     *
+     * @param key the key
+     * @param keys the keys
+     */
+    private void handleWatchEvents(WatchKey key, List<WatchEvent<?>> keys) {
+        for (WatchEvent<?> watchEvent : keys) {
+
+            Kind<?> watchEventKind = watchEvent.kind();
+            // Sometimes events are created faster than they are registered
+            // or the implementation may specify a maximum number of events
+            // and further events are discarded. In these cases an event of
+            // kind overflow is returned. We ignore this case for now
+            if (watchEventKind == StandardWatchEventKinds.OVERFLOW) {
+                continue;
+            }
+
+            Path dir = (Path) key.watchable();
+            Path fullPath = dir.resolve((Path) watchEvent.context());
+
+            FileWatcherUpdateInterface parentObj = watcherMap.get(key);
+            if (parentObj != null) {
+                if (watchEventKind == StandardWatchEventKinds.ENTRY_CREATE) {
+                    // A new file has been created
+                    parentObj.fileAdded(fullPath);
+                } else if (watchEventKind == StandardWatchEventKinds.ENTRY_MODIFY) {
+                    ReloadManager.getInstance().fileModified(fullPath);
+                    // The file has been modified.
+                    parentObj.fileModified(fullPath);
+                } else if (watchEventKind == StandardWatchEventKinds.ENTRY_DELETE) {
+                    parentObj.fileDeleted(fullPath);
+                }
+            }
+            // Reset the key so the further key events may be polled
+            key.reset();
+        }
     }
 }

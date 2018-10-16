@@ -75,7 +75,7 @@ public class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
 
         ProcessFunctionParameterValue valueObj = tableModel.getValue(row);
 
-        if (valueObj.optional) {
+        if (valueObj.isOptional()) {
             if (isSelected) {
                 setForeground(table.getSelectionForeground());
                 setBackground(table.getSelectionBackground());

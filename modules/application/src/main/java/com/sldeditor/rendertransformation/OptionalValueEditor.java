@@ -110,10 +110,10 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
 
         ProcessFunctionParameterValue currentValue = tableModel.getValue(row);
 
-        if (currentValue.optional) {
+        if (currentValue.isOptional()) {
             selectedIndex = row;
             currentEditor = checkBox;
-            checkBox.setSelected(currentValue.included);
+            checkBox.setSelected(currentValue.isIncluded());
             return checkBox;
         } else {
             selectedIndex = -1;

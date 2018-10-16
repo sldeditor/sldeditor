@@ -111,7 +111,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     private transient DataSourceInterface dataSource = null;
 
     /** The batch import list. */
-    private transient List<ExtensionInterface> extensionList = new ArrayList<ExtensionInterface>();
+    private transient List<ExtensionInterface> extensionList = new ArrayList<>();
 
     /** The user interface manager. */
     private transient SLDEditorUIPanels uiMgr = new SLDEditorUIPanels();

@@ -160,16 +160,13 @@ public class VendorOptionVersion implements Serializable {
      */
     @Override
     public String toString() {
-        String string =
-                String.format(
-                        "%s%s%s%s%s",
-                        classType.getName(),
-                        DELIMETER,
-                        (minimumVersion != null) ? minimumVersion.getEncodedString() : NULL_STRING,
-                        DELIMETER,
-                        (maximumVersion != null) ? maximumVersion.getEncodedString() : NULL_STRING);
-
-        return string;
+        return String.format(
+                "%s%s%s%s%s",
+                classType.getName(),
+                DELIMETER,
+                (minimumVersion != null) ? minimumVersion.getEncodedString() : NULL_STRING,
+                DELIMETER,
+                (maximumVersion != null) ? maximumVersion.getEncodedString() : NULL_STRING);
     }
 
     /**

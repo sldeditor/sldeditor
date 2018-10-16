@@ -43,13 +43,13 @@ public class TransferredData implements Serializable {
         private static final long serialVersionUID = -5290507590609699883L;
 
         /** The user object. */
-        public Object userObject = null;
+        private Object userObject = null;
 
         /** The tree path. */
-        public TreePath treePath = null;
+        private TreePath treePath = null;
 
         /** The data flavour. */
-        public DataFlavor dataFlavour = null;
+        private DataFlavor dataFlavour = null;
     }
 
     /** The data list. */

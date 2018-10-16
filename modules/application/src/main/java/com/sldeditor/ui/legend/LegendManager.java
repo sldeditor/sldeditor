@@ -94,12 +94,10 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
     public BufferedImage createLegend(StyledLayerDescriptor sld, String heading, String filename) {
         Map<String, BufferedImage> map = createLegend(sld, heading, filename, false);
 
-        if ((map != null) && !map.isEmpty()) {
-            if (map.size() == 1) {
-                String firstKey = map.keySet().iterator().next();
+        if ((map != null) && (map.size() == 1)) {
+            String firstKey = map.keySet().iterator().next();
 
-                return map.get(firstKey);
-            }
+            return map.get(firstKey);
         }
 
         return null;
@@ -358,9 +356,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
     /*
      * (non-Javadoc)
      *
-     * @see
-     * com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface#updateLegendOptionData(com.
-     * sldeditor.ui.legend.option.LegendOptionData)
+     * @see com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface#updateLegendOptionData(com. sldeditor.ui.legend.option.LegendOptionData)
      */
     @Override
     public void updateLegendOptionData(LegendOptionData data) {
