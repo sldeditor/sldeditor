@@ -335,7 +335,9 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
         if (selectedStyle.getName() != null) {
             styleName = selectedStyle.getName();
         } else {
-            styleName = String.format("Style %d", styleList.indexOf(selectedStyle));
+            styleName =
+                    String.format(
+                            "Style %d", (styleList != null) ? styleList.indexOf(selectedStyle) : 0);
         }
 
         styleMap.put(styleName, selectedStyle);
@@ -476,7 +478,13 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
     private boolean saveGridImage(
             BufferedImage image, String formatName, File destinationFile, int dpi)
             throws IOException {
-        destinationFile.delete();
+        if (!destinationFile.delete()) {
+            ConsoleManager.getInstance()
+                    .information(
+                            this,
+                            String.format(
+                                    "Failed to delete '%s'", destinationFile.getAbsolutePath()));
+        }
 
         for (Iterator<ImageWriter> iw = ImageIO.getImageWritersByFormatName(formatName);
                 iw.hasNext(); ) {

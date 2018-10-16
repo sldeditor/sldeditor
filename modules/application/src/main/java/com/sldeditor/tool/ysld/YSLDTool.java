@@ -200,11 +200,9 @@ public class YSLDTool implements ToolInterface {
                                                     YSLDTool.class, "YSLDTool.exportToYSLDMsg")
                                             + " "
                                             + ysldFilename);
-                    BufferedWriter out;
-                    try {
-                        out = new BufferedWriter(new FileWriter(fileToSave));
+
+                    try (BufferedWriter out = new BufferedWriter(new FileWriter(fileToSave))) {
                         out.write(sldString);
-                        out.close();
                     } catch (IOException e) {
                         ConsoleManager.getInstance().exception(this, e);
                     }
@@ -249,11 +247,9 @@ public class YSLDTool implements ToolInterface {
                                     Localisation.getField(YSLDTool.class, "YSLDTool.exportToSLDMsg")
                                             + " "
                                             + sldFilename);
-                    BufferedWriter out;
-                    try {
-                        out = new BufferedWriter(new FileWriter(fileToSave));
+
+                    try (BufferedWriter out = new BufferedWriter(new FileWriter(fileToSave))) {
                         out.write(sldString);
-                        out.close();
                     } catch (IOException e) {
                         ConsoleManager.getInstance().exception(this, e);
                     }

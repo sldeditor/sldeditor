@@ -320,7 +320,7 @@ public class GeoServerStyleTree extends JPanel {
             LayerStyleNode leaf = (LayerStyleNode) selectedStylePath.getLastPathComponent();
 
             if (leaf.getStyleWrapper() != null) {
-                selectedStyle = leaf.getStyleWrapper().clone();
+                selectedStyle = new StyleWrapper(leaf.getStyleWrapper());
             }
         }
 

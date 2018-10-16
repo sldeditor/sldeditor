@@ -20,7 +20,9 @@ import org.geotools.styling.visitor.DuplicatingStyleVisitor;
 public class InlineDatastoreVisitor extends DuplicatingStyleVisitor {
 
     /** Instantiates a new inline datastore visitor. */
-    public InlineDatastoreVisitor() {}
+    public InlineDatastoreVisitor() {
+        // Default constructor
+    }
 
     /**
      * (non-Javadoc)

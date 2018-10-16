@@ -32,10 +32,10 @@ import org.geotools.styling.SelectedChannelType;
  */
 class ChannelName {
 
-    public static String RED = "Red";
-    public static String GREEN = "Green";
-    public static String BLUE = "Blue";
-    public static String GREY = "Grey";
+    public static final String RED = "Red";
+    public static final String GREEN = "Green";
+    public static final String BLUE = "Blue";
+    public static final String GREY = "Grey";
 
     /** The panel config expression. */
     private String panelConfigExpression = "symbol/raster/PanelConfig_ChannelName%sExpression.xml";

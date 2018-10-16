@@ -57,7 +57,7 @@ public class FileSystemWatcher implements Runnable {
         try {
             watchService = FileSystems.getDefault().newWatchService();
         } catch (IOException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         }
     }
 

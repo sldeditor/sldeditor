@@ -24,7 +24,7 @@ package com.sldeditor.datasource.attribute;
  *
  * @author Robert Ward (SCISYS)
  */
-public class DataSourceAttributeData implements Cloneable {
+public class DataSourceAttributeData {
     /** The name. */
     private String name;
 
@@ -46,18 +46,6 @@ public class DataSourceAttributeData implements Cloneable {
         this.name = name;
         this.type = type;
         this.value = value;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#clone()
-     */
-    @Override
-    public DataSourceAttributeData clone() {
-        DataSourceAttributeData newObj = new DataSourceAttributeData(name, type, value);
-
-        return newObj;
     }
 
     /**

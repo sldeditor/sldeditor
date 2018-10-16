@@ -46,7 +46,9 @@ public class MapBoxWriterImpl implements SLDWriterInterface {
     private File cachedFile = null;
 
     /** Default constructor. */
-    public MapBoxWriterImpl() {}
+    public MapBoxWriterImpl() {
+        // Default constructor
+    }
 
     /**
      * Encode sld to a string.

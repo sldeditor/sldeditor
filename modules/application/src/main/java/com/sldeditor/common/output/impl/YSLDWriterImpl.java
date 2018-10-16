@@ -35,7 +35,9 @@ import org.geotools.ysld.Ysld;
 public class YSLDWriterImpl implements SLDWriterInterface {
 
     /** Default constructor. */
-    public YSLDWriterImpl() {}
+    public YSLDWriterImpl() {
+        // Default constructor
+    }
 
     /**
      * Encode sld to a string.

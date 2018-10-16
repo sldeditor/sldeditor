@@ -83,8 +83,10 @@ public class MapBoxFileHandler implements FileHandlerInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.input.FileSystemInterface,
-     * javax.swing.tree.DefaultTreeModel, com.sldeditor.extension.input.file.FileTreeNode)
+     * @see
+     * com.sldeditor.extension.input.file.FileHandlerInterface#populate(com.sldeditor.extension.
+     * input.FileSystemInterface, javax.swing.tree.DefaultTreeModel,
+     * com.sldeditor.extension.input.file.FileTreeNode)
      */
     @Override
     public boolean populate(
@@ -96,7 +98,9 @@ public class MapBoxFileHandler implements FileHandlerInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.input.NodeInterface)
+     * @see
+     * com.sldeditor.extension.input.FileHandlerInterface#getSLDContents(com.sldeditor.extension.
+     * input.NodeInterface)
      */
     @Override
     public List<SLDDataInterface> getSLDContents(NodeInterface node) {
@@ -158,53 +162,42 @@ public class MapBoxFileHandler implements FileHandlerInterface {
      */
     private void internalOpenFile(File f, List<SLDDataInterface> list) {
         /*
-        if (f.isFile() && FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList())) {
-            try {
-
-                FileInputStream fis = new FileInputStream(f);
-
-                String fileContents = IOUtils.toString(fis, "utf-8");
-                Reader reader = new StringReader(fileContents);
-
-                List<Exception> problems = MapBoxStyle.validate(reader);
-
-                if (!problems.isEmpty()) {
-                    for (Exception e : problems) {
-                        ConsoleManager.getInstance().exception(this, e);
-                    }
-                } else {
-                    FileInputStream fis2 = new FileInputStream(f);
-
-                    StyledLayerDescriptor sld = MapBoxStyle.parse(fis2);
-
-                    // Convert MapBox to SLD string
-                    if (sldWriter == null) {
-                        sldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD);
-                    }
-
-                    String sldContents = sldWriter.encodeSLD(null, sld);
-
-                    SLDDataInterface sldData = new SLDData(new StyleWrapper(f.getName()),
-                            sldContents);
-                    sldData.setSLDFile(f);
-                    sldData.setReadOnly(false);
-                    sldData.setOriginalFormat(SLDOutputFormatEnum.MAPBOX);
-
-                    list.add(sldData);
-                }
-            } catch (IOException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            } catch (ParseException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            }
-        }
-        */
+         * if (f.isFile() && FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList())) {
+         * try {
+         *
+         * FileInputStream fis = new FileInputStream(f);
+         *
+         * String fileContents = IOUtils.toString(fis, "utf-8"); Reader reader = new
+         * StringReader(fileContents);
+         *
+         * List<Exception> problems = MapBoxStyle.validate(reader);
+         *
+         * if (!problems.isEmpty()) { for (Exception e : problems) {
+         * ConsoleManager.getInstance().exception(this, e); } } else { FileInputStream fis2 = new
+         * FileInputStream(f);
+         *
+         * StyledLayerDescriptor sld = MapBoxStyle.parse(fis2);
+         *
+         * // Convert MapBox to SLD string if (sldWriter == null) { sldWriter =
+         * SLDWriterFactory.createWriter(SLDOutputFormatEnum.SLD); }
+         *
+         * String sldContents = sldWriter.encodeSLD(null, sld);
+         *
+         * SLDDataInterface sldData = new SLDData(new StyleWrapper(f.getName()), sldContents);
+         * sldData.setSLDFile(f); sldData.setReadOnly(false);
+         * sldData.setOriginalFormat(SLDOutputFormatEnum.MAPBOX);
+         *
+         * list.add(sldData); } } catch (IOException e) {
+         * ConsoleManager.getInstance().exception(this, e); } catch (ParseException e) {
+         * ConsoleManager.getInstance().exception(this, e); } }
+         */
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.SLDDataInterface)
+     * @see com.sldeditor.extension.input.file.FileHandlerInterface#save(com.sldeditor.ui.iface.
+     * SLDDataInterface)
      */
     @Override
     public boolean save(SLDDataInterface sldData) {
@@ -218,14 +211,11 @@ public class MapBoxFileHandler implements FileHandlerInterface {
             ysldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.YSLD);
         }
 
-        BufferedWriter out;
-        try {
-            out = new BufferedWriter(new FileWriter(fileToSave));
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(fileToSave))) {
             String contents =
                     ysldWriter.encodeSLD(
                             sldData.getResourceLocator(), SelectedSymbol.getInstance().getSld());
             out.write(contents);
-            out.close();
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
@@ -238,7 +228,9 @@ public class MapBoxFileHandler implements FileHandlerInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.SLDDataInterface)
+     * @see
+     * com.sldeditor.extension.input.file.FileHandlerInterface#getSLDName(com.sldeditor.ui.iface.
+     * SLDDataInterface)
      */
     @Override
     public String getSLDName(SLDDataInterface sldData) {
@@ -264,7 +256,9 @@ public class MapBoxFileHandler implements FileHandlerInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.lang.String, java.lang.String)
+     * @see
+     * com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface#getIcon(java.
+     * lang.String, java.lang.String)
      */
     @Override
     public Icon getIcon(String path, String filename) {

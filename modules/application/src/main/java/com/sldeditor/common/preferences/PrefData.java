@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author Robert Ward (SCISYS)
  */
-public class PrefData implements Cloneable {
+public class PrefData {
 
     /** The use anti alias flag. */
     private boolean useAntiAlias = false;
@@ -62,34 +62,26 @@ public class PrefData implements Cloneable {
     }
 
     /**
-     * Clone.
+     * Copy constructor.
      *
-     * @return the pref data
+     * @param clone the clone
      */
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#clone()
-     */
-    @Override
-    public PrefData clone() {
-        PrefData copy = new PrefData();
-        copy.uiLayoutClass = this.uiLayoutClass;
-        copy.useAntiAlias = this.useAntiAlias;
-        copy.backgroundColour = new Color(this.backgroundColour.getRGB());
-        copy.saveLastFolderView = this.saveLastFolderView;
-        copy.lastFolderViewed = this.lastFolderViewed;
-        copy.lastViewedKey = this.lastViewedKey;
-        copy.checkAppVersionOnStartUp = this.checkAppVersionOnStartUp;
+    public PrefData(PrefData clone) {
+        this.uiLayoutClass = clone.uiLayoutClass;
+        this.useAntiAlias = clone.useAntiAlias;
+        this.backgroundColour = new Color(clone.backgroundColour.getRGB());
+        this.saveLastFolderView = clone.saveLastFolderView;
+        this.lastFolderViewed = clone.lastFolderViewed;
+        this.lastViewedKey = clone.lastViewedKey;
+        this.checkAppVersionOnStartUp = clone.checkAppVersionOnStartUp;
 
-        if (this.vendorOptionList != null) {
-            copy.vendorOptionList = new ArrayList<VersionData>();
+        if (clone.vendorOptionList != null) {
+            this.vendorOptionList = new ArrayList<>();
 
-            for (VersionData versionData : vendorOptionList) {
-                copy.vendorOptionList.add(versionData.clone());
+            for (VersionData versionData : clone.vendorOptionList) {
+                this.vendorOptionList.add(new VersionData(versionData));
             }
         }
-        return copy;
     }
 
     /**

@@ -178,11 +178,8 @@ public class MapBoxTool implements ToolInterface {
                                                     MapBoxTool.class, "MapBoxTool.exportToSLDMsg")
                                             + " "
                                             + sldFilename);
-                    BufferedWriter out;
-                    try {
-                        out = new BufferedWriter(new FileWriter(fileToSave));
+                    try (BufferedWriter out = new BufferedWriter(new FileWriter(fileToSave))) {
                         out.write(sldString);
-                        out.close();
                     } catch (IOException e) {
                         ConsoleManager.getInstance().exception(this, e);
                     }

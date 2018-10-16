@@ -19,6 +19,7 @@
 
 package com.sldeditor.common.vendoroption;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ import java.util.List;
  *
  * @author Robert Ward (SCISYS)
  */
-public interface VendorOptionTypeInterface {
+public interface VendorOptionTypeInterface extends Serializable {
 
     /**
      * Gets the name.

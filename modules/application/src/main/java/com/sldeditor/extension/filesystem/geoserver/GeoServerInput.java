@@ -179,7 +179,7 @@ public class GeoServerInput
      * @param geoServerClientClass the geoServerClientClass to set
      */
     public static void overrideGeoServerClientClass(Class<?> geoServerClientClass) {
-        GeoServerConnectionManager.geoServerClientClass = geoServerClientClass;
+        GeoServerConnectionManager.overrideGeoServerClientClass(geoServerClientClass);
     }
 
     /** Update property file. */

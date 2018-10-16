@@ -59,7 +59,9 @@ public class GeoServerConnection implements Comparable<GeoServerConnection>, Ser
     private static boolean useEncryption = true;
 
     /** Default constructor. */
-    public GeoServerConnection() {}
+    public GeoServerConnection() {
+        // Default constructor
+    }
 
     /**
      * Decode an encoded GeoServerConnection string.

@@ -20,13 +20,17 @@
 package com.sldeditor.common.vendoroption;
 
 import com.sldeditor.common.console.ConsoleManager;
+import java.io.Serializable;
 
 /**
  * Class that encapsulates a vendor option version.
  *
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionVersion {
+public class VendorOptionVersion implements Serializable {
+
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 5971467773776382733L;
 
     /** The Constant DELIMETER. */
     private static final String DELIMETER = ";";

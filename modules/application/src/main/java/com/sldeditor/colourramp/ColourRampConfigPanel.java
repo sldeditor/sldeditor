@@ -48,7 +48,7 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
     private static final long serialVersionUID = 1L;
 
     /** The colour ramp map. */
-    private Map<ColourRampPanelInterface, List<ColourRamp>> colourRampMap = null;
+    private transient Map<ColourRampPanelInterface, List<ColourRamp>> colourRampMap = null;
 
     /** The type combo box. */
     private ValueComboBox typeComboBox;
@@ -57,14 +57,14 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
     private JPanel editPanel;
 
     /** The colour ramp map cache. */
-    private Map<String, ColourRampPanelInterface> colourRampMapCache =
+    private transient Map<String, ColourRampPanelInterface> colourRampMapCache =
             new HashMap<String, ColourRampPanelInterface>();
 
     /** The model. */
     private ColourMapModel colourMapModel = null;
 
     /** The parent obj. */
-    private ColourMapModelUpdateInterface parentObj = null;
+    private transient ColourMapModelUpdateInterface parentObj = null;
 
     /**
      * Instantiates a new colour ramp dialog.

@@ -95,9 +95,6 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     /** The Constant APPLICATION_FRAME_HEIGHT. */
     private static final int APPLICATION_FRAME_HEIGHT = 800;
 
-    /** The Constant NO_SLDEDITOR_FILE_SET. */
-    private static final String NO_SLDEDITOR_FILE_SET = "Not set";
-
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -111,16 +108,16 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     protected static JFrame frame = null;
 
     /** The data source. */
-    private DataSourceInterface dataSource = null;
+    private transient DataSourceInterface dataSource = null;
 
     /** The batch import list. */
-    private List<ExtensionInterface> extensionList = new ArrayList<ExtensionInterface>();
+    private transient List<ExtensionInterface> extensionList = new ArrayList<ExtensionInterface>();
 
     /** The user interface manager. */
-    private SLDEditorUIPanels uiMgr = new SLDEditorUIPanels();
+    private transient SLDEditorUIPanels uiMgr = new SLDEditorUIPanels();
 
     /** The sld writer. */
-    private SLDWriterInterface sldWriter = null;
+    private transient SLDWriterInterface sldWriter = null;
 
     /** The data edited flag. */
     private boolean dataEditedFlag = false;
@@ -129,7 +126,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     protected static boolean underTestFlag = false;
 
     /** The sld editor dlg. */
-    private SLDEditorDlgInterface sldEditorDlg = null;
+    private transient SLDEditorDlgInterface sldEditorDlg = null;
 
     static {
         JAIExt.initJAIEXT();
@@ -149,7 +146,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             // Set up localisation of text
             Localisation.getInstance().parseCommandLine(args);
 
-            if (args[0].startsWith("-") == false) {
+            if (!args[0].startsWith("-")) {
                 tmpFilename = args[0];
             }
 
@@ -287,31 +284,43 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         // If specified on the command line, load SLD file
         if (filename != null) {
-            File file = new File(filename);
-
-            URL url;
-            try {
-                url = file.toURI().toURL();
-                List<SLDDataInterface> sldDataList = null;
-                for (ExtensionInterface extension : extensionList) {
-                    if (sldDataList == null) {
-                        sldDataList = extension.open(url);
-                    }
-                }
-            } catch (MalformedURLException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            }
+            loadFromCommandLine(filename);
         }
 
         // Check application version on startup
+        checkAppVersion();
+    }
+
+    /** Check application version on startup. */
+    private void checkAppVersion() {
         if (!underTestFlag) {
             PrefData prefData = PrefManager.getInstance().getPrefData();
-            if (prefData != null) {
-                if (prefData.isCheckAppVersionOnStartUp()) {
-                    CheckUpdatePanel updatePanel = new CheckUpdatePanel();
-                    updatePanel.showPanelSilent(Version.getVersionNumber());
+            if ((prefData != null) && prefData.isCheckAppVersionOnStartUp()) {
+                CheckUpdatePanel updatePanel = new CheckUpdatePanel();
+                updatePanel.showPanelSilent(Version.getVersionNumber());
+            }
+        }
+    }
+
+    /**
+     * Load from command line.
+     *
+     * @param filename the filename
+     */
+    private void loadFromCommandLine(String filename) {
+        File file = new File(filename);
+
+        URL url;
+        try {
+            url = file.toURI().toURL();
+            List<SLDDataInterface> sldDataList = null;
+            for (ExtensionInterface extension : extensionList) {
+                if (sldDataList == null) {
+                    sldDataList = extension.open(url);
                 }
             }
+        } catch (MalformedURLException e) {
+            ConsoleManager.getInstance().exception(this, e);
         }
     }
 
@@ -381,7 +390,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     @Override
     public void updateWindowTitle(boolean dataEditedFlag) {
         this.dataEditedFlag = dataEditedFlag;
-        String docName = NO_SLDEDITOR_FILE_SET;
+        String docName;
         File file = SLDEditorFile.getInstance().getSldEditorFile();
 
         String sldLayerName = SLDEditorFile.getInstance().getSLDData().getLayerName();
@@ -600,33 +609,35 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         List<SLDDataInterface> sldFilesToLoad = selectedFiles.getSldData();
 
-        if (!selectedFiles.isFolder()) {
-            // Application can only support editing one SLD file at a time
-            if (sldFilesToLoad.size() == 1) {
-                SLDDataInterface firstObject = sldFilesToLoad.get(0);
+        if (selectedFiles.isFolder()) {
+            return loadNewSymbol;
+        }
 
-                if (firstObject != null) {
-                    if (dataEditedFlag && !isUnderTestFlag()) {
-                        loadNewSymbol = sldEditorDlg.load(frame);
-                    }
+        // Application can only support editing one SLD file at a time
+        if (sldFilesToLoad.size() == 1) {
+            SLDDataInterface firstObject = sldFilesToLoad.get(0);
 
-                    if (loadNewSymbol) {
-                        populate(firstObject);
-                    }
-
-                    ReloadManager.getInstance().reset();
+            if (firstObject != null) {
+                if (dataEditedFlag && !isUnderTestFlag()) {
+                    loadNewSymbol = sldEditorDlg.load(frame);
                 }
-            }
 
-            if (!selectedFiles.isDataSource()) {
-                // Inform UndoManager that a new SLD file has been
-                // loaded and to clear undo history
-                UndoManager.getInstance().fileLoaded();
+                if (loadNewSymbol) {
+                    populate(firstObject);
+                }
 
-                Controller.getInstance().setPopulating(true);
-                uiMgr.populateUI(sldFilesToLoad.size());
-                Controller.getInstance().setPopulating(false);
+                ReloadManager.getInstance().reset();
             }
+        }
+
+        if (!selectedFiles.isDataSource()) {
+            // Inform UndoManager that a new SLD file has been
+            // loaded and to clear undo history
+            UndoManager.getInstance().fileLoaded();
+
+            Controller.getInstance().setPopulating(true);
+            uiMgr.populateUI(sldFilesToLoad.size());
+            Controller.getInstance().setPopulating(false);
         }
 
         return loadNewSymbol;
@@ -783,7 +794,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         try {
             buff = ImageIO.read(getClass().getResourceAsStream(filename));
         } catch (IOException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         }
 
         return buff;

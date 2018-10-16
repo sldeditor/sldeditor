@@ -275,7 +275,7 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
         try {
             url = new URL(DOWNLOAD_URL);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            ConsoleManager.getInstance().exception(this, e);
         }
         return url;
     }

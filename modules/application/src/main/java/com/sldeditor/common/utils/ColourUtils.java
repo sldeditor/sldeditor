@@ -20,7 +20,7 @@
 package com.sldeditor.common.utils;
 
 import java.awt.Color;
-import java.util.Random;
+import java.security.SecureRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.geotools.styling.SLD;
@@ -40,7 +40,7 @@ public class ColourUtils {
     private static Pattern htmlColourPattern;
 
     /** The random number generator. */
-    private static Random rand = new Random();
+    private static SecureRandom rand = new SecureRandom();
 
     /**
      * Create a #rrggbb string From colour.

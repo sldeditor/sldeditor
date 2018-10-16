@@ -59,28 +59,7 @@ public class VendorOptionMenuUtils {
             List<String> keyOrderList = new ArrayList<String>();
 
             if (versionDataList != null) {
-                for (VersionData versionData : versionDataList) {
-
-                    String key = getKey(versionData);
-                    List<ValueComboBoxData> dataList = map.get(key);
-
-                    if (dataList == null) {
-                        dataList = new ArrayList<ValueComboBoxData>();
-                        map.put(key, dataList);
-                        keyOrderList.add(key);
-                    }
-
-                    VendorOptionVersion vendorOptionVersion =
-                            new VendorOptionVersion(versionData.getVendorOptionType(), versionData);
-                    ValueComboBoxData value =
-                            new ValueComboBoxData(
-                                    versionData.getVersionString(),
-                                    versionData.getVersionString(),
-                                    vendorOptionVersion,
-                                    String.class);
-                    dataList.add(value);
-                    valueMap.put(versionData.getVersionString(), value);
-                }
+                createVendorOptionItem(versionDataList, map, keyOrderList);
 
                 // Add groups to menu combo
                 for (String key : keyOrderList) {
@@ -93,6 +72,43 @@ public class VendorOptionMenuUtils {
             }
         }
         return dataSelectionList;
+    }
+
+    /**
+     * Creates the vendor option item.
+     *
+     * @param versionDataList the version data list
+     * @param map the map
+     * @param keyOrderList the key order list
+     */
+    private static void createVendorOptionItem(
+            List<VersionData> versionDataList,
+            Map<String, List<ValueComboBoxData>> map,
+            List<String> keyOrderList) {
+        for (VersionData versionData : versionDataList) {
+
+            if (versionData != null) {
+                String key = getKey(versionData);
+                List<ValueComboBoxData> dataList = map.get(key);
+
+                if (dataList == null) {
+                    dataList = new ArrayList<ValueComboBoxData>();
+                    map.put(key, dataList);
+                    keyOrderList.add(key);
+                }
+
+                VendorOptionVersion vendorOptionVersion =
+                        new VendorOptionVersion(versionData.getVendorOptionType(), versionData);
+                ValueComboBoxData value =
+                        new ValueComboBoxData(
+                                versionData.getVersionString(),
+                                versionData.getVersionString(),
+                                vendorOptionVersion,
+                                String.class);
+                dataList.add(value);
+                valueMap.put(versionData.getVersionString(), value);
+            }
+        }
     }
 
     /**

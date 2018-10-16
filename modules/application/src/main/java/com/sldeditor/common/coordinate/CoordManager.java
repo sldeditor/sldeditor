@@ -143,7 +143,7 @@ public class CoordManager {
                                     crsMap.put(fullCode, value);
                                 }
                             } catch (NoSuchAuthorityCodeException e) {
-                                // ConsoleManager.getInstance().exception(this, e);
+                                // Do nothing
                             } catch (FactoryException e) {
                                 ConsoleManager.getInstance().exception(this, e);
                             }
@@ -165,10 +165,8 @@ public class CoordManager {
         if (coordinateReferenceSystem != null) {
             Set<ReferenceIdentifier> indentifierList = coordinateReferenceSystem.getIdentifiers();
 
-            if (indentifierList != null) {
-                if (indentifierList.iterator().hasNext()) {
-                    identifier = indentifierList.iterator().next();
-                }
+            if ((indentifierList != null) && indentifierList.iterator().hasNext()) {
+                identifier = indentifierList.iterator().next();
             }
         }
 

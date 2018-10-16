@@ -204,7 +204,7 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
         Integer newValue = 0;
 
         if (objValue instanceof Integer) {
-            newValue = ((Integer) objValue).intValue();
+            newValue = (Integer) objValue;
         } else if (objValue instanceof Long) {
             newValue = ((Long) objValue).intValue();
         } else if (objValue instanceof Double) {

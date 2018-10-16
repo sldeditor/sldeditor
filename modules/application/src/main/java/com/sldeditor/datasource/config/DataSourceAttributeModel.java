@@ -418,7 +418,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
         List<DataSourceAttributeData> attributeList = new ArrayList<DataSourceAttributeData>();
 
         for (DataSourceAttributeData attributeData : valueList) {
-            attributeList.add(attributeData.clone());
+            attributeList.add(new DataSourceAttributeData(attributeData));
         }
         attributeDataImpl.setData(attributeList);
 

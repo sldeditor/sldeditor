@@ -181,7 +181,7 @@ public class MinimumVersion {
         VersionData latestUserDefault =
                 userDefaultVendorOptionList.get(userDefaultVendorOptionList.size() - 1);
 
-        return (earliestReadFromSymbol.compareTo(latestUserDefault) == -1)
+        return (earliestReadFromSymbol.compareTo(latestUserDefault) < 0)
                 ? latestUserDefault
                 : earliestReadFromSymbol;
     }

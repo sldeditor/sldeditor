@@ -21,13 +21,17 @@ package com.sldeditor.common.vendoroption.info;
 
 import com.sldeditor.common.vendoroption.VendorOptionStatus;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
+import java.io.Serializable;
 
 /**
  * The Class VendorOptionInfo.
  *
  * @author Robert Ward (SCISYS)
  */
-public class VendorOptionInfo implements Comparable<VendorOptionInfo> {
+public class VendorOptionInfo implements Comparable<VendorOptionInfo>, Serializable {
+
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 6922798990524535634L;
 
     /** The version data. */
     private VendorOptionVersion versionData;

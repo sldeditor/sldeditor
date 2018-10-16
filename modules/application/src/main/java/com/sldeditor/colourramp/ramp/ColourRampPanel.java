@@ -142,20 +142,18 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (!isPopulating()) {
-                            if (!suppressUndoEvents) {
-                                Integer newValueObj = rampComboBox.getSelectedIndex();
+                        if (!isPopulating() && (!suppressUndoEvents)) {
+                            Integer newValueObj = rampComboBox.getSelectedIndex();
 
-                                UndoManager.getInstance()
-                                        .addUndoEvent(
-                                                new UndoEvent(
-                                                        undoObj,
-                                                        FieldIdEnum.COLOUR_RAMP_COLOUR,
-                                                        oldColourRampIndex,
-                                                        newValueObj));
+                            UndoManager.getInstance()
+                                    .addUndoEvent(
+                                            new UndoEvent(
+                                                    undoObj,
+                                                    FieldIdEnum.COLOUR_RAMP_COLOUR,
+                                                    oldColourRampIndex,
+                                                    newValueObj));
 
-                                oldColourRampIndex = newValueObj;
-                            }
+                            oldColourRampIndex = newValueObj;
                         }
                     }
                 });

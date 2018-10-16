@@ -56,7 +56,7 @@ public class ColourRamp {
     /** The range. */
     private int range = Integer.MIN_VALUE;
 
-    /** The last min value. */
+    /** The last minimum value. */
     private int lastMinValue = Integer.MIN_VALUE;
 
     /** The reverse colours flag. */
@@ -66,7 +66,9 @@ public class ColourRamp {
     private BufferedImage gradientImage = null;
 
     /** Instantiates a new colour ramp. */
-    public ColourRamp() {}
+    public ColourRamp() {
+        // default implementation ignored
+    }
 
     /**
      * Adds the colour.
@@ -173,7 +175,7 @@ public class ColourRamp {
 
         Expression expression = null;
         if (quantityExpression instanceof LiteralExpressionImpl) {
-            int value = Integer.valueOf(quantityExpression.toString());
+            int value = Integer.parseInt(quantityExpression.toString());
 
             int tmpRange = Math.abs(data.getMaxValue() - data.getMinValue());
 

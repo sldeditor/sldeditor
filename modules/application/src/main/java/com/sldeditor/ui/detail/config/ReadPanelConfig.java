@@ -612,7 +612,7 @@ public class ReadPanelConfig implements PanelConfigInterface {
                 Class<?> vendorOptionClass = Class.forName(vendorOptionClassName);
                 versionData = VersionData.decode(vendorOptionClass, xmlVendorOption.getVersion());
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                ConsoleManager.getInstance().exception(ReadPanelConfig.class, e);
             }
         }
         return versionData;

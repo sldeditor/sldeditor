@@ -21,13 +21,18 @@ package com.sldeditor.common.vendoroption;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
+import java.io.Serializable;
 
 /**
  * Class that represents the vendor option versions supported.
  *
  * @author Robert Ward (SCISYS)
  */
-public class VersionData implements Comparable<VersionData>, Cloneable {
+public class VersionData implements Comparable<VersionData>, Serializable {
+
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 8993434365556056358L;
+
     private static final String SNAPSHOT_SUFFIX = "-SNAPSHOT";
 
     /** The Constant EARLIEST. */
@@ -79,28 +84,26 @@ public class VersionData implements Comparable<VersionData>, Cloneable {
     private boolean isLatest = false;
 
     /** Default constructor. */
-    public VersionData() {}
+    public VersionData() {
+        // Default constructor
+    }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Copy constructor
      *
-     * @see java.lang.Object#clone()
+     * @param clone the clone
      */
-    @Override
-    public VersionData clone() {
-        VersionData versionData = new VersionData();
-        versionData.vendorOptionType = vendorOptionType;
-        versionData.isNotSet = isNotSet;
-        versionData.majorNumber = majorNumber;
-        versionData.minorNumber = minorNumber;
-        versionData.pointNumber = pointNumber;
-        versionData.subPointNumber = subPointNumber;
-        versionData.vendorOption = vendorOption;
-        versionData.versionString = versionString;
-        versionData.isEarliest = isEarliest;
-        versionData.isLatest = isLatest;
-
-        return versionData;
+    public VersionData(VersionData clone) {
+        this.vendorOptionType = clone.vendorOptionType;
+        this.isNotSet = clone.isNotSet;
+        this.majorNumber = clone.majorNumber;
+        this.minorNumber = clone.minorNumber;
+        this.pointNumber = clone.pointNumber;
+        this.subPointNumber = clone.subPointNumber;
+        this.vendorOption = clone.vendorOption;
+        this.versionString = clone.versionString;
+        this.isEarliest = clone.isEarliest;
+        this.isLatest = clone.isLatest;
     }
 
     /**

@@ -195,7 +195,7 @@ public class SLDFileHandler implements FileHandlerInterface {
 
                 list.add(sldData);
             } catch (IOException e) {
-                e.printStackTrace();
+                ConsoleManager.getInstance().exception(this, e);
             }
         }
     }
@@ -215,11 +215,8 @@ public class SLDFileHandler implements FileHandlerInterface {
         File fileToSave = sldData.getSLDFile();
         String sldString = sldData.getSld();
 
-        BufferedWriter out;
-        try {
-            out = new BufferedWriter(new FileWriter(fileToSave));
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(fileToSave))) {
             out.write(sldString);
-            out.close();
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }

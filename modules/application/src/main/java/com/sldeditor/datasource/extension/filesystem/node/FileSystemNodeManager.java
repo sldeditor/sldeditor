@@ -330,61 +330,53 @@ public class FileSystemNodeManager {
                 }
             }
 
-            if (parent != null) {
-                folderList.add(0, parent.getPath());
-                folderList.add(0, FileSystemExtension.ROOT_NODE);
+            folderList.add(0, parent.getPath());
+            folderList.add(0, FileSystemExtension.ROOT_NODE);
 
-                DefaultMutableTreeNode node = ((DefaultMutableTreeNode) treeModel.getRoot());
+            DefaultMutableTreeNode node = ((DefaultMutableTreeNode) treeModel.getRoot());
 
-                boolean isRoot = true;
+            boolean isRoot = true;
 
-                for (String subFolder : folderList) {
-                    node = searchNode(isRoot, node, subFolder);
+            for (String subFolder : folderList) {
+                node = searchNode(isRoot, node, subFolder);
 
-                    if (node == null) {
-                        break;
-                    }
-                    isRoot = false;
+                if (node == null) {
+                    break;
+                }
+                isRoot = false;
+            }
+
+            if (node != null) {
+                TreeNode[] nodes = treeModel.getPathToRoot(node);
+                TreePath path = new TreePath(nodes);
+
+                if (showInTree) {
+                    fileSystemTreeComponent.scrollPathToVisible(path);
+                    fileSystemTreeComponent.expandPath(path);
                 }
 
-                if (node != null) {
-                    TreeNode[] nodes = treeModel.getPathToRoot(node);
-                    TreePath path = new TreePath(nodes);
+                // Select file
+                if (file.isFile()) {
+                    node = searchNode(isRoot, node, file.getName());
+                    if (node != null) {
+                        nodes = treeModel.getPathToRoot(node);
+                        path = new TreePath(nodes);
 
-                    if (showInTree) {
-                        fileSystemTreeComponent.scrollPathToVisible(path);
-                        fileSystemTreeComponent.expandPath(path);
-                    }
-
-                    // Select file
-                    if (file.isFile()) {
-                        node = searchNode(isRoot, node, file.getName());
-                        if (node != null) {
-                            nodes = treeModel.getPathToRoot(node);
-                            path = new TreePath(nodes);
-
-                            if (showInTree) {
-                                fileSystemTreeComponent.setSelectionPath(path);
-
-                                if (!node.isLeaf()) {
-                                    fileSystemTreeComponent.expandPath(path);
-                                }
-                            }
-                        }
-                    } else {
                         if (showInTree) {
                             fileSystemTreeComponent.setSelectionPath(path);
+
+                            if (!node.isLeaf()) {
+                                fileSystemTreeComponent.expandPath(path);
+                            }
                         }
                     }
-
-                    return node;
+                } else {
+                    if (showInTree) {
+                        fileSystemTreeComponent.setSelectionPath(path);
+                    }
                 }
-            } else {
-                ConsoleManager.getInstance()
-                        .error(
-                                FileSystemNodeManager.class,
-                                "Failed to find parent path for folder : "
-                                        + folder.getAbsolutePath());
+
+                return node;
             }
         }
 

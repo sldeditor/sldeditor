@@ -91,7 +91,9 @@ public class UndoEvent implements UndoInterface {
      * @see com.sldeditor.undo.UndoInterface#undo()
      */
     @Override
-    public void undo() {}
+    public void undo() {
+        // Overridden in derived classes
+    }
 
     /*
      * (non-Javadoc)
@@ -99,7 +101,9 @@ public class UndoEvent implements UndoInterface {
      * @see com.sldeditor.undo.UndoInterface#redo()
      */
     @Override
-    public void redo() {}
+    public void redo() {
+        // Overridden in derived classes
+    }
 
     /*
      * (non-Javadoc)

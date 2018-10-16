@@ -97,7 +97,6 @@ public class CustomProcessFunction {
         dataTypeMap.put("xs:double", Double.class);
         dataTypeMap.put("xs:boolean", Boolean.class);
         dataTypeMap.put("xs:float", Float.class);
-        dataTypeMap.put("xs:double", Double.class);
         dataTypeMap.put("xs:long", Long.class);
         dataTypeMap.put(GEOMETRY_NAME, Geometry.class);
         dataTypeMap.put(BBOX_NAME, ReferencedEnvelope.class);

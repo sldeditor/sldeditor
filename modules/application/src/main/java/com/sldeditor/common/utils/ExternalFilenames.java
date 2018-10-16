@@ -51,7 +51,9 @@ public class ExternalFilenames {
     private static Map<String, String> formatMap = new HashMap<String, String>();
 
     /** Default constructor. */
-    public ExternalFilenames() {}
+    public ExternalFilenames() {
+        // Default constructor
+    }
 
     /** Initialise. */
     private static void initialise() {
@@ -254,18 +256,20 @@ public class ExternalFilenames {
         if (file != null) {
             String filename = file.getAbsolutePath();
 
-            String fileExtension = getFileExtension(filename);
-            if (SLD_FILE_EXTENSION.compareToIgnoreCase(fileExtension) == 0) {
-                // The filename already has the correct SLD file extension
-                return file;
+            if (filename != null) {
+                String fileExtension = getFileExtension(filename);
+                if (SLD_FILE_EXTENSION.compareToIgnoreCase(fileExtension) == 0) {
+                    // The filename already has the correct SLD file extension
+                    return file;
+                }
+                int endIndex = filename.length() - fileExtension.length();
+
+                // Remove existing file extension
+                filename = filename.substring(0, endIndex);
+
+                // Create new filename with sld file extension
+                newFile = new File(filename + SLD_FILE_EXTENSION);
             }
-            int endIndex = filename.length() - fileExtension.length();
-
-            // Remove existing file extension
-            filename = filename.substring(0, endIndex);
-
-            // Create new filename with sld file extension
-            newFile = new File(filename + SLD_FILE_EXTENSION);
         }
         return newFile;
     }

@@ -22,6 +22,7 @@ package com.sldeditor.rendertransformation;
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.DataTypeEnum;
 import com.sldeditor.common.connection.GeoServerConnectionManagerInterface;
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.vendoroption.GeoServerVendorOption;
@@ -392,13 +393,13 @@ public class RenderTransformationDialog extends JDialog {
             String title =
                     String.format(
                             "%s - %s : %s",
-                            value.name,
+                            (value != null) ? value.name : "unknown",
                             Localisation.getString(
                                     RenderTransformationDialog.class,
                                     "RenderTransformationDialog.type"),
-                            value.dataType);
-            expressionPanel.configure(title, value.type, false);
-            expressionPanel.populate(value.objectValue.getExpression());
+                            (value != null) ? value.dataType : "unknown");
+            expressionPanel.configure(title, (value != null) ? value.type : Object.class, false);
+            expressionPanel.populate((value != null) ? value.objectValue.getExpression() : null);
             if (expressionPanel.showDialog()) {
                 Expression expression = expressionPanel.getExpression();
 
@@ -549,7 +550,7 @@ public class RenderTransformationDialog extends JDialog {
 
                             list.add(connection);
                         } catch (MalformedURLException e) {
-                            e.printStackTrace();
+                            ConsoleManager.getInstance().exception(this, e);
                         }
                         return list;
                     }

@@ -56,7 +56,7 @@ public class PrefDataTest {
         prefData.setUiLayoutClass(uiLayoutClass);
         prefData.setLastFolderViewed("last folder");
 
-        PrefData newObj = prefData.clone();
+        PrefData newObj = new PrefData(prefData);
 
         assertEquals(newObj.getBackgroundColour(), prefData.getBackgroundColour());
         assertEquals(newObj.getUiLayoutClass(), prefData.getUiLayoutClass());

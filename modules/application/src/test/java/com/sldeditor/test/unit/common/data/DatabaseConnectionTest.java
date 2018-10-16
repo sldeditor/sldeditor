@@ -69,6 +69,8 @@ public class DatabaseConnectionTest {
                         expectedSupportsDuplication,
                         expectedDetailList,
                         new DatabaseConnectionName() {
+                            /** The Constant serialVersionUID. */
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public String getConnectionName(

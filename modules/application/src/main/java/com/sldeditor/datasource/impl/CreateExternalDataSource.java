@@ -20,7 +20,7 @@
 package com.sldeditor.datasource.impl;
 
 import com.sldeditor.common.Controller;
-import com.sldeditor.common.DataSourceConnectorInterface;
+import com.sldeditor.common.DataSourceConstants;
 import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
@@ -143,7 +143,7 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                     determineGeometryType(schema.getGeometryDescriptor().getType());
                 } else {
                     // Try connecting to a raster data source
-                    Object rasterFilename = map.get(DataSourceConnectorInterface.FILE_MAP_KEY);
+                    Object rasterFilename = map.get(DataSourceConstants.FILE_MAP_KEY);
                     if (rasterFilename != null) {
                         File rasterFile =
                                 new File(

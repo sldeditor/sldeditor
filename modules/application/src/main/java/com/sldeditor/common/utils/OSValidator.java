@@ -50,7 +50,7 @@ public class OSValidator {
      * @return true, if is unix
      */
     public static boolean isUnix() {
-        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || (OS.indexOf("aix") > 0));
+        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >= 0);
     }
 
     /**
