@@ -50,7 +50,8 @@ class OSValidatorTest {
     /** Test method for {@link com.sldeditor.common.utils.OSValidator#isUnix()}. */
     @Test
     void testIsUnix() {
-        boolean expectedResult = OS.endsWith("x");
+        boolean expectedResult =
+                OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || (OS.indexOf("aix") > 0);
         assertEquals(expectedResult, OSValidator.isUnix());
     }
 
