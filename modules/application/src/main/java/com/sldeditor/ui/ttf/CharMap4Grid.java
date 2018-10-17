@@ -416,7 +416,7 @@ class CharMap4Grid extends JPanel
                     buffer.append(CharMap4.unicodeNotation(ch - 0xF000));
                     buffer.append(" = ");
                     buffer.append("decimal ");
-                    buffer.append(CharMap4.getFormatComma().format(ch - 0xF000));
+                    buffer.append(CharMap4.getFormatComma().format((long)(ch - 0xF000)));
                     ch = -1; // that's the end of the caption
                 }
             }

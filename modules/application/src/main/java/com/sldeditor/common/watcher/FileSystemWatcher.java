@@ -77,12 +77,8 @@ public class FileSystemWatcher implements Runnable {
             // Register three events. i.e. whenever a file is created, deleted or
             // modified the watcher gets informed
             try {
-                WatchKey key =
-                        path.register(
-                                watchService,
-                                StandardWatchEventKinds.ENTRY_CREATE,
-                                StandardWatchEventKinds.ENTRY_DELETE,
-                                StandardWatchEventKinds.ENTRY_MODIFY);
+                WatchKey key = path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
+                        StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
                 watcherMap.put(key, parent);
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(this, e);
@@ -113,29 +109,34 @@ public class FileSystemWatcher implements Runnable {
     public void run() {
         try {
             internal_watchDirectoryPath();
-        } catch (IOException e) {
+        } catch (InterruptedException e) {
             ConsoleManager.getInstance().exception(this, e);
+        }
+        finally
+        {
+            // Close the watcher service
+            try {
+                watchService.close();
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            }
         }
     }
 
     /**
      * Internal watch directory path method.
+     * @throws InterruptedException 
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private void internal_watchDirectoryPath() throws IOException {
+    private void internal_watchDirectoryPath() throws InterruptedException {
         WatchKey key = null;
 
         // Poll for events in an infinite loop
-        for (; ; ) {
-            try {
-                // The take method waits till watch service receives a
-                // notification
-                key = watchService.take();
-            } catch (InterruptedException e) {
-                // Ignore
-                ConsoleManager.getInstance().information(this, "Watch service interrupted");
-            }
+        for (;;) {
+            // The take method waits till watch service receives a
+            // notification
+            key = watchService.take();
 
             // once a key is obtained, we poll for events on that key
             if (key != null) {
@@ -150,9 +151,6 @@ public class FileSystemWatcher implements Runnable {
                 break;
             }
         }
-
-        // Close the watcher service
-        watchService.close();
     }
 
     /**
