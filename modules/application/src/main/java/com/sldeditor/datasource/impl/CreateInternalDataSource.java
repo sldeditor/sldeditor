@@ -91,10 +91,10 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
 
         ExtendedSimpleFeatureTypeBuilder b = new ExtendedSimpleFeatureTypeBuilder();
 
-        // set the name
-        typeName = INTERNAL_SCHEMA_NAME;
-        dsInfo.setTypeName(typeName);
-        b.setName(typeName);
+        // set the type name
+        String internalTypeName = INTERNAL_SCHEMA_NAME;
+        dsInfo.setTypeName(internalTypeName);
+        b.setName(internalTypeName);
 
         String namespace = null;
         b.setNamespaceURI(namespace);

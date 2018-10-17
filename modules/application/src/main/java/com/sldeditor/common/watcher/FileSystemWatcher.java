@@ -33,7 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class that implements a file watcher to inform the file system tree whether files have been added or deleted.
+ * Class that implements a file watcher to inform the file system tree whether files have been added
+ * or deleted.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -76,13 +77,15 @@ public class FileSystemWatcher implements Runnable {
             // Register three events. i.e. whenever a file is created, deleted or
             // modified the watcher gets informed
             try {
-                WatchKey key = path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
-                        StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
-
+                WatchKey key =
+                        path.register(
+                                watchService,
+                                StandardWatchEventKinds.ENTRY_CREATE,
+                                StandardWatchEventKinds.ENTRY_DELETE,
+                                StandardWatchEventKinds.ENTRY_MODIFY);
                 watcherMap.put(key, parent);
-
             } catch (IOException e) {
-                // Ignore
+                ConsoleManager.getInstance().exception(this, e);
             }
         }
     }
@@ -124,7 +127,7 @@ public class FileSystemWatcher implements Runnable {
         WatchKey key = null;
 
         // Poll for events in an infinite loop
-        for (;;) {
+        for (; ; ) {
             try {
                 // The take method waits till watch service receives a
                 // notification

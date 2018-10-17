@@ -68,11 +68,11 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /** The parent obj. */
-    private transient UpdateSymbolInterface parentObj = null;
+    /** The parent panel object. */
+    private transient UpdateSymbolInterface parentPanel = null;
 
-    /** The parent panel. */
-    private RasterSymbolizerDetails parentPanel = null;
+    /** The parent raster panel. */
+    private RasterSymbolizerDetails parentRasterPanel = null;
 
     /** The algorithm field id. */
     private FieldIdEnum algorithmFieldId;
@@ -102,7 +102,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
             FieldIdEnum maxValueFieldId) {
         super(panelId);
 
-        this.parentPanel = parentPanel;
+        this.parentRasterPanel = parentPanel;
         this.algorithmFieldId = algorithmFieldId;
         this.minValueFieldId = minValueFieldId;
         this.maxValueFieldId = maxValueFieldId;
@@ -146,8 +146,8 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     @Override
     public void dataChanged(FieldIdEnum changedField) {
-        if (parentObj != null) {
-            parentObj.dataChanged(changedField);
+        if (parentPanel != null) {
+            parentPanel.dataChanged(changedField);
         }
     }
 
@@ -193,7 +193,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     @Override
     public void setParentPanel(UpdateSymbolInterface parent) {
-        this.parentObj = parent;
+        this.parentPanel = parent;
     }
 
     /**
@@ -203,7 +203,7 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     @Override
     public UpdateSymbolInterface getParentPanel() {
-        return parentObj;
+        return parentPanel;
     }
 
     /**
@@ -264,8 +264,9 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
     @Override
     public void updateSymbol(RasterSymbolizer rasterSymbolizer) {
 
-        if (parentPanel != null) {
-            GroupConfigInterface group = parentPanel.getGroup(GroupIdEnum.RASTER_CHANNELSELECTION);
+        if (parentRasterPanel != null) {
+            GroupConfigInterface group =
+                    parentRasterPanel.getGroup(GroupIdEnum.RASTER_CHANNELSELECTION);
             if ((group != null) && group.isPanelEnabled()) {
                 MultiOptionGroup contrastEnhancementGroup = (MultiOptionGroup) group;
                 ChannelSelection channelSelection = rasterSymbolizer.getChannelSelection();

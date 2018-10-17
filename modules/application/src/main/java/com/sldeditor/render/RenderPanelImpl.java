@@ -324,7 +324,7 @@ public class RenderPanelImpl extends JPanel
             viewport = new MapViewport(rasterLayer.getBounds());
         }
 
-        boolean hasGeometry = true;
+        boolean hasGeometry = validSymbol;
 
         MapContent map = new MapContent();
         map.addLayers(layerList);
