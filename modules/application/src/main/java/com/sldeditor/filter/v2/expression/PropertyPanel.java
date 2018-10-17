@@ -48,7 +48,7 @@ public class PropertyPanel extends JPanel {
     private ExpressionNode selectedNode = null;
 
     /** The parent. */
-    private ExpressionFilterInterface parent = null;
+    private ExpressionFilterInterface parentObj = null;
 
     /** The btn apply. */
     private JButton btnApply;
@@ -62,7 +62,7 @@ public class PropertyPanel extends JPanel {
      * @param parent the parent
      */
     public PropertyPanel(ExpressionFilterInterface parent) {
-        this.parent = parent;
+        this.parentObj = parent;
         createUI();
     }
 
@@ -134,8 +134,8 @@ public class PropertyPanel extends JPanel {
                             selectedNode.setExpression(expression);
                         }
 
-                        if (parent != null) {
-                            parent.dataApplied();
+                        if (parentObj != null) {
+                            parentObj.dataApplied();
                         }
                         updateButtonState(false);
                     }

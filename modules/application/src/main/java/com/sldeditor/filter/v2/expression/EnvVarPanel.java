@@ -50,7 +50,7 @@ public class EnvVarPanel extends JPanel {
     private ExpressionNode selectedNode = null;
 
     /** The parent. */
-    private ExpressionFilterInterface parent = null;
+    private ExpressionFilterInterface parentObj = null;
 
     /** The btn apply. */
     private JButton btnApply;
@@ -64,7 +64,7 @@ public class EnvVarPanel extends JPanel {
      * @param parent the parent
      */
     public EnvVarPanel(ExpressionFilterInterface parent) {
-        this.parent = parent;
+        this.parentObj = parent;
         createUI();
     }
 
@@ -137,8 +137,8 @@ public class EnvVarPanel extends JPanel {
                             parentNode.setExpression(expression);
                         }
 
-                        if (parent != null) {
-                            parent.dataApplied();
+                        if (parentObj != null) {
+                            parentObj.dataApplied();
                         }
                         updateButtonState(false);
                     }

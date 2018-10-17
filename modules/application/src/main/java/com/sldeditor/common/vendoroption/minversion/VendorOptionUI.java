@@ -73,8 +73,7 @@ public class VendorOptionUI extends JPanel
     private VendorOptionTableModel vendorOptionModel = null;
 
     /** The options. */
-    private Map<VendorOptionTypeInterface, String> options =
-            new LinkedHashMap<VendorOptionTypeInterface, String>();
+    private Map<VendorOptionTypeInterface, String> options = new LinkedHashMap<>();
 
     /** The table. */
     private JTable vendorOptionPresentTable = null;
@@ -83,7 +82,7 @@ public class VendorOptionUI extends JPanel
     private VendorOptionPresentModel vendorOptionPresentModel = new VendorOptionPresentModel();
 
     /** Find the minimum version supported by the SLD. */
-    private MinimumVersion minimumVersion = null;
+    private transient MinimumVersion minimumVersion = null;
 
     /** The latest button. */
     private JButton btnLatestVO;

@@ -100,10 +100,7 @@ public class CoordManager {
     public void populateCRSList() {
 
         if (isPopulated()) {
-            Runnable runnable =
-                    () -> {
-                        processCRSEntry();
-                    };
+            Runnable runnable = () -> processCRSEntry();
             Thread thread = new Thread(runnable);
             thread.start();
         }

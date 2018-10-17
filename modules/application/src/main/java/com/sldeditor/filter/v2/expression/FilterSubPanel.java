@@ -59,7 +59,7 @@ public class FilterSubPanel extends JPanel {
     private FilterNode selectedNode = null;
 
     /** The parent. */
-    private ExpressionFilterInterface parent = null;
+    private ExpressionFilterInterface parentObj = null;
 
     /** The lbl filter. */
     private JLabel lblFilter;
@@ -82,7 +82,7 @@ public class FilterSubPanel extends JPanel {
      * @param parent the parent
      */
     public FilterSubPanel(ExpressionFilterInterface parent) {
-        this.parent = parent;
+        this.parentObj = parent;
         createUI();
     }
 
@@ -175,8 +175,8 @@ public class FilterSubPanel extends JPanel {
 
                         selectedNode.addFilter();
 
-                        if (parent != null) {
-                            parent.dataApplied();
+                        if (parentObj != null) {
+                            parentObj.dataApplied();
                         }
 
                         updateButtonState(false);
@@ -198,8 +198,8 @@ public class FilterSubPanel extends JPanel {
                         if (parentNode != null) {
                             parentNode.remove(selectedNode);
                         }
-                        if (parent != null) {
-                            parent.dataApplied();
+                        if (parentObj != null) {
+                            parentObj.dataApplied();
                         }
 
                         updateButtonState(false);
@@ -226,8 +226,8 @@ public class FilterSubPanel extends JPanel {
                         selectedNode.setFilter(
                                 filterPanel.getFilter(), filterPanel.getFilterConfig());
 
-                        if (parent != null) {
-                            parent.dataApplied();
+                        if (parentObj != null) {
+                            parentObj.dataApplied();
                         }
 
                         updateButtonState(false);

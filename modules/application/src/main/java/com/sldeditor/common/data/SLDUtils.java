@@ -53,6 +53,11 @@ public class SLDUtils {
     /** The Constant STYLES_PATH. */
     private static final String STYLES_PATH = "styles/";
 
+    /** Default constructor */
+    private SLDUtils() {
+        // Private default constructor
+    }
+
     /**
      * Creates a StyledLayerDescriptor object containing a SLD from a string.
      *
@@ -148,8 +153,6 @@ public class SLDUtils {
                 SLDParser styleReader = new SLDParser(styleFactory, url);
                 setResourcelocator(styleReader, file.toURI().toURL());
                 sld = styleReader.parseSLD();
-            } catch (MalformedURLException e) {
-                ConsoleManager.getInstance().exception(SLDUtils.class, e);
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(SLDUtils.class, e);
             }

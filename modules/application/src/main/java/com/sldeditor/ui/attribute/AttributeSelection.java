@@ -80,8 +80,8 @@ public class AttributeSelection extends JPanel
     /** The attribute chooser combo box. */
     private JComboBox<String> attributeChooserComboBox;
 
-    /** The listener list. */
-    private List<ExpressionUpdateInterface> listenerList =
+    /** The expression listener list. */
+    private List<ExpressionUpdateInterface> expressionListenerList =
             new ArrayList<ExpressionUpdateInterface>();
 
     /** The value panel. */
@@ -238,19 +238,19 @@ public class AttributeSelection extends JPanel
         if (selectedString.compareTo(ValueSubPanel.getPanelName()) == 0) {
             enableField = true;
 
-            for (ExpressionUpdateInterface listener : listenerList) {
+            for (ExpressionUpdateInterface listener : expressionListenerList) {
                 listener.valueUpdated();
             }
         } else if (selectedString.compareTo(DataSourceAttributePanel.getPanelName()) == 0) {
             String attribute = dataSourceAttributePanel.getSelectedItem();
 
-            for (ExpressionUpdateInterface listener : listenerList) {
+            for (ExpressionUpdateInterface listener : expressionListenerList) {
                 listener.attributeUpdated(attribute);
             }
         } else if (selectedString.compareTo(ExpressionSubPanel.getPanelName()) == 0) {
             Expression expression = expressionPanel.getExpression();
 
-            for (ExpressionUpdateInterface listener : listenerList) {
+            for (ExpressionUpdateInterface listener : expressionListenerList) {
                 listener.expressionUpdated(expression);
             }
         }
@@ -375,7 +375,7 @@ public class AttributeSelection extends JPanel
      * @param listener the listener
      */
     public void addExpressionListener(ExpressionUpdateInterface listener) {
-        listenerList.add(listener);
+        expressionListenerList.add(listener);
     }
 
     /**

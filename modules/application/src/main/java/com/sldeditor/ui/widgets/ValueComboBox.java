@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
@@ -42,22 +43,18 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData>
     private static final long serialVersionUID = 1L;
 
     /** The value map. */
-    private Map<String, ValueComboBoxData> valueMap = new HashMap<String, ValueComboBoxData>();
+    private Map<String, ValueComboBoxData> valueMap = new HashMap<>();
 
     /** The value list. */
-    private List<ValueComboBoxData> valueList = new ArrayList<ValueComboBoxData>();
-
-    /** The model. */
-    private DefaultComboBoxModel<ValueComboBoxData> model = null;
+    private List<ValueComboBoxData> valueList = new ArrayList<>();
 
     /** The vendor option list allowed to be used. */
-    private List<VersionData> vendorOptionVersionsList = new ArrayList<VersionData>();
+    private List<VersionData> vendorOptionVersionsList = new ArrayList<>();
 
     /** Instantiates a new value combo box. */
     @SuppressWarnings("unchecked")
     public ValueComboBox() {
         setRenderer(new ComboBoxRenderer());
-        // putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
     }
 
     /**
@@ -84,7 +81,7 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData>
 
     /** Update. */
     private void update() {
-        model = new DefaultComboBoxModel<ValueComboBoxData>();
+        DefaultComboBoxModel<ValueComboBoxData> model = new DefaultComboBoxModel<>();
         if (valueList != null) {
             for (ValueComboBoxData data : valueList) {
                 if (VendorOptionManager.getInstance()
@@ -105,10 +102,7 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData>
         Object selectedObj = getSelectedItem();
         if (selectedObj != null) {
             if (selectedObj instanceof ValueComboBoxData) {
-                ValueComboBoxData valueComboBoxData =
-                        valueMap.get(((ValueComboBoxData) selectedObj).getKey());
-
-                return valueComboBoxData;
+                return valueMap.get(((ValueComboBoxData) selectedObj).getKey());
             }
 
             String selectedItem = selectedObj.toString();
@@ -126,8 +120,8 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData>
      */
     public ValueComboBoxData getSelectedValue(String selectedItemValue) {
         if (selectedItemValue != null) {
-            for (String key : valueMap.keySet()) {
-                ValueComboBoxData valueComboBoxData = valueMap.get(key);
+            for (Entry<String, ValueComboBoxData> entry : valueMap.entrySet()) {
+                ValueComboBoxData valueComboBoxData = entry.getValue();
                 if (valueComboBoxData.getText().compareTo(selectedItemValue) == 0) {
                     return valueComboBoxData;
                 }
@@ -155,7 +149,9 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData>
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
+     * @see
+     * com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.
+     * util.List)
      */
     @Override
     public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {

@@ -53,16 +53,16 @@ public class NewSLDPanel extends JDialog {
     private static final long serialVersionUID = 1L;
 
     /** The class to create a new SLD symbol. */
-    private NewSLDInterface selected = null;
+    private transient NewSLDInterface selected = null;
 
     /** The new sld object map. */
-    private Map<String, NewSLDInterface> newSLDObjectMap = null;
+    private transient Map<String, NewSLDInterface> newSLDObjectMap = null;
 
     /** The combo box new sld. */
     protected JComboBox<String> comboBoxNewSLD;
 
     /** The sld writer. */
-    private SLDWriterInterface sldWriter = null;
+    private transient SLDWriterInterface sldWriter = null;
 
     /** Default constructor. */
     public NewSLDPanel() {
@@ -146,7 +146,7 @@ public class NewSLDPanel extends JDialog {
     protected List<SLDDataInterface> getSelectedSLD() {
         List<SLDDataInterface> newSLDList = null;
         if (selected != null) {
-            newSLDList = new ArrayList<SLDDataInterface>();
+            newSLDList = new ArrayList<>();
 
             StyledLayerDescriptor sld = selected.create();
 

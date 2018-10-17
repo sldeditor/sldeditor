@@ -50,7 +50,7 @@ public class EnvironmentVariablePanel extends JPanel {
     /** The selected node. */
     private ExpressionNode selectedNode = null;
 
-    private ExpressionFilterInterface parent = null;
+    private ExpressionFilterInterface parentObj = null;
 
     private JButton btnApply;
 
@@ -62,7 +62,7 @@ public class EnvironmentVariablePanel extends JPanel {
      * @param parent the parent
      */
     public EnvironmentVariablePanel(ExpressionFilterInterface parent) {
-        this.parent = parent;
+        this.parentObj = parent;
         createUI();
     }
 
@@ -176,8 +176,8 @@ public class EnvironmentVariablePanel extends JPanel {
             }
         }
 
-        if (parent != null) {
-            parent.dataApplied();
+        if (parentObj != null) {
+            parentObj.dataApplied();
         }
         updateButtonState(false);
     }

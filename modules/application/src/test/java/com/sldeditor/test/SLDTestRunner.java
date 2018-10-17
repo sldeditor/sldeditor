@@ -112,7 +112,7 @@ public class SLDTestRunner {
     /** The filename list. */
     private List<FieldIdEnum> filenameList = new ArrayList<FieldIdEnum>();
 
-    private SLDOutputTest testOutput = new SLDOutputTest();
+    private SLDOutput testOutput = new SLDOutput();
 
     public static final String PREFIX = "extracted";
 

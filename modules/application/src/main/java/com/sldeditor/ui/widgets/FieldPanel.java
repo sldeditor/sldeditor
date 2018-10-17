@@ -47,7 +47,7 @@ public class FieldPanel extends JPanel {
     private JCheckBox optionalCheckbox = null;
 
     /** The this obj. */
-    private FieldConfigBase thisObj = null;
+    private transient FieldConfigBase thisObj = null;
 
     /**
      * Instantiates a new field panel with no row.
@@ -173,10 +173,8 @@ public class FieldPanel extends JPanel {
     private void handleOptionalValue() {
         boolean enabled = true;
 
-        if (optionalCheckbox != null) {
-            if (optionalCheckbox.isVisible()) {
-                enabled = optionalCheckbox.isSelected();
-            }
+        if ((optionalCheckbox != null) && optionalCheckbox.isVisible()) {
+            enabled = optionalCheckbox.isSelected();
         }
 
         if (thisObj != null) {

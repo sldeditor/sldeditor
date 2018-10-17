@@ -44,14 +44,13 @@ public class VendorOptionTableModel extends AbstractTableModel {
     private static final long serialVersionUID = 1L;
 
     /** The selected version list. */
-    private List<VersionData> selectedVersionList = new ArrayList<VersionData>();
+    private List<VersionData> selectedVersionList = new ArrayList<>();
 
     /** The name map. */
-    private Map<VendorOptionTypeInterface, String> nameMap =
-            new HashMap<VendorOptionTypeInterface, String>();
+    private Map<VendorOptionTypeInterface, String> nameMap = new HashMap<>();
 
     /** The name order. */
-    private List<VendorOptionTypeInterface> nameOrder = null;
+    private transient List<VendorOptionTypeInterface> nameOrder = null;
 
     /** The instance. */
     private Class<?> instance = null;

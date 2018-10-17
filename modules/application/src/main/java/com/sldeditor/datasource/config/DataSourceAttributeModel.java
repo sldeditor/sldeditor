@@ -107,14 +107,13 @@ public class DataSourceAttributeModel extends AbstractTableModel {
     private static final Class<?> DEFAULT_NEW_FIELD_TYPE = String.class;
 
     /** The column list. */
-    private List<String> columnList = new ArrayList<String>();
+    private List<String> columnList = new ArrayList<>();
 
     /** The value list. */
-    private List<DataSourceAttributeData> valueList = new ArrayList<DataSourceAttributeData>();
+    private transient List<DataSourceAttributeData> valueList = new ArrayList<>();
 
     /** The value map. */
-    private Map<String, DataSourceAttributeData> valueMap =
-            new HashMap<String, DataSourceAttributeData>();
+    private transient Map<String, DataSourceAttributeData> valueMap = new HashMap<>();
 
     /** The is connected to data source. */
     private boolean isConnectedToDataSource = false;
@@ -212,7 +211,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
     @Override
     public boolean isCellEditable(int row, int col) {
         // Note that the data/cell address is constant,
-        // no matter where the cell appears onscreen.
+        // no matter where the cell appears on screen.
         if (isConnectedToDataSource) {
             if (col == VALUE_COLUMN_ID) {
                 return true;

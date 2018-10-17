@@ -64,7 +64,7 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
     private JList<String> formatListComponent;
 
     /** The format map. */
-    private Map<String, AbstractGridFormat> formatMap = new HashMap<String, AbstractGridFormat>();
+    private transient Map<String, AbstractGridFormat> formatMap = new HashMap<>();
 
     /** The description text area. */
     private JTextArea descriptionTextArea;

@@ -48,9 +48,9 @@ public class DecimalSpinner extends JSpinner {
     private static final long serialVersionUID = 1L;
 
     /** The observers. */
-    private ArrayList<SpinnerNotifyInterface> observers = new ArrayList<SpinnerNotifyInterface>();
+    private ArrayList<SpinnerNotifyInterface> observers = new ArrayList<>();
 
-    /** The min is zero. */
+    /** The minimum number is zero. */
     private boolean minIsZero = false;
 
     /** Instantiates a new decimal spinner with default values. */
@@ -61,10 +61,10 @@ public class DecimalSpinner extends JSpinner {
     /**
      * Instantiates a new decimal spinner.
      *
-     * @param min the min
-     * @param max the max
+     * @param min the minimum value
+     * @param max the maximum value
      * @param stepSize the step size
-     * @param noOfDecimalPlaces the no of decimal places
+     * @param noOfDecimalPlaces the number of decimal places
      */
     public DecimalSpinner(double min, double max, double stepSize, double noOfDecimalPlaces) {
         createUI(min, min, max, stepSize, noOfDecimalPlaces);
@@ -74,10 +74,10 @@ public class DecimalSpinner extends JSpinner {
      * Creates the ui.
      *
      * @param initialValue the initial value
-     * @param min the min
-     * @param max the max
+     * @param min the minimum value
+     * @param max the maximum value
      * @param stepSize the step size
-     * @param noOfDecimalPlaces the no of decimal places
+     * @param noOfDecimalPlaces the number of decimal places
      */
     private void createUI(
             Double initialValue,
@@ -90,9 +90,9 @@ public class DecimalSpinner extends JSpinner {
 
         JSpinner.NumberEditor editor = (JSpinner.NumberEditor) getEditor();
         DecimalFormat format = editor.getFormat();
-        format.setMinimumFractionDigits(3);
+        format.setMinimumFractionDigits((int) noOfDecimalPlaces);
 
-        final JFormattedTextField field = (JFormattedTextField) editor.getTextField();
+        final JFormattedTextField field = editor.getTextField();
         DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
         formatter.setCommitsOnValidEdit(true);
         addChangeListener(
@@ -108,11 +108,9 @@ public class DecimalSpinner extends JSpinner {
                             double oldValueCopy = oldValue;
 
                             oldValue = doubleValue;
-                            if (minIsZero) {
-                                if (doubleValue < 0.0) {
-                                    doubleValue = 0.0;
-                                    field.setValue(doubleValue);
-                                }
+                            if (minIsZero && (doubleValue < 0.0)) {
+                                doubleValue = 0.0;
+                                field.setValue(doubleValue);
                             }
 
                             notifyListeners(oldValueCopy, doubleValue);
@@ -153,18 +151,18 @@ public class DecimalSpinner extends JSpinner {
     }
 
     /**
-     * Checks if is min is zero.
+     * Checks if is minimum number is zero.
      *
-     * @return true, if is min is zero
+     * @return true, if is minimum number is zero
      */
     public boolean isMinIsZero() {
         return minIsZero;
     }
 
     /**
-     * Sets the min is zero.
+     * Sets the minimum number is zero.
      *
-     * @param minIsZero the new min is zero
+     * @param minIsZero the minimum number is zero flag
      */
     public void setMinIsZero(boolean minIsZero) {
         this.minIsZero = minIsZero;

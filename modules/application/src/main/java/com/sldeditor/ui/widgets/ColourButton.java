@@ -156,9 +156,8 @@ public class ColourButton extends JButton {
         int totalWidth = (fm.stringWidth(htmlColour) * 2) + 4;
 
         int x = (getWidth() - totalWidth) / 2;
-        int y = (getHeight() - fm.getHeight()) / 2;
+        int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
 
-        y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
         g2.drawString(htmlColour, x, y);
         setContentAreaFilled(false);
         setOpaque(true);
@@ -214,9 +213,7 @@ public class ColourButton extends JButton {
      * @return the colour opacity
      */
     public double getColourOpacity() {
-        double opacity = colour.getAlpha() / 255.0;
-
-        return opacity;
+        return (colour.getAlpha() / 255.0);
     }
 
     /**

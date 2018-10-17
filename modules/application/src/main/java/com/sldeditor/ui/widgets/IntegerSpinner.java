@@ -41,9 +41,9 @@ public class IntegerSpinner extends JSpinner {
     private static final long serialVersionUID = 1L;
 
     /** The observers. */
-    private ArrayList<SpinnerNotifyInterface> observers = new ArrayList<SpinnerNotifyInterface>();
+    private ArrayList<SpinnerNotifyInterface> observers = new ArrayList<>();
 
-    /** The min is zero. */
+    /** The minimum value is zero flag. */
     private boolean minIsZero = false;
 
     /** Instantiates a new value spinner. */
@@ -68,11 +68,9 @@ public class IntegerSpinner extends JSpinner {
                             double oldValueCopy = oldValue;
 
                             oldValue = doubleValue;
-                            if (minIsZero) {
-                                if (doubleValue < 0.0) {
-                                    doubleValue = 0.0;
-                                    field.setValue(doubleValue);
-                                }
+                            if (minIsZero && (doubleValue < 0.0)) {
+                                doubleValue = 0.0;
+                                field.setValue(doubleValue);
                             }
 
                             notifyListeners(oldValueCopy, doubleValue);

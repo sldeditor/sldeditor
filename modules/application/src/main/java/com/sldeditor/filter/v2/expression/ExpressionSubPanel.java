@@ -138,7 +138,7 @@ public class ExpressionSubPanel extends JPanel {
     private ExpressionNode selectedNode = null;
 
     /** The parent. */
-    private ExpressionFilterInterface parent = null;
+    private ExpressionFilterInterface parentObj = null;
 
     /** The apply button. */
     private JButton btnApply;
@@ -161,7 +161,7 @@ public class ExpressionSubPanel extends JPanel {
      * @param parent the parent
      */
     public ExpressionSubPanel(ExpressionFilterInterface parent) {
-        this.parent = parent;
+        this.parentObj = parent;
         createUI();
     }
 
@@ -306,7 +306,7 @@ public class ExpressionSubPanel extends JPanel {
     protected void setUpEnvVarPanel() {
         if (VendorOptionManager.getInstance()
                 .isAllowed(
-                        this.parent.getVendorOptionList(),
+                        this.parentObj.getVendorOptionList(),
                         EnvironmentVariableField.getVendorOption())) {
             panelEnvVar = new JPanel();
             panelEnvVar.setBorder(null);
@@ -367,8 +367,8 @@ public class ExpressionSubPanel extends JPanel {
 
                             @Override
                             public void parameterAdded() {
-                                if (parent != null) {
-                                    parent.dataApplied();
+                                if (parentObj != null) {
+                                    parentObj.dataApplied();
                                 }
                             }
                         },
@@ -624,8 +624,8 @@ public class ExpressionSubPanel extends JPanel {
         }
         parentNode.setDisplayString();
 
-        if (parent != null) {
-            parent.dataApplied();
+        if (parentObj != null) {
+            parentObj.dataApplied();
         }
     }
 
@@ -686,8 +686,8 @@ public class ExpressionSubPanel extends JPanel {
             }
         }
 
-        if (parent != null) {
-            parent.dataApplied();
+        if (parentObj != null) {
+            parentObj.dataApplied();
         }
         updateButtonState(false);
     }

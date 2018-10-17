@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.geotools.data.DataAccessFactory.Param;
 import org.geotools.jdbc.JDBCDataStoreFactory;
 
@@ -295,11 +296,11 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
         sb.append(userName);
         sb.append(DELIMETER);
         sb.append(password);
-        for (String key : connectionDataMap.keySet()) {
+        for (Entry<String, String> entry : connectionDataMap.entrySet()) {
             sb.append(DELIMETER);
-            sb.append(key);
+            sb.append(entry.getKey());
             sb.append(PROPERTY_DELIMETER);
-            sb.append(connectionDataMap.get(key));
+            sb.append(connectionDataMap.get(entry.getKey()));
         }
         return sb.toString();
     }
@@ -319,8 +320,8 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      * @param connectionDataMap the connectionDataMap to set
      */
     public void setConnectionDataMap(Map<String, String> connectionDataMap) {
-        for (String key : connectionDataMap.keySet()) {
-            this.connectionDataMap.put(key, connectionDataMap.get(key));
+        for (Entry<String, String> entry : connectionDataMap.entrySet()) {
+            this.connectionDataMap.put(entry.getKey(), entry.getValue());
         }
 
         if (this.databaseConnectionName != null) {

@@ -52,7 +52,7 @@ import org.xml.sax.SAXException;
  *
  * @author Robert Ward (SCISYS)
  */
-public class SLDOutputTest {
+public class SLDOutput {
 
     private static final String XPATH_CHILD_ELEMENT_VALUE = "/child::*";
 
@@ -74,7 +74,7 @@ public class SLDOutputTest {
             new HashMap<SelectedTreeItemEnum, String>();
 
     /** Instantiates a new SLD output test. */
-    public SLDOutputTest() {
+    public SLDOutput() {
         initialise();
     }
 
