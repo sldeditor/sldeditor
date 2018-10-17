@@ -344,7 +344,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
             copy2.setGraphic(copy(text2.getGraphic()));
             copy2.setSnippet(copy(text2.getSnippet()));
             copy2.setFeatureDescription(copy(text2.getFeatureDescription()));
-            copy2.setOtherText(copy(text2.getOtherText()));
+            copy2.setOtherText(copyOtherText(text2.getOtherText()));
         }
 
         if (STRICT && !copy.equals(text)) {
@@ -355,18 +355,16 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     }
 
     /**
-     * Method exists in DuplicatingStyleVisitor but is marked private.
+     * Method exists in DuplicatingStyleVisitor but is marked private so has to be recreated here.
      *
      * @param otherText the other text
      * @return the other text
      */
-    private OtherText copy(OtherText otherText) {
+    private OtherText copyOtherText(OtherText otherText) {
         if (otherText == null) {
             return null;
         }
 
-        // TODO: add methods to the factory to create OtherText instances
-        // sf.createOtherText();
         OtherTextImpl copy = new OtherTextImpl();
         copy.setTarget(otherText.getTarget());
         copy.setText(copy(otherText.getText()));

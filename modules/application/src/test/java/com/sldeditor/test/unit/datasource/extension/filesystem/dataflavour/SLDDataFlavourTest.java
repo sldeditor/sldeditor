@@ -82,5 +82,8 @@ public class SLDDataFlavourTest {
 
         assertTrue(actual3a.equals(actual3));
         assertFalse(actual3b.equals(actual3));
+
+        Object actual7 = new SLDDataFlavour(mimeType, humanPresentableName);
+        assertTrue(actual3.equals(actual7));
     }
 }

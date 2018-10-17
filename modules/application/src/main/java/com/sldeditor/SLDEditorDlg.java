@@ -69,8 +69,7 @@ public class SLDEditorDlg implements SLDEditorDlgInterface {
             Localisation.getString(SLDEditor.class, "common.no")
         };
 
-        int result = JOptionPane.OK_OPTION;
-        result =
+        int result =
                 JOptionPane.showOptionDialog(
                         frame,
                         Localisation.getString(SLDEditor.class, "SLDEditor.reloadFileQuery"),

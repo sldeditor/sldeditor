@@ -164,13 +164,10 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
                         try {
                             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                        } catch (UnsupportedLookAndFeelException e) {
-                            ConsoleManager.getInstance().exception(this, e);
-                        } catch (ClassNotFoundException e) {
-                            ConsoleManager.getInstance().exception(this, e);
-                        } catch (InstantiationException e) {
-                            ConsoleManager.getInstance().exception(this, e);
-                        } catch (IllegalAccessException e) {
+                        } catch (UnsupportedLookAndFeelException
+                                | ClassNotFoundException
+                                | InstantiationException
+                                | IllegalAccessException e) {
                             ConsoleManager.getInstance().exception(this, e);
                         }
 
@@ -203,14 +200,11 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             setDockIconImage.invoke(application, image);
 
             return true;
-        } catch (ClassNotFoundException e) {
-            // log exception
-        } catch (NoSuchMethodException e) {
-            // log exception
-        } catch (InvocationTargetException e) {
-            // log exception
-        } catch (IllegalAccessException e) {
-            // log exception
+        } catch (ClassNotFoundException
+                | NoSuchMethodException
+                | InvocationTargetException
+                | IllegalAccessException e) {
+            // If we get an exception we are not running on MacOS
         }
 
         return false;
@@ -313,15 +307,27 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         URL url;
         try {
             url = file.toURI().toURL();
-            List<SLDDataInterface> sldDataList = null;
-            for (ExtensionInterface extension : extensionList) {
-                if (sldDataList == null) {
-                    sldDataList = extension.open(url);
-                }
-            }
+            openURL(url);
         } catch (MalformedURLException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
+    }
+
+    /**
+     * Open URL.
+     *
+     * @param url the url
+     * @return the list
+     */
+    private List<SLDDataInterface> openURL(URL url) {
+        List<SLDDataInterface> sldDataList = null;
+        for (ExtensionInterface extension : extensionList) {
+            if (sldDataList == null) {
+                sldDataList = extension.open(url);
+            }
+        }
+
+        return sldDataList;
     }
 
     /**
@@ -544,7 +550,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
         boolean saved = false;
 
         for (ExtensionInterface extension : extensionList) {
-            if (saved == false) {
+            if (!saved) {
                 saved = extension.save(sldData);
             }
         }
@@ -728,12 +734,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
      */
     @Override
     public void openFile(URL url) {
-        List<SLDDataInterface> sldDataList = null;
-        for (ExtensionInterface extension : extensionList) {
-            if (sldDataList == null) {
-                sldDataList = extension.open(url);
-            }
-        }
+        List<SLDDataInterface> sldDataList = openURL(url);
 
         if (sldDataList != null) {
             SelectedFiles selectedFiles = new SelectedFiles();
@@ -776,7 +777,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     /** Sets the application icon. */
     private void setApplicationIcon() {
         if (frame != null) {
-            List<Image> icons = new ArrayList<Image>();
+            List<Image> icons = new ArrayList<>();
             icons.add(getImage(APPLICATION_ICON_SMALL));
             icons.add(getImage(APPLICATION_ICON_MEDIUM));
             frame.setIconImages(icons);
@@ -838,12 +839,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             if (sldData != null) {
                 URL url = sldData.getSLDURL();
                 if (url != null) {
-                    List<SLDDataInterface> sldDataList = null;
-                    for (ExtensionInterface extension : extensionList) {
-                        if (sldDataList == null) {
-                            sldDataList = extension.open(url);
-                        }
-                    }
+                    List<SLDDataInterface> sldDataList = openURL(url);
 
                     if ((sldDataList != null) && !sldDataList.isEmpty()) {
                         SLDDataInterface firstObject = sldDataList.get(0);

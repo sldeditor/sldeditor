@@ -382,8 +382,8 @@ public class FieldConfigInteger extends FieldConfigBase implements UndoActionInt
     protected void valueStored(double oldValue, double newValue) {
         if (!FieldConfigInteger.this.isSuppressUndoEvents()) {
 
-            Integer oldValueObj = Double.valueOf(oldValue).intValue();
-            Integer newValueObj = Double.valueOf(newValue).intValue();
+            Integer oldValueObj = Integer.valueOf((int) oldValue);
+            Integer newValueObj = Integer.valueOf((int) newValue);
 
             UndoManager.getInstance()
                     .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
