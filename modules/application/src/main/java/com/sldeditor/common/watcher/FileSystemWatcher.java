@@ -77,8 +77,12 @@ public class FileSystemWatcher implements Runnable {
             // Register three events. i.e. whenever a file is created, deleted or
             // modified the watcher gets informed
             try {
-                WatchKey key = path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
-                        StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
+                WatchKey key =
+                        path.register(
+                                watchService,
+                                StandardWatchEventKinds.ENTRY_CREATE,
+                                StandardWatchEventKinds.ENTRY_DELETE,
+                                StandardWatchEventKinds.ENTRY_MODIFY);
                 watcherMap.put(key, parent);
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(this, e);
@@ -107,36 +111,33 @@ public class FileSystemWatcher implements Runnable {
      */
     @Override
     public void run() {
+        internal_watchDirectoryPath();
+        // Close the watcher service
         try {
-            internal_watchDirectoryPath();
-        } catch (InterruptedException e) {
+            watchService.close();
+        } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
-        }
-        finally
-        {
-            // Close the watcher service
-            try {
-                watchService.close();
-            } catch (IOException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            }
         }
     }
 
     /**
      * Internal watch directory path method.
-     * @throws InterruptedException 
      *
+     * @throws InterruptedException
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private void internal_watchDirectoryPath() throws InterruptedException {
+    private void internal_watchDirectoryPath() {
         WatchKey key = null;
 
         // Poll for events in an infinite loop
-        for (;;) {
+        for (; ; ) {
             // The take method waits till watch service receives a
             // notification
-            key = watchService.take();
+            try {
+                key = watchService.take();
+            } catch (InterruptedException e) {
+                // Do nothing
+            }
 
             // once a key is obtained, we poll for events on that key
             if (key != null) {
