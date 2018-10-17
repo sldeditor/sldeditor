@@ -45,13 +45,13 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
     private JList<ConsoleData> textPane;
 
     /** The model. */
-    private DefaultListModel<ConsoleData> model = new DefaultListModel<ConsoleData>();
+    private DefaultListModel<ConsoleData> model = new DefaultListModel<>();
 
     /** Instantiates a new console panel. */
     public DefaultConsolePanel() {
         setLayout(new BorderLayout(0, 0));
 
-        textPane = new JList<ConsoleData>();
+        textPane = new JList<>();
         textPane.setCellRenderer(new ConsoleCellRenderer());
         textPane.setModel(model);
 

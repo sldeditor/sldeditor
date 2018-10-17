@@ -87,7 +87,7 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
     private ColourRampUpdateInterface parentObj = null;
 
     /** The colour ramp cache. */
-    private Map<String, ColourRamp> colourRampCache = new HashMap<String, ColourRamp>();
+    private Map<String, ColourRamp> colourRampCache = new HashMap<>();
 
     /** The reverse checkbox. */
     private JCheckBox reverseCheckbox;
@@ -199,7 +199,7 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
      * @return the list
      */
     private List<ValueComboBoxData> populateColourRamps(boolean reverseColours) {
-        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
+        List<ValueComboBoxData> dataList = new ArrayList<>();
         colourRampCache.clear();
 
         if (rampDataList != null) {
@@ -510,7 +510,7 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
      * @return the list
      */
     private List<ColourRamp> createColourRampList(XMLTwoColourRampList xmlTwoColourRampList) {
-        List<ColourRamp> colourRampList = new ArrayList<ColourRamp>();
+        List<ColourRamp> colourRampList = new ArrayList<>();
 
         for (XMLTwoColourRamp ramp : xmlTwoColourRampList.getTwoColourRamp()) {
             ColourRamp colourRamp = new ColourRamp();

@@ -65,7 +65,7 @@ public class SymbolData {
     private int selectedStyleIndex = -1;
 
     /** The valid symbol flag map. */
-    private Map<String, Boolean> validSymbolMap = new HashMap<String, Boolean>();
+    private Map<String, Boolean> validSymbolMap = new HashMap<>();
 
     /** Constructor. */
     public SymbolData() {

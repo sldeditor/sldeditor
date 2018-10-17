@@ -48,6 +48,11 @@ public class SLDExternalImages {
     /** The update graphic symbol. */
     private static ProcessGraphicSymbolInterface updateGraphicSymbol = new UpdateGraphicalSymbol();
 
+    /** Instantiates a new SLD external images. */
+    private SLDExternalImages() {
+        // Default constructor
+    }
+
     /**
      * Update online resources.
      *
@@ -56,7 +61,7 @@ public class SLDExternalImages {
      */
     public static void updateOnlineResources(URL resourceLocator, StyledLayerDescriptor sld) {
 
-        List<String> externalImageList = new ArrayList<String>();
+        List<String> externalImageList = new ArrayList<>();
 
         externalGraphicSymbolVisitor(resourceLocator, sld, externalImageList, updateGraphicSymbol);
     }
@@ -70,7 +75,7 @@ public class SLDExternalImages {
      */
     public static List<String> getExternalImages(URL resourceLocator, StyledLayerDescriptor sld) {
 
-        List<String> externalImageList = new ArrayList<String>();
+        List<String> externalImageList = new ArrayList<>();
 
         externalGraphicSymbolVisitor(resourceLocator, sld, externalImageList, updateGraphicSymbol);
 
@@ -164,13 +169,9 @@ public class SLDExternalImages {
             Fill fill,
             List<String> externalImageList,
             ProcessGraphicSymbolInterface process) {
-        if (fill != null) {
-            if (fill.getGraphicFill() != null) {
-                process.processGraphicalSymbol(
-                        resourceLocator,
-                        fill.getGraphicFill().graphicalSymbols(),
-                        externalImageList);
-            }
+        if ((fill != null) && (fill.getGraphicFill() != null)) {
+            process.processGraphicalSymbol(
+                    resourceLocator, fill.getGraphicFill().graphicalSymbols(), externalImageList);
         }
     }
 

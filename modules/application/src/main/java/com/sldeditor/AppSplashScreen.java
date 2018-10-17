@@ -178,12 +178,9 @@ public final class AppSplashScreen {
     public static Point getTextPosition() {
         createTextArea();
 
-        Point p =
-                new Point(
-                        (int) (splashTextArea.getX() + TEXTPOSITION_X_OFFSET),
-                        (int) (splashTextArea.getY() + TEXTPOSITION_Y_OFFSET));
-
-        return p;
+        return new Point(
+                (int) (splashTextArea.getX() + TEXTPOSITION_X_OFFSET),
+                (int) (splashTextArea.getY() + TEXTPOSITION_Y_OFFSET));
     }
 
     /**
@@ -201,7 +198,6 @@ public final class AppSplashScreen {
      * @return the splash image url
      */
     public static URL getSplashImageURL() {
-        URL url = SLDEditor.class.getClassLoader().getResource(SPLASH_IMAGE);
-        return url;
+        return SLDEditor.class.getClassLoader().getResource(SPLASH_IMAGE);
     }
 }

@@ -84,9 +84,7 @@ public class EncryptedPropertiesFactory {
 
         sb.append(System.getProperty("user.name"));
 
-        String password = sb.toString();
-
-        return password;
+        return sb.toString();
     }
 
     /**

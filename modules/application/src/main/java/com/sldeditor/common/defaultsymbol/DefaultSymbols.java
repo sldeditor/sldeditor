@@ -103,6 +103,11 @@ public class DefaultSymbols {
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
+    /** Instantiates a new default symbols. */
+    private DefaultSymbols() {
+        // Default constructor
+    }
+
     /**
      * Creates the default point symbolizer.
      *
@@ -112,7 +117,7 @@ public class DefaultSymbols {
         String geometryFieldName = null;
         Expression geometryField = ff.property(geometryFieldName);
 
-        List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
+        List<GraphicalSymbol> symbolList = new ArrayList<>();
 
         Stroke stroke = null;
         AnchorPoint anchorPoint = null;
@@ -129,16 +134,12 @@ public class DefaultSymbols {
                         ff.literal(0.0),
                         anchorPoint,
                         displacement);
-        PointSymbolizer newPointSymbolizer =
-                (PointSymbolizer)
-                        styleFactory.pointSymbolizer(
-                                Localisation.getString(SLDTreeTools.class, "TreeItem.newMarker"),
-                                geometryField,
-                                null,
-                                null,
-                                graphic);
-
-        return newPointSymbolizer;
+        return styleFactory.pointSymbolizer(
+                Localisation.getString(SLDTreeTools.class, "TreeItem.newMarker"),
+                geometryField,
+                null,
+                null,
+                graphic);
     }
 
     /**
@@ -161,8 +162,7 @@ public class DefaultSymbols {
         AnchorPoint anchor = null;
         Displacement displacement = null;
 
-        PointPlacement pointPlacement =
-                (PointPlacement) styleFactory.pointPlacement(anchor, displacement, rotation);
+        PointPlacement pointPlacement = styleFactory.pointPlacement(anchor, displacement, rotation);
 
         Expression fillColour = ff.literal(DEFAULT_COLOUR);
         Expression fillColourOpacity = ff.literal(1.0);
@@ -173,23 +173,22 @@ public class DefaultSymbols {
 
         List<Expression> fontFamilyList = new ArrayList<Expression>();
         fontFamilyList.add(fontFamily);
-        Font font = (Font) styleFactory.font(fontFamilyList, fontStyle, fontWeight, fontSize);
+        Font font = styleFactory.font(fontFamilyList, fontStyle, fontWeight, fontSize);
 
         Description description = null;
         Unit<?> unit = null;
 
         TextSymbolizer newTextSymbolizer =
-                (TextSymbolizer)
-                        styleFactory.textSymbolizer(
-                                name,
-                                geometryField,
-                                description,
-                                unit,
-                                label,
-                                font,
-                                pointPlacement,
-                                halo,
-                                fill);
+                styleFactory.textSymbolizer(
+                        name,
+                        geometryField,
+                        description,
+                        unit,
+                        label,
+                        font,
+                        pointPlacement,
+                        halo,
+                        fill);
 
         return newTextSymbolizer;
     }
@@ -255,9 +254,7 @@ public class DefaultSymbols {
         Expression backgroundColour = null;
         Expression opacity = ff.literal(1.0);
 
-        Fill fill = styleFactory.createFill(colour, backgroundColour, opacity, graphicFill);
-
-        return fill;
+        return styleFactory.createFill(colour, backgroundColour, opacity, graphicFill);
     }
 
     /**
@@ -288,9 +285,7 @@ public class DefaultSymbols {
      * @return the feature type style
      */
     public static FeatureTypeStyle createNewFeatureTypeStyle() {
-        FeatureTypeStyle featureTypeStyle = styleFactory.createFeatureTypeStyle();
-
-        return featureTypeStyle;
+        return styleFactory.createFeatureTypeStyle();
     }
 
     /**
@@ -299,9 +294,7 @@ public class DefaultSymbols {
      * @return the named layer
      */
     public static NamedLayer createNewNamedLayer() {
-        NamedLayer namedLayer = styleFactory.createNamedLayer();
-
-        return namedLayer;
+        return styleFactory.createNamedLayer();
     }
 
     /**
@@ -310,9 +303,7 @@ public class DefaultSymbols {
      * @return the user layer
      */
     public static UserLayer createNewUserLayer() {
-        UserLayer userLayer = styleFactory.createUserLayer();
-
-        return userLayer;
+        return styleFactory.createUserLayer();
     }
 
     /**
@@ -321,9 +312,7 @@ public class DefaultSymbols {
      * @return the styled layer descriptor
      */
     public static StyledLayerDescriptor createNewSLD() {
-        StyledLayerDescriptor sld = styleFactory.createStyledLayerDescriptor();
-
-        return sld;
+        return styleFactory.createStyledLayerDescriptor();
     }
 
     /**
@@ -332,9 +321,7 @@ public class DefaultSymbols {
      * @return the raster symbolizer
      */
     public static RasterSymbolizer createDefaultRasterSymbolizer() {
-        RasterSymbolizer rasterSymbolizer = styleFactory.createRasterSymbolizer();
-
-        return rasterSymbolizer;
+        return styleFactory.createRasterSymbolizer();
     }
 
     /**
@@ -439,8 +426,7 @@ public class DefaultSymbols {
      * @return the stroke
      */
     public static Stroke createDefaultStroke() {
-        Stroke stroke = styleFactory.getDefaultStroke();
-        return stroke;
+        return styleFactory.getDefaultStroke();
     }
 
     /**
@@ -526,7 +512,7 @@ public class DefaultSymbols {
         mark.getFill().setColor(ff.literal(DEFAULT_COLOUR));
 
         // Arrow rotation
-        List<Expression> rotationArgumentList = new ArrayList<Expression>();
+        List<Expression> rotationArgumentList = new ArrayList<>();
 
         String geometryFieldName = "geom";
         DataSourceInterface dsInfo = DataSourceFactory.getDataSource();
@@ -547,7 +533,7 @@ public class DefaultSymbols {
         graphic.setAnchorPoint(anchorPoint);
 
         // Set location of the arrow head
-        List<Expression> endPointArgumentList = new ArrayList<Expression>();
+        List<Expression> endPointArgumentList = new ArrayList<>();
         endPointArgumentList.add(ff.property(geometryFieldName));
 
         Expression geometry =

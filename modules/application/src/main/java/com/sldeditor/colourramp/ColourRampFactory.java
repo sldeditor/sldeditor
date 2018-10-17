@@ -40,8 +40,7 @@ public class ColourRampFactory {
     private static final String OUTPUT_SCHEMA_RESOURCE = "/xsd/colourramp.xsd";
 
     /** The colour ramp map. */
-    private static Map<ColourRampPanelInterface, List<ColourRamp>> colourRampMap =
-            new HashMap<ColourRampPanelInterface, List<ColourRamp>>();
+    private static Map<ColourRampPanelInterface, List<ColourRamp>> colourRampMap = new HashMap<>();
 
     /** Instantiates a new colour ramp factory. */
     private ColourRampFactory() {

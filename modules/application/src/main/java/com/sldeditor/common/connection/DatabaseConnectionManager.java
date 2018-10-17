@@ -50,12 +50,10 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
     private static DatabaseConnectionManagerInterface instance = null;
 
     /** The DatabaseClientInterface class to create. */
-    private List<DatabaseClientInterface> databaseClientClassList =
-            new ArrayList<DatabaseClientInterface>();
+    private List<DatabaseClientInterface> databaseClientClassList = new ArrayList<>();
 
     /** The connection map. */
-    private Map<DatabaseConnection, DatabaseClientInterface> connectionMap =
-            new LinkedHashMap<DatabaseConnection, DatabaseClientInterface>();
+    private Map<DatabaseConnection, DatabaseClientInterface> connectionMap = new LinkedHashMap<>();
 
     /**
      * Gets the singleton instance of DatabaseConnectionManager.
@@ -82,7 +80,7 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
      */
     @Override
     public List<DatabaseConnection> getConnectionList() {
-        List<DatabaseConnection> connectionList = new ArrayList<DatabaseConnection>();
+        List<DatabaseConnection> connectionList = new ArrayList<>();
 
         List<String> valueList =
                 PropertyManagerFactory.getInstance().getMultipleValues(DATABASE_CONNECTION_FIELD);
@@ -161,11 +159,9 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
                     newClient.initialise(progress, connection);
 
                     return newClient;
-                } catch (InstantiationException e) {
-                    ConsoleManager.getInstance().exception(DatabaseInput.class, e);
-                } catch (IllegalAccessException e) {
-                    ConsoleManager.getInstance().exception(DatabaseInput.class, e);
-                } catch (ClassNotFoundException e) {
+                } catch (InstantiationException
+                        | IllegalAccessException
+                        | ClassNotFoundException e) {
                     ConsoleManager.getInstance().exception(DatabaseInput.class, e);
                 }
             }

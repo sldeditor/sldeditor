@@ -66,12 +66,10 @@ import org.opengis.parameter.Parameter;
 public class ExtractAttributes extends DuplicatingStyleVisitor {
 
     /** The processed field list. */
-    private List<DataSourceAttributeData> processedFieldList =
-            new ArrayList<>();
+    private List<DataSourceAttributeData> processedFieldList = new ArrayList<>();
 
     /** The field list. */
-    private Map<String, DataSourceAttributeData> fieldList =
-            new HashMap<>();
+    private Map<String, DataSourceAttributeData> fieldList = new HashMap<>();
 
     /** The geometry field list. */
     private List<String> geometryFieldList = new ArrayList<>();
@@ -513,8 +511,8 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
      * @param foundList the found list
      * @param attribute the attribute
      */
-    private void extractPropertyAttribute(Class<?> attributeType, List<String> foundList,
-            AttributeExpressionImpl attribute) {
+    private void extractPropertyAttribute(
+            Class<?> attributeType, List<String> foundList, AttributeExpressionImpl attribute) {
         String attributeName = attribute.getPropertyName();
 
         // Determine if attribute is a geometry
@@ -544,8 +542,7 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
             visit(sld);
 
             // Check to see if any geometry fields have been added to processedFieldList
-            List<DataSourceAttributeData> fieldsToMoveToGeometryList =
-                    new ArrayList<>();
+            List<DataSourceAttributeData> fieldsToMoveToGeometryList = new ArrayList<>();
 
             for (DataSourceAttributeData dsAttribute : processedFieldList) {
                 if (dsAttribute.getType() == Geometry.class) {

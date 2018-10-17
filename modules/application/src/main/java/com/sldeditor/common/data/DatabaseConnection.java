@@ -57,7 +57,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
     private String connectionName;
 
     /** The connection data map. */
-    private Map<String, String> connectionDataMap = new HashMap<String, String>();
+    private Map<String, String> connectionDataMap = new HashMap<>();
 
     /** The user name. */
     private String userName;
@@ -78,7 +78,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
     private String databaseType;
 
     /** The initial values. */
-    private Map<String, String> initialValues = new HashMap<String, String>();
+    private Map<String, String> initialValues = new HashMap<>();
 
     /** The database connection name. */
     private DatabaseConnectionName databaseConnectionName = null;
@@ -90,7 +90,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
     private boolean supportsDuplication = false;
 
     /** The expected keys. */
-    private List<String> expectedKeys = new ArrayList<String>();
+    private List<String> expectedKeys = new ArrayList<>();
 
     /**
      * Constructor.
@@ -172,7 +172,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
             String[] components = connectionString.split(DELIMETER);
             if (components.length >= 3) {
 
-                Map<String, String> localConnectionDataMap = new HashMap<String, String>();
+                Map<String, String> localConnectionDataMap = new HashMap<>();
 
                 for (int index = 3; index < components.length; index++) {
                     String[] property = components[index].split(PROPERTY_DELIMETER);
@@ -336,9 +336,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      * @return the database connection
      */
     public DatabaseConnection duplicate() {
-        DatabaseConnection newItem = new DatabaseConnection(this);
-
-        return newItem;
+        return new DatabaseConnection(this);
     }
 
     /**
@@ -401,9 +399,9 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      * @return the DB connection params
      */
     public Map<String, Object> getDBConnectionParams() {
-        Map<String, String> connectionDataMap = getConnectionDataMap();
+        Map<String, String> localConnectionDataMap = getConnectionDataMap();
 
-        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        Map<String, Object> params = new LinkedHashMap<>();
         params.put(JDBCDataStoreFactory.DBTYPE.key, getDatabaseType());
         for (DatabaseConnectionField field : detailList) {
             if (field.isUsername()) {
@@ -415,12 +413,12 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
                     params.put(field.getKey(), getPassword());
                 }
             } else if (field.isOptional()) {
-                String value = connectionDataMap.get(field.getKey());
+                String value = localConnectionDataMap.get(field.getKey());
                 if ((value != null) && !value.trim().isEmpty()) {
                     params.put(field.getKey(), getValue(value, field.getType()));
                 }
             } else {
-                String value = connectionDataMap.get(field.getKey());
+                String value = localConnectionDataMap.get(field.getKey());
                 params.put(field.getKey(), getValue(value, field.getType()));
             }
         }

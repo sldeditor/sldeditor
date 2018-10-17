@@ -51,7 +51,7 @@ public class ColourRamp {
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
     /** The colour list. */
-    private List<Color> colourList = new ArrayList<Color>();
+    private List<Color> colourList = new ArrayList<>();
 
     /** The range. */
     private int range = Integer.MIN_VALUE;
@@ -133,9 +133,7 @@ public class ColourRamp {
     public ImageIcon getImageIcon(boolean reverseColours) {
         BufferedImage bufferedImage = createImage(IMAGE_WIDTH, reverseColours);
 
-        ImageIcon imageIcon = new ImageIcon(bufferedImage);
-
-        return imageIcon;
+        return new ImageIcon(bufferedImage);
     }
 
     /**

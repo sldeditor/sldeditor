@@ -54,7 +54,7 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
 
     /** The connection map. */
     private Map<GeoServerConnection, GeoServerClientInterface> connectionMap =
-            new LinkedHashMap<GeoServerConnection, GeoServerClientInterface>();
+            new LinkedHashMap<>();
 
     /**
      * Gets the singleton instance of GeoServerConnectionManager.
@@ -76,7 +76,7 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
      */
     @Override
     public List<GeoServerConnection> getConnectionList() {
-        List<GeoServerConnection> connectionList = new ArrayList<GeoServerConnection>();
+        List<GeoServerConnection> connectionList = new ArrayList<>();
 
         List<String> valueList =
                 PropertyManagerFactory.getInstance().getMultipleValues(GEOSERVER_CONNECTION_FIELD);
@@ -152,11 +152,7 @@ public class GeoServerConnectionManager implements GeoServerConnectionManagerInt
                             Class.forName(GeoServerConnectionManager.geoServerClientClass.getName())
                                     .newInstance();
             client.initialise(progress, connection);
-        } catch (InstantiationException e) {
-            ConsoleManager.getInstance().exception(GeoServerInput.class, e);
-        } catch (IllegalAccessException e) {
-            ConsoleManager.getInstance().exception(GeoServerInput.class, e);
-        } catch (ClassNotFoundException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             ConsoleManager.getInstance().exception(GeoServerInput.class, e);
         }
 
