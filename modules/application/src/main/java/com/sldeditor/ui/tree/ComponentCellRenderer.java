@@ -79,7 +79,7 @@ public class ComponentCellRenderer implements TreeCellRenderer {
         String name = getItemText(node, userObject);
 
         boolean showCheckbox = showCheckbox(parentUserObject, userObject);
-        leaf = isLeaf(parentUserObject, userObject);
+        boolean isLeaf = isLeaf(parentUserObject, userObject);
 
         panel.setCheckboxVisible(showCheckbox);
         if (showCheckbox) {
@@ -97,7 +97,7 @@ public class ComponentCellRenderer implements TreeCellRenderer {
 
             return panel;
         } else {
-            if (leaf) {
+            if (isLeaf) {
                 DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
 
                 if (parent != null) {
@@ -110,7 +110,7 @@ public class ComponentCellRenderer implements TreeCellRenderer {
         }
 
         return renderer.getTreeCellRendererComponent(
-                tree, name, selected, expanded, leaf, row, hasFocus);
+                tree, name, selected, expanded, isLeaf, row, hasFocus);
     }
 
     /**

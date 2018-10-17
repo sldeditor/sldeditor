@@ -133,11 +133,11 @@ public class FilterPanelv2 extends JDialog
     /** The empty panel. */
     private JPanel emptyPanel = new JPanel();
 
-    /** The filter. */
-    private transient Filter filter = null;
+    /** The original filter. */
+    private transient Filter originalFilter = null;
 
-    /** The overall filter. */
-    private transient Filter overallFilter;
+    /** The filter. */
+    private transient Filter filter;
 
     /** The vendor option list. */
     private transient List<VersionData> vendorOptionList = null;
@@ -384,13 +384,13 @@ public class FilterPanelv2 extends JDialog
     private boolean displayResult() {
         String result = INVALID_RESULT_STRING;
         if (rootNode instanceof FilterNode) {
-            overallFilter = addFilter((FilterNode) rootNode);
+            filter = addFilter((FilterNode) rootNode);
 
-            if (overallFilter == null) {
+            if (filter == null) {
                 result = "";
             } else {
                 try {
-                    result = overallFilter.toString();
+                    result = filter.toString();
                 } catch (Exception e) {
                     // DO nothing
                 }
@@ -423,22 +423,22 @@ public class FilterPanelv2 extends JDialog
 
         List<Expression> parameterFilter = new ArrayList<>();
 
-        if (filter instanceof FidFilterImpl) {
+        if (originalFilter instanceof FidFilterImpl) {
             createExpressionParameterList(node, 1, parameterFilter);
-        } else if (filter instanceof BinaryTemporalOperator) {
+        } else if (originalFilter instanceof BinaryTemporalOperator) {
             createExpressionParameterList(node, 2, parameterFilter);
-        } else if (filter instanceof PropertyIsBetween) {
+        } else if (originalFilter instanceof PropertyIsBetween) {
             createExpressionParameterList(node, 3, parameterFilter);
-        } else if (filter instanceof PropertyIsNull) {
+        } else if (originalFilter instanceof PropertyIsNull) {
             createExpressionParameterList(node, 1, parameterFilter);
-        } else if (filter instanceof PropertyIsLike) {
+        } else if (originalFilter instanceof PropertyIsLike) {
             createExpressionParameterList(node, 6, parameterFilter);
-        } else if (filter instanceof BinarySpatialOperator) {
+        } else if (originalFilter instanceof BinarySpatialOperator) {
             createExpressionParameterList(node, 2, parameterFilter);
-        } else if (filter instanceof BinaryComparisonAbstract) {
-            if (filter instanceof Not) {
+        } else if (originalFilter instanceof BinaryComparisonAbstract) {
+            if (originalFilter instanceof Not) {
                 createExpressionParameterList(node, 1, parameterFilter);
-            } else if (filter instanceof PropertyIsGreaterThan) {
+            } else if (originalFilter instanceof PropertyIsGreaterThan) {
                 createExpressionParameterList(node, 2, parameterFilter);
             } else {
                 createExpressionParameterList(node, 3, parameterFilter);
@@ -570,7 +570,7 @@ public class FilterPanelv2 extends JDialog
     public boolean showDialog() {
         Class<?> dataType = Object.class;
 
-        return showFilterDialog(dataType, filter);
+        return showFilterDialog(dataType, originalFilter);
     }
 
     /**
@@ -580,7 +580,7 @@ public class FilterPanelv2 extends JDialog
      */
     @Override
     public void populate(Filter filter) {
-        this.filter = filter;
+        this.originalFilter = filter;
     }
 
     /**
@@ -591,9 +591,9 @@ public class FilterPanelv2 extends JDialog
     @Override
     public String getFilterString() {
         String filterString = null;
-        if (overallFilter != null) {
+        if (filter != null) {
             try {
-                filterString = overallFilter.toString();
+                filterString = filter.toString();
             } catch (Exception e) {
                 // Do nothing
             }
@@ -624,7 +624,7 @@ public class FilterPanelv2 extends JDialog
      */
     @Override
     public Filter getFilter() {
-        return overallFilter;
+        return filter;
     }
 
     /*

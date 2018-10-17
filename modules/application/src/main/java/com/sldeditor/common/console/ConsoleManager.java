@@ -62,7 +62,9 @@ public class ConsoleManager {
     }
 
     /** Make default constructor private. */
-    private ConsoleManager() {}
+    private ConsoleManager() {
+        // Private default constructor
+    }
 
     /**
      * Error.
@@ -99,7 +101,6 @@ public class ConsoleManager {
      * @param e the e
      */
     public void exception(Class<?> clazz, Exception e) {
-        e.printStackTrace();
 
         Logger logger = Logger.getLogger(clazz);
 
@@ -113,7 +114,6 @@ public class ConsoleManager {
      * @param e the e
      */
     public void exception(Object obj, Exception e) {
-        e.printStackTrace();
 
         Logger logger = Logger.getLogger(obj.getClass());
 

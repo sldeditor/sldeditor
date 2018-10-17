@@ -107,14 +107,14 @@ public class ExpressionPanelv2 extends JDialog
     /** The empty panel. */
     private JPanel emptyPanel = new JPanel();
 
-    /** The expression. */
-    private transient Expression expression = null;
+    /** The original expression. */
+    private transient Expression originalExpression = null;
 
     /** The field type. */
     private Class<?> fieldType = null;
 
-    /** The overall expression. */
-    private transient Expression overallExpression;
+    /** The expression. */
+    private transient Expression expression;
 
     /** The vendor option list. */
     private transient List<VersionData> vendorOptionList = null;
@@ -341,10 +341,10 @@ public class ExpressionPanelv2 extends JDialog
     private void displayResult() {
         String result = "";
         if (rootNode instanceof ExpressionNode) {
-            overallExpression = addExpression((ExpressionNode) rootNode);
+            expression = addExpression((ExpressionNode) rootNode);
 
-            if (overallExpression != null) {
-                result = overallExpression.toString();
+            if (expression != null) {
+                result = expression.toString();
             }
         }
 
@@ -421,7 +421,7 @@ public class ExpressionPanelv2 extends JDialog
      */
     @Override
     public boolean showDialog() {
-        showExpressionDialog(fieldType, expression);
+        showExpressionDialog(fieldType, originalExpression);
 
         if (!inTestMode) {
             setVisible(true);
@@ -448,7 +448,7 @@ public class ExpressionPanelv2 extends JDialog
      */
     @Override
     public Expression getExpression() {
-        return overallExpression;
+        return expression;
     }
 
     /**
@@ -467,7 +467,7 @@ public class ExpressionPanelv2 extends JDialog
      */
     @Override
     public void populate(Expression storedExpression) {
-        this.expression = storedExpression;
+        this.originalExpression = storedExpression;
     }
 
     /*

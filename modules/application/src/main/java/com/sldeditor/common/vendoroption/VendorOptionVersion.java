@@ -214,7 +214,7 @@ public class VendorOptionVersion implements Serializable {
             if (other.classType != null) {
                 return false;
             }
-        } else if (!classType.getName().equals(other.classType.getName())) {
+        } else if (!classType.equals(other.classType)) {
             return false;
         }
         if (maximumVersion == null) {

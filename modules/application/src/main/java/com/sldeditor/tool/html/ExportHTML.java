@@ -33,6 +33,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.io.IOUtils;
@@ -63,8 +64,11 @@ public class ExportHTML {
      * @param sldDataList the sld data list
      * @param backgroundColour the background colour
      */
-    public static void save(File destinationFolder, String filename,
-            List<SLDDataInterface> sldDataList, Color backgroundColour) {
+    public static void save(
+            File destinationFolder,
+            String filename,
+            List<SLDDataInterface> sldDataList,
+            Color backgroundColour) {
         if (!destinationFolder.exists()) {
             destinationFolder.mkdirs();
         }
@@ -124,14 +128,22 @@ public class ExportHTML {
 
                     List<String> legendFileNameList = new ArrayList<String>();
 
-                    boolean result = LegendManager.getInstance().saveLegendImage(sld,
-                            destinationFolder, layerName, showHeading, showFilename,
-                            legendFileNameList);
+                    boolean result =
+                            LegendManager.getInstance()
+                                    .saveLegendImage(
+                                            sld,
+                                            destinationFolder,
+                                            layerName,
+                                            showHeading,
+                                            showFilename,
+                                            legendFileNameList);
 
                     if (result) {
                         String legendFilename = legendFileNameList.get(0);
-                        sb.append(String.format("    <td><img src=\"%s\" alt=\"%s\" ></td>\n",
-                                legendFilename, layerName));
+                        sb.append(
+                                String.format(
+                                        "    <td><img src=\"%s\" alt=\"%s\" ></td>\n",
+                                        legendFilename, layerName));
                     }
                 }
                 sb.append("  </tr>\n");
@@ -151,9 +163,12 @@ public class ExportHTML {
                 }
             }
 
-            if ((file != null) && !file.delete()) {
-                ConsoleManager.getInstance().information(ExportHTML.class,
-                        String.format("Failed to deleted %s", file.getAbsolutePath()));
+            try {
+                if (file != null) {
+                    Files.delete(file.toPath());
+                }
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(ExportHTML.class, e);
             }
         }
     }
