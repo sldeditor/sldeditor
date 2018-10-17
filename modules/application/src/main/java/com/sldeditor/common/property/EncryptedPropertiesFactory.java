@@ -78,15 +78,13 @@ public class EncryptedPropertiesFactory {
      * @return the string
      */
     private static String generatePassword() {
-        String password = "sldEditor";
-
         StringBuilder sb = new StringBuilder();
 
         sb.append(getUniqueIdentifier());
 
         sb.append(System.getProperty("user.name"));
 
-        password = sb.toString();
+        String password = sb.toString();
 
         return password;
     }

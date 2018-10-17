@@ -51,7 +51,7 @@ public class PanTool extends CursorTool {
     public static final String CURSOR_IMAGE = "/org/geotools/swing/icons/mActionPan.png";
 
     /** Cursor hotspot coordinates. */
-    public static final Point CURSOR_HOTSPOT = new Point(15, 15);
+    private static final Point CURSOR_HOTSPOT = new Point(15, 15);
 
     /** Icon for the control. */
     public static final String ICON_IMAGE = "/org/geotools/swing/icons/mActionPan.png";
