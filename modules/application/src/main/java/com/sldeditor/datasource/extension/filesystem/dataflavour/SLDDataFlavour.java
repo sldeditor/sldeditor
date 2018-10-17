@@ -105,4 +105,14 @@ public class SLDDataFlavour extends DataFlavor implements Serializable {
         }
         return isEqual;
     }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.awt.datatransfer.DataFlavor#equals(Object)
+     */
+    @Override
+    public boolean equals(Object o) {
+        return ((o instanceof DataFlavor) && equals((DataFlavor) o));
+    }
 }

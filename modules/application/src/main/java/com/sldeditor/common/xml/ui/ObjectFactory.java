@@ -28,54 +28,9 @@ public class ObjectFactory {
      */
     public ObjectFactory() {}
 
-    /** Create an instance of {@link XMLFieldConfigEnumValueField } */
-    public XMLFieldConfigEnumValueField createXMLFieldConfigEnumValueField() {
-        return new XMLFieldConfigEnumValueField();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigEnumValueGroup } */
-    public XMLFieldConfigEnumValueGroup createXMLFieldConfigEnumValueGroup() {
-        return new XMLFieldConfigEnumValueGroup();
-    }
-
-    /** Create an instance of {@link XMLGroupConfig } */
-    public XMLGroupConfig createXMLGroupConfig() {
-        return new XMLGroupConfig();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigColourMap } */
-    public XMLFieldConfigColourMap createXMLFieldConfigColourMap() {
-        return new XMLFieldConfigColourMap();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigInteger } */
-    public XMLFieldConfigInteger createXMLFieldConfigInteger() {
-        return new XMLFieldConfigInteger();
-    }
-
     /** Create an instance of {@link XMLOptionGroup } */
     public XMLOptionGroup createXMLOptionGroup() {
         return new XMLOptionGroup();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigGeometryField } */
-    public XMLFieldConfigGeometryField createXMLFieldConfigGeometryField() {
-        return new XMLFieldConfigGeometryField();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigFontPreview } */
-    public XMLFieldConfigFontPreview createXMLFieldConfigFontPreview() {
-        return new XMLFieldConfigFontPreview();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigEnumValue.FieldList } */
-    public XMLFieldConfigEnumValue.FieldList createXMLFieldConfigEnumValueFieldList() {
-        return new XMLFieldConfigEnumValue.FieldList();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigFeatureTypeConstraint } */
-    public XMLFieldConfigFeatureTypeConstraint createXMLFieldConfigFeatureTypeConstraint() {
-        return new XMLFieldConfigFeatureTypeConstraint();
     }
 
     /** Create an instance of {@link XMLFieldConfigGeometry } */
@@ -83,34 +38,9 @@ public class ObjectFactory {
         return new XMLFieldConfigGeometry();
     }
 
-    /** Create an instance of {@link XMLFieldConfigSlider } */
-    public XMLFieldConfigSlider createXMLFieldConfigSlider() {
-        return new XMLFieldConfigSlider();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigEnumValue } */
-    public XMLFieldConfigEnumValue createXMLFieldConfigEnumValue() {
-        return new XMLFieldConfigEnumValue();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigTransformation } */
-    public XMLFieldConfigTransformation createXMLFieldConfigTransformation() {
-        return new XMLFieldConfigTransformation();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigEnumValueList } */
-    public XMLFieldConfigEnumValueList createXMLFieldConfigEnumValueList() {
-        return new XMLFieldConfigEnumValueList();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigEnumValueItem } */
-    public XMLFieldConfigEnumValueItem createXMLFieldConfigEnumValueItem() {
-        return new XMLFieldConfigEnumValueItem();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigVendorOption } */
-    public XMLFieldConfigVendorOption createXMLFieldConfigVendorOption() {
-        return new XMLFieldConfigVendorOption();
+    /** Create an instance of {@link XMLFieldConfigColourMap } */
+    public XMLFieldConfigColourMap createXMLFieldConfigColourMap() {
+        return new XMLFieldConfigColourMap();
     }
 
     /** Create an instance of {@link XMLFieldConfigInlineFeature } */
@@ -118,34 +48,14 @@ public class ObjectFactory {
         return new XMLFieldConfigInlineFeature();
     }
 
-    /** Create an instance of {@link XMLMultiOptionGroup } */
-    public XMLMultiOptionGroup createXMLMultiOptionGroup() {
-        return new XMLMultiOptionGroup();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigMapUnit } */
-    public XMLFieldConfigMapUnit createXMLFieldConfigMapUnit() {
-        return new XMLFieldConfigMapUnit();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigString } */
-    public XMLFieldConfigString createXMLFieldConfigString() {
-        return new XMLFieldConfigString();
-    }
-
     /** Create an instance of {@link XMLFieldConfigColour } */
     public XMLFieldConfigColour createXMLFieldConfigColour() {
         return new XMLFieldConfigColour();
     }
 
-    /** Create an instance of {@link XMLFieldConfigBoolean } */
-    public XMLFieldConfigBoolean createXMLFieldConfigBoolean() {
-        return new XMLFieldConfigBoolean();
-    }
-
-    /** Create an instance of {@link XMLFieldConfigEnum } */
-    public XMLFieldConfigEnum createXMLFieldConfigEnum() {
-        return new XMLFieldConfigEnum();
+    /** Create an instance of {@link XMLFieldConfigEnumValue.FieldList } */
+    public XMLFieldConfigEnumValue.FieldList createXMLFieldConfigEnumValueFieldList() {
+        return new XMLFieldConfigEnumValue.FieldList();
     }
 
     /** Create an instance of {@link XMLFieldConfigSortBy } */
@@ -153,9 +63,29 @@ public class ObjectFactory {
         return new XMLFieldConfigSortBy();
     }
 
-    /** Create an instance of {@link XMLFieldConfigData } */
-    public XMLFieldConfigData createXMLFieldConfigData() {
-        return new XMLFieldConfigData();
+    /** Create an instance of {@link XMLFieldConfigBoolean } */
+    public XMLFieldConfigBoolean createXMLFieldConfigBoolean() {
+        return new XMLFieldConfigBoolean();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigVendorOption } */
+    public XMLFieldConfigVendorOption createXMLFieldConfigVendorOption() {
+        return new XMLFieldConfigVendorOption();
+    }
+
+    /** Create an instance of {@link XMLGroupConfig } */
+    public XMLGroupConfig createXMLGroupConfig() {
+        return new XMLGroupConfig();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigGeometryField } */
+    public XMLFieldConfigGeometryField createXMLFieldConfigGeometryField() {
+        return new XMLFieldConfigGeometryField();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigInteger } */
+    public XMLFieldConfigInteger createXMLFieldConfigInteger() {
+        return new XMLFieldConfigInteger();
     }
 
     /** Create an instance of {@link XMLFieldConfigSymbolType } */
@@ -173,14 +103,24 @@ public class ObjectFactory {
         return new XMLGroupConfigData();
     }
 
-    /** Create an instance of {@link XMLFieldConfigDouble } */
-    public XMLFieldConfigDouble createXMLFieldConfigDouble() {
-        return new XMLFieldConfigDouble();
+    /** Create an instance of {@link XMLFieldConfigEnumValueGroup } */
+    public XMLFieldConfigEnumValueGroup createXMLFieldConfigEnumValueGroup() {
+        return new XMLFieldConfigEnumValueGroup();
     }
 
     /** Create an instance of {@link MapUnits } */
     public MapUnits createMapUnits() {
         return new MapUnits();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigMapUnit } */
+    public XMLFieldConfigMapUnit createXMLFieldConfigMapUnit() {
+        return new XMLFieldConfigMapUnit();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigEnumValueList } */
+    public XMLFieldConfigEnumValueList createXMLFieldConfigEnumValueList() {
+        return new XMLFieldConfigEnumValueList();
     }
 
     /** Create an instance of {@link XMLFieldConfigDSProperties } */
@@ -191,5 +131,65 @@ public class ObjectFactory {
     /** Create an instance of {@link XMLFieldConfigFont } */
     public XMLFieldConfigFont createXMLFieldConfigFont() {
         return new XMLFieldConfigFont();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigData } */
+    public XMLFieldConfigData createXMLFieldConfigData() {
+        return new XMLFieldConfigData();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigTransformation } */
+    public XMLFieldConfigTransformation createXMLFieldConfigTransformation() {
+        return new XMLFieldConfigTransformation();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigEnumValue } */
+    public XMLFieldConfigEnumValue createXMLFieldConfigEnumValue() {
+        return new XMLFieldConfigEnumValue();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigFontPreview } */
+    public XMLFieldConfigFontPreview createXMLFieldConfigFontPreview() {
+        return new XMLFieldConfigFontPreview();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigString } */
+    public XMLFieldConfigString createXMLFieldConfigString() {
+        return new XMLFieldConfigString();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigSlider } */
+    public XMLFieldConfigSlider createXMLFieldConfigSlider() {
+        return new XMLFieldConfigSlider();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigEnumValueField } */
+    public XMLFieldConfigEnumValueField createXMLFieldConfigEnumValueField() {
+        return new XMLFieldConfigEnumValueField();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigFeatureTypeConstraint } */
+    public XMLFieldConfigFeatureTypeConstraint createXMLFieldConfigFeatureTypeConstraint() {
+        return new XMLFieldConfigFeatureTypeConstraint();
+    }
+
+    /** Create an instance of {@link XMLMultiOptionGroup } */
+    public XMLMultiOptionGroup createXMLMultiOptionGroup() {
+        return new XMLMultiOptionGroup();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigEnumValueItem } */
+    public XMLFieldConfigEnumValueItem createXMLFieldConfigEnumValueItem() {
+        return new XMLFieldConfigEnumValueItem();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigEnum } */
+    public XMLFieldConfigEnum createXMLFieldConfigEnum() {
+        return new XMLFieldConfigEnum();
+    }
+
+    /** Create an instance of {@link XMLFieldConfigDouble } */
+    public XMLFieldConfigDouble createXMLFieldConfigDouble() {
+        return new XMLFieldConfigDouble();
     }
 }

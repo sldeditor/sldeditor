@@ -134,12 +134,16 @@ public class FileSystemWatcher implements Runnable {
                 key = watchService.take();
             } catch (InterruptedException e) {
                 // Ignore
+                ConsoleManager.getInstance().information(this, "Watch service interrupted");
             }
 
             // once a key is obtained, we poll for events on that key
             if (key != null) {
                 List<WatchEvent<?>> keys = key.pollEvents();
-                handleWatchEvents(key, keys);
+                processWatchEvents(key, keys);
+
+                // Reset the key so the further key events may be polled
+                key.reset();
             }
 
             if (stopPolling) {
@@ -152,12 +156,12 @@ public class FileSystemWatcher implements Runnable {
     }
 
     /**
-     * Handle watch events.
+     * Process watch events.
      *
      * @param key the key
      * @param keys the keys
      */
-    private void handleWatchEvents(WatchKey key, List<WatchEvent<?>> keys) {
+    private void processWatchEvents(WatchKey key, List<WatchEvent<?>> keys) {
         for (WatchEvent<?> watchEvent : keys) {
 
             Kind<?> watchEventKind = watchEvent.kind();
@@ -185,8 +189,6 @@ public class FileSystemWatcher implements Runnable {
                     parentObj.fileDeleted(fullPath);
                 }
             }
-            // Reset the key so the further key events may be polled
-            key.reset();
         }
     }
 }
