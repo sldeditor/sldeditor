@@ -53,11 +53,10 @@ public class ToolPanel extends JPanel {
     public static final int TOOL_PANEL_HEIGHT = 50;
 
     /** The tool map. */
-    private Map<Class<?>, List<ToolInterface>> toolMap =
-            new HashMap<Class<?>, List<ToolInterface>>();
+    private transient Map<Class<?>, List<ToolInterface>> toolMap = new HashMap<>();
 
     /** The displayed panels. */
-    private List<JPanel> displayedPanels = new ArrayList<JPanel>();
+    private List<JPanel> displayedPanels = new ArrayList<>();
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(ToolPanel.class);
@@ -66,7 +65,7 @@ public class ToolPanel extends JPanel {
     private JPanel toolPanel;
 
     /** The tool selection. */
-    private ToolSelectionInterface toolSelection = null;
+    private transient ToolSelectionInterface toolSelection = null;
 
     /**
      * Instantiates a new tool panel.

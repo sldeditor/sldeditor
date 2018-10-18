@@ -59,13 +59,13 @@ public class ScaleSLDModel extends AbstractTableModel {
     public static final int COL_MAX_SCALE = 7;
 
     /** The column name list. */
-    private List<String> columnNameList = new ArrayList<String>();
+    private List<String> columnNameList = new ArrayList<>();
 
     /** The scale list. */
-    private List<ScaleSLDData> scaleList = new ArrayList<ScaleSLDData>();
+    private transient List<ScaleSLDData> scaleList = new ArrayList<>();
 
     /** The sld writer. */
-    private SLDWriterInterface sldWriter = null;
+    private transient SLDWriterInterface sldWriter = null;
 
     /** The listener. */
     private ScaleToolUpdate listener = null;

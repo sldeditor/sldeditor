@@ -52,7 +52,8 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
     /** The value. */
     private Interpolation value = null;
 
-    private static final int defaultSampleBits = 8;
+    /** The Constant DEFAULT_SAMPLE_BITS. */
+    private static final int DEFAULT_SAMPLE_BITS = 8;
 
     /** The interpolation bicubic pattern match. */
     private final Pattern INTERPOLATION_BICUBIC_PATTERN_MATCH =
@@ -64,7 +65,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
     private final Pattern INTERPOLATION_BICUBIC_PATTERN_EXTRACT = Pattern.compile("\\d+");
 
     /** The sample bits. */
-    private int sampleBits = defaultSampleBits;
+    private int sampleBits = DEFAULT_SAMPLE_BITS;
 
     /** Instantiates a new interpolation values. */
     public InterpolationValues() {
@@ -181,7 +182,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
             }
         }
         // unable to parse
-        return defaultSampleBits;
+        return DEFAULT_SAMPLE_BITS;
     }
 
     /*

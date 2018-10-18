@@ -43,7 +43,7 @@ public class TransferredData implements Serializable {
         private static final long serialVersionUID = -5290507590609699883L;
 
         /** The user object. */
-        private Object userObject = null;
+        private transient Object userObject = null;
 
         /** The tree path. */
         private TreePath treePath = null;
@@ -53,7 +53,7 @@ public class TransferredData implements Serializable {
     }
 
     /** The data list. */
-    private List<InternalTransferredData> dataList = new ArrayList<InternalTransferredData>();
+    private List<InternalTransferredData> dataList = new ArrayList<>();
 
     /** Default constructor. */
     public TransferredData() {

@@ -49,7 +49,8 @@ import java.util.Map;
 public class SymbolTypeConfig {
 
     /** The group name. */
-    private String groupName = Localisation.getString(SymbolTypeConfig.class, "common.notSet");
+    private String groupName =
+            Localisation.getString(SymbolTypeConfig.class, Localisation.COMMON_NOT_SET);
 
     /**
      * Flag indicating whether this set of symbol types appears as a separate menu group in the

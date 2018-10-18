@@ -69,7 +69,7 @@ public class BatchUpdateFontPanel extends JDialog {
     private BatchUpdateFontModel dataModel = new BatchUpdateFontModel();
 
     /** The application. */
-    private SLDEditorInterface application = null;
+    private transient SLDEditorInterface application = null;
 
     /** The font details. */
     private FontDetails fontDetails = null;

@@ -75,7 +75,7 @@ public class GeoServerStyleTree extends JPanel {
     private JPanel styleCardPanel;
 
     /** The parent object. */
-    private SelectedStyleInterface parentObj = null;
+    private transient SelectedStyleInterface parentObj = null;
 
     /** The Constant STYLE_PANEL. */
     private static final String STYLE_PANEL = "STYLE";

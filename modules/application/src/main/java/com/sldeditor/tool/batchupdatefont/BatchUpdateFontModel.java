@@ -69,13 +69,13 @@ public class BatchUpdateFontModel extends AbstractTableModel {
     private static final int COL_FONT_SIZE = 10;
 
     /** The column name list. */
-    private List<String> columnNameList = new ArrayList<String>();
+    private List<String> columnNameList = new ArrayList<>();
 
     /** The font list. */
-    private List<BatchUpdateFontData> fontList = new ArrayList<BatchUpdateFontData>();
+    private transient List<BatchUpdateFontData> fontList = new ArrayList<>();
 
     /** The sld writer. */
-    private SLDWriterInterface sldWriter = null;
+    private transient SLDWriterInterface sldWriter = null;
 
     /** Constructor. */
     public BatchUpdateFontModel() {

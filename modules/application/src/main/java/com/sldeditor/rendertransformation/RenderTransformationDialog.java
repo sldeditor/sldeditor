@@ -556,7 +556,9 @@ public class RenderTransformationDialog extends JDialog {
                     }
 
                     @Override
-                    public void readPropertyFile(GeoServerReadProgress progress) {}
+                    public void readPropertyFile(GeoServerReadProgress progress) {
+                        // Not used
+                    }
 
                     @Override
                     public Map<GeoServerConnection, GeoServerClientInterface> getConnectionMap() {
@@ -564,12 +566,16 @@ public class RenderTransformationDialog extends JDialog {
                     }
 
                     @Override
-                    public void removeConnection(GeoServerConnection connection) {}
+                    public void removeConnection(GeoServerConnection connection) {
+                        // Not used
+                    }
 
                     @Override
                     public void addNewConnection(
                             GeoServerReadProgress progress,
-                            GeoServerConnection newConnectionDetails) {}
+                            GeoServerConnection newConnectionDetails) {
+                        // Not used
+                    }
                 };
 
         List<VersionData> vendorOptionList = new ArrayList<VersionData>();

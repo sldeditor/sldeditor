@@ -66,7 +66,7 @@ public class EnvVarDlg extends JDialog {
     protected JTextField textField;
 
     /** The data model. */
-    private EnvVarModel dataModel = null;
+    private transient EnvVarModel dataModel = null;
 
     /** The ok button pressed. */
     private boolean okButtonPressed = false;
@@ -75,7 +75,7 @@ public class EnvVarDlg extends JDialog {
     private JButton btnRemove;
 
     /** The environment variable manager. */
-    private EnvironmentManagerInterface envVarMgr = null;
+    private transient EnvironmentManagerInterface envVarMgr = null;
 
     /**
      * Instantiates a new env var dlg.

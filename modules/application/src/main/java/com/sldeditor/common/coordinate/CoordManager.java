@@ -114,7 +114,7 @@ public class CoordManager {
         ValueComboBoxData notSetValue =
                 new ValueComboBoxData(
                         NOT_SET_CRS,
-                        Localisation.getString(CoordManager.class, "common.notSet"),
+                        Localisation.getString(CoordManager.class, Localisation.COMMON_NOT_SET),
                         vendorOptionVersion);
         crsDataList.add(notSetValue);
 

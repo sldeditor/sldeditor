@@ -56,12 +56,10 @@ public class DatabaseConnectionFactory {
     private static Map<String, String> nameMap = new HashMap<String, String>();
 
     /** The file handler list. */
-    private static List<FileHandlerInterface> fileHandlerList =
-            new ArrayList<FileHandlerInterface>();
+    private static List<FileHandlerInterface> fileHandlerList = new ArrayList<>();
 
     /** The file handler map. */
-    private static Map<DatabaseFileHandler, String> fileHandlerMap =
-            new HashMap<DatabaseFileHandler, String>();
+    private static Map<DatabaseFileHandler, String> fileHandlerMap = new HashMap<>();
 
     /**
      * Creates a new DatabaseConnection object for a GeoPackage.
@@ -103,7 +101,8 @@ public class DatabaseConnectionFactory {
                                     Map<String, String> properties) {
                                 String connectionName =
                                         Localisation.getString(
-                                                DatabaseConnectionFactory.class, "common.notSet");
+                                                DatabaseConnectionFactory.class,
+                                                Localisation.COMMON_NOT_SET);
                                 String databaseName =
                                         properties.get(JDBCDataStoreFactory.DATABASE.key);
                                 if (databaseName != null) {
@@ -174,7 +173,8 @@ public class DatabaseConnectionFactory {
                                     Map<String, String> properties) {
                                 String connectionName =
                                         Localisation.getString(
-                                                DatabaseConnectionFactory.class, "common.notSet");
+                                                DatabaseConnectionFactory.class,
+                                                Localisation.COMMON_NOT_SET);
                                 String databaseName =
                                         properties.get(JDBCDataStoreFactory.DATABASE.key);
                                 if (databaseName != null) {
@@ -275,7 +275,8 @@ public class DatabaseConnectionFactory {
                                     Map<String, String> properties) {
                                 String connectionName =
                                         Localisation.getString(
-                                                DatabaseConnectionFactory.class, "common.notSet");
+                                                DatabaseConnectionFactory.class,
+                                                Localisation.COMMON_NOT_SET);
                                 String databaseName =
                                         properties.get(JDBCDataStoreFactory.DATABASE.key);
                                 if (databaseName != null) {

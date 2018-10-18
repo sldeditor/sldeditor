@@ -48,13 +48,13 @@ public class ConfigureLayerStyleDialog extends JDialog implements SelectedStyleI
     private static final long serialVersionUID = 1L;
 
     /** The geo server style tree. */
-    private GeoServerStyleTree geoServerStyleTree = null;
+    private transient GeoServerStyleTree geoServerStyleTree = null;
 
     /** The ok button pressed. */
     private boolean okButtonPressed = false;
 
     /** The updated layer list. */
-    private List<GeoServerLayer> updatedLayerList = null;
+    private transient List<GeoServerLayer> updatedLayerList = null;
 
     /** The table. */
     private JTable table = null;

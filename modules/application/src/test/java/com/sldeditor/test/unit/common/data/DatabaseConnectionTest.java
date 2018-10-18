@@ -79,7 +79,8 @@ public class DatabaseConnectionTest {
                                     Map<String, String> properties) {
                                 String connectionName =
                                         Localisation.getString(
-                                                DatabaseConnectionTest.class, "common.notSet");
+                                                DatabaseConnectionTest.class,
+                                                Localisation.COMMON_NOT_SET);
                                 String databaseName =
                                         properties.get(GeoPkgDataStoreFactory.DATABASE.key);
                                 if (databaseName != null) {

@@ -57,6 +57,9 @@ public class Localisation {
     /** The Constant ARG_STRING. */
     private static final String ARG_STRING = "-locale=";
 
+    /** The Constant COMMON_NOT_SET. */
+    public static final String COMMON_NOT_SET = "common.notSet";
+
     /** The instance. */
     private static Localisation instance = null;
 

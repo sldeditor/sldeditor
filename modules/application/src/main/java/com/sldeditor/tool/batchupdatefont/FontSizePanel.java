@@ -40,8 +40,9 @@ public class FontSizePanel extends JPanel implements UpdateSymbolInterface {
     private static final long serialVersionUID = 1L;
 
     /** The value. */
-    private FieldConfigInteger value;
+    private transient FieldConfigInteger value;
 
+    /** Instantiates a new font size panel. */
     public FontSizePanel() {
         createUI();
     }
@@ -73,7 +74,9 @@ public class FontSizePanel extends JPanel implements UpdateSymbolInterface {
      * @see com.sldeditor.ui.iface.UpdateSymbolInterface#dataChanged(com.sldeditor.common.xml.ui.FieldIdEnum)
      */
     @Override
-    public void dataChanged(FieldIdEnum changedField) {}
+    public void dataChanged(FieldIdEnum changedField) {
+        // Not used
+    }
 
     /**
      * Populate.

@@ -45,7 +45,8 @@ public class ValueComboBoxDataGroup {
      */
     public ValueComboBoxDataGroup(List<ValueComboBoxData> dataList) {
         super();
-        this.groupName = Localisation.getString(ValueComboBoxDataGroup.class, "common.notSet");
+        this.groupName =
+                Localisation.getString(ValueComboBoxDataGroup.class, Localisation.COMMON_NOT_SET);
         this.dataList = dataList;
         this.isSubMenu = false;
     }

@@ -51,7 +51,8 @@ public class VersionData implements Comparable<VersionData>, Serializable {
     private static final String DELIMETER = "@";
 
     /** The version string. */
-    private String versionString = Localisation.getString(VersionData.class, "common.notSet");
+    private String versionString =
+            Localisation.getString(VersionData.class, Localisation.COMMON_NOT_SET);
 
     /** The is not set. */
     private boolean isNotSet = true;

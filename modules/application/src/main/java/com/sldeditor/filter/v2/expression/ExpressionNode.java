@@ -87,7 +87,7 @@ public class ExpressionNode extends DefaultMutableTreeNode {
     private boolean regExpString = false;
 
     /** The math expression map. */
-    private static Map<Class<?>, String> mathExpressionMap = new HashMap<Class<?>, String>();
+    private static Map<Class<?>, String> mathExpressionMap = new HashMap<>();
 
     /** The environment manager. */
     private static EnvironmentManagerInterface envMgr = null;

@@ -49,13 +49,14 @@ public class DBConnectorDetailsPanel extends JPanel {
     private boolean ok = false;
 
     /** The database connection map. */
-    private Map<String, DatabaseConnectionConfigInterface> databaseConnectionMap =
-            new LinkedHashMap<String, DatabaseConnectionConfigInterface>();
+    private transient Map<String, DatabaseConnectionConfigInterface> databaseConnectionMap =
+            new LinkedHashMap<>();
 
     /** The connection panel. */
     private JPanel connectionPanel = null;
 
-    private DatabaseConnectionConfigInterface selectedPanel;
+    /** The selected panel. */
+    private transient DatabaseConnectionConfigInterface selectedPanel;
 
     /** The in test mode flag. */
     private static boolean inTestModeFlag = false;

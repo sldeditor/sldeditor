@@ -75,7 +75,7 @@ public class FunctionField extends JPanel {
     private boolean isRasterSymbol = false;
 
     /** The current expression. */
-    private Expression currentExpression = null;
+    private transient Expression currentExpression = null;
 
     /** The current expression node. */
     private transient ExpressionNode currentExpressionNode = null;
