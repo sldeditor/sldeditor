@@ -62,14 +62,13 @@ public class FunctionTableModel extends AbstractTableModel {
     private static final int COL_VALUE = 3;
 
     /** The selected process function. */
-    private SelectedProcessFunction selectedFunction = new SelectedProcessFunction();
+    private transient SelectedProcessFunction selectedFunction = new SelectedProcessFunction();
 
     /** The column list. */
-    private List<String> columnList = new ArrayList<String>();
+    private transient List<String> columnList = new ArrayList<>();
 
     /** The value list. */
-    private List<ProcessFunctionParameterValue> valueList =
-            new ArrayList<ProcessFunctionParameterValue>();
+    private transient List<ProcessFunctionParameterValue> valueList = new ArrayList<>();
 
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();

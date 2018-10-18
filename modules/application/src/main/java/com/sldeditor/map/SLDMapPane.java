@@ -59,13 +59,13 @@ public class SLDMapPane extends AbstractMapPane {
     private static final long serialVersionUID = 1L;
 
     /** The renderer. */
-    private GTRenderer renderer;
+    private transient GTRenderer renderer;
 
     /** The base image. */
-    private BufferedImage baseImage;
+    private transient BufferedImage baseImage;
 
     /** The base image graphics. */
-    private Graphics2D baseImageGraphics;
+    private transient Graphics2D baseImageGraphics;
 
     /** Creates a new map pane. */
     public SLDMapPane() {

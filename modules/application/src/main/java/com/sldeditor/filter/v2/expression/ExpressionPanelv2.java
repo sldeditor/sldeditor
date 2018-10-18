@@ -457,7 +457,9 @@ public class ExpressionPanelv2 extends JDialog
      * @param expressionString the expression string
      */
     @Override
-    public void populate(String expressionString) {}
+    public void populate(String expressionString) {
+        // Does nothing
+    }
 
     /**
      * (non-Javadoc)

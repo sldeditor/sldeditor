@@ -90,7 +90,7 @@ public class ExpressionSubPanel extends JPanel {
     private Box box;
 
     /** The field allowing the configuration change. */
-    private FieldConfigBase fieldConfig = null;
+    private transient FieldConfigBase fieldConfig = null;
 
     /** The button group. */
     private ButtonGroup buttonGroup = new ButtonGroup();

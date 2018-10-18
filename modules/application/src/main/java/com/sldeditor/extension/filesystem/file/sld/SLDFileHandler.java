@@ -59,7 +59,7 @@ public class SLDFileHandler implements FileHandlerInterface {
     private static final String RESOURCE_ICON = "ui/filesystemicons/sld.png";
 
     /** The tree icon SLD. */
-    private Icon treeIcon = null;
+    private transient Icon treeIcon = null;
 
     /*
      * (non-Javadoc)

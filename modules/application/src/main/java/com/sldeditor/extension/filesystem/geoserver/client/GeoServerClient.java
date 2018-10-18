@@ -57,10 +57,10 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
     private transient GeoServerReadProgressInterface parentObj = null;
 
     /** The workspace list. */
-    private List<String> workspaceList = null;
+    private transient List<String> workspaceList = null;
 
     /** The connection. */
-    private GeoServerConnection connection = null;
+    private transient GeoServerConnection connection = null;
 
     /** The connected flag. */
     private boolean connected = false;

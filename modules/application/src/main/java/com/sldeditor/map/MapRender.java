@@ -115,11 +115,11 @@ public class MapRender extends JPanel
     private static boolean underTest = false;
 
     /** The feature list. */
-    private FeatureSource<SimpleFeatureType, SimpleFeature> featureList = null;
+    private transient FeatureSource<SimpleFeatureType, SimpleFeature> featureList = null;
 
     /** The user feature list. */
     // CHECKSTYLE:OFF
-    private Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>
+    private transient Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>
             userLayerFeatureListMap = null;
     // CHECKSTYLE:ON
 
@@ -130,7 +130,7 @@ public class MapRender extends JPanel
     private GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
 
     /** The grid coverage. */
-    private AbstractGridCoverage2DReader gridCoverage = null;
+    private transient AbstractGridCoverage2DReader gridCoverage = null;
 
     /** Name assigned to toolbar button for feature info queries. */
     public static final String TOOLBAR_INFO_BUTTON_NAME = "ToolbarInfoButton";
@@ -158,7 +158,7 @@ public class MapRender extends JPanel
     private final double clickToZoom = 0.1;
 
     /** The wms env var values. */
-    private WMSEnvVarValues wmsEnvVarValues = new WMSEnvVarValues();
+    private transient WMSEnvVarValues wmsEnvVarValues = new WMSEnvVarValues();
 
     /**
      * The map panel that contains the card layout containing map pane and 'no data source' panel.
@@ -175,7 +175,7 @@ public class MapRender extends JPanel
     private boolean error = false;
 
     /** The label cache. */
-    private SynchronizedLabelCache labelCache = new SynchronizedLabelCache();
+    private transient SynchronizedLabelCache labelCache = new SynchronizedLabelCache();
 
     /** Default constructor. */
     public MapRender() {

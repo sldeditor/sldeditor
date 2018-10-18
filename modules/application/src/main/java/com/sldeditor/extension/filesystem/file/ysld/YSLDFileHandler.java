@@ -64,16 +64,16 @@ public class YSLDFileHandler implements FileHandlerInterface {
     private static final String YSLD_FILE_EXTENSION = "ysld";
 
     /** The sld writer. */
-    private SLDWriterInterface sldWriter = null;
+    private transient SLDWriterInterface sldWriter = null;
 
     /** The ysld writer. */
-    private SLDWriterInterface ysldWriter = null;
+    private transient SLDWriterInterface ysldWriter = null;
 
     /** The Constant RESOURCE_ICON. */
     private static final String RESOURCE_ICON = "ui/filesystemicons/ysld.png";
 
     /** The tree icon SLD. */
-    private Icon treeIcon = null;
+    private transient Icon treeIcon = null;
 
     /*
      * (non-Javadoc)

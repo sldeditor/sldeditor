@@ -66,10 +66,10 @@ public class FunctionField extends JPanel {
     private JComboBox<String> functionComboBox;
 
     /** The function name map. */
-    private Map<String, FunctionName> functionNameMap = new LinkedHashMap<String, FunctionName>();
+    private transient Map<String, FunctionName> functionNameMap = new LinkedHashMap<>();
 
     /** The function name mgr. */
-    private FunctionNameInterface functionNameMgr = null;
+    private transient FunctionNameInterface functionNameMgr = null;
 
     /** Is edited symbol a raster flag. */
     private boolean isRasterSymbol = false;
@@ -78,7 +78,7 @@ public class FunctionField extends JPanel {
     private Expression currentExpression = null;
 
     /** The current expression node. */
-    private ExpressionNode currentExpressionNode = null;
+    private transient ExpressionNode currentExpressionNode = null;
 
     /** The add parameter button. */
     private JButton btnAddParameter;

@@ -50,10 +50,10 @@ import org.opengis.filter.temporal.BinaryTemporalOperator;
 public class FilterNode extends DefaultMutableTreeNode {
 
     /** The filter. */
-    private Filter filter = null;
+    private transient Filter filter = null;
 
     /** The filter configuration. */
-    private FilterConfigInterface filterConfig = null;
+    private transient FilterConfigInterface filterConfig = null;
 
     /** The type. */
     private Class<?> type = String.class;

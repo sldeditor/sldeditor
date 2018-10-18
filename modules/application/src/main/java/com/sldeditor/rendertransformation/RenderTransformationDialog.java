@@ -83,26 +83,25 @@ public class RenderTransformationDialog extends JDialog {
     private JComboBox<String> connectionComboBox;
 
     /** The geo server connection manager. */
-    private GeoServerConnectionManagerInterface geoServerConnectionManager = null;
+    private transient GeoServerConnectionManagerInterface geoServerConnectionManager = null;
 
     /** The GeoServer WPS client. */
-    private GeoServerWPSClientInterface client = null;
+    private transient GeoServerWPSClientInterface client = null;
 
     /** The connection map. */
-    private Map<String, GeoServerConnection> connectionMap =
-            new HashMap<String, GeoServerConnection>();
+    private transient Map<String, GeoServerConnection> connectionMap = new HashMap<>();
 
     /** The available function list. */
-    private List<ProcessBriefType> availableFunctionList = null;
+    private transient List<ProcessBriefType> availableFunctionList = null;
 
     /** The function list. */
     private JList<String> functionList;
 
     /** The function list model. */
-    private DefaultListModel<String> functionListModel = new DefaultListModel<String>();
+    private DefaultListModel<String> functionListModel = new DefaultListModel<>();
 
     /** The function parameter table model. */
-    private FunctionTableModel functionParameterTableModel = new FunctionTableModel();
+    private transient FunctionTableModel functionParameterTableModel = new FunctionTableModel();
 
     /** The Add button. */
     private JButton btnAdd;
@@ -123,10 +122,10 @@ public class RenderTransformationDialog extends JDialog {
     private boolean okButtonPressed = false;
 
     /** The existing process function. */
-    private ProcessFunction existingProcessFunction = null;
+    private transient ProcessFunction existingProcessFunction = null;
 
     /** The built in process function factory. */
-    private ProcessFunctionFactory factory = new ProcessFunctionFactory();
+    private transient ProcessFunctionFactory factory = new ProcessFunctionFactory();
 
     /**
      * Instantiates a new render transformation dialog.
@@ -266,17 +265,6 @@ public class RenderTransformationDialog extends JDialog {
         JPanel panel_2 = new JPanel();
         panel_2.setLayout(new BorderLayout(0, 0));
         getContentPane().add(panel_2, BorderLayout.NORTH);
-
-        //        btnEditConnection =
-        //                new JButton(
-        //                        Localisation.getString(
-        //                                RenderTransformationDialog.class,
-        //                                "RenderTransformationDialog.editConnection"));
-        //        panel_2.add(btnEditConnection, BorderLayout.EAST);
-        //        btnEditConnection.addActionListener(
-        //                new ActionListener() {
-        //                    public void actionPerformed(ActionEvent e) {}
-        //                });
 
         //
         // Connect button

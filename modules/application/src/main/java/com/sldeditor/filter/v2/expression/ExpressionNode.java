@@ -48,7 +48,7 @@ import org.opengis.parameter.Parameter;
 public class ExpressionNode extends DefaultMutableTreeNode {
 
     /** The expression. */
-    private Expression expression = null;
+    private transient Expression expression = null;
 
     /** The type. */
     private Class<?> type = String.class;
@@ -75,7 +75,7 @@ public class ExpressionNode extends DefaultMutableTreeNode {
     private boolean optionalParamUsed = false;
 
     /** The expression node parameter. */
-    private Parameter<?> expressionNodeParameter = null;
+    private transient Parameter<?> expressionNodeParameter = null;
 
     /** The Constant UNLIMITED_STRING_SIZE. */
     public static final int UNLIMITED_STRING_SIZE = -1;

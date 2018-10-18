@@ -60,10 +60,10 @@ public class EnvironmentVariableField extends JPanel {
     private JComboBox<String> envVarComboBox;
 
     /** The env var map. */
-    private Map<String, EnvVar> envVarMap = new LinkedHashMap<String, EnvVar>();
+    private transient Map<String, EnvVar> envVarMap = new LinkedHashMap<>();
 
     /** The env var mgr. */
-    private EnvironmentManagerInterface envVarMgr = null;
+    private transient EnvironmentManagerInterface envVarMgr = null;
 
     /**
      * Gets the panel name.
@@ -120,7 +120,7 @@ public class EnvironmentVariableField extends JPanel {
     /** Populate function combo box. */
     private void populateFunctionComboBox() {
         if (envVarComboBox != null) {
-            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
             model.addElement("");
 

@@ -38,7 +38,7 @@ public class Version {
     private static final String APP_COPYRIGHT_YEAR = "2016-2018";
 
     /** The version taken from the maven pom. */
-    public static final String pomVersionString = "0.8.2-SNAPSHOT";
+    public static final String POM_VERSION_STRING = "0.8.2-SNAPSHOT";
 
     /**
      * Gets the version number.
@@ -46,7 +46,7 @@ public class Version {
      * @return the version number
      */
     public static String getVersionNumber() {
-        return pomVersionString;
+        return POM_VERSION_STRING;
     }
 
     /**

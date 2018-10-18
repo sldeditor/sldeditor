@@ -51,14 +51,13 @@ public class FilterField extends JPanel implements ValueComboBoxDataSelectedInte
     private MenuComboBox filterComboBox = null;
 
     /** The filter name map. */
-    private Map<String, FilterConfigInterface> filterNameMap =
-            new LinkedHashMap<String, FilterConfigInterface>();
+    private transient Map<String, FilterConfigInterface> filterNameMap = new LinkedHashMap<>();
 
     /** The filter name manager. */
-    private FilterNameInterface filterNameMgr = null;
+    private transient FilterNameInterface filterNameMgr = null;
 
     /** The parent obj. */
-    private SubPanelUpdatedInterface parentObj = null;
+    private transient SubPanelUpdatedInterface parentObj = null;
 
     /**
      * Gets the panel name.
@@ -102,8 +101,7 @@ public class FilterField extends JPanel implements ValueComboBoxDataSelectedInte
     private void populateFunctionComboBox() {
         if (filterComboBox != null) {
 
-            List<ValueComboBoxDataGroup> dataSelectionList =
-                    new ArrayList<ValueComboBoxDataGroup>();
+            List<ValueComboBoxDataGroup> dataSelectionList = new ArrayList<>();
 
             List<ValueComboBoxData> defaultDataList = new ArrayList<ValueComboBoxData>();
             defaultDataList.add(
@@ -113,8 +111,7 @@ public class FilterField extends JPanel implements ValueComboBoxDataSelectedInte
                             VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
             dataSelectionList.add(new ValueComboBoxDataGroup(defaultDataList));
 
-            Map<String, List<ValueComboBoxData>> map =
-                    new HashMap<String, List<ValueComboBoxData>>();
+            Map<String, List<ValueComboBoxData>> map = new HashMap<>();
 
             List<ValueComboBoxData> dataList = null;
 
@@ -123,7 +120,7 @@ public class FilterField extends JPanel implements ValueComboBoxDataSelectedInte
 
                 dataList = map.get(filterConfig.category());
                 if (dataList == null) {
-                    dataList = new ArrayList<ValueComboBoxData>();
+                    dataList = new ArrayList<>();
                     map.put(filterConfig.category(), dataList);
                 }
                 String text = filterConfig.getFilterConfiguration().getFilterName();

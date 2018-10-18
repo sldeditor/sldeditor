@@ -55,7 +55,7 @@ public class GeoServerWorkspaceNode extends DefaultMutableTreeNode implements No
     private static final String RESOURCE_ICON = "ui/filesystemicons/geoserverworkspace.png";
 
     /** The tree icon. */
-    private Icon treeIcon = null;
+    private transient Icon treeIcon = null;
 
     /**
      * Instantiates a new geo server workspace node.

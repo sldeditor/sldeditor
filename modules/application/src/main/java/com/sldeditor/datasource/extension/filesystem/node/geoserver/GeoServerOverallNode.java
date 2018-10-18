@@ -48,7 +48,7 @@ public class GeoServerOverallNode extends DefaultMutableTreeNode implements Node
     private static final String RESOURCE_ICON = "ui/filesystemicons/geoserver.png";
 
     /** The tree icon. */
-    private Icon treeIcon = null;
+    private transient Icon treeIcon = null;
 
     /**
      * Instantiates a new geo server overall node.

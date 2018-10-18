@@ -50,13 +50,13 @@ public class EnvVarModel extends DefaultTableModel {
     private static final int COL_VALUE = 2;
 
     /** The columns. */
-    private static List<String> columns = new ArrayList<String>();
+    private static List<String> columns = new ArrayList<>();
 
     /** The data list. */
-    private List<EnvVar> dataList = new ArrayList<EnvVar>();
+    private transient List<EnvVar> dataList = new ArrayList<>();
 
     /** The env mgr. */
-    private EnvironmentManagerInterface envMgr = null;
+    private transient EnvironmentManagerInterface envMgr = null;
 
     /**
      * Instantiates a new env var model.

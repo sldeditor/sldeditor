@@ -43,10 +43,10 @@ public class OptionalValueEditor extends AbstractCellEditor implements TableCell
     private JCheckBox checkBox = new JCheckBox();
 
     /** The current editor. */
-    private Object currentEditor = null;
+    private transient Object currentEditor = null;
 
     /** The table model. */
-    private FunctionTableModel tableModel = null;
+    private transient FunctionTableModel tableModel = null;
 
     /** The selected index. */
     private int selectedIndex = -1;
