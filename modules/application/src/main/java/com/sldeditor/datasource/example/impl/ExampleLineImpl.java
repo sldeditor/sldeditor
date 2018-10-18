@@ -36,7 +36,9 @@ public class ExampleLineImpl implements ExampleLineInterface {
     private LineString line = null;
 
     /** Instantiates a new example line impl. */
-    public ExampleLineImpl() {}
+    public ExampleLineImpl() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

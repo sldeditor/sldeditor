@@ -44,13 +44,13 @@ public class EnvVarPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /** The env var field. */
-    private EnvironmentVariableField envVarField = null;
+    private transient EnvironmentVariableField envVarField = null;
 
     /** The selected node. */
-    private ExpressionNode selectedNode = null;
+    private transient ExpressionNode selectedNode = null;
 
     /** The parent. */
-    private ExpressionFilterInterface parentObj = null;
+    private transient ExpressionFilterInterface parentObj = null;
 
     /** The btn apply. */
     private JButton btnApply;

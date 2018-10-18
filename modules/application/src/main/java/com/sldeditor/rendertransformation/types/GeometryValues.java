@@ -47,7 +47,9 @@ public class GeometryValues extends BaseValue implements RenderTransformValueInt
     private Geometry value = null;
 
     /** Instantiates a new geometry values. */
-    public GeometryValues() {}
+    public GeometryValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

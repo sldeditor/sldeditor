@@ -71,7 +71,9 @@ public class DataFlavourManager {
             new HashMap<DataFlavor, List<DataFlavor>>();
 
     /** Private default constructor. */
-    private DataFlavourManager() {}
+    private DataFlavourManager() {
+        // Default constructor
+    }
 
     /**
      * Gets the data flavour array.

@@ -53,13 +53,13 @@ public class FilterSubPanel extends JPanel {
     private JPanel panelFilter;
 
     /** The function panel. */
-    private FilterField filterPanel;
+    private transient FilterField filterPanel;
 
     /** The selected node. */
-    private FilterNode selectedNode = null;
+    private transient FilterNode selectedNode = null;
 
     /** The parent. */
-    private ExpressionFilterInterface parentObj = null;
+    private transient ExpressionFilterInterface parentObj = null;
 
     /** The lbl filter. */
     private JLabel lblFilter;

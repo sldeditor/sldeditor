@@ -43,7 +43,9 @@ public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
     private FieldConfigWKT wktShape;
 
     /** Instantiates a new VOGeoServerWKTSymbol. */
-    public VOGeoServerWKTSymbol() {}
+    public VOGeoServerWKTSymbol() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

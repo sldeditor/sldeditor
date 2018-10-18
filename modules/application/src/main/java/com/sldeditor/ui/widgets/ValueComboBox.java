@@ -43,13 +43,13 @@ public class ValueComboBox extends JComboBox<ValueComboBoxData>
     private static final long serialVersionUID = 1L;
 
     /** The value map. */
-    private Map<String, ValueComboBoxData> valueMap = new HashMap<>();
+    private transient Map<String, ValueComboBoxData> valueMap = new HashMap<>();
 
     /** The value list. */
-    private List<ValueComboBoxData> valueList = new ArrayList<>();
+    private transient List<ValueComboBoxData> valueList = new ArrayList<>();
 
     /** The vendor option list allowed to be used. */
-    private List<VersionData> vendorOptionVersionsList = new ArrayList<>();
+    private transient List<VersionData> vendorOptionVersionsList = new ArrayList<>();
 
     /** Instantiates a new value combo box. */
     @SuppressWarnings("unchecked")

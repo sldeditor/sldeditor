@@ -42,7 +42,9 @@ public class DoubleValues extends BaseValue implements RenderTransformValueInter
     private Double value = null;
 
     /** Instantiates a new double values. */
-    public DoubleValues() {}
+    public DoubleValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

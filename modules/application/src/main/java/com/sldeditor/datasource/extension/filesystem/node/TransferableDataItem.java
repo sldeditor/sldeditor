@@ -45,7 +45,9 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
     private TransferredData data;
 
     /** Default constructor. */
-    public TransferableDataItem() {}
+    public TransferableDataItem() {
+        // Default constructor
+    }
 
     /**
      * Instantiates a new transferable data item.

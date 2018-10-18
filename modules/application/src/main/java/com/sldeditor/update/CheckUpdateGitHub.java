@@ -81,7 +81,9 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
     private boolean destinationReached = false;
 
     /** Instantiates a new check update github. */
-    public CheckUpdateGitHub() {}
+    public CheckUpdateGitHub() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

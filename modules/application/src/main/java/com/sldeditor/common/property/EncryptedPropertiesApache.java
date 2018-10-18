@@ -56,7 +56,9 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
     private static byte[] salt = {(byte) 0x03, 0x0F, 0x12, 0x0D, 0x03, 0x0F, 0x12, 0x0D};
 
     /** Instantiates a new encrypted properties. */
-    public EncryptedPropertiesApache() {}
+    public EncryptedPropertiesApache() {
+        // Default constructor
+    }
 
     /* (non-Javadoc)
      * @see com.sldeditor.common.property.EncryptedPropertiesInterface#initialise(java.lang.String)

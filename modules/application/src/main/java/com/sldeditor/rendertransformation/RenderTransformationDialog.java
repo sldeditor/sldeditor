@@ -558,7 +558,9 @@ public class RenderTransformationDialog extends JDialog {
                     }
 
                     @Override
-                    public void updateList() {}
+                    public void updateList() {
+                        // Not used
+                    }
 
                     @Override
                     public GeoServerConnection getConnection(String connectionDataName) {

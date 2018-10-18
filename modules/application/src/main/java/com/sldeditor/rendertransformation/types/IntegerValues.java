@@ -42,7 +42,9 @@ public class IntegerValues extends BaseValue implements RenderTransformValueInte
     private Integer value = null;
 
     /** Instantiates a new integer values. */
-    public IntegerValues() {}
+    public IntegerValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

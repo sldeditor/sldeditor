@@ -48,7 +48,9 @@ public class WKTPoint {
     }
 
     /** Default constructor. */
-    public WKTPoint() {}
+    public WKTPoint() {
+        // Default constructor
+    }
 
     /**
      * Gets the x coordinate.

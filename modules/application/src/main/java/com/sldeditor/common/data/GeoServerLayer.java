@@ -53,7 +53,9 @@ public class GeoServerLayer implements Serializable {
     private GeoServerConnection connection = null;
 
     /** Default constructor. */
-    public GeoServerLayer() {}
+    public GeoServerLayer() {
+        // Default constructor
+    }
 
     /** Constructor. */
     public GeoServerLayer(String layerWorkspace, String layerName) {

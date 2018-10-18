@@ -25,7 +25,9 @@ import com.sldeditor.rendertransformation.types.RenderTransformValueInterface;
 public class ProcessFunctionParameterValue {
 
     /** Default constructor. */
-    public ProcessFunctionParameterValue() {}
+    public ProcessFunctionParameterValue() {
+        // Default constructor
+    }
 
     /**
      * Instantiates a new value.

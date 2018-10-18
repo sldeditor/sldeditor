@@ -29,7 +29,9 @@ public class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder {
     static Logger LOGGER = org.geotools.util.logging.Logging.getLogger("org.geotools.feature");
 
     /** Instantiates a new extended simple feature type builder. */
-    public ExtendedSimpleFeatureTypeBuilder() {}
+    public ExtendedSimpleFeatureTypeBuilder() {
+        // Default constructor
+    }
 
     /**
      * Instantiates a new extended simple feature type builder.

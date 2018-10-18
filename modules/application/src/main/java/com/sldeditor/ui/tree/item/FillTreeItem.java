@@ -36,7 +36,9 @@ public class FillTreeItem implements SLDTreeItemInterface {
     private static final String TITLE = Localisation.getString(SLDTreeTools.class, "TreeItem.fill");
 
     /** Instantiates a new fill tree item. */
-    public FillTreeItem() {}
+    public FillTreeItem() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

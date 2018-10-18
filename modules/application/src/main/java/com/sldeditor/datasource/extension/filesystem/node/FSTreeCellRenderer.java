@@ -42,7 +42,9 @@ public class FSTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
     private static final long serialVersionUID = 1L;
 
     /** Instantiates a new component cell renderer. */
-    public FSTreeCellRenderer() {}
+    public FSTreeCellRenderer() {
+        // Default constructor
+    }
 
     /**
      * This is the only TreeCellRenderer method. Compute the string to display, and pass it to the

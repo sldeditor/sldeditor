@@ -44,7 +44,9 @@ public class JAIExtRangeValues extends BaseValue implements RenderTransformValue
     private Range value = null;
 
     /** Instantiates a new JAI-EXT range values. */
-    public JAIExtRangeValues() {}
+    public JAIExtRangeValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

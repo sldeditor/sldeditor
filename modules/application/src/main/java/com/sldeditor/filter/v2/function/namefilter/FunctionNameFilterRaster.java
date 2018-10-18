@@ -59,7 +59,9 @@ public class FunctionNameFilterRaster implements FunctionNameFilterInterface {
     private List<String> disallowedFunctionNameList = Arrays.asList(disallowedFunctionNames);
 
     /** Instantiates a new function name filter raster. */
-    public FunctionNameFilterRaster() {}
+    public FunctionNameFilterRaster() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

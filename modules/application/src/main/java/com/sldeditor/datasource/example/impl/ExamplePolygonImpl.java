@@ -37,7 +37,9 @@ public class ExamplePolygonImpl implements ExamplePolygonInterface {
     private Polygon polygon = null;
 
     /** Default constructor. */
-    public ExamplePolygonImpl() {}
+    public ExamplePolygonImpl() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

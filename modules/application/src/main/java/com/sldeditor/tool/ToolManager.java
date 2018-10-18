@@ -70,7 +70,9 @@ public class ToolManager implements ToolSelectionInterface {
             new ArrayList<RecursiveUpdateInterface>();
 
     /** Default constructor. */
-    private ToolManager() {}
+    private ToolManager() {
+        // Default constructor
+    }
 
     /**
      * Register tool.

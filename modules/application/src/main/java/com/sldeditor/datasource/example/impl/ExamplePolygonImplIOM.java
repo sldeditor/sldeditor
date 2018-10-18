@@ -37,7 +37,9 @@ public class ExamplePolygonImplIOM implements ExamplePolygonInterface {
     private Polygon polygon = null;
 
     /** Instantiates a new example polygon impl iom. */
-    public ExamplePolygonImplIOM() {}
+    public ExamplePolygonImplIOM() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

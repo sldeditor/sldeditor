@@ -66,7 +66,9 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
     private boolean connected = false;
 
     /** Default constructor. */
-    public GeoServerClient() {}
+    public GeoServerClient() {
+        // Default constructor
+    }
 
     /**
      * Initialise a new GeoServer client.

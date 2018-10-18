@@ -38,7 +38,9 @@ public class WMSEnvVarValues {
     private ReferencedEnvelope mapBounds = null;
 
     /** Instantiates a new WMS env var values. */
-    public WMSEnvVarValues() {}
+    public WMSEnvVarValues() {
+        // Default constructor
+    }
 
     /**
      * Gets the image width.

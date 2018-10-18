@@ -37,7 +37,9 @@ public class StrokeTreeItem implements SLDTreeItemInterface {
             Localisation.getString(SLDTreeTools.class, "TreeItem.stroke");
 
     /** Instantiates a new stroke tree item. */
-    public StrokeTreeItem() {}
+    public StrokeTreeItem() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

@@ -55,7 +55,9 @@ public class ReportIssue {
     }
 
     /** Instantiates a new report issue class. */
-    private ReportIssue() {}
+    private ReportIssue() {
+        // Default constructor
+    }
 
     /** Display report issue section. */
     public void display() {

@@ -48,7 +48,7 @@ public class DatabaseNode extends DefaultMutableTreeNode implements NodeInterfac
     private static final String RESOURCE_ICON = "ui/filesystemicons/geoservernode.png";
 
     /** The tree icon. */
-    private Icon treeIcon = null;
+    private transient Icon treeIcon = null;
 
     /**
      * Instantiates a new DatabaseNode.

@@ -41,7 +41,9 @@ public class GeoServerRESTManagerFactory {
     private static GeoServerRESTManagerFactory instance = null;
 
     /** Instantiates a new geo server rest manager factory. */
-    private GeoServerRESTManagerFactory() {}
+    private GeoServerRESTManagerFactory() {
+        // Default constructor
+    }
 
     /**
      * Gets the single instance of GeoServerRESTManagerFactory.

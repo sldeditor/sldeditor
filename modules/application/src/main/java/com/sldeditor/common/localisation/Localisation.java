@@ -67,7 +67,9 @@ public class Localisation {
     private Map<String, ResourceBundle> resourceBundleMap = new HashMap<String, ResourceBundle>();
 
     /** Instantiates a new localisation. */
-    private Localisation() {}
+    private Localisation() {
+        // Default constructor
+    }
 
     /**
      * Gets the single instance of Localisation.

@@ -30,7 +30,9 @@ public class RuleRenderOptions {
     private boolean applyTransformation = false;
 
     /** Default constructor. */
-    public RuleRenderOptions() {}
+    public RuleRenderOptions() {
+        // Default constructor
+    }
 
     /**
      * Checks if is transformation applied.

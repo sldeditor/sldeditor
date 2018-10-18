@@ -65,7 +65,9 @@ public class BuiltInDataFlavour implements DataFlavourInterface {
             new SLDDataFlavour(DatabaseNode.class, DatabaseNode.class.getName());
 
     /** Instantiates a new built in data flavour. */
-    public BuiltInDataFlavour() {}
+    public BuiltInDataFlavour() {
+        // Default constructor
+    }
 
     /**
      * Populate data flavours supported.

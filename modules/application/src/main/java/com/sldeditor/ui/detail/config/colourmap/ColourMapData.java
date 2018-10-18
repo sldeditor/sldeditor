@@ -56,7 +56,9 @@ public class ColourMapData {
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
     /** Instantiates a new colour map data. */
-    public ColourMapData() {}
+    public ColourMapData() {
+        // Default constructor
+    }
 
     /**
      * Gets the colour.

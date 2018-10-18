@@ -88,7 +88,9 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     private JLabel groupTitle = null;
 
     /** Instantiates a new group config. */
-    public GroupConfig() {}
+    public GroupConfig() {
+        // Default constructor
+    }
 
     /**
      * Gets the id.

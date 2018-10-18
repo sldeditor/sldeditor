@@ -86,7 +86,9 @@ public class Duration {
     private boolean isDurationDate = false;
 
     /** Instantiates a new duration. */
-    public Duration() {}
+    public Duration() {
+        // Default constructor
+    }
 
     /**
      * Instantiates and decodes a duration.

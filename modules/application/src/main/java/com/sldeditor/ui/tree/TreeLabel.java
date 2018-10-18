@@ -53,7 +53,9 @@ public class TreeLabel extends JLabel {
     boolean hasFocus;
 
     /** Instantiates a new tree label. */
-    public TreeLabel() {}
+    public TreeLabel() {
+        // Default constructor
+    }
 
     /**
      * (non-Javadoc)

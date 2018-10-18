@@ -55,7 +55,9 @@ public class Help {
     }
 
     /** Instantiates a new help reader. */
-    private Help() {}
+    private Help() {
+        // Default constructor
+    }
 
     /**
      * Display user guide section.

@@ -42,7 +42,9 @@ public class LongValues extends BaseValue implements RenderTransformValueInterfa
     private Long value = null;
 
     /** Instantiates a new long values. */
-    public LongValues() {}
+    public LongValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

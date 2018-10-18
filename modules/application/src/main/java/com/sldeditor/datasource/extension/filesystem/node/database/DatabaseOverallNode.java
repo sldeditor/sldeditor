@@ -47,7 +47,7 @@ public class DatabaseOverallNode extends DefaultMutableTreeNode implements NodeI
     private String resourceIcon = "";
 
     /** The tree icon. */
-    private Icon treeIcon = null;
+    private transient Icon treeIcon = null;
 
     /**
      * Instantiates a new geo server overall node.

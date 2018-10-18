@@ -57,7 +57,9 @@ public class VendorOptionInfoManager {
             new ArrayList<VendorOptionFactoryInterface>();
 
     /** Instantiates a new vendor option info manager. */
-    private VendorOptionInfoManager() {}
+    private VendorOptionInfoManager() {
+        // Default constructor
+    }
 
     /**
      * Gets the single instance of VendorOptionInfoManager.

@@ -45,7 +45,9 @@ public class JAIToolsRangeValues extends BaseValue implements RenderTransformVal
     private Range value = null;
 
     /** Instantiates a new JAI Tools values. */
-    public JAIToolsRangeValues() {}
+    public JAIToolsRangeValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

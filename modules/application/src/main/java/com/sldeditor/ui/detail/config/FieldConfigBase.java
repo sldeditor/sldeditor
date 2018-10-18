@@ -486,7 +486,9 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      *
      * <p>Will be be overridden if necessary.
      */
-    public void justSelected() {}
+    public void justSelected() {
+        // Overridden if necessary
+    }
 
     /**
      * Gets the expression type.

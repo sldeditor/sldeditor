@@ -43,7 +43,9 @@ public class DateValues extends BaseValue implements RenderTransformValueInterfa
     private Date value = null;
 
     /** Instantiates a new date values. */
-    public DateValues() {}
+    public DateValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

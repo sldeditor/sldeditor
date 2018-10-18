@@ -42,13 +42,13 @@ public class PropertyPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /** The data source attribute panel. */
-    private DataSourceAttributePanel dataSourceAttributePanel;
+    private transient DataSourceAttributePanel dataSourceAttributePanel;
 
     /** The selected node. */
-    private ExpressionNode selectedNode = null;
+    private transient ExpressionNode selectedNode = null;
 
     /** The parent. */
-    private ExpressionFilterInterface parentObj = null;
+    private transient ExpressionFilterInterface parentObj = null;
 
     /** The btn apply. */
     private JButton btnApply;

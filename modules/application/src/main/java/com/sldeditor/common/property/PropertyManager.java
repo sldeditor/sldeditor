@@ -63,7 +63,9 @@ public class PropertyManager implements PropertyManagerInterface {
     private Map<String, String> fieldValueMap = new HashMap<String, String>();
 
     /** Default constructor. */
-    public PropertyManager() {}
+    public PropertyManager() {
+        // Default constructor
+    }
 
     /**
      * Sets the property file.

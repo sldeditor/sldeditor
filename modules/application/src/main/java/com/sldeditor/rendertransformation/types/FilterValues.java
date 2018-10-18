@@ -44,7 +44,9 @@ public class FilterValues extends BaseValue implements RenderTransformValueInter
     private Filter value = null;
 
     /** Instantiates a new filter values. */
-    public FilterValues() {}
+    public FilterValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

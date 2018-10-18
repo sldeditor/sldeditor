@@ -45,7 +45,9 @@ public class RasterFileHandler implements FileHandlerInterface {
     private static final long serialVersionUID = -250145791086601486L;
 
     /** Default constructor. */
-    public RasterFileHandler() {}
+    public RasterFileHandler() {
+        // Default constructor
+    }
 
     /**
      * Gets the file extension.

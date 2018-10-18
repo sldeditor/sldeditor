@@ -43,13 +43,13 @@ public class LiteralPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /** The field config. */
-    private FieldConfigBase fieldConfig = null;
+    private transient FieldConfigBase fieldConfig = null;
 
     /** The selected node. */
-    private ExpressionNode selectedNode = null;
+    private transient ExpressionNode selectedNode = null;
 
     /** The parent. */
-    private ExpressionFilterInterface parentObj = null;
+    private transient ExpressionFilterInterface parentObj = null;
 
     /** The Apply button. */
     private JButton btnApply;

@@ -199,16 +199,24 @@ public class FileSystemExtension
                     }
 
                     @Override
-                    public void mousePressed(MouseEvent e) {}
+                    public void mousePressed(MouseEvent e) {
+                        // Do nothing
+                    }
 
                     @Override
-                    public void mouseReleased(MouseEvent e) {}
+                    public void mouseReleased(MouseEvent e) {
+                        // Do nothing
+                    }
 
                     @Override
-                    public void mouseEntered(MouseEvent e) {}
+                    public void mouseEntered(MouseEvent e) {
+                        // Do nothing
+                    }
 
                     @Override
-                    public void mouseExited(MouseEvent e) {}
+                    public void mouseExited(MouseEvent e) {
+                        // Do nothing
+                    }
                 });
 
         // Listen for Tree Selection Events

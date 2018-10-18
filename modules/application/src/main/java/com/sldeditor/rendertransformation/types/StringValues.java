@@ -42,7 +42,9 @@ public class StringValues extends BaseValue implements RenderTransformValueInter
     private String value = null;
 
     /** Instantiates a new string values. */
-    public StringValues() {}
+    public StringValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

@@ -81,23 +81,22 @@ public class AttributeSelection extends JPanel
     private JComboBox<String> attributeChooserComboBox;
 
     /** The expression listener list. */
-    private List<ExpressionUpdateInterface> expressionListenerList =
-            new ArrayList<ExpressionUpdateInterface>();
+    private transient List<ExpressionUpdateInterface> expressionListenerList = new ArrayList<>();
 
     /** The value panel. */
-    private ValueSubPanel valuePanel;
+    private transient ValueSubPanel valuePanel;
 
     /** The expression panel. */
-    private ExpressionSubPanel expressionPanel;
+    private transient ExpressionSubPanel expressionPanel;
 
     /** The data source attribute panel. */
-    private DataSourceAttributePanel dataSourceAttributePanel;
+    private transient DataSourceAttributePanel dataSourceAttributePanel;
 
     /** The old value obj. */
-    private Object oldValueObj = null;
+    private transient Object oldValueObj = null;
 
     /** The field. */
-    private FieldConfigBase field = null;
+    private transient FieldConfigBase field = null;
 
     /**
      * Gets the panel width.
@@ -477,7 +476,7 @@ public class AttributeSelection extends JPanel
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void updateAttributeSelection(boolean excludeAttributePanel) {
 
-        List<String> allowedItemList = new ArrayList<String>();
+        List<String> allowedItemList = new ArrayList<>();
         allowedItemList.add(ValueSubPanel.getPanelName());
 
         if (excludeAttributePanel) {

@@ -49,7 +49,9 @@ public class StyleWrapper implements Comparable<StyleWrapper>, Serializable {
     }
 
     /** Instantiates a new style wrapper. */
-    public StyleWrapper() {}
+    public StyleWrapper() {
+        // Default constructor
+    }
 
     /**
      * Instantiates a new style wrapper.

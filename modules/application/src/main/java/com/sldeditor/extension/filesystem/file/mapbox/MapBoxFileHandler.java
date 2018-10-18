@@ -59,16 +59,16 @@ public class MapBoxFileHandler implements FileHandlerInterface {
 
     /** The sld writer. */
     @SuppressWarnings("unused")
-    private SLDWriterInterface sldWriter = null;
+    private transient SLDWriterInterface sldWriter = null;
 
     /** The ysld writer. */
-    private SLDWriterInterface ysldWriter = null;
+    private transient SLDWriterInterface ysldWriter = null;
 
     /** The Constant RESOURCE_ICON. */
     private static final String RESOURCE_ICON = "ui/filesystemicons/mapbox.png";
 
     /** The tree icon SLD. */
-    private Icon treeIcon = null;
+    private transient Icon treeIcon = null;
 
     /*
      * (non-Javadoc)

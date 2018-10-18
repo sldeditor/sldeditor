@@ -103,7 +103,7 @@ public class SLDEditorFileHandler implements FileHandlerInterface {
     private static final String RESOURCE_ICON = "ui/filesystemicons/sldeditor.png";
 
     /** The tree icon SLD. */
-    private Icon treeIcon = null;
+    private transient Icon treeIcon = null;
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3193761375262410975L;

@@ -42,7 +42,9 @@ public class BooleanValues extends BaseValue implements RenderTransformValueInte
     private Boolean value = null;
 
     /** Instantiates a new boolean values. */
-    public BooleanValues() {}
+    public BooleanValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

@@ -44,7 +44,9 @@ public class NumberValues extends BaseValue implements RenderTransformValueInter
     private Number value = null;
 
     /** Instantiates a new number values. */
-    public NumberValues() {}
+    public NumberValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

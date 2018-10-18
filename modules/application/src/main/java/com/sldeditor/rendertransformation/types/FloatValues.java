@@ -42,7 +42,9 @@ public class FloatValues extends BaseValue implements RenderTransformValueInterf
     private Float value = null;
 
     /** Instantiates a new float values. */
-    public FloatValues() {}
+    public FloatValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

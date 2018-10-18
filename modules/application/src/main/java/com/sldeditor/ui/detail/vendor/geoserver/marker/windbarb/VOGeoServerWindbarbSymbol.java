@@ -42,7 +42,9 @@ public class VOGeoServerWindbarbSymbol implements VOMarkerSymbolInterface {
     private FieldConfigWindBarbs windBarbs;
 
     /** Instantiates a new VOGeoServerWindbarbSymbol. */
-    public VOGeoServerWindbarbSymbol() {}
+    public VOGeoServerWindbarbSymbol() {
+        // Default constructor
+    }
 
     /* (non-Javadoc)
      * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getFieldMap()

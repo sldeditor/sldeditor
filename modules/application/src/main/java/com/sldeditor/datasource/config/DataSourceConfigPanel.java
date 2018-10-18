@@ -69,13 +69,13 @@ public class DataSourceConfigPanel extends JPanel
     private JTable table;
 
     /** The data model. */
-    private DataSourceAttributeModel dataModel = null;
+    private transient DataSourceAttributeModel dataModel = null;
 
     /** The attribute data. */
-    private DataSourceAttributeListInterface attributeData = null;
+    private transient DataSourceAttributeListInterface attributeData = null;
 
     /** The data source. */
-    private DataSourceInterface dataSource = null;
+    private transient DataSourceInterface dataSource = null;
 
     /** The data source connector panel. */
     private JPanel dscPanel;
@@ -417,7 +417,9 @@ public class DataSourceConfigPanel extends JPanel
     }
 
     /** Reset. */
-    public void reset() {}
+    public void reset() {
+        // Nothing to reset
+    }
 
     /** Adds the new field. */
     protected void addNewField() {

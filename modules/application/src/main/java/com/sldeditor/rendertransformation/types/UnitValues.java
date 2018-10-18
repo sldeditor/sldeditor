@@ -45,7 +45,9 @@ public class UnitValues extends BaseValue implements RenderTransformValueInterfa
     private Unit value = null;
 
     /** Instantiates a new unit values. */
-    public UnitValues() {}
+    public UnitValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

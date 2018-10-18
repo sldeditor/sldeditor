@@ -49,7 +49,7 @@ public class DatabaseFileHandler implements FileHandlerInterface {
     private String resourceIcon;
 
     /** The icon. */
-    private Icon icon = null;
+    private transient Icon icon = null;
 
     /** The file extension list. */
     private List<String> fileExtensionList;

@@ -46,7 +46,9 @@ public class ReferencedEnvelopeValues extends BaseValue implements RenderTransfo
     private Envelope value = null;
 
     /** Instantiates a new referenced envelope values. */
-    public ReferencedEnvelopeValues() {}
+    public ReferencedEnvelopeValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

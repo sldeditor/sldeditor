@@ -43,7 +43,9 @@ public class TextAreaValues extends BaseValue implements RenderTransformValueInt
     private String value = null;
 
     /** Instantiates a new string values. */
-    public TextAreaValues() {}
+    public TextAreaValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

@@ -45,12 +45,12 @@ public class EnvironmentVariablePanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /** The data source attribute panel. */
-    protected DataSourceAttributePanel dataSourceAttributePanel;
+    protected transient DataSourceAttributePanel dataSourceAttributePanel;
 
     /** The selected node. */
-    private ExpressionNode selectedNode = null;
+    private transient ExpressionNode selectedNode = null;
 
-    private ExpressionFilterInterface parentObj = null;
+    private transient ExpressionFilterInterface parentObj = null;
 
     private JButton btnApply;
 

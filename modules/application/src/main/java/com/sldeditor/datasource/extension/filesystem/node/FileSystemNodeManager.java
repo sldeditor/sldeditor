@@ -51,7 +51,9 @@ public class FileSystemNodeManager {
     private static DefaultTreeModel treeModel;
 
     /** Private default constructor. */
-    private FileSystemNodeManager() {}
+    private FileSystemNodeManager() {
+        // Default constructor
+    }
 
     /**
      * Instantiates a new file system node manager.

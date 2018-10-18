@@ -43,7 +43,9 @@ public class TimePeriodValues extends BaseValue implements RenderTransformValueI
     private TimePeriod value = null;
 
     /** Instantiates a new date values. */
-    public TimePeriodValues() {}
+    public TimePeriodValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

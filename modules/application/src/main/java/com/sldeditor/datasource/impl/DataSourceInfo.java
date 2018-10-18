@@ -84,8 +84,8 @@ public class DataSourceInfo {
     /** The user layer. */
     private UserLayer userLayer = null;
 
-    /** The Constant rasterGeometryField. */
-    private static final String rasterGeometryField = "grid";
+    /** The Constant RASTER_GEOMETRY_FIELD. */
+    private static final String RASTER_GEOMETRY_FIELD = "grid";
 
     /** The raster geometry descriptor. */
     private Collection<PropertyDescriptor> rasterPropertyDescriptorList = null;
@@ -94,7 +94,9 @@ public class DataSourceInfo {
     private static FeatureTypeFactory featureTypeFactory = new FeatureTypeFactoryImpl();
 
     /** Default constructor. */
-    public DataSourceInfo() {}
+    public DataSourceInfo() {
+        // Default constructor
+    }
 
     /** Reset the member data. */
     public void reset() {
@@ -262,7 +264,7 @@ public class DataSourceInfo {
                     InternationalString description = null;
                     GeometryType type =
                             featureTypeFactory.createGeometryType(
-                                    new NameImpl(rasterGeometryField),
+                                    new NameImpl(RASTER_GEOMETRY_FIELD),
                                     GridCoverage2D.class,
                                     crs,
                                     isIdentifiable,
@@ -272,7 +274,7 @@ public class DataSourceInfo {
                                     description);
                     GeometryDescriptor descriptor =
                             featureTypeFactory.createGeometryDescriptor(
-                                    type, new NameImpl(rasterGeometryField), 0, 1, false, null);
+                                    type, new NameImpl(RASTER_GEOMETRY_FIELD), 0, 1, false, null);
 
                     rasterPropertyDescriptorList.add(descriptor);
                 }
@@ -293,7 +295,7 @@ public class DataSourceInfo {
             return schema.getGeometryDescriptor().getLocalName();
         } else {
             if (geometryType == GeometryTypeEnum.RASTER) {
-                return rasterGeometryField;
+                return RASTER_GEOMETRY_FIELD;
             }
         }
         return null;

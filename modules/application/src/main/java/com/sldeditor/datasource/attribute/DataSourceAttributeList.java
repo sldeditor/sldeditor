@@ -32,7 +32,9 @@ public class DataSourceAttributeList implements DataSourceAttributeListInterface
     private List<DataSourceAttributeData> attributeList = null;
 
     /** Default constructor. */
-    public DataSourceAttributeList() {}
+    public DataSourceAttributeList() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

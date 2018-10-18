@@ -54,7 +54,9 @@ public class CreateSampleData {
     private GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
 
     /** Default constructor. */
-    public CreateSampleData() {}
+    public CreateSampleData() {
+        // Default constructor
+    }
 
     /**
      * Gets the data store.

@@ -46,7 +46,9 @@ public class VectorFileHandler implements FileHandlerInterface {
     private static final long serialVersionUID = 7418498226923733628L;
 
     /** Default constructor. */
-    public VectorFileHandler() {}
+    public VectorFileHandler() {
+        // Default constructor
+    }
 
     /**
      * Gets the file extension.

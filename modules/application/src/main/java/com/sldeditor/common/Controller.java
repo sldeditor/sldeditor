@@ -43,7 +43,9 @@ public class Controller implements PopulatingInterface {
     private JFrame frame = null;
 
     /** Instantiates a new controller. */
-    private Controller() {}
+    private Controller() {
+        // Default constructor
+    }
 
     /**
      * Gets the single instance of Controller.

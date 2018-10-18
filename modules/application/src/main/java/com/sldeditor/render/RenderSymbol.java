@@ -40,7 +40,9 @@ public class RenderSymbol {
     private RuleRenderOptions renderOptions = new RuleRenderOptions();
 
     /** Instantiates a new render symbol. */
-    public RenderSymbol() {}
+    public RenderSymbol() {
+        // Default constructor
+    }
 
     /**
      * Gets the render style.

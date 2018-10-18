@@ -126,19 +126,19 @@ public class ExpressionSubPanel extends JPanel {
     private JPanel panelMaths;
 
     /** The data source attribute panel. */
-    private DataSourceAttributePanel dataSourceAttributePanel;
+    private transient DataSourceAttributePanel dataSourceAttributePanel;
 
     /** The function panel. */
-    private FunctionField functionPanel;
+    private transient FunctionField functionPanel;
 
     /** The math expression panel. */
-    private MathsExpressionPanel mathsExpressionPanel;
+    private transient MathsExpressionPanel mathsExpressionPanel;
 
     /** The selected node. */
-    private ExpressionNode selectedNode = null;
+    private transient ExpressionNode selectedNode = null;
 
     /** The parent. */
-    private ExpressionFilterInterface parentObj = null;
+    private transient ExpressionFilterInterface parentObj = null;
 
     /** The apply button. */
     private JButton btnApply;
@@ -147,7 +147,7 @@ public class ExpressionSubPanel extends JPanel {
     private JButton btnRevert;
 
     /** The environment variable panel. */
-    private EnvironmentVariableField envVarField = null;
+    private transient EnvironmentVariableField envVarField = null;
 
     /** The panel containing the remove parameter button. */
     private JPanel panelRemoveParameter;

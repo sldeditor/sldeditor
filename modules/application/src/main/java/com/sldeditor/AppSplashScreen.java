@@ -87,7 +87,9 @@ public final class AppSplashScreen {
     private static Logger logger = Logger.getLogger(AppSplashScreen.class);
 
     /** Instantiates a new app splash screen. */
-    private AppSplashScreen() {}
+    private AppSplashScreen() {
+        // Default constructor
+    }
 
     /** Splash initialise. */
     public static void splashInit() {

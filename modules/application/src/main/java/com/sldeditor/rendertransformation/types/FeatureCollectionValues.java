@@ -46,7 +46,9 @@ public class FeatureCollectionValues extends BaseValue implements RenderTransfor
     private FeatureCollection value = null;
 
     /** Instantiates a new feature collection values. */
-    public FeatureCollectionValues() {}
+    public FeatureCollectionValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

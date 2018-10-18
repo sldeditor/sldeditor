@@ -44,7 +44,9 @@ public class StyleValues extends BaseValue implements RenderTransformValueInterf
     private Style value = null;
 
     /** Instantiates a new float values. */
-    public StyleValues() {}
+    public StyleValues() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)

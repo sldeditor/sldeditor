@@ -36,7 +36,7 @@ public class VendorOptionPresentModel extends AbstractTableModel {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    private List<VendorOptionPresent> vendorOptionsPresentList = null;
+    private transient List<VendorOptionPresent> vendorOptionsPresentList = null;
 
     /** The column names. */
     private String[] columnNames = new String[2];

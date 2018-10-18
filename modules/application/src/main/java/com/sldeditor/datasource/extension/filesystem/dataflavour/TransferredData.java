@@ -56,7 +56,9 @@ public class TransferredData implements Serializable {
     private List<InternalTransferredData> dataList = new ArrayList<InternalTransferredData>();
 
     /** Default constructor. */
-    public TransferredData() {}
+    public TransferredData() {
+        // Default constructor
+    }
 
     /**
      * Gets the size of the data list.

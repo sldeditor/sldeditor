@@ -41,7 +41,9 @@ public class NewSLDFactory {
             new LinkedHashMap<String, NewSLDInterface>();
 
     /** Instantiates a new NewSLDFactory. */
-    public NewSLDFactory() {}
+    public NewSLDFactory() {
+        // Default constructor
+    }
 
     /**
      * Gets the available New SLD options.

@@ -43,7 +43,9 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
     private FieldConfigArrow arrowShape = null;
 
     /** Instantiates a new VOGeoServerArrowSymbol. */
-    public VOGeoServerArrowSymbol() {}
+    public VOGeoServerArrowSymbol() {
+        // Default constructor
+    }
 
     /*
      * (non-Javadoc)
