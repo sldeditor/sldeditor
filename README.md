@@ -58,7 +58,7 @@ and can be started:
 
     java -jar SLDEditor.jar
 
-Due to the changes in Java double clicking on the executable jar file does not work any more, specific OS installers/applications are available here:
+Due to the changes in Java, double clicking on the executable jar file does not work any more, specific OS installers/applications are available here:
 
 ### MacOS
 
