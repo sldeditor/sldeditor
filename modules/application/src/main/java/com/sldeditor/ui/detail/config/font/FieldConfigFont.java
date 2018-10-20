@@ -45,7 +45,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -109,10 +109,10 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
             comboBox.addActionListener(
                     new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                            ValueComboBox comboBox = (ValueComboBox) e.getSource();
-                            if (comboBox.getSelectedItem() != null) {
+                            ValueComboBox localComboBox = (ValueComboBox) e.getSource();
+                            if (localComboBox.getSelectedItem() != null) {
 
-                                String selectedKey = comboBox.getSelectedValue().getKey();
+                                String selectedKey = localComboBox.getSelectedValue().getKey();
 
                                 valueStored(selectedKey);
                             }
@@ -129,7 +129,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
     /** Populate font family list. */
     private synchronized void populateFontFamilyList() {
         if (fontFamilyList == null) {
-            fontFamilyList = new ArrayList<ValueComboBoxData>();
+            fontFamilyList = new ArrayList<>();
 
             String[] families =
                     GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
@@ -167,7 +167,7 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (comboBox != null) {
             comboBox.setEnabled(enabled);
         }
@@ -295,10 +295,8 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
     public String getStringValue() {
         Font font = getFont();
 
-        if (font != null) {
-            if (font.getFamily().size() > 0) {
-                return font.getFamily().get(0).toString();
-            }
+        if ((font != null) && (!font.getFamily().isEmpty())) {
+            return font.getFamily().get(0).toString();
         }
         return null;
     }
@@ -411,13 +409,11 @@ public class FieldConfigFont extends FieldConfigBase implements UndoActionInterf
         comboBox.setSelectValueKey(fontName);
         currentFont = font;
 
-        if (differentFamilyName) {
-            if (!isSuppressUndoEvents()) {
-                UndoManager.getInstance()
-                        .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, fontName));
+        if (differentFamilyName && !isSuppressUndoEvents()) {
+            UndoManager.getInstance()
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, fontName));
 
-                oldValueObj = fontName;
-            }
+            oldValueObj = fontName;
         }
 
         return differentFamilyName;

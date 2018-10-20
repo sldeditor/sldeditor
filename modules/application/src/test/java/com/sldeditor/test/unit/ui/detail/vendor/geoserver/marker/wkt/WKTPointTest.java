@@ -48,6 +48,7 @@ public class WKTPointTest {
      * Test method for {@link
      * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTPoint#equals(java.lang.Object)}.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testWKTPointDirectPosition() {
         WKTPoint point = new WKTPoint();

@@ -463,9 +463,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
     public PopulateDetailsInterface getSymbolPanel() {
         SLDTree sldTree = uiMgr.getSymbolTree();
 
-        PopulateDetailsInterface panel = sldTree.getSelectedSymbolPanel();
-
-        return panel;
+        return sldTree.getSelectedSymbolPanel();
     }
 
     /**
@@ -702,7 +700,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
 
         VendorOptionManager.getInstance().loadSLDFile(uiMgr, sld, sldData);
 
-        LegendManager.getInstance().SLDLoaded(sldData.getLegendOptions());
+        LegendManager.getInstance().sldLoaded(sldData.getLegendOptions());
         SLDEditorFile.getInstance().fileOpenedSaved();
     }
 
@@ -769,9 +767,7 @@ public class SLDEditor extends JPanel implements SLDEditorInterface, LoadSLDInte
             sldWriter = SLDWriterFactory.createWriter(null);
         }
 
-        String sldContents = sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
-
-        return sldContents;
+        return sldWriter.encodeSLD(null, SelectedSymbol.getInstance().getSld());
     }
 
     /** Sets the application icon. */

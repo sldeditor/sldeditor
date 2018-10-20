@@ -62,7 +62,7 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
     private VOMarkerSymbolInterface vendorOptionGeoServerQGIS = new VOGeoServerQGISSymbol();
 
     /** The list of all the extensions. */
-    private List<VOMarkerSymbolInterface> list = new ArrayList<VOMarkerSymbolInterface>();
+    private List<VOMarkerSymbolInterface> list = new ArrayList<>();
 
     /** Instantiates a new vendor option marker symbol factory. */
     public VendorOptionMarkerSymbolFactory() {
@@ -110,7 +110,7 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
             ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField) {
-        List<FieldState> fieldStateList = new ArrayList<FieldState>();
+        List<FieldState> fieldStateList = new ArrayList<>();
 
         for (VOMarkerSymbolInterface obj : list) {
             List<FieldState> markerFieldStateList =
@@ -131,7 +131,7 @@ public class VendorOptionMarkerSymbolFactory implements VendorOptionFactoryInter
      */
     @Override
     public List<VendorOptionInfo> getVendorOptionInfoList() {
-        List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
+        List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<>();
 
         for (VOMarkerSymbolInterface vendorOption : list) {
             VendorOptionInfo vendorOptionInfo = vendorOption.getVendorOptionInfo();

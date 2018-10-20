@@ -273,13 +273,7 @@ public class VersionData implements Comparable<VersionData>, Serializable {
             return false;
         }
 
-        // if (minimumVersion.isNotSet()) {
-        // return true;
-        // }
-
-        boolean inRange = minimumVersion.greaterThan(this) && this.lessThan(maximumVersion);
-
-        return inRange;
+        return minimumVersion.greaterThan(this) && this.lessThan(maximumVersion);
     }
 
     /**

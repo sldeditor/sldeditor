@@ -40,7 +40,7 @@ public class ComboBoxCellRenderer implements TableCellRenderer {
      * @param comboBox the combo box
      */
     public ComboBoxCellRenderer(JComboBox<String> comboBox) {
-        this.combo = new JComboBox<String>();
+        this.combo = new JComboBox<>();
         for (int i = 0; i < comboBox.getItemCount(); i++) {
             combo.addItem(comboBox.getItemAt(i));
         }

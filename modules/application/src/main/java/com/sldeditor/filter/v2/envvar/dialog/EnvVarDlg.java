@@ -133,7 +133,7 @@ public class EnvVarDlg extends JDialog {
         table.setModel(dataModel);
         TableColumn column = table.getColumnModel().getColumn(1);
 
-        JComboBox<Class<?>> typeComboBox = new JComboBox<Class<?>>();
+        JComboBox<Class<?>> typeComboBox = new JComboBox<>();
         typeComboBox.setModel(new EnvVarComboBoxModel(envVarMgr));
         column.setCellEditor(new DefaultCellEditor(typeComboBox));
 
@@ -173,8 +173,8 @@ public class EnvVarDlg extends JDialog {
         panelWMS.add(textField);
         textField.setColumns(40);
 
-        JPanel panel_1 = new JPanel();
-        panel.add(panel_1, BorderLayout.SOUTH);
+        JPanel panel1 = new JPanel();
+        panel.add(panel1, BorderLayout.SOUTH);
 
         JButton btnAdd = new JButton(Localisation.getString(EnvVarDlg.class, "EnvVarDlg.add"));
         btnAdd.addActionListener(
@@ -183,7 +183,7 @@ public class EnvVarDlg extends JDialog {
                         addButtonPressed();
                     }
                 });
-        panel_1.add(btnAdd);
+        panel1.add(btnAdd);
 
         btnRemove = new JButton(Localisation.getString(EnvVarDlg.class, "EnvVarDlg.remove"));
         btnRemove.setEnabled(false);
@@ -193,7 +193,7 @@ public class EnvVarDlg extends JDialog {
                         removeButtonPressed();
                     }
                 });
-        panel_1.add(btnRemove);
+        panel1.add(btnRemove);
     }
 
     /** Internal show dialog. */
@@ -232,9 +232,7 @@ public class EnvVarDlg extends JDialog {
             if (parameterMap.containsKey(WMS_ENV_PARAMETER)) {
                 dataModel.addNew(parameterMap.get(WMS_ENV_PARAMETER));
             }
-        } catch (MalformedURLException e1) {
-            ConsoleManager.getInstance().exception(this, e1);
-        } catch (UnsupportedEncodingException e1) {
+        } catch (UnsupportedEncodingException | MalformedURLException e1) {
             ConsoleManager.getInstance().exception(this, e1);
         }
     }

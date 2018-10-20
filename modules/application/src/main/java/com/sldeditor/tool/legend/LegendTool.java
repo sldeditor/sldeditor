@@ -202,7 +202,7 @@ public class LegendTool implements ToolInterface {
 
                 String layerName = sldData.getLayerNameWithOutSuffix();
 
-                List<String> filenameList = new ArrayList<String>();
+                List<String> filenameList = new ArrayList<>();
 
                 LegendManager.getInstance()
                         .saveLegendImage(
@@ -222,11 +222,11 @@ public class LegendTool implements ToolInterface {
         this.sldDataList = sldDataList;
 
         if (saveAllLegend != null) {
-            saveAllLegend.setEnabled(sldDataList.size() > 0);
+            saveAllLegend.setEnabled(!sldDataList.isEmpty());
         }
 
         if (exportAllHTML != null) {
-            exportAllHTML.setEnabled(sldDataList.size() > 0);
+            exportAllHTML.setEnabled(!sldDataList.isEmpty());
         }
     }
 

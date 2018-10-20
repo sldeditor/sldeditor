@@ -47,7 +47,7 @@ public class ArrowDetails extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The parent obj. */
-    private ArrowUpdateInterface parentObj = null;
+    private transient ArrowUpdateInterface parentObj = null;
 
     /**
      * Instantiates a new feature type style details.
@@ -165,11 +165,8 @@ public class ArrowDetails extends StandardPanel
                 fieldConfigVisitor.getExpression(FieldIdEnum.VO_ARROW_HEIGHT_OVER_WIDTH);
         Expression abExpression = fieldConfigVisitor.getExpression(FieldIdEnum.VO_ARROW_HEAD);
 
-        Expression expression =
-                getFilterFactory()
-                        .literal(ArrowUtils.encode(hrExpression, tValueExpression, abExpression));
-
-        return expression;
+        return getFilterFactory()
+                .literal(ArrowUtils.encode(hrExpression, tValueExpression, abExpression));
     }
 
     /** Revert to default value. */

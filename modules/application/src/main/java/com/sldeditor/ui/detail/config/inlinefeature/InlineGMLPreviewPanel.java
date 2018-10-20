@@ -44,7 +44,7 @@ public class InlineGMLPreviewPanel extends JPanel {
 
     /** The parent obj. */
     @SuppressWarnings("unused")
-    private InlineFeatureUpdateInterface parentObj = null;
+    private transient InlineFeatureUpdateInterface parentObj = null;
 
     /**
      * Instantiates a new inline GML preview panel.

@@ -39,7 +39,7 @@ import com.sldeditor.ui.widgets.FieldPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import org.geotools.filter.LiteralExpressionImpl;
@@ -65,7 +65,7 @@ import org.opengis.style.GraphicalSymbol;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -139,7 +139,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
      * @param enabled the new enabled state
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (ttfPanel != null) {
             ttfPanel.setEnabled(enabled);
         }
@@ -312,7 +312,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
             Expression symbolType,
             boolean fillEnabled,
             boolean strokeEnabled) {
-        List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
+        List<GraphicalSymbol> symbolList = new ArrayList<>();
 
         Expression wellKnownName = null;
         if ((getConfigField() != null) && (fieldConfigManager != null)) {
@@ -370,9 +370,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
 
         Expression fillColour = null;
         Expression fillColourOpacity = null;
-        Fill fill = getStyleFactory().fill(graphicFill, fillColour, fillColourOpacity);
-
-        return fill;
+        return getStyleFactory().fill(graphicFill, fillColour, fillColourOpacity);
     }
 
     /**
@@ -394,7 +392,7 @@ public class FieldConfigTTF extends FieldState implements TTFUpdateInterface {
     @Override
     public Map<FieldIdEnum, FieldConfigBase> getFieldList(
             GraphicPanelFieldManager fieldConfigManager) {
-        Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
+        Map<FieldIdEnum, FieldConfigBase> map = new EnumMap<>(FieldIdEnum.class);
 
         map.put(FieldIdEnum.TTF_SYMBOL, this);
 

@@ -151,7 +151,7 @@ public class YSLDFileHandler implements FileHandlerInterface {
     public List<SLDDataInterface> open(File f) {
         List<SLDDataInterface> list = null;
         if (f != null) {
-            list = new ArrayList<SLDDataInterface>();
+            list = new ArrayList<>();
 
             if (f.isDirectory()) {
                 File[] listFiles = f.listFiles();

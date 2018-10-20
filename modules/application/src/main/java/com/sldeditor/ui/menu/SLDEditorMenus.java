@@ -576,8 +576,6 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
                                                 case JOptionPane.NO_OPTION:
                                                     return;
                                                 case JOptionPane.CLOSED_OPTION:
-                                                    cancelSelection();
-                                                    return;
                                                 case JOptionPane.CANCEL_OPTION:
                                                     cancelSelection();
                                                     return;

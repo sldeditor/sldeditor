@@ -58,13 +58,13 @@ public class ExtentModel extends AbstractTableModel {
     private static final int COL_MAXY = 4;
 
     /** The extent list. */
-    private List<Extent> extentList = new ArrayList<Extent>();
+    private transient List<Extent> extentList = new ArrayList<>();
 
     /** The column list. */
-    private List<String> columnList = new ArrayList<String>();
+    private List<String> columnList = new ArrayList<>();
 
     /** The parent object to inform of any changes. */
-    private FeatureTypeConstraintModelUpdateInterface parentObj = null;
+    private transient FeatureTypeConstraintModelUpdateInterface parentObj = null;
 
     /** The style factory. */
     private static StyleFactoryImpl styleFactory =

@@ -81,7 +81,7 @@ public class InlineCellEditor extends AbstractCellEditor implements TableCellEdi
             String geometryString = null;
             Object obj = model.getValueAt(row, column);
             if (obj != null) {
-                geometryString = (String) obj.toString();
+                geometryString = obj.toString();
             }
 
             if (wktDialog.showDialog(geometryString)) {

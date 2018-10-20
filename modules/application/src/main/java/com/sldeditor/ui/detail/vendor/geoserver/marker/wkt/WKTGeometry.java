@@ -30,11 +30,14 @@ import java.util.List;
  */
 public class WKTGeometry {
 
+    /** The Constant STRING_FORMAT. */
+    private static final String STRING_FORMAT = "%s %d";
+
     /** The geometry type. */
     private WKTType geometryType = null;
 
     /** The segment list. */
-    private List<List<WKTSegmentList>> segmentList = new ArrayList<List<WKTSegmentList>>();
+    private List<List<WKTSegmentList>> segmentList = new ArrayList<>();
 
     /** The is valid flag. */
     private boolean valid = true;
@@ -111,7 +114,7 @@ public class WKTGeometry {
             return -1;
         } else {
             if (index >= segmentList.size()) {
-                localSegmentList = new ArrayList<WKTSegmentList>();
+                localSegmentList = new ArrayList<>();
                 segmentList.add(localSegmentList);
             } else {
                 localSegmentList = segmentList.get(index);
@@ -196,7 +199,7 @@ public class WKTGeometry {
      * @return the multi shape name
      */
     public String getMultiShapeName(int index) {
-        return String.format("%s %d", geometryType.getListItem(), index + 1);
+        return String.format(STRING_FORMAT, geometryType.getListItem(), index + 1);
     }
 
     /**
@@ -208,10 +211,11 @@ public class WKTGeometry {
     public String getSegmentName(int index) {
         if (geometryType.canHaveMultipleShapes()) {
             return String.format(
-                    "%s %d",
-                    Localisation.getString(WKTDialog.class, "WKTDialog.partShape"), index + 1);
+                    STRING_FORMAT,
+                    Localisation.getString(WKTDialog.class, "WKTDialog.partShape"),
+                    index + 1);
         } else {
-            return String.format("%s %d", geometryType.getListItem(), index + 1);
+            return String.format(STRING_FORMAT, geometryType.getListItem(), index + 1);
         }
     }
 

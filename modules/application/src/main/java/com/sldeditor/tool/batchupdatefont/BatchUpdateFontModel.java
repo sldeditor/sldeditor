@@ -299,7 +299,7 @@ public class BatchUpdateFontModel extends AbstractTableModel {
     public List<Font> getFontEntries(int[] selectedRows) {
         List<Font> selectedFontList = null;
         if (selectedRows != null) {
-            selectedFontList = new ArrayList<Font>();
+            selectedFontList = new ArrayList<>();
             for (int row : selectedRows) {
                 BatchUpdateFontData entry = fontList.get(row);
                 selectedFontList.add(entry.getFont());

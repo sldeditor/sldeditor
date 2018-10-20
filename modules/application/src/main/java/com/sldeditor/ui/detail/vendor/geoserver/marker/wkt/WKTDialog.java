@@ -58,19 +58,16 @@ public class WKTDialog extends JDialog {
     private JList<String> segmentList = null;
 
     /** The primitive list model. */
-    private DefaultListModel<String> segmentListModel = new DefaultListModel<String>();
+    private DefaultListModel<String> segmentListModel = new DefaultListModel<>();
 
     /** The wkt geometry. */
-    private WKTGeometry wktGeometry = null;
+    private transient WKTGeometry wktGeometry = null;
 
     /** The multi list. */
     private JList<String> multiList = null;
 
     /** The multi list model. */
-    private DefaultListModel<String> multiListModel = new DefaultListModel<String>();
-
-    /** The multi panel. */
-    private JPanel multiPanel;
+    private DefaultListModel<String> multiListModel = new DefaultListModel<>();
 
     /** The add multi button. */
     private JButton addMultiButton;
@@ -115,7 +112,7 @@ public class WKTDialog extends JDialog {
         getContentPane().add(wktSelectionPanel, BorderLayout.NORTH);
 
         model = new WKTTypeComboBoxModel(WKTConversion.getWKTTypeData());
-        geometryTypeComboBox = new JComboBox<WKTType>(model);
+        geometryTypeComboBox = new JComboBox<>(model);
         geometryTypeComboBox.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -257,7 +254,7 @@ public class WKTDialog extends JDialog {
         JScrollPane segmentScrollPane = new JScrollPane();
         segmentPanel.add(segmentScrollPane, BorderLayout.CENTER);
 
-        segmentList = new JList<String>();
+        segmentList = new JList<>();
         segmentList.setModel(segmentListModel);
         segmentList.addListSelectionListener(
                 new ListSelectionListener() {
@@ -269,39 +266,15 @@ public class WKTDialog extends JDialog {
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         if (!e.getValueIsAdjusting()) {
-                            int selectedIndex = segmentList.getSelectedIndex();
-
-                            if (wktGeometry.getNoOfSegments() == 1) {
-                                if (selectedIndex >= 0) {
-                                    tablePointModel.populate(
-                                            wktGeometry.getSegmentList(0).get(selectedIndex));
-                                }
-                            } else {
-                                int multiSelectedIndex = multiList.getSelectedIndex();
-                                if (selectedIndex < 0) {
-                                    selectedIndex = 0;
-                                }
-
-                                WKTSegmentList wktPointList = null;
-                                List<WKTSegmentList> segmentList2 =
-                                        wktGeometry.getSegmentList(multiSelectedIndex);
-                                if ((segmentList2 != null)
-                                        && (selectedIndex >= 0)
-                                        && (selectedIndex < segmentList2.size())) {
-                                    wktPointList = segmentList2.get(selectedIndex);
-                                }
-                                tablePointModel.populate(wktPointList);
-                            }
-
-                            updateSegmentButtons();
+                            segmentSelected();
                         }
                     }
                 });
         segmentScrollPane.setViewportView(segmentList);
 
         JPanel segmentButtonPanel = new JPanel();
-        FlowLayout flowLayout_1 = (FlowLayout) segmentButtonPanel.getLayout();
-        flowLayout_1.setAlignment(FlowLayout.RIGHT);
+        FlowLayout flowLayout1 = (FlowLayout) segmentButtonPanel.getLayout();
+        flowLayout1.setAlignment(FlowLayout.RIGHT);
         segmentPanel.add(segmentButtonPanel, BorderLayout.SOUTH);
 
         //
@@ -371,8 +344,8 @@ public class WKTDialog extends JDialog {
         scrollPanePoint.setViewportView(table);
 
         JPanel pointButtonPanel = new JPanel();
-        FlowLayout flowLayout_3 = (FlowLayout) pointButtonPanel.getLayout();
-        flowLayout_3.setAlignment(FlowLayout.RIGHT);
+        FlowLayout flowLayout3 = (FlowLayout) pointButtonPanel.getLayout();
+        flowLayout3.setAlignment(FlowLayout.RIGHT);
         coordinatePanel.add(pointButtonPanel, BorderLayout.SOUTH);
 
         //
@@ -407,7 +380,7 @@ public class WKTDialog extends JDialog {
      * @param panel the panel
      */
     private void createMultiShapePanel(JPanel panel) {
-        multiPanel = new JPanel();
+        JPanel multiPanel = new JPanel();
         panel.add(multiPanel);
         multiPanel.setLayout(new BorderLayout(0, 0));
         multiPanel.setPreferredSize(new Dimension(150, 200));
@@ -415,7 +388,7 @@ public class WKTDialog extends JDialog {
         JScrollPane scrollPanelMulti = new JScrollPane();
         multiPanel.add(scrollPanelMulti, BorderLayout.CENTER);
 
-        multiList = new JList<String>();
+        multiList = new JList<>();
         multiList.setModel(multiListModel);
         multiList.addListSelectionListener(
                 new ListSelectionListener() {
@@ -438,8 +411,8 @@ public class WKTDialog extends JDialog {
         scrollPanelMulti.setViewportView(multiList);
 
         JPanel multiButtonPanel = new JPanel();
-        FlowLayout flowLayout_2 = (FlowLayout) multiButtonPanel.getLayout();
-        flowLayout_2.setAlignment(FlowLayout.RIGHT);
+        FlowLayout flowLayout2 = (FlowLayout) multiButtonPanel.getLayout();
+        flowLayout2.setAlignment(FlowLayout.RIGHT);
         multiPanel.add(multiButtonPanel, BorderLayout.SOUTH);
 
         //
@@ -781,5 +754,32 @@ public class WKTDialog extends JDialog {
      */
     protected void setGeometryType(WKTType geometryType) {
         geometryTypeComboBox.setSelectedItem(geometryType);
+    }
+
+    /** Segment selected. */
+    private void segmentSelected() {
+        int selectedIndex = segmentList.getSelectedIndex();
+
+        if (wktGeometry.getNoOfSegments() == 1) {
+            if (selectedIndex >= 0) {
+                tablePointModel.populate(wktGeometry.getSegmentList(0).get(selectedIndex));
+            }
+        } else {
+            int multiSelectedIndex = multiList.getSelectedIndex();
+            if (selectedIndex < 0) {
+                selectedIndex = 0;
+            }
+
+            WKTSegmentList wktPointList = null;
+            List<WKTSegmentList> segmentList2 = wktGeometry.getSegmentList(multiSelectedIndex);
+            if ((segmentList2 != null)
+                    && (selectedIndex >= 0)
+                    && (selectedIndex < segmentList2.size())) {
+                wktPointList = segmentList2.get(selectedIndex);
+            }
+            tablePointModel.populate(wktPointList);
+        }
+
+        updateSegmentButtons();
     }
 }

@@ -31,8 +31,7 @@ import org.geotools.styling.UserLayerImpl;
 public class TreeItemMap {
 
     /** The tree item map. */
-    private Map<Class<?>, SLDTreeItemInterface> treeItemMap =
-            new HashMap<Class<?>, SLDTreeItemInterface>();
+    private Map<Class<?>, SLDTreeItemInterface> theTreeItemMap = new HashMap<>();
 
     /** The rule tree item. */
     private RuleTreeItem ruleTreeItem = new RuleTreeItem();
@@ -51,7 +50,7 @@ public class TreeItemMap {
     /** Creates the tree item map. */
     private void createTreeItemMap() {
 
-        if (treeItemMap.isEmpty()) {
+        if (theTreeItemMap.isEmpty()) {
             /** The sld tree item. */
             StyledLayerDescriptorTreeItem sldTreeItem = new StyledLayerDescriptorTreeItem();
 
@@ -73,19 +72,19 @@ public class TreeItemMap {
             /** The stroke tree item. */
             StrokeTreeItem strokeTreeItem = new StrokeTreeItem();
 
-            treeItemMap.put(StyledLayerDescriptorImpl.class, sldTreeItem);
-            treeItemMap.put(StyleImpl.class, styleTreeItem);
-            treeItemMap.put(FeatureTypeStyleImpl.class, ftsTreeItem);
-            treeItemMap.put(RuleImpl.class, ruleTreeItem);
-            treeItemMap.put(PointSymbolizerImpl.class, symbolizerTreeItem);
-            treeItemMap.put(LineSymbolizerImpl.class, symbolizerTreeItem);
-            treeItemMap.put(PolygonSymbolizerImpl.class, symbolizerTreeItem);
-            treeItemMap.put(TextSymbolizerImpl.class, symbolizerTreeItem);
-            treeItemMap.put(NamedLayerImpl.class, nameLayerTreeItem);
-            treeItemMap.put(UserLayerImpl.class, userLayerTreeItem);
-            treeItemMap.put(StrokeImpl.class, strokeTreeItem);
-            treeItemMap.put(FillImpl.class, fillTreeItem);
-            treeItemMap.put(RasterSymbolizerImpl.class, symbolizerTreeItem);
+            theTreeItemMap.put(StyledLayerDescriptorImpl.class, sldTreeItem);
+            theTreeItemMap.put(StyleImpl.class, styleTreeItem);
+            theTreeItemMap.put(FeatureTypeStyleImpl.class, ftsTreeItem);
+            theTreeItemMap.put(RuleImpl.class, ruleTreeItem);
+            theTreeItemMap.put(PointSymbolizerImpl.class, symbolizerTreeItem);
+            theTreeItemMap.put(LineSymbolizerImpl.class, symbolizerTreeItem);
+            theTreeItemMap.put(PolygonSymbolizerImpl.class, symbolizerTreeItem);
+            theTreeItemMap.put(TextSymbolizerImpl.class, symbolizerTreeItem);
+            theTreeItemMap.put(NamedLayerImpl.class, nameLayerTreeItem);
+            theTreeItemMap.put(UserLayerImpl.class, userLayerTreeItem);
+            theTreeItemMap.put(StrokeImpl.class, strokeTreeItem);
+            theTreeItemMap.put(FillImpl.class, fillTreeItem);
+            theTreeItemMap.put(RasterSymbolizerImpl.class, symbolizerTreeItem);
         }
     }
 
@@ -96,10 +95,7 @@ public class TreeItemMap {
      * @return the value
      */
     public SLDTreeItemInterface getValue(Class<?> classType) {
-
-        SLDTreeItemInterface treeItem = treeItemMap.get(classType);
-
-        return treeItem;
+        return theTreeItemMap.get(classType);
     }
 
     /**

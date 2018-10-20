@@ -171,26 +171,15 @@ public class DefaultSymbols {
 
         Halo halo = null;
 
-        List<Expression> fontFamilyList = new ArrayList<Expression>();
+        List<Expression> fontFamilyList = new ArrayList<>();
         fontFamilyList.add(fontFamily);
         Font font = styleFactory.font(fontFamilyList, fontStyle, fontWeight, fontSize);
 
         Description description = null;
         Unit<?> unit = null;
 
-        TextSymbolizer newTextSymbolizer =
-                styleFactory.textSymbolizer(
-                        name,
-                        geometryField,
-                        description,
-                        unit,
-                        label,
-                        font,
-                        pointPlacement,
-                        halo,
-                        fill);
-
-        return newTextSymbolizer;
+        return styleFactory.textSymbolizer(
+                name, geometryField, description, unit, label, font, pointPlacement, halo, fill);
     }
 
     /**

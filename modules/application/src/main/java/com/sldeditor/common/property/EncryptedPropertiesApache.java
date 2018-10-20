@@ -75,15 +75,11 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
             decrypter = Cipher.getInstance("PBEWithMD5AndDES/CBC/PKCS5Padding");
             encrypter.init(Cipher.ENCRYPT_MODE, k, ps);
             decrypter.init(Cipher.DECRYPT_MODE, k, ps);
-        } catch (NoSuchAlgorithmException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (NoSuchPaddingException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (InvalidKeySpecException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (InvalidKeyException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (InvalidAlgorithmParameterException e) {
+        } catch (NoSuchAlgorithmException
+                | NoSuchPaddingException
+                | InvalidKeySpecException
+                | InvalidKeyException
+                | InvalidAlgorithmParameterException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
     }
@@ -98,11 +94,7 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
             dec = new Base64().decode(str.getBytes());
             byte[] utf8 = decrypter.doFinal(dec);
             return new String(utf8, "UTF-8");
-        } catch (IOException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (IllegalBlockSizeException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (BadPaddingException e) {
+        } catch (IOException | IllegalBlockSizeException | BadPaddingException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
@@ -119,11 +111,7 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
             utf8 = str.getBytes("UTF-8");
             byte[] enc = encrypter.doFinal(utf8);
             return new Base64().encodeToString(enc);
-        } catch (UnsupportedEncodingException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (IllegalBlockSizeException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (BadPaddingException e) {
+        } catch (UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 

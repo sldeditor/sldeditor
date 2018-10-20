@@ -191,7 +191,7 @@ public class BatchUpdateFontPanel extends JDialog {
         editPanel = new JPanel();
         panel.add(editPanel);
 
-        comboBox = new JComboBox<String>();
+        comboBox = new JComboBox<>();
         comboBox.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -247,7 +247,7 @@ public class BatchUpdateFontPanel extends JDialog {
      */
     public void populate(List<SLDDataInterface> sldDataList) {
 
-        List<BatchUpdateFontData> fontDataList = new ArrayList<BatchUpdateFontData>();
+        List<BatchUpdateFontData> fontDataList = new ArrayList<>();
 
         for (SLDDataInterface sldData : sldDataList) {
             List<BatchUpdateFontData> fontSLDDataList = BatchUpdateFontUtils.containsFonts(sldData);
@@ -266,7 +266,7 @@ public class BatchUpdateFontPanel extends JDialog {
     protected void setUpdateFont(Font font) {
         comboBox.setSelectedItem(PANEL_FULL_FONT);
 
-        List<Font> fontList = new ArrayList<Font>();
+        List<Font> fontList = new ArrayList<>();
         fontList.add(font);
 
         table.selectAll();
@@ -281,7 +281,7 @@ public class BatchUpdateFontPanel extends JDialog {
     protected void setUpdateFontSize(Font font) {
         comboBox.setSelectedItem(PANEL_FONT_SIZE);
 
-        List<Font> fontList = new ArrayList<Font>();
+        List<Font> fontList = new ArrayList<>();
         fontList.add(font);
 
         table.selectAll();

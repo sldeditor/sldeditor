@@ -29,6 +29,11 @@ public class CheckUpdateClientFactory {
     /** The git hub client. */
     private static CheckUpdateGitHub gitHubClient = new CheckUpdateGitHub();
 
+    /** Private default constructor */
+    private CheckUpdateClientFactory() {
+        // Private default constructor
+    }
+
     /**
      * Gets the client.
      *

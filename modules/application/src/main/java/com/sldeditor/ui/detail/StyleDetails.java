@@ -100,22 +100,20 @@ public class StyleDetails extends StandardPanel
 
             Style existingStyle = SelectedSymbol.getInstance().getStyle();
             if (existingStyle != null) {
-                List<org.opengis.style.FeatureTypeStyle> newFTSList =
-                        new ArrayList<org.opengis.style.FeatureTypeStyle>();
+                List<org.opengis.style.FeatureTypeStyle> newFTSList = new ArrayList<>();
                 for (org.opengis.style.FeatureTypeStyle fts : existingStyle.featureTypeStyles()) {
                     newFTSList.add(fts);
                 }
 
                 Symbolizer defaultSymbolizer = null;
                 Style newStyle =
-                        (Style)
-                                getStyleFactory()
-                                        .style(
-                                                standardData.getName(),
-                                                standardData.getDescription(),
-                                                isDefault,
-                                                newFTSList,
-                                                defaultSymbolizer);
+                        getStyleFactory()
+                                .style(
+                                        standardData.getName(),
+                                        standardData.getDescription(),
+                                        isDefault,
+                                        newFTSList,
+                                        defaultSymbolizer);
 
                 SelectedSymbol.getInstance().replaceStyle(newStyle);
 

@@ -37,8 +37,12 @@ import org.locationtech.jts.geom.Polygon;
 public class GeometryTypeMapping {
 
     /** The geometry map. */
-    private static Map<Class<?>, GeometryTypeEnum> geometryMap =
-            new HashMap<Class<?>, GeometryTypeEnum>();
+    private static Map<Class<?>, GeometryTypeEnum> geometryMap = new HashMap<>();
+
+    /** Private default constructor */
+    private GeometryTypeMapping() {
+        // Private default constructor
+    }
 
     /** Populate member data. */
     private static void populate() {

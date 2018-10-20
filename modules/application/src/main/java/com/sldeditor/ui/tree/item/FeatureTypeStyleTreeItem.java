@@ -46,10 +46,8 @@ public class FeatureTypeStyleTreeItem implements SLDTreeItemInterface {
         FeatureTypeStyle fts = (FeatureTypeStyle) nodeObject;
 
         String name = "";
-        if (fts != null) {
-            if (fts.getName() != null) {
-                name = fts.getName();
-            }
+        if ((fts != null) && (fts.getName() != null)) {
+            name = fts.getName();
         }
         return String.format("%s : %s", TITLE, name);
     }

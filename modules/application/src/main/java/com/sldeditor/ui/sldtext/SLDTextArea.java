@@ -100,7 +100,7 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
         JPanel sldSourcePanel = new JPanel(false);
         sldSourcePanel.setLayout(new BorderLayout());
 
-        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
+        List<ValueComboBoxData> dataList = new ArrayList<>();
 
         dataList.add(
                 new ValueComboBoxData(
@@ -132,10 +132,10 @@ public class SLDTextArea implements SLDOutputInterface, SLDEditorDataUpdateInter
         comboBox.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        ValueComboBox comboBox = (ValueComboBox) e.getSource();
-                        if (comboBox.getSelectedItem() != null) {
+                        ValueComboBox localComboBox = (ValueComboBox) e.getSource();
+                        if (localComboBox.getSelectedItem() != null) {
 
-                            String name = comboBox.getSelectedValue().getKey();
+                            String name = localComboBox.getSelectedValue().getKey();
                             outputFormat =
                                     SLDOutputFormatEnum.valueOf(SLDOutputFormatEnum.class, name);
                             outputText();

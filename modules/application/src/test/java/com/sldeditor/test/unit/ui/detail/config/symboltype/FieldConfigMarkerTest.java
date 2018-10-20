@@ -97,7 +97,7 @@ public class FieldConfigMarkerTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#internal_setEnabled(boolean)}.
+     * com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#internalSetEnabled(boolean)}.
      * Test method for {@link
      * com.sldeditor.ui.detail.config.symboltype.FieldConfigMarker#isEnabled()}.
      */
@@ -115,7 +115,7 @@ public class FieldConfigMarkerTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -124,7 +124,7 @@ public class FieldConfigMarkerTest {
         assertFalse(field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -140,7 +140,7 @@ public class FieldConfigMarkerTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -149,7 +149,7 @@ public class FieldConfigMarkerTest {
         assertFalse(field2.isEnabled());
 
         expectedValue = false;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
 
         assertFalse(field2.isEnabled());
     }

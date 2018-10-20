@@ -37,7 +37,7 @@ public class EnvVarComboBoxModel extends AbstractListModel<Class<?>>
     private static final long serialVersionUID = 1L;
 
     /** The list. */
-    private List<Class<?>> list = new ArrayList<Class<?>>();
+    private List<Class<?>> list = new ArrayList<>();
 
     /** The selected item. */
     private Class<?> selectedItem = null;

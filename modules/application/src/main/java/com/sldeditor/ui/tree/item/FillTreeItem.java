@@ -62,11 +62,9 @@ public class FillTreeItem implements SLDTreeItemInterface {
         // Individual symbol selected
         if (node != null) {
             DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
-            if (parent != null) {
-                if (parent.getUserObject() instanceof Symbolizer) {
-                    Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
-                    selectedSymbol.setSymbolizer(symbolizer);
-                }
+            if ((parent != null) && (parent.getUserObject() instanceof Symbolizer)) {
+                Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
+                selectedSymbol.setSymbolizer(symbolizer);
             }
         }
     }

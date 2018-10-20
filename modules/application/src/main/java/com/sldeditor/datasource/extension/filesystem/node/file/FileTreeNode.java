@@ -84,7 +84,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
     private boolean interim;
 
     /** The is directory flag, true if it is!. */
-    private boolean isDir = false;
+    private boolean isDirFlag = false;
 
     /** The file category. */
     private FileTreeNodeTypeEnum fileCategory = FileTreeNodeTypeEnum.SLD;
@@ -100,7 +100,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
      * @throws SecurityException the security exception
      * @throws FileNotFoundException the file not found exception
      */
-    public FileTreeNode(File parent, String name) throws SecurityException, FileNotFoundException {
+    public FileTreeNode(File parent, String name) throws FileNotFoundException {
         this(parent.toPath(), name);
     }
 
@@ -112,7 +112,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
      * @throws SecurityException the security exception
      * @throws FileNotFoundException the file not found exception
      */
-    public FileTreeNode(Path parent, String name) throws SecurityException, FileNotFoundException {
+    public FileTreeNode(Path parent, String name) throws FileNotFoundException {
 
         if ((parent == null) || (name == null)) {
             throw new FileNotFoundException();
@@ -124,7 +124,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
         Path pathPath = Paths.get(parent.toString(), name);
         path = pathPath.toString();
 
-        isDir = Files.isDirectory(pathPath);
+        isDirFlag = pathPath.toFile().isDirectory();
 
         setUserObject(this.name);
 
@@ -141,7 +141,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
      * @throws SecurityException the security exception
      * @throws FileNotFoundException the file not found exception
      */
-    public FileTreeNode(Path parent) throws SecurityException, FileNotFoundException {
+    public FileTreeNode(Path parent) throws FileNotFoundException {
 
         if (parent == null) {
             throw new FileNotFoundException();
@@ -152,7 +152,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
         Path pathPath = parent;
         path = pathPath.toString();
 
-        isDir = true;
+        isDirFlag = true;
 
         isRoot = true;
         setUserObject(this.name);
@@ -165,7 +165,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
      */
     @Override
     public boolean isLeaf() {
-        return !isDir;
+        return !isDirFlag;
     }
 
     /**
@@ -175,7 +175,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
      */
     @Override
     public boolean getAllowsChildren() {
-        return isDir;
+        return isDir();
     }
 
     /**
@@ -192,8 +192,8 @@ public class FileTreeNode extends DefaultMutableTreeNode
 
         if (!isRoot || (isRoot && descend)) {
             // Do this only once
-            if (populated == false) {
-                if (interim == true) {
+            if (!populated) {
+                if (interim) {
                     // We have had a quick look here before:
                     // remove the dummy node that we added last time
                     removeAllChildren();
@@ -201,7 +201,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
                 }
 
                 // Get list of contents
-                List<Path> names = new ArrayList<Path>();
+                List<Path> names = new ArrayList<>();
 
                 DirectoryStream<Path> stream = null;
                 try {
@@ -209,8 +209,8 @@ public class FileTreeNode extends DefaultMutableTreeNode
                     stream = Files.newDirectoryStream(pathPath);
 
                     if (stream != null) {
-                        for (Path path : stream) {
-                            names.add(path.getFileName());
+                        for (Path localPath : stream) {
+                            names.add(localPath.getFileName());
                         }
                     }
                 } catch (AccessDeniedException e) {
@@ -231,23 +231,23 @@ public class FileTreeNode extends DefaultMutableTreeNode
 
                 // Process the directories
                 for (Path filename : names) {
-                    Path d = Paths.get(path.toString(), filename.toString());
+                    Path d = Paths.get(path, filename.toString());
                     try {
-                        if (Files.isDirectory(d)) {
+                        if (d.toFile().isDirectory()) {
                             addFolder(descend, filename.toString());
 
                             addedNodes = true;
 
-                            if (descend == false) {
+                            if (!descend) {
                                 // Only add one node if not descending
                                 break;
                             }
-                        } else if (Files.isRegularFile(d)) {
+                        } else if (d.toFile().isFile()) {
                             if (validFile(filename.toString())) {
                                 addFile(filename.toString());
                             }
                         }
-                    } catch (Throwable t) {
+                    } catch (Exception e) {
                         // Ignore phantoms or access problems
                     }
                 }
@@ -257,7 +257,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
                 // reason to look at this directory again, so
                 // set populated to true. Otherwise, we set interim
                 // so that we look again in the future if we need to
-                if (descend == true || addedNodes == false) {
+                if (descend || !addedNodes) {
                     populated = true;
 
                     if (isDir() && !fileWatcherSet) {
@@ -307,10 +307,8 @@ public class FileTreeNode extends DefaultMutableTreeNode
         this.add(node);
 
         FileHandlerInterface handler = fileHandlerMap.get(ExternalFilenames.getFileExtension(name));
-        if (handler != null) {
-            if (handler.populate(inputInterface, treeModel, node)) {
-                node.isDir = true;
-            }
+        if ((handler != null) && handler.populate(inputInterface, treeModel, node)) {
+            node.isDirFlag = true;
         }
 
         return node;
@@ -406,12 +404,9 @@ public class FileTreeNode extends DefaultMutableTreeNode
     public DataFlavor getDataFlavour() {
         boolean isDirectory = isDir();
 
-        DataFlavor flavour =
-                isDirectory
-                        ? DataFlavourManager.FOLDER_DATAITEM_FLAVOR
-                        : BuiltInDataFlavour.FILE_DATAITEM_FLAVOR;
-
-        return flavour;
+        return isDirectory
+                ? DataFlavourManager.FOLDER_DATAITEM_FLAVOR
+                : BuiltInDataFlavour.FILE_DATAITEM_FLAVOR;
     }
 
     /** Refresh folder. */
@@ -427,7 +422,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
      * @return true, if is dir
      */
     public boolean isDir() {
-        return isDir;
+        return isDirFlag;
     }
 
     /**
@@ -439,38 +434,56 @@ public class FileTreeNode extends DefaultMutableTreeNode
     public void fileAdded(Path f) {
 
         if (f != null) {
-            Path path = f.getFileName();
-            if (path != null) {
-                String filename = path.toString();
-                if (Files.isRegularFile(f)) {
+            Path localPath = f.getFileName();
+            if (localPath != null) {
+                String filename = localPath.toString();
+                if (f.toFile().isFile()) {
                     // File added
-                    if (validFile(filename)) {
-                        try {
-                            FileTreeNode nodeAdded = addFile(filename);
-
-                            sort(this);
-
-                            int index = this.getIndex(nodeAdded);
-                            FileSystemNodeManager.nodeAdded(this, index);
-                        } catch (Throwable t) {
-                            // Ignore phantoms or access problems
-                        }
-                    }
+                    addLocalFile(filename);
                 } else {
                     // Folder added
-                    boolean descend = false;
-                    DefaultMutableTreeNode nodeAdded = null;
-                    try {
-                        nodeAdded = addFolder(descend, filename);
-                    } catch (Throwable t) {
-                        // Ignore phantoms or access problems
-                    }
-                    sort(this);
-                    int index = this.getIndex(nodeAdded);
-                    FileSystemNodeManager.nodeAdded(this, index);
+                    addFolder(filename);
                 }
             }
         }
+    }
+
+    /**
+     * Adds the local file.
+     *
+     * @param filename the filename
+     */
+    private void addLocalFile(String filename) {
+        if (validFile(filename)) {
+            try {
+                FileTreeNode nodeAdded = addFile(filename);
+
+                sort(this);
+
+                int index = this.getIndex(nodeAdded);
+                FileSystemNodeManager.nodeAdded(this, index);
+            } catch (Exception e) {
+                // Ignore phantoms or access problems
+            }
+        }
+    }
+
+    /**
+     * Adds the folder.
+     *
+     * @param filename the filename
+     */
+    private void addFolder(String filename) {
+        boolean descend = false;
+        DefaultMutableTreeNode nodeAdded = null;
+        try {
+            nodeAdded = addFolder(descend, filename);
+        } catch (Exception e) {
+            // Ignore phantoms or access problems
+        }
+        sort(this);
+        int index = this.getIndex(nodeAdded);
+        FileSystemNodeManager.nodeAdded(this, index);
     }
 
     /**
@@ -532,9 +545,9 @@ public class FileTreeNode extends DefaultMutableTreeNode
     public void fileDeleted(Path f) {
 
         if (f != null) {
-            Path path = f.getFileName();
-            if (path != null) {
-                String filename = path.toString();
+            Path localPath = f.getFileName();
+            if (localPath != null) {
+                String filename = localPath.toString();
 
                 for (int childIndex = 0; childIndex < this.getChildCount(); childIndex++) {
                     FileTreeNode childNode = (FileTreeNode) this.getChildAt(childIndex);
@@ -584,7 +597,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
      */
     @Override
     public Icon getIcon() {
-        if (!isDir) {
+        if (!isDirFlag) {
             FileHandlerInterface handler =
                     fileHandlerMap.get(ExternalFilenames.getFileExtension(name));
             if (handler != null) {

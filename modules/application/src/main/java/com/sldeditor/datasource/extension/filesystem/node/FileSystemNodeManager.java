@@ -137,9 +137,7 @@ public class FileSystemNodeManager {
         }
         boolean showInTree = false;
 
-        DefaultMutableTreeNode node = getTreePath(url, showInTree);
-
-        return node;
+        return getTreePath(url, showInTree);
     }
 
     /**
@@ -214,7 +212,7 @@ public class FileSystemNodeManager {
             return null;
         }
 
-        List<String> folderList = new ArrayList<String>();
+        List<String> folderList = new ArrayList<>();
         folderList.add(FileSystemExtension.ROOT_NODE);
         folderList.add(GeoServerOverallNode.GEOSERVER_NODE);
         if (connectionData != null) {
@@ -264,7 +262,7 @@ public class FileSystemNodeManager {
             return null;
         }
 
-        List<String> folderList = new ArrayList<String>();
+        List<String> folderList = new ArrayList<>();
         folderList.add(FileSystemExtension.ROOT_NODE);
         folderList.add(overallNodeName);
         if (connectionData != null) {
@@ -321,7 +319,7 @@ public class FileSystemNodeManager {
 
             boolean finished = false;
 
-            List<String> folderList = new ArrayList<String>();
+            List<String> folderList = new ArrayList<>();
 
             while (!finished) {
                 if (parent.getParentFile() == null) {

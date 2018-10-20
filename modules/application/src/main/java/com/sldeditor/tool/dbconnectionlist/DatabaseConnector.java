@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -48,10 +49,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class DatabaseConnector implements DatabaseConnectionConfigInterface {
 
     /** The text field map. */
-    private Map<String, JTextField> textFieldMap = new HashMap<String, JTextField>();
+    private Map<String, JTextField> textFieldMap = new HashMap<>();
 
     /** The accept field list. */
-    private List<String> acceptFieldList = new ArrayList<String>();
+    private List<String> acceptFieldList = new ArrayList<>();
 
     /** The panel. */
     private JPanel panel = null;
@@ -170,7 +171,8 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.tool.dbconnectionlist.DatabaseConnectionConfigInterface#setConnection(com.sldeditor.common.data.DatabaseConnection)
+     * @see com.sldeditor.tool.dbconnectionlist.DatabaseConnectionConfigInterface#setConnection(com.
+     * sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public void setConnection(DatabaseConnection connection) {
@@ -189,9 +191,8 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
 
             Map<String, String> properties = connection.getConnectionDataMap();
 
-            for (String fieldName : textFieldMap.keySet()) {
-                JTextField textField = textFieldMap.get(fieldName);
-                textField.setText(properties.get(fieldName));
+            for (Entry<String, JTextField> entry : textFieldMap.entrySet()) {
+                entry.getValue().setText(properties.get(entry.getKey()));
             }
 
             if (userKey != null) {
@@ -217,18 +218,22 @@ public class DatabaseConnector implements DatabaseConnectionConfigInterface {
                 DatabaseConnectionFactory.getNewConnection(databaseConnection);
 
         if (connectionData != null) {
-            Map<String, String> sourceMap = new HashMap<String, String>();
-            for (String fieldName : textFieldMap.keySet()) {
+            Map<String, String> sourceMap = new HashMap<>();
+            for (Entry<String, JTextField> entry : textFieldMap.entrySet()) {
+                String fieldName = entry.getKey();
+
                 boolean isUserName = false;
                 if (userKey != null) {
                     isUserName = fieldName.equals(userKey);
                 }
+
                 boolean isPassword = false;
                 if (passwordKey != null) {
                     isPassword = fieldName.equals(passwordKey);
                 }
+
                 if (!(isUserName || isPassword)) {
-                    JTextField textField = textFieldMap.get(fieldName);
+                    JTextField textField = entry.getValue();
                     sourceMap.put(fieldName, textField.getText());
                 }
             }

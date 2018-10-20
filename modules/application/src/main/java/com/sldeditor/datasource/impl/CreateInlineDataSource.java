@@ -40,7 +40,7 @@ import org.opengis.feature.type.Name;
 public class CreateInlineDataSource implements CreateDataSourceInterface {
 
     /** The data source info. */
-    private List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
+    private List<DataSourceInfo> dataSourceInfoList = new ArrayList<>();
 
     /**
      * Creates the data source.

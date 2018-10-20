@@ -63,7 +63,7 @@ public class RuleDetails extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The original filter, stored so it can be used if the new filter is invalid. */
-    private Filter originalFilter;
+    private transient Filter originalFilter;
 
     /** Constructor. */
     public RuleDetails() {
@@ -199,18 +199,7 @@ public class RuleDetails extends StandardPanel
             //
             // Read filter string
             //
-            String filterText = fieldConfigVisitor.getText(FieldIdEnum.FILTER);
-            Filter filter = originalFilter;
-            if (originalFilter == null) {
-                try {
-                    if (!filterText.isEmpty()) {
-                        filter = CQL.toFilter(filterText);
-                    }
-                } catch (CQLException e) {
-                    filter = originalFilter;
-                    ConsoleManager.getInstance().exception(this, e);
-                }
-            }
+            Filter filter = updateFilter();
 
             //
             // Use existing symbolizers
@@ -230,21 +219,7 @@ public class RuleDetails extends StandardPanel
                 //
                 // Legend
                 //
-                GraphicLegend existingLegend = existingRule.getLegend();
-                Graphic[] legendGraphics = null;
-
-                if (existingLegend != null) {
-                    int legendGraphicCount = existingLegend.graphicalSymbols().size();
-                    legendGraphics = new Graphic[legendGraphicCount];
-
-                    index = 0;
-                    for (GraphicalSymbol graphicalSymbol : existingLegend.graphicalSymbols()) {
-                        legendGraphics[index] = (Graphic) graphicalSymbol;
-                        index++;
-                    }
-                } else {
-                    legendGraphics = new Graphic[0];
-                }
+                Graphic[] legendGraphics = updateLegend(existingRule);
 
                 //
                 // Else filter
@@ -271,6 +246,50 @@ public class RuleDetails extends StandardPanel
                 this.fireUpdateSymbol();
             }
         }
+    }
+
+    /**
+     * @param existingRule
+     * @return
+     */
+    private Graphic[] updateLegend(org.geotools.styling.Rule existingRule) {
+        int index;
+        GraphicLegend existingLegend = existingRule.getLegend();
+        Graphic[] legendGraphics = null;
+
+        if (existingLegend != null) {
+            int legendGraphicCount = existingLegend.graphicalSymbols().size();
+            legendGraphics = new Graphic[legendGraphicCount];
+
+            index = 0;
+            for (GraphicalSymbol graphicalSymbol : existingLegend.graphicalSymbols()) {
+                legendGraphics[index] = (Graphic) graphicalSymbol;
+                index++;
+            }
+        } else {
+            legendGraphics = new Graphic[0];
+        }
+        return legendGraphics;
+    }
+
+    /**
+     * Update filter.
+     *
+     * @return the filter
+     */
+    private Filter updateFilter() {
+        String filterText = fieldConfigVisitor.getText(FieldIdEnum.FILTER);
+        Filter filter = originalFilter;
+        if (originalFilter == null) {
+            try {
+                if (!filterText.isEmpty()) {
+                    filter = CQL.toFilter(filterText);
+                }
+            } catch (CQLException e) {
+                ConsoleManager.getInstance().exception(this, e);
+            }
+        }
+        return filter;
     }
 
     /**

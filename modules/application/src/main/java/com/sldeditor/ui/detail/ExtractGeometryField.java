@@ -12,6 +12,11 @@ import org.opengis.filter.expression.Expression;
  */
 public class ExtractGeometryField {
 
+    /** Default private constructor */
+    private ExtractGeometryField() {
+        // Default private constructor
+    }
+
     /**
      * Gets the geometry field.
      *

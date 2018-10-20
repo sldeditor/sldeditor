@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
@@ -56,11 +57,12 @@ public class LegendPanelImage extends JLabel {
     private static final long serialVersionUID = 1L;
 
     /** The legend. */
-    private LegendManager legend = LegendManager.getInstance();
+    private transient LegendManager legend = LegendManager.getInstance();
 
     /** The attribute data. */
     @SuppressWarnings("unused")
-    private DataSourceAttributeListInterface attributeData = new DataSourceAttributeList();
+    private transient DataSourceAttributeListInterface attributeData =
+            new DataSourceAttributeList();
 
     /** The image icon. */
     private ImageIcon imageIcon = null;
@@ -84,18 +86,7 @@ public class LegendPanelImage extends JLabel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        if (imageIcon != null) {
-                            try {
-                                Image image = imageIcon.getImage();
-                                BufferedImage buffered = (BufferedImage) image;
-
-                                ImageSelection trans = new ImageSelection(buffered);
-                                Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
-                                c.setContents(trans, null);
-                            } catch (Exception e) {
-                                ConsoleManager.getInstance().exception(LegendPanelImage.class, e);
-                            }
-                        }
+                        copyToClipboard();
                     }
                 });
 
@@ -105,50 +96,7 @@ public class LegendPanelImage extends JLabel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        if (imageIcon != null) {
-                            JFileChooser fc = new JFileChooser();
-                            try {
-                                Image image = imageIcon.getImage();
-
-                                List<FileFilter> fileterList = ImageFilter.getFilters();
-
-                                for (FileFilter filter : fileterList) {
-                                    fc.addChoosableFileFilter(filter);
-                                }
-
-                                int returnVal = fc.showSaveDialog(LegendPanelImage.this);
-
-                                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                                    String extension = ImageFilter.defaultExtension();
-                                    FileFilter selectedFileFilter = fc.getFileFilter();
-
-                                    if (selectedFileFilter != null) {
-                                        if (selectedFileFilter instanceof ImageFilter) {
-                                            extension =
-                                                    ((ImageFilter) fc.getFileFilter())
-                                                            .getFileExtension();
-                                        }
-                                    }
-
-                                    String fullExtension = "." + extension;
-
-                                    String fullPath = fc.getSelectedFile().getCanonicalPath();
-
-                                    if (!fullPath.endsWith(fullExtension)) {
-                                        fullPath = fullPath + fullExtension;
-                                    }
-
-                                    File outputFile = new File(fullPath);
-
-                                    BufferedImage buffered = (BufferedImage) image;
-
-                                    LegendManager.getInstance()
-                                            .saveLegendImage(buffered, extension, outputFile);
-                                }
-                            } catch (Exception e) {
-                                ConsoleManager.getInstance().exception(this, e);
-                            }
-                        }
+                        saveAsMenuItem();
                     }
                 });
 
@@ -203,16 +151,7 @@ public class LegendPanelImage extends JLabel {
                 String styleNameHeading = null;
 
                 if (showStyleName) {
-                    if (!sld.layers().isEmpty()) {
-                        StyledLayer styledLayer = sld.layers().get(0);
-                        if (styledLayer != null) {
-                            styleNameHeading = styledLayer.getName();
-                        }
-                    }
-
-                    if (styleNameHeading == null) {
-                        styleNameHeading = "";
-                    }
+                    styleNameHeading = showStyleName(sld);
                 }
 
                 // Filename
@@ -225,15 +164,7 @@ public class LegendPanelImage extends JLabel {
                     }
                 }
 
-                BufferedImage bImage = legend.createLegend(sld, styleNameHeading, filename);
-
-                if (bImage != null) {
-                    imageIcon = new ImageIcon(bImage);
-                } else {
-                    imageIcon = null;
-                }
-
-                this.setIcon(imageIcon);
+                createLegendIcon(sld, styleNameHeading, filename);
             } else {
                 this.setIcon(null);
             }
@@ -241,5 +172,120 @@ public class LegendPanelImage extends JLabel {
             this.setIcon(null);
         }
         repaint();
+    }
+
+    /**
+     * Creates the legend icon.
+     *
+     * @param sld the sld
+     * @param styleNameHeading the style name heading
+     * @param filename the filename
+     */
+    private void createLegendIcon(
+            StyledLayerDescriptor sld, String styleNameHeading, String filename) {
+        BufferedImage bImage = legend.createLegend(sld, styleNameHeading, filename);
+
+        if (bImage != null) {
+            imageIcon = new ImageIcon(bImage);
+        } else {
+            imageIcon = null;
+        }
+
+        this.setIcon(imageIcon);
+    }
+
+    /**
+     * Show style name.
+     *
+     * @param sld the sld
+     * @param styleNameHeading the style name heading
+     * @return the string
+     */
+    private String showStyleName(StyledLayerDescriptor sld) {
+        String styleNameHeading = null;
+        if (!sld.layers().isEmpty()) {
+            StyledLayer styledLayer = sld.layers().get(0);
+            if (styledLayer != null) {
+                styleNameHeading = styledLayer.getName();
+            }
+        }
+
+        if (styleNameHeading == null) {
+            styleNameHeading = "";
+        }
+        return styleNameHeading;
+    }
+
+    /** Save as menu item. */
+    private void saveAsMenuItem() {
+        if (imageIcon != null) {
+            JFileChooser fc = new JFileChooser();
+            try {
+                Image image = imageIcon.getImage();
+
+                List<FileFilter> fileterList = ImageFilter.getFilters();
+
+                for (FileFilter filter : fileterList) {
+                    fc.addChoosableFileFilter(filter);
+                }
+
+                int returnVal = fc.showSaveDialog(LegendPanelImage.this);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    writeLegendImage(fc.getFileFilter(), fc.getSelectedFile(), image);
+                }
+            } catch (Exception e) {
+                ConsoleManager.getInstance().exception(this, e);
+            }
+        }
+    }
+
+    /**
+     * Write legend image.
+     *
+     * @param fileFilter the file filter
+     * @param selectedFile the selected file
+     * @param image the image
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    private void writeLegendImage(FileFilter fileFilter, File selectedFile, Image image)
+            throws IOException {
+        String extension = ImageFilter.defaultExtension();
+
+        if (fileFilter != null) {
+            if (fileFilter instanceof ImageFilter) {
+                extension = ((ImageFilter) fileFilter).getFileExtension();
+            }
+        }
+
+        String fullExtension = "." + extension;
+
+        String fullPath = selectedFile.getCanonicalPath();
+
+        if (!fullPath.endsWith(fullExtension)) {
+            fullPath = fullPath + fullExtension;
+        }
+
+        File outputFile = new File(fullPath);
+
+        BufferedImage buffered = (BufferedImage) image;
+
+        LegendManager.getInstance().saveLegendImage(buffered, extension, outputFile);
+    }
+
+    /** Copy to clipboard. */
+    private void copyToClipboard() {
+        if (imageIcon != null) {
+            try {
+                Image image = imageIcon.getImage();
+                BufferedImage buffered = (BufferedImage) image;
+
+                ImageSelection trans = new ImageSelection(buffered);
+                Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+                c.setContents(trans, null);
+            } catch (Exception e) {
+                ConsoleManager.getInstance().exception(LegendPanelImage.class, e);
+            }
+        }
     }
 }

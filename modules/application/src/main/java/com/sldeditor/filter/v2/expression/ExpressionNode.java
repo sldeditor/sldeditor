@@ -117,26 +117,7 @@ public class ExpressionNode extends DefaultMutableTreeNode {
         }
 
         if (expression == null) {
-            if (expressionType == ExpressionTypeEnum.LITERAL) {
-                sb.append(
-                        Localisation.getString(
-                                ExpressionPanelv2.class, "ExpressionPanelv2.literalNotSet"));
-            } else if (expressionType == ExpressionTypeEnum.PROPERTY) {
-                sb.append(
-                        Localisation.getString(
-                                ExpressionPanelv2.class, "ExpressionPanelv2.propertyNotSet"));
-            } else {
-                if (optionalParam) {
-                    sb.append(
-                            Localisation.getString(
-                                    ExpressionPanelv2.class, "ExpressionPanelv2.optional"));
-
-                } else {
-                    sb.append(
-                            Localisation.getString(
-                                    ExpressionPanelv2.class, "ExpressionPanelv2.expressionNotSet"));
-                }
-            }
+            setDisplayStringNoExpression(sb);
         }
 
         if (expression instanceof LiteralExpressionImpl) {
@@ -170,6 +151,34 @@ public class ExpressionNode extends DefaultMutableTreeNode {
         }
 
         displayString = sb.toString();
+    }
+
+    /**
+     * Sets the display string no expression.
+     *
+     * @param sb the new display string no expression
+     */
+    private void setDisplayStringNoExpression(StringBuilder sb) {
+        if (expressionType == ExpressionTypeEnum.LITERAL) {
+            sb.append(
+                    Localisation.getString(
+                            ExpressionPanelv2.class, "ExpressionPanelv2.literalNotSet"));
+        } else if (expressionType == ExpressionTypeEnum.PROPERTY) {
+            sb.append(
+                    Localisation.getString(
+                            ExpressionPanelv2.class, "ExpressionPanelv2.propertyNotSet"));
+        } else {
+            if (optionalParam) {
+                sb.append(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "ExpressionPanelv2.optional"));
+
+            } else {
+                sb.append(
+                        Localisation.getString(
+                                ExpressionPanelv2.class, "ExpressionPanelv2.expressionNotSet"));
+            }
+        }
     }
 
     /**
@@ -218,131 +227,17 @@ public class ExpressionNode extends DefaultMutableTreeNode {
         this.removeAllChildren();
 
         if (this.expression instanceof EnvFunction) {
-            EnvFunction envVarExpression = (EnvFunction) this.expression;
-            ExpressionNode childNode = new ExpressionNode();
-            childNode.setExpressionType(ExpressionTypeEnum.ENVVAR);
-
-            Expression envVarLiteral = envVarExpression.getParameters().get(0);
-            Class<?> dataType = Object.class;
-
-            if (envMgr != null) {
-                dataType = envMgr.getDataType(envVarLiteral);
-            }
-            childNode.setType(dataType);
-            childNode.setName(
-                    Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.envVar"));
-
-            childNode.setExpression(envVarLiteral);
-
-            this.insert(childNode, this.getChildCount());
+            setEnvFunction();
         } else if (this.expression instanceof FunctionExpression) {
-            FunctionExpression functionExpression = (FunctionExpression) this.expression;
-            FunctionName functionName = functionExpression.getFunctionName();
-
-            TypeManager.getInstance().setDataType(functionName.getReturn().getType());
-            int argCount = functionName.getArgumentCount();
-
-            if (functionName.getArgumentCount() < 0) {
-                argCount *= -1;
-            }
-
-            for (int index = 0;
-                    index < Math.max(functionExpression.getParameters().size(), argCount);
-                    index++) {
-                ExpressionNode childNode = new ExpressionNode();
-
-                // If function has a variable number of arguments pick the last one
-                int argumentIndex = Math.min(index, Math.max(0, argCount - 1));
-
-                Parameter<?> parameter = functionName.getArguments().get(argumentIndex);
-                childNode.setParameter(parameter);
-
-                if (index < functionExpression.getParameters().size()) {
-                    childNode.setExpression(functionExpression.getParameters().get(index));
-                } else {
-                    childNode.setExpression(null);
-                }
-                this.insert(childNode, this.getChildCount());
-            }
+            setFunctionExpression();
         } else if (this.expression instanceof FunctionImpl) {
-            FunctionImpl functionExpression = (FunctionImpl) this.expression;
-            FunctionName functionName = functionExpression.getFunctionName();
-
-            TypeManager.getInstance().setDataType(functionName.getReturn().getType());
-
-            int maxArgument = Math.abs(functionName.getArgumentCount());
-
-            for (int index = 0; index < maxArgument; index++) {
-                ExpressionNode childNode = new ExpressionNode();
-                Parameter<?> parameter = functionName.getArguments().get(0);
-                childNode.setType(parameter.getType());
-                childNode.setName(parameter.getName());
-
-                if (index < functionExpression.getParameters().size()) {
-                    childNode.setExpression(functionExpression.getParameters().get(index));
-                }
-                this.insert(childNode, this.getChildCount());
-            }
+            setFunctionImpl();
         } else if (this.expression instanceof Function) {
-            Function functionExpression = (Function) this.expression;
-            FunctionName functionName = functionExpression.getFunctionName();
-
-            TypeManager.getInstance().setDataType(functionName.getReturn().getType());
-
-            int overallIndex = 0;
-            for (Parameter<?> param : functionName.getArguments()) {
-                if (param.getMinOccurs() == 0) {
-                    ExpressionNode childNode = new ExpressionNode();
-                    childNode.setParameter(param);
-                    childNode.setOptional();
-
-                    if (overallIndex < functionExpression.getParameters().size()) {
-                        childNode.setExpression(
-                                functionExpression.getParameters().get(overallIndex));
-                        childNode.setOptionalParamUsed(true);
-                    } else {
-                        childNode.setExpression(null);
-                    }
-                    overallIndex++;
-                    this.insert(childNode, this.getChildCount());
-                } else {
-                    for (int index = 0; index < param.getMinOccurs(); index++) {
-                        ExpressionNode childNode = new ExpressionNode();
-                        childNode.setParameter(param);
-
-                        if (index < functionExpression.getParameters().size()) {
-                            if (overallIndex < functionExpression.getParameters().size()) {
-                                childNode.setExpression(
-                                        functionExpression.getParameters().get(overallIndex));
-                            } else {
-                                childNode.setExpression(null);
-                            }
-                        }
-
-                        overallIndex++;
-                        this.insert(childNode, this.getChildCount());
-                    }
-                }
-            }
+            setFunction();
         } else if (expression instanceof MathExpressionImpl) {
-            MathExpressionImpl mathsExpression = (MathExpressionImpl) expression;
-
-            String expressionText =
-                    Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.expression");
-            ExpressionNode childNode1 = new ExpressionNode();
-            childNode1.setType(Number.class);
-            childNode1.setName(expressionText + " 1");
-            childNode1.setExpression(mathsExpression.getExpression1());
-            this.insert(childNode1, this.getChildCount());
-
-            ExpressionNode childNode2 = new ExpressionNode();
-            childNode2.setType(Number.class);
-            childNode2.setName(expressionText + " 2");
-            childNode2.setExpression(mathsExpression.getExpression2());
-            this.insert(childNode2, this.getChildCount());
+            setMathExpression(expression);
         } else if (expression instanceof AttributeExpressionImpl) {
-            @SuppressWarnings("unused")
-            AttributeExpressionImpl property = (AttributeExpressionImpl) expression;
+            //        AttributeExpressionImpl property = (AttributeExpressionImpl) expression;
 
             // TypeManager.getInstance().setLiteralType(literal.getValue().getClass());
         } else if (expression instanceof LiteralExpressionImpl) {
@@ -351,6 +246,174 @@ public class ExpressionNode extends DefaultMutableTreeNode {
                 TypeManager.getInstance().setDataType(literal.getValue().getClass());
             }
         }
+    }
+
+    /**
+     * Sets the math expression.
+     *
+     * @param expression the new math expression
+     */
+    private void setMathExpression(Expression expression) {
+        MathExpressionImpl mathsExpression = (MathExpressionImpl) expression;
+
+        String expressionText =
+                Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.expression");
+        ExpressionNode childNode1 = new ExpressionNode();
+        childNode1.setType(Number.class);
+        childNode1.setName(expressionText + " 1");
+        childNode1.setExpression(mathsExpression.getExpression1());
+        this.insert(childNode1, this.getChildCount());
+
+        ExpressionNode childNode2 = new ExpressionNode();
+        childNode2.setType(Number.class);
+        childNode2.setName(expressionText + " 2");
+        childNode2.setExpression(mathsExpression.getExpression2());
+        this.insert(childNode2, this.getChildCount());
+    }
+
+    /** Sets the function. */
+    private void setFunction() {
+        Function functionExpression = (Function) this.expression;
+        FunctionName functionName = functionExpression.getFunctionName();
+
+        TypeManager.getInstance().setDataType(functionName.getReturn().getType());
+
+        int overallIndex = 0;
+        for (Parameter<?> param : functionName.getArguments()) {
+            if (param.getMinOccurs() == 0) {
+                overallIndex = setFunctionOptional(functionExpression, overallIndex, param);
+            } else {
+                overallIndex = setFunctionFixed(functionExpression, overallIndex, param);
+            }
+        }
+    }
+
+    /**
+     * Sets the function fixed.
+     *
+     * @param functionExpression the function expression
+     * @param overallIndex the overall index
+     * @param param the param
+     * @return the int
+     */
+    private int setFunctionFixed(
+            Function functionExpression, int overallIndex, Parameter<?> param) {
+        for (int index = 0; index < param.getMinOccurs(); index++) {
+            ExpressionNode childNode = new ExpressionNode();
+            childNode.setParameter(param);
+
+            if (index < functionExpression.getParameters().size()) {
+                if (overallIndex < functionExpression.getParameters().size()) {
+                    childNode.setExpression(functionExpression.getParameters().get(overallIndex));
+                } else {
+                    childNode.setExpression(null);
+                }
+            }
+
+            overallIndex++;
+            this.insert(childNode, this.getChildCount());
+        }
+        return overallIndex;
+    }
+
+    /**
+     * Sets the function optional.
+     *
+     * @param functionExpression the function expression
+     * @param overallIndex the overall index
+     * @param param the param
+     * @return the int
+     */
+    private int setFunctionOptional(
+            Function functionExpression, int overallIndex, Parameter<?> param) {
+        ExpressionNode childNode = new ExpressionNode();
+        childNode.setParameter(param);
+        childNode.setOptional();
+
+        if (overallIndex < functionExpression.getParameters().size()) {
+            childNode.setExpression(functionExpression.getParameters().get(overallIndex));
+            childNode.setOptionalParamUsed(true);
+        } else {
+            childNode.setExpression(null);
+        }
+        overallIndex++;
+        this.insert(childNode, this.getChildCount());
+        return overallIndex;
+    }
+
+    /** Sets the function impl. */
+    private void setFunctionImpl() {
+        FunctionImpl functionExpression = (FunctionImpl) this.expression;
+        FunctionName functionName = functionExpression.getFunctionName();
+
+        TypeManager.getInstance().setDataType(functionName.getReturn().getType());
+
+        int maxArgument = Math.abs(functionName.getArgumentCount());
+
+        for (int index = 0; index < maxArgument; index++) {
+            ExpressionNode childNode = new ExpressionNode();
+            Parameter<?> parameter = functionName.getArguments().get(0);
+            childNode.setType(parameter.getType());
+            childNode.setName(parameter.getName());
+
+            if (index < functionExpression.getParameters().size()) {
+                childNode.setExpression(functionExpression.getParameters().get(index));
+            }
+            this.insert(childNode, this.getChildCount());
+        }
+    }
+
+    /** Sets the function expression. */
+    private void setFunctionExpression() {
+        FunctionExpression functionExpression = (FunctionExpression) this.expression;
+        FunctionName functionName = functionExpression.getFunctionName();
+
+        TypeManager.getInstance().setDataType(functionName.getReturn().getType());
+        int argCount = functionName.getArgumentCount();
+
+        if (functionName.getArgumentCount() < 0) {
+            argCount *= -1;
+        }
+
+        for (int index = 0;
+                index < Math.max(functionExpression.getParameters().size(), argCount);
+                index++) {
+            ExpressionNode childNode = new ExpressionNode();
+
+            // If function has a variable number of arguments pick the last one
+            int argumentIndex = Math.min(index, Math.max(0, argCount - 1));
+
+            Parameter<?> parameter = functionName.getArguments().get(argumentIndex);
+            childNode.setParameter(parameter);
+
+            if (index < functionExpression.getParameters().size()) {
+                childNode.setExpression(functionExpression.getParameters().get(index));
+            } else {
+                childNode.setExpression(null);
+            }
+            this.insert(childNode, this.getChildCount());
+        }
+    }
+
+    /** Sets the env function. */
+    private void setEnvFunction() {
+        EnvFunction envVarExpression = (EnvFunction) this.expression;
+        ExpressionNode childNode = new ExpressionNode();
+        childNode.setExpressionType(ExpressionTypeEnum.ENVVAR);
+
+        Expression envVarLiteral = envVarExpression.getParameters().get(0);
+        Class<?> dataType = Object.class;
+
+        if (envMgr != null) {
+            dataType = envMgr.getDataType(envVarLiteral);
+        }
+        childNode.setType(dataType);
+        childNode.setName(
+                Localisation.getString(ExpressionPanelv2.class, "ExpressionPanelv2.envVar"));
+
+        childNode.setExpression(envVarLiteral);
+
+        this.insert(childNode, this.getChildCount());
     }
 
     /** Marks the parameter as optional. */

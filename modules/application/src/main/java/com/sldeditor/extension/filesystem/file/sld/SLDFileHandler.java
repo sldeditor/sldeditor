@@ -136,7 +136,7 @@ public class SLDFileHandler implements FileHandlerInterface {
     @Override
     public List<SLDDataInterface> open(File f) {
         if (f != null) {
-            List<SLDDataInterface> list = new ArrayList<SLDDataInterface>();
+            List<SLDDataInterface> list = new ArrayList<>();
 
             if (f.isDirectory()) {
                 boolean traverseFolders = ToolManager.getInstance().isRecursiveFlag();

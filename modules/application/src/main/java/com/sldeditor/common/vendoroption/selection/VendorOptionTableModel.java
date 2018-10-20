@@ -71,7 +71,7 @@ public class VendorOptionTableModel extends AbstractTableModel {
                 Localisation.getString(
                         VendorOptionTableModel.class, "VendorOptionTableModel.selected");
 
-        List<VendorOptionTypeInterface> orderList = new ArrayList<VendorOptionTypeInterface>();
+        List<VendorOptionTypeInterface> orderList = new ArrayList<>();
 
         if (options != null) {
             nameMap = options;
@@ -181,7 +181,7 @@ public class VendorOptionTableModel extends AbstractTableModel {
      */
     public List<VersionData> getVendorOptionVersionList() {
 
-        List<VersionData> localVendorOptionList = new ArrayList<VersionData>();
+        List<VersionData> localVendorOptionList = new ArrayList<>();
 
         localVendorOptionList.add(
                 VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
@@ -203,7 +203,7 @@ public class VendorOptionTableModel extends AbstractTableModel {
      */
     public void setSelectedVendorOptionVersions(List<VersionData> selectedVersionList) {
         if (selectedVersionList != null) {
-            this.selectedVersionList = new ArrayList<VersionData>();
+            this.selectedVersionList = new ArrayList<>();
 
             for (VendorOptionTypeInterface key : nameOrder) {
                 boolean found = false;

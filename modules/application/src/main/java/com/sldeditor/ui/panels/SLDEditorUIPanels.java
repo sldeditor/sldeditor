@@ -31,6 +31,7 @@ import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -74,21 +75,13 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
     private NoSymbolUI noSymbolUI;
 
     /** The ui symbol map. */
-    private Map<String, SymbolPanelInterface> uiSymbolMap =
-            new HashMap<String, SymbolPanelInterface>();
+    private Map<String, SymbolPanelInterface> uiSymbolMap = new HashMap<>();
 
     /** The ui legend map. */
-    private Map<String, SymbolPanelInterface> uiLegendMap =
-            new HashMap<String, SymbolPanelInterface>();
+    private Map<String, SymbolPanelInterface> uiLegendMap = new HashMap<>();
 
     /** The panel data tab. */
     private JPanel panelDataTab = null;
-
-    /** The outer panel data tab. */
-    private JPanel outerPanelDataTab = null;
-
-    /** The outer panel legend tab. */
-    private JPanel outerPanelLegendTab = null;
 
     /** The panel legend tab. */
     private JPanel panelLegendTab = null;
@@ -166,14 +159,14 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
      * @return the panel
      */
     public JPanel getSLDSymbolData() {
-        outerPanelDataTab = new JPanel();
+        JPanel outerPanelDataTab = new JPanel();
         outerPanelDataTab.setLayout(new BorderLayout());
 
         panelDataTab = new JPanel(false);
         panelDataTab.setLayout(new CardLayout());
 
-        for (String key : uiSymbolMap.keySet()) {
-            SymbolPanelInterface symbolPanel = uiSymbolMap.get(key);
+        for (Entry<String, SymbolPanelInterface> entry : uiSymbolMap.entrySet()) {
+            SymbolPanelInterface symbolPanel = entry.getValue();
 
             JPanel panel = new JPanel(new BorderLayout());
 
@@ -188,7 +181,7 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
             if (symbolPanel.addCentrePanel() != null) {
                 panel.add(symbolPanel.addCentrePanel(), BorderLayout.CENTER);
             }
-            panelDataTab.add(panel, key);
+            panelDataTab.add(panel, entry.getKey());
         }
 
         outerPanelDataTab.add(panelDataTab, BorderLayout.CENTER);
@@ -233,14 +226,14 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
      * @return the legend data
      */
     public JComponent getLegendData() {
-        outerPanelLegendTab = new JPanel();
+        JPanel outerPanelLegendTab = new JPanel();
         outerPanelLegendTab.setLayout(new BorderLayout());
 
         panelLegendTab = new JPanel(false);
         panelLegendTab.setLayout(new CardLayout());
 
-        for (String key : uiLegendMap.keySet()) {
-            SymbolPanelInterface legendPanel = uiLegendMap.get(key);
+        for (Entry<String, SymbolPanelInterface> entry : uiLegendMap.entrySet()) {
+            SymbolPanelInterface legendPanel = entry.getValue();
 
             JPanel panel = new JPanel(new BorderLayout());
 
@@ -255,7 +248,7 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
             if (legendPanel.addCentrePanel() != null) {
                 panel.add(legendPanel.addCentrePanel(), BorderLayout.CENTER);
             }
-            panelLegendTab.add(panel, key);
+            panelLegendTab.add(panel, entry.getKey());
         }
 
         outerPanelLegendTab.add(panelLegendTab, BorderLayout.CENTER);

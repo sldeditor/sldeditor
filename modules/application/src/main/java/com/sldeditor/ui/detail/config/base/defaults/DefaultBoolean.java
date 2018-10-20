@@ -27,10 +27,10 @@ package com.sldeditor.ui.detail.config.base.defaults;
 public class DefaultBoolean extends DefaultBase {
 
     /** The true string. */
-    private static String TRUE_STRING = "true";
+    private static final String TRUE_STRING = "true";
 
     /** The false string. */
-    private static String FALSE_STRING = "false";
+    private static final String FALSE_STRING = "false";
 
     /*
      * (non-Javadoc)
@@ -43,12 +43,8 @@ public class DefaultBoolean extends DefaultBase {
             return false;
         }
 
-        if ((defaultValue.compareToIgnoreCase(TRUE_STRING) == 0)
-                || (defaultValue.compareToIgnoreCase(FALSE_STRING) == 0)) {
-            return true;
-        }
-
-        return false;
+        return ((defaultValue.compareToIgnoreCase(TRUE_STRING) == 0)
+                || (defaultValue.compareToIgnoreCase(FALSE_STRING) == 0));
     }
 
     /*

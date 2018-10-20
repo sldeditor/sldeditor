@@ -63,9 +63,7 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
     public boolean hasFill(Symbolizer symbolizer) {
         if (symbolizer instanceof PointSymbolizer) {
             PointSymbolizer point = (PointSymbolizer) symbolizer;
-            if (point != null) {
-                return (point.getGraphic() != null);
-            }
+            return (point.getGraphic() != null);
         }
 
         return false;
@@ -90,22 +88,18 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
     public Fill getFill(Symbolizer symbolizer) {
         if (symbolizer instanceof PointSymbolizer) {
             PointSymbolizer point = (PointSymbolizer) symbolizer;
-            if (point != null) {
-                Graphic graphic = point.getGraphic();
+            Graphic graphic = point.getGraphic();
 
-                if (graphic != null) {
-                    List<GraphicalSymbol> symbolList = graphic.graphicalSymbols();
+            if (graphic != null) {
+                List<GraphicalSymbol> symbolList = graphic.graphicalSymbols();
 
-                    if ((symbolList != null) && !symbolList.isEmpty()) {
-                        GraphicalSymbol obj = symbolList.get(0);
+                if ((symbolList != null) && !symbolList.isEmpty()) {
+                    GraphicalSymbol obj = symbolList.get(0);
 
-                        if (obj != null) {
-                            if (obj instanceof MarkImpl) {
-                                MarkImpl mark = (MarkImpl) obj;
+                    if (obj instanceof MarkImpl) {
+                        MarkImpl mark = (MarkImpl) obj;
 
-                                return mark.getFill();
-                            }
-                        }
+                        return mark.getFill();
                     }
                 }
             }
@@ -126,7 +120,8 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeStroke(org.opengis.style.Symbolizer)
+     * @see
+     * com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeStroke(org.opengis.style.Symbolizer)
      */
     @Override
     public void removeStroke(Symbolizer symbolizer) {
@@ -136,7 +131,8 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createStroke(org.opengis.style.Symbolizer)
+     * @see
+     * com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createStroke(org.opengis.style.Symbolizer)
      */
     @Override
     public void createStroke(Symbolizer symbolizer) {
@@ -153,20 +149,16 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
         if (symbolizer instanceof PointSymbolizer) {
             PointSymbolizer point = (PointSymbolizer) symbolizer;
 
-            if (point != null) {
-                Graphic graphic = point.getGraphic();
-                if (graphic == null) {
-                    graphic = styleFactory.createDefaultGraphic();
-                    point.setGraphic(graphic);
-                }
+            Graphic graphic = point.getGraphic();
+            if (graphic == null) {
+                graphic = styleFactory.createDefaultGraphic();
+                point.setGraphic(graphic);
+            }
 
-                if (graphic != null) {
-                    if (graphic.graphicalSymbols().isEmpty()) {
-                        Mark mark = styleFactory.getDefaultMark();
+            if ((graphic != null) && graphic.graphicalSymbols().isEmpty()) {
+                Mark mark = styleFactory.getDefaultMark();
 
-                        graphic.graphicalSymbols().add(mark);
-                    }
-                }
+                graphic.graphicalSymbols().add(mark);
             }
         }
     }
@@ -181,9 +173,7 @@ public class SLDTreeLeafPoint implements SLDTreeLeafInterface {
         if (symbolizer instanceof PointSymbolizer) {
             PointSymbolizer point = (PointSymbolizer) symbolizer;
 
-            if (point != null) {
-                point.setGraphic(null);
-            }
+            point.setGraphic(null);
         }
     }
 

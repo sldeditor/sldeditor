@@ -40,6 +40,9 @@ import javax.swing.JScrollPane;
  */
 public class CheckUpdatePanel extends JDialog {
 
+    /** The Constant VERSION_FORMAT. */
+    private static final String VERSION_FORMAT = "%s %s";
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -95,29 +98,29 @@ public class CheckUpdatePanel extends JDialog {
         JScrollPane jp = new JScrollPane(textArea);
         panel.add(jp, BorderLayout.CENTER);
 
-        JPanel panel_1 = new JPanel();
-        getContentPane().add(panel_1, BorderLayout.NORTH);
-        panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+        JPanel panel1 = new JPanel();
+        getContentPane().add(panel1, BorderLayout.NORTH);
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 
-        JPanel panel_3 = new JPanel();
-        FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
-        flowLayout_1.setAlignment(FlowLayout.LEFT);
-        panel_1.add(panel_3);
+        JPanel panel3 = new JPanel();
+        FlowLayout flowLayout1 = (FlowLayout) panel3.getLayout();
+        flowLayout1.setAlignment(FlowLayout.LEFT);
+        panel1.add(panel3);
 
         lblCurrentVersion = new JLabel("current");
-        panel_3.add(lblCurrentVersion);
+        panel3.add(lblCurrentVersion);
 
-        JPanel panel_5 = new JPanel();
-        panel_1.add(panel_5);
-        FlowLayout flowLayout = (FlowLayout) panel_5.getLayout();
+        JPanel panel5 = new JPanel();
+        panel1.add(panel5);
+        FlowLayout flowLayout = (FlowLayout) panel5.getLayout();
         flowLayout.setAlignment(FlowLayout.LEFT);
 
         lblLatestVersion = new JLabel("latest");
-        panel_5.add(lblLatestVersion);
+        panel5.add(lblLatestVersion);
 
-        JPanel panel_4 = new JPanel();
-        panel_1.add(panel_4);
-        panel_4.setLayout(new BorderLayout(0, 0));
+        JPanel panel4 = new JPanel();
+        panel1.add(panel4);
+        panel4.setLayout(new BorderLayout(0, 0));
 
         btnGet =
                 new JButton(Localisation.getString(CheckUpdatePanel.class, "CheckUpdatePanel.get"));
@@ -130,15 +133,15 @@ public class CheckUpdatePanel extends JDialog {
                         update.showDownloadPage();
                     }
                 });
-        panel_4.add(btnGet, BorderLayout.EAST);
+        panel4.add(btnGet, BorderLayout.EAST);
 
-        JPanel panel_2 = new JPanel();
-        panel_4.add(panel_2, BorderLayout.WEST);
-        FlowLayout flowLayout_2 = (FlowLayout) panel_2.getLayout();
-        flowLayout_2.setAlignment(FlowLayout.LEFT);
+        JPanel panel2 = new JPanel();
+        panel4.add(panel2, BorderLayout.WEST);
+        FlowLayout flowLayout2 = (FlowLayout) panel2.getLayout();
+        flowLayout2.setAlignment(FlowLayout.LEFT);
 
         lblStatus = new JLabel("status");
-        panel_2.add(lblStatus);
+        panel2.add(lblStatus);
     }
 
     /**
@@ -149,7 +152,7 @@ public class CheckUpdatePanel extends JDialog {
     public void showPanel(String currentVersion) {
         lblCurrentVersion.setText(
                 String.format(
-                        "%s %s",
+                        VERSION_FORMAT,
                         Localisation.getField(
                                 CheckUpdatePanel.class, "CheckUpdatePanel.currentVersion"),
                         currentVersion));
@@ -179,7 +182,7 @@ public class CheckUpdatePanel extends JDialog {
     public void showPanelSilent(String currentVersion) {
         lblCurrentVersion.setText(
                 String.format(
-                        "%s %s",
+                        VERSION_FORMAT,
                         Localisation.getField(
                                 CheckUpdatePanel.class, "CheckUpdatePanel.currentVersion"),
                         currentVersion));
@@ -226,7 +229,7 @@ public class CheckUpdatePanel extends JDialog {
             UpdateData latestData = update.getLatestData();
             String latestVersionString =
                     String.format(
-                            "%s %s",
+                            VERSION_FORMAT,
                             Localisation.getField(
                                     CheckUpdatePanel.class, "CheckUpdatePanel.latestVersion"),
                             latestData.getVersion());

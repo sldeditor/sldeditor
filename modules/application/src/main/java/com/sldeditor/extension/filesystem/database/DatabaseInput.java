@@ -73,8 +73,7 @@ public class DatabaseInput
     private transient DatabaseReadProgress progress = new DatabaseReadProgress(this, this);
 
     /** The feature class map. */
-    private Map<DatabaseConnection, List<String>> featureClassMap =
-            new HashMap<DatabaseConnection, List<String>>();
+    private Map<DatabaseConnection, List<String>> featureClassMap = new HashMap<>();
 
     /** The logger. */
     private static transient Logger logger = Logger.getLogger(DatabaseInput.class.getName());
@@ -147,9 +146,9 @@ public class DatabaseInput
      */
     private Map<String, DatabaseOverallNode> getRootDatabaseNodes() {
         if (databaseRootNodeMap == null) {
-            databaseRootNodeMap = new LinkedHashMap<String, DatabaseOverallNode>();
+            databaseRootNodeMap = new LinkedHashMap<>();
 
-            List<DatabaseOverallNode> list = new ArrayList<DatabaseOverallNode>();
+            List<DatabaseOverallNode> list = new ArrayList<>();
 
             list.add(new DatabaseOverallNode(this, "PostGIS", "ui/filesystemicons/postgresql.png"));
 
@@ -292,7 +291,7 @@ public class DatabaseInput
 
         SelectedFiles selectedFiles = new SelectedFiles();
         if (node instanceof DatabaseFeatureClassNode) {
-            List<SLDDataInterface> sldContentList = new ArrayList<SLDDataInterface>();
+            List<SLDDataInterface> sldContentList = new ArrayList<>();
 
             selectedFiles.setSldData(sldContentList);
             selectedFiles.setDataSource(true);
@@ -328,7 +327,7 @@ public class DatabaseInput
      */
     @Override
     public List<DatabaseConnection> getConnectionDetails() {
-        List<DatabaseConnection> list = new ArrayList<DatabaseConnection>();
+        List<DatabaseConnection> list = new ArrayList<>();
         for (DatabaseConnection key :
                 DatabaseConnectionManager.getInstance().getConnectionMap().keySet()) {
             list.add(key);
@@ -343,9 +342,7 @@ public class DatabaseInput
      */
     @Override
     public List<NodeInterface> getNodeTypes() {
-        List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
-
-        return nodeTypeList;
+        return new ArrayList<>();
     }
 
     /*
@@ -492,8 +489,7 @@ public class DatabaseInput
             return;
         }
 
-        List<DefaultMutableTreeNode> overallNodesToRefresh =
-                new ArrayList<DefaultMutableTreeNode>();
+        List<DefaultMutableTreeNode> overallNodesToRefresh = new ArrayList<>();
         String overallNodeName = null;
         for (DatabaseConnection connection : connectionList) {
             logger.debug("Deleting connection : " + connection.getConnectionName());

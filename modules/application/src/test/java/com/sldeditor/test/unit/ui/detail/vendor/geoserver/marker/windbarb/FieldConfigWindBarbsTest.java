@@ -58,7 +58,7 @@ public class FieldConfigWindBarbsTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#internal_setEnabled(boolean)}.
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#internalSetEnabled(boolean)}.
      * Test method for {@link
      * com.sldeditor.ui.detail.vendor.geoserver.marker.windbarb.FieldConfigWindBarbs#isEnabled()}.
      */
@@ -76,7 +76,7 @@ public class FieldConfigWindBarbsTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -85,7 +85,7 @@ public class FieldConfigWindBarbsTest {
         assertTrue(field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -101,7 +101,7 @@ public class FieldConfigWindBarbsTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
         assertTrue(field2.isEnabled());
 
         // Create text field
@@ -110,7 +110,7 @@ public class FieldConfigWindBarbsTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
 
         assertTrue(field2.isEnabled());
     }

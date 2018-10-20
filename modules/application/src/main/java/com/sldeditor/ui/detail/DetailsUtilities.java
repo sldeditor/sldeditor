@@ -40,6 +40,11 @@ import org.opengis.filter.expression.Expression;
  */
 public class DetailsUtilities {
 
+    /** Default private constructor */
+    private DetailsUtilities() {
+        // Default private constructor
+    }
+
     /**
      * Checks if displacement objects are the same.
      *
@@ -110,7 +115,7 @@ public class DetailsUtilities {
         } else if (objValue instanceof Integer) {
             return ((Integer) objValue).doubleValue();
         } else if (objValue instanceof String) {
-            return Double.valueOf((String) objValue).doubleValue();
+            return Double.parseDouble((String) objValue);
         }
 
         return 0.0;

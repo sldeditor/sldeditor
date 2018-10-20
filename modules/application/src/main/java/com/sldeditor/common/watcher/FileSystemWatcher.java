@@ -111,7 +111,7 @@ public class FileSystemWatcher implements Runnable {
      */
     @Override
     public void run() {
-        internal_watchDirectoryPath();
+        internalWatchDirectoryPath();
         // Close the watcher service
         try {
             watchService.close();
@@ -126,7 +126,7 @@ public class FileSystemWatcher implements Runnable {
      * @throws InterruptedException
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private void internal_watchDirectoryPath() {
+    private void internalWatchDirectoryPath() {
         WatchKey key = null;
 
         // Poll for events in an infinite loop

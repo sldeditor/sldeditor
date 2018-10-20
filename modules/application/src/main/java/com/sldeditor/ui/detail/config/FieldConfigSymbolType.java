@@ -65,7 +65,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * <p><img src="./doc-files/symboltypefield.png" />
  *
@@ -78,18 +78,16 @@ public class FieldConfigSymbolType extends FieldConfigBase
     private JPanel containingPanel = null;
 
     /** The vendor option map. */
-    private Map<Class<?>, VendorOptionVersion> vendorOptionMap =
-            new HashMap<Class<?>, VendorOptionVersion>();
+    private Map<Class<?>, VendorOptionVersion> vendorOptionMap = new HashMap<>();
 
     /** The field configuration map. Key is panel id string the field appears on. */
-    private Map<Class<?>, FieldConfigBase> fieldConfigMap =
-            new HashMap<Class<?>, FieldConfigBase>();
+    private Map<Class<?>, FieldConfigBase> fieldConfigMap = new HashMap<>();
 
     /** The symbol selected listener. */
     private MultiOptionSelectedInterface symbolSelectedListener = null;
 
     /** The logger. */
-    private static Logger logger = Logger.getLogger(FieldConfigSymbolType.class);
+    private static final Logger logger = Logger.getLogger(FieldConfigSymbolType.class);
 
     /** The menu combo box containing all the symbols that can be selected. */
     private MenuComboBox comboBox = null;
@@ -203,10 +201,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
      * @return the selected value obj
      */
     public ValueComboBoxData getSelectedValueObj() {
-        if (comboBox == null) {
-            return null;
-        }
-        return comboBox.getSelectedData();
+        return getEnumValue();
     }
 
     /**
@@ -245,7 +240,7 @@ public class FieldConfigSymbolType extends FieldConfigBase
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (comboBox != null) {
             comboBox.setEnabled(enabled);
         }

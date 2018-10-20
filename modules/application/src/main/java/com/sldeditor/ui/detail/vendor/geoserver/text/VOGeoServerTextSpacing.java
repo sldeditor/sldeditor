@@ -31,9 +31,10 @@ import com.sldeditor.ui.detail.vendor.VOPopulation;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
@@ -56,10 +57,10 @@ public class VOGeoServerTextSpacing extends VOPopulation
     private static final long serialVersionUID = 1L;
 
     /** The field map. */
-    private Map<FieldIdEnum, String> fieldMap = new HashMap<FieldIdEnum, String>();
+    private Map<FieldIdEnum, String> fieldMap = new EnumMap<>(FieldIdEnum.class);
 
     /** The parent obj. */
-    private UpdateSymbolInterface parentObj = null;
+    private transient UpdateSymbolInterface parentObj = null;
 
     /** The vendor option info. */
     private VendorOptionInfo vendorOptionInfo = null;
@@ -150,8 +151,8 @@ public class VOGeoServerTextSpacing extends VOPopulation
         if (textSymbolizer != null) {
             Map<String, String> options = textSymbolizer.getOptions();
 
-            for (FieldIdEnum key : fieldMap.keySet()) {
-                internalPopulate(options, key, fieldMap.get(key));
+            for (Entry<FieldIdEnum, String> entry : fieldMap.entrySet()) {
+                internalPopulate(options, entry.getKey(), entry.getValue());
             }
         }
     }
@@ -258,8 +259,8 @@ public class VOGeoServerTextSpacing extends VOPopulation
         if (textSymbolizer != null) {
             Map<String, String> options = textSymbolizer.getOptions();
 
-            for (FieldIdEnum key : fieldMap.keySet()) {
-                internalUpdateSymbol(options, key, fieldMap.get(key));
+            for (Entry<FieldIdEnum, String> entry : fieldMap.entrySet()) {
+                internalPopulate(options, entry.getKey(), entry.getValue());
             }
         }
     }
@@ -376,8 +377,8 @@ public class VOGeoServerTextSpacing extends VOPopulation
             TextSymbolizer textSymbolizer = (TextSymbolizer) sldObj;
             Map<String, String> options = textSymbolizer.getOptions();
 
-            for (FieldIdEnum key : fieldMap.keySet()) {
-                String vendorOptionAttributeKey = fieldMap.get(key);
+            for (Entry<FieldIdEnum, String> entry : fieldMap.entrySet()) {
+                String vendorOptionAttributeKey = entry.getValue();
 
                 if (options.containsKey(vendorOptionAttributeKey)) {
                     VendorOptionPresent voPresent =

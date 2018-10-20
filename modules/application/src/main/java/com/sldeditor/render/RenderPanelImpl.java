@@ -134,7 +134,7 @@ public class RenderPanelImpl extends JPanel
     private transient FeatureSource<SimpleFeatureType, SimpleFeature> featureList = null;
 
     /** The sld output list. */
-    private transient List<SLDOutputInterface> sldOutputList = new ArrayList<SLDOutputInterface>();
+    private transient List<SLDOutputInterface> sldOutputList = new ArrayList<>();
 
     /** The use anti alias. */
     private boolean useAntiAlias = false;
@@ -390,7 +390,7 @@ public class RenderPanelImpl extends JPanel
             Rectangle imageSize,
             Style style,
             int dpi) {
-        List<Layer> layerList = new ArrayList<Layer>();
+        List<Layer> layerList = new ArrayList<>();
         if (style != null) {
             FeatureLayer featureLayer = new FeatureLayer(features, style);
             layerList.add(featureLayer);
@@ -411,7 +411,7 @@ public class RenderPanelImpl extends JPanel
             }
         }
 
-        internal_renderMap(layerList, bounds, imageSize, hasGeometry, dpi);
+        internalRenderMap(layerList, bounds, imageSize, hasGeometry, dpi);
     }
 
     /**
@@ -480,7 +480,7 @@ public class RenderPanelImpl extends JPanel
     }
 
     /**
-     * Internal_render map.
+     * Internal render map.
      *
      * @param layers the layers
      * @param bounds the bounds
@@ -488,7 +488,7 @@ public class RenderPanelImpl extends JPanel
      * @param hasGeometry the has geometry
      * @param dpi the dpi
      */
-    private void internal_renderMap(
+    private void internalRenderMap(
             List<Layer> layers,
             ReferencedEnvelope bounds,
             Rectangle imageSize,

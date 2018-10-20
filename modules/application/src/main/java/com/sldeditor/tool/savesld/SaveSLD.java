@@ -37,7 +37,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -92,14 +91,14 @@ public class SaveSLD implements SaveSLDInterface {
             if (sld != null) {
                 String sldString = sldWriter.encodeSLD(sldData.getResourceLocator(), sld);
 
-                String sldFilename = sldData.getLayerName();
+                StringBuilder sldFilename = new StringBuilder(sldData.getLayerName());
 
                 // Ensure we don't get duplicate sld file extensions
-                if (!sldFilename.endsWith(suffix)) {
-                    sldFilename = sldFilename + suffix;
+                if (!sldFilename.toString().endsWith(suffix)) {
+                    sldFilename.append(suffix);
                 }
 
-                File fileToSave = new File(destinationFolder, sldFilename);
+                File fileToSave = new File(destinationFolder, sldFilename.toString());
 
                 ConsoleManager.getInstance()
                         .information(
@@ -117,48 +116,59 @@ public class SaveSLD implements SaveSLDInterface {
 
                 // Save external images if requested
                 if (saveExternalResources) {
-                    List<String> externalImageList =
-                            SLDExternalImages.getExternalImages(sldData.getResourceLocator(), sld);
-
-                    for (String externalImage : externalImageList) {
-                        File output = new File(destinationFolder, externalImage);
-
-                        File parentFolder = output.getParentFile();
-
-                        // Check to see if the destination folder exists
-                        if (!parentFolder.exists()) {
-                            if (output.getParentFile().mkdirs()) {
-                                ConsoleManager.getInstance()
-                                        .error(
-                                                this,
-                                                Localisation.getField(
-                                                                SaveSLDTool.class,
-                                                                "SaveSLDTool.error1")
-                                                        + output.getAbsolutePath());
-                            }
-                        }
-
-                        if (parentFolder.exists()) {
-                            boolean writeOutputFileFlag = true;
-
-                            if (output.exists()) {
-                                if (!yesToAll) {
-                                    overwriteDestinationDlg.overwrite(output);
-
-                                    yesToAll = overwriteDestinationDlg.isYesToAll();
-                                    writeOutputFileFlag =
-                                            overwriteDestinationDlg.isWriteOutputFile();
-                                }
-                            }
-
-                            if (writeOutputFileFlag) {
-                                writeOutputFile(sldData, externalImage, output);
-                            }
-                        }
-                    }
+                    yesToAll = saveExternalResources(destinationFolder, yesToAll, sldData, sld);
                 }
             }
         }
+    }
+
+    /**
+     * Save external resources.
+     *
+     * @param destinationFolder the destination folder
+     * @param yesToAll the yes to all
+     * @param sldData the sld data
+     * @param sld the sld
+     * @return true, if successful
+     */
+    private boolean saveExternalResources(
+            File destinationFolder,
+            boolean yesToAll,
+            SLDDataInterface sldData,
+            StyledLayerDescriptor sld) {
+        List<String> externalImageList =
+                SLDExternalImages.getExternalImages(sldData.getResourceLocator(), sld);
+
+        for (String externalImage : externalImageList) {
+            File output = new File(destinationFolder, externalImage);
+
+            File parentFolder = output.getParentFile();
+
+            // Check to see if the destination folder exists
+            if (!parentFolder.exists() && output.getParentFile().mkdirs()) {
+                ConsoleManager.getInstance()
+                        .error(
+                                this,
+                                Localisation.getField(SaveSLDTool.class, "SaveSLDTool.error1")
+                                        + output.getAbsolutePath());
+            }
+
+            if (parentFolder.exists()) {
+                boolean writeOutputFileFlag = true;
+
+                if (output.exists() && !yesToAll) {
+                    overwriteDestinationDlg.overwrite(output);
+
+                    yesToAll = overwriteDestinationDlg.isYesToAll();
+                    writeOutputFileFlag = overwriteDestinationDlg.isWriteOutputFile();
+                }
+
+                if (writeOutputFileFlag) {
+                    writeOutputFile(sldData, externalImage, output);
+                }
+            }
+        }
+        return yesToAll;
     }
 
     /**
@@ -176,8 +186,6 @@ public class SaveSLD implements SaveSLDInterface {
             URLConnection connection = input.openConnection();
 
             inputStream = connection.getInputStream();
-        } catch (MalformedURLException e) {
-            ConsoleManager.getInstance().exception(this, e);
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         }

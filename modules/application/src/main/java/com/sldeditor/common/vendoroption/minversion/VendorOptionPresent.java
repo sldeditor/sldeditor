@@ -33,7 +33,7 @@ public class VendorOptionPresent implements Comparable<VendorOptionPresent>, Ser
     private static final long serialVersionUID = 3983755249096943710L;
 
     /** The sld obj. */
-    private Object sldObj = null;
+    private transient Object sldObj = null;
 
     /** The vendor option info. */
     private VendorOptionInfo vendorOptionInfo = null;

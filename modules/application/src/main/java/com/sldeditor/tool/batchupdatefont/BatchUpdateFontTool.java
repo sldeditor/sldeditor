@@ -137,7 +137,7 @@ public class BatchUpdateFontTool implements ToolInterface {
         this.sldDataList = sldDataList;
 
         if (toolButton != null) {
-            toolButton.setEnabled(sldDataList.size() > 0);
+            toolButton.setEnabled(!sldDataList.isEmpty());
         }
     }
 

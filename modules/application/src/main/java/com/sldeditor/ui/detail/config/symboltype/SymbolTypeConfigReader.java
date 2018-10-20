@@ -24,7 +24,7 @@ import com.sldeditor.common.xml.ParseXML;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValue;
 import com.sldeditor.common.xml.ui.XMLPanelDetails;
 import com.sldeditor.common.xml.ui.XMLSymbolTypeConfig;
-import com.sldeditor.ui.detail.config.ReadPanelConfig;
+import com.sldeditor.ui.detail.config.panelconfig.SymbolTypeConfigParse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +42,11 @@ public class SymbolTypeConfigReader {
 
     /** The Constant SCHEMA_RESOURCE. */
     private static final String SCHEMA_RESOURCE = "/xsd/symboltype.xsd";
+
+    /** Private default constructor */
+    private SymbolTypeConfigReader() {
+        // Private default constructor
+    }
 
     /**
      * Read configuration.
@@ -92,12 +97,13 @@ public class SymbolTypeConfigReader {
      */
     private static List<SymbolTypeConfig> readSymbolizerConfig(
             Class<?> panelId, XMLPanelDetails xmlPanelDetails) {
-        List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
+        List<SymbolTypeConfig> configList = new ArrayList<>();
 
         for (XMLFieldConfigEnumValue value : xmlPanelDetails.getValue()) {
 
             SymbolTypeConfig config =
-                    ReadPanelConfig.parseSymbolTypeConfig(SymbolTypeConfig.class, panelId, value);
+                    SymbolTypeConfigParse.parseSymbolTypeConfig(
+                            SymbolTypeConfig.class, panelId, value);
 
             configList.add(config);
         }

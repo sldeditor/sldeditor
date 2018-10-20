@@ -88,12 +88,12 @@ public class SingleSymbolUI implements SymbolPanelInterface {
      */
     private JPanel getSymbolizerDetailsPanel() {
         if (panelSymbolizerDetails == null) {
-            List<RenderSymbolInterface> rendererList = new ArrayList<RenderSymbolInterface>();
-            rendererList.add(RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName()));
-            rendererList.add(LegendManager.getInstance().getRendererUpdate());
-            rendererList.add(SLDEditorFile.getInstance());
-            rendererList.add(RenderPanelFactory.getMapRenderer());
-            panelSymbolizerDetails = new SymbolizerDetailsPanel(rendererList, getSymbolTree());
+            List<RenderSymbolInterface> localRendererList = new ArrayList<>();
+            localRendererList.add(RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName()));
+            localRendererList.add(LegendManager.getInstance().getRendererUpdate());
+            localRendererList.add(SLDEditorFile.getInstance());
+            localRendererList.add(RenderPanelFactory.getMapRenderer());
+            panelSymbolizerDetails = new SymbolizerDetailsPanel(localRendererList, getSymbolTree());
         }
 
         return panelSymbolizerDetails;
@@ -147,7 +147,7 @@ public class SingleSymbolUI implements SymbolPanelInterface {
      */
     private List<RenderSymbolInterface> getRendererList() {
         if (rendererList == null) {
-            rendererList = new ArrayList<RenderSymbolInterface>();
+            rendererList = new ArrayList<>();
 
             RenderSymbolInterface renderer =
                     RenderPanelFactory.getRenderer(SingleSymbolUI.class.getName());

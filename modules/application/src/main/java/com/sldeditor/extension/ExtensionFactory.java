@@ -36,7 +36,12 @@ public class ExtensionFactory {
     public static final String EXTENSION_PREFIX = "-extension";
 
     /** The extension list. */
-    private static List<ExtensionInterface> extensionList = new ArrayList<ExtensionInterface>();
+    private static List<ExtensionInterface> extensionList = new ArrayList<>();
+
+    /** Private default constructor */
+    private ExtensionFactory() {
+        // Private default constructor
+    }
 
     /**
      * Gets the available extensions.
@@ -73,32 +78,45 @@ public class ExtensionFactory {
      */
     public static List<String> getArguments(
             ExtensionInterface extension, List<String> extensionArgList) {
-        List<String> specificExtensionArgList = new ArrayList<String>();
+        List<String> specificExtensionArgList = new ArrayList<>();
 
         if (extensionArgList != null) {
             for (String extensionArg : extensionArgList) {
-                String[] components = extensionArg.split("\\.");
-
-                if (components.length >= 2) {
-                    if ((components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0)
-                            && (components[1].compareToIgnoreCase(extension.getExtensionArgPrefix())
-                                    == 0)) {
-                        StringBuilder sb = new StringBuilder();
-
-                        for (int index = 2; index < components.length; index++) {
-                            sb.append(components[index]);
-
-                            if (index + 1 != components.length) {
-                                sb.append(".");
-                            }
-                        }
-                        specificExtensionArgList.add(sb.toString());
-                    }
-                }
+                extractArg(extension, specificExtensionArgList, extensionArg);
             }
         }
 
         return specificExtensionArgList;
+    }
+
+    /**
+     * Extract argument.
+     *
+     * @param extension the extension
+     * @param specificExtensionArgList the specific extension arg list
+     * @param extensionArg the extension arg
+     */
+    private static void extractArg(
+            ExtensionInterface extension,
+            List<String> specificExtensionArgList,
+            String extensionArg) {
+        String[] components = extensionArg.split("\\.");
+
+        if ((components.length >= 2)
+                && ((components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0)
+                        && (components[1].compareToIgnoreCase(extension.getExtensionArgPrefix())
+                                == 0))) {
+            StringBuilder sb = new StringBuilder();
+
+            for (int index = 2; index < components.length; index++) {
+                sb.append(components[index]);
+
+                if (index + 1 != components.length) {
+                    sb.append(".");
+                }
+            }
+            specificExtensionArgList.add(sb.toString());
+        }
     }
 
     /**
@@ -108,15 +126,14 @@ public class ExtensionFactory {
      * @return the argument list
      */
     public static List<String> getArgumentList(String[] args) {
-        List<String> extensionArgList = new ArrayList<String>();
+        List<String> extensionArgList = new ArrayList<>();
 
         for (String extensionArg : args) {
             String[] components = extensionArg.split("\\.");
 
-            if (components.length >= 2) {
-                if (components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0) {
-                    extensionArgList.add(extensionArg);
-                }
+            if ((components.length >= 2)
+                    && (components[0].compareToIgnoreCase(EXTENSION_PREFIX) == 0)) {
+                extensionArgList.add(extensionArg);
             }
         }
         return extensionArgList;

@@ -38,7 +38,7 @@ import com.sldeditor.ui.widgets.FieldPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import org.geotools.filter.LiteralExpressionImpl;
@@ -144,7 +144,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         // Do nothin
     }
 
@@ -163,9 +163,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
         if (windBarbsPanel == null) {
             return null;
         }
-        Expression expression = windBarbsPanel.getExpression();
-
-        return expression;
+        return windBarbsPanel.getExpression();
     }
 
     /**
@@ -281,7 +279,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
             Expression symbolType,
             boolean fillEnabled,
             boolean strokeEnabled) {
-        List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
+        List<GraphicalSymbol> symbolList = new ArrayList<>();
 
         Expression wellKnownName = null;
         if ((getConfigField() != null) && (fieldConfigManager != null)) {
@@ -341,7 +339,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
     @Override
     public Map<FieldIdEnum, FieldConfigBase> getFieldList(
             GraphicPanelFieldManager fieldConfigManager) {
-        Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
+        Map<FieldIdEnum, FieldConfigBase> map = new EnumMap<>(FieldIdEnum.class);
 
         map.put(FieldIdEnum.WINDBARBS, this);
         map.put(FieldIdEnum.WINDBARB_WINDSPEED, this);
@@ -407,6 +405,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      *
      * @return true, if is a single value
      */
+    @Override
     public boolean isASingleValue() {
         return false;
     }
@@ -428,6 +427,7 @@ public class FieldConfigWindBarbs extends FieldState implements WindBarbUpdateIn
      *
      * <p>Will be be overridden if necessary.
      */
+    @Override
     public void justSelected() {
         setCachedExpression(generateExpression());
 

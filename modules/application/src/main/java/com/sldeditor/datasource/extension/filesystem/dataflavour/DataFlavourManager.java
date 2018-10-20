@@ -67,8 +67,7 @@ public class DataFlavourManager {
     private static DataFlavor[] dataFlavourArray = null;
 
     /** The supported map. */
-    private static Map<DataFlavor, List<DataFlavor>> supportedMap =
-            new HashMap<DataFlavor, List<DataFlavor>>();
+    private static Map<DataFlavor, List<DataFlavor>> supportedMap = new HashMap<>();
 
     /** Private default constructor. */
     private DataFlavourManager() {
@@ -111,12 +110,12 @@ public class DataFlavourManager {
 
     /** Populate supported map. */
     private static void populateSupportedMap() {
-        List<String> classNameList = new ArrayList<String>();
+        List<String> classNameList = new ArrayList<>();
         classNameList.add(BuiltInDataFlavour.class.getName());
 
-        List<DataFlavor> dataFlavourList = new ArrayList<DataFlavor>();
-        List<DataFlavor> destinationFolderList = new ArrayList<DataFlavor>();
-        List<DataFlavor> destinationGeoServerList = new ArrayList<DataFlavor>();
+        List<DataFlavor> dataFlavourList = new ArrayList<>();
+        List<DataFlavor> destinationFolderList = new ArrayList<>();
+        List<DataFlavor> destinationGeoServerList = new ArrayList<>();
 
         for (String className : classNameList) {
             try {
@@ -154,7 +153,7 @@ public class DataFlavourManager {
      * @param supportedList the supported list
      */
     private static void populate(DataFlavor destination, DataFlavor[] supportedList) {
-        List<DataFlavor> list = new ArrayList<DataFlavor>();
+        List<DataFlavor> list = new ArrayList<>();
 
         for (DataFlavor flavour : supportedList) {
             list.add(flavour);
@@ -174,8 +173,7 @@ public class DataFlavourManager {
             return false;
         }
 
-        Map<NodeInterface, List<SLDDataInterface>> map =
-                new LinkedHashMap<NodeInterface, List<SLDDataInterface>>();
+        Map<NodeInterface, List<SLDDataInterface>> map = new LinkedHashMap<>();
 
         for (int index = 0; index < transferredData.getDataListSize(); index++) {
             NodeInterface nodeToTransfer =

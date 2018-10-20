@@ -85,7 +85,7 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
 
         JPanel p = new JPanel();
         p.setLayout(new GridLayout(1, 2));
-        formatListComponent = new JList<String>();
+        formatListComponent = new JList<>();
         formatListComponent.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         formatListComponent.setPreferredSize(new Dimension(100, 300));
         formatListComponent.addListSelectionListener(
@@ -101,6 +101,7 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
 
         formatListComponent.addMouseListener(
                 new MouseAdapter() {
+                    @Override
                     public void mouseClicked(MouseEvent evt) {
                         if (evt.getClickCount() == 2) {
                             selectFormat();
@@ -154,9 +155,9 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
     public AbstractGridFormat showPanel(Set<AbstractGridFormat> formatList) {
         WorldImageFormat wif = new WorldImageFormat();
 
-        DefaultListModel<String> listModel = new DefaultListModel<String>();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
 
-        List<AbstractGridFormat> sortedFormatList = new ArrayList<AbstractGridFormat>();
+        List<AbstractGridFormat> sortedFormatList = new ArrayList<>();
         for (AbstractGridFormat format : formatList) {
             if (format.getName().compareTo(wif.getName()) != 0) {
                 sortedFormatList.add(format);
@@ -190,9 +191,7 @@ public class ChooseRasterFormatPanel extends JDialog implements ChooseRasterForm
         setVisible(true);
 
         String selectedFormatName = formatListComponent.getSelectedValue();
-        AbstractGridFormat selectedFormat = formatMap.get(selectedFormatName);
-
-        return selectedFormat;
+        return formatMap.get(selectedFormatName);
     }
 
     /** Select format. */

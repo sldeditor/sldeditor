@@ -46,14 +46,11 @@ public class ScaleToolPanel extends JDialog implements ScaleToolUpdate {
     /** serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /** The table. */
-    private JTable table;
-
     /** The table model. */
     protected ScaleSLDModel dataModel = null;
 
     /** The application. */
-    private SLDEditorInterface application = null;
+    private transient SLDEditorInterface application = null;
 
     /** The btn save. */
     private JButton btnSave = null;
@@ -83,7 +80,7 @@ public class ScaleToolPanel extends JDialog implements ScaleToolUpdate {
     private void createUI() {
         dataModel = new ScaleSLDModel(this);
 
-        table = new JTable();
+        JTable table = new JTable();
         table.setModel(dataModel);
 
         dataModel.setColumnRenderer(table.getColumnModel());
@@ -138,7 +135,7 @@ public class ScaleToolPanel extends JDialog implements ScaleToolUpdate {
      */
     public void populate(List<SLDDataInterface> sldDataList) {
 
-        List<ScaleSLDData> scaleDataList = new ArrayList<ScaleSLDData>();
+        List<ScaleSLDData> scaleDataList = new ArrayList<>();
 
         for (SLDDataInterface sldData : sldDataList) {
             List<ScaleSLDData> scaleSLDDataList = ScalePanelUtils.containsScales(sldData);

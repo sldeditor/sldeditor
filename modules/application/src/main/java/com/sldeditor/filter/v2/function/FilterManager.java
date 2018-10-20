@@ -92,7 +92,6 @@ import org.locationtech.jts.geom.Point;
 import org.opengis.filter.Filter;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Function;
 import org.opengis.filter.expression.Literal;
 import org.opengis.parameter.Parameter;
 
@@ -116,25 +115,20 @@ public class FilterManager implements FilterNameInterface {
     /** The singleton instance. */
     private static FilterNameInterface instance = null;
 
-    /** The function name list. */
-    private List<FilterName> filterNameList = new ArrayList<FilterName>();
-
     /** The function name map. */
-    private Map<String, FilterName> functionNameMap = new HashMap<String, FilterName>();
+    private Map<String, FilterName> functionNameMap = new HashMap<>();
 
     /** The filter map. */
-    private Map<String, FilterConfigInterface> filterMap =
-            new HashMap<String, FilterConfigInterface>();
+    private Map<String, FilterConfigInterface> filterMap = new HashMap<>();
 
     /** The filter type map. */
-    private Map<Class<?>, FilterConfigInterface> filterTypeMap =
-            new HashMap<Class<?>, FilterConfigInterface>();
+    private Map<Class<?>, FilterConfigInterface> filterTypeMap = new HashMap<>();
 
     /** The function factory. */
     private DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
 
     /** The allowed type map. */
-    private Map<Class<?>, List<Class<?>>> allowedTypeMap = new HashMap<Class<?>, List<Class<?>>>();
+    private Map<Class<?>, List<Class<?>>> allowedTypeMap = new HashMap<>();
 
     /**
      * Gets the single instance of FilterManager.
@@ -158,7 +152,7 @@ public class FilterManager implements FilterNameInterface {
     private void initialise() {
         List<FilterConfigInterface> filterConfigList = getFilterConfigList();
 
-        filterNameList = new ArrayList<FilterName>();
+        List<FilterName> filterNameList = new ArrayList<>();
 
         for (FilterConfigInterface filterConfig : filterConfigList) {
             filterNameList.add(filterConfig.getFilterConfiguration());
@@ -167,7 +161,7 @@ public class FilterManager implements FilterNameInterface {
             filterTypeMap.put(filterConfig.getFilterClass(), filterConfig);
         }
 
-        List<Class<?>> classList = new ArrayList<Class<?>>();
+        List<Class<?>> classList = new ArrayList<>();
 
         Logger logger = Logger.getLogger(getClass());
 
@@ -252,7 +246,7 @@ public class FilterManager implements FilterNameInterface {
      */
     @Override
     public List<FilterConfigInterface> getFilterConfigList() {
-        List<FilterConfigInterface> filterConfigList = new ArrayList<FilterConfigInterface>();
+        List<FilterConfigInterface> filterConfigList = new ArrayList<>();
 
         // Logic filters
         filterConfigList.add(new And(CATEGORY_LOGIC));
@@ -328,10 +322,7 @@ public class FilterManager implements FilterNameInterface {
 
         List<Expression> parameters = null;
         Literal fallback = null;
-        Function function =
-                functionFactory.function(functionName.getFunctionName(), parameters, fallback);
-
-        return function;
+        return functionFactory.function(functionName.getFunctionName(), parameters, fallback);
     }
 
     /**
@@ -344,7 +335,7 @@ public class FilterManager implements FilterNameInterface {
     @Override
     public List<GroupConfigInterface> convertParameters(
             Class<?> panelId, FunctionName functionName) {
-        List<GroupConfigInterface> groupConfigList = new ArrayList<GroupConfigInterface>();
+        List<GroupConfigInterface> groupConfigList = new ArrayList<>();
 
         if (functionName != null) {
             GroupConfig groupConfig = new GroupConfig();

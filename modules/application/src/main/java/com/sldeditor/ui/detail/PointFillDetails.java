@@ -36,6 +36,7 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.Displacement;
@@ -57,20 +58,20 @@ public class PointFillDetails extends StandardPanel
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /** The Constant configFile. */
-    private static final String configFile = "PointFill.xml";
+    /** The Constant CONFIG_FILE. */
+    private static final String CONFIG_FILE = "PointFill.xml";
 
     /** The symbol type factory. */
-    private SymbolTypeFactory symbolTypeFactory = null;
+    private transient SymbolTypeFactory symbolTypeFactory = null;
 
     /** The field override map, indicates which fields to enable. */
-    private FieldEnableState fieldEnableState = null;
+    private transient FieldEnableState fieldEnableState = null;
 
     /** The panel id of the selected fill. */
     private Class<?> selectedFillPanelId = null;
 
     /** The vendor option fill factory. */
-    private VendorOptionFillFactory vendorOptionFillFactory = null;
+    private transient VendorOptionFillFactory vendorOptionFillFactory = null;
 
     /** Constructor. */
     public PointFillDetails() {
@@ -95,16 +96,15 @@ public class PointFillDetails extends StandardPanel
 
         fieldEnableState = symbolTypeFactory.getFieldOverrides(PointFillDetails.class);
 
-        createUI(PointFillDetails.class, configFile);
+        createUI(CONFIG_FILE);
     }
 
     /**
      * Creates the ui.
      *
-     * @param panelDetails the panel details the configuration is for
      * @param configFile the config file
      */
-    private void createUI(Class<?> panelDetails, String configFile) {
+    private void createUI(String configFile) {
 
         createVendorOptionPanel();
 
@@ -272,13 +272,10 @@ public class PointFillDetails extends StandardPanel
 
         if (anchorPointPanel.isPanelEnabled()) {
             anchor =
-                    (AnchorPoint)
-                            getStyleFactory()
-                                    .anchorPoint(
-                                            fieldConfigVisitor.getExpression(
-                                                    FieldIdEnum.ANCHOR_POINT_H),
-                                            fieldConfigVisitor.getExpression(
-                                                    FieldIdEnum.ANCHOR_POINT_V));
+                    getStyleFactory()
+                            .anchorPoint(
+                                    fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_H),
+                                    fieldConfigVisitor.getExpression(FieldIdEnum.ANCHOR_POINT_V));
 
             // Ignore the anchor point if it is the same as the default
             // so it doesn't appear in the SLD
@@ -368,31 +365,31 @@ public class PointFillDetails extends StandardPanel
         Map<GroupIdEnum, Boolean> groupList =
                 fieldEnableState.getGroupIdList(panelId.getName(), selectedItem);
 
-        for (GroupIdEnum groupId : groupList.keySet()) {
-            boolean groupEnabled = groupList.get(groupId);
+        for (Entry<GroupIdEnum, Boolean> entry : groupList.entrySet()) {
+            boolean groupEnabled = entry.getValue();
             GroupConfigInterface groupConfig =
-                    fieldConfigManager.getGroup(this.getClass(), groupId);
+                    fieldConfigManager.getGroup(this.getClass(), entry.getKey());
             if (groupConfig != null) {
                 groupConfig.setGroupStateOverride(groupEnabled);
             } else {
                 ConsoleManager.getInstance()
-                        .error(this, "Failed to find group : " + groupId.toString());
+                        .error(this, "Failed to find group : " + entry.getKey().toString());
             }
         }
 
         Map<FieldIdEnum, Boolean> fieldList =
                 fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
 
-        for (FieldIdEnum fieldId : fieldList.keySet()) {
-            boolean fieldEnabled = fieldList.get(fieldId);
-            FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        for (Entry<FieldIdEnum, Boolean> entry : fieldList.entrySet()) {
+            boolean fieldEnabled = entry.getValue();
+            FieldConfigBase fieldConfig = fieldConfigManager.get(entry.getKey());
             if (fieldConfig != null) {
                 CurrentFieldState fieldState = fieldConfig.getFieldState();
                 fieldState.setFieldEnabled(fieldEnabled);
                 fieldConfig.setFieldState(fieldState);
             } else {
                 ConsoleManager.getInstance()
-                        .error(this, "Failed to find field : " + fieldId.toString());
+                        .error(this, "Failed to find field : " + entry.getKey().toString());
             }
         }
     }

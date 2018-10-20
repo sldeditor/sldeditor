@@ -49,7 +49,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -69,7 +69,7 @@ public class FieldConfigGeometryField extends FieldConfigBase
     private Object oldValueObj = null;
 
     /** The data model. */
-    private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+    private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
     /** The populating attribute combo box. */
     private boolean populatingAttributeComboBox = false;
@@ -99,7 +99,7 @@ public class FieldConfigGeometryField extends FieldConfigBase
             int xPos = getXPos();
             FieldPanel fieldPanel = createFieldPanel(xPos, getLabel());
 
-            attributeComboBox = new JComboBox<String>();
+            attributeComboBox = new JComboBox<>();
             attributeComboBox.setBounds(
                     xPos + BasePanel.WIDGET_X_START,
                     0,
@@ -134,7 +134,7 @@ public class FieldConfigGeometryField extends FieldConfigBase
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         // Do nothing
     }
 

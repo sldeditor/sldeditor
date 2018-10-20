@@ -67,7 +67,7 @@ public class Localisation {
     private Locale currentLocale = null;
 
     /** The resource bundle map. */
-    private Map<String, ResourceBundle> resourceBundleMap = new HashMap<String, ResourceBundle>();
+    private Map<String, ResourceBundle> resourceBundleMap = new HashMap<>();
 
     /** Instantiates a new localisation. */
     private Localisation() {
@@ -187,11 +187,8 @@ public class Localisation {
             className = clazz.getSimpleName();
         }
 
-        ResourceBundle resourceBundle =
-                getInstance()
-                        .getResourceBundle(
-                                String.format("%s/%s/%s", RESOURCE_FOLDER, baseName, className));
-        return resourceBundle;
+        return getInstance()
+                .getResourceBundle(String.format("%s/%s/%s", RESOURCE_FOLDER, baseName, className));
     }
 
     /**

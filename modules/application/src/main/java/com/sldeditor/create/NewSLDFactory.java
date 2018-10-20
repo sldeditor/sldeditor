@@ -37,11 +37,10 @@ import java.util.Map;
 public class NewSLDFactory {
 
     /** The available map. */
-    private static Map<String, NewSLDInterface> availableMap =
-            new LinkedHashMap<String, NewSLDInterface>();
+    private static Map<String, NewSLDInterface> availableMap = new LinkedHashMap<>();
 
     /** Instantiates a new NewSLDFactory. */
-    public NewSLDFactory() {
+    private NewSLDFactory() {
         // Default constructor
     }
 
@@ -68,7 +67,7 @@ public class NewSLDFactory {
      * @return the list
      */
     private static List<NewSLDInterface> populateAvailableList() {
-        List<NewSLDInterface> list = new ArrayList<NewSLDInterface>();
+        List<NewSLDInterface> list = new ArrayList<>();
 
         list.add(new NewPointSLD());
         list.add(new NewLineSLD());

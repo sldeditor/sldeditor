@@ -134,7 +134,7 @@ public class FontDetails extends StandardPanel implements UpdateSymbolInterface 
     private Font extractFont() {
         Expression fontFamily = fieldConfigVisitor.getExpression(FieldIdEnum.FONT_FAMILY);
 
-        List<Expression> fontFamilyList = new ArrayList<Expression>();
+        List<Expression> fontFamilyList = new ArrayList<>();
         if (fontFamily != null) {
             fontFamilyList.add(fontFamily);
         }
@@ -171,8 +171,6 @@ public class FontDetails extends StandardPanel implements UpdateSymbolInterface 
      * @return the font data
      */
     public Font getFontData() {
-        Font font = extractFont();
-
-        return font;
+        return extractFont();
     }
 }

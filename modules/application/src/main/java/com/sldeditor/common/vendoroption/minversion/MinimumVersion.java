@@ -19,6 +19,7 @@
 
 package com.sldeditor.common.vendoroption.minversion;
 
+import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VendorOptionVersion;
 import com.sldeditor.common.vendoroption.VersionData;
@@ -28,13 +29,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
-import org.geotools.styling.UserLayerImpl;
 
 /**
  * The Class MinimumVersion.
@@ -47,8 +46,7 @@ public class MinimumVersion {
     private GetMinimumVersionInterface uiMgr = null;
 
     /** The vendor options present list. */
-    private List<VendorOptionPresent> vendorOptionsPresentList =
-            new ArrayList<VendorOptionPresent>();
+    private List<VendorOptionPresent> vendorOptionsPresentList = new ArrayList<>();
 
     /** The default vendor option version. */
     private VendorOptionVersion defaultVendorOptionVersion =
@@ -76,40 +74,27 @@ public class MinimumVersion {
             uiMgr.getMinimumVersion(parentObj, sld, vendorOptionsPresentList);
             List<StyledLayer> styledLayerList = sld.layers();
 
-            if (styledLayerList != null) {
-                parentObj = sld;
-                for (StyledLayer styledLayer : styledLayerList) {
-                    uiMgr.getMinimumVersion(parentObj, styledLayer, vendorOptionsPresentList);
-                    List<Style> styleList = null;
+            parentObj = sld;
+            for (StyledLayer styledLayer : styledLayerList) {
+                uiMgr.getMinimumVersion(parentObj, styledLayer, vendorOptionsPresentList);
+                List<Style> styleList = SLDUtils.getStylesList(styledLayer);
 
-                    if (styledLayer instanceof NamedLayerImpl) {
-                        NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
-                        styleList = namedLayerImpl.styles();
-                    } else if (styledLayer instanceof UserLayerImpl) {
-                        UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
-                        styleList = userLayerImpl.userStyles();
-                    }
+                parentObj = styledLayer;
+                for (Style style : styleList) {
+                    uiMgr.getMinimumVersion(parentObj, style, vendorOptionsPresentList);
+                    parentObj = style;
 
-                    if (styleList != null) {
-                        parentObj = styledLayer;
-                        for (Style style : styleList) {
-                            uiMgr.getMinimumVersion(parentObj, style, vendorOptionsPresentList);
-                            parentObj = style;
+                    for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                        uiMgr.getMinimumVersion(parentObj, fts, vendorOptionsPresentList);
+                        parentObj = fts;
 
-                            for (FeatureTypeStyle fts : style.featureTypeStyles()) {
-                                uiMgr.getMinimumVersion(parentObj, fts, vendorOptionsPresentList);
-                                parentObj = fts;
+                        for (Rule rule : fts.rules()) {
+                            uiMgr.getMinimumVersion(parentObj, rule, vendorOptionsPresentList);
+                            parentObj = rule;
 
-                                for (Rule rule : fts.rules()) {
-                                    uiMgr.getMinimumVersion(
-                                            parentObj, rule, vendorOptionsPresentList);
-                                    parentObj = rule;
-
-                                    for (Symbolizer symbolizer : rule.symbolizers()) {
-                                        uiMgr.getMinimumVersion(
-                                                parentObj, symbolizer, vendorOptionsPresentList);
-                                    }
-                                }
+                            for (Symbolizer symbolizer : rule.symbolizers()) {
+                                uiMgr.getMinimumVersion(
+                                        parentObj, symbolizer, vendorOptionsPresentList);
                             }
                         }
                     }
@@ -122,7 +107,7 @@ public class MinimumVersion {
 
     /** Removes the strict SLD. */
     private void removeStrictSLD() {
-        List<VendorOptionPresent> newList = new ArrayList<VendorOptionPresent>();
+        List<VendorOptionPresent> newList = new ArrayList<>();
 
         for (VendorOptionPresent obj : vendorOptionsPresentList) {
             if (obj.getVendorOptionInfo().getVersionData() != defaultVendorOptionVersion) {
@@ -151,7 +136,7 @@ public class MinimumVersion {
      * @return the minimum version
      */
     public List<VersionData> getMinimumVersion(List<VersionData> userDefaultVendorOption) {
-        List<VersionData> list = new ArrayList<VersionData>();
+        List<VersionData> list = new ArrayList<>();
         if (vendorOptionsPresentList.isEmpty()) {
             list = userDefaultVendorOption;
         } else {

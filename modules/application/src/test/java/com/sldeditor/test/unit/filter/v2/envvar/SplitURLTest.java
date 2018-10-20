@@ -159,10 +159,6 @@ class SplitURLTest {
      */
     @Test
     void testSplitQueryNull() {
-        // Increase code coverage
-        @SuppressWarnings("unused")
-        SplitURL tmp = new SplitURL();
-        tmp = null;
 
         // Test methods by passing null parameters
         Map<String, List<String>> actualResults = null;

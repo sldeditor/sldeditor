@@ -30,6 +30,7 @@ public class InlineDatastoreVisitor extends DuplicatingStyleVisitor {
      * @see
      *     org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.UserLayer)
      */
+    @Override
     public void visit(UserLayer layer) {
 
         Style[] style = layer.getUserStyles();

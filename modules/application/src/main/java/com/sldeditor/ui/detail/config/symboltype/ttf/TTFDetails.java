@@ -57,10 +57,10 @@ public class TTFDetails extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The parent obj. */
-    private TTFUpdateInterface parentObj = null;
+    private transient TTFUpdateInterface parentObj = null;
 
     /** The old value obj. */
-    private Object oldValueObj = null;
+    private transient Object oldValueObj = null;
 
     /** The suppress undo events flag. */
     private boolean suppressUndoEvents = false;
@@ -175,9 +175,7 @@ public class TTFDetails extends StandardPanel
     public Expression getExpression() {
         String string = fieldConfigVisitor.getText(FieldIdEnum.TTF_SYMBOL);
 
-        Expression expression = getFilterFactory().literal(string);
-
-        return expression;
+        return getFilterFactory().literal(string);
     }
 
     /** Revert to default value. */

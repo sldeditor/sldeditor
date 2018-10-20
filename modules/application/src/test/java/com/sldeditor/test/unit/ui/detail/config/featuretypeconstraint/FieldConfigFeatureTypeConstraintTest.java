@@ -155,7 +155,7 @@ public class FieldConfigFeatureTypeConstraintTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#internal_setEnabled(boolean)}.
+     * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#internalSetEnabled(boolean)}.
      * Test method for {@link
      * com.sldeditor.ui.detail.config.featuretypeconstraint.FieldConfigFeatureTypeConstraint#isEnabled()}.
      */
@@ -168,7 +168,7 @@ public class FieldConfigFeatureTypeConstraintTest {
 
         // Field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -178,7 +178,7 @@ public class FieldConfigFeatureTypeConstraintTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
     }

@@ -44,7 +44,7 @@ public class FeatureTypeStyleDetails extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The vendor option feature type style factory. */
-    private VendorOptionFTSFactory vendorOptionFTSFactory = null;
+    private transient VendorOptionFTSFactory vendorOptionFTSFactory = null;
 
     /** Constructor. */
     public FeatureTypeStyleDetails() {
@@ -132,22 +132,21 @@ public class FeatureTypeStyleDetails extends StandardPanel
 
             FeatureTypeStyle existingFTS = SelectedSymbol.getInstance().getFeatureTypeStyle();
             if (existingFTS != null) {
-                List<org.opengis.style.Rule> newRuleList = new ArrayList<org.opengis.style.Rule>();
+                List<org.opengis.style.Rule> newRuleList = new ArrayList<>();
                 for (org.opengis.style.Rule rule : existingFTS.rules()) {
                     newRuleList.add(rule);
                 }
 
                 FeatureTypeStyle fts =
-                        (FeatureTypeStyle)
-                                getStyleFactory()
-                                        .featureTypeStyle(
-                                                standardData.getName(),
-                                                (org.opengis.style.Description)
-                                                        standardData.getDescription(),
-                                                existingFTS.getFeatureInstanceIDs(),
-                                                existingFTS.featureTypeNames(),
-                                                existingFTS.semanticTypeIdentifiers(),
-                                                newRuleList);
+                        getStyleFactory()
+                                .featureTypeStyle(
+                                        standardData.getName(),
+                                        (org.opengis.style.Description)
+                                                standardData.getDescription(),
+                                        existingFTS.getFeatureInstanceIDs(),
+                                        existingFTS.featureTypeNames(),
+                                        existingFTS.semanticTypeIdentifiers(),
+                                        newRuleList);
 
                 if (transformation != null) {
                     fts.setTransformation(transformation);

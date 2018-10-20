@@ -17,6 +17,11 @@ import java.io.File;
  */
 public class GenerateFilename {
 
+    /** Private default constructor */
+    private GenerateFilename() {
+        // Private default constructor
+    }
+
     /**
      * Find unique name.
      *

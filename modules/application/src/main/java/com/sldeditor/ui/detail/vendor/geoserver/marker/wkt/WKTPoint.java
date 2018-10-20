@@ -116,7 +116,7 @@ public class WKTPoint {
         if (this == obj) {
             return true;
         }
-        ;
+
         if (obj == null) {
             return false;
         }

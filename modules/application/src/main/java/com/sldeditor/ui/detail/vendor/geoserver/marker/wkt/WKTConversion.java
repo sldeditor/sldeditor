@@ -79,10 +79,15 @@ public class WKTConversion {
     private static WKTParser wktParser = null;
 
     /** The wkt type list. */
-    private static List<WKTType> wktTypeList = new ArrayList<WKTType>();
+    private static List<WKTType> wktTypeList = new ArrayList<>();
 
     /** The wkt type map. */
-    private static Map<String, WKTType> wktTypeMap = new HashMap<String, WKTType>();
+    private static Map<String, WKTType> wktTypeMap = new HashMap<>();
+
+    /** Private default constructor */
+    private WKTConversion() {
+        // Private default constructor
+    }
 
     /**
      * Gets the WKT type data.
@@ -136,76 +141,14 @@ public class WKTConversion {
             org.opengis.geometry.Geometry geometry = wktParser.parse(wktString);
 
             if (geometry instanceof MultiPrimitiveImpl) {
-                int index = 0;
                 MultiPrimitiveImpl multiLine = (MultiPrimitiveImpl) geometry;
-                for (Primitive primitive : multiLine.getElements()) {
-                    if (primitive instanceof CurveImpl) {
-                        WKTSegmentList ptList = new WKTSegmentList();
-                        wktGeometry.setGeometryType(getWKTType(WKT_MULTILINESTRING));
-                        CurveImpl curve = (CurveImpl) primitive;
-
-                        extractLineSegments(curve, ptList);
-
-                        wktGeometry.addSegmentList(index, ptList);
-                    } else if (primitive instanceof PointImpl) {
-                        WKTSegmentList ptList = new WKTSegmentList();
-                        wktGeometry.setGeometryType(getWKTType(WKT_MULTIPOINT));
-
-                        PointImpl point = (PointImpl) primitive;
-
-                        WKTPoint wktPoint = new WKTPoint(point.getDirectPosition());
-                        ptList.addPoint(wktPoint);
-                        wktGeometry.addSegmentList(index, ptList);
-                    } else if (primitive instanceof SurfaceImpl) {
-                        wktGeometry.setGeometryType(getWKTType(WKT_MULTIPOLYGON));
-                        SurfaceImpl surfaceImpl = (SurfaceImpl) primitive;
-
-                        for (Ring ring : surfaceImpl.getBoundaryRings()) {
-                            WKTSegmentList ptList = new WKTSegmentList();
-                            for (Primitive ringPrimitive : ring.getElements()) {
-                                if (ringPrimitive instanceof CurveImpl) {
-                                    CurveImpl curve = (CurveImpl) ringPrimitive;
-                                    extractLineSegments(curve, ptList);
-                                }
-                            }
-                            wktGeometry.addSegmentList(index, ptList);
-                        }
-                    }
-                    index++;
-                }
+                parseWKTMultiPrimitive(wktGeometry, multiLine);
             } else if (geometry instanceof PointImpl) {
-                wktGeometry.setGeometryType(getWKTType(WKT_POINT));
-                PointImpl pointImpl = (PointImpl) geometry;
-
-                WKTSegmentList ptList = new WKTSegmentList();
-                wktGeometry.addSegmentList(0, ptList);
-
-                WKTPoint point = new WKTPoint(pointImpl.getDirectPosition());
-
-                ptList.addPoint(point);
+                parseWKTPoint(wktGeometry, geometry);
             } else if (geometry instanceof CurveImpl) {
-                wktGeometry.setGeometryType(getWKTType(WKT_LINESTRING));
-                CurveImpl curveImpl = (CurveImpl) geometry;
-
-                WKTSegmentList ptList = new WKTSegmentList();
-                wktGeometry.addSegmentList(0, ptList);
-
-                extractLineSegments(curveImpl, ptList);
+                parseWKTCurve(wktGeometry, geometry);
             } else if (geometry instanceof SurfaceImpl) {
-                wktGeometry.setGeometryType(getWKTType(WKT_POLYGON));
-                SurfaceImpl surfaceImpl = (SurfaceImpl) geometry;
-
-                for (Ring ring : surfaceImpl.getBoundaryRings()) {
-                    WKTSegmentList ptList = new WKTSegmentList();
-                    wktGeometry.addSegmentList(0, ptList);
-
-                    for (Primitive primitive : ring.getElements()) {
-                        if (primitive instanceof CurveImpl) {
-                            CurveImpl curve = (CurveImpl) primitive;
-                            extractLineSegments(curve, ptList);
-                        }
-                    }
-                }
+                parseWKTSurface(wktGeometry, geometry);
             }
         } catch (ParseException e) {
 
@@ -220,6 +163,148 @@ public class WKTConversion {
             ConsoleManager.getInstance().error(WKTConversion.class, e.getLocalizedMessage());
         }
         return wktGeometry;
+    }
+
+    /**
+     * Parses the WKT multi primitive.
+     *
+     * @param wktGeometry the wkt geometry
+     * @param multiLine the multi line
+     */
+    private static void parseWKTMultiPrimitive(
+            WKTGeometry wktGeometry, MultiPrimitiveImpl multiLine) {
+        int index = 0;
+        for (Primitive primitive : multiLine.getElements()) {
+            if (primitive instanceof CurveImpl) {
+                parseWKTMultiCurve(wktGeometry, index, primitive);
+            } else if (primitive instanceof PointImpl) {
+                parseWKTMultiPoint(wktGeometry, index, primitive);
+            } else if (primitive instanceof SurfaceImpl) {
+                parseWKTMultiSurface(wktGeometry, index, primitive);
+            }
+            index++;
+        }
+    }
+
+    /**
+     * Parses the WKT multi surface.
+     *
+     * @param wktGeometry the wkt geometry
+     * @param index the index
+     * @param primitive the primitive
+     */
+    private static void parseWKTMultiSurface(
+            WKTGeometry wktGeometry, int index, Primitive primitive) {
+        wktGeometry.setGeometryType(getWKTType(WKT_MULTIPOLYGON));
+        SurfaceImpl surfaceImpl = (SurfaceImpl) primitive;
+
+        for (Ring ring : surfaceImpl.getBoundaryRings()) {
+            WKTSegmentList ptList = new WKTSegmentList();
+            for (Primitive ringPrimitive : ring.getElements()) {
+                if (ringPrimitive instanceof CurveImpl) {
+                    CurveImpl curve = (CurveImpl) ringPrimitive;
+                    extractLineSegments(curve, ptList);
+                }
+            }
+            wktGeometry.addSegmentList(index, ptList);
+        }
+    }
+
+    /**
+     * Parses the WKT multi point.
+     *
+     * @param wktGeometry the wkt geometry
+     * @param index the index
+     * @param primitive the primitive
+     */
+    private static void parseWKTMultiPoint(
+            WKTGeometry wktGeometry, int index, Primitive primitive) {
+        WKTSegmentList ptList = new WKTSegmentList();
+        wktGeometry.setGeometryType(getWKTType(WKT_MULTIPOINT));
+
+        PointImpl point = (PointImpl) primitive;
+
+        WKTPoint wktPoint = new WKTPoint(point.getDirectPosition());
+        ptList.addPoint(wktPoint);
+        wktGeometry.addSegmentList(index, ptList);
+    }
+
+    /**
+     * Parses the WKT multi curve.
+     *
+     * @param wktGeometry the wkt geometry
+     * @param index the index
+     * @param primitive the primitive
+     */
+    private static void parseWKTMultiCurve(
+            WKTGeometry wktGeometry, int index, Primitive primitive) {
+        WKTSegmentList ptList = new WKTSegmentList();
+        wktGeometry.setGeometryType(getWKTType(WKT_MULTILINESTRING));
+        CurveImpl curve = (CurveImpl) primitive;
+
+        extractLineSegments(curve, ptList);
+
+        wktGeometry.addSegmentList(index, ptList);
+    }
+
+    /**
+     * Parses the WKT surface.
+     *
+     * @param wktGeometry the wkt geometry
+     * @param geometry the geometry
+     */
+    private static void parseWKTSurface(
+            WKTGeometry wktGeometry, org.opengis.geometry.Geometry geometry) {
+        wktGeometry.setGeometryType(getWKTType(WKT_POLYGON));
+        SurfaceImpl surfaceImpl = (SurfaceImpl) geometry;
+
+        for (Ring ring : surfaceImpl.getBoundaryRings()) {
+            WKTSegmentList ptList = new WKTSegmentList();
+            wktGeometry.addSegmentList(0, ptList);
+
+            for (Primitive primitive : ring.getElements()) {
+                if (primitive instanceof CurveImpl) {
+                    CurveImpl curve = (CurveImpl) primitive;
+                    extractLineSegments(curve, ptList);
+                }
+            }
+        }
+    }
+
+    /**
+     * Parses the WKT curve.
+     *
+     * @param wktGeometry the wkt geometry
+     * @param geometry the geometry
+     */
+    private static void parseWKTCurve(
+            WKTGeometry wktGeometry, org.opengis.geometry.Geometry geometry) {
+        wktGeometry.setGeometryType(getWKTType(WKT_LINESTRING));
+        CurveImpl curveImpl = (CurveImpl) geometry;
+
+        WKTSegmentList ptList = new WKTSegmentList();
+        wktGeometry.addSegmentList(0, ptList);
+
+        extractLineSegments(curveImpl, ptList);
+    }
+
+    /**
+     * Parses the WKT point.
+     *
+     * @param wktGeometry the wkt geometry
+     * @param geometry the geometry
+     */
+    private static void parseWKTPoint(
+            WKTGeometry wktGeometry, org.opengis.geometry.Geometry geometry) {
+        wktGeometry.setGeometryType(getWKTType(WKT_POINT));
+        PointImpl pointImpl = (PointImpl) geometry;
+
+        WKTSegmentList ptList = new WKTSegmentList();
+        wktGeometry.addSegmentList(0, ptList);
+
+        WKTPoint point = new WKTPoint(pointImpl.getDirectPosition());
+
+        ptList.addPoint(point);
     }
 
     /**
@@ -362,11 +447,8 @@ public class WKTConversion {
             } else {
                 List<WKTSegmentList> segmentList = wktGeometry.getSegmentList(0);
                 if (segmentList != null) {
-                    if (geometryTypeName.compareTo(WKT_POINT) == 0) {
-                        for (WKTSegmentList pointList : segmentList) {
-                            sb.append(pointList.getWKTString());
-                        }
-                    } else if (geometryTypeName.compareTo(WKT_LINESTRING) == 0) {
+                    if ((geometryTypeName.compareTo(WKT_POINT) == 0)
+                            || (geometryTypeName.compareTo(WKT_LINESTRING) == 0)) {
                         for (WKTSegmentList pointList : segmentList) {
                             sb.append(pointList.getWKTString());
                         }
@@ -404,7 +486,7 @@ public class WKTConversion {
         if (crsCode != null) {
             CoordinateReferenceSystem crs = CoordManager.getInstance().getCRS(crsCode);
             String sridString = CRS.toSRS(crs, true);
-            srid = Integer.valueOf(sridString).intValue();
+            srid = Integer.parseInt(sridString);
         }
         org.locationtech.jts.geom.GeometryFactory geometryFactory =
                 new org.locationtech.jts.geom.GeometryFactory(new PrecisionModel(), srid);

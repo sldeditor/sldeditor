@@ -41,12 +41,14 @@ import org.opengis.filter.expression.Expression;
  */
 public class FieldConfigPopulation {
 
+    /** The Constant STANDARD_PANEL_UNKNOWN_FIELD. */
+    private static final String STANDARD_PANEL_UNKNOWN_FIELD = "StandardPanel.unknownField";
+
     /** The field config manager. */
     private GraphicPanelFieldManager fieldConfigManager = null;
 
     /** The map to hold the original values of a text field. */
-    private Map<FieldConfigValuePopulateInterface, String> valueMap =
-            new HashMap<FieldConfigValuePopulateInterface, String>();
+    private Map<FieldConfigValuePopulateInterface, String> valueMap = new HashMap<>();
 
     /** The tree data updated flag. */
     private boolean treeDataUpdated = false;
@@ -75,7 +77,7 @@ public class FieldConfigPopulation {
 
         if (fieldConfig != null) {
             if (value != null) {
-                ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+                fieldConfig.populateField(value);
             } else {
                 fieldConfig.revertToDefaultValue();
             }
@@ -96,7 +98,7 @@ public class FieldConfigPopulation {
 
         if (fieldConfig != null) {
             if (value != null) {
-                ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+                fieldConfig.populateField(value);
             } else {
                 fieldConfig.revertToDefaultValue();
             }
@@ -180,7 +182,7 @@ public class FieldConfigPopulation {
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
         if (fieldConfig != null) {
-            ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+            fieldConfig.populateField(value);
             storeOriginalData(fieldConfig);
         } else {
             ConsoleManager.getInstance()
@@ -189,7 +191,7 @@ public class FieldConfigPopulation {
                             String.format(
                                     "populateTextField - %s : %s",
                                     Localisation.getString(
-                                            StandardPanel.class, "StandardPanel.unknownField"),
+                                            StandardPanel.class, STANDARD_PANEL_UNKNOWN_FIELD),
                                     fieldId));
         }
     }
@@ -206,7 +208,7 @@ public class FieldConfigPopulation {
         }
         FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
         if (fieldConfig != null) {
-            ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+            fieldConfig.populateField(value);
         } else {
             ConsoleManager.getInstance()
                     .error(
@@ -214,7 +216,7 @@ public class FieldConfigPopulation {
                             String.format(
                                     "populateUserLayer - %s : %s",
                                     Localisation.getString(
-                                            StandardPanel.class, "StandardPanel.unknownField"),
+                                            StandardPanel.class, STANDARD_PANEL_UNKNOWN_FIELD),
                                     fieldId));
         }
     }
@@ -233,7 +235,7 @@ public class FieldConfigPopulation {
 
         if (fieldConfig != null) {
             if (value != null) {
-                ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+                fieldConfig.populateField(value);
             } else {
                 fieldConfig.revertToDefaultValue();
             }
@@ -254,7 +256,7 @@ public class FieldConfigPopulation {
 
         if (fieldConfig != null) {
             if (value != null) {
-                ((FieldConfigValuePopulateInterface) fieldConfig).populateField(value);
+                fieldConfig.populateField(value);
             } else {
                 fieldConfig.revertToDefaultValue();
             }
@@ -281,7 +283,7 @@ public class FieldConfigPopulation {
                             String.format(
                                     "populateField - %s : %s",
                                     Localisation.getString(
-                                            StandardPanel.class, "StandardPanel.unknownField"),
+                                            StandardPanel.class, STANDARD_PANEL_UNKNOWN_FIELD),
                                     fieldId));
         }
     }
@@ -295,10 +297,8 @@ public class FieldConfigPopulation {
     public Expression getExpression(FieldIdEnum fieldId) {
         if (fieldConfigManager != null) {
             FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
-            if (fieldConfig != null) {
-                if (fieldConfig.isEnabled()) {
-                    return fieldConfig.getExpression();
-                }
+            if ((fieldConfig != null) && fieldConfig.isEnabled()) {
+                return fieldConfig.getExpression();
             }
         }
         return null;
@@ -445,10 +445,8 @@ public class FieldConfigPopulation {
 
             String originalText = valueMap.get(field);
 
-            if (originalText != null) {
-                if (originalText.compareTo(nextText) != 0) {
-                    treeDataUpdated = true;
-                }
+            if ((originalText != null) && (originalText.compareTo(nextText) != 0)) {
+                treeDataUpdated = true;
             }
         }
     }
@@ -478,6 +476,6 @@ public class FieldConfigPopulation {
         if (fieldConfigManager != null) {
             fieldConfig = fieldConfigManager.get(fieldId);
         }
-        return (FieldConfigBase) fieldConfig;
+        return fieldConfig;
     }
 }

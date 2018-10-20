@@ -33,12 +33,12 @@ import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigPopulation;
 import com.sldeditor.ui.detail.config.FieldConfigString;
 import com.sldeditor.ui.detail.config.FieldConfigStringButtonInterface;
-import com.sldeditor.ui.detail.config.PanelConfigInterface;
-import com.sldeditor.ui.detail.config.ReadPanelConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfig;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.MultiOptionGroup;
 import com.sldeditor.ui.detail.config.base.OptionGroup;
+import com.sldeditor.ui.detail.config.panelconfig.PanelConfigInterface;
+import com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig;
 import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import java.awt.BorderLayout;
@@ -47,6 +47,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JPanel;
@@ -104,29 +105,29 @@ public class BasePanel extends JPanel {
     public static final int WIDGET_BUTTON_WIDTH = 89;
 
     /** The renderer list. */
-    private List<RenderSymbolInterface> rendererList = new ArrayList<RenderSymbolInterface>();
+    private transient List<RenderSymbolInterface> rendererList = new ArrayList<>();
 
     /** The tree update list. */
-    private List<SLDTreeUpdatedInterface> treeUpdateList = new ArrayList<SLDTreeUpdatedInterface>();
+    private transient List<SLDTreeUpdatedInterface> treeUpdateList = new ArrayList<>();
 
     /** The style factory. */
-    private StyleFactoryImpl styleFactory =
+    private transient StyleFactoryImpl styleFactory =
             (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /** The field configuration list. */
-    private List<FieldConfigBase> fieldConfigList = new ArrayList<FieldConfigBase>();
+    private transient List<FieldConfigBase> fieldConfigList = new ArrayList<>();
 
     /** The field config visitor. */
-    protected FieldConfigPopulation fieldConfigVisitor = null;
+    protected transient FieldConfigPopulation fieldConfigVisitor = null;
 
     /** The update symbol listener. */
-    private UpdateSymbolInterface updateSymbolListener = null;
+    private transient UpdateSymbolInterface updateSymbolListener = null;
 
     /** The field configuration manager. */
-    protected GraphicPanelFieldManager fieldConfigManager = null;
+    protected transient GraphicPanelFieldManager fieldConfigManager = null;
 
     /** The scroll frame. */
     private JScrollPane scrollFrame = null;
@@ -147,16 +148,16 @@ public class BasePanel extends JPanel {
     private VendorOptionVersion vendorOptionVersion = null;
 
     /** The map of default field value. */
-    private Map<FieldIdEnum, Object> defaultFieldMap = null;
+    private transient Map<FieldIdEnum, Object> defaultFieldMap = null;
 
     /** The containing panel. */
     private JPanel containingPanel;
 
     /** The padding component. */
-    private BasePanelPadding padding = null;
+    private transient BasePanelPadding padding = null;
 
     /** The group config list. */
-    private List<GroupConfigInterface> groupConfigList;
+    private transient List<GroupConfigInterface> groupConfigList;
 
     /**
      * Default constructor.
@@ -314,7 +315,7 @@ public class BasePanel extends JPanel {
             Class<?> panelId,
             UpdateSymbolInterface parent,
             String filename) {
-        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, true, false);
+        internalReadConfigFile(vendorOptionFactory, panelId, parent, filename, true, false);
     }
 
     /**
@@ -330,7 +331,7 @@ public class BasePanel extends JPanel {
             Class<?> panelId,
             UpdateSymbolInterface parent,
             String filename) {
-        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, true, true);
+        internalReadConfigFile(vendorOptionFactory, panelId, parent, filename, true, true);
     }
 
     /**
@@ -345,7 +346,7 @@ public class BasePanel extends JPanel {
             Class<?> panelId,
             UpdateSymbolInterface parent,
             String filename) {
-        internal_readConfigFile(vendorOptionFactory, panelId, parent, filename, false, false);
+        internalReadConfigFile(vendorOptionFactory, panelId, parent, filename, false, false);
     }
 
     /**
@@ -358,7 +359,7 @@ public class BasePanel extends JPanel {
      * @param useScrollFrame the use scroll frame
      * @param isRasterSymbol the is raster symbol
      */
-    private void internal_readConfigFile(
+    private void internalReadConfigFile(
             VendorOptionFactoryInterface vendorOptionFactory,
             Class<?> panelId,
             UpdateSymbolInterface parent,
@@ -452,7 +453,7 @@ public class BasePanel extends JPanel {
             // Create field user interface
             for (FieldConfigBase field : fieldList) {
                 field.setParent(parentField);
-                addField(parentBox, parentField, field);
+                addField(parentBox, field);
             }
 
             for (GroupConfigInterface subGroup : group.getSubGroupList()) {
@@ -502,15 +503,25 @@ public class BasePanel extends JPanel {
             } else if (subOptionGroupConfig instanceof MultiOptionGroup) {
                 MultiOptionGroup multiOption = (MultiOptionGroup) subOptionGroupConfig;
 
-                fieldConfigManager.addMultiOptionGroup(multiOption);
+                populateMultiOptionGroup(parent, multiOption);
+            }
+        }
+    }
 
-                for (OptionGroup optionGroup : multiOption.getGroupList()) {
-                    for (GroupConfigInterface subMultiOptionGroupConfig :
-                            optionGroup.getGroupList()) {
-                        if (subMultiOptionGroupConfig instanceof GroupConfig) {
-                            populateOptionGroup(parent, (GroupConfig) subMultiOptionGroupConfig);
-                        }
-                    }
+    /**
+     * Populate multi option group.
+     *
+     * @param parent the parent
+     * @param multiOption the multi option
+     */
+    private void populateMultiOptionGroup(
+            UpdateSymbolInterface parent, MultiOptionGroup multiOption) {
+        fieldConfigManager.addMultiOptionGroup(multiOption);
+
+        for (OptionGroup optionGroup : multiOption.getGroupList()) {
+            for (GroupConfigInterface subMultiOptionGroupConfig : optionGroup.getGroupList()) {
+                if (subMultiOptionGroupConfig instanceof GroupConfig) {
+                    populateOptionGroup(parent, (GroupConfig) subMultiOptionGroupConfig);
                 }
             }
         }
@@ -520,10 +531,9 @@ public class BasePanel extends JPanel {
      * Adds the field.
      *
      * @param parentBox the parent box
-     * @param parentField the parent field
      * @param field the field
      */
-    private void addField(Box parentBox, FieldConfigBase parentField, FieldConfigBase field) {
+    private void addField(Box parentBox, FieldConfigBase field) {
 
         if (field != null) {
             field.createUI();
@@ -557,8 +567,8 @@ public class BasePanel extends JPanel {
 
                 Map<FieldIdEnum, Boolean> stateMap = fieldEnum.getFieldEnableState();
                 if (stateMap != null) {
-                    for (FieldIdEnum fieldKey : stateMap.keySet()) {
-                        enableField(fieldKey, stateMap.get(fieldKey));
+                    for (Entry<FieldIdEnum, Boolean> entry : stateMap.entrySet()) {
+                        enableField(entry.getKey(), entry.getValue());
                     }
                 }
             }
@@ -582,8 +592,8 @@ public class BasePanel extends JPanel {
 
             Map<FieldIdEnum, Boolean> stateMap = fieldEnum.getFieldEnableState();
             if (stateMap != null) {
-                for (FieldIdEnum fieldKey : stateMap.keySet()) {
-                    enableField(fieldKey, stateMap.get(fieldKey));
+                for (Entry<FieldIdEnum, Boolean> entry : stateMap.entrySet()) {
+                    enableField(entry.getKey(), entry.getValue());
                 }
             }
         }
@@ -686,14 +696,9 @@ public class BasePanel extends JPanel {
     public void insertPanel(FieldConfigBase fieldConfig, BasePanel panel, Box optionBox) {
         int fieldIndex = -1;
 
-        Box boxToUpdate = null;
-        if (optionBox != null) {
-            boxToUpdate = optionBox;
-        } else {
-            boxToUpdate = box;
-        }
+        Box boxToUpdate = (optionBox != null) ? optionBox : box;
 
-        if (boxToUpdate != null) {
+        if ((boxToUpdate != null) && (panel != null)) {
             for (int index = 0; index < boxToUpdate.getComponentCount(); index++) {
                 Component component = boxToUpdate.getComponent(index);
                 if (fieldConfig.getPanel() == component) {
@@ -702,28 +707,26 @@ public class BasePanel extends JPanel {
                 }
             }
 
-            if (panel != null) {
-                if (padding != null) {
-                    padding.removePadding();
-                }
+            if (padding != null) {
+                padding.removePadding();
+            }
 
-                logger.debug(
-                        String.format(
-                                "%s : %s -> %s",
-                                Localisation.getString(
-                                        StandardPanel.class, "StandardPanel.addingPanel"),
-                                panel.getClass().getName(),
-                                this.getClass().getName()));
+            logger.debug(
+                    String.format(
+                            "%s : %s -> %s",
+                            Localisation.getString(
+                                    StandardPanel.class, "StandardPanel.addingPanel"),
+                            panel.getClass().getName(),
+                            this.getClass().getName()));
 
-                if (fieldIndex > -1) {
-                    fieldIndex++;
-                }
+            if (fieldIndex > -1) {
+                fieldIndex++;
+            }
 
-                boxToUpdate.add(panel, fieldIndex);
+            boxToUpdate.add(panel, fieldIndex);
 
-                if (padding != null) {
-                    padding.addPadding();
-                }
+            if (padding != null) {
+                padding.addPadding();
             }
         }
     }

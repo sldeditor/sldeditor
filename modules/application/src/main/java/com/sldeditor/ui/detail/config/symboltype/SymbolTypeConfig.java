@@ -24,10 +24,12 @@ import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.common.xml.ui.GroupIdEnum;
 import com.sldeditor.ui.detail.FieldEnableState;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * The Class SymbolTypeConfig contains all the configuration for a symbol type.
@@ -59,16 +61,16 @@ public class SymbolTypeConfig {
     private boolean isSeparateGroup = false;
 
     /** The key order list. */
-    private List<String> keyOrderList = new ArrayList<String>();
+    private List<String> keyOrderList = new ArrayList<>();
 
     /** The option map. */
-    private Map<String, String> optionMap = new LinkedHashMap<String, String>();
+    private Map<String, String> optionMap = new LinkedHashMap<>();
 
     /** The field map. */
-    private Map<FieldIdEnum, Boolean> fieldMap = new HashMap<FieldIdEnum, Boolean>();
+    private Map<FieldIdEnum, Boolean> fieldMap = new EnumMap<>(FieldIdEnum.class);
 
     /** The group map. */
-    private Map<GroupIdEnum, Boolean> groupMap = new HashMap<GroupIdEnum, Boolean>();
+    private Map<GroupIdEnum, Boolean> groupMap = new EnumMap<>(GroupIdEnum.class);
 
     /** The panel id. */
     private Class<?> panelId = null;
@@ -102,19 +104,19 @@ public class SymbolTypeConfig {
      */
     public void updateFieldState(FieldEnableState fieldEnableState, String panelName) {
         for (String menuOption : keyOrderList) {
-            Map<FieldIdEnum, Boolean> fieldList = new HashMap<FieldIdEnum, Boolean>();
+            Map<FieldIdEnum, Boolean> fieldList = new EnumMap<>(FieldIdEnum.class);
 
-            for (FieldIdEnum fieldKey : fieldMap.keySet()) {
-                boolean value = fieldMap.get(fieldKey);
+            for (Entry<FieldIdEnum, Boolean> entry : fieldMap.entrySet()) {
+                boolean value = entry.getValue();
 
-                fieldList.put(fieldKey, value);
+                fieldList.put(entry.getKey(), value);
             }
 
-            Map<GroupIdEnum, Boolean> groupList = new HashMap<GroupIdEnum, Boolean>();
-            for (GroupIdEnum groupKey : groupMap.keySet()) {
-                boolean value = groupMap.get(groupKey);
+            Map<GroupIdEnum, Boolean> groupList = new EnumMap<>(GroupIdEnum.class);
+            for (Entry<GroupIdEnum, Boolean> entry : groupMap.entrySet()) {
+                boolean value = entry.getValue();
 
-                groupList.put(groupKey, value);
+                groupList.put(entry.getKey(), value);
             }
 
             if (fieldEnableState != null) {
@@ -130,15 +132,12 @@ public class SymbolTypeConfig {
      * @return the field map
      */
     public Map<Class<?>, Map<FieldIdEnum, Boolean>> getFieldMap() {
-        Map<Class<?>, Map<FieldIdEnum, Boolean>> map =
-                new HashMap<Class<?>, Map<FieldIdEnum, Boolean>>();
+        Map<Class<?>, Map<FieldIdEnum, Boolean>> map = new HashMap<>();
 
-        Map<FieldIdEnum, Boolean> fieldList = new HashMap<FieldIdEnum, Boolean>();
+        Map<FieldIdEnum, Boolean> fieldList = new EnumMap<>(FieldIdEnum.class);
 
-        for (FieldIdEnum fieldKey : fieldMap.keySet()) {
-            boolean value = fieldMap.get(fieldKey);
-
-            fieldList.put(fieldKey, value);
+        for (Entry<FieldIdEnum, Boolean> entry : fieldMap.entrySet()) {
+            fieldList.put(entry.getKey(), entry.getValue());
         }
 
         map.put(panelId, fieldList);

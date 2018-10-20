@@ -44,7 +44,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -69,7 +69,7 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     private ProcessFunction processFunction = null;
 
     /** The number of rows the text area will have. */
-    private int NO_OF_ROWS = 10;
+    private static final int NO_OF_ROWS = 10;
 
     /**
      * Instantiates a new field config string.
@@ -160,15 +160,15 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
      * @return the process function
      */
     private ProcessFunction showTransformationDialog(ProcessFunction existingProcessFunction) {
-        ProcessFunction processFunction = null;
+        ProcessFunction localProcessFunction = null;
         RenderTransformationDialog dlg =
                 new RenderTransformationDialog(GeoServerConnectionManager.getInstance());
 
         if (dlg.showDialog(existingProcessFunction)) {
-            processFunction = dlg.getTransformationProcessFunction();
+            localProcessFunction = dlg.getTransformationProcessFunction();
         }
 
-        return processFunction;
+        return localProcessFunction;
     }
 
     /**
@@ -198,7 +198,7 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (textField != null) {
             textField.setEnabled(enabled);
         }
@@ -266,9 +266,9 @@ public class FieldConfigTransformation extends FieldConfigBase implements UndoAc
     @Override
     public void populateExpression(Object objValue) {
         if (objValue instanceof ProcessFunction) {
-            ProcessFunction processFunction = (ProcessFunction) objValue;
+            ProcessFunction localProcessFunction = (ProcessFunction) objValue;
 
-            populateField(processFunction);
+            populateField(localProcessFunction);
         }
     }
 

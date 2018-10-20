@@ -63,7 +63,7 @@ public class DatabaseConnectionTool implements ToolInterface {
     private DatabaseConnectStateInterface databaseConnectState = null;
 
     /** The connection list. */
-    private List<DatabaseConnection> connectionList = new ArrayList<DatabaseConnection>();
+    private List<DatabaseConnection> connectionList = new ArrayList<>();
 
     /**
      * Instantiates a new database connection state tool.
@@ -215,7 +215,7 @@ public class DatabaseConnectionTool implements ToolInterface {
         boolean supported = false;
         if (uniqueNodeTypeList != null) {
             if (uniqueNodeTypeList.size() == 1) {
-                if (nodeTypeList.size() > 0) {
+                if (!nodeTypeList.isEmpty()) {
                     NodeInterface node = nodeTypeList.get(0);
                     if (node instanceof FileTreeNode) {
                         FileTreeNode fileNode = (FileTreeNode) node;

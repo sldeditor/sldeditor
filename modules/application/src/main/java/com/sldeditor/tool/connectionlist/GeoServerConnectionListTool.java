@@ -48,9 +48,6 @@ public class GeoServerConnectionListTool implements ToolInterface {
     /** The Constant PANEL_WIDTH. */
     private static final int PANEL_WIDTH = 235;
 
-    /** The btn new. */
-    private JButton btnNew;
-
     /** The btn duplicate. */
     protected JButton btnDuplicate;
 
@@ -67,7 +64,7 @@ public class GeoServerConnectionListTool implements ToolInterface {
     private GeoServerConnectUpdateInterface geoServerConnectUpdate = null;
 
     /** The connection list. */
-    private List<GeoServerConnection> connectionList = new ArrayList<GeoServerConnection>();
+    private List<GeoServerConnection> connectionList = new ArrayList<>();
 
     /**
      * Instantiates a new geo server connection list tool.
@@ -94,7 +91,7 @@ public class GeoServerConnectionListTool implements ToolInterface {
         flowLayout.setVgap(0);
         flowLayout.setHgap(0);
 
-        btnNew =
+        JButton btnNew =
                 new ToolButton(
                         Localisation.getString(
                                 GeoServerConnectionListTool.class,
@@ -216,10 +213,7 @@ public class GeoServerConnectionListTool implements ToolInterface {
             List<Class<?>> uniqueNodeTypeList,
             List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
-        if (uniqueNodeTypeList.size() == 1) {
-            return true;
-        }
-        return false;
+        return (uniqueNodeTypeList.size() == 1);
     }
 
     /** Add new button pressed. */
@@ -238,29 +232,25 @@ public class GeoServerConnectionListTool implements ToolInterface {
 
     /** Duplicate button pressed. */
     protected void duplicateButtonPressed() {
-        if (geoServerConnectUpdate != null) {
-            if (!connectionList.isEmpty()) {
-                GeoServerConnection selectedConnectionDetails = connectionList.get(0);
+        if ((geoServerConnectUpdate != null) && !connectionList.isEmpty()) {
+            GeoServerConnection selectedConnectionDetails = connectionList.get(0);
 
-                GeoServerConnection duplicateItem = selectedConnectionDetails.duplicate();
+            GeoServerConnection duplicateItem = selectedConnectionDetails.duplicate();
 
-                geoServerConnectUpdate.addNewConnection(duplicateItem);
-            }
+            geoServerConnectUpdate.addNewConnection(duplicateItem);
         }
     }
 
     /** Edit button pressed. */
     protected void editButtonPressed() {
-        if (geoServerConnectUpdate != null) {
-            if (!connectionList.isEmpty()) {
-                GeoServerConnection selectedConnectionDetails = connectionList.get(0);
-                GeoServerConnection newConnectionDetails =
-                        ConnectorDetailsPanel.showDialog(null, selectedConnectionDetails);
+        if ((geoServerConnectUpdate != null) && !connectionList.isEmpty()) {
+            GeoServerConnection selectedConnectionDetails = connectionList.get(0);
+            GeoServerConnection newConnectionDetails =
+                    ConnectorDetailsPanel.showDialog(null, selectedConnectionDetails);
 
-                if (newConnectionDetails != null) {
-                    geoServerConnectUpdate.updateConnectionDetails(
-                            selectedConnectionDetails, newConnectionDetails);
-                }
+            if (newConnectionDetails != null) {
+                geoServerConnectUpdate.updateConnectionDetails(
+                        selectedConnectionDetails, newConnectionDetails);
             }
         }
     }

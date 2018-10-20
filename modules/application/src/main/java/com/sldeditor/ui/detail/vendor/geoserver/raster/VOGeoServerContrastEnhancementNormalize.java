@@ -354,31 +354,47 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
                         String algorithm = options.get(ALGORITHM_OPTION).toString();
                         fieldConfigVisitor.populateComboBoxField(algorithmFieldId, algorithm);
 
-                        int minValue = 0;
-                        try {
-                            Expression expression = options.get(MIN_VALUE_OPTION);
-                            minValue = Integer.valueOf(expression.toString());
-                        } catch (Exception e) {
-                            // Ignore number format conversions
-                            ConsoleManager.getInstance()
-                                    .error(this, "Vendor Option - minValue not valid");
-                        }
-                        fieldConfigVisitor.populateIntegerField(minValueFieldId, minValue);
+                        populateMinValue(options);
 
-                        int maxValue = 0;
-                        try {
-                            Expression expression = options.get(MAX_VALUE_OPTION);
-                            maxValue = Integer.valueOf(expression.toString());
-                        } catch (Exception e) {
-                            // Ignore number format conversions
-                            ConsoleManager.getInstance()
-                                    .error(this, "Vendor Option - maxValue not valid");
-                        }
-                        fieldConfigVisitor.populateIntegerField(maxValueFieldId, maxValue);
+                        populateMaxValue(options);
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Populate max value.
+     *
+     * @param options the options
+     */
+    private void populateMaxValue(Map<String, Expression> options) {
+        int maxValue = 0;
+        try {
+            Expression expression = options.get(MAX_VALUE_OPTION);
+            maxValue = Integer.valueOf(expression.toString());
+        } catch (Exception e) {
+            // Ignore number format conversions
+            ConsoleManager.getInstance().error(this, "Vendor Option - maxValue not valid");
+        }
+        fieldConfigVisitor.populateIntegerField(maxValueFieldId, maxValue);
+    }
+
+    /**
+     * Populate min value.
+     *
+     * @param options the options
+     */
+    private void populateMinValue(Map<String, Expression> options) {
+        int minValue = 0;
+        try {
+            Expression expression = options.get(MIN_VALUE_OPTION);
+            minValue = Integer.valueOf(expression.toString());
+        } catch (Exception e) {
+            // Ignore number format conversions
+            ConsoleManager.getInstance().error(this, "Vendor Option - minValue not valid");
+        }
+        fieldConfigVisitor.populateIntegerField(minValueFieldId, minValue);
     }
 
     /*
@@ -429,19 +445,35 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
                         options.put(ALGORITHM_OPTION, algorithmExpression);
                     }
 
-                    Expression minValueExpression =
-                            fieldConfigVisitor.getExpression(minValueFieldId);
-                    if (minValueExpression != null) {
-                        options.put(MIN_VALUE_OPTION, minValueExpression);
-                    }
+                    extractMinValue(options);
 
-                    Expression maxValueExpression =
-                            fieldConfigVisitor.getExpression(maxValueFieldId);
-                    if (maxValueExpression != null) {
-                        options.put(MAX_VALUE_OPTION, maxValueExpression);
-                    }
+                    extractMaxValue(options);
                 }
             }
+        }
+    }
+
+    /**
+     * Extract max value.
+     *
+     * @param options the options
+     */
+    private void extractMaxValue(Map<String, Expression> options) {
+        Expression maxValueExpression = fieldConfigVisitor.getExpression(maxValueFieldId);
+        if (maxValueExpression != null) {
+            options.put(MAX_VALUE_OPTION, maxValueExpression);
+        }
+    }
+
+    /**
+     * Extract min value.
+     *
+     * @param options the options
+     */
+    private void extractMinValue(Map<String, Expression> options) {
+        Expression minValueExpression = fieldConfigVisitor.getExpression(minValueFieldId);
+        if (minValueExpression != null) {
+            options.put(MIN_VALUE_OPTION, minValueExpression);
         }
     }
 
@@ -452,15 +484,12 @@ public abstract class VOGeoServerContrastEnhancementNormalize extends StandardPa
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        VendorOptionInfo info =
-                new VendorOptionInfo(
-                        "Raster Contrast Enhancement",
-                        this.getVendorOptionVersion(),
-                        Localisation.getString(
-                                VOGeoServerContrastEnhancementNormalize.class,
-                                "VOGeoServerContrastEnhancementNormalize.description"));
-
-        return info;
+        return new VendorOptionInfo(
+                "Raster Contrast Enhancement",
+                this.getVendorOptionVersion(),
+                Localisation.getString(
+                        VOGeoServerContrastEnhancementNormalize.class,
+                        "VOGeoServerContrastEnhancementNormalize.description"));
     }
 
     /*

@@ -104,15 +104,15 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
      * @return the j panel
      */
     public JPanel createLegendPanel() {
-        JPanel legendPanel = new JPanel();
-        legendPanel.setLayout(new GridLayout(2, 1));
+        JPanel localLegendPanel = new JPanel();
+        localLegendPanel.setLayout(new GridLayout(2, 1));
 
-        legendPanel.add(getLegendPanel());
+        localLegendPanel.add(getLegendPanel());
 
         JPanel symbolTreePanel = getSymbolTree();
-        legendPanel.add(symbolTreePanel);
+        localLegendPanel.add(symbolTreePanel);
 
-        return legendPanel;
+        return localLegendPanel;
     }
 
     /**
@@ -155,7 +155,7 @@ public class SingleLegendUI implements SymbolPanelInterface, SymbolizerSelectedI
      */
     private List<RenderSymbolInterface> getRendererList() {
         if (rendererList == null) {
-            rendererList = new ArrayList<RenderSymbolInterface>();
+            rendererList = new ArrayList<>();
 
             RenderSymbolInterface renderer =
                     RenderPanelFactory.getRenderer(SingleLegendUI.class.getName());

@@ -54,22 +54,22 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
     private static final int NO_OF_ROWS = 5 + NO_OF_PADDING_ROWS;
 
     /** The Constant panelHeight. */
-    private static final int panelHeight = NO_OF_ROWS * BasePanel.WIDGET_HEIGHT;
+    private static final int PANEL_HEIGHT = NO_OF_ROWS * BasePanel.WIDGET_HEIGHT;
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /** The label. */
-    private FieldConfigString label;
+    private transient FieldConfigString label;
 
     /** The colour. */
-    private FieldConfigColour colour;
+    private transient FieldConfigColour colour;
 
     /** The opacity. */
-    private FieldConfigSlider opacity;
+    private transient FieldConfigSlider opacity;
 
     /** The quantity. */
-    private FieldConfigDouble quantity;
+    private transient FieldConfigDouble quantity;
 
     /** The apply button. */
     private JButton applyButton;
@@ -78,10 +78,10 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
     private JButton cancelButton;
 
     /** The parent obj. */
-    private ColourMapEntryUpdateInterface parentObj;
+    private transient ColourMapEntryUpdateInterface parentObj;
 
     /** The field list. */
-    List<FieldConfigBase> fieldList = new ArrayList<FieldConfigBase>();
+    private transient List<FieldConfigBase> fieldList = new ArrayList<>();
 
     /**
      * Instantiates a new colour map entry panel.
@@ -217,7 +217,7 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
      * @return the panel height
      */
     public int getPanelHeight() {
-        return panelHeight;
+        return PANEL_HEIGHT;
     }
 
     /**

@@ -40,6 +40,11 @@ public class ParameterFunctionUtils {
     /** The Constant PARAMETER_NOT_SET. */
     private static final String PARAMETER_NOT_SET = ":<not set>";
 
+    /** Private default constructor */
+    private ParameterFunctionUtils() {
+        // Private default constructor
+    }
+
     /**
      * Gets the expression list. @TODO This gets round the issue where the
      * org.geotools.process.function.ParameterFunction does not have a public accessor. Using
@@ -61,11 +66,9 @@ public class ParameterFunctionUtils {
                         parameterList = (List<Expression>) method.invoke(parameter, args);
 
                         return parameterList;
-                    } catch (IllegalAccessException e) {
-                        ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
-                    } catch (IllegalArgumentException e) {
-                        ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
-                    } catch (InvocationTargetException e) {
+                    } catch (IllegalAccessException
+                            | IllegalArgumentException
+                            | InvocationTargetException e) {
                         ConsoleManager.getInstance().exception(ParameterFunctionUtils.class, e);
                     }
                 }

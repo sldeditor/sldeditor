@@ -108,10 +108,8 @@ public class SymbolizerTreeItem implements SLDTreeItemInterface {
         if (node != null) {
             DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) node.getParent();
 
-            if (parentNode != null) {
-                if (parentNode.getUserObject() instanceof RasterSymbolizer) {
-                    isOutline = true;
-                }
+            if ((parentNode != null) && (parentNode.getUserObject() instanceof RasterSymbolizer)) {
+                isOutline = true;
             }
         }
         return isOutline;

@@ -46,10 +46,10 @@ public class VendorOptionFillFactory
     private VOGeoServerRandomFill vendorOptionGeoServerRandomFill = null;
 
     /** The list of all the extensions. */
-    private List<VendorOptionInterface> vendorOptionList = new ArrayList<VendorOptionInterface>();
+    private List<VendorOptionInterface> vendorOptionList = new ArrayList<>();
 
     /** The vendor option list allowed to be used. */
-    private List<VersionData> vendorOptionVersionList = new ArrayList<VersionData>();
+    private List<VersionData> vendorOptionVersionList = new ArrayList<>();
 
     /**
      * Instantiates a new vendor option label option factory.
@@ -85,7 +85,7 @@ public class VendorOptionFillFactory
      */
     @Override
     public List<VendorOptionInterface> getVendorOptionList(String className) {
-        List<VendorOptionInterface> matchingList = new ArrayList<VendorOptionInterface>();
+        List<VendorOptionInterface> matchingList = new ArrayList<>();
 
         for (VendorOptionInterface vendorOption : vendorOptionList) {
             if (vendorOption.getClass().getName().compareTo(className) == 0) {
@@ -166,7 +166,7 @@ public class VendorOptionFillFactory
      */
     @Override
     public List<VendorOptionInfo> getVendorOptionInfoList() {
-        List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
+        List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<>();
 
         for (VendorOptionInterface vo : vendorOptionList) {
             VendorOptionInfo vendorOptionInfo = vo.getVendorOptionInfo();

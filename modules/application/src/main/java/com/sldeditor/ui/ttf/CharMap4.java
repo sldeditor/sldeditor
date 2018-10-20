@@ -282,7 +282,7 @@ public class CharMap4 extends JDialog {
 
         String[] availableFonts =
                 GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-        nameDialog = new JComboBox<String>(availableFonts);
+        nameDialog = new JComboBox<>(availableFonts);
         nameDialog.setEditable(true); // allow user to edit this dialog field
         if (buttonFont != null) {
             nameDialog.setFont(buttonFont);
@@ -294,7 +294,7 @@ public class CharMap4 extends JDialog {
 
         panel2.add(Box.createHorizontalStrut(10));
 
-        sizeDialog = new JComboBox<String>(FONT_SIZES); // create list from standard sizes
+        sizeDialog = new JComboBox<>(FONT_SIZES); // create list from standard sizes
         sizeDialog.setEditable(false); // temporarily disable editing during layout
         if (buttonFont != null) sizeDialog.setFont(buttonFont);
         sizeDialog.setPrototypeDisplayValue("9999"); // allow for up to four digits
@@ -401,41 +401,59 @@ public class CharMap4 extends JDialog {
 
         InputMap inmap = panel6.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), ACTION_LINE_DOWN);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, InputEvent.CTRL_MASK), ACTION_LINE_DOWN);
+        inmap.put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, InputEvent.CTRL_DOWN_MASK),
+                ACTION_LINE_DOWN);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0), ACTION_GOTO_END);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_END, InputEvent.CTRL_MASK), ACTION_GOTO_END);
+        inmap.put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_END, InputEvent.CTRL_DOWN_MASK),
+                ACTION_GOTO_END);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), ACTION_REPORT_SHOW);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.ALT_MASK), ACTION_REPORT_SHOW);
+        inmap.put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.ALT_DOWN_MASK),
+                ACTION_REPORT_SHOW);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0), ACTION_GOTO_HOME);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, InputEvent.CTRL_MASK), ACTION_GOTO_HOME);
+        inmap.put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_HOME, InputEvent.CTRL_DOWN_MASK),
+                ACTION_GOTO_HOME);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_DOWN, 0), ACTION_LINE_DOWN);
         inmap.put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_KP_DOWN, InputEvent.CTRL_MASK),
+                KeyStroke.getKeyStroke(KeyEvent.VK_KP_DOWN, InputEvent.CTRL_DOWN_MASK),
                 ACTION_LINE_DOWN);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_LEFT, 0), ACTION_LINE_UP);
         inmap.put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_KP_LEFT, InputEvent.CTRL_MASK), ACTION_LINE_UP);
+                KeyStroke.getKeyStroke(KeyEvent.VK_KP_LEFT, InputEvent.CTRL_DOWN_MASK),
+                ACTION_LINE_UP);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_RIGHT, 0), ACTION_LINE_DOWN);
         inmap.put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_KP_RIGHT, InputEvent.CTRL_MASK),
+                KeyStroke.getKeyStroke(KeyEvent.VK_KP_RIGHT, InputEvent.CTRL_DOWN_MASK),
                 ACTION_LINE_DOWN);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_UP, 0), ACTION_LINE_UP);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_UP, InputEvent.CTRL_MASK), ACTION_LINE_UP);
+        inmap.put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_KP_UP, InputEvent.CTRL_DOWN_MASK),
+                ACTION_LINE_UP);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), ACTION_LINE_UP);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.CTRL_MASK), ACTION_LINE_UP);
+        inmap.put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.CTRL_DOWN_MASK),
+                ACTION_LINE_UP);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, 0), ACTION_PAGE_DOWN);
         inmap.put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, InputEvent.CTRL_MASK),
+                KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, InputEvent.CTRL_DOWN_MASK),
                 ACTION_PAGE_DOWN);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, 0), ACTION_PAGE_UP);
         inmap.put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, InputEvent.CTRL_MASK), ACTION_PAGE_UP);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.ALT_MASK), ACTION_REPORT_SHOW);
+                KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, InputEvent.CTRL_DOWN_MASK),
+                ACTION_PAGE_UP);
+        inmap.put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.ALT_DOWN_MASK),
+                ACTION_REPORT_SHOW);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), ACTION_LINE_DOWN);
         inmap.put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.CTRL_MASK), ACTION_LINE_DOWN);
+                KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.CTRL_DOWN_MASK),
+                ACTION_LINE_DOWN);
         inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), ACTION_LINE_UP);
-        inmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, InputEvent.CTRL_MASK), ACTION_LINE_UP);
+        inmap.put(
+                KeyStroke.getKeyStroke(KeyEvent.VK_UP, InputEvent.CTRL_DOWN_MASK), ACTION_LINE_UP);
 
         ActionMap acmap = panel6.getActionMap();
         acmap.put(ACTION_GOTO_END, new CharMap4User(this, ACTION_GOTO_END));
@@ -480,7 +498,8 @@ public class CharMap4 extends JDialog {
      * (selection) and restore that afterwards.
      */
     public void copyText() {
-        int end, start; // text positions for caret and/or selection
+        int end;
+        int start; // text positions for caret and/or selection
 
         end = selectedCharField.getSelectionEnd(); // remember current position in text
         start = selectedCharField.getSelectionStart();
@@ -496,21 +515,24 @@ public class CharMap4 extends JDialog {
      * @return the string
      */
     public String captionGet(int value) {
-        StringBuffer buffer; // faster than String for multiple appends
+        StringBuilder buffer; // faster than String for multiple appends
         String caption; // defined caption string or <null>
 
         // Convert the character number to Unicode "U+nnnn" notation.
 
-        buffer = new StringBuffer(); // allocate empty string buffer for result
+        buffer = new StringBuilder(); // allocate empty string buffer for result
         buffer.append(unicodeNotation(value));
         buffer.append(" = ");
 
         // Append the defined caption string, or create a generic caption.
 
         if (captionMap == null) // have the caption strings been loaded?
-        caption = null; // no, follow through with generic caption
-        else // yes, attempt to fetch defined caption
-        caption = (String) captionMap.get(new Integer(value)); // may be <null>
+        {
+            caption = null; // no, follow through with generic caption
+        } else // yes, attempt to fetch defined caption
+        {
+            caption = captionMap.get(new Integer(value)); // may be <null>
+        }
 
         if (caption == null) // was there a defined caption string?
         {
@@ -532,8 +554,9 @@ public class CharMap4 extends JDialog {
              */
 
             if ((value >= 0x0000) && (value <= 0x007F)) // known Unicode range?
-            caption = "Basic Latin";
-            else if ((value >= 0x0080) && (value <= 0x00FF)) caption = "Latin-1 Supplement";
+            {
+                caption = "Basic Latin";
+            } else if ((value >= 0x0080) && (value <= 0x00FF)) caption = "Latin-1 Supplement";
             else if ((value >= 0x0100) && (value <= 0x017F)) caption = "Latin Extended-A";
             else if ((value >= 0x0180) && (value <= 0x024F)) caption = "Latin Extended-B";
             else if ((value >= 0x0250) && (value <= 0x02AF)) caption = "IPA Extensions";
@@ -817,7 +840,9 @@ public class CharMap4 extends JDialog {
             // Default to a numeric caption in decimal if nothing else found.
 
             else // no defined caption, unknown character
-            caption = "decimal " + getFormatComma().format(value);
+            {
+                caption = "decimal " + getFormatComma().format(value);
+            }
         }
         buffer.append(caption); // append selected caption to result
         return (buffer.toString()); // give caller our converted string
@@ -881,7 +906,7 @@ public class CharMap4 extends JDialog {
         int i; // index variable
         String text; // one input line from file, or otherwise
 
-        captionMap = new TreeMap<Integer, String>(); // start without any mouse captions
+        captionMap = new TreeMap<>(); // start without any mouse captions
 
         // Supply default names for the plain text ASCII characters only.
 
@@ -1001,12 +1026,15 @@ public class CharMap4 extends JDialog {
                 array[0] = (byte) i; // construct byte array for decoding
                 text = new String(array); // convert byte to Unicode, or replace char
                 if ((text.length() == 1) && ((ch = text.charAt(0)) != REPLACE_CHAR)) {
-                    caption = (String) captionMap.get(new Integer((int) ch));
+                    caption = captionMap.get(new Integer((int) ch));
                     // fetch actual value, not via <captionGet>
                     if (caption == null) // but have we already created a caption?
-                    caption = ""; // no, use empty string, nothing to append to
-                    else // yes, there is a caption and we are adding
-                    caption += " = "; // insert delimiter between caption and Alt+
+                    {
+                        caption = ""; // no, use empty string, nothing to append to
+                    } else // yes, there is a caption and we are adding
+                    {
+                        caption += " = "; // insert delimiter between caption and Alt+
+                    }
                     caption += winaltNotation(i); // append Windows Alt+nnnn key code
                     captionPut((int) ch, caption); // save new caption string
                 }
@@ -1331,7 +1359,7 @@ public class CharMap4 extends JDialog {
      * @param ttfFontString the new TTF string
      */
     public void setTTFString(String ttfFontString) {
-        String string = ttfFontString;
+        String string;
         if (ttfFontString.startsWith(TTF_PREFIX)) {
             string = ttfFontString.substring(TTF_PREFIX.length());
 

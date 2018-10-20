@@ -156,26 +156,9 @@ public class FilterNode extends DefaultMutableTreeNode {
             FilterName filterName = filterConfig.getFilterConfiguration();
 
             if (filter instanceof Not) {
-                List<Filter> childFilterList = ((LogicFilterImpl) filter).getChildren();
-
-                if (childFilterList.isEmpty()) {
-                    // No child filter so add a minimum 1 to work with.
-                    setFilterParameter(null, filterName.getParameter(0));
-                } else {
-                    setFilterParameter(childFilterList.get(0), filterName.getParameter(0));
-                }
+                setNotFilter(filter, filterName);
             } else if (filter instanceof LogicFilterImpl) {
-                List<Filter> childFilterList = ((LogicFilterImpl) filter).getChildren();
-
-                if (childFilterList.isEmpty()) {
-                    // No child filter so add a minimum 2 to work with.
-                    setFilterParameter(null, filterName.getParameter(0));
-                    setFilterParameter(null, filterName.getParameter(0));
-                } else {
-                    for (Filter childFilter : childFilterList) {
-                        setFilterParameter(childFilter, filterName.getParameter(0));
-                    }
-                }
+                setLogicFilter(filter, filterName);
             } else if (filter instanceof BinaryTemporalOperator) {
                 setExpressionParameter(
                         ((BinaryTemporalOperator) filter).getExpression1(),
@@ -220,36 +203,9 @@ public class FilterNode extends DefaultMutableTreeNode {
                         ff.literal(((PropertyIsLike) filter).isMatchingCase()),
                         filterName.getParameter(5));
             } else if (filter instanceof BinarySpatialOperator) {
-                setExpressionParameter(
-                        ((BinarySpatialOperator) filter).getExpression1(),
-                        filterName.getParameter(0));
-                setExpressionParameter(
-                        ((BinarySpatialOperator) filter).getExpression2(),
-                        filterName.getParameter(1));
-
-                if (filter instanceof CartesianDistanceFilter) {
-                    setExpressionParameter(
-                            ff.literal(((CartesianDistanceFilter) filter).getDistance()),
-                            filterName.getParameter(2));
-                    setExpressionParameter(
-                            ff.literal(((CartesianDistanceFilter) filter).getDistanceUnits()),
-                            filterName.getParameter(3));
-                }
+                setBinarySpatialOperator(filter, filterName);
             } else if (filter instanceof BinaryComparisonAbstract) {
-                setExpressionParameter(
-                        ((BinaryComparisonAbstract) filter).getExpression1(),
-                        filterName.getParameter(0));
-                setExpressionParameter(
-                        ((BinaryComparisonAbstract) filter).getExpression2(),
-                        filterName.getParameter(1));
-
-                // Gets round the problem with PropertyIsGreaterThan
-                // which has no matchCase parameter
-                if (filterName.getParameterList().size() > 2) {
-                    setExpressionParameter(
-                            ff.literal(((BinaryComparisonAbstract) filter).isMatchingCase()),
-                            filterName.getParameter(2));
-                }
+                setBinaryComparisonAbstract(filter, filterName);
             } else if (filter instanceof FidFilterImpl) {
                 FidFilterImpl fidFilter = (FidFilterImpl) filter;
 
@@ -257,6 +213,86 @@ public class FilterNode extends DefaultMutableTreeNode {
                     setExpressionParameter(ff.literal(identifier), filterName.getParameter(0));
                 }
             }
+        }
+    }
+
+    /**
+     * Sets the binary comparison abstract.
+     *
+     * @param filter the filter
+     * @param filterName the filter name
+     */
+    private void setBinaryComparisonAbstract(Filter filter, FilterName filterName) {
+        setExpressionParameter(
+                ((BinaryComparisonAbstract) filter).getExpression1(), filterName.getParameter(0));
+        setExpressionParameter(
+                ((BinaryComparisonAbstract) filter).getExpression2(), filterName.getParameter(1));
+
+        // Gets round the problem with PropertyIsGreaterThan
+        // which has no matchCase parameter
+        if (filterName.getParameterList().size() > 2) {
+            setExpressionParameter(
+                    ff.literal(((BinaryComparisonAbstract) filter).isMatchingCase()),
+                    filterName.getParameter(2));
+        }
+    }
+
+    /**
+     * Sets the binary spatial operator.
+     *
+     * @param filter the filter
+     * @param filterName the filter name
+     */
+    private void setBinarySpatialOperator(Filter filter, FilterName filterName) {
+        setExpressionParameter(
+                ((BinarySpatialOperator) filter).getExpression1(), filterName.getParameter(0));
+        setExpressionParameter(
+                ((BinarySpatialOperator) filter).getExpression2(), filterName.getParameter(1));
+
+        if (filter instanceof CartesianDistanceFilter) {
+            setExpressionParameter(
+                    ff.literal(((CartesianDistanceFilter) filter).getDistance()),
+                    filterName.getParameter(2));
+            setExpressionParameter(
+                    ff.literal(((CartesianDistanceFilter) filter).getDistanceUnits()),
+                    filterName.getParameter(3));
+        }
+    }
+
+    /**
+     * Sets the logic filter.
+     *
+     * @param filter the filter
+     * @param filterName the filter name
+     */
+    private void setLogicFilter(Filter filter, FilterName filterName) {
+        List<Filter> childFilterList = ((LogicFilterImpl) filter).getChildren();
+
+        if (childFilterList.isEmpty()) {
+            // No child filter so add a minimum 2 to work with.
+            setFilterParameter(null, filterName.getParameter(0));
+            setFilterParameter(null, filterName.getParameter(0));
+        } else {
+            for (Filter childFilter : childFilterList) {
+                setFilterParameter(childFilter, filterName.getParameter(0));
+            }
+        }
+    }
+
+    /**
+     * Sets the not filter.
+     *
+     * @param filter the filter
+     * @param filterName the filter name
+     */
+    private void setNotFilter(Filter filter, FilterName filterName) {
+        List<Filter> childFilterList = ((LogicFilterImpl) filter).getChildren();
+
+        if (childFilterList.isEmpty()) {
+            // No child filter so add a minimum 1 to work with.
+            setFilterParameter(null, filterName.getParameter(0));
+        } else {
+            setFilterParameter(childFilterList.get(0), filterName.getParameter(0));
         }
     }
 
@@ -269,10 +305,10 @@ public class FilterNode extends DefaultMutableTreeNode {
     private void setFilterParameter(Filter childFilter, FilterNameParameter parameter) {
         FilterNode childNode = new FilterNode();
         childNode.setType(parameter.getDataType());
-        FilterConfigInterface filterConfig =
+        FilterConfigInterface localFilterConfig =
                 FilterManager.getInstance().getFilterConfig(childFilter);
 
-        childNode.setFilter(childFilter, filterConfig);
+        childNode.setFilter(childFilter, localFilterConfig);
         this.insert(childNode, this.getChildCount());
     }
 
@@ -284,7 +320,7 @@ public class FilterNode extends DefaultMutableTreeNode {
      * @param maxStringSize the max string size
      * @param regExpString the regular expression string
      */
-    private void internal_setExpressionParameter(
+    private void internalSetExpressionParameter(
             Expression expression,
             FilterNameParameter parameter,
             int maxStringSize,
@@ -309,7 +345,7 @@ public class FilterNode extends DefaultMutableTreeNode {
      */
     private void setExpressionParameter(Expression expression, FilterNameParameter parameter) {
 
-        internal_setExpressionParameter(
+        internalSetExpressionParameter(
                 expression, parameter, ExpressionNode.UNLIMITED_STRING_SIZE, false);
     }
 
@@ -326,7 +362,7 @@ public class FilterNode extends DefaultMutableTreeNode {
             FilterNameParameter parameter,
             int maxStringSize,
             boolean regExpString) {
-        internal_setExpressionParameter(expression, parameter, maxStringSize, regExpString);
+        internalSetExpressionParameter(expression, parameter, maxStringSize, regExpString);
     }
 
     /**

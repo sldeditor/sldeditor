@@ -32,6 +32,11 @@ public class ScaleUtil {
     /** The Constant SCALE_PREFIX. */
     private static final String SCALE_PREFIX = "1:";
 
+    /** Default private constructor */
+    private ScaleUtil() {
+        // Default private constructor
+    }
+
     /**
      * Gets the value.
      *

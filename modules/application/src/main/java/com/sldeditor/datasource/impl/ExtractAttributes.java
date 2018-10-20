@@ -199,10 +199,8 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
         copy.setGraphic(copy(ps.getGraphic()));
         copy.getOptions().putAll(ps.getOptions());
 
-        if (STRICT) {
-            if (!copy.equals(ps)) {
-                throw new IllegalStateException("Was unable to duplicate provided Graphic:" + ps);
-            }
+        if (STRICT && !copy.equals(ps)) {
+            throw new IllegalStateException("Was unable to duplicate provided Graphic:" + ps);
         }
         pages.push(copy);
     }
@@ -267,7 +265,7 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
         FeatureTypeStyle copy = new FeatureTypeStyleImpl(fts);
 
         List<Rule> rules = fts.rules();
-        List<Rule> rulesCopy = new ArrayList<Rule>();
+        List<Rule> rulesCopy = new ArrayList<>();
         for (Rule rule : rules) {
             if (rule != null) {
                 rule.accept(this);
@@ -288,7 +286,7 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
 
         String sortbyGroup = fts.getOptions().get(FeatureTypeStyle.SORT_BY_GROUP);
         if (sortbyGroup != null) {
-            List<String> foundList = new ArrayList<String>();
+            List<String> foundList = new ArrayList<>();
             extractAttribute(String.class, ff.property(sortbyGroup), foundList);
         }
 
@@ -296,7 +294,7 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
         if (sortby != null) {
             SortBy[] sortByArray = SLDStyleFactory.getSortBy(fts.getOptions());
             for (SortBy sortBy : sortByArray) {
-                List<String> foundList = new ArrayList<String>();
+                List<String> foundList = new ArrayList<>();
                 extractAttribute(
                         String.class,
                         ff.property(sortBy.getPropertyName().getPropertyName()),
@@ -402,10 +400,9 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
         if (foundList != null) {
             for (String fieldName : foundList) {
                 DataSourceAttributeData data = fieldList.get(fieldName);
-                if (data != null) {
-                    if (!((data.getType() == Double.class) && (returnType == Integer.class))) {
-                        data.setType(returnType);
-                    }
+                if ((data != null)
+                        && (!((data.getType() == Double.class) && (returnType == Integer.class)))) {
+                    data.setType(returnType);
                 }
             }
         }

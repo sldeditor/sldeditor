@@ -58,7 +58,7 @@ public class VOGeoServerFTSCompositeBase extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The parent obj. */
-    private UpdateSymbolInterface parentObj = null;
+    private transient UpdateSymbolInterface parentObj = null;
 
     /** The vendor option info. */
     private VendorOptionInfo vendorOptionInfo = null;

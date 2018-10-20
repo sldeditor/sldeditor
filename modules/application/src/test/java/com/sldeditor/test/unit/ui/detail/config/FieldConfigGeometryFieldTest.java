@@ -279,7 +279,7 @@ public class FieldConfigGeometryFieldTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.FieldConfigGeometryField#internal_setEnabled(boolean)}. Test
+     * com.sldeditor.ui.detail.config.FieldConfigGeometryField#internalSetEnabled(boolean)}. Test
      * method for {@link com.sldeditor.ui.detail.config.FieldConfigGeometryField#isEnabled()}.
      */
     @Test
@@ -291,7 +291,7 @@ public class FieldConfigGeometryFieldTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -300,7 +300,7 @@ public class FieldConfigGeometryFieldTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
     }

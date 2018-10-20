@@ -29,6 +29,11 @@ import java.util.List;
  */
 public class VendorOptionStatus {
 
+    /** Private default constructor */
+    private VendorOptionStatus() {
+        // Private default constructor
+    }
+
     /**
      * Gets the vendor option version string, returns the last vendor option in the list.
      *
@@ -82,13 +87,10 @@ public class VendorOptionStatus {
                     (VendorOptionTypeInterface)
                             Class.forName(vendorOptionType.getName()).newInstance();
             return o.getName();
-        } catch (InstantiationException e) {
-            ConsoleManager.getInstance().exception(VendorOptionStatus.class, e);
-        } catch (IllegalAccessException e) {
-            ConsoleManager.getInstance().exception(VendorOptionStatus.class, e);
-        } catch (ClassNotFoundException e) {
-            ConsoleManager.getInstance().exception(VendorOptionStatus.class, e);
-        } catch (ClassCastException e) {
+        } catch (InstantiationException
+                | IllegalAccessException
+                | ClassNotFoundException
+                | ClassCastException e) {
             ConsoleManager.getInstance().exception(VendorOptionStatus.class, e);
         }
         return null;

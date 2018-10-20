@@ -114,7 +114,7 @@ public class VectorFileHandler implements FileHandlerInterface {
      */
     @Override
     public List<SLDDataInterface> open(File f) {
-        return new ArrayList<SLDDataInterface>();
+        return new ArrayList<>();
     }
 
     /**

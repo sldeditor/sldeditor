@@ -40,6 +40,11 @@ public class Version {
     /** The version taken from the maven pom. */
     public static final String POM_VERSION_STRING = "xx";
 
+    /** Private default constructor. */
+    private Version() {
+        // Private default constructor
+    }
+
     /**
      * Gets the version number.
      *

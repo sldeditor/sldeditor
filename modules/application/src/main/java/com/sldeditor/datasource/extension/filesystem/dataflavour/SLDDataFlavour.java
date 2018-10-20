@@ -94,7 +94,7 @@ public class SLDDataFlavour extends DataFlavor implements Serializable {
      */
     @Override
     public boolean equals(DataFlavor that) {
-        if ((that == null) || !(that instanceof SLDDataFlavour)) {
+        if (!(that instanceof SLDDataFlavour)) {
             return false;
         }
 

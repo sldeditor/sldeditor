@@ -35,8 +35,7 @@ import net.opengis.wps10.LiteralInputType;
 public class RenderTransformValueFactory {
 
     /** The value list. */
-    private Map<Class<?>, RenderTransformValueInterface> valueList =
-            new HashMap<Class<?>, RenderTransformValueInterface>();
+    private Map<Class<?>, RenderTransformValueInterface> valueList = new HashMap<>();
 
     /** The instance. */
     private static RenderTransformValueFactory instance = null;
@@ -61,26 +60,26 @@ public class RenderTransformValueFactory {
 
     /** Populate. */
     private void populate() {
-        internal_populate(new InterpolationValues());
-        internal_populate(new CoordinateReferenceSystemValues());
-        internal_populate(new BooleanValues());
-        internal_populate(new DateValues());
-        internal_populate(new DoubleValues());
-        internal_populate(new GeometryValues());
-        internal_populate(new IntegerValues());
-        internal_populate(new NumberValues());
-        internal_populate(new ReferencedEnvelopeValues());
-        internal_populate(new StringValues());
-        internal_populate(new UnitValues());
-        internal_populate(new FeatureCollectionValues());
-        internal_populate(new KernelJAIValues());
-        internal_populate(new JAIToolsRangeValues());
-        internal_populate(new JAIExtRangeValues());
-        internal_populate(new FloatValues());
-        internal_populate(new StyleValues());
-        internal_populate(new FilterValues());
-        internal_populate(new TextAreaValues());
-        internal_populate(new TimePeriodValues());
+        internalPopulate(new InterpolationValues());
+        internalPopulate(new CoordinateReferenceSystemValues());
+        internalPopulate(new BooleanValues());
+        internalPopulate(new DateValues());
+        internalPopulate(new DoubleValues());
+        internalPopulate(new GeometryValues());
+        internalPopulate(new IntegerValues());
+        internalPopulate(new NumberValues());
+        internalPopulate(new ReferencedEnvelopeValues());
+        internalPopulate(new StringValues());
+        internalPopulate(new UnitValues());
+        internalPopulate(new FeatureCollectionValues());
+        internalPopulate(new KernelJAIValues());
+        internalPopulate(new JAIToolsRangeValues());
+        internalPopulate(new JAIExtRangeValues());
+        internalPopulate(new FloatValues());
+        internalPopulate(new StyleValues());
+        internalPopulate(new FilterValues());
+        internalPopulate(new TextAreaValues());
+        internalPopulate(new TimePeriodValues());
     }
 
     /**
@@ -88,7 +87,7 @@ public class RenderTransformValueFactory {
      *
      * @param values the values
      */
-    private void internal_populate(RenderTransformValueInterface values) {
+    private void internalPopulate(RenderTransformValueInterface values) {
         List<Class<?>> supportedClasses = values.getType();
 
         for (Class<?> supportedClass : supportedClasses) {
@@ -125,7 +124,7 @@ public class RenderTransformValueFactory {
 
         enumValues.populate(enumList);
 
-        internal_populate(enumValues);
+        internalPopulate(enumValues);
 
         return enumValues;
     }
@@ -168,7 +167,7 @@ public class RenderTransformValueFactory {
                 EnumValues enumValues = new EnumValues(StringBuilder.class);
                 value.setObjectValue(enumValues);
                 value.getObjectValue().setDefaultValue(defaultValue);
-                List<String> enumValueList = new ArrayList<String>();
+                List<String> enumValueList = new ArrayList<>();
 
                 for (Object valueTypeObj : literal.getAllowedValues().getValue()) {
                     ValueTypeImpl valueType = (ValueTypeImpl) valueTypeObj;

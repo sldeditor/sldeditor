@@ -132,7 +132,7 @@ public class MapBoxFileHandler implements FileHandlerInterface {
     @Override
     public List<SLDDataInterface> open(File f) {
         if (f != null) {
-            List<SLDDataInterface> list = new ArrayList<SLDDataInterface>();
+            List<SLDDataInterface> list = new ArrayList<>();
 
             if (f.isDirectory()) {
                 File[] listFiles = f.listFiles();

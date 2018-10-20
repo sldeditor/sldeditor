@@ -21,7 +21,7 @@ package com.sldeditor.common.data;
 
 import com.sldeditor.common.property.EncryptedPropertiesFactory;
 import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
-import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionName;
+import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionNameInterface;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -82,7 +82,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
     private Map<String, String> initialValues = new HashMap<>();
 
     /** The database connection name. */
-    private DatabaseConnectionName databaseConnectionName = null;
+    private DatabaseConnectionNameInterface databaseConnectionName = null;
 
     /** The no of times duplicated. */
     private int noOfTimesDuplicated = 0;
@@ -107,7 +107,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
             String databaseTypeLabel,
             boolean supportsDuplication,
             List<DatabaseConnectionField> detailList,
-            DatabaseConnectionName databaseConnectionName) {
+            DatabaseConnectionNameInterface databaseConnectionName) {
         this.databaseType = (databaseType == null) ? "" : (String) databaseType.sample;
         this.databaseTypeLabel = databaseTypeLabel;
         this.detailList = detailList;
@@ -178,8 +178,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
                 for (int index = 3; index < components.length; index++) {
                     String[] property = components[index].split(PROPERTY_DELIMETER);
                     if (property.length == 2) {
-                        localConnectionDataMap.put(
-                                property[0], (property[1].equals("null")) ? null : property[1]);
+                        localConnectionDataMap.put(property[0], getString(property[1]));
                     }
                 }
 
@@ -187,14 +186,24 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
 
                 if (connectionData != null) {
                     connectionData.connectionName = components[0];
-                    connectionData.userName = (components[1].equals("null")) ? null : components[1];
-                    connectionData.password = (components[2].equals("null")) ? null : components[2];
+                    connectionData.userName = getString(components[1]);
+                    connectionData.password = getString(components[2]);
 
                     connectionData.setConnectionDataMap(localConnectionDataMap);
                 }
             }
         }
         return connectionData;
+    }
+
+    /**
+     * Gets the string.
+     *
+     * @param string the string
+     * @return the string
+     */
+    private static String getString(String string) {
+        return (string.equals("null")) ? null : string;
     }
 
     /**
@@ -354,7 +363,7 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
      *
      * @return the databaseConnectionName
      */
-    public DatabaseConnectionName getDatabaseConnectionName() {
+    public DatabaseConnectionNameInterface getDatabaseConnectionName() {
         return databaseConnectionName;
     }
 
@@ -405,26 +414,38 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
         Map<String, Object> params = new LinkedHashMap<>();
         params.put(JDBCDataStoreFactory.DBTYPE.key, getDatabaseType());
         for (DatabaseConnectionField field : detailList) {
+            String key = field.getKey();
+
             if (field.isUsername()) {
-                if ((getUserName() != null) && !getUserName().trim().isEmpty()) {
-                    params.put(field.getKey(), getUserName());
+                if (isDataPopulated(getUserName())) {
+                    params.put(key, getUserName());
                 }
             } else if (field.isPassword()) {
-                if ((getPassword() != null) && !getPassword().trim().isEmpty()) {
-                    params.put(field.getKey(), getPassword());
+                if (isDataPopulated(getPassword())) {
+                    params.put(key, getPassword());
                 }
             } else if (field.isOptional()) {
-                String value = localConnectionDataMap.get(field.getKey());
-                if ((value != null) && !value.trim().isEmpty()) {
-                    params.put(field.getKey(), getValue(value, field.getType()));
+                String value = localConnectionDataMap.get(key);
+                if (isDataPopulated(value)) {
+                    params.put(key, getValue(value, field.getType()));
                 }
             } else {
-                String value = localConnectionDataMap.get(field.getKey());
-                params.put(field.getKey(), getValue(value, field.getType()));
+                String value = localConnectionDataMap.get(key);
+                params.put(key, getValue(value, field.getType()));
             }
         }
 
         return params;
+    }
+
+    /**
+     * Checks if is data populated.
+     *
+     * @param string the string
+     * @return true, if is data populated
+     */
+    private boolean isDataPopulated(String string) {
+        return ((string != null) && !string.trim().isEmpty());
     }
 
     /**

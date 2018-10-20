@@ -58,7 +58,7 @@ public class MultipleColourMapEntry {
         String colourValue = firstEntry.getColor().toString();
 
         for (ColorMapEntry entry : entries) {
-            if ((labelValue != null) && labelValue.compareTo(entry.getLabel().toString()) != 0) {
+            if ((labelValue != null) && labelValue.compareTo(entry.getLabel()) != 0) {
                 labelMultipleValue = false;
             }
             if ((opacityValue != null)

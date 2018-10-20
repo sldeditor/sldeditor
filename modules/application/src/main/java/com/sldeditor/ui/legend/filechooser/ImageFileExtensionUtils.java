@@ -62,28 +62,33 @@ import javax.swing.ImageIcon;
  */
 public class ImageFileExtensionUtils {
 
-    /** The Constant jpg. */
-    public static final String jpg = "jpg";
+    /** Private default constructor. */
+    private ImageFileExtensionUtils() {
+        // Private default constructor
+    }
 
-    /** The Constant gif. */
-    public static final String gif = "gif";
+    /** The Constant JPG. */
+    public static final String JPG = "jpg";
 
-    /** The Constant tif. */
-    public static final String tif = "tif";
+    /** The Constant GIF. */
+    public static final String GIF = "gif";
 
-    /** The Constant png. */
-    public static final String png = "png";
+    /** The Constant TIF. */
+    public static final String TIF = "tif";
+
+    /** The Constant PNG. */
+    public static final String PNG = "png";
 
     /** The description map. */
-    private static Map<String, String> descriptionMap = new HashMap<String, String>();
+    private static Map<String, String> descriptionMap = new HashMap<>();
 
     /** Populates the description values. */
     private static void populate() {
         if (descriptionMap.isEmpty()) {
-            descriptionMap.put(jpg, "JPEG (*.png)");
-            descriptionMap.put(gif, "GIF (*.gif)");
-            descriptionMap.put(tif, "TIFF (*.tif)");
-            descriptionMap.put(png, "PNG (*.png)");
+            descriptionMap.put(JPG, "JPEG (*.png)");
+            descriptionMap.put(GIF, "GIF (*.gif)");
+            descriptionMap.put(TIF, "TIFF (*.tif)");
+            descriptionMap.put(PNG, "PNG (*.png)");
         }
     }
 

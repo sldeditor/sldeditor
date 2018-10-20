@@ -55,6 +55,11 @@ public class DataSourceFactory {
     /** The inline data source. */
     private static CreateDataSourceInterface inlineDataSource = new CreateInlineDataSource();
 
+    /** Private default constructor */
+    private DataSourceFactory() {
+        // Private default constructor
+    }
+
     /** Reset. */
     public static void reset() {
         dataSource = null;

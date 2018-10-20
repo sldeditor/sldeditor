@@ -116,15 +116,6 @@ public class ExpressionSubPanel extends JPanel {
     /** The panel attribute. */
     private JPanel panelAttribute;
 
-    /** The panel function. */
-    private JPanel panelFunction;
-
-    /** The panel environment variable. */
-    private JPanel panelEnvVar;
-
-    /** The panel maths. */
-    private JPanel panelMaths;
-
     /** The data source attribute panel. */
     private transient DataSourceAttributePanel dataSourceAttributePanel;
 
@@ -148,9 +139,6 @@ public class ExpressionSubPanel extends JPanel {
 
     /** The environment variable panel. */
     private transient EnvironmentVariableField envVarField = null;
-
-    /** The panel containing the remove parameter button. */
-    private JPanel panelRemoveParameter;
 
     /** The remove parameter button. */
     private JButton btnRemoveParameter;
@@ -226,7 +214,7 @@ public class ExpressionSubPanel extends JPanel {
         setUpMathsPanel();
         box.add(Box.createVerticalStrut(VERTICAL_STRUCT_SIZE));
 
-        panelRemoveParameter = new JPanel();
+        JPanel panelRemoveParameter = new JPanel();
         FlowLayout flowLayout = (FlowLayout) panelRemoveParameter.getLayout();
         flowLayout.setVgap(1);
         flowLayout.setHgap(1);
@@ -308,7 +296,7 @@ public class ExpressionSubPanel extends JPanel {
                 .isAllowed(
                         this.parentObj.getVendorOptionList(),
                         EnvironmentVariableField.getVendorOption())) {
-            panelEnvVar = new JPanel();
+            JPanel panelEnvVar = new JPanel();
             panelEnvVar.setBorder(null);
             panelEnvVar.setLayout(new BoxLayout(panelEnvVar, BoxLayout.X_AXIS));
 
@@ -342,7 +330,7 @@ public class ExpressionSubPanel extends JPanel {
 
     /** Sets the up function panel. */
     protected void setUpFunctionPanel() {
-        panelFunction = new JPanel();
+        JPanel panelFunction = new JPanel();
         panelFunction.setBorder(null);
         panelFunction.setLayout(new BoxLayout(panelFunction, BoxLayout.X_AXIS));
 
@@ -380,7 +368,7 @@ public class ExpressionSubPanel extends JPanel {
 
     /** Sets the up maths panel. */
     protected void setUpMathsPanel() {
-        panelMaths = new JPanel();
+        JPanel panelMaths = new JPanel();
         panelMaths.setBorder(null);
         panelMaths.setLayout(new BoxLayout(panelMaths, BoxLayout.X_AXIS));
         rdbtnMaths =
@@ -503,45 +491,54 @@ public class ExpressionSubPanel extends JPanel {
             }
 
             // Now work out whether the Remove Parameter button should be displayed
-            boolean displayRemoveParameter = false;
-
-            if (node.getParent() instanceof ExpressionNode) {
-                ExpressionNode parentNode = (ExpressionNode) node.getParent();
-                if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
-                    FunctionExpression functionExpression =
-                            (FunctionExpression) parentNode.getExpression();
-                    FunctionName functionName = functionExpression.getFunctionName();
-
-                    int argCount = functionName.getArgumentCount();
-
-                    if (functionName.getArgumentCount() < 0) {
-                        displayRemoveParameter = true;
-                        argCount *= -1;
-
-                        btnRemoveParameter.setEnabled(
-                                functionExpression.getParameters().size() > argCount);
-                    }
-                } else if (parentNode.getExpression() instanceof ConcatenateFunction) {
-                    ConcatenateFunction concatenateFunction =
-                            (ConcatenateFunction) parentNode.getExpression();
-                    FunctionName functionName = concatenateFunction.getFunctionName();
-
-                    int argCount = functionName.getArgumentCount();
-
-                    if (functionName.getArgumentCount() < 0) {
-                        displayRemoveParameter = true;
-                        argCount *= -1;
-
-                        btnRemoveParameter.setEnabled(
-                                concatenateFunction.getParameters().size() > argCount);
-                    }
-                }
-            }
-            btnRemoveParameter.setVisible(displayRemoveParameter);
+            displayRemoveParameterButton(node);
         }
         Dimension boxSize = box.getPreferredSize();
         setPreferredSize(boxSize);
         revalidate();
+    }
+
+    /**
+     * Display remove parameter button.
+     *
+     * @param node the node
+     */
+    private void displayRemoveParameterButton(ExpressionNode node) {
+        boolean displayRemoveParameter = false;
+
+        if (node.getParent() instanceof ExpressionNode) {
+            ExpressionNode parentNode = (ExpressionNode) node.getParent();
+            if (parentNode.getExpression() instanceof FunctionExpressionImpl) {
+                FunctionExpression functionExpression =
+                        (FunctionExpression) parentNode.getExpression();
+                FunctionName functionName = functionExpression.getFunctionName();
+
+                int argCount = functionName.getArgumentCount();
+
+                if (functionName.getArgumentCount() < 0) {
+                    displayRemoveParameter = true;
+                    argCount *= -1;
+
+                    btnRemoveParameter.setEnabled(
+                            functionExpression.getParameters().size() > argCount);
+                }
+            } else if (parentNode.getExpression() instanceof ConcatenateFunction) {
+                ConcatenateFunction concatenateFunction =
+                        (ConcatenateFunction) parentNode.getExpression();
+                FunctionName functionName = concatenateFunction.getFunctionName();
+
+                int argCount = functionName.getArgumentCount();
+
+                if (functionName.getArgumentCount() < 0) {
+                    displayRemoveParameter = true;
+                    argCount *= -1;
+
+                    btnRemoveParameter.setEnabled(
+                            concatenateFunction.getParameters().size() > argCount);
+                }
+            }
+        }
+        btnRemoveParameter.setVisible(displayRemoveParameter);
     }
 
     /**
@@ -670,7 +667,7 @@ public class ExpressionSubPanel extends JPanel {
                     MathExpressionImpl mathExpression =
                             (MathExpressionImpl) parentNode.getExpression();
 
-                    List<Expression> parameterList = new ArrayList<Expression>();
+                    List<Expression> parameterList = new ArrayList<>();
 
                     parameterList.add(mathExpression.getExpression1());
                     parameterList.add(mathExpression.getExpression2());

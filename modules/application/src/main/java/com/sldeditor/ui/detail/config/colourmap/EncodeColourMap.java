@@ -37,6 +37,11 @@ public class EncodeColourMap {
     /** The Constant ENTRY_SEPARATOR. */
     private static final String ENTRY_SEPARATOR = "/";
 
+    /** Private default constructor */
+    private EncodeColourMap() {
+        // Private default constructor
+    }
+
     /**
      * Encode colour map entries into a string.
      *

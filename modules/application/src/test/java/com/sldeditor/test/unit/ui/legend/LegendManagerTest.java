@@ -52,7 +52,7 @@ public class LegendManagerTest {
         StyledLayerDescriptor sld = testSLD1();
         String heading = "Test Heading";
 
-        LegendManager.getInstance().SLDLoaded(null);
+        LegendManager.getInstance().sldLoaded(null);
         LegendManager.getInstance().updateLegendOptionData(null);
         boolean actualResult = compareLegendImage(sld, heading);
         assertTrue(actualResult);
@@ -269,7 +269,7 @@ public class LegendManagerTest {
         legendOption.setShowLabels(true);
         legendOption.setShowTitle(true);
 
-        LegendManager.getInstance().SLDLoaded(legendOption);
+        LegendManager.getInstance().sldLoaded(legendOption);
 
         boolean actualResult = compareLegendImage(sld, heading);
         assertTrue(actualResult);
@@ -291,7 +291,7 @@ public class LegendManagerTest {
         legendOption.setShowLabels(false);
         legendOption.setShowTitle(false);
 
-        LegendManager.getInstance().SLDLoaded(legendOption);
+        LegendManager.getInstance().sldLoaded(legendOption);
 
         boolean actualResult = compareLegendImage(sld, heading);
         assertTrue(actualResult);

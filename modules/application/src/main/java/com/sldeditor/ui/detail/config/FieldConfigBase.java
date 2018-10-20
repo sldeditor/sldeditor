@@ -85,8 +85,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
     private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /** The update symbol listener list, called when a value changes. */
-    private List<UpdateSymbolInterface> updateSymbolListenerList =
-            new ArrayList<UpdateSymbolInterface>();
+    private List<UpdateSymbolInterface> updateSymbolListenerList = new ArrayList<>();
 
     /** The style factory. */
     private StyleFactoryImpl styleFactory =
@@ -119,9 +118,9 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      * @param enabled the new enabled
      */
     public void setEnabled(boolean enabled) {
-        CurrentFieldState fieldState = getFieldState();
-        fieldState.setFieldEnabled(enabled);
-        setFieldState(fieldState);
+        CurrentFieldState localFieldState = getFieldState();
+        localFieldState.setFieldEnabled(enabled);
+        setFieldState(localFieldState);
     }
 
     /**
@@ -129,7 +128,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      *
      * @param enabled the new enabled
      */
-    protected abstract void internal_setEnabled(boolean enabled);
+    protected abstract void internalSetEnabled(boolean enabled);
 
     /**
      * Sets the field visibility state.
@@ -171,7 +170,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
      * @return the common data
      */
     public FieldConfigCommonData getCommonData() {
-        return (FieldConfigCommonData) this;
+        return this;
     }
 
     /**
@@ -200,7 +199,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
     protected void addCustomPanel(JPanel customPanel) {
         // Create the list if it hasn't been created before
         if (customPanelList == null) {
-            customPanelList = new ArrayList<Component>();
+            customPanelList = new ArrayList<>();
         }
 
         customPanelList.add(customPanel);
@@ -229,7 +228,7 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
         if (fieldPanel != null) {
             fieldEnabled &= fieldPanel.isValueReadable();
         }
-        internal_setEnabled(fieldEnabled && (getExpressionType() == ExpressionTypeEnum.E_VALUE));
+        internalSetEnabled(fieldEnabled && (getExpressionType() == ExpressionTypeEnum.E_VALUE));
 
         if (attributeSelectionPanel != null) {
             attributeSelectionPanel.setEnabled(fieldEnabled);
@@ -331,72 +330,17 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
             valueUpdated();
         } else {
             if (expression instanceof LiteralExpressionImpl) {
-                LiteralExpressionImpl lExpression = (LiteralExpressionImpl) expression;
-
-                Object objValue = lExpression.getValue();
-
-                if (objValue instanceof AttributeExpressionImpl) {
-                    expressionType = ExpressionTypeEnum.E_ATTRIBUTE;
-
-                    if (attributeSelectionPanel != null) {
-                        attributeSelectionPanel.setAttribute((AttributeExpressionImpl) objValue);
-                    }
-
-                    setCachedExpression((AttributeExpressionImpl) objValue);
-                } else {
-                    expressionType = ExpressionTypeEnum.E_VALUE;
-
-                    populateExpression(objValue);
-
-                    valueUpdated();
-                }
+                populateLiteralExpression(expression);
             } else if (expression instanceof ConstantExpression) {
-                ConstantExpression cExpression = (ConstantExpression) expression;
-
-                Object objValue = cExpression.getValue();
-
-                expressionType = ExpressionTypeEnum.E_VALUE;
-
-                populateExpression(objValue);
-
-                valueUpdated();
+                populateConstantExpression(expression);
             } else if (expression instanceof NilExpression) {
-                Object objValue = null;
-
-                expressionType = ExpressionTypeEnum.E_VALUE;
-
-                populateExpression(objValue);
-
-                valueUpdated();
+                populateNilExpression();
             } else if (expression instanceof ProcessFunction) {
-                ProcessFunction processExpression = (ProcessFunction) expression;
-
-                Object objValue = processExpression;
-
-                expressionType = ExpressionTypeEnum.E_VALUE;
-
-                populateExpression(objValue);
-
-                valueUpdated();
+                populateProcessFunction(expression);
             } else if (expression instanceof AttributeExpressionImpl) {
-                expressionType = ExpressionTypeEnum.E_ATTRIBUTE;
-
-                if (attributeSelectionPanel != null) {
-                    attributeSelectionPanel.setAttribute(expression);
-                } else {
-                    populateExpression(expression);
-                }
-
-                setCachedExpression(expression);
-            } else if (expression instanceof FunctionExpressionImpl) {
-                expressionType = ExpressionTypeEnum.E_EXPRESSION;
-
-                if (attributeSelectionPanel != null) {
-                    attributeSelectionPanel.populate(expression);
-                }
-
-                setCachedExpression(expression);
-            } else if (expression instanceof BinaryExpression) {
+                populateAttributeExpression(expression);
+            } else if ((expression instanceof FunctionExpressionImpl)
+                    || (expression instanceof BinaryExpression)) {
                 expressionType = ExpressionTypeEnum.E_EXPRESSION;
 
                 if (attributeSelectionPanel != null) {
@@ -410,6 +354,83 @@ public abstract class FieldConfigBase extends FieldConfigPopulate
         }
 
         setValueFieldState();
+    }
+
+    /**
+     * Populate literal expression.
+     *
+     * @param expression the expression
+     */
+    private void populateLiteralExpression(Expression expression) {
+        LiteralExpressionImpl lExpression = (LiteralExpressionImpl) expression;
+
+        Object objValue = lExpression.getValue();
+
+        if (objValue instanceof AttributeExpressionImpl) {
+            expressionType = ExpressionTypeEnum.E_ATTRIBUTE;
+
+            if (attributeSelectionPanel != null) {
+                attributeSelectionPanel.setAttribute((AttributeExpressionImpl) objValue);
+            }
+
+            setCachedExpression((AttributeExpressionImpl) objValue);
+        } else {
+            expressionType = ExpressionTypeEnum.E_VALUE;
+
+            populateExpression(objValue);
+
+            valueUpdated();
+        }
+    }
+
+    /**
+     * Populate attribute expression.
+     *
+     * @param expression the expression
+     */
+    private void populateAttributeExpression(Expression expression) {
+        expressionType = ExpressionTypeEnum.E_ATTRIBUTE;
+
+        if (attributeSelectionPanel != null) {
+            attributeSelectionPanel.setAttribute(expression);
+        } else {
+            populateExpression(expression);
+        }
+
+        setCachedExpression(expression);
+    }
+
+    /**
+     * Populate process function.
+     *
+     * @param expression the expression
+     */
+    private void populateProcessFunction(Expression expression) {
+        ProcessFunction processExpression = (ProcessFunction) expression;
+
+        Object objValue = processExpression;
+
+        populateExpression(objValue);
+    }
+
+    /** Populate nil expression. */
+    private void populateNilExpression() {
+        Object objValue = null;
+
+        populateExpression(objValue);
+    }
+
+    /**
+     * Populate constant expression.
+     *
+     * @param expression the expression
+     */
+    private void populateConstantExpression(Expression expression) {
+        ConstantExpression cExpression = (ConstantExpression) expression;
+
+        Object objValue = cExpression.getValue();
+
+        populateExpression(objValue);
     }
 
     /**

@@ -44,9 +44,6 @@ public class VersionCellEditor extends AbstractCellEditor
     /** The version data. */
     private VersionData versionData;
 
-    /** The list version data. */
-    private List<VersionData> listVersionData;
-
     /** The model. */
     private VendorOptionTableModel model = null;
 
@@ -88,7 +85,7 @@ public class VersionCellEditor extends AbstractCellEditor
             this.versionData = (VersionData) value;
         }
 
-        listVersionData = model.getVendorOption(row);
+        List<VersionData> listVersionData = model.getVendorOption(row);
         MenuComboBox comboVersionData = new MenuComboBox(this);
 
         List<ValueComboBoxDataGroup> dataSelectionList =

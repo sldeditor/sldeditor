@@ -120,9 +120,7 @@ public class SLDTreeLeafLine implements SLDTreeLeafInterface {
         if (symbolizer instanceof LineSymbolizer) {
             LineSymbolizer line = (LineSymbolizer) symbolizer;
 
-            if (line != null) {
-                stroke = line.getStroke();
-            }
+            stroke = line.getStroke();
         }
 
         return stroke;
@@ -136,16 +134,15 @@ public class SLDTreeLeafLine implements SLDTreeLeafInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeStroke(org.opengis.style.Symbolizer)
+     * @see
+     * com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeStroke(org.opengis.style.Symbolizer)
      */
     @Override
     public void removeStroke(Symbolizer symbolizer) {
         if (symbolizer instanceof LineSymbolizer) {
             LineSymbolizer line = (LineSymbolizer) symbolizer;
 
-            if (line != null) {
-                line.setStroke(null);
-            }
+            line.setStroke(null);
         }
     }
 
@@ -157,16 +154,15 @@ public class SLDTreeLeafLine implements SLDTreeLeafInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createStroke(org.opengis.style.Symbolizer)
+     * @see
+     * com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createStroke(org.opengis.style.Symbolizer)
      */
     @Override
     public void createStroke(Symbolizer symbolizer) {
         if (symbolizer instanceof LineSymbolizer) {
             LineSymbolizer line = (LineSymbolizer) symbolizer;
 
-            if (line != null) {
-                line.setStroke(styleFactory.getDefaultStroke());
-            }
+            line.setStroke(styleFactory.getDefaultStroke());
         }
     }
 

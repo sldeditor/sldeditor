@@ -135,7 +135,7 @@ public class ScaleTool implements ToolInterface {
         this.sldDataList = sldDataList;
 
         if (scaleButton != null) {
-            scaleButton.setEnabled(sldDataList.size() > 0);
+            scaleButton.setEnabled(!sldDataList.isEmpty());
         }
     }
 

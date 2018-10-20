@@ -51,7 +51,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -71,9 +71,6 @@ public class FieldConfigColourMap extends FieldConfigBase
 
     /** The colour map data model. */
     protected ColourMapModel model = null;
-
-    /** The add button. */
-    private JButton addButton;
 
     /** The remove button. */
     protected JButton removeButton;
@@ -154,7 +151,7 @@ public class FieldConfigColourMap extends FieldConfigBase
             //
             // Add button
             //
-            addButton =
+            JButton addButton =
                     new JButton(
                             Localisation.getString(
                                     FieldConfigBase.class, "FieldConfigColourMap.add"));
@@ -243,7 +240,7 @@ public class FieldConfigColourMap extends FieldConfigBase
      * @param enabled the new enabled
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (table != null) {
             table.setEnabled(enabled);
         }
@@ -261,9 +258,7 @@ public class FieldConfigColourMap extends FieldConfigBase
      */
     @Override
     protected Expression generateExpression() {
-        Expression expression = null;
-
-        return expression;
+        return null;
     }
 
     /**
@@ -475,7 +470,7 @@ public class FieldConfigColourMap extends FieldConfigBase
         List<ColorMapEntry> entries;
         if (table.getSelectedRowCount() == 1) {
             ColorMapEntry entry = model.getColourMapEntry(table.getSelectedRow());
-            entries = new ArrayList<ColorMapEntry>();
+            entries = new ArrayList<>();
             entries.add(entry);
         } else {
             entries = model.getColourMapEntries(table.getSelectedRows());

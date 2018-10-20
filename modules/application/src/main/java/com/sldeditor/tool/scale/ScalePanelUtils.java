@@ -36,6 +36,11 @@ import org.geotools.styling.StyledLayerDescriptor;
  */
 public class ScalePanelUtils {
 
+    /** Default constructor */
+    private ScalePanelUtils() {
+        // Default constructor
+    }
+
     /**
      * Extracts all the rule scales.
      *
@@ -51,37 +56,35 @@ public class ScalePanelUtils {
         if (sld != null) {
             List<StyledLayer> styledLayerList = sld.layers();
 
-            if (styledLayerList != null) {
-                for (StyledLayer styledLayer : styledLayerList) {
-                    if (styledLayer instanceof NamedLayerImpl) {
-                        NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
+            for (StyledLayer styledLayer : styledLayerList) {
+                if (styledLayer instanceof NamedLayerImpl) {
+                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
 
-                        for (Style style : namedLayerImpl.styles()) {
-                            for (FeatureTypeStyle fts : style.featureTypeStyles()) {
-                                for (Rule rule : fts.rules()) {
-                                    double minScale = rule.getMinScaleDenominator();
-                                    double maxScale = rule.getMaxScaleDenominator();
+                    for (Style style : namedLayerImpl.styles()) {
+                        for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                            for (Rule rule : fts.rules()) {
+                                double minScale = rule.getMinScaleDenominator();
+                                double maxScale = rule.getMaxScaleDenominator();
 
-                                    if (isMinScaleSet(minScale) || isMaxScaleSet(maxScale)) {
-                                        if (dataList == null) {
-                                            dataList = new ArrayList<ScaleSLDData>();
-                                        }
-                                        ScaleSLDData scaleSLDData = new ScaleSLDData(sld, sldData);
-
-                                        scaleSLDData.setNamedLayer(namedLayerImpl.getName());
-                                        scaleSLDData.setFeatureTypeStyle(fts.getName());
-                                        scaleSLDData.setStyle(style.getName());
-                                        scaleSLDData.setRule(rule);
-
-                                        if (isMinScaleSet(minScale)) {
-                                            scaleSLDData.setMinScale(minScale);
-                                        }
-
-                                        if (isMaxScaleSet(maxScale)) {
-                                            scaleSLDData.setMaxScale(maxScale);
-                                        }
-                                        dataList.add(scaleSLDData);
+                                if (isMinScaleSet(minScale) || isMaxScaleSet(maxScale)) {
+                                    if (dataList == null) {
+                                        dataList = new ArrayList<>();
                                     }
+                                    ScaleSLDData scaleSLDData = new ScaleSLDData(sld, sldData);
+
+                                    scaleSLDData.setNamedLayer(namedLayerImpl.getName());
+                                    scaleSLDData.setFeatureTypeStyle(fts.getName());
+                                    scaleSLDData.setStyle(style.getName());
+                                    scaleSLDData.setRule(rule);
+
+                                    if (isMinScaleSet(minScale)) {
+                                        scaleSLDData.setMinScale(minScale);
+                                    }
+
+                                    if (isMaxScaleSet(maxScale)) {
+                                        scaleSLDData.setMaxScale(maxScale);
+                                    }
+                                    dataList.add(scaleSLDData);
                                 }
                             }
                         }

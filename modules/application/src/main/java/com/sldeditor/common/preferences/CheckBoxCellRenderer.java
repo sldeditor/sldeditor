@@ -78,7 +78,7 @@ public class CheckBoxCellRenderer extends AbstractCellEditor
      */
     @Override
     public Object getCellEditorValue() {
-        if (checkBox.isSelected() == true) {
+        if (checkBox.isSelected()) {
             return Boolean.TRUE;
         } else {
             return Boolean.FALSE;

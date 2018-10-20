@@ -42,7 +42,7 @@ public class VendorOptionInfoModel extends AbstractTableModel {
     private String[] columnNames = new String[2];
 
     /** The info list. */
-    private List<VendorOptionInfo> infoList = new ArrayList<VendorOptionInfo>();
+    private List<VendorOptionInfo> infoList = new ArrayList<>();
 
     /** The selected version. */
     private VersionData selectedVersion = null;

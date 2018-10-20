@@ -50,7 +50,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -339,7 +339,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
      * @param enabled the new enabled
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (filterTable != null) {
             filterTable.setEnabled(enabled);
         }
@@ -357,9 +357,7 @@ public class FieldConfigFeatureTypeConstraint extends FieldConfigBase
      */
     @Override
     protected Expression generateExpression() {
-        Expression expression = null;
-
-        return expression;
+        return null;
     }
 
     /**

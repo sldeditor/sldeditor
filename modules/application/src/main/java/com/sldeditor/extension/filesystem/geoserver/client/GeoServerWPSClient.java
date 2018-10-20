@@ -24,7 +24,6 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.localisation.Localisation;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -88,7 +87,7 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
     private GeoServerConnection connection = null;
 
     /** The process list. */
-    private List<ProcessDescriptionType> processList = new ArrayList<ProcessDescriptionType>();
+    private List<ProcessDescriptionType> processList = new ArrayList<>();
 
     /**
      * Instantiates a new GeoServer WPS client.
@@ -142,9 +141,7 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
             }
 
             ok = true;
-        } catch (URISyntaxException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (MalformedURLException e) {
+        } catch (URISyntaxException | IOException e) {
             ConsoleManager.getInstance().exception(this, e);
         } catch (ServiceException e) {
             ConsoleManager.getInstance().exception(this, e);
@@ -153,8 +150,6 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
                             this,
                             Localisation.getString(
                                     GeoServerWPSClient.class, "GeoServerWPSClient.noCapabilities"));
-        } catch (IOException e) {
-            ConsoleManager.getInstance().exception(this, e);
         }
 
         return ok;
@@ -168,7 +163,7 @@ public class GeoServerWPSClient implements GeoServerWPSClientInterface {
      */
     @Override
     public List<ProcessBriefType> getRenderTransformations(DataTypeEnum typeOfData) {
-        List<ProcessBriefType> functionList = new ArrayList<ProcessBriefType>();
+        List<ProcessBriefType> functionList = new ArrayList<>();
 
         for (ProcessDescriptionType processDescription : processList) {
             ConsoleManager.getInstance()

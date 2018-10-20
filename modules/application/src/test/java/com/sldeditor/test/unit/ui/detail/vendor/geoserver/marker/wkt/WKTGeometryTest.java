@@ -174,6 +174,7 @@ public class WKTGeometryTest {
      * Test method for {@link
      * com.sldeditor.ui.detail.vendor.geoserver.marker.wkt.WKTGeometry#hashCode()}.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testHashCode() {
         WKTGeometry g = new WKTGeometry();

@@ -124,7 +124,7 @@ public class VendorOptionPresentModel extends AbstractTableModel {
      * @return the minimum vendor option version
      */
     public List<VersionData> getMinimum() {
-        List<VersionData> minimum = new ArrayList<VersionData>();
+        List<VersionData> minimum = new ArrayList<>();
         VendorOptionPresent voPresent =
                 vendorOptionsPresentList.get(vendorOptionsPresentList.size() - 1);
 

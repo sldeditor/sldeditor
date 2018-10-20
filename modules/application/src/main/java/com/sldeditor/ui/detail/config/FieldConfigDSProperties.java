@@ -46,7 +46,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -57,13 +57,13 @@ public class FieldConfigDSProperties extends FieldConfigBase
     private String defaultValue = "";
 
     /** The combo box. */
-    private JComboBox<String> comboBox = new JComboBox<String>();
+    private JComboBox<String> comboBox = new JComboBox<>();
 
     /** The old value obj. */
     private Object oldValueObj = null;
 
     /** The data model. */
-    private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+    private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
     /** The populating attribute combo box. */
     private boolean populatingAttributeComboBox = false;
@@ -139,7 +139,7 @@ public class FieldConfigDSProperties extends FieldConfigBase
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (comboBox != null) {
             comboBox.setEnabled(enabled);
         }
@@ -218,11 +218,8 @@ public class FieldConfigDSProperties extends FieldConfigBase
                 String sValue = (String) objValue;
 
                 populateField(sValue);
-            } else if (objValue instanceof LiteralExpressionImpl) {
-                String sValue = objValue.toString();
-
-                populateField(sValue);
-            } else if (objValue instanceof AttributeExpressionImpl) {
+            } else if ((objValue instanceof LiteralExpressionImpl)
+                    || (objValue instanceof AttributeExpressionImpl)) {
                 String sValue = objValue.toString();
 
                 populateField(sValue);

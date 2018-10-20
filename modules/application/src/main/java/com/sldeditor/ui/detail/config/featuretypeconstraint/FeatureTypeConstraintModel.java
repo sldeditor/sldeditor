@@ -50,16 +50,16 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
     private static final int COL_FILTER = 1;
 
     /** The feature type constraint list. */
-    private List<FeatureTypeConstraint> ftcList = new ArrayList<FeatureTypeConstraint>();
+    private transient List<FeatureTypeConstraint> ftcList = new ArrayList<>();
 
     /** The column list. */
-    private List<String> columnList = new ArrayList<String>();
+    private List<String> columnList = new ArrayList<>();
 
     /** The parent object to inform of any changes. */
-    private FeatureTypeConstraintModelUpdateInterface parentObj = null;
+    private transient FeatureTypeConstraintModelUpdateInterface parentObj = null;
 
     /** The style factory. */
-    private StyleFactoryImpl styleFactory =
+    private transient StyleFactoryImpl styleFactory =
             (StyleFactoryImpl) CommonFactoryFinder.getStyleFactory();
 
     /**
@@ -267,9 +267,7 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
      */
     public FeatureTypeConstraint getFeatureTypeConstraint(int row) {
         if ((row >= 0) && (row < ftcList.size())) {
-            FeatureTypeConstraint ftc = ftcList.get(row);
-
-            return ftc;
+            return ftcList.get(row);
         }
         return null;
     }

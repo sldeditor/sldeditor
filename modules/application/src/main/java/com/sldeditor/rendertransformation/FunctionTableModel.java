@@ -280,10 +280,10 @@ public class FunctionTableModel extends AbstractTableModel {
             return null;
         }
 
-        List<Expression> overallParameterList = new ArrayList<Expression>();
+        List<Expression> overallParameterList = new ArrayList<>();
 
         for (ProcessFunctionParameterValue value : valueList) {
-            List<Expression> parameterList = new ArrayList<Expression>();
+            List<Expression> parameterList = new ArrayList<>();
             parameterList.add(ff.literal(value.getName()));
 
             boolean setValue = true;
@@ -291,12 +291,10 @@ public class FunctionTableModel extends AbstractTableModel {
                 setValue = value.isIncluded();
             }
 
-            if (setValue) {
-                if (value.getObjectValue() != null) {
-                    Expression expression = value.getObjectValue().getExpression();
-                    if (expression != null) {
-                        parameterList.add(expression);
-                    }
+            if (setValue && (value.getObjectValue() != null)) {
+                Expression expression = value.getObjectValue().getExpression();
+                if (expression != null) {
+                    parameterList.add(expression);
                 }
             }
 

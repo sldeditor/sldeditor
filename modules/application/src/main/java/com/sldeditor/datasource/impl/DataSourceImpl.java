@@ -75,8 +75,7 @@ public class DataSourceImpl implements DataSourceInterface {
     private static Logger logger = Logger.getLogger(DataSourceImpl.class);
 
     /** The listener list. */
-    private List<DataSourceUpdatedInterface> listenerList =
-            new ArrayList<DataSourceUpdatedInterface>();
+    private List<DataSourceUpdatedInterface> listenerList = new ArrayList<>();
 
     /** The data source info. */
     private DataSourceInfo dataSourceInfo = new DataSourceInfo();
@@ -85,7 +84,7 @@ public class DataSourceImpl implements DataSourceInterface {
     private DataSourceInfo exampleDataSourceInfo = new DataSourceInfo();
 
     /** The user layer data source info. */
-    private List<DataSourceInfo> userLayerDataSourceInfo = new ArrayList<DataSourceInfo>();
+    private List<DataSourceInfo> userLayerDataSourceInfo = new ArrayList<>();
 
     /** The data source properties. */
     private DataSourcePropertiesInterface dataSourceProperties = null;
@@ -94,7 +93,7 @@ public class DataSourceImpl implements DataSourceInterface {
     private boolean connectedToDataSourceFlag = false;
 
     /** The available data stores. */
-    private List<String> availableDataStoreList = new ArrayList<String>();
+    private List<String> availableDataStoreList = new ArrayList<>();
 
     /** The editor file interface. */
     private SLDEditorFileInterface editorFileInterface = null;
@@ -267,7 +266,7 @@ public class DataSourceImpl implements DataSourceInterface {
 
         Iterator<DataStoreFactorySpi> iterator = DataStoreFinder.getAvailableDataStores();
         while (iterator.hasNext()) {
-            fac = (DataAccessFactory) iterator.next();
+            fac = iterator.next();
 
             logger.debug("\t" + fac.getDisplayName());
 
@@ -301,9 +300,7 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     @Override
     public FeatureSource<SimpleFeatureType, SimpleFeature> getFeatureSource() {
-        FeatureSource<SimpleFeatureType, SimpleFeature> features = dataSourceInfo.getFeatures();
-
-        return features;
+        return dataSourceInfo.getFeatures();
     }
 
     /**
@@ -319,10 +316,7 @@ public class DataSourceImpl implements DataSourceInterface {
     @Override
     public FeatureSource<SimpleFeatureType, SimpleFeature> getExampleFeatureSource() {
         if (exampleDataSourceInfo != null) {
-            FeatureSource<SimpleFeatureType, SimpleFeature> features =
-                    exampleDataSourceInfo.getFeatures();
-
-            return features;
+            return exampleDataSourceInfo.getFeatures();
         }
         return null;
     }
@@ -340,7 +334,7 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     @Override
     public List<String> getAttributes(Class<?> expectedDataType) {
-        List<String> attributeNameList = new ArrayList<String>();
+        List<String> attributeNameList = new ArrayList<>();
 
         Collection<PropertyDescriptor> descriptorList = getPropertyDescriptorList();
 
@@ -362,7 +356,7 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     @Override
     public List<String> getAllAttributes(boolean includeGeometry) {
-        List<String> attributeNameList = new ArrayList<String>();
+        List<String> attributeNameList = new ArrayList<>();
 
         Collection<PropertyDescriptor> descriptorList = getPropertyDescriptorList();
 
@@ -402,7 +396,9 @@ public class DataSourceImpl implements DataSourceInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceInterface#updateAttributes(com.sldeditor.render.iface. RenderAttributeDataInterface)
+     * @see
+     * com.sldeditor.datasource.DataSourceInterface#updateAttributes(com.sldeditor.render.iface.
+     * RenderAttributeDataInterface)
      */
     @Override
     public void readAttributes(DataSourceAttributeListInterface attributeData) {
@@ -410,7 +406,7 @@ public class DataSourceImpl implements DataSourceInterface {
             return;
         }
 
-        List<DataSourceAttributeData> valueMap = new ArrayList<DataSourceAttributeData>();
+        List<DataSourceAttributeData> valueMap = new ArrayList<>();
 
         SimpleFeatureCollection featureCollection = dataSourceInfo.getFeatureCollection();
         if (featureCollection != null) {
@@ -422,36 +418,52 @@ public class DataSourceImpl implements DataSourceInterface {
             if (iterator.hasNext()) {
                 SimpleFeature feature = iterator.next();
 
-                List<Object> attributes = feature.getAttributes();
-                for (int i = 0; i < attributes.size(); i++) {
-                    Name name = fieldNameMap.get(i);
-                    if (name != null) {
-                        String fieldName = name.getLocalPart();
-
-                        Class<?> fieldType = fieldTypeMap.get(i);
-
-                        if (fieldType == Geometry.class) {
-                            Object value = feature.getAttribute(fieldName);
-
-                            fieldType = value.getClass();
-                        }
-
-                        Object value =
-                                CreateSampleData.getFieldTypeValue(
-                                        i, fieldName, fieldType, attributes.get(i));
-
-                        DataSourceAttributeData data =
-                                new DataSourceAttributeData(fieldName, fieldType, value);
-
-                        valueMap.add(data);
-                    }
-                }
+                extractAttributes(valueMap, fieldNameMap, fieldTypeMap, feature);
             }
 
             iterator.close();
         }
 
         attributeData.setData(valueMap);
+    }
+
+    /**
+     * Extract attributes.
+     *
+     * @param valueMap the value map
+     * @param fieldNameMap the field name map
+     * @param fieldTypeMap the field type map
+     * @param feature the feature
+     */
+    private void extractAttributes(
+            List<DataSourceAttributeData> valueMap,
+            Map<Integer, Name> fieldNameMap,
+            Map<Integer, Class<?>> fieldTypeMap,
+            SimpleFeature feature) {
+        List<Object> attributes = feature.getAttributes();
+        for (int i = 0; i < attributes.size(); i++) {
+            Name name = fieldNameMap.get(i);
+            if (name != null) {
+                String fieldName = name.getLocalPart();
+
+                Class<?> fieldType = fieldTypeMap.get(i);
+
+                if (fieldType == Geometry.class) {
+                    Object value = feature.getAttribute(fieldName);
+
+                    fieldType = value.getClass();
+                }
+
+                Object value =
+                        CreateSampleData.getFieldTypeValue(
+                                i, fieldName, fieldType, attributes.get(i));
+
+                DataSourceAttributeData data =
+                        new DataSourceAttributeData(fieldName, fieldType, value);
+
+                valueMap.add(data);
+            }
+        }
     }
 
     /** Reset. */
@@ -538,8 +550,7 @@ public class DataSourceImpl implements DataSourceInterface {
 
     /** Notify data source loaded. */
     private void notifyDataSourceLoaded() {
-        List<DataSourceUpdatedInterface> copyListenerList =
-                new ArrayList<DataSourceUpdatedInterface>(listenerList);
+        List<DataSourceUpdatedInterface> copyListenerList = new ArrayList<>(listenerList);
         GeometryTypeEnum geometryType = getGeometryType();
         for (DataSourceUpdatedInterface listener : copyListenerList) {
             listener.dataSourceLoaded(geometryType, this.connectedToDataSourceFlag);
@@ -552,8 +563,7 @@ public class DataSourceImpl implements DataSourceInterface {
      * @param dataStore the data store to be unloaded
      */
     private void notifyDataSourceAboutToUnloaded(DataStore dataStore) {
-        List<DataSourceUpdatedInterface> copyListenerList =
-                new ArrayList<DataSourceUpdatedInterface>(listenerList);
+        List<DataSourceUpdatedInterface> copyListenerList = new ArrayList<>(listenerList);
         for (DataSourceUpdatedInterface listener : copyListenerList) {
             listener.dataSourceAboutToUnloaded(dataStore);
         }
@@ -597,7 +607,8 @@ public class DataSourceImpl implements DataSourceInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceInterface#updateFields(com.sldeditor.render.iface. RenderAttributeDataInterface)
+     * @see com.sldeditor.datasource.DataSourceInterface#updateFields(com.sldeditor.render.iface.
+     * RenderAttributeDataInterface)
      */
     @Override
     public void updateFields(DataSourceAttributeListInterface attributeData) {
@@ -626,21 +637,19 @@ public class DataSourceImpl implements DataSourceInterface {
      */
     @Override
     public void addField(DataSourceAttributeData dataSourceField) {
-        if (dataSourceField != null) {
-            if (connectedToDataSourceFlag == false) {
-                SLDDataInterface sldData = this.editorFileInterface.getSLDData();
-                List<DataSourceAttributeData> fieldList = sldData.getFieldList();
+        if ((dataSourceField != null) && !connectedToDataSourceFlag) {
+            SLDDataInterface sldData = this.editorFileInterface.getSLDData();
+            List<DataSourceAttributeData> fieldList = sldData.getFieldList();
 
-                if (fieldList == null) {
-                    fieldList = new ArrayList<DataSourceAttributeData>();
-                    sldData.setFieldList(fieldList);
-                }
-                fieldList.add(dataSourceField);
-
-                createInternalDataSource();
-
-                notifyDataSourceLoaded();
+            if (fieldList == null) {
+                fieldList = new ArrayList<>();
+                sldData.setFieldList(fieldList);
             }
+            fieldList.add(dataSourceField);
+
+            createInternalDataSource();
+
+            notifyDataSourceLoaded();
         }
     }
 
@@ -682,8 +691,7 @@ public class DataSourceImpl implements DataSourceInterface {
     public Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>
             getUserLayerFeatureSource() {
         // CHECKSTYLE:ON
-        Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> map =
-                new HashMap<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>>();
+        Map<UserLayer, FeatureSource<SimpleFeatureType, SimpleFeature>> map = new HashMap<>();
 
         for (DataSourceInfo dsInfo : userLayerDataSourceInfo) {
             FeatureSource<SimpleFeatureType, SimpleFeature> features = dsInfo.getFeatures();
@@ -705,7 +713,8 @@ public class DataSourceImpl implements DataSourceInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String, java.lang.Class)
+     * @see com.sldeditor.datasource.DataSourceInterface#updateFieldType(java.lang.String,
+     * java.lang.Class)
      */
     @Override
     public void updateFieldType(String fieldName, Class<?> dataType) {

@@ -26,7 +26,8 @@ import org.opengis.feature.type.GeometryType;
 public class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder {
 
     /** The logger. */
-    static Logger LOGGER = org.geotools.util.logging.Logging.getLogger("org.geotools.feature");
+    private static final Logger LOGGER =
+            org.geotools.util.logging.Logging.getLogger("org.geotools.feature");
 
     /** Instantiates a new extended simple feature type builder. */
     public ExtendedSimpleFeatureTypeBuilder() {
@@ -69,9 +70,9 @@ public class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder {
             if (!attributeBuilder.isCRSSet()) {
                 if (defaultCrs == null && !defaultCrsSet) {
                     LOGGER.fine(
-                            "Creating "
-                                    + name
-                                    + " with null CoordinateReferenceSystem - did you mean to setCRS?");
+                            String.format(
+                                    "Creating %s with null CoordinateReferenceSystem - did you mean to setCRS?",
+                                    name));
                 }
                 attributeBuilder.setCRS(defaultCrs);
             }

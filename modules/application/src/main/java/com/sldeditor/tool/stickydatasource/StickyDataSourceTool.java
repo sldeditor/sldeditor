@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.tool.stickDataSource;
+package com.sldeditor.tool.stickydatasource;
 
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -106,7 +106,9 @@ public class StickyDataSourceTool implements ToolInterface, StickyDataSourceInte
      */
     @Override
     public void setSelectedItems(
-            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {}
+            List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
+        // Not used
+    }
 
     /*
      * (non-Javadoc)

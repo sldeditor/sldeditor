@@ -29,7 +29,7 @@ import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import org.geotools.styling.TextSymbolizer;
@@ -41,6 +41,13 @@ import org.geotools.styling.TextSymbolizer.PolygonAlignOptions;
  * @author Robert Ward (SCISYS)
  */
 public class VOPopulation extends StandardPanel {
+
+    /** The Constant FAILED_TO_FIND_DEFAULT_FOR_FIELD. */
+    private static final String FAILED_TO_FIND_DEFAULT_FOR_FIELD =
+            "Failed to find default for field : ";
+
+    /** The Constant UNSUPPORTED_FIELD_TYPE. */
+    private static final String UNSUPPORTED_FIELD_TYPE = "Unsupported field type : ";
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -86,8 +93,8 @@ public class VOPopulation extends StandardPanel {
     }
 
     /** The override map. */
-    private Map<FieldIdEnum, DefaultOverride> overrideMap =
-            new HashMap<FieldIdEnum, DefaultOverride>();
+    private transient Map<FieldIdEnum, DefaultOverride> overrideMap =
+            new EnumMap<>(FieldIdEnum.class);
 
     /**
      * Instantiates a new VO population.
@@ -110,18 +117,18 @@ public class VOPopulation extends StandardPanel {
 
         if (fieldConfig != null) {
             if (fieldConfig instanceof FieldConfigBoolean) {
-                internal_populateBooleanField(options, field, key);
+                internalPopulateBooleanField(options, field, key);
             } else if (fieldConfig instanceof FieldConfigInteger) {
-                internal_populateIntegerField(options, field, key);
+                internalPopulateIntegerField(options, field, key);
             } else if (fieldConfig instanceof FieldConfigDouble) {
-                internal_populateDoubleField(options, field, key);
+                internalPopulateDoubleField(options, field, key);
             } else if (fieldConfig instanceof FieldConfigEnum) {
-                internal_populateEnumField(options, field, key);
+                internalPopulateEnumField(options, field, key);
             } else {
                 ConsoleManager.getInstance()
                         .error(
                                 this,
-                                "Unsupported field type : "
+                                UNSUPPORTED_FIELD_TYPE
                                         + field
                                         + " "
                                         + fieldConfig.getClass().getName());
@@ -136,7 +143,7 @@ public class VOPopulation extends StandardPanel {
      * @param fieldId the field id
      * @param key the key
      */
-    protected void internal_populateDoubleField(
+    protected void internalPopulateDoubleField(
             Map<String, String> options, FieldIdEnum fieldId, String key) {
         if ((options != null) && options.containsKey(key)) {
             String storedValue = options.get(key);
@@ -154,7 +161,7 @@ public class VOPopulation extends StandardPanel {
      * @param fieldId the field id
      * @param key the key
      */
-    protected void internal_populateBooleanField(
+    protected void internalPopulateBooleanField(
             Map<String, String> options, FieldIdEnum fieldId, String key) {
         if ((options != null) && options.containsKey(key)) {
             String storedValue = options.get(key);
@@ -172,7 +179,7 @@ public class VOPopulation extends StandardPanel {
      * @param fieldId the field id
      * @param key the key
      */
-    protected void internal_populateIntegerField(
+    protected void internalPopulateIntegerField(
             Map<String, String> options, FieldIdEnum fieldId, String key) {
         if ((options != null) && options.containsKey(key)) {
             String storedValue = options.get(key);
@@ -190,7 +197,7 @@ public class VOPopulation extends StandardPanel {
      * @param fieldId the field id
      * @param key the key
      */
-    protected void internal_populateEnumField(
+    protected void internalPopulateEnumField(
             Map<String, String> options, FieldIdEnum fieldId, String key) {
         if ((options != null) && options.containsKey(key)) {
             String value = options.get(key);
@@ -212,18 +219,18 @@ public class VOPopulation extends StandardPanel {
         FieldConfigBase fieldConfig = fieldConfigManager.get(field);
 
         if (fieldConfig instanceof FieldConfigBoolean) {
-            internal_updateSymbolBooleanField(options, field, key);
+            internalUpdateSymbolBooleanField(options, field, key);
         } else if (fieldConfig instanceof FieldConfigInteger) {
-            internal_updateSymbolIntegerField(options, field, key);
+            internalUpdateSymbolIntegerField(options, field, key);
         } else if (fieldConfig instanceof FieldConfigDouble) {
-            internal_updateSymbolDoubleField(options, field, key);
+            internalUpdateSymbolDoubleField(options, field, key);
         } else if (fieldConfig instanceof FieldConfigEnum) {
-            internal_updateSymbolEnumField(options, field, key);
+            internalUpdateSymbolEnumField(options, field, key);
         } else {
             ConsoleManager.getInstance()
                     .error(
                             this,
-                            "Unsupported field type : "
+                            UNSUPPORTED_FIELD_TYPE
                                     + field
                                     + " "
                                     + fieldConfig.getClass().getName());
@@ -231,13 +238,13 @@ public class VOPopulation extends StandardPanel {
     }
 
     /**
-     * Internal_update symbol enum field.
+     * Internal update symbol enum field.
      *
      * @param options the options
      * @param field the field
      * @param key the key
      */
-    protected void internal_updateSymbolEnumField(
+    protected void internalUpdateSymbolEnumField(
             Map<String, String> options, FieldIdEnum field, String key) {
         ValueComboBoxData value = fieldConfigVisitor.getComboBox(field);
 
@@ -252,67 +259,67 @@ public class VOPopulation extends StandardPanel {
         }
 
         if (defaultValue == null) {
-            ConsoleManager.getInstance().error(this, "Failed to find default for field : " + field);
+            ConsoleManager.getInstance().error(this, FAILED_TO_FIND_DEFAULT_FOR_FIELD + field);
         } else if ((value.getKey().compareToIgnoreCase(defaultValue) != 0) || includeValue(field)) {
             options.put(key, value.getKey());
         }
     }
 
     /**
-     * Internal_update symbol double field.
+     * Internal update symbol double field.
      *
      * @param options the options
      * @param field the field
      * @param key the key
      */
-    protected void internal_updateSymbolDoubleField(
+    protected void internalUpdateSymbolDoubleField(
             Map<String, String> options, FieldIdEnum field, String key) {
         double value = fieldConfigVisitor.getDouble(field);
 
         Double defaultValue = (Double) getDefaultFieldValue(field);
 
         if (defaultValue == null) {
-            ConsoleManager.getInstance().error(this, "Failed to find default for field : " + field);
+            ConsoleManager.getInstance().error(this, FAILED_TO_FIND_DEFAULT_FOR_FIELD + field);
         } else if ((value != defaultValue) || (includeValue(field))) {
             options.put(key, String.valueOf(value));
         }
     }
 
     /**
-     * Internal_update symbol integer field.
+     * Internal update symbol integer field.
      *
      * @param options the options
      * @param field the field
      * @param key the key
      */
-    protected void internal_updateSymbolIntegerField(
+    protected void internalUpdateSymbolIntegerField(
             Map<String, String> options, FieldIdEnum field, String key) {
         int value = fieldConfigVisitor.getInteger(field);
 
         Integer defaultValue = (Integer) getDefaultFieldValue(field);
 
         if (defaultValue == null) {
-            ConsoleManager.getInstance().error(this, "Failed to find default for field : " + field);
+            ConsoleManager.getInstance().error(this, FAILED_TO_FIND_DEFAULT_FOR_FIELD + field);
         } else if ((value != defaultValue) || (includeValue(field))) {
             options.put(key, String.valueOf(value));
         }
     }
 
     /**
-     * Internal_update symbol boolean field.
+     * Internal update symbol boolean field.
      *
      * @param options the options
      * @param field the field
      * @param key the key
      */
-    protected void internal_updateSymbolBooleanField(
+    protected void internalUpdateSymbolBooleanField(
             Map<String, String> options, FieldIdEnum field, String key) {
         boolean value = fieldConfigVisitor.getBoolean(field);
 
         Boolean defaultValue = (Boolean) getDefaultFieldValue(field);
 
         if (defaultValue == null) {
-            ConsoleManager.getInstance().error(this, "Failed to find default for field : " + field);
+            ConsoleManager.getInstance().error(this, FAILED_TO_FIND_DEFAULT_FOR_FIELD + field);
         } else if ((value != defaultValue) || (includeValue(field))) {
             options.put(key, String.valueOf(value));
         }
@@ -352,7 +359,7 @@ public class VOPopulation extends StandardPanel {
                 ConsoleManager.getInstance()
                         .error(
                                 this,
-                                "Unsupported field type : "
+                                UNSUPPORTED_FIELD_TYPE
                                         + field
                                         + " "
                                         + fieldConfig.getClass().getName());

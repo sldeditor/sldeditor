@@ -22,4 +22,4 @@
  *
  * @author Robert Ward (SCISYS)
  */
-package com.sldeditor.tool.stickDataSource;
+package com.sldeditor.tool.stickydatasource;

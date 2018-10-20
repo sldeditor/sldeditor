@@ -37,7 +37,7 @@ import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import com.sldeditor.ui.widgets.FieldPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import org.geotools.styling.ExternalGraphic;
@@ -58,7 +58,7 @@ import org.opengis.style.GraphicalSymbol;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -149,7 +149,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (externalGraphicPanel != null) {
             externalGraphicPanel.setEnabled(enabled);
         }
@@ -349,7 +349,7 @@ public class FieldConfigFilename extends FieldState implements ExternalGraphicUp
     @Override
     public Map<FieldIdEnum, FieldConfigBase> getFieldList(
             GraphicPanelFieldManager fieldConfigManager) {
-        Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
+        Map<FieldIdEnum, FieldConfigBase> map = new EnumMap<>(FieldIdEnum.class);
 
         map.put(FieldIdEnum.EXTERNAL_GRAPHIC, this);
 

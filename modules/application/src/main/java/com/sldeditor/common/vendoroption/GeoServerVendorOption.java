@@ -34,7 +34,7 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
     private static final long serialVersionUID = 7843746323615224955L;
 
     /** The version list. */
-    private List<VersionData> versionList = new ArrayList<VersionData>();
+    private List<VersionData> versionList = new ArrayList<>();
 
     /** The list reversed. */
     private boolean listReversed = false;
@@ -56,7 +56,7 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
      */
     @Override
     public List<String> getVersionStringList() {
-        List<String> versionStringList = new ArrayList<String>();
+        List<String> versionStringList = new ArrayList<>();
 
         for (VersionData versionData : getVersionList()) {
             versionStringList.add(versionData.getVersionString());
@@ -86,9 +86,7 @@ public class GeoServerVendorOption implements VendorOptionTypeInterface {
      */
     @Override
     public VersionData getVersion(String versionString) {
-        VersionData versionData = VersionData.decode(this.getClass(), versionString);
-
-        return versionData;
+        return VersionData.decode(this.getClass(), versionString);
     }
 
     /*

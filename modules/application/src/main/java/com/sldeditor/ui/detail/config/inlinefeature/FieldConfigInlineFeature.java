@@ -41,7 +41,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -55,7 +55,7 @@ public class FieldConfigInlineFeature extends FieldConfigBase
     private Object oldValueObj = null;
 
     /** The number of rows the text area will have. */
-    private int NO_OF_ROWS = 20;
+    private static final int NO_OF_ROWS = 20;
 
     /** The inline GML. */
     private InlineGMLPreviewPanel inlineGML = null;
@@ -138,7 +138,7 @@ public class FieldConfigInlineFeature extends FieldConfigBase
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (inlineGML != null) {
             inlineGML.setEnabled(enabled);
         }

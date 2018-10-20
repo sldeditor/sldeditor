@@ -49,10 +49,10 @@ public class SelectedSymbolMask {
     }
 
     /** The mask order list. */
-    private static List<SymbolMaskEnum> maskOrderlist = new ArrayList<SymbolMaskEnum>();
+    private static List<SymbolMaskEnum> maskOrderlist = new ArrayList<>();
 
     /** The mask list. */
-    private List<SymbolMaskEnum> maskList = new ArrayList<SymbolMaskEnum>();
+    private List<SymbolMaskEnum> maskList = new ArrayList<>();
 
     /**
      * Instantiates a new selected symbol mask.

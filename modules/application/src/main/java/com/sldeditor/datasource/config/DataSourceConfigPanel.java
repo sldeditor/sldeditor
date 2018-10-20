@@ -41,6 +41,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -133,8 +134,8 @@ public class DataSourceConfigPanel extends JPanel
         dscPanel = new JPanel();
         dscPanel.setLayout(new CardLayout());
 
-        for (Class<?> key : dscMap.keySet()) {
-            DataSourceConnectorInterface dsConnector = dscMap.get(key);
+        for (Entry<Class<?>, DataSourceConnectorInterface> entry : dscMap.entrySet()) {
+            DataSourceConnectorInterface dsConnector = entry.getValue();
             JPanel panelToAdd = dsConnector.getPanel();
             dscPanel.add(panelToAdd, dsConnector.getDisplayName());
         }
@@ -205,7 +206,7 @@ public class DataSourceConfigPanel extends JPanel
                         });
         TableColumn tmpColum = table.getColumnModel().getColumn(1);
 
-        JComboBox<String> comboBox = new JComboBox<String>(dataModel.getTypeData());
+        JComboBox<String> comboBox = new JComboBox<>(dataModel.getTypeData());
 
         DefaultCellEditor defaultCellEditor = new DefaultCellEditor(comboBox);
         tmpColum.setCellEditor(defaultCellEditor);
@@ -283,9 +284,7 @@ public class DataSourceConfigPanel extends JPanel
                 });
         buttonPanel.add(btnCancel);
 
-        JScrollPane scrollPane = new JScrollPane(table);
-
-        return scrollPane;
+        return new JScrollPane(table);
     }
 
     /** Update button state. */

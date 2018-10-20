@@ -91,7 +91,7 @@ public class SaveSLDTool implements ToolInterface {
         this.sldDataList = sldDataList;
 
         if (saveAllSLD != null) {
-            saveAllSLD.setEnabled(sldDataList.size() > 0);
+            saveAllSLD.setEnabled(!sldDataList.isEmpty());
         }
     }
 

@@ -55,7 +55,7 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
     private JTextField expressionTextField;
 
     /** The expression being configured. */
-    private Expression storedExpression = null;
+    private transient Expression storedExpression = null;
 
     /**
      * Gets the panel name.
@@ -104,13 +104,6 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
                             if (parentObj != null) {
                                 parentObj.updateSymbol();
                             }
-
-                            // String expressionString = expressionPanel.getExpressionString();
-                            //
-                            // if(expressionString != null)
-                            // {
-                            // createExpression(expressionString);
-                            // }
                         }
                     }
                 });
@@ -131,7 +124,7 @@ public class ExpressionSubPanel extends JPanel implements UndoActionInterface {
             try {
                 expression = CQL.toExpression(expressionTextField.getText());
             } catch (CQLException e) {
-                // ConsoleManager.getInstance().exception(this, e);
+                // Do nothing
             }
             return expression;
         }

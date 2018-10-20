@@ -81,11 +81,11 @@ public class LegendOptionPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /** The listener list. */
-    private List<LegendOptionDataUpdateInterface> legendOpenPanelListenerList =
-            new ArrayList<LegendOptionDataUpdateInterface>();
+    private transient List<LegendOptionDataUpdateInterface> legendOpenPanelListenerList =
+            new ArrayList<>();
 
     /** The data. */
-    private LegendOptionData data = new LegendOptionData();
+    private transient LegendOptionData data = new LegendOptionData();
 
     /** The spinner dpi. */
     private JSpinner dpiSpinner;
@@ -161,8 +161,8 @@ public class LegendOptionPanel extends JPanel {
         //
         widthSpinner = new JSpinner();
         widthSpinner.setBounds(FIELD_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
-        widthSpinner.setModel(
-                new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+        int value = 1;
+        widthSpinner.setModel(new SpinnerNumberModel(value, value, null, value));
         widthPanel.add(widthSpinner);
         widthSpinner.addChangeListener(
                 new ChangeListener() {
@@ -188,8 +188,7 @@ public class LegendOptionPanel extends JPanel {
                         Localisation.getField(LegendOptionPanel.class, "LegendOptionPanel.height"));
         box.add(heightPanel);
 
-        heightSpinner.setModel(
-                new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+        heightSpinner.setModel(new SpinnerNumberModel(value, value, null, value));
         heightPanel.add(heightSpinner);
         heightSpinner.addChangeListener(
                 new ChangeListener() {
@@ -233,8 +232,7 @@ public class LegendOptionPanel extends JPanel {
 
         dpiSpinner = new JSpinner();
         dpiSpinner.setBounds(FIELD_X, 0, FIELD_WIDTH, PANEL_HEIGHT);
-        dpiSpinner.setModel(
-                new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+        dpiSpinner.setModel(new SpinnerNumberModel(value, value, null, value));
         panelDPI.add(dpiSpinner);
         dpiSpinner.addChangeListener(
                 new ChangeListener() {
@@ -446,13 +444,12 @@ public class LegendOptionPanel extends JPanel {
                         StyleBuilder sb = new StyleBuilder();
                         Font existingFont = sb.createFont(data.getLabelFont());
                         Font font =
-                                (Font)
-                                        JFontChooser.showDialog(
-                                                Controller.getInstance().getFrame(),
-                                                Localisation.getField(
-                                                        LegendOptionPanel.class,
-                                                        "LegendOptionPanel.labelFontTitle"),
-                                                existingFont);
+                                JFontChooser.showDialog(
+                                        Controller.getInstance().getFrame(),
+                                        Localisation.getField(
+                                                LegendOptionPanel.class,
+                                                "LegendOptionPanel.labelFontTitle"),
+                                        existingFont);
                         if (font != null) {
                             java.awt.Font newFont = FontUtils.getFont(font);
 

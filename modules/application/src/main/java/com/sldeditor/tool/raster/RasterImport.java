@@ -31,7 +31,6 @@ import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
-import com.sldeditor.datasource.connector.instance.DataSourceConnector;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.datasource.impl.DataSourceProperties;
@@ -74,13 +73,9 @@ public class RasterImport {
                 SLDDataInterface sldData = rasterReader.createRasterSLDData(rasterFile);
 
                 // Raster file
+                DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource();
+
                 DataSourcePropertiesInterface dsProperties =
-                        SLDEditorFile.getInstance().getDataSource();
-
-                DataSourceConnectorInterface dsc =
-                        DataSourceConnectorFactory.getDataSource(DataSourceConnector.class);
-
-                dsProperties =
                         dsc.getDataSourceProperties(
                                 DataSourceProperties.encodeFilename(rasterFile.getAbsolutePath()));
 
@@ -91,7 +86,7 @@ public class RasterImport {
                 SLDEditorFile.getInstance().fileOpenedSaved();
 
                 // Load sld
-                List<SLDDataInterface> sldFilesToLoad = new ArrayList<SLDDataInterface>();
+                List<SLDDataInterface> sldFilesToLoad = new ArrayList<>();
                 sldFilesToLoad.add(sldData);
 
                 SelectedFiles selectedFiles = new SelectedFiles();
@@ -125,8 +120,7 @@ public class RasterImport {
                                     rasterFile.getAbsolutePath()));
 
             // Raster file
-            DataSourceConnectorInterface dsc =
-                    DataSourceConnectorFactory.getDataSource(DataSourceConnector.class);
+            DataSourceConnectorInterface dsc = DataSourceConnectorFactory.getDataSource();
 
             String rasterFilename = null;
             try {

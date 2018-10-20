@@ -98,6 +98,11 @@ public class InlineFeatureUtils {
     /** The Constant GML_END. */
     private static final String GML_END = "</FeatureCollection>";
 
+    /** Private default constructor */
+    private InlineFeatureUtils() {
+        // Private default constructor
+    }
+
     /**
      * Gets the inline features text.
      *
@@ -185,40 +190,46 @@ public class InlineFeatureUtils {
             return;
         }
 
+        StringBuilder sb = new StringBuilder();
+
+        // To extract inline features need to find the XML Node, so fake an XML document
+        sb.append(XML_HEADER);
+        sb.append(SLD_ROOT_ELEMENT);
+        sb.append(SLD_USER_LAYER_START);
+        sb.append(SLD_INLINE_FEATURE_START);
+
+        // There is an issue with the inline features parser, when generating the
+        // xml it adds gml: namespace prefixes and the parser can't read them!
+
+        // Remove gml namespace prefix
+        inlineFeatures = inlineFeatures.replace(GML_NAMESPACE_PREFIX, "");
+
+        // The hack, put the gml namespace prefix back otherwise the XML parsing fails
+        inlineFeatures = inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX, GML_FEATURE_FID);
+        inlineFeatures =
+                inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX_END, GML_FEATURE_FID_END);
+
+        // Remove empty namespace prefixes
+        inlineFeatures = inlineFeatures.replace("<:", "<");
+        inlineFeatures = inlineFeatures.replace("</:", "</");
+
+        sb.append(inlineFeatures);
+        sb.append(SLD_INLINE_FEATURE_END);
+        sb.append(SLD_USER_LAYER_END);
+        sb.append(SLD_ROOT_ELEMENT_END);
+
+        Document doc = null;
         try {
-            StringBuilder sb = new StringBuilder();
-
-            // To extract inline features need to find the XML Node, so fake an XML document
-            sb.append(XML_HEADER);
-            sb.append(SLD_ROOT_ELEMENT);
-            sb.append(SLD_USER_LAYER_START);
-            sb.append(SLD_INLINE_FEATURE_START);
-
-            // There is an issue with the inline features parser, when generating the
-            // xml it adds gml: namespace prefixes and the parser can't read them!
-
-            // Remove gml namespace prefix
-            inlineFeatures = inlineFeatures.replace(GML_NAMESPACE_PREFIX, "");
-
-            // The hack, put the gml namespace prefix back otherwise the XML parsing fails
-            inlineFeatures = inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX, GML_FEATURE_FID);
-            inlineFeatures =
-                    inlineFeatures.replace(FEATURE_FID_WITHOUT_PREFIX_END, GML_FEATURE_FID_END);
-
-            // Remove empty namespace prefixes
-            inlineFeatures = inlineFeatures.replace("<:", "<");
-            inlineFeatures = inlineFeatures.replace("</:", "</");
-
-            sb.append(inlineFeatures);
-            sb.append(SLD_INLINE_FEATURE_END);
-            sb.append(SLD_USER_LAYER_END);
-            sb.append(SLD_ROOT_ELEMENT_END);
-
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             InputSource is = new InputSource(new StringReader(sb.toString()));
-            Document doc = builder.parse(is);
+            doc = builder.parse(is);
 
+        } catch (SAXException | IOException | ParserConfigurationException e) {
+            ConsoleManager.getInstance().exception(InlineFeatureUtils.class, e);
+        }
+
+        if (doc != null) {
             Node root = doc.getDocumentElement();
             Node userLayerNode = root.getFirstChild();
             Node inlineFeatureNode = userLayerNode.getFirstChild();
@@ -231,12 +242,6 @@ public class InlineFeatureUtils {
             } catch (Exception e) {
                 ConsoleManager.getInstance().exception(InlineFeatureUtils.class, e);
             }
-        } catch (IOException e) {
-            ConsoleManager.getInstance().exception(InlineFeatureUtils.class, e);
-        } catch (SAXException e) {
-            ConsoleManager.getInstance().exception(InlineFeatureUtils.class, e);
-        } catch (ParserConfigurationException e) {
-            ConsoleManager.getInstance().exception(InlineFeatureUtils.class, e);
         }
     }
 
@@ -268,7 +273,7 @@ public class InlineFeatureUtils {
      * @return the list of user layers
      */
     public static List<UserLayer> extractUserLayers(StyledLayerDescriptor sld) {
-        List<UserLayer> userLayerList = new ArrayList<UserLayer>();
+        List<UserLayer> userLayerList = new ArrayList<>();
 
         if (sld != null) {
             for (StyledLayer layer : sld.layers()) {
@@ -307,7 +312,7 @@ public class InlineFeatureUtils {
             Name geometryName = geometryDescriptor.getName();
             SimpleFeatureIterator iterator = simpleFeatureCollection.features();
 
-            List<GeometryTypeEnum> geometryFeatures = new ArrayList<GeometryTypeEnum>();
+            List<GeometryTypeEnum> geometryFeatures = new ArrayList<>();
 
             while (iterator.hasNext()) {
                 SimpleFeature feature = iterator.next();

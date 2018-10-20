@@ -60,10 +60,10 @@ public class MathsExpressionPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /** The attribute combo box. */
-    private JComboBox<String> comboBox = new JComboBox<String>();
+    private JComboBox<String> comboBox = new JComboBox<>();
 
     /** The data model. */
-    private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+    private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
     /** The label : data type. */
     private JLabel lblDataType;

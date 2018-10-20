@@ -60,7 +60,7 @@ public class CreateInternalDataSourceTest {
          * @param sld the sld
          */
         public GeometryTypeEnum callDetermineGeometryType(StyledLayerDescriptor sld) {
-            return super.internal_determineGeometryType(sld);
+            return super.internalDetermineGeometryType(sld);
         }
     }
 

@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.media.jai.Interpolation;
@@ -56,13 +57,13 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
     private static final int DEFAULT_SAMPLE_BITS = 8;
 
     /** The interpolation bicubic pattern match. */
-    private final Pattern INTERPOLATION_BICUBIC_PATTERN_MATCH =
+    private static final Pattern INTERPOLATION_BICUBIC_PATTERN_MATCH =
             Pattern.compile("InterpolationBicubic\\(\\d+\\)");
 
-    private final Pattern INTERPOLATION_BICUBIC2_PATTERN_MATCH =
+    private static final Pattern INTERPOLATION_BICUBIC2_PATTERN_MATCH =
             Pattern.compile("InterpolationBicubic2\\(\\d+\\)");
 
-    private final Pattern INTERPOLATION_BICUBIC_PATTERN_EXTRACT = Pattern.compile("\\d+");
+    private static final Pattern INTERPOLATION_BICUBIC_PATTERN_EXTRACT = Pattern.compile("\\d+");
 
     /** The sample bits. */
     private int sampleBits = DEFAULT_SAMPLE_BITS;
@@ -75,7 +76,7 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
     /** Populate interpolation map. */
     private static synchronized void populateInterpolation() {
         if (interpolationMap == null) {
-            interpolationMap = new LinkedHashMap<Class<? extends Interpolation>, String>();
+            interpolationMap = new LinkedHashMap<>();
             interpolationMap.put(InterpolationNearest.class, "Nearest Neighbour");
             interpolationMap.put(InterpolationBicubic.class, "Bicubic");
             interpolationMap.put(InterpolationBicubic2.class, "Bicubic2");
@@ -102,8 +103,9 @@ public class InterpolationValues extends BaseValue implements RenderTransformVal
      */
     protected void populateSymbolType(SymbolTypeConfig symbolTypeConfig) {
         if (symbolTypeConfig != null) {
-            for (Class<? extends Interpolation> key : interpolationMap.keySet()) {
-                symbolTypeConfig.addOption(key.getSimpleName(), interpolationMap.get(key));
+            for (Entry<Class<? extends Interpolation>, String> entry :
+                    interpolationMap.entrySet()) {
+                symbolTypeConfig.addOption(entry.getKey().getSimpleName(), entry.getValue());
             }
         }
     }

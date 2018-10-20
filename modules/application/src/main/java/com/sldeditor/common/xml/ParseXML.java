@@ -48,6 +48,11 @@ public class ParseXML {
     /** The Constant UI_RESOURCE_FOLDER. */
     private static final String UI_RESOURCE_FOLDER = "/ui/";
 
+    /** Private default constructor */
+    private ParseXML() {
+        // Private default constructor
+    }
+
     /**
      * Parses the xml files, validates against schema and reports any errors.
      *

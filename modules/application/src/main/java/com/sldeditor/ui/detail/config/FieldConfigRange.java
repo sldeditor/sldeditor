@@ -43,7 +43,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -212,7 +212,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      */
     @Override
     public void attributeSelection(String field) {
-        internal_setEnabled(field == null);
+        internalSetEnabled(field == null);
     }
 
     /**
@@ -226,7 +226,7 @@ public class FieldConfigRange extends FieldConfigBase implements UndoActionInter
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (startRange.spinner != null) {
             startRange.spinner.setEnabled(enabled);
         }

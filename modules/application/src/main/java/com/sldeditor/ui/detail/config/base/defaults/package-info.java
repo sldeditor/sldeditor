@@ -18,7 +18,7 @@
  */
 /**
  * Package contains the class that describe default values for fields read using {@link
- * com.sldeditor.ui.detail.config.ReadPanelConfig}.
+ * com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}.
  *
  * <p>Classes managed by factory class {@link
  * com.sldeditor.ui.detail.config.base.defaults.ConfigDefaultFactory}.

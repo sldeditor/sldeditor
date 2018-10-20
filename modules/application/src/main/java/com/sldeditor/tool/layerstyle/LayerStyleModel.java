@@ -51,10 +51,10 @@ public class LayerStyleModel extends AbstractTableModel {
     private static final long serialVersionUID = 1L;
 
     /** The layer map. */
-    private Map<GeoServerLayer, Boolean> layerMap = new LinkedHashMap<GeoServerLayer, Boolean>();
+    private Map<GeoServerLayer, Boolean> layerMap = new LinkedHashMap<>();
 
     /** The layer list. */
-    private List<GeoServerLayer> layerList = null;
+    private transient List<GeoServerLayer> layerList = null;
 
     /**
      * Populate model.

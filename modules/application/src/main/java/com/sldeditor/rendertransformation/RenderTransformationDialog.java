@@ -163,7 +163,7 @@ public class RenderTransformationDialog extends JDialog {
         JScrollPane scrollPane = new JScrollPane();
         panel.add(scrollPane);
 
-        functionList = new JList<String>();
+        functionList = new JList<>();
         functionList.setModel(functionListModel);
 
         populateBuiltInProcessFunctions();
@@ -179,12 +179,12 @@ public class RenderTransformationDialog extends JDialog {
                         }
                     }
                 });
-        JPanel panel_1 = new JPanel();
-        getContentPane().add(panel_1, BorderLayout.CENTER);
-        panel_1.setLayout(new BorderLayout(0, 0));
+        JPanel panel1 = new JPanel();
+        getContentPane().add(panel1, BorderLayout.CENTER);
+        panel1.setLayout(new BorderLayout(0, 0));
 
-        JScrollPane scrollPane_1 = new JScrollPane();
-        panel_1.add(scrollPane_1);
+        JScrollPane scrollPane1 = new JScrollPane();
+        panel1.add(scrollPane1);
 
         functionParameterTable = new JTable();
         functionParameterTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -204,20 +204,15 @@ public class RenderTransformationDialog extends JDialog {
         TableColumn col =
                 functionParameterTable
                         .getColumnModel()
-                        .getColumn(FunctionTableModel.getValueColumn());
-
-        col =
-                functionParameterTable
-                        .getColumnModel()
                         .getColumn(FunctionTableModel.getOptionalColumn());
         CheckBoxRenderer checkBoxRenderer = new CheckBoxRenderer(functionParameterTableModel);
         col.setCellRenderer(checkBoxRenderer);
         col.setCellEditor(new OptionalValueEditor(functionParameterTableModel));
 
-        scrollPane_1.setViewportView(functionParameterTable);
+        scrollPane1.setViewportView(functionParameterTable);
 
-        JPanel panel_3 = new JPanel();
-        panel_1.add(panel_3, BorderLayout.SOUTH);
+        JPanel panel3 = new JPanel();
+        panel1.add(panel3, BorderLayout.SOUTH);
 
         //
         // Add value button
@@ -236,7 +231,7 @@ public class RenderTransformationDialog extends JDialog {
                     }
                 });
         btnAdd.setEnabled(false);
-        panel_3.add(btnAdd);
+        panel3.add(btnAdd);
 
         //
         // Remove value button
@@ -256,15 +251,15 @@ public class RenderTransformationDialog extends JDialog {
                 });
 
         btnRemove.setEnabled(false);
-        panel_3.add(btnRemove);
+        panel3.add(btnRemove);
 
         //
         // Top panel
         //
 
-        JPanel panel_2 = new JPanel();
-        panel_2.setLayout(new BorderLayout(0, 0));
-        getContentPane().add(panel_2, BorderLayout.NORTH);
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new BorderLayout(0, 0));
+        getContentPane().add(panel2, BorderLayout.NORTH);
 
         //
         // Connect button
@@ -283,18 +278,18 @@ public class RenderTransformationDialog extends JDialog {
                         populateFunctionList((String) connectionComboBox.getSelectedItem());
                     }
                 });
-        panel_2.add(btnConnect, BorderLayout.WEST);
+        panel2.add(btnConnect, BorderLayout.WEST);
 
         connectionComboBox = new JComboBox<String>();
         populateConnectionComboBox();
-        panel_2.add(connectionComboBox, BorderLayout.CENTER);
+        panel2.add(connectionComboBox, BorderLayout.CENTER);
 
         //
         // Error label
         //
 
         lblError = new JLabel(" ");
-        panel_2.add(lblError, BorderLayout.SOUTH);
+        panel2.add(lblError, BorderLayout.SOUTH);
 
         //
         // Ok button
@@ -529,7 +524,7 @@ public class RenderTransformationDialog extends JDialog {
 
                     @Override
                     public List<GeoServerConnection> getConnectionList() {
-                        List<GeoServerConnection> list = new ArrayList<GeoServerConnection>();
+                        List<GeoServerConnection> list = new ArrayList<>();
 
                         GeoServerConnection connection = new GeoServerConnection();
                         connection.setConnectionName("Test");
@@ -578,7 +573,7 @@ public class RenderTransformationDialog extends JDialog {
                     }
                 };
 
-        List<VersionData> vendorOptionList = new ArrayList<VersionData>();
+        List<VersionData> vendorOptionList = new ArrayList<>();
         vendorOptionList.add(VersionData.getLatestVersion(GeoServerVendorOption.class));
         VendorOptionManager.getInstance().setSelectedVendorOptions(vendorOptionList);
 
@@ -594,18 +589,18 @@ public class RenderTransformationDialog extends JDialog {
      * @return true, if successful
      */
     public boolean showDialog(ProcessFunction existingProcessFunction) {
-        internal_showDialog(existingProcessFunction);
+        internalShowDialog(existingProcessFunction);
         setVisible(true);
 
         return okButtonPressed;
     }
 
     /**
-     * Interal show dialog.
+     * Internal show dialog.
      *
      * @param existingProcessFunction the existing process function
      */
-    protected void internal_showDialog(ProcessFunction existingProcessFunction) {
+    protected void internalShowDialog(ProcessFunction existingProcessFunction) {
         this.existingProcessFunction = existingProcessFunction;
         if (existingProcessFunction != null) {
             displayFunction(existingProcessFunction.getName());

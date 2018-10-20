@@ -46,7 +46,7 @@ public class FieldConfigBooleanTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.FieldConfigBoolean#internal_setEnabled(boolean)}. Test method
+     * com.sldeditor.ui.detail.config.FieldConfigBoolean#internalSetEnabled(boolean)}. Test method
      * for {@link com.sldeditor.ui.detail.config.FieldConfigBoolean#isEnabled()}.
      */
     @Test
@@ -60,7 +60,7 @@ public class FieldConfigBooleanTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -69,7 +69,7 @@ public class FieldConfigBooleanTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
 
@@ -82,7 +82,7 @@ public class FieldConfigBooleanTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -91,7 +91,7 @@ public class FieldConfigBooleanTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(!expectedValue, field2.isEnabled());

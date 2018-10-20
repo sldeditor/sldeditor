@@ -34,7 +34,7 @@ public class SLDTreeManager {
     private static SLDTreeManager instance = null;
 
     /** The list of registered SLD trees. */
-    private List<SLDTree> treeList = new ArrayList<SLDTree>();
+    private List<SLDTree> treeList = new ArrayList<>();
 
     /**
      * Gets the single instance of SLDTreeManager.

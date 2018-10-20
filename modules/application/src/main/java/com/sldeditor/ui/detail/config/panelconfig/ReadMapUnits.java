@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.sldeditor.ui.detail.config;
+package com.sldeditor.ui.detail.config.panelconfig;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
@@ -32,6 +32,7 @@ import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValue.FieldList;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueField;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueItem;
 import com.sldeditor.common.xml.ui.XMLFieldConfigEnumValueList;
+import com.sldeditor.ui.detail.config.FieldConfigMapUnits;
 import com.sldeditor.ui.detail.config.base.GroupConfigInterface;
 import com.sldeditor.ui.detail.config.base.defaults.ConfigDefaultFactory;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
@@ -137,7 +138,7 @@ public class ReadMapUnits implements PanelConfigInterface {
      */
     private List<SymbolTypeConfig> readValueListConfig(
             Class<?> localisationClass, Class<?> panelId, XMLFieldConfigEnumValueList valueList) {
-        List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
+        List<SymbolTypeConfig> configList = new ArrayList<>();
 
         for (XMLFieldConfigEnumValue valueObj : valueList.getValue()) {
             SymbolTypeConfig config = parseSymbolTypeConfig(localisationClass, panelId, valueObj);

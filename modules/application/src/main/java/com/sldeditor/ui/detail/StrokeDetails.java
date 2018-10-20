@@ -37,6 +37,7 @@ import com.sldeditor.ui.widgets.ValueComboBoxData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.geotools.filter.ConstantExpression;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.styling.AnchorPoint;
@@ -72,13 +73,13 @@ public class StrokeDetails extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The symbol type factory. */
-    private SymbolTypeFactory symbolTypeFactory = null;
+    private transient SymbolTypeFactory symbolTypeFactory = null;
 
     /** The panel id of the selected fill. */
     private Class<?> selectedFillPanelId = null;
 
     /** The field enable state map, indicates which fields to enable. */
-    private FieldEnableState fieldEnableState = null;
+    private transient FieldEnableState fieldEnableState = null;
 
     /** The default anchor point. */
     private static AnchorPoint defaultAnchorPoint = new AnchorPointImpl();
@@ -87,7 +88,7 @@ public class StrokeDetails extends StandardPanel
     private static Displacement defaultDisplacement = new DisplacementImpl();
 
     /** The symbolizer displayed. */
-    private Symbolizer symbolizer = null;
+    private transient Symbolizer symbolizer = null;
 
     /** Constructor. */
     public StrokeDetails() {
@@ -273,7 +274,7 @@ public class StrokeDetails extends StandardPanel
     private List<Float> createDashArray(String dashString) {
         String[] dashes = dashString.split(" ");
 
-        List<Float> floatDashArray = new ArrayList<Float>();
+        List<Float> floatDashArray = new ArrayList<>();
 
         for (String dashValue : dashes) {
             try {
@@ -308,7 +309,7 @@ public class StrokeDetails extends StandardPanel
 
                 List<GraphicalSymbol> graphicalSymbols = graphic.graphicalSymbols();
 
-                if (graphicalSymbols.size() > 0) {
+                if (!graphicalSymbols.isEmpty()) {
                     GraphicalSymbol symbol = graphicalSymbols.get(0);
 
                     if (symbol instanceof MarkImpl) {
@@ -492,7 +493,7 @@ public class StrokeDetails extends StandardPanel
      */
     private List<Float> getStrokeDashArray(Stroke stroke) {
         List<Expression> expressionList = stroke.dashArray();
-        List<Float> valueList = new ArrayList<Float>();
+        List<Float> valueList = new ArrayList<>();
 
         if (expressionList != null) {
             for (Expression expression : expressionList) {
@@ -641,31 +642,31 @@ public class StrokeDetails extends StandardPanel
         Map<GroupIdEnum, Boolean> groupList =
                 fieldEnableState.getGroupIdList(panelId.getName(), selectedItem);
 
-        for (GroupIdEnum groupId : groupList.keySet()) {
-            boolean groupEnabled = groupList.get(groupId);
+        for (Entry<GroupIdEnum, Boolean> entry : groupList.entrySet()) {
+            boolean groupEnabled = entry.getValue();
             GroupConfigInterface groupConfig =
-                    fieldConfigManager.getGroup(this.getClass(), groupId);
+                    fieldConfigManager.getGroup(this.getClass(), entry.getKey());
             if (groupConfig != null) {
                 groupConfig.setGroupStateOverride(groupEnabled);
             } else {
                 ConsoleManager.getInstance()
-                        .error(this, "Failed to find group : " + groupId.toString());
+                        .error(this, "Failed to find group : " + entry.getKey().toString());
             }
         }
 
         Map<FieldIdEnum, Boolean> fieldList =
                 fieldEnableState.getFieldIdList(panelId.getName(), selectedItem);
 
-        for (FieldIdEnum fieldId : fieldList.keySet()) {
-            boolean fieldEnabled = fieldList.get(fieldId);
-            FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        for (Entry<FieldIdEnum, Boolean> entry : fieldList.entrySet()) {
+            boolean fieldEnabled = entry.getValue();
+            FieldConfigBase fieldConfig = fieldConfigManager.get(entry.getKey());
             if (fieldConfig != null) {
                 CurrentFieldState fieldState = fieldConfig.getFieldState();
                 fieldState.setFieldEnabled(fieldEnabled);
                 fieldConfig.setFieldState(fieldState);
             } else {
                 ConsoleManager.getInstance()
-                        .error(this, "Failed to find field : " + fieldId.toString());
+                        .error(this, "Failed to find field : " + entry.getKey().toString());
             }
         }
     }

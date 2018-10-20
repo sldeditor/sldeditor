@@ -80,7 +80,7 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
     @Override
     public List<DataSourceInfo> connect(
             String typeName, String geometryFieldName, SLDEditorFileInterface editorFile) {
-        List<DataSourceInfo> dataSourceInfoList = new ArrayList<DataSourceInfo>();
+        List<DataSourceInfo> dataSourceInfoList = new ArrayList<>();
         dataSourceInfoList.add(dsInfo);
 
         dsInfo.reset();
@@ -110,56 +110,10 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
 
                 if (dataStore != null) {
                     // Try connecting to a vector data source
-                    dsInfo.setTypeName(typeName);
-
-                    SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
-                    SimpleFeatureType schema = source.getSchema();
-
-                    if (schema.getCoordinateReferenceSystem() == null) {
-                        // No crs found to set a default and reload
-                        if (dataStore instanceof ShapefileDataStore) {
-                            ShapefileDataStore shapeFileDatastore = (ShapefileDataStore) dataStore;
-
-                            CoordinateReferenceSystem crs =
-                                    JCRSChooser.showDialog(
-                                            Localisation.getString(
-                                                    CreateExternalDataSource.class,
-                                                    "CRSPanel.title"),
-                                            defaultCRS
-                                                    .getIdentifiers()
-                                                    .iterator()
-                                                    .next()
-                                                    .toString());
-                            if (crs != null) {
-                                shapeFileDatastore.forceSchemaCRS(crs);
-                            }
-
-                            source = dataStore.getFeatureSource(typeName);
-                            schema = source.getSchema();
-                        }
-                    }
-                    dsInfo.setSchema(schema);
-
-                    determineGeometryType(schema.getGeometryDescriptor().getType());
+                    connectToVectorDataSource(typeName, dataStore);
                 } else {
                     // Try connecting to a raster data source
-                    Object rasterFilename = map.get(DataSourceConstants.FILE_MAP_KEY);
-                    if (rasterFilename != null) {
-                        File rasterFile =
-                                new File(
-                                        ExternalFilenames.convertURLToFile(
-                                                (String) rasterFilename));
-
-                        ChooseRasterFormatInterface panel =
-                                new ChooseRasterFormatPanel(Controller.getInstance().getFrame());
-
-                        AbstractGridFormat format = DetermineRasterFormat.choose(rasterFile, panel);
-                        AbstractGridCoverage2DReader reader = format.getReader(rasterFile);
-
-                        dsInfo.setGridCoverageReader(reader);
-                    } else {
-                        logger.error("No matching datastore");
-                    }
+                    connectToRasterDataSource(map);
                 }
             } catch (IOException e) {
                 ConsoleManager.getInstance().exception(this, e);
@@ -178,6 +132,65 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
             }
         }
         return dataSourceInfoList;
+    }
+
+    /**
+     * Connect to raster data source.
+     *
+     * @param map the map
+     */
+    private void connectToRasterDataSource(Map<String, Object> map) {
+        Object rasterFilename = map.get(DataSourceConstants.FILE_MAP_KEY);
+        if (rasterFilename != null) {
+            File rasterFile = new File(ExternalFilenames.convertURLToFile((String) rasterFilename));
+
+            ChooseRasterFormatInterface panel =
+                    new ChooseRasterFormatPanel(Controller.getInstance().getFrame());
+
+            AbstractGridFormat format = DetermineRasterFormat.choose(rasterFile, panel);
+            AbstractGridCoverage2DReader reader = format.getReader(rasterFile);
+
+            dsInfo.setGridCoverageReader(reader);
+        } else {
+            logger.error("No matching datastore");
+        }
+    }
+
+    /**
+     * Connect to vector data source.
+     *
+     * @param typeName the type name
+     * @param dataStore the data store
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    private void connectToVectorDataSource(String typeName, DataStore dataStore)
+            throws IOException {
+        dsInfo.setTypeName(typeName);
+
+        SimpleFeatureSource source = dataStore.getFeatureSource(typeName);
+        SimpleFeatureType schema = source.getSchema();
+
+        if (schema.getCoordinateReferenceSystem() == null) {
+            // No crs found to set a default and reload
+            if (dataStore instanceof ShapefileDataStore) {
+                ShapefileDataStore shapeFileDatastore = (ShapefileDataStore) dataStore;
+
+                CoordinateReferenceSystem crs =
+                        JCRSChooser.showDialog(
+                                Localisation.getString(
+                                        CreateExternalDataSource.class, "CRSPanel.title"),
+                                defaultCRS.getIdentifiers().iterator().next().toString());
+                if (crs != null) {
+                    shapeFileDatastore.forceSchemaCRS(crs);
+                }
+
+                source = dataStore.getFeatureSource(typeName);
+                schema = source.getSchema();
+            }
+        }
+        dsInfo.setSchema(schema);
+
+        determineGeometryType(schema.getGeometryDescriptor().getType());
     }
 
     /**

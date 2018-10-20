@@ -44,19 +44,19 @@ public class SortByTableModel extends AbstractTableModel {
     private static final SortOrder DEFAULT_SORT_ORDER = SortOrder.ASCENDING;
 
     /** The filter factory. */
-    private FilterFactory ff = CommonFactoryFinder.getFilterFactory();
+    private transient FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
     /** The data list. */
-    private List<SortBy> dataList = new ArrayList<SortBy>();
+    private transient List<SortBy> dataList = new ArrayList<>();
 
     /** The column name list. */
-    private List<String> columnNameList = new ArrayList<String>();
+    private List<String> columnNameList = new ArrayList<>();
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /** The parent obj. */
-    private SortOrderUpdateInterface parentObj = null;
+    private transient SortOrderUpdateInterface parentObj = null;
 
     /**
      * Instantiates a new sort by table model.
@@ -156,22 +156,31 @@ public class SortByTableModel extends AbstractTableModel {
             case 0:
                 break;
             case COL_SORT_ORDER:
-                {
-                    Boolean b = (Boolean) aValue;
-
-                    SortOrder sortOrder =
-                            b.booleanValue() ? SortOrder.ASCENDING : SortOrder.DESCENDING;
-                    ((SortByImpl) obj).setSortOrder(sortOrder);
-
-                    fireTableCellUpdated(row, column);
-
-                    if (parentObj != null) {
-                        parentObj.sortOrderUpdated();
-                    }
-                    break;
-                }
+                setSortOrder(aValue, row, column, obj);
+                break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * Sets the sort order.
+     *
+     * @param aValue the a value
+     * @param row the row
+     * @param column the column
+     * @param obj the obj
+     */
+    private void setSortOrder(Object aValue, int row, int column, SortBy obj) {
+        Boolean b = (Boolean) aValue;
+
+        SortOrder sortOrder = b.booleanValue() ? SortOrder.ASCENDING : SortOrder.DESCENDING;
+        ((SortByImpl) obj).setSortOrder(sortOrder);
+
+        fireTableCellUpdated(row, column);
+
+        if (parentObj != null) {
+            parentObj.sortOrderUpdated();
         }
     }
 
@@ -200,7 +209,7 @@ public class SortByTableModel extends AbstractTableModel {
      * @return the list of removed property names
      */
     public List<String> removeSelected(JTable table) {
-        List<String> itemsRemovedList = new ArrayList<String>();
+        List<String> itemsRemovedList = new ArrayList<>();
 
         int[] selectedRows = table.getSelectedRows();
         if (selectedRows.length > 0) {
@@ -261,7 +270,7 @@ public class SortByTableModel extends AbstractTableModel {
      * @return the encoded string
      */
     public String getEncodedString() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         for (SortBy sortBy : dataList) {
             String string =
@@ -336,7 +345,7 @@ public class SortByTableModel extends AbstractTableModel {
      */
     public void checkForFields(List<String> fieldNameList) {
         if (fieldNameList != null) {
-            List<SortBy> fieldsToRemoveList = new ArrayList<SortBy>();
+            List<SortBy> fieldsToRemoveList = new ArrayList<>();
 
             for (SortBy sortBy : dataList) {
                 if (!fieldNameList.contains(sortBy.getPropertyName().getPropertyName())) {

@@ -554,43 +554,37 @@ public class LegendOptionData {
                     if (child.getNodeType() == Node.ELEMENT_NODE) {
                         String nodeName = child.getNodeName();
                         if (nodeName.compareToIgnoreCase(IMAGE_WIDTH) == 0) {
-                            legendOptionData.setImageWidth(decodeIntElement(document, child));
+                            legendOptionData.setImageWidth(decodeIntElement(child));
                         } else if (nodeName.compareToIgnoreCase(IMAGE_HEIGHT) == 0) {
-                            legendOptionData.setImageHeight(decodeIntElement(document, child));
+                            legendOptionData.setImageHeight(decodeIntElement(child));
                         } else if (nodeName.compareToIgnoreCase(IMAGE_DPI) == 0) {
-                            legendOptionData.setDpi(decodeIntElement(document, child));
+                            legendOptionData.setDpi(decodeIntElement(child));
                         } else if (nodeName.compareToIgnoreCase(IMAGE_SIZE) == 0) {
-                            legendOptionData.setImageSize(decodeIntElement(document, child));
+                            legendOptionData.setImageSize(decodeIntElement(child));
                         } else if (nodeName.compareToIgnoreCase(MAINTAIN_ASPECT_RATIO) == 0) {
-                            legendOptionData.setMaintainAspectRatio(
-                                    decodeBooleanElement(document, child));
+                            legendOptionData.setMaintainAspectRatio(decodeBooleanElement(child));
                         } else if (nodeName.compareToIgnoreCase(SHOW_LABELS) == 0) {
-                            legendOptionData.setShowLabels(decodeBooleanElement(document, child));
+                            legendOptionData.setShowLabels(decodeBooleanElement(child));
                         } else if (nodeName.compareToIgnoreCase(SHOW_TITLE) == 0) {
-                            legendOptionData.setShowTitle(decodeBooleanElement(document, child));
+                            legendOptionData.setShowTitle(decodeBooleanElement(child));
                         } else if (nodeName.compareToIgnoreCase(SPLIT_SYMBOLIZERS) == 0) {
-                            legendOptionData.setSplitSymbolizers(
-                                    decodeBooleanElement(document, child));
+                            legendOptionData.setSplitSymbolizers(decodeBooleanElement(child));
                         } else if (nodeName.compareToIgnoreCase(FONT_ANTI_ALIASING) == 0) {
-                            legendOptionData.setFontAntiAliasing(
-                                    decodeBooleanElement(document, child));
+                            legendOptionData.setFontAntiAliasing(decodeBooleanElement(child));
                         } else if (nodeName.compareToIgnoreCase(SHOW_BORDER) == 0) {
-                            legendOptionData.setBorder(decodeBooleanElement(document, child));
+                            legendOptionData.setBorder(decodeBooleanElement(child));
                         } else if (nodeName.compareToIgnoreCase(BAND_INFORMATION) == 0) {
-                            legendOptionData.setBandInformation(
-                                    decodeBooleanElement(document, child));
+                            legendOptionData.setBandInformation(decodeBooleanElement(child));
                         } else if (nodeName.compareToIgnoreCase(BACKGROUND_TRANSPARENT) == 0) {
-                            legendOptionData.setTransparent(decodeBooleanElement(document, child));
+                            legendOptionData.setTransparent(decodeBooleanElement(child));
                         } else if (nodeName.compareToIgnoreCase(LABEL_FONT) == 0) {
-                            legendOptionData.setLabelFont(decodeFontElement(document, child));
+                            legendOptionData.setLabelFont(decodeFontElement(child));
                         } else if (nodeName.compareToIgnoreCase(LABEL_FONT_COLOUR) == 0) {
-                            legendOptionData.setLabelFontColour(
-                                    decodeColourElement(document, child));
+                            legendOptionData.setLabelFontColour(decodeColourElement(child));
                         } else if (nodeName.compareToIgnoreCase(BORDER_COLOUR) == 0) {
-                            legendOptionData.setBorderColour(decodeColourElement(document, child));
+                            legendOptionData.setBorderColour(decodeColourElement(child));
                         } else if (nodeName.compareToIgnoreCase(BACKGROUND_COLOUR) == 0) {
-                            legendOptionData.setBackgroundColour(
-                                    decodeColourElement(document, child));
+                            legendOptionData.setBackgroundColour(decodeColourElement(child));
                         }
                     }
                     child = child.getNextSibling();
@@ -603,52 +597,46 @@ public class LegendOptionData {
     /**
      * Decode colour element.
      *
-     * @param document the document
      * @param child the child
      * @return the color
      */
-    private static Color decodeColourElement(Document document, Node child) {
+    private static Color decodeColourElement(Node child) {
         return ColourUtils.toColour(child.getTextContent());
     }
 
     /**
      * Decode font element.
      *
-     * @param document the document
      * @param child the child
      * @return the font
      */
-    private static Font decodeFontElement(Document document, Node child) {
+    private static Font decodeFontElement(Node child) {
         String name = child.getTextContent();
         NamedNodeMap attributes = child.getAttributes();
         Node sizeNode = attributes.getNamedItem(FONT_SIZE);
         Node styleNode = attributes.getNamedItem(FONT_STYLE);
-        int size = Integer.valueOf(sizeNode.getNodeValue()).intValue();
-        int style = Integer.valueOf(styleNode.getNodeValue()).intValue();
-        Font font = new Font(name, style, size);
-
-        return font;
+        int size = Integer.parseInt(sizeNode.getNodeValue());
+        int style = Integer.parseInt(styleNode.getNodeValue());
+        return new Font(name, style, size);
     }
 
     /**
      * Decode boolean element.
      *
-     * @param document the document
      * @param child the child
      * @return true, if successful
      */
-    private static boolean decodeBooleanElement(Document document, Node child) {
-        return Boolean.valueOf(child.getTextContent()).booleanValue();
+    private static boolean decodeBooleanElement(Node child) {
+        return Boolean.parseBoolean(child.getTextContent());
     }
 
     /**
      * Decode int element.
      *
-     * @param document the document
      * @param child the child
      * @return the int
      */
-    private static int decodeIntElement(Document document, Node child) {
-        return Integer.valueOf(child.getTextContent()).intValue();
+    private static int decodeIntElement(Node child) {
+        return Integer.parseInt(child.getTextContent());
     }
 }

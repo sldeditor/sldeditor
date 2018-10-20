@@ -11,11 +11,11 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * The Interface DatabaseConnectionName.
+ * The Interface DatabaseConnectionNameInterface.
  *
  * @author Robert Ward (SCISYS)
  */
-public interface DatabaseConnectionName extends Serializable {
+public interface DatabaseConnectionNameInterface extends Serializable {
 
     /**
      * Gets the connection name.

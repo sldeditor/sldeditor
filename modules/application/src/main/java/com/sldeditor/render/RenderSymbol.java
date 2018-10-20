@@ -19,15 +19,14 @@
 
 package com.sldeditor.render;
 
+import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.ui.render.RuleRenderOptions;
 import java.util.List;
 import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
-import org.geotools.styling.UserLayerImpl;
 
 /**
  * Class to render a symbol and decide which bit of the symbol to draw.
@@ -54,27 +53,15 @@ public class RenderSymbol {
         List<StyledLayer> styledLayerList = selectedSymbol.getSld().layers();
 
         for (StyledLayer styledLayer : styledLayerList) {
-            List<Style> styleList = null;
+            List<Style> styleList = SLDUtils.getStylesList(styledLayer);
 
-            if (styledLayer instanceof NamedLayerImpl) {
-                NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
+            for (Style style : styleList) {
+                FeatureTypeStyle ftsToRender = selectedSymbol.getFeatureTypeStyle();
+                Rule ruleToRender = selectedSymbol.getRule();
 
-                styleList = namedLayer.styles();
-            } else if (styledLayer instanceof UserLayerImpl) {
-                UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
-
-                styleList = userLayer.userStyles();
-            }
-
-            if (styleList != null) {
-                for (Style style : styleList) {
-                    FeatureTypeStyle ftsToRender = selectedSymbol.getFeatureTypeStyle();
-                    Rule ruleToRender = selectedSymbol.getRule();
-
-                    // Check to see if style contains the rule to render
-                    if (shouldRenderSymbol(style, ftsToRender, ruleToRender)) {
-                        return renderSymbol(style, ftsToRender, ruleToRender, renderOptions);
-                    }
+                // Check to see if style contains the rule to render
+                if (shouldRenderSymbol(style, ftsToRender, ruleToRender)) {
+                    return renderSymbol(style, ftsToRender, ruleToRender, renderOptions);
                 }
             }
         }
@@ -101,9 +88,7 @@ public class RenderSymbol {
         RuleRenderVisitor visitor =
                 new RuleRenderVisitor(ftsToRender, ruleToRender, symbolIndex, options);
         style.accept(visitor);
-        Style copy = (Style) visitor.getCopy();
-
-        return copy;
+        return (Style) visitor.getCopy();
     }
 
     /**

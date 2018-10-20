@@ -109,7 +109,7 @@ public class VOGeoServerContrastEnhancementNormalizeGrey
      */
     @Override
     public void populate(FeatureTypeStyle featureTypeStyle) {
-        // TODO Auto-generated method stub
+        // Not used
 
     }
 
@@ -118,7 +118,7 @@ public class VOGeoServerContrastEnhancementNormalizeGrey
      */
     @Override
     public void updateSymbol(FeatureTypeStyle featureTypeStyle) {
-        // TODO Auto-generated method stub
+        // Not used
 
     }
 }

@@ -40,7 +40,7 @@ public class SLDTreeLeafFactory {
     private static SLDTreeLeafFactory instance = null;
 
     /** The map. */
-    private Map<Class<?>, SLDTreeLeafInterface> map = new HashMap<Class<?>, SLDTreeLeafInterface>();
+    private Map<Class<?>, SLDTreeLeafInterface> map = new HashMap<>();
 
     /** The style factory. */
     private static StyleFactoryImpl styleFactory =
@@ -76,7 +76,7 @@ public class SLDTreeLeafFactory {
     }
 
     /**
-     * Adds the SLDTreeLeafInterface objtec.
+     * Adds the SLDTreeLeafInterface object.
      *
      * @param obj the obj
      */

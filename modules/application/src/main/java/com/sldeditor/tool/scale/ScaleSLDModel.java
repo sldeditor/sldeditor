@@ -68,7 +68,7 @@ public class ScaleSLDModel extends AbstractTableModel {
     private transient SLDWriterInterface sldWriter = null;
 
     /** The listener. */
-    private ScaleToolUpdate listener = null;
+    private transient ScaleToolUpdate listener = null;
 
     /** Constructor. */
     public ScaleSLDModel(ScaleToolUpdate listener) {

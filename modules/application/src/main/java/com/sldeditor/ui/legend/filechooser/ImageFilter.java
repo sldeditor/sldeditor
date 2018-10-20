@@ -86,11 +86,7 @@ public class ImageFilter extends FileFilter {
 
         String extension = ImageFileExtensionUtils.getExtension(f);
         if (extension != null) {
-            if (extension.equals(filterString)) {
-                return true;
-            } else {
-                return false;
-            }
+            return (extension.equals(filterString));
         }
 
         return false;
@@ -111,12 +107,12 @@ public class ImageFilter extends FileFilter {
      * @return the filters
      */
     public static List<FileFilter> getFilters() {
-        List<FileFilter> filterlist = new ArrayList<FileFilter>();
+        List<FileFilter> filterlist = new ArrayList<>();
 
-        filterlist.add(new ImageFilter(ImageFileExtensionUtils.jpg));
-        filterlist.add(new ImageFilter(ImageFileExtensionUtils.gif));
-        filterlist.add(new ImageFilter(ImageFileExtensionUtils.tif));
-        filterlist.add(new ImageFilter(ImageFileExtensionUtils.png));
+        filterlist.add(new ImageFilter(ImageFileExtensionUtils.JPG));
+        filterlist.add(new ImageFilter(ImageFileExtensionUtils.GIF));
+        filterlist.add(new ImageFilter(ImageFileExtensionUtils.TIF));
+        filterlist.add(new ImageFilter(ImageFileExtensionUtils.PNG));
 
         return filterlist;
     }
@@ -136,6 +132,6 @@ public class ImageFilter extends FileFilter {
      * @return the string
      */
     public static String defaultExtension() {
-        return ImageFileExtensionUtils.png;
+        return ImageFileExtensionUtils.PNG;
     }
 }

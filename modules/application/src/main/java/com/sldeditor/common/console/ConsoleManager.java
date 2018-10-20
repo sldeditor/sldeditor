@@ -104,7 +104,7 @@ public class ConsoleManager {
 
         Logger logger = Logger.getLogger(clazz);
 
-        internal_logException(e, logger);
+        internalLogException(e, logger);
     }
 
     /**
@@ -117,16 +117,16 @@ public class ConsoleManager {
 
         Logger logger = Logger.getLogger(obj.getClass());
 
-        internal_logException(e, logger);
+        internalLogException(e, logger);
     }
 
     /**
-     * Internal_log exception.
+     * Internal log exception method.
      *
      * @param e the e
      * @param logger the logger
      */
-    private void internal_logException(Exception e, Logger logger) {
+    private void internalLogException(Exception e, Logger logger) {
         logger.error(e.getMessage());
         panel.addErrorMessage(e.getMessage());
 

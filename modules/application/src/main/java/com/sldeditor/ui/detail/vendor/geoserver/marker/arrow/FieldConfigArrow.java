@@ -39,7 +39,7 @@ import com.sldeditor.ui.widgets.FieldPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import org.geotools.filter.LiteralExpressionImpl;
@@ -62,7 +62,7 @@ import org.opengis.style.GraphicalSymbol;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -134,7 +134,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
      * @param enabled the new enabled state
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (arrowPanel != null) {
             arrowPanel.setEnabled(enabled);
         }
@@ -188,10 +188,8 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
      */
     @Override
     public void populateExpression(Object objValue) {
-        if (arrowPanel != null) {
-            if (objValue instanceof String) {
-                arrowPanel.populateExpression((String) objValue);
-            }
+        if ((arrowPanel != null) && (objValue instanceof String)) {
+            arrowPanel.populateExpression((String) objValue);
         }
     }
 
@@ -234,33 +232,31 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
             FieldConfigSymbolType multiOptionPanel,
             Graphic graphic,
             GraphicalSymbol symbol) {
-        if ((symbol != null) && (fieldConfigManager != null)) {
-            if (symbol instanceof Mark) {
-                MarkImpl markerSymbol = (MarkImpl) symbol;
+        if ((symbol instanceof Mark) && (fieldConfigManager != null)) {
+            MarkImpl markerSymbol = (MarkImpl) symbol;
 
-                FillImpl fill = markerSymbol.getFill();
+            FillImpl fill = markerSymbol.getFill();
 
-                if (fill != null) {
-                    Expression expFillColour = fill.getColor();
-                    Expression expFillColourOpacity = fill.getOpacity();
+            if (fill != null) {
+                Expression expFillColour = fill.getColor();
+                Expression expFillColourOpacity = fill.getOpacity();
 
-                    FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
-                    if (field != null) {
-                        field.populate(expFillColour);
-                    }
-                    field = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
-                    if (field != null) {
-                        field.populate(expFillColourOpacity);
-                    }
+                FieldConfigBase field = fieldConfigManager.get(FieldIdEnum.FILL_COLOUR);
+                if (field != null) {
+                    field.populate(expFillColour);
                 }
-
-                if (arrowPanel != null) {
-                    arrowPanel.populateExpression(markerSymbol.getWellKnownName().toString());
+                field = fieldConfigManager.get(FieldIdEnum.OVERALL_OPACITY);
+                if (field != null) {
+                    field.populate(expFillColourOpacity);
                 }
+            }
 
-                if (multiOptionPanel != null) {
-                    multiOptionPanel.setSelectedItem(ARROW_SYMBOL_KEY);
-                }
+            if (arrowPanel != null) {
+                arrowPanel.populateExpression(markerSymbol.getWellKnownName().toString());
+            }
+
+            if (multiOptionPanel != null) {
+                multiOptionPanel.setSelectedItem(ARROW_SYMBOL_KEY);
             }
         }
     }
@@ -280,7 +276,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
             Expression symbolType,
             boolean fillEnabled,
             boolean strokeEnabled) {
-        List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
+        List<GraphicalSymbol> symbolList = new ArrayList<>();
 
         if (fieldConfigManager != null) {
             Expression wellKnownName = null;
@@ -289,50 +285,10 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
                 if (wellKnownName != null) {
                     // Stroke colour
                     FieldConfigBase field = null;
-                    Stroke stroke = null;
-
-                    if (strokeEnabled && (strokeFieldConfig != null)) {
-                        Expression expStrokeColour = null;
-                        Expression expStrokeColourOpacity = null;
-
-                        field = fieldConfigManager.get(strokeFieldConfig.getColour());
-                        if (field != null) {
-                            if (field instanceof FieldConfigColour) {
-                                FieldConfigColour colourField = (FieldConfigColour) field;
-
-                                expStrokeColour = colourField.getColourExpression();
-                            }
-                        }
-                        field = fieldConfigManager.get(strokeFieldConfig.getOpacity());
-                        if (field != null) {
-                            expStrokeColourOpacity = field.getExpression();
-                        }
-                        stroke =
-                                getStyleFactory()
-                                        .createStroke(expStrokeColour, expStrokeColourOpacity);
-                    }
+                    Stroke stroke = getStrokeValue(fieldConfigManager, strokeEnabled);
 
                     // Fill colour
-                    Fill fill = null;
-
-                    if (fillEnabled && (fillFieldConfig != null)) {
-                        Expression expFillColour = null;
-                        Expression expFillColourOpacity = null;
-
-                        field = fieldConfigManager.get(fillFieldConfig.getColour());
-                        if (field != null) {
-                            if (field instanceof FieldConfigColour) {
-                                FieldConfigColour colourField = (FieldConfigColour) field;
-
-                                expFillColour = colourField.getColourExpression();
-                            }
-                        }
-                        field = fieldConfigManager.get(fillFieldConfig.getOpacity());
-                        if (field != null) {
-                            expFillColourOpacity = field.getExpression();
-                        }
-                        fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
-                    }
+                    Fill fill = getFillValue(fieldConfigManager, fillEnabled);
 
                     field = fieldConfigManager.get(FieldIdEnum.STROKE_WIDTH);
                     if (field != null) {
@@ -342,11 +298,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
                         }
                     }
 
-                    Expression symbolSize = null;
-                    field = fieldConfigManager.get(FieldIdEnum.STROKE_SYMBOL_SIZE);
-                    if (field != null) {
-                        symbolSize = field.getExpression();
-                    }
+                    Expression symbolSize = getSizeValue(fieldConfigManager);
                     Expression rotation = null;
                     Mark mark =
                             getStyleFactory()
@@ -357,6 +309,84 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
             }
         }
         return symbolList;
+    }
+
+    /**
+     * Gets the size value.
+     *
+     * @param fieldConfigManager the field config manager
+     * @return the size value
+     */
+    private Expression getSizeValue(GraphicPanelFieldManager fieldConfigManager) {
+        FieldConfigBase field;
+        Expression symbolSize = null;
+        field = fieldConfigManager.get(FieldIdEnum.STROKE_SYMBOL_SIZE);
+        if (field != null) {
+            symbolSize = field.getExpression();
+        }
+        return symbolSize;
+    }
+
+    /**
+     * Gets the stroke value.
+     *
+     * @param fieldConfigManager the field config manager
+     * @param strokeEnabled the stroke enabled
+     * @return the stroke value
+     */
+    private Stroke getStrokeValue(
+            GraphicPanelFieldManager fieldConfigManager, boolean strokeEnabled) {
+        FieldConfigBase field;
+        Stroke stroke = null;
+
+        if (strokeEnabled && (strokeFieldConfig != null)) {
+            Expression expStrokeColour = null;
+            Expression expStrokeColourOpacity = null;
+
+            field = fieldConfigManager.get(strokeFieldConfig.getColour());
+            if (field instanceof FieldConfigColour) {
+                FieldConfigColour colourField = (FieldConfigColour) field;
+
+                expStrokeColour = colourField.getColourExpression();
+            }
+            field = fieldConfigManager.get(strokeFieldConfig.getOpacity());
+            if (field != null) {
+                expStrokeColourOpacity = field.getExpression();
+            }
+            stroke = getStyleFactory().createStroke(expStrokeColour, expStrokeColourOpacity);
+        }
+        return stroke;
+    }
+
+    /**
+     * Gets the fill value.
+     *
+     * @param fieldConfigManager the field config manager
+     * @param fillEnabled the fill enabled
+     * @return the fill value
+     */
+    private Fill getFillValue(GraphicPanelFieldManager fieldConfigManager, boolean fillEnabled) {
+        FieldConfigBase field;
+        Fill fill = null;
+
+        if (fillEnabled && (fillFieldConfig != null)) {
+            Expression expFillColour = null;
+            Expression expFillColourOpacity = null;
+
+            field = fieldConfigManager.get(fillFieldConfig.getColour());
+            if (field instanceof FieldConfigColour) {
+                FieldConfigColour colourField = (FieldConfigColour) field;
+
+                expFillColour = colourField.getColourExpression();
+            }
+
+            field = fieldConfigManager.get(fillFieldConfig.getOpacity());
+            if (field != null) {
+                expFillColourOpacity = field.getExpression();
+            }
+            fill = getStyleFactory().createFill(expFillColour, expFillColourOpacity);
+        }
+        return fill;
     }
 
     /**
@@ -390,7 +420,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     @Override
     public Map<FieldIdEnum, FieldConfigBase> getFieldList(
             GraphicPanelFieldManager fieldConfigManager) {
-        Map<FieldIdEnum, FieldConfigBase> map = new HashMap<FieldIdEnum, FieldConfigBase>();
+        Map<FieldIdEnum, FieldConfigBase> map = new EnumMap<>(FieldIdEnum.class);
 
         map.put(FieldIdEnum.VO_ARROW, this);
         map.put(FieldIdEnum.VO_ARROW_HEAD, this);
@@ -408,22 +438,20 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
      */
     @Override
     public boolean accept(GraphicalSymbol symbol) {
-        if (symbol != null) {
-            if (symbol instanceof MarkImpl) {
-                MarkImpl marker = (MarkImpl) symbol;
+        if (symbol instanceof MarkImpl) {
+            MarkImpl marker = (MarkImpl) symbol;
 
-                Expression expression = marker.getWellKnownName();
+            Expression expression = marker.getWellKnownName();
 
-                if (expression instanceof LiteralExpressionImpl) {
-                    LiteralExpressionImpl lExpression = (LiteralExpressionImpl) expression;
+            if (expression instanceof LiteralExpressionImpl) {
+                LiteralExpressionImpl lExpression = (LiteralExpressionImpl) expression;
 
-                    Object value = lExpression.getValue();
-                    if (value instanceof String) {
-                        String valueString = (String) value;
+                Object value = lExpression.getValue();
+                if (value instanceof String) {
+                    String valueString = (String) value;
 
-                        if (valueString.startsWith(ArrowUtils.getArrowPrefix())) {
-                            return true;
-                        }
+                    if (valueString.startsWith(ArrowUtils.getArrowPrefix())) {
+                        return true;
                     }
                 }
             }
@@ -448,10 +476,8 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
      */
     @Override
     public String getStringValue() {
-        if (arrowPanel != null) {
-            if (arrowPanel.getExpression() != null) {
-                return arrowPanel.getExpression().toString();
-            }
+        if ((arrowPanel != null) && (arrowPanel.getExpression() != null)) {
+            return arrowPanel.getExpression().toString();
         }
 
         return null;
@@ -541,9 +567,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     /*
      * (non-Javadoc)
      *
-     * @see
-     * com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap(
-     * java.util.Map)
+     * @see com.sldeditor.ui.detail.config.symboltype.SymbolTypeInterface#populateVendorOptionFieldMap( java.util.Map)
      */
     @Override
     protected void populateVendorOptionFieldMap(
@@ -577,8 +601,7 @@ public class FieldConfigArrow extends FieldState implements ArrowUpdateInterface
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object,
-     * java.util.List)
+     * @see com.sldeditor.ui.detail.config.symboltype.FieldState#getMinimumVersion(java.lang.Object, java.util.List)
      */
     @Override
     public void getMinimumVersion(

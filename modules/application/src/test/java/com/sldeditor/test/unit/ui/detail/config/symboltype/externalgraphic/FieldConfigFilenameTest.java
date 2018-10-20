@@ -80,7 +80,7 @@ public class FieldConfigFilenameTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#internal_setEnabled(boolean)}.
+     * com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#internalSetEnabled(boolean)}.
      * Test method for {@link
      * com.sldeditor.ui.detail.config.symboltype.externalgraphic.FieldConfigFilename#isEnabled()}.
      */
@@ -98,7 +98,7 @@ public class FieldConfigFilenameTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -108,7 +108,7 @@ public class FieldConfigFilenameTest {
         assertTrue(field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -124,7 +124,7 @@ public class FieldConfigFilenameTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
         assertTrue(field2.isEnabled());
 
         // Create text field
@@ -133,7 +133,7 @@ public class FieldConfigFilenameTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
 
         assertTrue(field2.isEnabled());
     }

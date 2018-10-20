@@ -90,7 +90,6 @@ public class ArrowIcon implements Icon, SwingConstants {
      * @see javax.swing.Icon#getIconWidth()
      */
     public int getIconWidth() {
-        // int retCode;
         switch (direction) {
             case NORTH:
             case SOUTH:

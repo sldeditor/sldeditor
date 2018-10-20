@@ -148,6 +148,7 @@ public class FilterPanelv2 extends JDialog
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
+    /** The optional check box. */
     private JCheckBox optionalCheckBox;
 
     /** The in test mode flag. */
@@ -281,13 +282,13 @@ public class FilterPanelv2 extends JDialog
         getContentPane().add(resultPanel, BorderLayout.NORTH);
         resultPanel.setLayout(new BorderLayout(0, 0));
 
-        JScrollPane scrollPane_1 = new JScrollPane();
-        resultPanel.add(scrollPane_1);
+        JScrollPane scrollPane1 = new JScrollPane();
+        resultPanel.add(scrollPane1);
 
         textArea = new JTextArea();
         textArea.setRows(2);
         textArea.setEditable(false);
-        scrollPane_1.setViewportView(textArea);
+        scrollPane1.setViewportView(textArea);
     }
 
     /**
@@ -480,9 +481,7 @@ public class FilterPanelv2 extends JDialog
         for (int index = 0; index < node.getChildCount(); index++) {
             FilterNode filterNode = (FilterNode) node.getChildAt(index);
 
-            Filter filter = addFilter(filterNode);
-
-            filterList.add(filter);
+            filterList.add(addFilter(filterNode));
         }
     }
 
@@ -502,48 +501,83 @@ public class FilterPanelv2 extends JDialog
         } else if (expression instanceof FunctionExpressionImpl) {
             FunctionExpressionImpl functionExpression = (FunctionExpressionImpl) expression;
 
-            List<Expression> parameterlist = new ArrayList<Expression>();
-            for (int childIndex = 0; childIndex < node.getChildCount(); childIndex++) {
-                ExpressionNode childNode = (ExpressionNode) node.getChildAt(childIndex);
-
-                Expression addExpression = addExpression(childNode);
-
-                if ((addExpression == null)
-                        && ((expression instanceof Collection_AverageFunction)
-                                || (expression instanceof Collection_BoundsFunction)
-                                || (expression instanceof Collection_SumFunction))) {
-                    parameterlist.add(ff.literal(0));
-                } else {
-                    parameterlist.add(addExpression);
-                }
-            }
-
-            functionExpression.setParameters(parameterlist);
-
-            return functionExpression;
+            return addFunctionExpression(node, expression, functionExpression);
         } else if (expression instanceof MathExpressionImpl) {
             MathExpressionImpl mathExpression = (MathExpressionImpl) expression;
-            ExpressionNode leftChildNode = (ExpressionNode) node.getChildAt(0);
-            mathExpression.setExpression1(addExpression(leftChildNode));
-            ExpressionNode rightChildNode = (ExpressionNode) node.getChildAt(1);
-            mathExpression.setExpression2(addExpression(rightChildNode));
-
-            return mathExpression;
+            return addMathsExpression(node, mathExpression);
         } else if (expression instanceof Function) {
             Function function = (Function) expression;
-            List<Expression> expList = new ArrayList<Expression>();
-            for (Expression exp : function.getParameters()) {
-                expList.add(exp);
-            }
-
-            for (int index = 0; index < node.getChildCount(); index++) {
-                ExpressionNode childNode = (ExpressionNode) node.getChildAt(index);
-                expList.add(addExpression(childNode));
-            }
-
-            return function;
+            return addFunction(node, function);
         }
         return null;
+    }
+
+    /**
+     * Adds the function.
+     *
+     * @param node the node
+     * @param function the function
+     * @return the expression
+     */
+    private Expression addFunction(ExpressionNode node, Function function) {
+        List<Expression> expList = new ArrayList<>();
+        for (Expression exp : function.getParameters()) {
+            expList.add(exp);
+        }
+
+        for (int index = 0; index < node.getChildCount(); index++) {
+            ExpressionNode childNode = (ExpressionNode) node.getChildAt(index);
+            expList.add(addExpression(childNode));
+        }
+
+        return function;
+    }
+
+    /**
+     * Adds the maths expression.
+     *
+     * @param node the node
+     * @param mathExpression the math expression
+     * @return the expression
+     */
+    private Expression addMathsExpression(ExpressionNode node, MathExpressionImpl mathExpression) {
+        ExpressionNode leftChildNode = (ExpressionNode) node.getChildAt(0);
+        mathExpression.setExpression1(addExpression(leftChildNode));
+        ExpressionNode rightChildNode = (ExpressionNode) node.getChildAt(1);
+        mathExpression.setExpression2(addExpression(rightChildNode));
+
+        return mathExpression;
+    }
+
+    /**
+     * Adds the function expression.
+     *
+     * @param node the node
+     * @param expression the expression
+     * @param functionExpression the function expression
+     * @return the expression
+     */
+    private Expression addFunctionExpression(
+            ExpressionNode node, Expression expression, FunctionExpressionImpl functionExpression) {
+        List<Expression> parameterlist = new ArrayList<>();
+        for (int childIndex = 0; childIndex < node.getChildCount(); childIndex++) {
+            ExpressionNode childNode = (ExpressionNode) node.getChildAt(childIndex);
+
+            Expression addExpression = addExpression(childNode);
+
+            if ((addExpression == null)
+                    && ((expression instanceof Collection_AverageFunction)
+                            || (expression instanceof Collection_BoundsFunction)
+                            || (expression instanceof Collection_SumFunction))) {
+                parameterlist.add(ff.literal(0));
+            } else {
+                parameterlist.add(addExpression);
+            }
+        }
+
+        functionExpression.setParameters(parameterlist);
+
+        return functionExpression;
     }
 
     /**

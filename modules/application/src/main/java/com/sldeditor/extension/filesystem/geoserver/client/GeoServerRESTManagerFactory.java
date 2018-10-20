@@ -34,8 +34,7 @@ import java.util.Map;
 public class GeoServerRESTManagerFactory {
 
     /** The map. */
-    private Map<GeoServerConnection, GeoServerRESTManager> map =
-            new HashMap<GeoServerConnection, GeoServerRESTManager>();
+    private Map<GeoServerConnection, GeoServerRESTManager> map = new HashMap<>();
 
     /** The instance. */
     private static GeoServerRESTManagerFactory instance = null;
@@ -65,7 +64,7 @@ public class GeoServerRESTManagerFactory {
      * @return the manager
      */
     public static GeoServerRESTManager getManager(GeoServerConnection connection) {
-        return getInstance().internal_getManager(connection);
+        return getInstance().internalGetManager(connection);
     }
 
     /**
@@ -74,7 +73,7 @@ public class GeoServerRESTManagerFactory {
      * @param connection the connection
      * @return the geo server rest manager
      */
-    private GeoServerRESTManager internal_getManager(GeoServerConnection connection) {
+    private GeoServerRESTManager internalGetManager(GeoServerConnection connection) {
         if (connection == null) {
             return null;
         }
@@ -109,7 +108,7 @@ public class GeoServerRESTManagerFactory {
      * @param connection the connection
      */
     public static void deleteConnection(GeoServerConnection connection) {
-        getInstance().internal_deleteConnection(connection);
+        getInstance().internalDeleteConnection(connection);
     }
 
     /**
@@ -117,7 +116,7 @@ public class GeoServerRESTManagerFactory {
      *
      * @param connection the connection
      */
-    private void internal_deleteConnection(GeoServerConnection connection) {
+    private void internalDeleteConnection(GeoServerConnection connection) {
         map.remove(connection);
     }
 }

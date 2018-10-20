@@ -65,10 +65,10 @@ public class WindBarbDetails extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The wind barbs expression. */
-    private Expression windBarbsExpression = null;
+    private transient Expression windBarbsExpression = null;
 
     /** The parent obj. */
-    private WindBarbUpdateInterface parentObj = null;
+    private transient WindBarbUpdateInterface parentObj = null;
 
     /**
      * Instantiates a new feature type style details.
@@ -141,8 +141,8 @@ public class WindBarbDetails extends StandardPanel
     public void populateExpression(String wellKnownName) {
 
         if (wellKnownName != null) {
-            int startSpeedOpenBracket = wellKnownName.indexOf("(");
-            int endSpeedCloseBracket = wellKnownName.indexOf(")");
+            int startSpeedOpenBracket = wellKnownName.indexOf('(');
+            int endSpeedCloseBracket = wellKnownName.indexOf(')');
 
             if ((startSpeedOpenBracket < 0) || (endSpeedCloseBracket < 0)) {
                 // Invalid
@@ -151,8 +151,8 @@ public class WindBarbDetails extends StandardPanel
             String windSpeed =
                     wellKnownName.substring(startSpeedOpenBracket + 1, endSpeedCloseBracket);
 
-            int startUnitsOpenBracket = wellKnownName.indexOf("[");
-            int endUnitsOpenBracket = wellKnownName.indexOf("]");
+            int startUnitsOpenBracket = wellKnownName.indexOf('[');
+            int endUnitsOpenBracket = wellKnownName.indexOf(']');
             if ((startUnitsOpenBracket < 0) || (endUnitsOpenBracket < 0)) {
                 // Invalid
                 return;
@@ -225,7 +225,6 @@ public class WindBarbDetails extends StandardPanel
                         String.format(
                                 "<ogc:PropertyName>%s</ogc:PropertyName>",
                                 attributeExpression.getPropertyName());
-                ;
             } else {
                 ConsoleManager.getInstance()
                         .error(

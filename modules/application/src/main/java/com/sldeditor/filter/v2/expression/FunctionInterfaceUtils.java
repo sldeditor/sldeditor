@@ -47,6 +47,11 @@ import org.opengis.filter.expression.Function;
  */
 public class FunctionInterfaceUtils {
 
+    /** Private default constructor */
+    private FunctionInterfaceUtils() {
+        // Private default constructor
+    }
+
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory();
 
@@ -61,7 +66,7 @@ public class FunctionInterfaceUtils {
             ExpressionNode parentNode, int index, Expression expression) {
         Function function = (Function) parentNode.getExpression();
 
-        List<Expression> parameterList = new ArrayList<Expression>();
+        List<Expression> parameterList = new ArrayList<>();
         for (Expression exp : function.getParameters()) {
             parameterList.add(exp);
         }
@@ -108,9 +113,7 @@ public class FunctionInterfaceUtils {
      */
     public static Expression createNewFunction(Expression newExpression, List<Expression> params) {
         if (newExpression instanceof InterpolateFunction) {
-            InterpolateFunction interpolateFunction = new InterpolateFunction(params, null);
-
-            return interpolateFunction;
+            return new InterpolateFunction(params, null);
         } else if (newExpression instanceof CategorizeFunction) {
 
             // CategorizeFunction needs all the fields populated
@@ -124,18 +127,11 @@ public class FunctionInterfaceUtils {
             params.remove(params.size() - 1);
             params.add(ff.literal(CategorizeFunction.PRECEDING));
 
-            CategorizeFunction categorizeFunction = new CategorizeFunction(params, null);
-
-            return categorizeFunction;
+            return new CategorizeFunction(params, null);
         } else if (newExpression instanceof RecodeFunction) {
-            RecodeFunction recodeFunction = new RecodeFunction(params, null);
-
-            return recodeFunction;
+            return new RecodeFunction(params, null);
         } else if (newExpression instanceof StringTemplateFunction) {
-            StringTemplateFunction stringTemplateFunction =
-                    new StringTemplateFunction(params, null);
-
-            return stringTemplateFunction;
+            return new StringTemplateFunction(params, null);
         }
         return null;
     }
@@ -146,7 +142,7 @@ public class FunctionInterfaceUtils {
      * @param expression the expression
      * @return the string
      */
-    private static String missing_toString(Function expression) {
+    private static String missingToString(Function expression) {
         StringBuilder sb = new StringBuilder();
         sb.append(expression.getName());
         sb.append("(");
@@ -176,29 +172,29 @@ public class FunctionInterfaceUtils {
      */
     public static String toString(Expression expression) {
         if (expression instanceof RecodeFunction) {
-            return missing_toString((RecodeFunction) expression);
+            return missingToString((RecodeFunction) expression);
         } else if (expression instanceof StringTemplateFunction) {
-            return missing_toString((StringTemplateFunction) expression);
+            return missingToString((StringTemplateFunction) expression);
         } else if (expression instanceof ConstrastFunction) {
-            return missing_toString((ConstrastFunction) expression);
+            return missingToString((ConstrastFunction) expression);
         } else if (expression instanceof LightenFunction) {
-            return missing_toString((LightenFunction) expression);
+            return missingToString((LightenFunction) expression);
         } else if (expression instanceof JenksNaturalBreaksFunction) {
-            return missing_toString((JenksNaturalBreaksFunction) expression);
+            return missingToString((JenksNaturalBreaksFunction) expression);
         } else if (expression instanceof CategorizeFunction) {
-            return missing_toString((CategorizeFunction) expression);
+            return missingToString((CategorizeFunction) expression);
         } else if (expression instanceof UniqueIntervalFunction) {
-            return missing_toString((UniqueIntervalFunction) expression);
+            return missingToString((UniqueIntervalFunction) expression);
         } else if (expression instanceof GrayscaleFunction) {
-            return missing_toString((GrayscaleFunction) expression);
+            return missingToString((GrayscaleFunction) expression);
         } else if (expression instanceof QuantileFunction) {
-            return missing_toString((QuantileFunction) expression);
+            return missingToString((QuantileFunction) expression);
         } else if (expression instanceof ModuloFunction) {
-            return missing_toString((ModuloFunction) expression);
+            return missingToString((ModuloFunction) expression);
         } else if (expression instanceof StandardDeviationFunction) {
-            return missing_toString((StandardDeviationFunction) expression);
+            return missingToString((StandardDeviationFunction) expression);
         } else if (expression instanceof EqualIntervalFunction) {
-            return missing_toString((EqualIntervalFunction) expression);
+            return missingToString((EqualIntervalFunction) expression);
         } else {
             return expression.toString();
         }

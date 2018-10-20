@@ -85,7 +85,7 @@ public class ColourMapData {
                 this.colour = Color.white;
             }
         } else if (colourExpression instanceof Expression) {
-            colourString = ((Expression) colourExpression).toString();
+            colourString = colourExpression.toString();
             this.colour = Color.white;
         }
     }
@@ -175,7 +175,7 @@ public class ColourMapData {
 
         if (quantity != null) {
             if (quantity instanceof LiteralExpressionImpl) {
-                double quantityValue = Double.valueOf(quantity.toString());
+                double quantityValue = Double.parseDouble(quantity.toString());
                 nextQuantity = ff.literal(quantityValue + 1);
             } else {
                 // Could be a function expression so just leave alone

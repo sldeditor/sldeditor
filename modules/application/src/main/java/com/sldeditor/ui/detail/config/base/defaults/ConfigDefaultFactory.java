@@ -30,8 +30,16 @@ import java.util.List;
  */
 public class ConfigDefaultFactory {
 
+    /** The Constant INCORRECT_TYPE_CONFIGURED_FOR. */
+    private static final String INCORRECT_TYPE_CONFIGURED_FOR = "Incorrect type configured for : ";
+
     /** The default list. */
-    private static List<DefaultBase> defaultList = new ArrayList<DefaultBase>();
+    private static List<DefaultBase> defaultList = new ArrayList<>();
+
+    /** Private default constructor */
+    private ConfigDefaultFactory() {
+        // Private default constructor
+    }
 
     /**
      * Gets the boolean default value.
@@ -51,7 +59,7 @@ public class ConfigDefaultFactory {
                 ConsoleManager.getInstance()
                         .error(
                                 ConfigDefaultFactory.class,
-                                "Incorrect type configured for : "
+                                INCORRECT_TYPE_CONFIGURED_FOR
                                         + defaultValue
                                         + " expecting Boolean");
             }
@@ -78,7 +86,7 @@ public class ConfigDefaultFactory {
                 ConsoleManager.getInstance()
                         .error(
                                 ConfigDefaultFactory.class,
-                                "Incorrect type configured for : "
+                                INCORRECT_TYPE_CONFIGURED_FOR
                                         + defaultValue
                                         + " expecting Integer");
             }
@@ -105,9 +113,7 @@ public class ConfigDefaultFactory {
                 ConsoleManager.getInstance()
                         .error(
                                 ConfigDefaultFactory.class,
-                                "Incorrect type configured for : "
-                                        + defaultValue
-                                        + " expecting Double");
+                                INCORRECT_TYPE_CONFIGURED_FOR + defaultValue + " expecting Double");
             }
         }
 
@@ -132,9 +138,7 @@ public class ConfigDefaultFactory {
                 ConsoleManager.getInstance()
                         .error(
                                 ConfigDefaultFactory.class,
-                                "Incorrect type configured for : "
-                                        + defaultValue
-                                        + " expecting String");
+                                INCORRECT_TYPE_CONFIGURED_FOR + defaultValue + " expecting String");
             }
         }
 

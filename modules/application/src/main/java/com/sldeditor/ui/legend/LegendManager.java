@@ -20,6 +20,7 @@
 package com.sldeditor.ui.legend;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.utils.ColourUtils;
 import com.sldeditor.datasource.RenderSymbolInterface;
@@ -36,6 +37,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageTypeSpecifier;
@@ -45,15 +47,14 @@ import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageOutputStream;
+import org.geoserver.platform.resource.Files;
 import org.geoserver.wms.GetLegendGraphicRequest;
 import org.geoserver.wms.GetLegendGraphicRequest.LegendRequest;
 import org.geoserver.wms.legendgraphic.SLDEditorBufferedImageLegendGraphicBuilder;
 import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.styling.UserLayerImpl;
 
 /**
  * Manager object, implemented as a singleton, that controls the creation of SLD legend images.
@@ -117,12 +118,12 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
             String heading,
             String filename,
             boolean separateSymbolizers) {
-        Map<String, BufferedImage> imageMap = new HashMap<String, BufferedImage>();
+        Map<String, BufferedImage> imageMap = new HashMap<>();
 
         //
         // Set legend options
         //
-        Map<String, Object> legendOptions = new HashMap<String, Object>();
+        Map<String, Object> legendOptions = new HashMap<>();
 
         if (heading != null) {
             legendOptions.put("heading", heading);
@@ -180,7 +181,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
         request.setLegendOptions(legendOptions);
 
         if (sld != null) {
-            Map<String, Style> styleMap = new LinkedHashMap<String, Style>();
+            Map<String, Style> styleMap = new LinkedHashMap<>();
             StyledLayer selectedStyledLayer = SelectedSymbol.getInstance().getStyledLayer();
             Style selectedStyle = SelectedSymbol.getInstance().getStyle();
             if (selectedStyle != null) {
@@ -191,50 +192,76 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
 
             // Merge symbolizers into 1 image
             if (!separateSymbolizers) {
-                for (String key : styleMap.keySet()) {
-                    Style style = styleMap.get(key);
-
-                    if (!style.featureTypeStyles().isEmpty()) {
-                        FeatureTypeStyle featureTypeStyle = style.featureTypeStyles().get(0);
-                        if (featureTypeStyle != null) {
-                            if (!featureTypeStyle.rules().isEmpty()) {
-                                LegendRequest legendEntryRequest = request.new LegendRequest();
-                                request.getLegends().add(legendEntryRequest);
-                                legendEntryRequest.setTitle(key);
-                                legendEntryRequest.setStyle(style);
-                            }
-                        }
-                    }
-                }
-
-                BufferedImage legendGraphic = null;
-
-                try {
-                    legendGraphic = legendBuilder.buildLegendGraphic(request);
-                } catch (Exception e) {
-                    // Ignore
-                }
-                imageMap.put("", legendGraphic);
+                mergeSymbolizers(imageMap, request, styleMap);
             } else {
-                for (String key : styleMap.keySet()) {
-                    request.getLegends().clear();
-                    LegendRequest legendEntryRequest = request.new LegendRequest();
-                    legendEntryRequest.setStyle(styleMap.get(key));
-                    legendEntryRequest.setStyleName(key);
-                    request.getLegends().add(legendEntryRequest);
-
-                    BufferedImage legendGraphic = null;
-
-                    try {
-                        legendGraphic = legendBuilder.buildLegendGraphic(request);
-                    } catch (Exception e) {
-                        // Ignore
-                    }
-                    imageMap.put(key, legendGraphic);
-                }
+                separateSymbolizers(imageMap, request, styleMap);
             }
         }
         return imageMap;
+    }
+
+    /**
+     * Separate symbolizers.
+     *
+     * @param imageMap the image map
+     * @param request the request
+     * @param styleMap the style map
+     */
+    private void separateSymbolizers(
+            Map<String, BufferedImage> imageMap,
+            GetLegendGraphicRequest request,
+            Map<String, Style> styleMap) {
+        for (Entry<String, Style> entry : styleMap.entrySet()) {
+            request.getLegends().clear();
+            LegendRequest legendEntryRequest = request.new LegendRequest();
+            legendEntryRequest.setStyle(entry.getValue());
+            legendEntryRequest.setStyleName(entry.getKey());
+            request.getLegends().add(legendEntryRequest);
+
+            BufferedImage legendGraphic = null;
+
+            try {
+                legendGraphic = legendBuilder.buildLegendGraphic(request);
+            } catch (Exception e) {
+                // Ignore
+            }
+            imageMap.put(entry.getKey(), legendGraphic);
+        }
+    }
+
+    /**
+     * Merge symbolizers.
+     *
+     * @param imageMap the image map
+     * @param request the request
+     * @param styleMap the style map
+     */
+    private void mergeSymbolizers(
+            Map<String, BufferedImage> imageMap,
+            GetLegendGraphicRequest request,
+            Map<String, Style> styleMap) {
+        for (Entry<String, Style> entry : styleMap.entrySet()) {
+            Style style = entry.getValue();
+
+            if (!style.featureTypeStyles().isEmpty()) {
+                FeatureTypeStyle featureTypeStyle = style.featureTypeStyles().get(0);
+                if ((featureTypeStyle != null) && !featureTypeStyle.rules().isEmpty()) {
+                    LegendRequest legendEntryRequest = request.new LegendRequest();
+                    request.getLegends().add(legendEntryRequest);
+                    legendEntryRequest.setTitle(entry.getKey());
+                    legendEntryRequest.setStyle(style);
+                }
+            }
+        }
+
+        BufferedImage legendGraphic = null;
+
+        try {
+            legendGraphic = legendBuilder.buildLegendGraphic(request);
+        } catch (Exception e) {
+            // Ignore
+        }
+        imageMap.put("", legendGraphic);
     }
 
     /**
@@ -273,36 +300,24 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
         if (selectedStyledLayer == null) {
             styledLayerList = sld.layers();
         } else {
-            styledLayerList = new ArrayList<StyledLayer>();
+            styledLayerList = new ArrayList<>();
             styledLayerList.add(selectedStyledLayer);
         }
 
         for (StyledLayer styledLayer : styledLayerList) {
-            List<Style> styleList = null;
+            List<Style> styleList = SLDUtils.getStylesList(styledLayer);
 
-            if (styledLayer instanceof NamedLayerImpl) {
-                NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
-
-                styleList = namedLayer.styles();
-            } else if (styledLayer instanceof UserLayerImpl) {
-                UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
-
-                styleList = userLayer.userStyles();
-            }
-
-            if (styleList != null) {
-                int count = 1;
-                for (Style style : styleList) {
-                    String styleName;
-                    if (style.getName() != null) {
-                        styleName = style.getName();
-                    } else {
-                        styleName = String.format("Style %d", count);
-                    }
-                    styleMap.put(styleName, style);
-
-                    count++;
+            int count = 1;
+            for (Style style : styleList) {
+                String styleName;
+                if (style.getName() != null) {
+                    styleName = style.getName();
+                } else {
+                    styleName = String.format("Style %d", count);
                 }
+                styleMap.put(styleName, style);
+
+                count++;
             }
         }
     }
@@ -317,17 +332,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
     private void createSingleStyleLegend(
             Map<String, Style> styleMap, StyledLayer selectedStyledLayer, Style selectedStyle) {
         // A style has been selected
-        List<Style> styleList = null;
-
-        if (selectedStyledLayer instanceof NamedLayerImpl) {
-            NamedLayerImpl namedLayer = (NamedLayerImpl) selectedStyledLayer;
-
-            styleList = namedLayer.styles();
-        } else if (selectedStyledLayer instanceof UserLayerImpl) {
-            UserLayerImpl userLayer = (UserLayerImpl) selectedStyledLayer;
-
-            styleList = userLayer.userStyles();
-        }
+        List<Style> styleList = SLDUtils.getStylesList(selectedStyledLayer);
 
         String styleName;
         if (selectedStyle.getName() != null) {
@@ -356,7 +361,9 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface#updateLegendOptionData(com. sldeditor.ui.legend.option.LegendOptionData)
+     * @see
+     * com.sldeditor.ui.legend.option.LegendOptionDataUpdateInterface#updateLegendOptionData(com.
+     * sldeditor.ui.legend.option.LegendOptionData)
      */
     @Override
     public void updateLegendOptionData(LegendOptionData data) {
@@ -401,19 +408,21 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
                         .createLegend(sld, heading, filename, legendOptionData.splitSymbolizers());
 
         if (imageMap != null) {
-            for (String name : imageMap.keySet()) {
-                BufferedImage image = imageMap.get(name);
+            for (Entry<String, BufferedImage> entry : imageMap.entrySet()) {
+                BufferedImage image = entry.getValue();
                 if (image != null) {
                     try {
                         String legendFilename;
 
-                        if (name == null) {
+                        if (entry.getKey() == null) {
                             legendFilename = layerName + "." + LegendManager.getLegendImageFormat();
                         } else {
                             legendFilename =
                                     String.format(
                                             "%s_%s.%s",
-                                            layerName, name, LegendManager.getLegendImageFormat());
+                                            layerName,
+                                            entry.getKey(),
+                                            LegendManager.getLegendImageFormat());
                         }
                         File fileToSave = new File(destinationFolder, legendFilename);
 
@@ -474,7 +483,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
     private boolean saveGridImage(
             BufferedImage image, String formatName, File destinationFile, int dpi)
             throws IOException {
-        if (!destinationFile.delete()) {
+        if (!Files.delete(destinationFile)) {
             ConsoleManager.getInstance()
                     .information(
                             this,
@@ -482,27 +491,28 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
                                     "Failed to delete '%s'", destinationFile.getAbsolutePath()));
         }
 
+        boolean finish = false;
+
         for (Iterator<ImageWriter> iw = ImageIO.getImageWritersByFormatName(formatName);
-                iw.hasNext(); ) {
+                iw.hasNext() && !finish; ) {
             ImageWriter writer = iw.next();
             ImageWriteParam writeParam = writer.getDefaultWriteParam();
             ImageTypeSpecifier typeSpecifier =
                     ImageTypeSpecifier.createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
             IIOMetadata metadata = writer.getDefaultImageMetadata(typeSpecifier, writeParam);
-            if (metadata.isReadOnly() || !metadata.isStandardMetadataFormatSupported()) {
-                continue;
-            }
+            if (!(metadata.isReadOnly() || !metadata.isStandardMetadataFormatSupported())) {
 
-            setDPI(metadata, dpi);
+                setDPI(metadata, dpi);
 
-            final ImageOutputStream stream = ImageIO.createImageOutputStream(destinationFile);
-            try {
-                writer.setOutput(stream);
-                writer.write(metadata, new IIOImage(image, null, metadata), writeParam);
-            } finally {
-                stream.close();
+                final ImageOutputStream stream = ImageIO.createImageOutputStream(destinationFile);
+                try {
+                    writer.setOutput(stream);
+                    writer.write(metadata, new IIOImage(image, null, metadata), writeParam);
+                } finally {
+                    stream.close();
+                }
+                finish = true;
             }
-            break;
         }
 
         return true;
@@ -557,7 +567,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
      *
      * @param data the data
      */
-    public void SLDLoaded(LegendOptionData data) {
+    public void sldLoaded(LegendOptionData data) {
         if (data != null) {
             updateLegendOptionData(data);
 

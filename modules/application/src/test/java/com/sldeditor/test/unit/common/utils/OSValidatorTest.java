@@ -61,12 +61,4 @@ class OSValidatorTest {
         boolean expectedResult = (OS.indexOf("sunos") >= 0);
         assertEquals(expectedResult, OSValidator.isSolaris());
     }
-
-    /** Test method for {@link com.sldeditor.common.utils.OSValidator#getOS()}. */
-    @Test
-    void testGetOS() {
-        @SuppressWarnings("unused")
-        OSValidator ignore = new OSValidator();
-        System.out.println(OSValidator.getOS());
-    }
 }

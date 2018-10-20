@@ -23,7 +23,6 @@ import com.sldeditor.common.console.ConsoleManager;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -33,6 +32,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 /**
@@ -60,7 +60,7 @@ public class PropertyManager implements PropertyManagerInterface {
     private static final String LIST_DELIMETER = ",";
 
     /** The map of property values. */
-    private Map<String, String> fieldValueMap = new HashMap<String, String>();
+    private Map<String, String> fieldValueMap = new HashMap<>();
 
     /** Default constructor. */
     public PropertyManager() {
@@ -89,12 +89,8 @@ public class PropertyManager implements PropertyManagerInterface {
 
         if (fieldValueMap.containsKey(key)) {
             String stringValue = fieldValueMap.get(key);
-            if (stringValue != null) {
-                if (value != null) {
-                    if (stringValue.compareTo(value) != 0) {
-                        dataUpdated = true;
-                    }
-                }
+            if ((stringValue != null) && (value != null) && (stringValue.compareTo(value) != 0)) {
+                dataUpdated = true;
             }
         } else {
             dataUpdated = true;
@@ -181,10 +177,10 @@ public class PropertyManager implements PropertyManagerInterface {
             try {
                 Properties props = new Properties();
 
-                for (String key : fieldValueMap.keySet()) {
-                    String value = fieldValueMap.get(key);
+                for (Entry<String, String> entry : fieldValueMap.entrySet()) {
+                    String value = fieldValueMap.get(entry.getKey());
                     if (value != null) {
-                        props.setProperty(key, value);
+                        props.setProperty(entry.getKey(), value);
                     }
                 }
 
@@ -205,20 +201,16 @@ public class PropertyManager implements PropertyManagerInterface {
         // to load application's properties, we use this class
         Properties mainProperties = new Properties();
 
-        if (configPropertiesFile != null) {
-            if (configPropertiesFile.exists()) {
-                // load the file handle for main.properties
-                try {
-                    FileInputStream file = new FileInputStream(configPropertiesFile);
-                    // load all the properties from this file
-                    mainProperties.load(file);
-                    // we have loaded the properties, so close the file handle
-                    file.close();
-                } catch (FileNotFoundException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                } catch (IOException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
+        if ((configPropertiesFile != null) && configPropertiesFile.exists()) {
+            // load the file handle for main.properties
+            try {
+                FileInputStream file = new FileInputStream(configPropertiesFile);
+                // load all the properties from this file
+                mainProperties.load(file);
+                // we have loaded the properties, so close the file handle
+                file.close();
+            } catch (IOException e) {
+                ConsoleManager.getInstance().exception(this, e);
             }
         }
         fieldValueMap.clear();
@@ -279,10 +271,10 @@ public class PropertyManager implements PropertyManagerInterface {
             String[] components = value.split(ESCAPED_DELIMETER);
 
             if (components.length == 4) {
-                int red = Integer.valueOf(components[0]);
-                int green = Integer.valueOf(components[1]);
-                int blue = Integer.valueOf(components[2]);
-                int alpha = Integer.valueOf(components[3]);
+                int red = Integer.parseInt(components[0]);
+                int green = Integer.parseInt(components[1]);
+                int blue = Integer.parseInt(components[2]);
+                int alpha = Integer.parseInt(components[3]);
 
                 return new Color(red, green, blue, alpha);
             }
@@ -343,9 +335,9 @@ public class PropertyManager implements PropertyManagerInterface {
     @Override
     public List<String> getMultipleValues(String key) {
         String updatedKey = key + DELIMETER;
-        List<String> valueList = new ArrayList<String>();
+        List<String> valueList = new ArrayList<>();
 
-        List<Integer> indexList = new ArrayList<Integer>();
+        List<Integer> indexList = new ArrayList<>();
 
         for (String storedKey : fieldValueMap.keySet()) {
             if (storedKey.startsWith(updatedKey)) {
@@ -383,7 +375,7 @@ public class PropertyManager implements PropertyManagerInterface {
 
         String prefix = sb.toString();
 
-        List<String> keyToRemove = new ArrayList<String>();
+        List<String> keyToRemove = new ArrayList<>();
         for (String existingKey : fieldValueMap.keySet()) {
             if (existingKey.startsWith(prefix)) {
                 keyToRemove.add(existingKey);

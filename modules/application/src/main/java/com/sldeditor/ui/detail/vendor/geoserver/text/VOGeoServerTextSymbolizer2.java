@@ -42,6 +42,7 @@ import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.geotools.styling.AnchorPoint;
 import org.geotools.styling.Displacement;
 import org.geotools.styling.ExternalGraphic;
@@ -78,16 +79,16 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The parent obj. */
-    private UpdateSymbolInterface parentObj = null;
+    private transient UpdateSymbolInterface parentObj = null;
 
     /** The vendor option info. */
     private VendorOptionInfo vendorOptionInfo = null;
 
     /** The symbol type factory. */
-    private SymbolTypeFactory symbolTypeFactory = null;
+    private transient SymbolTypeFactory symbolTypeFactory = null;
 
     /** The field override map, indicates which fields to enable. */
-    private FieldEnableState fieldEnableState = null;
+    private transient FieldEnableState fieldEnableState = null;
 
     /** The panel id of the selected fill. */
     private Class<?> selectedFillPanelId = null;
@@ -637,14 +638,16 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
         if (groupList == null) {
             return;
         }
-        for (GroupIdEnum groupId : groupList.keySet()) {
-            boolean groupEnabled = groupList.get(groupId);
-            GroupConfigInterface groupConfig = fieldConfigManager.getGroup(getPanelId(), groupId);
+
+        for (Entry<GroupIdEnum, Boolean> entry : groupList.entrySet()) {
+            boolean groupEnabled = entry.getValue();
+            GroupConfigInterface groupConfig =
+                    fieldConfigManager.getGroup(getPanelId(), entry.getKey());
             if (groupConfig != null) {
                 groupConfig.setGroupStateOverride(groupEnabled);
             } else {
                 ConsoleManager.getInstance()
-                        .error(this, "Failed to find group : " + groupId.toString());
+                        .error(this, "Failed to find group : " + entry.getKey().toString());
             }
         }
 
@@ -655,16 +658,16 @@ public class VOGeoServerTextSymbolizer2 extends StandardPanel
             return;
         }
 
-        for (FieldIdEnum fieldId : fieldList.keySet()) {
-            boolean fieldEnabled = fieldList.get(fieldId);
-            FieldConfigBase fieldConfig = fieldConfigManager.get(fieldId);
+        for (Entry<FieldIdEnum, Boolean> entry : fieldList.entrySet()) {
+            boolean fieldEnabled = entry.getValue();
+            FieldConfigBase fieldConfig = fieldConfigManager.get(entry.getKey());
             if (fieldConfig != null) {
                 CurrentFieldState fieldState = fieldConfig.getFieldState();
                 fieldState.setFieldEnabled(fieldEnabled);
                 fieldConfig.setFieldState(fieldState);
             } else {
                 ConsoleManager.getInstance()
-                        .error(this, "Failed to find field : " + fieldId.toString());
+                        .error(this, "Failed to find field : " + entry.getKey().toString());
             }
         }
     }

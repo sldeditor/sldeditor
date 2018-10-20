@@ -40,6 +40,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -72,8 +73,7 @@ public class PrefPanel extends JDialog {
     private VendorOptionTableModel model = null;
 
     /** The vendor options. */
-    private Map<VendorOptionTypeInterface, String> options =
-            new LinkedHashMap<VendorOptionTypeInterface, String>();
+    private Map<VendorOptionTypeInterface, String> options = new LinkedHashMap<>();
 
     /** The ok button pressed flag. */
     private boolean okPressed = false;
@@ -160,7 +160,7 @@ public class PrefPanel extends JDialog {
             uiLayoutNameList[index] = key;
             index++;
         }
-        uiLayoutComboBox = new JComboBox<String>(uiLayoutNameList);
+        uiLayoutComboBox = new JComboBox<>(uiLayoutNameList);
 
         JPanel uiLayoutPanel = new JPanel();
         uiLayoutPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -186,8 +186,8 @@ public class PrefPanel extends JDialog {
                 });
 
         // Vendor options
-        JPanel panel_1 = new JPanel();
-        panel_1.setBorder(
+        JPanel panel1 = new JPanel();
+        panel1.setBorder(
                 new TitledBorder(
                         UIManager.getBorder("TitledBorder.border"),
                         Localisation.getString(PrefPanel.class, "PrefPanel.vendorOptions"),
@@ -195,15 +195,15 @@ public class PrefPanel extends JDialog {
                         TitledBorder.TOP,
                         null,
                         null));
-        panel_1.setLayout(new BorderLayout());
-        panel.add(panel_1);
+        panel1.setLayout(new BorderLayout());
+        panel.add(panel1);
 
         JScrollPane scrollPane = new JScrollPane();
-        panel_1.add(scrollPane, BorderLayout.CENTER);
+        panel1.add(scrollPane, BorderLayout.CENTER);
 
         vendorOptionTable = new JTable();
         scrollPane.setViewportView(vendorOptionTable);
-        panel_1.setPreferredSize(new Dimension(500, 200));
+        panel1.setPreferredSize(new Dimension(500, 200));
 
         vendorOptionTable.setModel(model);
         vendorOptionTable.getColumnModel().getColumn(1).setCellRenderer(new VersionCellRenderer());
@@ -220,17 +220,17 @@ public class PrefPanel extends JDialog {
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.setLayout(new BorderLayout(0, 0));
 
-        JPanel panel_2 = new JPanel();
-        buttonPanel.add(panel_2, BorderLayout.EAST);
+        JPanel panel2 = new JPanel();
+        buttonPanel.add(panel2, BorderLayout.EAST);
 
         JButton btnOk = new JButton(Localisation.getString(PrefPanel.class, "common.ok"));
-        panel_2.add(btnOk);
+        panel2.add(btnOk);
 
         JButton btnCancel = new JButton(Localisation.getString(PrefPanel.class, "common.cancel"));
-        panel_2.add(btnCancel);
+        panel2.add(btnCancel);
 
-        JPanel panel_3 = new JPanel();
-        buttonPanel.add(panel_3, BorderLayout.WEST);
+        JPanel panel3 = new JPanel();
+        buttonPanel.add(panel3, BorderLayout.WEST);
 
         JButton btnHelp = new JButton(Localisation.getString(PrefPanel.class, "common.help"));
         btnHelp.addActionListener(
@@ -239,7 +239,7 @@ public class PrefPanel extends JDialog {
                         Help.getInstance().display(CONTEXT_HELP);
                     }
                 });
-        panel_3.add(btnHelp);
+        panel3.add(btnHelp);
         btnCancel.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -300,15 +300,14 @@ public class PrefPanel extends JDialog {
             model.setSelectedVendorOptionVersions(prefData.getVendorOptionVersionList());
             colourButton.setColour(prefData.getBackgroundColour());
 
-            for (String displayName : uiLayoutMap.keySet()) {
-                String className = uiLayoutMap.get(displayName);
+            for (Entry<String, String> entry : uiLayoutMap.entrySet()) {
+                String className = entry.getValue();
 
-                if (prefData.getUiLayoutClass() != null) {
-                    if (className.compareTo(prefData.getUiLayoutClass()) == 0) {
-                        populatingDialog = true;
-                        uiLayoutComboBox.setSelectedItem(displayName);
-                        populatingDialog = false;
-                    }
+                if ((prefData.getUiLayoutClass() != null)
+                        && (className.compareTo(prefData.getUiLayoutClass()) == 0)) {
+                    populatingDialog = true;
+                    uiLayoutComboBox.setSelectedItem(entry.getKey());
+                    populatingDialog = false;
                 }
             }
         }

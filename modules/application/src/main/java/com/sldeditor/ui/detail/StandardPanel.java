@@ -254,7 +254,7 @@ public class StandardPanel extends BasePanel {
                     Text.text(fieldConfigVisitor.getText(FieldIdEnum.DESCRIPTION));
 
             standardData.description =
-                    (Description) getStyleFactory().description(titleString, descriptionString);
+                    getStyleFactory().description(titleString, descriptionString);
         }
 
         FieldConfigBase uomFieldConfig = fieldConfigManager.get(FieldIdEnum.UOM);

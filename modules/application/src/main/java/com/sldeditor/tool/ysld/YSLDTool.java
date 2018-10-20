@@ -286,36 +286,46 @@ public class YSLDTool implements ToolInterface {
 
                     if (fileTreeNode.isDir()) {
                         // Folder
-                        for (int childIndex = 0;
-                                childIndex < fileTreeNode.getChildCount();
-                                childIndex++) {
-                            FileTreeNode f = (FileTreeNode) fileTreeNode.getChildAt(childIndex);
-                            if (f.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
-                                String fileExtension =
-                                        ExternalFilenames.getFileExtension(
-                                                f.getFile().getAbsolutePath());
-                                if ((fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0)
-                                        || (fileExtension.compareTo(
-                                                        SLDEditorFile.getSLDFileExtension())
-                                                == 0)) {
-                                    result = true;
-                                }
-                            }
-                        }
+                        result = supportsFolder(result, fileTreeNode);
                     } else {
-                        // Single file
-                        if (fileTreeNode.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
-                            String fileExtension =
-                                    ExternalFilenames.getFileExtension(
-                                            fileTreeNode.getFile().getAbsolutePath());
-                            if ((fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0)
-                                    || (fileExtension.compareTo(SLDEditorFile.getSLDFileExtension())
-                                            == 0)) {
-                                result = true;
-                            }
-                        }
+                        result = supportsSingleFile(result, fileTreeNode);
                     }
                 }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Supports folder.
+     *
+     * @param result the result
+     * @param fileTreeNode the file tree node
+     * @return true, if successful
+     */
+    private boolean supportsFolder(boolean result, FileTreeNode fileTreeNode) {
+        for (int childIndex = 0; childIndex < fileTreeNode.getChildCount(); childIndex++) {
+            FileTreeNode f = (FileTreeNode) fileTreeNode.getChildAt(childIndex);
+            result = supportsSingleFile(result, f);
+        }
+        return result;
+    }
+
+    /**
+     * Supports single file.
+     *
+     * @param result the result
+     * @param fileTreeNode the file tree node
+     * @return true, if successful
+     */
+    private boolean supportsSingleFile(boolean result, FileTreeNode fileTreeNode) {
+        // Single file
+        if (fileTreeNode.getFileCategory() == FileTreeNodeTypeEnum.SLD) {
+            String fileExtension =
+                    ExternalFilenames.getFileExtension(fileTreeNode.getFile().getAbsolutePath());
+            if ((fileExtension.compareTo(YSLDTool.YSLD_FILE_EXTENSION) == 0)
+                    || (fileExtension.compareTo(SLDEditorFile.getSLDFileExtension()) == 0)) {
+                result = true;
             }
         }
         return result;

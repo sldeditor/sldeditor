@@ -76,10 +76,10 @@ public class DataSourceInfo {
     private AbstractGridCoverage2DReader gridCoverageReader = null;
 
     /** The field name map. */
-    private Map<Integer, Name> fieldNameMap = new HashMap<Integer, Name>();
+    private Map<Integer, Name> fieldNameMap = new HashMap<>();
 
     /** The field type map. */
-    private Map<Integer, Class<?>> fieldTypeMap = new HashMap<Integer, Class<?>>();
+    private Map<Integer, Class<?>> fieldTypeMap = new HashMap<>();
 
     /** The user layer. */
     private UserLayer userLayer = null;
@@ -254,7 +254,7 @@ public class DataSourceInfo {
         } else {
             if (geometryType == GeometryTypeEnum.RASTER) {
                 if (rasterPropertyDescriptorList == null) {
-                    rasterPropertyDescriptorList = new ArrayList<PropertyDescriptor>();
+                    rasterPropertyDescriptorList = new ArrayList<>();
 
                     CoordinateReferenceSystem crs = null;
                     boolean isIdentifiable = false;

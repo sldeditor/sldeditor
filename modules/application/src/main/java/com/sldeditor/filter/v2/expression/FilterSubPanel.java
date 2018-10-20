@@ -49,9 +49,6 @@ public class FilterSubPanel extends JPanel {
     /** The box. */
     private Box box;
 
-    /** The panel filter. */
-    private JPanel panelFilter;
-
     /** The function panel. */
     private transient FilterField filterPanel;
 
@@ -60,9 +57,6 @@ public class FilterSubPanel extends JPanel {
 
     /** The parent. */
     private transient ExpressionFilterInterface parentObj = null;
-
-    /** The lbl filter. */
-    private JLabel lblFilter;
 
     /** The btn apply. */
     private JButton btnApply;
@@ -95,9 +89,9 @@ public class FilterSubPanel extends JPanel {
         //
         // Filter panel
         //
-        panelFilter = new JPanel(new FlowLayout());
+        JPanel panelFilter = new JPanel(new FlowLayout());
 
-        lblFilter =
+        JLabel lblFilter =
                 new JLabel(
                         Localisation.getString(
                                 ExpressionPanelv2.class, "ExpressionPanelv2.filter"));

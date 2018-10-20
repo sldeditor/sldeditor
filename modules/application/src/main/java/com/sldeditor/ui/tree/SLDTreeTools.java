@@ -72,6 +72,9 @@ import org.geotools.styling.UserLayer;
  */
 public class SLDTreeTools {
 
+    /** The Constant BUTTON_ADD_PNG. */
+    private static final String BUTTON_ADD_PNG = "button/add.png";
+
     /** The Constant PANEL_WIDTH. */
     private static final int PANEL_WIDTH = 400;
 
@@ -85,12 +88,10 @@ public class SLDTreeTools {
     private DefaultTreeModel treeModel = null;
 
     /** The tree item map. */
-    protected static Map<Class<?>, SLDTreeItemInterface> treeItemMap =
-            new HashMap<Class<?>, SLDTreeItemInterface>();
+    protected static Map<Class<?>, SLDTreeItemInterface> treeItemMap = new HashMap<>();
 
     /** The node map. */
-    private Map<Object, DefaultMutableTreeNode> nodeMap =
-            new HashMap<Object, DefaultMutableTreeNode>();
+    private Map<Object, DefaultMutableTreeNode> nodeMap = new HashMap<>();
 
     /** The new text button. */
     private JButton btnNewText;
@@ -183,7 +184,7 @@ public class SLDTreeTools {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.setPreferredSize(new Dimension(PANEL_WIDTH, BasePanel.WIDGET_HEIGHT));
         btnAddButton = new JButton("");
-        btnAddButton.setIcon(getResourceIcon("button/add.png"));
+        btnAddButton.setIcon(getResourceIcon(BUTTON_ADD_PNG));
         btnAddButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -194,7 +195,7 @@ public class SLDTreeTools {
 
         btnAddNamedLayerButton =
                 new JButton(Localisation.getString(SLDTreeTools.class, "SLDTreeTools.named"));
-        btnAddNamedLayerButton.setIcon(getResourceIcon("button/add.png"));
+        btnAddNamedLayerButton.setIcon(getResourceIcon(BUTTON_ADD_PNG));
         btnAddNamedLayerButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -205,7 +206,7 @@ public class SLDTreeTools {
 
         btnAddUserLayerButton =
                 new JButton(Localisation.getString(SLDTreeTools.class, "SLDTreeTools.user"));
-        btnAddUserLayerButton.setIcon(getResourceIcon("button/add.png"));
+        btnAddUserLayerButton.setIcon(getResourceIcon(BUTTON_ADD_PNG));
         btnAddUserLayerButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -443,11 +444,9 @@ public class SLDTreeTools {
             DefaultMutableTreeNode parent = (DefaultMutableTreeNode) nodeToRemove.getParent();
             nodeMap.remove(nodeToRemove.getUserObject());
 
-            if (treeModel != null) {
-                if (parent != null) {
-                    treeModel.removeNodeFromParent(nodeToRemove);
-                    treeModel.nodeChanged(parent);
-                }
+            if ((treeModel != null) && (parent != null)) {
+                treeModel.removeNodeFromParent(nodeToRemove);
+                treeModel.nodeChanged(parent);
             }
 
             if (symbolTree != null) {
@@ -463,7 +462,7 @@ public class SLDTreeTools {
      * @return the path
      */
     private static TreePath getPath(TreeNode treeNode) {
-        List<Object> nodes = new ArrayList<Object>();
+        List<Object> nodes = new ArrayList<>();
         if (treeNode != null) {
             nodes.add(treeNode);
             treeNode = treeNode.getParent();
@@ -529,12 +528,7 @@ public class SLDTreeTools {
                 SelectedSymbol.getInstance().addNewStyledLayer(userLayer);
                 newNode = sldTree.addObject(lastNode, userLayer, true);
             }
-        } else if (obj instanceof NamedLayer) {
-            Style style = DefaultSymbols.createNewStyle();
-
-            SelectedSymbol.getInstance().addNewStyle(style);
-            newNode = sldTree.addObject(lastNode, style, true);
-        } else if (obj instanceof UserLayer) {
+        } else if ((obj instanceof NamedLayer) || (obj instanceof UserLayer)) {
             Style style = DefaultSymbols.createNewStyle();
 
             SelectedSymbol.getInstance().addNewStyle(style);
@@ -588,7 +582,7 @@ public class SLDTreeTools {
             if (obj instanceof Symbolizer) {
                 return (DefaultMutableTreeNode) lastNode.getParent();
             } else if (obj instanceof Rule) {
-                return (DefaultMutableTreeNode) lastNode;
+                return lastNode;
             }
         }
         return rootNode;
@@ -607,7 +601,7 @@ public class SLDTreeTools {
             Object obj = lastNode.getUserObject();
 
             if (obj instanceof RasterSymbolizer) {
-                return (DefaultMutableTreeNode) lastNode;
+                return lastNode;
             }
         }
         return rootNode;
@@ -1181,14 +1175,12 @@ public class SLDTreeTools {
                     isLastSelected = (obj == sld.layers().get(sld.layers().size() - 1));
                 }
             } else if (obj instanceof Style) {
-                if (parentObj != null) {
-                    if (parentObj instanceof NamedLayerImpl) {
-                        NamedLayerImpl namedLayer = (NamedLayerImpl) parentObj;
-                        hasMoreThan1Item = namedLayer.styles().size() > 1;
-                        isFirstSelected = (obj == namedLayer.styles().get(0));
-                        isLastSelected =
-                                (obj == namedLayer.styles().get(namedLayer.styles().size() - 1));
-                    }
+                if (parentObj instanceof NamedLayerImpl) {
+                    NamedLayerImpl namedLayer = (NamedLayerImpl) parentObj;
+                    hasMoreThan1Item = namedLayer.styles().size() > 1;
+                    isFirstSelected = (obj == namedLayer.styles().get(0));
+                    isLastSelected =
+                            (obj == namedLayer.styles().get(namedLayer.styles().size() - 1));
                 }
             } else if (obj instanceof FeatureTypeStyle) {
                 if (parentObj != null) {
@@ -1214,14 +1206,11 @@ public class SLDTreeTools {
                 symbolizerButtonState.showSymbolizerButtons();
                 addButtonEnabled = false;
 
-                if (parentObj != null) {
-                    if (parentObj instanceof Rule) {
-                        Rule rule = (Rule) parentObj;
-                        hasMoreThan1Item = rule.symbolizers().size() > 1;
-                        isFirstSelected = (obj == rule.symbolizers().get(0));
-                        isLastSelected =
-                                (obj == rule.symbolizers().get(rule.symbolizers().size() - 1));
-                    }
+                if (parentObj instanceof Rule) {
+                    Rule rule = (Rule) parentObj;
+                    hasMoreThan1Item = rule.symbolizers().size() > 1;
+                    isFirstSelected = (obj == rule.symbolizers().get(0));
+                    isLastSelected = (obj == rule.symbolizers().get(rule.symbolizers().size() - 1));
                 }
 
                 showLineArrowButtons = (obj instanceof LineSymbolizer);

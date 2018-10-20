@@ -32,6 +32,11 @@ public class AttributeUtils {
     /** The Constant ATTRIBUTE_END. */
     private static final String ATTRIBUTE_END = "</ogc:PropertyName>";
 
+    /** Private default constructor */
+    private AttributeUtils() {
+        // Private default constructor
+    }
+
     /**
      * Checks if string is actually an attribute.
      *

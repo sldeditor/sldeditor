@@ -35,13 +35,18 @@ import java.util.Map;
 public class DataSourceConnectorFactory {
     /** The data connector map. */
     private static Map<Class<?>, DataSourceConnectorInterface> dataConnectorMap =
-            new LinkedHashMap<Class<?>, DataSourceConnectorInterface>();
+            new LinkedHashMap<>();
 
     /** The no data source. */
     private static DataSourceConnectorEmpty noDataSource = null;
 
     /** The data source. */
     private static DataSourceConnector dataSource = null;
+
+    /** Private default constructor */
+    private DataSourceConnectorFactory() {
+        // Private default constructor
+    }
 
     /**
      * Gets the data source connector list.
@@ -61,16 +66,16 @@ public class DataSourceConnectorFactory {
         noDataSource = new DataSourceConnectorEmpty();
         dataSource = new DataSourceConnector();
 
-        populate_internal(noDataSource);
-        populate_internal(dataSource);
+        populateInternal(noDataSource);
+        populateInternal(dataSource);
     }
 
     /**
-     * Populate_internal.
+     * Populate internal.
      *
      * @param dataConnector the data connector
      */
-    private static void populate_internal(DataSourceConnectorInterface dataConnector) {
+    private static void populateInternal(DataSourceConnectorInterface dataConnector) {
         dataConnectorMap.put(dataConnector.getClass(), dataConnector);
     }
 
@@ -145,10 +150,9 @@ public class DataSourceConnectorFactory {
     /**
      * Gets the data source for the given class type.
      *
-     * @param classType the class type
      * @return the data source
      */
-    public static DataSourceConnectorInterface getDataSource(Class<?> classType) {
+    public static DataSourceConnectorInterface getDataSource() {
         if (dataConnectorMap.isEmpty()) {
             populate();
         }

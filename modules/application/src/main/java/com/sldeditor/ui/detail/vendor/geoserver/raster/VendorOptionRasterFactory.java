@@ -33,7 +33,7 @@ import com.sldeditor.ui.detail.vendor.VendorOptionFactoryInterface;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import org.geotools.factory.CommonFactoryFinder;
@@ -76,15 +76,15 @@ public class VendorOptionRasterFactory
             vendorOptionGeoServerContrastEnhancementNormalizeOverall = null;
 
     /** The channel name map. */
-    private Map<GroupIdEnum, ChannelName> channelNameMap = new HashMap<GroupIdEnum, ChannelName>();
+    private Map<GroupIdEnum, ChannelName> channelNameMap = new EnumMap<>(GroupIdEnum.class);
 
     // CHECKSTYLE:ON
 
     /** The vendor option list. */
-    private List<VendorOptionInterface> vendorOptionList = new ArrayList<VendorOptionInterface>();
+    private List<VendorOptionInterface> vendorOptionList = new ArrayList<>();
 
     /** The vendor option versions list. */
-    private List<VersionData> vendorOptionVersionsList = new ArrayList<VersionData>();
+    private List<VersionData> vendorOptionVersionsList = new ArrayList<>();
 
     /**
      * Instantiates a new vendor option text factory.
@@ -176,7 +176,7 @@ public class VendorOptionRasterFactory
      */
     @Override
     public List<VendorOptionInterface> getVendorOptionList(String className) {
-        List<VendorOptionInterface> matchingList = new ArrayList<VendorOptionInterface>();
+        List<VendorOptionInterface> matchingList = new ArrayList<>();
 
         for (VendorOptionInterface vendorOption : vendorOptionList) {
             if (vendorOption.getClass().getName().compareTo(className) == 0) {
@@ -248,7 +248,7 @@ public class VendorOptionRasterFactory
      */
     @Override
     public List<VendorOptionInfo> getVendorOptionInfoList() {
-        List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
+        List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<>();
 
         for (VendorOptionInterface vendorOption : vendorOptionList) {
             VendorOptionInfo vendorOptionInfo = vendorOption.getVendorOptionInfo();

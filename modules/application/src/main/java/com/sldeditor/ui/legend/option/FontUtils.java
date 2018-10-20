@@ -29,6 +29,11 @@ import org.geotools.styling.Font;
  */
 public class FontUtils {
 
+    /** Private default constructor. */
+    private FontUtils() {
+        // Private default constructor
+    }
+
     /**
      * Converts a org.geotools.styling.Font to java.awt.Font
      *
@@ -38,7 +43,7 @@ public class FontUtils {
     public static java.awt.Font getFont(Font font) {
         LiteralExpressionImpl sizeExpression = ((LiteralExpressionImpl) font.getSize());
         Object obj = sizeExpression.getValue();
-        int size = 10;
+        int size;
         if (obj instanceof String) {
             size = Integer.valueOf((String) obj);
         } else if (obj instanceof Double) {
@@ -64,8 +69,6 @@ public class FontUtils {
 
         String name = font.getFamily().get(0).toString();
 
-        java.awt.Font newFont = new java.awt.Font(name, styleMask, size);
-
-        return newFont;
+        return new java.awt.Font(name, styleMask, size);
     }
 }

@@ -148,7 +148,7 @@ public class AboutDialog extends JDialog {
      * @return the list
      */
     private List<TextPosition> createTextList() {
-        List<TextPosition> textList = new ArrayList<TextPosition>();
+        List<TextPosition> textList = new ArrayList<>();
 
         // Application version string
         Point textPosition = AppSplashScreen.getTextPosition();
@@ -197,7 +197,6 @@ public class AboutDialog extends JDialog {
 
         InputStream in = new ByteArrayInputStream(baos.toByteArray());
 
-        BufferedImage bImageFromConvert = ImageIO.read(in);
-        return bImageFromConvert;
+        return ImageIO.read(in);
     }
 }

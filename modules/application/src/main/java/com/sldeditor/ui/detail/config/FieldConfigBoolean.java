@@ -37,7 +37,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -122,7 +122,7 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (this.checkBox != null) {
             checkBox.setEnabled(enabled);
         }
@@ -190,12 +190,10 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
      */
     @Override
     public void populateExpression(Object objValue) {
-        if (objValue != null) {
-            if (objValue instanceof Boolean) {
-                populateField((Boolean) objValue);
+        if (objValue instanceof Boolean) {
+            populateField((Boolean) objValue);
 
-                valueUpdated();
-            }
+            valueUpdated();
         }
     }
 
@@ -326,11 +324,11 @@ public class FieldConfigBoolean extends FieldConfigBase implements UndoActionInt
     protected void checkBoxSelected() {
         if (!FieldConfigBoolean.this.isSuppressUndoEvents()) {
             boolean isSelected = checkBox.isSelected();
-            Boolean oldValueObj = Boolean.valueOf(!isSelected);
+            Boolean localOldValueObj = Boolean.valueOf(!isSelected);
             Boolean newValueObj = Boolean.valueOf(isSelected);
 
             UndoManager.getInstance()
-                    .addUndoEvent(new UndoEvent(this, getFieldId(), oldValueObj, newValueObj));
+                    .addUndoEvent(new UndoEvent(this, getFieldId(), localOldValueObj, newValueObj));
         }
         valueUpdated();
     }

@@ -155,8 +155,6 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
                     destinationReached = true;
                 }
-
-                httpClient.close();
             } catch (IOException e) {
                 ConsoleManager.getInstance()
                         .error(
@@ -189,10 +187,10 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
             JsonParser parser = new JsonParser();
             JsonArray o = parser.parse(jsonString).getAsJsonArray();
 
-            Map<ZonedDateTime, String> map = new HashMap<ZonedDateTime, String>();
-            Map<ZonedDateTime, JsonObject> jsonMap = new HashMap<ZonedDateTime, JsonObject>();
-            Map<String, String> descriptionMap = new HashMap<String, String>();
-            List<ZonedDateTime> calList = new ArrayList<ZonedDateTime>();
+            Map<ZonedDateTime, String> map = new HashMap<>();
+            Map<ZonedDateTime, JsonObject> jsonMap = new HashMap<>();
+            Map<String, String> descriptionMap = new HashMap<>();
+            List<ZonedDateTime> calList = new ArrayList<>();
 
             for (int index = 0; index < o.size(); index++) {
                 JsonObject obj = o.get(index).getAsJsonObject();
@@ -203,7 +201,7 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
                 }
                 String published = obj.get(PUBLISHED_AT).getAsString();
 
-                ZonedDateTime cal = ISO8601toCalendar(published);
+                ZonedDateTime cal = iso8601toCalendar(published);
 
                 map.put(cal, tagName);
                 jsonMap.put(cal, obj);
@@ -224,11 +222,7 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
             VersionData latestVersion = VersionData.decode(getClass(), latest);
 
-            UpdateData updateData = new UpdateData(latestVersion, description.toString());
-
-            return updateData;
-        } catch (ParseException e) {
-            ConsoleManager.getInstance().exception(this, e);
+            return new UpdateData(latestVersion, description.toString());
         } catch (IllegalStateException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
@@ -258,12 +252,8 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
      * @return the zoned date time
      * @throws ParseException the parse exception
      */
-    private static ZonedDateTime ISO8601toCalendar(final String iso8601string)
-            throws ParseException {
-
-        ZonedDateTime zonedDateTime = DateUtils.getZonedDateTime(iso8601string);
-
-        return zonedDateTime;
+    private static ZonedDateTime iso8601toCalendar(final String iso8601string) {
+        return DateUtils.getZonedDateTime(iso8601string);
     }
 
     /*

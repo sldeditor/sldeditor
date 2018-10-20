@@ -62,7 +62,7 @@ public class ToolPanel extends JPanel {
     private static Logger logger = Logger.getLogger(ToolPanel.class);
 
     /** The tool panel. */
-    private JPanel toolPanel;
+    private JPanel theToolPanel;
 
     /** The tool selection. */
     private transient ToolSelectionInterface toolSelection = null;
@@ -76,14 +76,14 @@ public class ToolPanel extends JPanel {
     public ToolPanel(ToolSelectionInterface parentObj, Map<Class<?>, List<ToolInterface>> toolMap) {
         this.toolSelection = parentObj;
 
-        toolPanel = new JPanel();
-        FlowLayout flowLayout = (FlowLayout) toolPanel.getLayout();
+        theToolPanel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) theToolPanel.getLayout();
         flowLayout.setAlignOnBaseline(true);
         flowLayout.setVgap(1);
         flowLayout.setHgap(1);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(toolPanel);
+        this.add(theToolPanel);
 
         this.toolMap = toolMap;
 
@@ -113,17 +113,16 @@ public class ToolPanel extends JPanel {
             List<Class<?>> uniqueNodeTypeList,
             List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
-        List<ToolInterface> consolidatedToolList = new ArrayList<ToolInterface>();
+        List<ToolInterface> consolidatedToolList = new ArrayList<>();
 
         if (nodeTypeList != null) {
             for (Class<?> nodeType : uniqueNodeTypeList) {
                 List<ToolInterface> toolList = toolMap.get(nodeType);
                 if (toolList != null) {
                     for (ToolInterface tool : toolList) {
-                        if (!consolidatedToolList.contains(tool)) {
-                            if (tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList)) {
-                                consolidatedToolList.add(tool);
-                            }
+                        if ((!consolidatedToolList.contains(tool))
+                                && tool.supports(uniqueNodeTypeList, nodeTypeList, sldDataList)) {
+                            consolidatedToolList.add(tool);
                         }
                     }
                 }
@@ -132,7 +131,7 @@ public class ToolPanel extends JPanel {
 
         // Remove existing panels
         for (JPanel panel : displayedPanels) {
-            toolPanel.remove(panel);
+            theToolPanel.remove(panel);
         }
 
         displayedPanels.clear();
@@ -140,7 +139,7 @@ public class ToolPanel extends JPanel {
         // Add new panels
         for (ToolInterface tool : consolidatedToolList) {
             JPanel panel = tool.getPanel();
-            toolPanel.add(panel);
+            theToolPanel.add(panel);
             displayedPanels.add(panel);
             tool.setSelectedItems(nodeTypeList, sldDataList);
             logger.debug("Displaying tool : " + tool.getToolName());

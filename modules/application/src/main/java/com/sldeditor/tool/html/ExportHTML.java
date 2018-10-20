@@ -56,6 +56,11 @@ public class ExportHTML {
 
     private static final String SUFFIX = ".html";
 
+    /** Private default constructor */
+    private ExportHTML() {
+        // Private default constructor
+    }
+
     /**
      * Save all html to folder.
      *
@@ -126,7 +131,7 @@ public class ExportHTML {
                     String showHeading = null;
                     String showFilename = null;
 
-                    List<String> legendFileNameList = new ArrayList<String>();
+                    List<String> legendFileNameList = new ArrayList<>();
 
                     boolean result =
                             LegendManager.getInstance()

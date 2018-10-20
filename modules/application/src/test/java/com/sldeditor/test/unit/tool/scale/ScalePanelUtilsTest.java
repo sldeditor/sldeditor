@@ -44,10 +44,6 @@ class ScalePanelUtilsTest {
      */
     @Test
     void testContainsScales() {
-        @SuppressWarnings("unused")
-        ScalePanelUtils tmp = new ScalePanelUtils();
-        tmp = null;
-
         DummyScaleSLDFile testData = new DummyScaleSLDFile();
 
         List<ScaleSLDData> expectedList = testData.getExpectedScaleList();

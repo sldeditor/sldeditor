@@ -79,7 +79,7 @@ public class FieldConfigBaseTest {
         public void attributeSelection(String field) {}
 
         @Override
-        public void internal_setEnabled(boolean enabled) {}
+        public void internalSetEnabled(boolean enabled) {}
 
         @Override
         public void setVisible(boolean visible) {}

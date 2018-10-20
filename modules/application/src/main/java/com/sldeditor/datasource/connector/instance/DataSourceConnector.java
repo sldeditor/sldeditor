@@ -27,6 +27,7 @@ import com.sldeditor.datasource.impl.DataSourceProperties;
 import java.awt.BorderLayout;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -44,10 +45,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
     private JPanel dataSourceFieldPanel;
 
     /** The property map. */
-    private Map<String, Object> propertyMap = new HashMap<String, Object>();
-
-    /** The table. */
-    private JTable table;
+    private Map<String, Object> propertyMap = new HashMap<>();
 
     /** The model. */
     private DefaultTableModel model = new DefaultTableModel();
@@ -85,7 +83,7 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
         model.addColumn("Field");
         model.addColumn("Value");
 
-        table = new JTable(model);
+        JTable table = new JTable(model);
 
         JScrollPane scrollPane = new JScrollPane(table);
         dataSourceFieldPanel.add(scrollPane);
@@ -100,9 +98,9 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
      */
     private void displayPropertyMap(Map<String, Object> propertyMap) {
         reset();
-        for (String key : propertyMap.keySet()) {
-            if (!key.equals(JDBCDataStoreFactory.PASSWD.key)) {
-                model.addRow(new String[] {key, propertyMap.get(key).toString()});
+        for (Entry<String, Object> entry : propertyMap.entrySet()) {
+            if (!JDBCDataStoreFactory.PASSWD.key.equals(entry.getKey())) {
+                model.addRow(new String[] {entry.getKey(), entry.getValue().toString()});
             }
         }
         model.fireTableDataChanged();
@@ -142,11 +140,11 @@ public class DataSourceConnector implements DataSourceConnectorInterface {
             return null;
         }
 
-        Map<String, Object> propertyMap = new HashMap<String, Object>();
+        Map<String, Object> localPropertyMap = new HashMap<>();
 
-        propertyMap.put(DataSourceConstants.FILE_MAP_KEY, filename);
+        localPropertyMap.put(DataSourceConstants.FILE_MAP_KEY, filename);
 
-        return propertyMap;
+        return localPropertyMap;
     }
 
     /*

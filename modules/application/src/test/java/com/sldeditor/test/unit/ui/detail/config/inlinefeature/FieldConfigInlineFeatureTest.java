@@ -52,7 +52,7 @@ public class FieldConfigInlineFeatureTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#internal_setEnabled(boolean)}.
+     * com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#internalSetEnabled(boolean)}.
      * Test method for {@link
      * com.sldeditor.ui.detail.config.inlinefeature.FieldConfigInlineFeature#isEnabled()}.
      */
@@ -65,7 +65,7 @@ public class FieldConfigInlineFeatureTest {
 
         // Field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -75,7 +75,7 @@ public class FieldConfigInlineFeatureTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
     }

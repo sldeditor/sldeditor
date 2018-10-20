@@ -47,10 +47,8 @@ public class NameLayerTreeItem implements SLDTreeItemInterface {
         NamedLayerImpl namedLayer = (NamedLayerImpl) nodeObject;
 
         String name = "";
-        if (namedLayer != null) {
-            if (namedLayer.getName() != null) {
-                name = namedLayer.getName();
-            }
+        if ((namedLayer != null) && (namedLayer.getName() != null)) {
+            name = namedLayer.getName();
         }
 
         return String.format("%s : %s", TITLE, name);

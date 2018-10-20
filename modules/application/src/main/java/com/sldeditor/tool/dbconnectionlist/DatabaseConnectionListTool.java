@@ -68,7 +68,7 @@ public class DatabaseConnectionListTool implements ToolInterface {
     private DatabaseConnectUpdateInterface databaseConnectUpdate = null;
 
     /** The connection list. */
-    private List<DatabaseConnection> connectionList = new ArrayList<DatabaseConnection>();
+    private List<DatabaseConnection> connectionList = new ArrayList<>();
 
     /** The selected database type. */
     private String selectedDatabaseType = null;
@@ -233,12 +233,7 @@ public class DatabaseConnectionListTool implements ToolInterface {
             List<Class<?>> uniqueNodeTypeList,
             List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
-        if (uniqueNodeTypeList != null) {
-            if (uniqueNodeTypeList.size() == 1) {
-                return true;
-            }
-        }
-        return false;
+        return ((uniqueNodeTypeList != null) && (uniqueNodeTypeList.size() == 1));
     }
 
     /** New button pressed. */

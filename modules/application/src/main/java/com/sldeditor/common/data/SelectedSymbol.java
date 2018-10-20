@@ -72,8 +72,7 @@ public class SelectedSymbol {
     private SymbolData symbolData = new SymbolData();
 
     /** The tree update listener. */
-    private List<SLDTreeUpdatedInterface> treeUpdateListenerList =
-            new ArrayList<SLDTreeUpdatedInterface>();
+    private List<SLDTreeUpdatedInterface> treeUpdateListenerList = new ArrayList<>();
 
     /** The filename. */
     private String filename = null;
@@ -128,7 +127,7 @@ public class SelectedSymbol {
      * @return the symbol list
      */
     public List<GraphicalSymbol> getSymbolList(GraphicalSymbol symbolToAdd) {
-        List<GraphicalSymbol> symbolList = new ArrayList<GraphicalSymbol>();
+        List<GraphicalSymbol> symbolList = new ArrayList<>();
 
         symbolList.add(symbolToAdd);
 
@@ -247,9 +246,9 @@ public class SelectedSymbol {
             return;
         }
 
-        StyledLayer[] styledLayers = sld.getStyledLayers();
+        List<StyledLayer> styledLayers = sld.layers();
 
-        if (styledLayers != null) {
+        if (!styledLayers.isEmpty()) {
             localSymbolData.initialiseSelectedStyledLayerIndex();
             for (StyledLayer styledLayer : styledLayers) {
                 localSymbolData.setStyledLayer(styledLayer);
@@ -261,18 +260,13 @@ public class SelectedSymbol {
 
                 List<Style> styleList = null;
 
-                if ((styledLayer instanceof NamedLayerImpl)
-                        && mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLED_LAYER)) {
-                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
-                    styleList = namedLayerImpl.styles();
-                } else if ((styledLayer instanceof UserLayerImpl)
-                        && mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLED_LAYER)) {
-                    UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
-                    styleList = userLayerImpl.userStyles();
+                if (mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLED_LAYER)) {
+                    styleList = SLDUtils.getStylesList(styledLayer);
                 }
 
                 if (mask.shouldContinue(SelectedSymbolMask.SymbolMaskEnum.E_STYLE)
-                        && (styleList != null)) {
+                        && (styleList != null)
+                        && !styleList.isEmpty()) {
                     localSymbolData.initialiseSelectedStyleIndex();
                     for (Style style : styleList) {
                         localSymbolData.setStyle(style);
@@ -364,30 +358,16 @@ public class SelectedSymbol {
     public boolean hasOnlyOneRule() {
         boolean oneRule = false;
 
-        StyledLayer[] styledLayers = sld.getStyledLayers();
-
         int noOfRules = 0;
 
-        if (styledLayers != null) {
-            for (StyledLayer styledLayer : styledLayers) {
-                List<Style> styleList = null;
+        List<StyledLayer> styledLayers = sld.layers();
 
-                if (styledLayer instanceof NamedLayerImpl) {
-                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
+        for (StyledLayer styledLayer : styledLayers) {
+            List<Style> styleList = SLDUtils.getStylesList(styledLayer);
 
-                    styleList = namedLayerImpl.styles();
-                } else if (styledLayer instanceof UserLayerImpl) {
-                    UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
-
-                    styleList = userLayerImpl.userStyles();
-                }
-
-                if (styleList != null) {
-                    for (Style style : styleList) {
-                        for (FeatureTypeStyle fts : style.featureTypeStyles()) {
-                            noOfRules += fts.rules().size();
-                        }
-                    }
+            for (Style style : styleList) {
+                for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                    noOfRules += fts.rules().size();
                 }
             }
         }
@@ -408,8 +388,7 @@ public class SelectedSymbol {
         if (this.symbolData.getRule() == null) {
             ConsoleManager.getInstance().error(this, "rule == null");
         } else {
-            List<Symbolizer> symbolizerList =
-                    (List<Symbolizer>) this.symbolData.getRule().symbolizers();
+            List<Symbolizer> symbolizerList = this.symbolData.getRule().symbolizers();
             symbolizerList.add(newSymbolizer);
         }
     }
@@ -438,7 +417,7 @@ public class SelectedSymbol {
      * @param newRule the new rule
      */
     public void replaceRule(Rule newRule) {
-        List<Rule> ruleList = (List<Rule>) this.symbolData.getFeatureTypeStyle().rules();
+        List<Rule> ruleList = this.symbolData.getFeatureTypeStyle().rules();
 
         int indexFound = -1;
         int index = 0;
@@ -574,33 +553,30 @@ public class SelectedSymbol {
      * @param newSymbolizer the new symbolizer
      */
     public void replaceSymbolizer(Symbolizer newSymbolizer) {
-        if (this.symbolData != null) {
-            if (this.symbolData.getRule() != null) {
-                List<Symbolizer> symbolizerList =
-                        (List<Symbolizer>) this.symbolData.getRule().symbolizers();
+        if ((this.symbolData != null) && (this.symbolData.getRule() != null)) {
+            List<Symbolizer> symbolizerList = this.symbolData.getRule().symbolizers();
 
-                Symbolizer oldSymbolizer = null;
-                int indexFound = -1;
-                int index = 0;
-                for (Symbolizer symbolizer : symbolizerList) {
-                    if (symbolizer == this.symbolData.getSymbolizer()) {
-                        indexFound = index;
-                        oldSymbolizer = symbolizer;
-                        break;
-                    } else {
-                        index++;
-                    }
+            Symbolizer oldSymbolizer = null;
+            int indexFound = -1;
+            int index = 0;
+            for (Symbolizer symbolizer : symbolizerList) {
+                if (symbolizer == this.symbolData.getSymbolizer()) {
+                    indexFound = index;
+                    oldSymbolizer = symbolizer;
+                    break;
+                } else {
+                    index++;
                 }
+            }
 
-                if (indexFound > -1) {
-                    symbolizerList.remove(indexFound);
-                    symbolizerList.add(indexFound, newSymbolizer);
-                    setSymbolizer(newSymbolizer);
-                }
+            if (indexFound > -1) {
+                symbolizerList.remove(indexFound);
+                symbolizerList.add(indexFound, newSymbolizer);
+                setSymbolizer(newSymbolizer);
+            }
 
-                for (SLDTreeUpdatedInterface listener : treeUpdateListenerList) {
-                    listener.updateNode(oldSymbolizer, newSymbolizer);
-                }
+            for (SLDTreeUpdatedInterface listener : treeUpdateListenerList) {
+                listener.updateNode(oldSymbolizer, newSymbolizer);
             }
         }
     }
@@ -612,41 +588,29 @@ public class SelectedSymbol {
      */
     public void replaceStyle(Style newStyle) {
 
-        List<Style> styleList = null;
+        List<Style> styleList = SLDUtils.getStylesList(this.symbolData.getStyledLayer());
 
-        if (this.symbolData.getStyledLayer() instanceof NamedLayerImpl) {
-            NamedLayerImpl namedLayer = (NamedLayerImpl) this.symbolData.getStyledLayer();
-
-            styleList = namedLayer.styles();
-        } else if (this.symbolData.getStyledLayer() instanceof UserLayerImpl) {
-            UserLayerImpl userLayer = (UserLayerImpl) this.symbolData.getStyledLayer();
-
-            styleList = userLayer.userStyles();
+        Style oldStyle = null;
+        int indexFound = -1;
+        int index = 0;
+        for (Style style : styleList) {
+            if (style == this.symbolData.getStyle()) {
+                oldStyle = style;
+                indexFound = index;
+                break;
+            } else {
+                index++;
+            }
         }
 
-        if (styleList != null) {
-            Style oldStyle = null;
-            int indexFound = -1;
-            int index = 0;
-            for (Style style : styleList) {
-                if (style == this.symbolData.getStyle()) {
-                    oldStyle = style;
-                    indexFound = index;
-                    break;
-                } else {
-                    index++;
-                }
-            }
+        if (indexFound > -1) {
+            styleList.remove(indexFound);
+            styleList.add(indexFound, newStyle);
+            setStyle(newStyle);
+        }
 
-            if (indexFound > -1) {
-                styleList.remove(indexFound);
-                styleList.add(indexFound, newStyle);
-                setStyle(newStyle);
-            }
-
-            for (SLDTreeUpdatedInterface listener : treeUpdateListenerList) {
-                listener.updateNode(oldStyle, newStyle);
-            }
+        for (SLDTreeUpdatedInterface listener : treeUpdateListenerList) {
+            listener.updateNode(oldStyle, newStyle);
         }
     }
 
@@ -688,7 +652,7 @@ public class SelectedSymbol {
         if (this.symbolData.getFeatureTypeStyle() == null) {
             ConsoleManager.getInstance().error(this, "featureTypeStyle == null");
         } else {
-            List<Rule> ruleList = (List<Rule>) this.symbolData.getFeatureTypeStyle().rules();
+            List<Rule> ruleList = this.symbolData.getFeatureTypeStyle().rules();
 
             ruleList.add(rule);
         }
@@ -766,8 +730,7 @@ public class SelectedSymbol {
      * @param symbolizerToDelete the symbolizer to delete
      */
     public void removeSymbolizer(Symbolizer symbolizerToDelete) {
-        List<Symbolizer> symbolizerList =
-                (List<Symbolizer>) this.symbolData.getRule().symbolizers();
+        List<Symbolizer> symbolizerList = this.symbolData.getRule().symbolizers();
 
         int indexFound = -1;
         int index = 0;
@@ -791,7 +754,7 @@ public class SelectedSymbol {
      * @param ruleToDelete the rule to delete
      */
     public void removeRule(Rule ruleToDelete) {
-        List<Rule> ruleList = (List<Rule>) this.symbolData.getFeatureTypeStyle().rules();
+        List<Rule> ruleList = this.symbolData.getFeatureTypeStyle().rules();
 
         int indexFound = -1;
         int index = 0;
@@ -839,33 +802,21 @@ public class SelectedSymbol {
      * @param styleToDelete the style to delete
      */
     public void removeStyle(Style styleToDelete) {
-        List<Style> styleList = null;
+        List<Style> styleList = SLDUtils.getStylesList(this.symbolData.getStyledLayer());
 
-        if (this.symbolData.getStyledLayer() instanceof NamedLayerImpl) {
-            NamedLayerImpl namedLayer = (NamedLayerImpl) this.symbolData.getStyledLayer();
-
-            styleList = namedLayer.styles();
-        } else if (this.symbolData.getStyledLayer() instanceof UserLayerImpl) {
-            UserLayerImpl userLayer = (UserLayerImpl) this.symbolData.getStyledLayer();
-
-            styleList = userLayer.userStyles();
+        int indexFound = -1;
+        int index = 0;
+        for (Style style : styleList) {
+            if (style == styleToDelete) {
+                indexFound = index;
+                break;
+            } else {
+                index++;
+            }
         }
 
-        if (styleList != null) {
-            int indexFound = -1;
-            int index = 0;
-            for (Style style : styleList) {
-                if (style == styleToDelete) {
-                    indexFound = index;
-                    break;
-                } else {
-                    index++;
-                }
-            }
-
-            if (indexFound > -1) {
-                styleList.remove(indexFound);
-            }
+        if (indexFound > -1) {
+            styleList.remove(indexFound);
         }
     }
 

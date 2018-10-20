@@ -24,6 +24,7 @@ import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.map.MapRender;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * A factory for creating RenderPanel objects.
@@ -32,9 +33,13 @@ import java.util.Map;
  */
 public class RenderPanelFactory {
 
+    /** Private default constructor */
+    private RenderPanelFactory() {
+        // Private default constructor
+    }
+
     /** The symbol render panel map. */
-    private static Map<String, RenderSymbolInterface> symbolRenderPanelMap =
-            new HashMap<String, RenderSymbolInterface>();
+    private static Map<String, RenderSymbolInterface> symbolRenderPanelMap = new HashMap<>();
 
     /** The map panel render. */
     private static MapRender mapPanelRender = null;
@@ -59,8 +64,8 @@ public class RenderPanelFactory {
      * @param sldOutput the sld output
      */
     public static void addSLDOutputListener(SLDOutputInterface sldOutput) {
-        for (String key : symbolRenderPanelMap.keySet()) {
-            RenderSymbolInterface render = symbolRenderPanelMap.get(key);
+        for (Entry<String, RenderSymbolInterface> entry : symbolRenderPanelMap.entrySet()) {
+            RenderSymbolInterface render = entry.getValue();
 
             render.addSLDOutputListener(sldOutput);
         }

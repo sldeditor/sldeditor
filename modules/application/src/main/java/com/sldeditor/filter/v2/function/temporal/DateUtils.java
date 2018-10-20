@@ -34,6 +34,11 @@ import org.geotools.temporal.object.Utils;
  */
 public class DateUtils {
 
+    /** Private default constructor */
+    private DateUtils() {
+        // Private default constructor
+    }
+
     /** The date/time format. */
     private static DateTimeFormatter dtf = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 

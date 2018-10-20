@@ -173,7 +173,9 @@ class CharMap4Grid extends JPanel
     private Font panelFont; // saved font for drawing text on this panel
 
     /** The panel width. */
-    private int panelHeight, panelWidth; // saved panel height and width in pixels
+    private int panelHeight;
+
+    private int panelWidth; // saved panel height and width in pixels
 
     /** The panel rows. */
     private int panelRows; // number of complete lines (rows) displayed
@@ -282,7 +284,9 @@ class CharMap4Grid extends JPanel
         int result; // converted cell index or <NO_MOUSE>
 
         if (panelFont == null) // can't do conversion if we haven't painted
-        return (NO_MOUSE); // tell caller to come back some other time
+        {
+            return (NO_MOUSE); // tell caller to come back some other time
+        }
 
         int colOff = event.getX() - GRID_WIDTH - PANEL_MARGIN; // known margins
         int colNum = colOff / horizStep; // convert pixels to column number
@@ -302,7 +306,9 @@ class CharMap4Grid extends JPanel
 
         result = cornerIndex + (rowNum * panelColumns) + colNum;
         if (result >= cellCount) // is the mouse beyond the last character?
-        return (NO_MOUSE); // character index is out of range
+        {
+            return (NO_MOUSE); // character index is out of range
+        }
 
         return (result); // give caller a valid character index
     } // end of convertMouse() method
@@ -358,7 +364,7 @@ class CharMap4Grid extends JPanel
          * "drag". We don't automatically cancel our click highlighting upon movement, because some tolerance is more comfortable for users.
          */
 
-        StringBuffer buffer; // faster than String for multiple appends
+        StringBuilder buffer; // faster than String for multiple appends
         int ch; // one character from string as an integer
         int index; // cell index for character or glyph
         boolean repaint; // true if we should repaint our display
@@ -376,7 +382,7 @@ class CharMap4Grid extends JPanel
             text = CharMap4.getEmptyStatus(); // remove the caption string, if any
         } else if (hoverIndex != index) // has there been a change in position?
         {
-            buffer = new StringBuffer(); // allocate empty string buffer for result
+            buffer = new StringBuilder(); // allocate empty string buffer for result
             ch = cellChar[index]; // character number or -1 if unmapped glyph
             hoverIndex = index; // turn on highlighting for this character
             repaint = true; // mark ourselves as needing to be repainted
@@ -611,9 +617,11 @@ class CharMap4Grid extends JPanel
      * this method, because some calculations are difficult and declaring all variables at the
      * beginning would be worse than declaring them when they are first used.
      */
+    @Override
     protected void paintComponent(Graphics context) {
         Graphics2D gr2d; // special subclass of graphics context
-        int i, k; // index variables
+        int i;
+        int k; // index variables
         FontRenderContext render; // needed for displaying low-level glyphs
 
         // Most of this code would work with the standard Graphics object, but some
@@ -691,8 +699,9 @@ class CharMap4Grid extends JPanel
 
                 // if (panelFont.canDisplay((char) i) == false) // Java 1.4
                 if (panelFont.canDisplay(i) == false) // Java 5.0
-                continue; // jump to next interaction of <for> loop
-
+                {
+                    continue; // jump to next interaction of <for> loop
+                }
                 // Update mapping information between characters and glyphs. Early
                 // Java 5.0 on the Apple Macintosh has a bug where canDisplay() returns
                 // true for every possible Unicode character number. Ignore characters
@@ -870,7 +879,9 @@ class CharMap4Grid extends JPanel
      */
     void paintGridCell(Graphics2D gr2d, FontRenderContext render, int index) {
         if (index >= cellCount) // is there a defined character?
-        return; // no, do nothing and return to caller
+        {
+            return; // no, do nothing and return to caller
+        }
 
         /* Calculate top-left drawing corner of the border for this cell. */
 

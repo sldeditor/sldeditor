@@ -52,6 +52,7 @@ public class RenderTransformationExpressionPanelv2 extends ExpressionPanelv2
      *
      * @return the expression node
      */
+    @Override
     protected ExpressionNode createExpressionNode() {
         ExpressionNode node = new ExpressionNode();
 

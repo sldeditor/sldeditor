@@ -47,11 +47,10 @@ public class UserLayerTreeItem implements SLDTreeItemInterface {
         UserLayerImpl userLayer = (UserLayerImpl) nodeObject;
 
         String name = "";
-        if (userLayer != null) {
-            if (userLayer.getName() != null) {
-                name = userLayer.getName();
-            }
+        if ((userLayer != null) && (userLayer.getName() != null)) {
+            name = userLayer.getName();
         }
+
         return String.format("%s : %s", TITLE, name);
     }
 

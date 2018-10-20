@@ -69,13 +69,17 @@ import org.locationtech.jts.geom.Polygon;
 public class AllowedAttributeTypes {
 
     /** The allowed class type map. */
-    private static Map<Class<?>, List<Class<?>>> allowedClassTypeMap =
-            new HashMap<Class<?>, List<Class<?>>>();
+    private static Map<Class<?>, List<Class<?>>> allowedClassTypeMap = new HashMap<>();
+
+    /** Private default constructor */
+    private AllowedAttributeTypes() {
+        // Private default constructor
+    }
 
     /** Initialise. */
     private static void initialise() {
         List<Class<?>> doubleList =
-                new ArrayList<Class<?>>(
+                new ArrayList<>(
                         Arrays.asList(
                                 Integer.class,
                                 Long.class,
@@ -83,10 +87,10 @@ public class AllowedAttributeTypes {
                                 Float.class,
                                 Object.class));
         List<Class<?>> integerList =
-                new ArrayList<Class<?>>(Arrays.asList(Integer.class, Long.class, Object.class));
-        List<Class<?>> stringList = new ArrayList<Class<?>>(Arrays.asList(String.class));
+                new ArrayList<>(Arrays.asList(Integer.class, Long.class, Object.class));
+        List<Class<?>> stringList = new ArrayList<>(Arrays.asList(String.class));
         List<Class<?>> geometryList =
-                new ArrayList<Class<?>>(
+                new ArrayList<>(
                         Arrays.asList(
                                 Point.class,
                                 LineString.class,
@@ -97,19 +101,19 @@ public class AllowedAttributeTypes {
                                 GridCoverage2D.class,
                                 Object.class));
         List<Class<?>> lineStringList =
-                new ArrayList<Class<?>>(
+                new ArrayList<>(
                         Arrays.asList(LineString.class, MultiLineString.class, Object.class));
         List<Class<?>> pointList =
-                new ArrayList<Class<?>>(Arrays.asList(Point.class, MultiPoint.class, Object.class));
-        List<Class<?>> linearRingList = new ArrayList<Class<?>>(Arrays.asList(LinearRing.class));
+                new ArrayList<>(Arrays.asList(Point.class, MultiPoint.class, Object.class));
+        List<Class<?>> linearRingList = new ArrayList<>(Arrays.asList(LinearRing.class));
         List<Class<?>> rangedClassifierList =
-                new ArrayList<Class<?>>(Arrays.asList(RangedClassifier.class, Object.class));
+                new ArrayList<>(Arrays.asList(RangedClassifier.class, Object.class));
         List<Class<?>> classifierList =
-                new ArrayList<Class<?>>(Arrays.asList(Classifier.class, Object.class));
+                new ArrayList<>(Arrays.asList(Classifier.class, Object.class));
         List<Class<?>> rasterGeometryList =
-                new ArrayList<Class<?>>(Arrays.asList(GridCoverage2D.class, Object.class));
+                new ArrayList<>(Arrays.asList(GridCoverage2D.class, Object.class));
         List<Class<?>> referencedEnvelopeList =
-                new ArrayList<Class<?>>(Arrays.asList(ReferencedEnvelope.class, Object.class));
+                new ArrayList<>(Arrays.asList(ReferencedEnvelope.class, Object.class));
 
         allowedClassTypeMap.put(String.class, stringList);
         allowedClassTypeMap.put(Double.class, doubleList);
@@ -125,7 +129,7 @@ public class AllowedAttributeTypes {
         allowedClassTypeMap.put(GridCoverage2D.class, rasterGeometryList);
         allowedClassTypeMap.put(ReferencedEnvelope.class, referencedEnvelopeList);
 
-        List<Class<?>> objectList = new ArrayList<Class<?>>();
+        List<Class<?>> objectList = new ArrayList<>();
         objectList.addAll(doubleList);
         objectList.addAll(integerList);
         objectList.addAll(stringList);

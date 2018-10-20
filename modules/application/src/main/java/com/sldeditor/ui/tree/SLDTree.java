@@ -100,17 +100,16 @@ public class SLDTree extends JPanel
     private DefaultTreeModel treeModel = null;
 
     /** The display panel. */
-    private SymbolizerSelectedInterface displayPanel = null;
+    private transient SymbolizerSelectedInterface displayPanel = null;
 
     /** The node map. */
-    private Map<String, DefaultMutableTreeNode> nodeMap =
-            new HashMap<String, DefaultMutableTreeNode>();
+    private Map<String, DefaultMutableTreeNode> nodeMap = new HashMap<>();
 
     /** The object to render the selected symbol. */
-    private List<RenderSymbolInterface> renderList = null;
+    private transient List<RenderSymbolInterface> renderList = null;
 
     /** The tree tools. */
-    private SLDTreeTools treeTools = null;
+    private transient SLDTreeTools treeTools = null;
 
     /** The current geometry type of the loaded data source. */
     private GeometryTypeEnum currentGeometryType = GeometryTypeEnum.UNKNOWN;
@@ -132,10 +131,8 @@ public class SLDTree extends JPanel
 
         if (renderList != null) {
             for (RenderSymbolInterface render : renderList) {
-                if (render instanceof DataSourceUpdatedInterface) {
-                    if (dataSource != null) {
-                        dataSource.addListener(render);
-                    }
+                if ((render instanceof DataSourceUpdatedInterface) && (dataSource != null)) {
+                    dataSource.addListener(render);
                 }
             }
         }
@@ -191,7 +188,7 @@ public class SLDTree extends JPanel
      * @return the path
      */
     private static TreePath getPath(TreeNode treeNode) {
-        List<Object> nodes = new ArrayList<Object>();
+        List<Object> nodes = new ArrayList<>();
         if (treeNode != null) {
             nodes.add(treeNode);
             treeNode = treeNode.getParent();
@@ -223,7 +220,7 @@ public class SLDTree extends JPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.tree.UpdateTreeStructureInterface#addObject(javax.swing.tree.DefaultMutableTreeNode, java.lang.Object, boolean)
+     * @see com.sldeditor.ui.tree.UpdateTreeStructureInterface#addObject(javax.swing.tree. DefaultMutableTreeNode, java.lang.Object, boolean)
      */
     @Override
     public DefaultMutableTreeNode addObject(
@@ -265,70 +262,77 @@ public class SLDTree extends JPanel
             if (sld != null) {
                 List<StyledLayer> styledLayerList = sld.layers();
 
-                if (styledLayerList != null) {
-                    for (StyledLayer styledLayer : styledLayerList) {
-                        DefaultMutableTreeNode styledLayerTreeNode = null;
-                        List<Style> styleList = null;
+                for (StyledLayer styledLayer : styledLayerList) {
+                    DefaultMutableTreeNode styledLayerTreeNode = null;
+                    List<Style> styleList = null;
 
-                        if (styledLayer instanceof NamedLayerImpl) {
-                            NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
-                            styleList = namedLayerImpl.styles();
+                    if (styledLayer instanceof NamedLayerImpl) {
+                        NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
+                        styleList = namedLayerImpl.styles();
 
-                            styledLayerTreeNode = addObject(rootNode, namedLayerImpl, true);
-                        } else if (styledLayer instanceof UserLayerImpl) {
-                            UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
-                            styleList = userLayerImpl.userStyles();
+                        styledLayerTreeNode = addObject(rootNode, namedLayerImpl, true);
+                    } else if (styledLayer instanceof UserLayerImpl) {
+                        UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
+                        styleList = userLayerImpl.userStyles();
 
-                            styledLayerTreeNode = addObject(rootNode, userLayerImpl, true);
-                        }
+                        styledLayerTreeNode = addObject(rootNode, userLayerImpl, true);
+                    }
 
-                        if (styleList != null) {
-                            for (Style style : styleList) {
-                                DefaultMutableTreeNode styleTreeNode =
-                                        addObject(styledLayerTreeNode, style, true);
-
-                                for (FeatureTypeStyle fts : style.featureTypeStyles()) {
-                                    DefaultMutableTreeNode ftsTreeNode =
-                                            addObject(styleTreeNode, fts, true);
-
-                                    for (Rule rule : fts.rules()) {
-                                        DefaultMutableTreeNode ruleTreeNode =
-                                                addObject(ftsTreeNode, rule, true);
-
-                                        for (Symbolizer symbolizer : rule.symbolizers()) {
-                                            DefaultMutableTreeNode symbolizerTreeNode =
-                                                    addObject(ruleTreeNode, symbolizer, true);
-
-                                            if ((symbolizer instanceof PointSymbolizer)
-                                                    || (symbolizer instanceof PolygonSymbolizer)) {
-                                                addObject(
-                                                        symbolizerTreeNode,
-                                                        SLDTreeLeafFactory.getInstance()
-                                                                .getFill(symbolizer),
-                                                        true);
-                                            }
-
-                                            if ((symbolizer instanceof PolygonSymbolizer)
-                                                    || (symbolizer instanceof LineSymbolizer)) {
-                                                addObject(
-                                                        symbolizerTreeNode,
-                                                        SLDTreeLeafFactory.getInstance()
-                                                                .getStroke(symbolizer),
-                                                        true);
-                                            }
-
-                                            if (symbolizer instanceof RasterSymbolizer) {
-                                                handleRasterSymbolizer(
-                                                        symbolizer, symbolizerTreeNode);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    if (styleList != null) {
+                        populateStyles(styledLayerTreeNode, styleList);
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Populate styles.
+     *
+     * @param styledLayerTreeNode the styled layer tree node
+     * @param styleList the style list
+     */
+    private void populateStyles(DefaultMutableTreeNode styledLayerTreeNode, List<Style> styleList) {
+        for (Style style : styleList) {
+            DefaultMutableTreeNode styleTreeNode = addObject(styledLayerTreeNode, style, true);
+
+            for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                DefaultMutableTreeNode ftsTreeNode = addObject(styleTreeNode, fts, true);
+
+                for (Rule rule : fts.rules()) {
+                    DefaultMutableTreeNode ruleTreeNode = addObject(ftsTreeNode, rule, true);
+
+                    for (Symbolizer symbolizer : rule.symbolizers()) {
+                        populateSymbolizer(ruleTreeNode, symbolizer);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Populate symbolizer.
+     *
+     * @param ruleTreeNode the rule tree node
+     * @param symbolizer the symbolizer
+     */
+    private void populateSymbolizer(DefaultMutableTreeNode ruleTreeNode, Symbolizer symbolizer) {
+        DefaultMutableTreeNode symbolizerTreeNode = addObject(ruleTreeNode, symbolizer, true);
+
+        if ((symbolizer instanceof PointSymbolizer) || (symbolizer instanceof PolygonSymbolizer)) {
+            addObject(
+                    symbolizerTreeNode, SLDTreeLeafFactory.getInstance().getFill(symbolizer), true);
+        }
+
+        if ((symbolizer instanceof PolygonSymbolizer) || (symbolizer instanceof LineSymbolizer)) {
+            addObject(
+                    symbolizerTreeNode,
+                    SLDTreeLeafFactory.getInstance().getStroke(symbolizer),
+                    true);
+        }
+
+        if (symbolizer instanceof RasterSymbolizer) {
+            handleRasterSymbolizer(symbolizer, symbolizerTreeNode);
         }
     }
 
@@ -345,31 +349,27 @@ public class SLDTree extends JPanel
 
         if (outlineSymbolizer instanceof LineSymbolizer) {
             LineSymbolizer outlineLineSymbolizer = (LineSymbolizer) outlineSymbolizer;
-            if (outlineLineSymbolizer != null) {
-                DefaultMutableTreeNode symbolizerImageOutlineLineNode =
-                        addObject(symbolizerTreeNode, outlineLineSymbolizer, true);
+            DefaultMutableTreeNode symbolizerImageOutlineLineNode =
+                    addObject(symbolizerTreeNode, outlineLineSymbolizer, true);
 
-                addObject(
-                        symbolizerImageOutlineLineNode,
-                        SLDTreeLeafFactory.getInstance().getStroke(outlineLineSymbolizer),
-                        true);
-            }
+            addObject(
+                    symbolizerImageOutlineLineNode,
+                    SLDTreeLeafFactory.getInstance().getStroke(outlineLineSymbolizer),
+                    true);
         } else if (outlineSymbolizer instanceof PolygonSymbolizer) {
             PolygonSymbolizer outlinePolygonSymbolizer = (PolygonSymbolizer) outlineSymbolizer;
 
-            if (outlinePolygonSymbolizer != null) {
-                DefaultMutableTreeNode symbolizerImageOutlinePolygonNode =
-                        addObject(symbolizerTreeNode, outlinePolygonSymbolizer, true);
+            DefaultMutableTreeNode symbolizerImageOutlinePolygonNode =
+                    addObject(symbolizerTreeNode, outlinePolygonSymbolizer, true);
 
-                addObject(
-                        symbolizerImageOutlinePolygonNode,
-                        SLDTreeLeafFactory.getInstance().getFill(outlinePolygonSymbolizer),
-                        true);
-                addObject(
-                        symbolizerImageOutlinePolygonNode,
-                        SLDTreeLeafFactory.getInstance().getStroke(outlinePolygonSymbolizer),
-                        true);
-            }
+            addObject(
+                    symbolizerImageOutlinePolygonNode,
+                    SLDTreeLeafFactory.getInstance().getFill(outlinePolygonSymbolizer),
+                    true);
+            addObject(
+                    symbolizerImageOutlinePolygonNode,
+                    SLDTreeLeafFactory.getInstance().getStroke(outlinePolygonSymbolizer),
+                    true);
         }
     }
 
@@ -428,7 +428,7 @@ public class SLDTree extends JPanel
 
         if (node != null) {
             node.setUserObject(objectNew);
-            nodeMap.remove(key.toString());
+            nodeMap.remove(key);
             String newKey = SLDTreeItemWrapper.generateKey(objectNew);
             nodeMap.put(newKey, node);
             treeModel.nodeChanged(node);
@@ -438,7 +438,7 @@ public class SLDTree extends JPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource.impl.GeometryTypeEnum, boolean)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceLoaded(com.sldeditor.datasource .impl.GeometryTypeEnum, boolean)
      */
     @Override
     public void dataSourceLoaded(
@@ -666,7 +666,7 @@ public class SLDTree extends JPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.common.undo.UndoActionInterface#undoAction(com.sldeditor.common.undo.UndoInterface)
+     * @see com.sldeditor.common.undo.UndoActionInterface#undoAction(com.sldeditor.common.undo. UndoInterface)
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
@@ -698,7 +698,7 @@ public class SLDTree extends JPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.common.undo.UndoActionInterface#redoAction(com.sldeditor.common.undo.UndoInterface)
+     * @see com.sldeditor.common.undo.UndoActionInterface#redoAction(com.sldeditor.common.undo. UndoInterface)
      */
     @Override
     public void redoAction(UndoInterface undoRedoObject) {
@@ -720,7 +720,7 @@ public class SLDTree extends JPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools.data.DataStore)
+     * @see com.sldeditor.datasource.DataSourceUpdatedInterface#dataSourceAboutToUnloaded(org.geotools. data.DataStore)
      */
     @Override
     public void dataSourceAboutToUnloaded(DataStore dataStore) {

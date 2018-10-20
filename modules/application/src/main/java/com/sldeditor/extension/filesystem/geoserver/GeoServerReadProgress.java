@@ -34,6 +34,7 @@ import com.sldeditor.datasource.extension.filesystem.node.geoserver.GeoServerWor
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -106,20 +107,18 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
     private FSTree tree = null;
 
     /** The node map. */
-    private Map<GeoServerConnection, GeoServerNode> nodeMap =
-            new HashMap<GeoServerConnection, GeoServerNode>();
+    private Map<GeoServerConnection, GeoServerNode> nodeMap = new HashMap<>();
 
     /** The populate state map. */
-    private Map<GeoServerConnection, PopulateState> populateStateMap =
-            new HashMap<GeoServerConnection, PopulateState>();
+    private Map<GeoServerConnection, PopulateState> populateStateMap = new HashMap<>();
 
     /** The style map. */
     private Map<GeoServerConnection, Map<String, List<StyleWrapper>>> geoServerStyleMap =
-            new HashMap<GeoServerConnection, Map<String, List<StyleWrapper>>>();
+            new HashMap<>();
 
     /** The geo server layer map. */
     private Map<GeoServerConnection, Map<String, List<GeoServerLayer>>> geoServerLayerMap =
-            new HashMap<GeoServerConnection, Map<String, List<GeoServerLayer>>>();
+            new HashMap<>();
 
     /** The style progress text. */
     private String styleProgressText;
@@ -165,8 +164,8 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
             Map<String, List<StyleWrapper>> extistingStyleMap =
                     this.geoServerStyleMap.get(connection);
 
-            for (String workspace : styleMap.keySet()) {
-                extistingStyleMap.put(workspace, styleMap.get(workspace));
+            for (Entry<String, List<StyleWrapper>> entry : styleMap.entrySet()) {
+                extistingStyleMap.put(entry.getKey(), entry.getValue());
             }
 
             GeoServerNode geoServerNode = nodeMap.get(connection);
@@ -238,11 +237,11 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
 
         Map<String, List<StyleWrapper>> styleMap = geoServerStyleMap.get(connection);
 
-        for (String workspaceName : styleMap.keySet()) {
-            List<StyleWrapper> styleList = styleMap.get(workspaceName);
+        for (Entry<String, List<StyleWrapper>> entry : styleMap.entrySet()) {
+            List<StyleWrapper> styleList = entry.getValue();
 
             GeoServerWorkspaceNode workspaceNode =
-                    new GeoServerWorkspaceNode(this.handler, connection, workspaceName, true);
+                    new GeoServerWorkspaceNode(this.handler, connection, entry.getKey(), true);
 
             // It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
             treeModel.insertNodeInto(workspaceNode, styleNode, styleNode.getChildCount());
@@ -301,11 +300,11 @@ public class GeoServerReadProgress implements GeoServerReadProgressInterface {
 
         Map<String, List<GeoServerLayer>> layerMap = geoServerLayerMap.get(connection);
 
-        for (String workspaceName : layerMap.keySet()) {
-            List<GeoServerLayer> layerList = layerMap.get(workspaceName);
+        for (Entry<String, List<GeoServerLayer>> entry : layerMap.entrySet()) {
+            List<GeoServerLayer> layerList = entry.getValue();
 
             GeoServerWorkspaceNode workspaceNode =
-                    new GeoServerWorkspaceNode(this.handler, connection, workspaceName, false);
+                    new GeoServerWorkspaceNode(this.handler, connection, entry.getKey(), false);
 
             // It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
             treeModel.insertNodeInto(workspaceNode, layersNode, layersNode.getChildCount());

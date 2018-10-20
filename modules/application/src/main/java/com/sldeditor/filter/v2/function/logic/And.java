@@ -60,9 +60,10 @@ public class And extends FilterBase implements FilterConfigInterface {
          *
          * @see org.geotools.filter.LogicFilterImpl#toString()
          */
+        @Override
         public String toString() {
             List<Filter> filterList = getChildren();
-            List<String> filterStringList = new ArrayList<String>();
+            List<String> filterStringList = new ArrayList<>();
 
             for (Filter f : filterList) {
                 filterStringList.add(f.toString());

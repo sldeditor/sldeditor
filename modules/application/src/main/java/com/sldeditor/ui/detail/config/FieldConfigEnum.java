@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import org.geotools.filter.LiteralExpressionImpl;
 import org.opengis.filter.expression.Expression;
@@ -45,24 +46,23 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterface {
 
     /** The key list. */
-    private List<String> keyList = new ArrayList<String>();
+    private List<String> keyList = new ArrayList<>();
 
     /** The value map. */
-    private Map<String, String> valueMap = new HashMap<String, String>();
+    private Map<String, String> valueMap = new HashMap<>();
 
     /** The combo data map. */
-    private Map<String, ValueComboBoxData> comboDataMap = new HashMap<String, ValueComboBoxData>();
+    private Map<String, ValueComboBoxData> comboDataMap = new HashMap<>();
 
     /** The field map. */
-    private Map<Class<?>, Map<FieldIdEnum, Boolean>> fieldMap =
-            new HashMap<Class<?>, Map<FieldIdEnum, Boolean>>();
+    private Map<Class<?>, Map<FieldIdEnum, Boolean>> fieldMap = new HashMap<>();
 
     /** The default value. */
     private String defaultValue = "";
@@ -110,7 +110,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
     @Override
     public void createUI() {
         if (comboBox == null) {
-            List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
+            List<ValueComboBoxData> dataList = new ArrayList<>();
 
             for (String key : keyList) {
                 dataList.add(new ValueComboBoxData(key, valueMap.get(key), getPanelId()));
@@ -181,7 +181,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (comboBox != null) {
             comboBox.setEnabled(enabled);
         }
@@ -278,9 +278,7 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
         if (comboBox == null) {
             return null;
         }
-        ValueComboBoxData selectedItem = (ValueComboBoxData) comboBox.getSelectedItem();
-
-        return selectedItem;
+        return (ValueComboBoxData) comboBox.getSelectedItem();
     }
 
     /**
@@ -311,8 +309,8 @@ public class FieldConfigEnum extends FieldConfigBase implements UndoActionInterf
 
                     Map<String, String> optionMap = config.getOptionMap();
 
-                    for (String key : optionMap.keySet()) {
-                        addValue(key, optionMap.get(key));
+                    for (Entry<String, String> entry : optionMap.entrySet()) {
+                        addValue(entry.getKey(), entry.getValue());
                     }
                 }
             }

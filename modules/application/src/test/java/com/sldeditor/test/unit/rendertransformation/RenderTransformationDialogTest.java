@@ -59,7 +59,7 @@ public class RenderTransformationDialogTest {
          * @param existingProcessFunction the existing process function
          */
         public void test_internal_showDialog(ProcessFunction existingProcessFunction) {
-            internal_showDialog(existingProcessFunction);
+            internalShowDialog(existingProcessFunction);
         }
 
         public void testDisplayFunction(String functionName) {

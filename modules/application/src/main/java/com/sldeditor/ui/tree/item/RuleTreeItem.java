@@ -45,10 +45,8 @@ public class RuleTreeItem implements SLDTreeItemInterface {
         Rule rule = (Rule) nodeObject;
 
         String name = "";
-        if (rule != null) {
-            if (rule.getName() != null) {
-                name = rule.getName();
-            }
+        if ((rule != null) && (rule.getName() != null)) {
+            name = rule.getName();
         }
 
         return String.format("%s : %s", TITLE, name);

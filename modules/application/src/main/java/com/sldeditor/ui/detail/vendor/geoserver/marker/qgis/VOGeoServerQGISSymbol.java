@@ -65,7 +65,7 @@ public class VOGeoServerQGISSymbol implements VOMarkerSymbolInterface {
             ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField) {
-        List<FieldState> fieldStateList = new ArrayList<FieldState>();
+        List<FieldState> fieldStateList = new ArrayList<>();
 
         markerField =
                 new FieldConfigMarkerQGIS(

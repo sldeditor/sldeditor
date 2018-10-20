@@ -30,6 +30,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -112,10 +113,11 @@ public class DBConnectorDetailsPanel extends JPanel {
         add(connectionPanel, BorderLayout.CENTER);
         connectionPanel.setLayout(new CardLayout());
 
-        for (String key : databaseConnectionMap.keySet()) {
-            DatabaseConnectionConfigInterface dsConnector = databaseConnectionMap.get(key);
+        for (Entry<String, DatabaseConnectionConfigInterface> entry :
+                databaseConnectionMap.entrySet()) {
+            DatabaseConnectionConfigInterface dsConnector = entry.getValue();
             JPanel panelToAdd = dsConnector.getPanel();
-            connectionPanel.add(panelToAdd, key);
+            connectionPanel.add(panelToAdd, entry.getKey());
         }
     }
 
@@ -198,12 +200,13 @@ public class DBConnectorDetailsPanel extends JPanel {
      */
     private void populate(DatabaseConnection connectionDetails) {
         if (connectionDetails != null) {
-            for (String name : databaseConnectionMap.keySet()) {
-                selectedPanel = databaseConnectionMap.get(name);
+            for (Entry<String, DatabaseConnectionConfigInterface> entry :
+                    databaseConnectionMap.entrySet()) {
+                selectedPanel = entry.getValue();
 
                 if (selectedPanel != null) {
                     CardLayout cl = (CardLayout) (connectionPanel.getLayout());
-                    cl.show(connectionPanel, name);
+                    cl.show(connectionPanel, entry.getKey());
                     selectedPanel.setConnection(connectionDetails);
                 }
             }

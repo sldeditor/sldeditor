@@ -67,7 +67,8 @@ public class UserLayerDetails extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.SelectedSymbol)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#populate(com.sldeditor.ui.detail.
+     * SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
@@ -91,21 +92,7 @@ public class UserLayerDetails extends StandardPanel
                     MultiOptionGroup userLayerSourceGroup = (MultiOptionGroup) group;
 
                     if (userLayer.getInlineFeatureDatastore() == null) {
-                        userLayerSourceGroup.setOption(GroupIdEnum.REMOTE_OWS_OPTION);
-
-                        // Remote OWS
-                        String service = "";
-                        String onlineResource = "";
-                        RemoteOWS remoteOWS = userLayer.getRemoteOWS();
-
-                        if (remoteOWS != null) {
-                            service = remoteOWS.getService();
-                            onlineResource = remoteOWS.getOnlineResource();
-                        }
-                        fieldConfigVisitor.populateTextField(
-                                FieldIdEnum.REMOTE_OWS_SERVICE, service);
-                        fieldConfigVisitor.populateTextField(
-                                FieldIdEnum.REMOTE_OWS_ONLINERESOURCE, onlineResource);
+                        populateRemoteOWS(userLayer, userLayerSourceGroup);
                     } else {
                         userLayerSourceGroup.setOption(GroupIdEnum.INLINE_FEATURE_OPTION);
 
@@ -115,6 +102,28 @@ public class UserLayerDetails extends StandardPanel
                 }
             }
         }
+    }
+
+    /**
+     * Populate remote OWS.
+     *
+     * @param userLayer the user layer
+     * @param userLayerSourceGroup the user layer source group
+     */
+    private void populateRemoteOWS(UserLayerImpl userLayer, MultiOptionGroup userLayerSourceGroup) {
+        userLayerSourceGroup.setOption(GroupIdEnum.REMOTE_OWS_OPTION);
+
+        // Remote OWS
+        String service = "";
+        String onlineResource = "";
+        RemoteOWS remoteOWS = userLayer.getRemoteOWS();
+
+        if (remoteOWS != null) {
+            service = remoteOWS.getService();
+            onlineResource = remoteOWS.getOnlineResource();
+        }
+        fieldConfigVisitor.populateTextField(FieldIdEnum.REMOTE_OWS_SERVICE, service);
+        fieldConfigVisitor.populateTextField(FieldIdEnum.REMOTE_OWS_ONLINERESOURCE, onlineResource);
     }
 
     /*
@@ -155,30 +164,10 @@ public class UserLayerDetails extends StandardPanel
                 OptionGroup selectedOption = userLayerSourceGroup.getSelectedOptionGroup();
                 switch (selectedOption.getId()) {
                     case REMOTE_OWS_OPTION:
-                        {
-                            RemoteOWS remoteOWS = new RemoteOWSImpl();
-
-                            String service =
-                                    fieldConfigVisitor.getText(FieldIdEnum.REMOTE_OWS_SERVICE);
-                            remoteOWS.setService(service);
-
-                            String onlineResource =
-                                    fieldConfigVisitor.getText(
-                                            FieldIdEnum.REMOTE_OWS_ONLINERESOURCE);
-                            remoteOWS.setOnlineResource(onlineResource);
-
-                            userLayer.setRemoteOWS(remoteOWS);
-                        }
+                        updateRemoteOWS(userLayer);
                         break;
                     case INLINE_FEATURE_OPTION:
-                        {
-                            String inlineFeatures =
-                                    fieldConfigVisitor.getText(FieldIdEnum.INLINE_FEATURE);
-
-                            if ((inlineFeatures != null) && (!inlineFeatures.isEmpty())) {
-                                InlineFeatureUtils.setInlineFeatures(userLayer, inlineFeatures);
-                            }
-                        }
+                        updateInlineFeatureOption(userLayer);
                         break;
                     default:
                         break;
@@ -197,17 +186,48 @@ public class UserLayerDetails extends StandardPanel
 
             // Update inline data sources if the inline data changed,
             // reduces creation of datasources
-            if (changedField != null) {
-                if (changedField == FieldIdEnum.INLINE_FEATURE) {
-                    DataSourceInterface dataSource = DataSourceFactory.getDataSource();
-                    if (dataSource != null) {
-                        dataSource.updateUserLayers();
-                    }
-                }
-            }
+            updateInLineFeature(changedField);
 
             this.fireUpdateSymbol();
         }
+    }
+
+    /**
+     * Update in line feature.
+     *
+     * @param changedField the changed field
+     */
+    private void updateInLineFeature(FieldIdEnum changedField) {
+        if (changedField != null) {
+            if (changedField == FieldIdEnum.INLINE_FEATURE) {
+                DataSourceInterface dataSource = DataSourceFactory.getDataSource();
+                if (dataSource != null) {
+                    dataSource.updateUserLayers();
+                }
+            }
+        }
+    }
+
+    /** @param userLayer */
+    private void updateInlineFeatureOption(UserLayer userLayer) {
+        String inlineFeatures = fieldConfigVisitor.getText(FieldIdEnum.INLINE_FEATURE);
+
+        if ((inlineFeatures != null) && (!inlineFeatures.isEmpty())) {
+            InlineFeatureUtils.setInlineFeatures(userLayer, inlineFeatures);
+        }
+    }
+
+    /** @param userLayer */
+    private void updateRemoteOWS(UserLayer userLayer) {
+        RemoteOWS remoteOWS = new RemoteOWSImpl();
+
+        String service = fieldConfigVisitor.getText(FieldIdEnum.REMOTE_OWS_SERVICE);
+        remoteOWS.setService(service);
+
+        String onlineResource = fieldConfigVisitor.getText(FieldIdEnum.REMOTE_OWS_ONLINERESOURCE);
+        remoteOWS.setOnlineResource(onlineResource);
+
+        userLayer.setRemoteOWS(remoteOWS);
     }
 
     /*
@@ -243,7 +263,8 @@ public class UserLayerDetails extends StandardPanel
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.iface.PopulateDetailsInterface#getMinimumVersion(java.lang.Object,
+     * java.util.List)
      */
     @Override
     public void getMinimumVersion(

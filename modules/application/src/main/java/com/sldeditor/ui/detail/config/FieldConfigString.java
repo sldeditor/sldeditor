@@ -48,7 +48,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -87,10 +87,9 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
         /**
          * Instantiates a new j text field limit.
          *
-         * @param fieldConfigString
          * @param limit the limit
          */
-        JTextFieldLimit(FieldConfigString fieldConfigString, int limit) {
+        JTextFieldLimit(int limit) {
             super();
             this.limit = limit;
         }
@@ -98,9 +97,9 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
         /*
          * (non-Javadoc)
          *
-         * @see javax.swing.text.PlainDocument#insertString(int, java.lang.String,
-         * javax.swing.text.AttributeSet)
+         * @see javax.swing.text.PlainDocument#insertString(int, java.lang.String, javax.swing.text.AttributeSet)
          */
+        @Override
         public void insertString(int offset, String str, AttributeSet attr)
                 throws BadLocationException {
             if (str == null) return;
@@ -174,8 +173,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
                         /*
                          * (non-Javadoc)
                          *
-                         * @see java.beans.PropertyChangeListener#propertyChange(java.beans.
-                         * PropertyChangeEvent)
+                         * @see java.beans.PropertyChangeListener#propertyChange(java.beans. PropertyChangeEvent)
                          */
                         @Override
                         public void propertyChange(PropertyChangeEvent evt) {
@@ -187,7 +185,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
                     });
 
             if (maximumStringSize > 0) {
-                textField.setDocument(new JTextFieldLimit(this, maximumStringSize));
+                textField.setDocument(new JTextFieldLimit(maximumStringSize));
             }
 
             if (buttonText != null) {
@@ -225,8 +223,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     /*
      * (non-Javadoc)
      *
-     * @see
-     * com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
+     * @see com.sldeditor.ui.iface.AttributeButtonSelectionInterface#attributeSelection(java.lang.String)
      */
     @Override
     public void attributeSelection(String field) {
@@ -244,7 +241,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (textField != null) {
             textField.setEnabled(enabled);
         }
@@ -338,16 +335,14 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
      */
     @Override
     public String getStringValue() {
-        if (textField != null) {
-            if (getPanel().isValueReadable()) {
-                String value = textField.getText();
+        if ((textField != null) && (getPanel().isValueReadable())) {
+            String value = textField.getText();
 
-                // Prepend the regular expression special character
-                if (isRegExpString) {
-                    value = "." + value;
-                }
-                return value;
+            // Prepend the regular expression special character
+            if (isRegExpString) {
+                value = "." + value;
             }
+            return value;
         }
         return null;
     }
@@ -398,7 +393,7 @@ public class FieldConfigString extends FieldConfigBase implements UndoActionInte
     public void addButtonPressedListener(FieldConfigStringButtonInterface listener) {
 
         if (buttonPressedListenerList == null) {
-            buttonPressedListenerList = new ArrayList<FieldConfigStringButtonInterface>();
+            buttonPressedListenerList = new ArrayList<>();
         }
 
         if (listener != null) {

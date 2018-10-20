@@ -53,29 +53,32 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The Constant MENU_SELECTION_BACKGROUND. */
+    private static final String MENU_SELECTION_BACKGROUND = "Menu.selectionBackground";
+
     /** The menu. */
     private JMenu menu;
 
     /** The selected data. */
-    private ValueComboBoxData selectedData = null;
+    private transient ValueComboBoxData selectedData = null;
 
     /** The preferred size. */
     private Dimension preferredSize;
 
     /** The data map. */
-    private Map<String, ValueComboBoxData> dataMap = new HashMap<String, ValueComboBoxData>();
+    private transient Map<String, ValueComboBoxData> dataMap = new HashMap<>();
 
     /** The listener. */
-    private ValueComboBoxDataSelectedInterface listener = null;
+    private transient ValueComboBoxDataSelectedInterface listener = null;
 
     /** The first value. */
-    private ValueComboBoxData firstValue = null;
+    private transient ValueComboBoxData firstValue = null;
 
     /** The data selection list. */
-    private List<ValueComboBoxDataGroup> dataSelectionList = null;
+    private transient List<ValueComboBoxDataGroup> dataSelectionList = null;
 
     /** The vendor option versions list. */
-    private List<VersionData> vendorOptionVersionsList = null;
+    private transient List<VersionData> vendorOptionVersionsList = null;
 
     /**
      * Instantiates a new menu combo box.
@@ -93,49 +96,69 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
      * @return the combo menu
      */
     private ComboMenu createMenu(List<ValueComboBoxDataGroup> listAll) {
-        ComboMenu menu = new ComboMenu("");
+        ComboMenu localMenu = new ComboMenu("");
 
         if (listAll != null) {
             for (ValueComboBoxDataGroup group : listAll) {
                 if (group.isSubMenu()) {
-                    JMenu subMenu = new JMenu(group.getGroupName());
-                    for (ValueComboBoxData data : group.getDataList()) {
-                        if (VendorOptionManager.getInstance()
-                                .isAllowed(vendorOptionVersionsList, data.getVendorOption())) {
-                            ComboMenuItem menuItem = new ComboMenuItem(data);
-
-                            subMenu.add(menuItem);
-
-                            dataMap.put(data.getKey(), data);
-
-                            if (firstValue == null) {
-                                firstValue = data;
-                            }
-                        }
-                    }
-
-                    if (subMenu.getMenuComponentCount() > 1) {
-                        menu.add(subMenu);
-                    }
+                    createSubMenu(localMenu, group);
                 } else {
-                    for (ValueComboBoxData data : group.getDataList()) {
-                        if (VendorOptionManager.getInstance()
-                                .isAllowed(vendorOptionVersionsList, data.getVendorOption())) {
-                            ComboMenuItem menuItem = new ComboMenuItem(data);
-
-                            menu.add(menuItem);
-
-                            dataMap.put(data.getKey(), data);
-
-                            if (firstValue == null) {
-                                firstValue = data;
-                            }
-                        }
-                    }
+                    createMenuItem(localMenu, group);
                 }
             }
         }
-        return menu;
+        return localMenu;
+    }
+
+    /**
+     * Creates the menu item.
+     *
+     * @param localMenu the local menu
+     * @param group the group
+     */
+    private void createMenuItem(ComboMenu localMenu, ValueComboBoxDataGroup group) {
+        for (ValueComboBoxData data : group.getDataList()) {
+            if (VendorOptionManager.getInstance()
+                    .isAllowed(vendorOptionVersionsList, data.getVendorOption())) {
+                ComboMenuItem menuItem = new ComboMenuItem(data);
+
+                localMenu.add(menuItem);
+
+                dataMap.put(data.getKey(), data);
+
+                if (firstValue == null) {
+                    firstValue = data;
+                }
+            }
+        }
+    }
+
+    /**
+     * Creates the sub menu.
+     *
+     * @param localMenu the local menu
+     * @param group the group
+     */
+    private void createSubMenu(ComboMenu localMenu, ValueComboBoxDataGroup group) {
+        JMenu subMenu = new JMenu(group.getGroupName());
+        for (ValueComboBoxData data : group.getDataList()) {
+            if (VendorOptionManager.getInstance()
+                    .isAllowed(vendorOptionVersionsList, data.getVendorOption())) {
+                ComboMenuItem menuItem = new ComboMenuItem(data);
+
+                subMenu.add(menuItem);
+
+                dataMap.put(data.getKey(), data);
+
+                if (firstValue == null) {
+                    firstValue = data;
+                }
+            }
+        }
+
+        if (subMenu.getMenuComponentCount() > 1) {
+            localMenu.add(subMenu);
+        }
     }
 
     /**
@@ -195,10 +218,10 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
      */
     private void setListener(JMenuItem item, ActionListener listener) {
         if (item instanceof JMenu) {
-            JMenu menu = (JMenu) item;
-            int n = menu.getItemCount();
+            JMenu localMenu = (JMenu) item;
+            int n = localMenu.getItemCount();
             for (int i = 0; i < n; i++) {
-                setListener(menu.getItem(i), listener);
+                setListener(localMenu.getItem(i), listener);
             }
         } else if (item != null) { // null means separator
             item.addActionListener(listener);
@@ -219,6 +242,7 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
      *
      * @see javax.swing.JComponent#setPreferredSize(java.awt.Dimension)
      */
+    @Override
     public void setPreferredSize(Dimension size) {
         preferredSize = size;
     }
@@ -228,6 +252,7 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
      *
      * @see javax.swing.JComponent#getPreferredSize()
      */
+    @Override
     public Dimension getPreferredSize() {
         if (preferredSize == null) {
             Dimension menuD = getItemSize(menu);
@@ -271,7 +296,7 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
         private static final long serialVersionUID = 1L;
 
         /** The data. */
-        private ValueComboBoxData data = null;
+        private transient ValueComboBoxData data = null;
 
         /**
          * Instantiates a new combo menu item.
@@ -300,7 +325,7 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
         private static final long serialVersionUID = 1L;
 
         /** The icon renderer. */
-        private ArrowIcon iconRenderer;
+        private transient ArrowIcon iconRenderer;
 
         /**
          * Instantiates a new combo menu.
@@ -321,6 +346,7 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
          *
          * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
          */
+        @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             Dimension d = this.getPreferredSize();
@@ -350,13 +376,13 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
         }
         this.menu = createMenu(dataSelectionList);
 
-        Color color = UIManager.getColor("Menu.selectionBackground");
-        UIManager.put("Menu.selectionBackground", UIManager.getColor("Menu.background"));
+        Color color = UIManager.getColor(MENU_SELECTION_BACKGROUND);
+        UIManager.put(MENU_SELECTION_BACKGROUND, UIManager.getColor("Menu.background"));
         menu.updateUI();
-        UIManager.put("Menu.selectionBackground", color);
+        UIManager.put(MENU_SELECTION_BACKGROUND, color);
 
-        MenuItemListener listener = new MenuItemListener();
-        setListener(menu, listener);
+        MenuItemListener localListener = new MenuItemListener();
+        setListener(menu, localListener);
 
         add(menu);
     }
@@ -364,7 +390,9 @@ public class MenuComboBox extends JMenuBar implements VendorOptionUpdateInterfac
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.util.List)
+     * @see
+     * com.sldeditor.preferences.iface.PrefUpdateVendorOptionInterface#vendorOptionsUpdated(java.
+     * util.List)
      */
     @Override
     public void vendorOptionsUpdated(List<VersionData> vendorOptionVersionsList) {

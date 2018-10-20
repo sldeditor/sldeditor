@@ -64,13 +64,13 @@ public class SortByPanel extends JPanel
     private static final long serialVersionUID = 1L;
 
     /** The source list model. */
-    private DefaultListModel<String> sourceModel = new DefaultListModel<String>();
+    private DefaultListModel<String> sourceModel = new DefaultListModel<>();
 
     /** The destination table model. */
     private SortByTableModel destinationModel = null;
 
     /** The field name list. */
-    private List<String> fieldNameList = null;
+    private transient List<String> fieldNameList = null;
 
     /** The button move up. */
     private JButton btnMoveUp;
@@ -91,7 +91,7 @@ public class SortByPanel extends JPanel
     private JTable destinationTable;
 
     /** The parent obj. */
-    private SortByUpdateInterface parentObj = null;
+    private transient SortByUpdateInterface parentObj = null;
 
     /**
      * Instantiates a new sort by panel.
@@ -128,19 +128,19 @@ public class SortByPanel extends JPanel
         scrollPaneSource.setPreferredSize(new Dimension(200, 200));
         panel.add(scrollPaneSource);
 
-        sourceList = new JList<String>(sourceModel);
+        sourceList = new JList<>(sourceModel);
         sourceList.addListSelectionListener(
                 new ListSelectionListener() {
                     public void valueChanged(ListSelectionEvent e) {
-                        if (e.getValueIsAdjusting() == false) {
+                        if (!e.getValueIsAdjusting()) {
                             sourceSelected();
                         }
                     }
                 });
         scrollPaneSource.setViewportView(sourceList);
 
-        JPanel panel_1 = new JPanel();
-        panel_1.setLayout(new BorderLayout(0, 0));
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new BorderLayout(0, 0));
 
         JPanel centrePanel = new JPanel();
         centrePanel.setPreferredSize(new Dimension(50, 50));
@@ -187,7 +187,7 @@ public class SortByPanel extends JPanel
                 .addListSelectionListener(
                         new ListSelectionListener() {
                             public void valueChanged(ListSelectionEvent e) {
-                                if (e.getValueIsAdjusting() == false) {
+                                if (!e.getValueIsAdjusting()) {
                                     ListSelectionModel model = destinationTable.getSelectionModel();
                                     if (!model.isSelectionEmpty()) {
                                         destinationSelected();
@@ -215,8 +215,8 @@ public class SortByPanel extends JPanel
         scrollPaneDest.setViewportView(destinationTable);
 
         JPanel buttonPanel = new JPanel();
-        FlowLayout fl_buttonPanel = (FlowLayout) buttonPanel.getLayout();
-        fl_buttonPanel.setAlignment(FlowLayout.RIGHT);
+        FlowLayout flButtonPanel = (FlowLayout) buttonPanel.getLayout();
+        flButtonPanel.setAlignment(FlowLayout.RIGHT);
         add(buttonPanel, BorderLayout.SOUTH);
 
         btnMoveUp = new JButton(Localisation.getString(SortByPanel.class, "sortby.up"));
@@ -360,7 +360,7 @@ public class SortByPanel extends JPanel
      * @param value the new text
      */
     public void setText(String value) {
-        Map<String, String> options = new HashMap<String, String>();
+        Map<String, String> options = new HashMap<>();
 
         ListSelectionModel model = destinationTable.getSelectionModel();
         model.clearSelection();

@@ -30,16 +30,16 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
     private static final long serialVersionUID = 1L;
 
     /** The renderer. */
-    private ComponentCellRenderer renderer;
+    private transient ComponentCellRenderer renderer;
 
     /** The tree. */
     private JTree tree;
 
     /** The symbolizer. */
-    private Symbolizer symbolizer = null;
+    private transient Symbolizer symbolizer = null;
 
     /** The user object. */
-    private Object userObject = null;
+    private transient Object userObject = null;
 
     /** The checkbox node panel. */
     private CheckBoxPanel panel = new CheckBoxPanel();
@@ -59,10 +59,12 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
         panel.setCheckboxActionListener(this);
         panel.setCheckboxMouseListener(
                 new MouseAdapter() {
+                    @Override
                     public void mousePressed(MouseEvent e) {
-                        // checkBox.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+                        // Do nothing
                     }
 
+                    @Override
                     public void mouseReleased(MouseEvent e) {
                         if (sldTree != null) {
                             sldTree.leafSelected();
@@ -102,7 +104,7 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
             TreePath path = tree.getPathForLocation(mouseEvent.getX(), mouseEvent.getY());
             if (path != null) {
                 Object node = path.getLastPathComponent();
-                if ((node != null) && (node instanceof DefaultMutableTreeNode)) {
+                if (node instanceof DefaultMutableTreeNode) {
                     DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) node;
 
                     if (treeNode.getParent() != null) {
@@ -130,7 +132,7 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
             JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row) {
 
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-        Object userObject = node.getUserObject();
+        Object localUserObject = node.getUserObject();
         Object parentUserObject = null;
 
         DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) node.getParent();
@@ -138,23 +140,21 @@ class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor, A
             parentUserObject = parentNode.getUserObject();
         }
 
-        if (ComponentCellRenderer.showCheckbox(parentUserObject, userObject)) {
+        if (ComponentCellRenderer.showCheckbox(parentUserObject, localUserObject)) {
             DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
-            Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
+            Symbolizer localSymbolizer = (Symbolizer) parent.getUserObject();
             boolean selectedItem =
-                    SLDTreeLeafFactory.getInstance().isItemSelected(userObject, symbolizer);
+                    SLDTreeLeafFactory.getInstance()
+                            .isItemSelected(localUserObject, localSymbolizer);
 
             panel.setCheckboxSelected(selectedItem);
-            panel.setLabelText(ComponentCellRenderer.getItemText(node, userObject));
+            panel.setLabelText(ComponentCellRenderer.getItemText(node, localUserObject));
             panel.setSelected(true, true);
 
             return panel;
         }
 
-        Component editor =
-                renderer.getTreeCellRendererComponent(tree, value, true, expanded, leaf, row, true);
-
-        return editor;
+        return renderer.getTreeCellRendererComponent(tree, value, true, expanded, leaf, row, true);
     }
 
     /*

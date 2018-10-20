@@ -50,7 +50,7 @@ public class CustomProcessFunction {
     private static final String GEOMETRY_NAME = "Geometry";
 
     /** The data type map. */
-    private static Map<String, Class<?>> dataTypeMap = new HashMap<String, Class<?>>();
+    private static Map<String, Class<?>> dataTypeMap = new HashMap<>();
 
     /**
      * Extract parameters.
@@ -60,8 +60,7 @@ public class CustomProcessFunction {
      */
     public List<ProcessFunctionParameterValue> extractParameters(
             ProcessDescriptionType selectedCustomFunction) {
-        List<ProcessFunctionParameterValue> valueList =
-                new ArrayList<ProcessFunctionParameterValue>();
+        List<ProcessFunctionParameterValue> valueList = new ArrayList<>();
 
         if (dataTypeMap.isEmpty()) {
             populateDataMap();
@@ -113,10 +112,7 @@ public class CustomProcessFunction {
         int minOccurs = input.getMinOccurs().intValue();
         int maxOccurs = input.getMaxOccurs().intValue();
 
-        if ((minOccurs == 0) && (maxOccurs == 1)) {
-            return true;
-        }
-        return false;
+        return ((minOccurs == 0) && (maxOccurs == 1));
     }
 
     /**
@@ -142,8 +138,6 @@ public class CustomProcessFunction {
             } else {
                 SupportedComplexDataType complex = inputDescription.getComplexData();
                 if (complex != null) {
-                    // ComplexDataCombinationsType parameterDataType = complex.getSupported();
-
                     value.setDataType(GEOMETRY_NAME);
                 }
             }

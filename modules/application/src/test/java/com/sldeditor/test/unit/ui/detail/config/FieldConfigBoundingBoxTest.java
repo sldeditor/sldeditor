@@ -51,7 +51,7 @@ public class FieldConfigBoundingBoxTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#internal_setEnabled(boolean)}. Test
+     * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#internalSetEnabled(boolean)}. Test
      * method for {@link com.sldeditor.ui.detail.config.FieldConfigBoundingBox#isEnabled()}. Test
      * method for {@link
      * com.sldeditor.ui.detail.config.FieldConfigBoundingBox#createUI(javax.swing.Box)}.
@@ -67,7 +67,7 @@ public class FieldConfigBoundingBoxTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -76,7 +76,7 @@ public class FieldConfigBoundingBoxTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
 
@@ -89,7 +89,7 @@ public class FieldConfigBoundingBoxTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -98,7 +98,7 @@ public class FieldConfigBoundingBoxTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(!expectedValue, field2.isEnabled());

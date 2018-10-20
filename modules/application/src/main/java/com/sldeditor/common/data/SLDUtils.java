@@ -21,17 +21,23 @@ package com.sldeditor.common.data;
 
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.data.traverse.TraverseSymbolizersInterface;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.DefaultResourceLocator;
 import org.geotools.styling.FeatureTypeStyle;
+import org.geotools.styling.LineSymbolizer;
 import org.geotools.styling.NamedLayerImpl;
+import org.geotools.styling.PointSymbolizer;
+import org.geotools.styling.PolygonSymbolizer;
+import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.SLDParser;
 import org.geotools.styling.Style;
@@ -53,7 +59,7 @@ public class SLDUtils {
     /** The Constant STYLES_PATH. */
     private static final String STYLES_PATH = "styles/";
 
-    /** Default constructor */
+    /** Default constructor. */
     private SLDUtils() {
         // Private default constructor
     }
@@ -175,57 +181,42 @@ public class SLDUtils {
 
         List<StyledLayer> styledLayerList = sld.layers();
 
-        if (styledLayerList != null) {
-            int styledLayerIndex = 0;
-            int styleIndex = 0;
-            int ftsIndex = 0;
-            int ruleIndex = 0;
-            int symbolizerIndex = 0;
-            boolean isNamedLayer = true;
+        int styledLayerIndex = 0;
+        int styleIndex = 0;
+        int ftsIndex = 0;
+        int ruleIndex = 0;
+        int symbolizerIndex = 0;
+        boolean isNamedLayer = true;
 
-            for (StyledLayer styledLayer : styledLayerList) {
-                List<Style> styleList = null;
+        for (StyledLayer styledLayer : styledLayerList) {
+            List<Style> styleList = getStylesList(styledLayer);
 
-                if (styledLayer instanceof NamedLayerImpl) {
-                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
-                    styleList = namedLayerImpl.styles();
-                    isNamedLayer = true;
-                } else if (styledLayer instanceof UserLayerImpl) {
-                    UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
-                    styleList = userLayerImpl.userStyles();
-                    isNamedLayer = false;
-                }
+            isNamedLayer = (styledLayer instanceof NamedLayerImpl);
 
-                if (styleList != null) {
-                    styleIndex = 0;
-                    for (Style style : styleList) {
-                        ftsIndex = 0;
-                        for (FeatureTypeStyle fts : style.featureTypeStyles()) {
-                            ruleIndex = 0;
-                            for (Rule rule : fts.rules()) {
-                                symbolizerIndex = 0;
-                                for (org.opengis.style.Symbolizer symbolizer : rule.symbolizers()) {
-                                    if (symbolizer == symbolizerToFind) {
-                                        return findEquivalentSymbolizer(
-                                                otherSLD,
-                                                styledLayerIndex,
-                                                isNamedLayer,
-                                                styleIndex,
-                                                ftsIndex,
-                                                ruleIndex,
-                                                symbolizerIndex);
-                                    }
-                                    symbolizerIndex++;
-                                }
-                                ruleIndex++;
-                            }
-                            ftsIndex++;
+            styleIndex = 0;
+            for (Style style : styleList) {
+                ftsIndex = 0;
+                for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                    ruleIndex = 0;
+                    for (Rule rule : fts.rules()) {
+                        symbolizerIndex = (rule.symbolizers().indexOf(symbolizerToFind));
+                        if (symbolizerIndex > -1) {
+                            return findEquivalentSymbolizer(
+                                    otherSLD,
+                                    styledLayerIndex,
+                                    isNamedLayer,
+                                    styleIndex,
+                                    ftsIndex,
+                                    ruleIndex,
+                                    symbolizerIndex);
                         }
-                        styleIndex++;
+                        ruleIndex++;
                     }
+                    ftsIndex++;
                 }
-                styledLayerIndex++;
+                styleIndex++;
             }
+            styledLayerIndex++;
         }
         return null;
     }
@@ -295,51 +286,28 @@ public class SLDUtils {
         if (sld != null) {
             List<StyledLayer> styledLayerList = sld.layers();
 
-            if (styledLayerList != null) {
-                int styledLayerIndex = 0;
-                int styleIndex = 0;
-                int ftsIndex = 0;
-                int ruleIndex = 0;
-                boolean isNamedLayer = true;
+            int styledLayerIndex = 0;
+            int styleIndex = 0;
+            int ftsIndex = 0;
+            int ruleIndex = 0;
 
-                for (StyledLayer styledLayer : styledLayerList) {
-                    List<Style> styleList = null;
+            for (StyledLayer styledLayer : styledLayerList) {
+                List<Style> styleList = getStylesList(styledLayer);
 
-                    if (styledLayer instanceof NamedLayerImpl) {
-                        NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
-                        styleList = namedLayerImpl.styles();
-                        isNamedLayer = true;
-                    } else if (styledLayer instanceof UserLayerImpl) {
-                        UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
-                        styleList = userLayerImpl.userStyles();
-                        isNamedLayer = false;
-                    }
-
-                    if (styleList != null) {
-                        styleIndex = 0;
-                        for (Style style : styleList) {
-                            ftsIndex = 0;
-                            for (FeatureTypeStyle fts : style.featureTypeStyles()) {
-                                ruleIndex = 0;
-                                for (Rule rule : fts.rules()) {
-                                    if (rule == ruleToFind) {
-                                        return findEquivalentRule(
-                                                otherSLD,
-                                                styledLayerIndex,
-                                                isNamedLayer,
-                                                styleIndex,
-                                                ftsIndex,
-                                                ruleIndex);
-                                    }
-                                    ruleIndex++;
-                                }
-                                ftsIndex++;
-                            }
-                            styleIndex++;
+                styleIndex = 0;
+                for (Style style : styleList) {
+                    ftsIndex = 0;
+                    for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                        ruleIndex = fts.rules().indexOf(ruleToFind);
+                        if (ruleIndex > -1) {
+                            return findEquivalentRule(
+                                    otherSLD, styledLayerIndex, styleIndex, ftsIndex, ruleIndex);
                         }
+                        ftsIndex++;
                     }
-                    styledLayerIndex++;
+                    styleIndex++;
                 }
+                styledLayerIndex++;
             }
         }
         return null;
@@ -350,7 +318,6 @@ public class SLDUtils {
      *
      * @param otherSLD the other SLD
      * @param styledLayerIndex the styled layer index
-     * @param isNamedLayer the is named layer
      * @param styleIndex the style index
      * @param ftsIndex the fts index
      * @param ruleIndex the rule index
@@ -359,38 +326,90 @@ public class SLDUtils {
     private static Rule findEquivalentRule(
             StyledLayerDescriptor otherSLD,
             int styledLayerIndex,
-            boolean isNamedLayer,
             int styleIndex,
             int ftsIndex,
             int ruleIndex) {
         if (otherSLD != null) {
             List<StyledLayer> styledLayerList = otherSLD.layers();
 
-            if (styledLayerList != null) {
+            try {
+                StyledLayer styledLayer = styledLayerList.get(styledLayerIndex);
 
-                try {
-                    StyledLayer styledLayer = styledLayerList.get(styledLayerIndex);
+                List<Style> styleList = getStylesList(styledLayer);
 
-                    List<Style> styleList = null;
-
-                    if (isNamedLayer) {
-                        NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
-                        styleList = namedLayerImpl.styles();
-                    } else {
-                        UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
-                        styleList = userLayerImpl.userStyles();
-                    }
-
-                    if (styleList != null) {
-                        Style style = styleList.get(styleIndex);
-                        FeatureTypeStyle fts = style.featureTypeStyles().get(ftsIndex);
-                        return fts.rules().get(ruleIndex);
-                    }
-                } catch (IndexOutOfBoundsException exception) {
-                    // Do nothing
-                }
+                Style style = styleList.get(styleIndex);
+                FeatureTypeStyle fts = style.featureTypeStyles().get(ftsIndex);
+                return fts.rules().get(ruleIndex);
+            } catch (IndexOutOfBoundsException exception) {
+                // Do nothing
             }
         }
         return null;
+    }
+
+    /**
+     * Gets the styles list.
+     *
+     * @param styledLayer the styled layer
+     * @return the styles list
+     */
+    public static List<Style> getStylesList(StyledLayer styledLayer) {
+        List<Style> styleList = Collections.<Style>emptyList();
+
+        if (styledLayer instanceof NamedLayerImpl) {
+            NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
+
+            styleList = namedLayerImpl.styles();
+        } else if (styledLayer instanceof UserLayerImpl) {
+            UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
+
+            styleList = userLayerImpl.userStyles();
+        }
+        return styleList;
+    }
+
+    /**
+     * Traverse symbolizers.
+     *
+     * @param sld the sld
+     * @param traverseSymbolizersInterface the traverse symbolizers interface
+     */
+    public static void traverseSymbolizers(
+            StyledLayerDescriptor sld, TraverseSymbolizersInterface traverseSymbolizersInterface) {
+        List<StyledLayer> styledLayerList = sld.layers();
+
+        for (StyledLayer styledLayer : styledLayerList) {
+            List<Style> styleList = SLDUtils.getStylesList(styledLayer);
+
+            for (Style style : styleList) {
+                for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                    for (Rule rule : fts.rules()) {
+                        for (org.opengis.style.Symbolizer symbolizer : rule.symbolizers()) {
+                            processSymbolizer(symbolizer, traverseSymbolizersInterface);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Process symbolizer.
+     *
+     * @param symbolizer the symbolizer
+     * @param traverseSymbolizersInterface the traverse symbolizers interface
+     */
+    private static void processSymbolizer(
+            org.opengis.style.Symbolizer symbolizer,
+            TraverseSymbolizersInterface traverseSymbolizersInterface) {
+        if (symbolizer instanceof PointSymbolizer) {
+            traverseSymbolizersInterface.pointSymbolizerCallback((PointSymbolizer) symbolizer);
+        } else if (symbolizer instanceof LineSymbolizer) {
+            traverseSymbolizersInterface.lineSymbolizerCallback((LineSymbolizer) symbolizer);
+        } else if (symbolizer instanceof PolygonSymbolizer) {
+            traverseSymbolizersInterface.polygonSymbolizerCallback((PolygonSymbolizer) symbolizer);
+        } else if (symbolizer instanceof RasterSymbolizer) {
+            traverseSymbolizersInterface.rasterSymbolizerCallback((RasterSymbolizer) symbolizer);
+        }
     }
 }

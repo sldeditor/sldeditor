@@ -46,11 +46,6 @@ class CheckAttributeFactoryTest {
         assertEquals(1, CheckAttributeFactory.getCheckList().size());
         assertEquals(
                 MissingSLDAttributes.class, CheckAttributeFactory.getCheckList().get(0).getClass());
-
-        // Increase code coverage
-        @SuppressWarnings("unused")
-        CheckAttributeFactory factory = new CheckAttributeFactory();
-        factory = null;
     }
 
     /**

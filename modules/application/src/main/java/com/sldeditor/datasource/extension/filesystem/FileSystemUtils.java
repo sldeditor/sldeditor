@@ -30,6 +30,11 @@ import java.util.List;
  */
 public class FileSystemUtils {
 
+    /** Private default constructor */
+    private FileSystemUtils() {
+        // Private default constructor
+    }
+
     /**
      * Checks if is file extension supported.
      *

@@ -60,7 +60,10 @@ public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java.lang.Class, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getMarkerSymbols(java
+     * .lang.Class, com.sldeditor.ui.detail.ColourFieldConfig,
+     * com.sldeditor.ui.detail.ColourFieldConfig, com.sldeditor.common.xml.ui.FieldIdEnum)
      */
     @Override
     public List<FieldState> getMarkerSymbols(
@@ -68,7 +71,7 @@ public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
             ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField) {
-        List<FieldState> fieldStateList = new ArrayList<FieldState>();
+        List<FieldState> fieldStateList = new ArrayList<>();
 
         wktShape =
                 new FieldConfigWKT(
@@ -81,18 +84,18 @@ public class VOGeoServerWKTSymbol implements VOMarkerSymbolInterface {
         return fieldStateList;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.sldeditor.ui.detail.vendor.geoserver.marker.VOMarkerSymbolInterface#getVendorOptionInfo()
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
 
-        VendorOptionInfo info =
-                new VendorOptionInfo(
-                        "WKT",
-                        wktShape.getVendorOptionVersion(),
-                        Localisation.getString(WKTDetails.class, "WKTDetails.description"));
-
-        return info;
+        return new VendorOptionInfo(
+                "WKT",
+                wktShape.getVendorOptionVersion(),
+                Localisation.getString(WKTDetails.class, "WKTDetails.description"));
     }
 }

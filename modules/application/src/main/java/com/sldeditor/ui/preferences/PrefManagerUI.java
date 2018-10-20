@@ -29,6 +29,11 @@ import com.sldeditor.common.preferences.PrefManager;
  */
 public class PrefManagerUI {
 
+    /** Private default constructor. */
+    private PrefManagerUI() {
+        // Private default constructor
+    }
+
     /** Show preferences panel. */
     public static void showPrefPanel() {
         PrefPanel panel = new PrefPanel();

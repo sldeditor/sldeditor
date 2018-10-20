@@ -75,6 +75,7 @@ public class Beyond extends FilterBase implements FilterConfigInterface {
          *
          * @see org.geotools.filter.CartesianDistanceFilter#toString()
          */
+        @Override
         public String toString() {
             String operator = " beyond ";
 

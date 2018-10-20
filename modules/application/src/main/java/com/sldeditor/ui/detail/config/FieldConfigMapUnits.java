@@ -19,6 +19,8 @@
 
 package com.sldeditor.ui.detail.config;
 
+import com.sldeditor.ui.detail.config.panelconfig.ReadMapUnits;
+
 /**
  * The Class FieldConfigMapUnits.
  *
@@ -26,8 +28,8 @@ package com.sldeditor.ui.detail.config;
  */
 public class FieldConfigMapUnits extends FieldConfigEnum {
 
-    /** The filename. */
-    private final String filename = "MapUnits.xml";
+    /** The Constant FILENAME. */
+    private static final String FILENAME = "MapUnits.xml";
 
     /**
      * Instantiates a new field config map units.
@@ -39,6 +41,6 @@ public class FieldConfigMapUnits extends FieldConfigEnum {
 
         ReadMapUnits readMapUnits = new ReadMapUnits();
 
-        readMapUnits.read(commonData.getPanelId(), filename, this);
+        readMapUnits.read(commonData.getPanelId(), FILENAME, this);
     }
 }

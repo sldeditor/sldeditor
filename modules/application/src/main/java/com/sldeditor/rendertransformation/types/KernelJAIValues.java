@@ -54,7 +54,7 @@ public class KernelJAIValues extends BaseValue implements RenderTransformValueIn
     /** Populate interpolation map. */
     private static synchronized void populateKernelKAI() {
         if (kernelJAIMap == null) {
-            kernelJAIMap = new HashMap<KernelJAI, String>();
+            kernelJAIMap = new HashMap<>();
             kernelJAIMap.put(
                     KernelJAI.GRADIENT_MASK_SOBEL_HORIZONTAL, "GRADIENT_MASK_SOBEL_HORIZONTAL");
             kernelJAIMap.put(

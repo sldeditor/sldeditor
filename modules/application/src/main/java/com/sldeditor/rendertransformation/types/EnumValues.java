@@ -42,7 +42,7 @@ public class EnumValues extends BaseValue implements RenderTransformValueInterfa
     private Class<?> classType = StringBuilder.class;
 
     /** The enum list. */
-    private List<String> enumValueList = new ArrayList<String>();
+    private List<String> enumValueList = new ArrayList<>();
 
     /** The value. */
     private String value = null;

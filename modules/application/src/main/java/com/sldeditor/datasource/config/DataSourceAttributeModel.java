@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.table.AbstractTableModel;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.MultiLineString;
@@ -86,7 +87,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
     // CHECKSTYLE:ON
 
     /** The type map. */
-    private Map<Class<?>, String> typeMap = new HashMap<Class<?>, String>();
+    private Map<Class<?>, String> typeMap = new HashMap<>();
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -177,7 +178,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      * @return the map
      */
     public List<DataSourceAttributeData> retrieveData() {
-        List<DataSourceAttributeData> attributeList = new ArrayList<DataSourceAttributeData>();
+        List<DataSourceAttributeData> attributeList = new ArrayList<>();
 
         for (int row = 0; row < this.getRowCount(); row++) {
             String name = (String) this.getValueAt(row, FIELD_COLUMN_ID);
@@ -365,11 +366,11 @@ public class DataSourceAttributeModel extends AbstractTableModel {
      * @return the type class
      */
     private Class<?> getTypeClass(String displayName) {
-        for (Class<?> key : typeMap.keySet()) {
-            String value = typeMap.get(key);
+        for (Entry<Class<?>, String> entry : typeMap.entrySet()) {
+            String value = entry.getValue();
 
             if (value.compareTo(displayName) == 0) {
-                return key;
+                return entry.getKey();
             }
         }
         return null;
@@ -414,7 +415,7 @@ public class DataSourceAttributeModel extends AbstractTableModel {
     public DataSourceAttributeListInterface getAttributeData() {
         DataSourceAttributeList attributeDataImpl = new DataSourceAttributeList();
 
-        List<DataSourceAttributeData> attributeList = new ArrayList<DataSourceAttributeData>();
+        List<DataSourceAttributeData> attributeList = new ArrayList<>();
 
         for (DataSourceAttributeData attributeData : valueList) {
             attributeList.add(new DataSourceAttributeData(attributeData));

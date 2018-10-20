@@ -32,7 +32,7 @@ import java.util.List;
 public class SelectedFiles {
 
     /** The list of sld data. */
-    List<SLDDataInterface> sldData = new ArrayList<SLDDataInterface>();
+    List<SLDDataInterface> sldData = new ArrayList<>();
 
     /** The is data source. */
     boolean isDataSource = false;

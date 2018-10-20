@@ -137,7 +137,7 @@ public class SLDMapPane extends AbstractMapPane {
         if (newRenderer != null) {
             Map<Object, Object> hints = newRenderer.getRendererHints();
             if (hints == null) {
-                hints = new HashMap<Object, Object>();
+                hints = new HashMap<>();
             }
 
             if (newRenderer instanceof StreamingRenderer) {

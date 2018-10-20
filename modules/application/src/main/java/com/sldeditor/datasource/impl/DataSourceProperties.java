@@ -25,6 +25,7 @@ import com.sldeditor.common.DataSourcePropertiesInterface;
 import com.sldeditor.datasource.connector.DataSourceConnectorFactory;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -40,11 +41,11 @@ import org.w3c.dom.NodeList;
  * @author Robert Ward (SCISYS)
  */
 public class DataSourceProperties implements DataSourcePropertiesInterface {
-    /** The Constant PASSWORD_KEY. */
-    private static final String PASSWORD_KEY = "password";
+    /** The Constant MAP_CREDENTIAL_KEY, the password key of the property map. */
+    private static final String MAP_CREDENTIAL_KEY = "password";
 
     /** The property map. */
-    private Map<String, Object> propertyMap = new LinkedHashMap<String, Object>();
+    private Map<String, Object> propertyMap = new LinkedHashMap<>();
 
     /** The data source connector. */
     private DataSourceConnectorInterface dsc = null;
@@ -144,9 +145,9 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
 
         Element dataSourceElement = doc.createElement(elementName);
 
-        for (String key : propertyMap.keySet()) {
-            Element element = doc.createElement(key);
-            element.appendChild(doc.createTextNode((String) propertyMap.get(key)));
+        for (Entry<String, Object> entry : propertyMap.entrySet()) {
+            Element element = doc.createElement(entry.getKey());
+            element.appendChild(doc.createTextNode((String) entry.getValue()));
 
             dataSourceElement.appendChild(element);
         }
@@ -166,7 +167,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
             return null;
         }
 
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        Map<String, Object> map = new LinkedHashMap<>();
 
         NodeList nodeList = document.getElementsByTagName(elementName);
         if (nodeList.getLength() > 0) {
@@ -207,7 +208,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
      * @return the map
      */
     public static Map<String, Object> encodeFilename(String filename) {
-        Map<String, Object> propertyMap = new LinkedHashMap<String, Object>();
+        Map<String, Object> propertyMap = new LinkedHashMap<>();
 
         propertyMap.put(DataSourceConstants.FILE_MAP_KEY, filename);
 
@@ -235,7 +236,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
      */
     @Override
     public boolean hasPassword() {
-        return propertyMap.containsKey(PASSWORD_KEY);
+        return propertyMap.containsKey(MAP_CREDENTIAL_KEY);
     }
 
     /**
@@ -245,7 +246,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
      */
     @Override
     public String getPassword() {
-        return (String) propertyMap.get(PASSWORD_KEY);
+        return (String) propertyMap.get(MAP_CREDENTIAL_KEY);
     }
 
     /**
@@ -255,7 +256,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
      */
     @Override
     public void setPassword(String password) {
-        propertyMap.put(PASSWORD_KEY, password);
+        propertyMap.put(MAP_CREDENTIAL_KEY, password);
     }
 
     /**
@@ -267,7 +268,7 @@ public class DataSourceProperties implements DataSourcePropertiesInterface {
     public String getDebugConnectionString() {
         Map<String, Object> properties = getConnectionProperties();
 
-        properties.remove(PASSWORD_KEY);
+        properties.remove(MAP_CREDENTIAL_KEY);
 
         return properties.toString();
     }

@@ -37,6 +37,11 @@ public class DetermineRasterFormat {
     /** The class under test flag. */
     private static boolean classUndertest = false;
 
+    /** Private default constructor */
+    private DetermineRasterFormat() {
+        // Private default constructor
+    }
+
     /**
      * Get user to choose raster format.
      *

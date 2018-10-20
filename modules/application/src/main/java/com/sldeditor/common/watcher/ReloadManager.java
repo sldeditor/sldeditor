@@ -51,7 +51,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
     private static boolean underTest = false;
 
     /** The current loaded file list. */
-    private Map<Path, Boolean> currentLoadedFileList = new HashMap<Path, Boolean>();
+    private Map<Path, Boolean> currentLoadedFileList = new HashMap<>();
 
     /** The timing out flag. */
     private boolean timingOut = false;
@@ -141,7 +141,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      */
     @Override
     public void sldDataUpdated(SLDDataInterface sldData, boolean dataEditedFlag) {
-        Map<Path, Boolean> pathList = new HashMap<Path, Boolean>();
+        Map<Path, Boolean> pathList = new HashMap<>();
 
         if (sldData != null) {
             File sldFile = sldData.getSLDFile();
@@ -199,7 +199,7 @@ public class ReloadManager implements FileWatcherUpdateInterface, SLDEditorDataU
      * @return true, if timeout should be started, false it is already running
      */
     private synchronized boolean startTimeout() {
-        if (this.timingOut == false) {
+        if (!this.timingOut) {
             this.timingOut = true;
             return true;
         }

@@ -101,10 +101,6 @@ public class BatchUpdateFontUtilsTest {
         assertEquals(rule.getName(), actualList.get(0).getRuleName());
 
         // Bump up the code coverage
-        @SuppressWarnings("unused")
-        BatchUpdateFontUtils tmp = new BatchUpdateFontUtils();
-        tmp = null;
-
         sldData = new SLDData(new StyleWrapper("workspace", "layer.sld"), "empty");
         actualList = BatchUpdateFontUtils.containsFonts(sldData);
         assertNull(actualList);

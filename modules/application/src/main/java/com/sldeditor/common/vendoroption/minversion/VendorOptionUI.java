@@ -66,17 +66,11 @@ public class VendorOptionUI extends JPanel
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /** The vendor option table. */
-    private JTable vendorOptionTable;
-
     /** The model. */
     private VendorOptionTableModel vendorOptionModel = null;
 
     /** The options. */
     private Map<VendorOptionTypeInterface, String> options = new LinkedHashMap<>();
-
-    /** The table. */
-    private JTable vendorOptionPresentTable = null;
 
     /** The vendor option present model. */
     private VendorOptionPresentModel vendorOptionPresentModel = new VendorOptionPresentModel();
@@ -135,7 +129,7 @@ public class VendorOptionUI extends JPanel
         vendorOptionSelectionPanel.setLayout(new BorderLayout());
         add(vendorOptionSelectionPanel);
 
-        vendorOptionTable = new JTable();
+        JTable vendorOptionTable = new JTable();
         JScrollPane scrollPane = new JScrollPane(vendorOptionTable);
         vendorOptionSelectionPanel.add(scrollPane, BorderLayout.CENTER);
 
@@ -168,7 +162,7 @@ public class VendorOptionUI extends JPanel
         voPresentPanel.setLayout(new BorderLayout());
         voPresentPanel.setPreferredSize(new Dimension(400, 300));
 
-        vendorOptionPresentTable = new JTable();
+        JTable vendorOptionPresentTable = new JTable();
         vendorOptionPresentTable.setModel(vendorOptionPresentModel);
 
         JScrollPane scrollPaneTable = new JScrollPane(vendorOptionPresentTable);
@@ -180,11 +174,11 @@ public class VendorOptionUI extends JPanel
         voPresentPanel.add(panel, BorderLayout.SOUTH);
         panel.setLayout(new BorderLayout(0, 0));
 
-        JPanel panel_2 = new JPanel();
-        panel.add(panel_2, BorderLayout.EAST);
+        JPanel panel2 = new JPanel();
+        panel.add(panel2, BorderLayout.EAST);
 
         JButton btnHelp = new JButton(Localisation.getString(VendorOptionUI.class, "common.help"));
-        panel_2.add(btnHelp);
+        panel2.add(btnHelp);
         btnHelp.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -192,18 +186,18 @@ public class VendorOptionUI extends JPanel
                     }
                 });
 
-        JPanel panel_1 = new JPanel();
-        panel.add(panel_1, BorderLayout.CENTER);
+        JPanel panel1 = new JPanel();
+        panel.add(panel1, BorderLayout.CENTER);
 
         btnLatestVO =
                 new JButton(Localisation.getString(VendorOptionUI.class, "VendorOptionUI.latest"));
-        panel_1.add(btnLatestVO);
+        panel1.add(btnLatestVO);
         btnLatestVO.setEnabled(false);
 
         btnMinimumVendorOption =
                 new JButton(
                         Localisation.getString(VendorOptionUI.class, "VendorOptionUI.minimumVO"));
-        panel_1.add(btnMinimumVendorOption);
+        panel1.add(btnMinimumVendorOption);
         btnMinimumVendorOption.setEnabled(false);
         btnMinimumVendorOption.addActionListener(
                 new ActionListener() {

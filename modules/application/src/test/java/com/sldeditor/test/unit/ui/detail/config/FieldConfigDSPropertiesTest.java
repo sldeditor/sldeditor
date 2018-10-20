@@ -277,7 +277,7 @@ public class FieldConfigDSPropertiesTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.FieldConfigDSProperties#internal_setEnabled(boolean)}. Test
+     * com.sldeditor.ui.detail.config.FieldConfigDSProperties#internalSetEnabled(boolean)}. Test
      * method for {@link com.sldeditor.ui.detail.config.FieldConfigDSProperties#isEnabled()}.
      */
     @Test
@@ -295,7 +295,7 @@ public class FieldConfigDSPropertiesTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -305,7 +305,7 @@ public class FieldConfigDSPropertiesTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
 
@@ -318,7 +318,7 @@ public class FieldConfigDSPropertiesTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
         assertTrue(field2.isEnabled());
 
         // Create text field
@@ -328,7 +328,7 @@ public class FieldConfigDSPropertiesTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = true;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(expectedValue, field2.isEnabled());

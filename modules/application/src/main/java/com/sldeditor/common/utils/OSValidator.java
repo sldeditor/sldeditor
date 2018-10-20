@@ -23,8 +23,13 @@ package com.sldeditor.common.utils;
  */
 public class OSValidator {
 
-    /** The os. */
-    private static String OS = System.getProperty("os.name").toLowerCase();
+    /** The operating system. */
+    private static final String OS = System.getProperty("os.name").toLowerCase();
+
+    /** Private default constructor */
+    private OSValidator() {
+        // Private default constructor
+    }
 
     /**
      * Checks if is windows.

@@ -177,8 +177,7 @@ public class UndoEvent implements UndoInterface {
     @Override
     public String getUndoString() {
         String text = (customText != null) ? customText : fieldId.toString();
-        String undoString = String.format("Undoing value : %s Value : %s", text, oldValue);
-        return undoString;
+        return String.format("Undoing value : %s Value : %s", text, oldValue);
     }
 
     /*
@@ -189,7 +188,6 @@ public class UndoEvent implements UndoInterface {
     @Override
     public String getRedoString() {
         String text = (customText != null) ? customText : fieldId.toString();
-        String redoString = String.format("Redoing value : %s Value : %s", text, newValue);
-        return redoString;
+        return String.format("Redoing value : %s Value : %s", text, newValue);
     }
 }

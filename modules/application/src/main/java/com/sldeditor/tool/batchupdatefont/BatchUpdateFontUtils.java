@@ -39,6 +39,11 @@ import org.geotools.styling.TextSymbolizer;
  */
 public class BatchUpdateFontUtils {
 
+    /** // Default private constructor */
+    private BatchUpdateFontUtils() {
+        // Default private constructor
+    }
+
     /**
      * Contains font details.
      *
@@ -48,44 +53,37 @@ public class BatchUpdateFontUtils {
     public static List<BatchUpdateFontData> containsFonts(SLDDataInterface sldData) {
 
         List<BatchUpdateFontData> dataList = null;
-        if (sldData != null) {
-            StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
 
-            if (sld != null) {
-                List<StyledLayer> styledLayerList = sld.layers();
+        StyledLayerDescriptor sld = SLDUtils.createSLDFromString(sldData);
 
-                if (sld != null) {
-                    for (StyledLayer styledLayer : styledLayerList) {
-                        if (styledLayer instanceof NamedLayerImpl) {
-                            NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
+        if (sld != null) {
+            List<StyledLayer> styledLayerList = sld.layers();
 
-                            for (Style style : namedLayerImpl.styles()) {
-                                for (FeatureTypeStyle fts : style.featureTypeStyles()) {
-                                    for (Rule rule : fts.rules()) {
-                                        for (Symbolizer symbolizer : rule.symbolizers()) {
-                                            if (symbolizer instanceof TextSymbolizer) {
-                                                TextSymbolizer textSymbol =
-                                                        (TextSymbolizer) symbolizer;
-                                                Font font = textSymbol.getFont();
-                                                if (font != null) {
-                                                    if (dataList == null) {
-                                                        dataList =
-                                                                new ArrayList<
-                                                                        BatchUpdateFontData>();
-                                                    }
-                                                    BatchUpdateFontData fontSLDData =
-                                                            new BatchUpdateFontData(sld, sldData);
+            for (StyledLayer styledLayer : styledLayerList) {
+                if (styledLayer instanceof NamedLayerImpl) {
+                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
 
-                                                    fontSLDData.setNamedLayer(
-                                                            namedLayerImpl.getName());
-                                                    fontSLDData.setFeatureTypeStyle(fts.getName());
-                                                    fontSLDData.setStyle(style.getName());
-                                                    fontSLDData.setRule(rule);
-                                                    fontSLDData.setSymbolizer(textSymbol);
-                                                    fontSLDData.setFont(font);
-                                                    dataList.add(fontSLDData);
-                                                }
+                    for (Style style : namedLayerImpl.styles()) {
+                        for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                            for (Rule rule : fts.rules()) {
+                                for (Symbolizer symbolizer : rule.symbolizers()) {
+                                    if (symbolizer instanceof TextSymbolizer) {
+                                        TextSymbolizer textSymbol = (TextSymbolizer) symbolizer;
+                                        Font font = textSymbol.getFont();
+                                        if (font != null) {
+                                            if (dataList == null) {
+                                                dataList = new ArrayList<>();
                                             }
+                                            BatchUpdateFontData fontSLDData =
+                                                    new BatchUpdateFontData(sld, sldData);
+
+                                            fontSLDData.setNamedLayer(namedLayerImpl.getName());
+                                            fontSLDData.setFeatureTypeStyle(fts.getName());
+                                            fontSLDData.setStyle(style.getName());
+                                            fontSLDData.setRule(rule);
+                                            fontSLDData.setSymbolizer(textSymbol);
+                                            fontSLDData.setFont(font);
+                                            dataList.add(fontSLDData);
                                         }
                                     }
                                 }

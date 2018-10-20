@@ -34,10 +34,10 @@ import org.apache.log4j.Logger;
 public class UndoManager {
 
     /** The listener list. */
-    private List<UndoStateInterface> listenerList = new ArrayList<UndoStateInterface>();
+    private List<UndoStateInterface> listenerList = new ArrayList<>();
 
     /** The undo list. */
-    private List<UndoInterface> undoList = new ArrayList<UndoInterface>();
+    private List<UndoInterface> undoList = new ArrayList<>();
 
     /** The instance. */
     private static UndoManager instance = null;

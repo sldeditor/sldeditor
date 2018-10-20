@@ -49,12 +49,12 @@ public class ColourButton extends JButton {
     private static final long serialVersionUID = 1L;
 
     /** The observers. */
-    private ArrayList<ColourNotifyInterface> observers = new ArrayList<ColourNotifyInterface>();
+    private ArrayList<ColourNotifyInterface> observers = new ArrayList<>();
 
     /** The colour. */
     private Color colour = Color.BLACK;
 
-    private BufferedImage image = null;
+    private transient BufferedImage image = null;
 
     /** Instantiates a new colour button. */
     public ColourButton() {

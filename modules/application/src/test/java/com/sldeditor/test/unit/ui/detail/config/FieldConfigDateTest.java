@@ -51,7 +51,7 @@ public class FieldConfigDateTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.FieldConfigDate#internal_setEnabled(boolean)}. Test method for
+     * com.sldeditor.ui.detail.config.FieldConfigDate#internalSetEnabled(boolean)}. Test method for
      * {@link com.sldeditor.ui.detail.config.FieldConfigDate#isEnabled()}. Test method for {@link
      * com.sldeditor.ui.detail.config.FieldConfigDate#createUI(javax.swing.Box)}.
      */
@@ -66,7 +66,7 @@ public class FieldConfigDateTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -76,7 +76,7 @@ public class FieldConfigDateTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
 
@@ -89,7 +89,7 @@ public class FieldConfigDateTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -98,7 +98,7 @@ public class FieldConfigDateTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(!expectedValue, field2.isEnabled());
@@ -163,8 +163,6 @@ public class FieldConfigDateTest {
         field.populateExpression("invalid date");
 
         // Increase code coverage
-        @SuppressWarnings("unused")
-        DateUtils x = new DateUtils();
         assertNull(DateUtils.getZonedDateTime(null));
         assertNull(DateUtils.getZonedDateTime("invalid date"));
         assertNull(DateUtils.getZonedDateTime("20A2-05-01T23:13:26+05:00"));

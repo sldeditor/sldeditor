@@ -13,11 +13,11 @@ public class FieldEnableState {
 
     /** The enabled field state map. */
     private Map<String, Map<String, Map<FieldIdEnum, Boolean>>> enabledFieldStateMap =
-            new HashMap<String, Map<String, Map<FieldIdEnum, Boolean>>>();
+            new HashMap<>();
 
     /** The enabled group state map. */
     private Map<String, Map<String, Map<GroupIdEnum, Boolean>>> enabledGroupStateMap =
-            new HashMap<String, Map<String, Map<GroupIdEnum, Boolean>>>();
+            new HashMap<>();
 
     /**
      * Adds the for the given panel the field enable state for a menu option.
@@ -38,7 +38,7 @@ public class FieldEnableState {
                 enabledFieldStateMap.get(panelName);
 
         if (menuOptionFieldMap == null) {
-            menuOptionFieldMap = new HashMap<String, Map<FieldIdEnum, Boolean>>();
+            menuOptionFieldMap = new HashMap<>();
             enabledFieldStateMap.put(panelName, menuOptionFieldMap);
         }
 
@@ -48,7 +48,7 @@ public class FieldEnableState {
         Map<String, Map<GroupIdEnum, Boolean>> menuOptionGroupMap =
                 enabledGroupStateMap.get(panelName);
         if (menuOptionGroupMap == null) {
-            menuOptionGroupMap = new HashMap<String, Map<GroupIdEnum, Boolean>>();
+            menuOptionGroupMap = new HashMap<>();
             enabledGroupStateMap.put(panelName, menuOptionGroupMap);
         }
 

@@ -92,9 +92,6 @@ public class ExpressionPanelv2 extends JDialog
     /** The expression panel. */
     private ExpressionSubPanel expressionPanel = null;
 
-    /** The filter panel. */
-    private FilterSubPanel filterPanel = null;
-
     /** The literal panel. */
     private LiteralPanel literalPanel = null;
 
@@ -204,7 +201,7 @@ public class ExpressionPanelv2 extends JDialog
         dataPanel.add(emptyPanel, EMPTY_PANEL);
         expressionPanel = new ExpressionSubPanel(this);
         dataPanel.add(expressionPanel, ExpressionSubPanel.class.getName());
-        filterPanel = new FilterSubPanel(this);
+        FilterSubPanel filterPanel = new FilterSubPanel(this);
         dataPanel.add(filterPanel, FilterSubPanel.class.getName());
         literalPanel = new LiteralPanel(this);
         dataPanel.add(literalPanel, LiteralPanel.class.getName());
@@ -248,13 +245,13 @@ public class ExpressionPanelv2 extends JDialog
         getContentPane().add(resultPanel, BorderLayout.NORTH);
         resultPanel.setLayout(new BorderLayout(0, 0));
 
-        JScrollPane scrollPane_1 = new JScrollPane();
-        scrollPane_1.setPreferredSize(new Dimension(800, 30));
-        resultPanel.add(scrollPane_1);
+        JScrollPane scrollPane1 = new JScrollPane();
+        scrollPane1.setPreferredSize(new Dimension(800, 30));
+        resultPanel.add(scrollPane1);
 
         textArea = new JTextArea();
         textArea.setEditable(false);
-        scrollPane_1.setViewportView(textArea);
+        scrollPane1.setViewportView(textArea);
     }
 
     /**
@@ -358,16 +355,16 @@ public class ExpressionPanelv2 extends JDialog
      * @return the expression
      */
     private Expression addExpression(ExpressionNode node) {
-        Expression expression = node.getExpression();
+        Expression localExpression = node.getExpression();
 
-        if (expression instanceof LiteralExpressionImpl) {
-            return expression;
-        } else if (expression instanceof AttributeExpressionImpl) {
-            return expression;
-        } else if (expression instanceof FunctionExpressionImpl) {
-            FunctionExpressionImpl functionExpression = (FunctionExpressionImpl) expression;
+        if (localExpression instanceof LiteralExpressionImpl) {
+            return localExpression;
+        } else if (localExpression instanceof AttributeExpressionImpl) {
+            return localExpression;
+        } else if (localExpression instanceof FunctionExpressionImpl) {
+            FunctionExpressionImpl functionExpression = (FunctionExpressionImpl) localExpression;
 
-            List<Expression> parameterlist = new ArrayList<Expression>();
+            List<Expression> parameterlist = new ArrayList<>();
             for (int childIndex = 0; childIndex < node.getChildCount(); childIndex++) {
                 ExpressionNode childNode = (ExpressionNode) node.getChildAt(childIndex);
 
@@ -377,17 +374,17 @@ public class ExpressionPanelv2 extends JDialog
             functionExpression.setParameters(parameterlist);
 
             return functionExpression;
-        } else if (expression instanceof MathExpressionImpl) {
-            MathExpressionImpl mathExpression = (MathExpressionImpl) expression;
+        } else if (localExpression instanceof MathExpressionImpl) {
+            MathExpressionImpl mathExpression = (MathExpressionImpl) localExpression;
             ExpressionNode leftChildNode = (ExpressionNode) node.getChildAt(0);
             mathExpression.setExpression1(addExpression(leftChildNode));
             ExpressionNode rightChildNode = (ExpressionNode) node.getChildAt(1);
             mathExpression.setExpression2(addExpression(rightChildNode));
 
             return mathExpression;
-        } else if (expression instanceof ConcatenateFunction) {
-            ConcatenateFunction concatenateExpression = (ConcatenateFunction) expression;
-            List<Expression> parameters = new ArrayList<Expression>();
+        } else if (localExpression instanceof ConcatenateFunction) {
+            ConcatenateFunction concatenateExpression = (ConcatenateFunction) localExpression;
+            List<Expression> parameters = new ArrayList<>();
             for (int index = 0; index < node.getChildCount(); index++) {
                 ExpressionNode expressionNode = (ExpressionNode) node.getChildAt(0);
                 parameters.add(addExpression(expressionNode));

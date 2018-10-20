@@ -408,19 +408,15 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
         if (undoRedoObject != null) {
             switch (undoRedoObject.getFieldId()) {
                 case COLOUR_RAMP_COLOUR:
-                    {
-                        int oldValue = ((Integer) undoRedoObject.getOldValue()).intValue();
+                    int oldValue = ((Integer) undoRedoObject.getOldValue()).intValue();
 
-                        rampComboBox.setSelectedIndex(oldValue);
-                    }
+                    rampComboBox.setSelectedIndex(oldValue);
                     break;
                 case COLOUR_RAMP_REVERSE:
-                    {
-                        Boolean oldValueObj = (Boolean) undoRedoObject.getOldValue();
+                    Boolean oldValueObj = (Boolean) undoRedoObject.getOldValue();
 
-                        reverseCheckbox.setSelected(oldValueObj.booleanValue());
-                        reverseColourRamp(oldValueObj.booleanValue());
-                    }
+                    reverseCheckbox.setSelected(oldValueObj.booleanValue());
+                    reverseColourRamp(oldValueObj.booleanValue());
                     break;
                 default:
                     break;
@@ -439,19 +435,15 @@ public class ColourRampPanel implements ColourRampPanelInterface, UndoActionInte
         if (undoRedoObject != null) {
             switch (undoRedoObject.getFieldId()) {
                 case COLOUR_RAMP_COLOUR:
-                    {
-                        int newValue = ((Integer) undoRedoObject.getNewValue()).intValue();
+                    int newValue = ((Integer) undoRedoObject.getNewValue()).intValue();
 
-                        rampComboBox.setSelectedIndex(newValue);
-                    }
+                    rampComboBox.setSelectedIndex(newValue);
                     break;
                 case COLOUR_RAMP_REVERSE:
-                    {
-                        Boolean newValueObj = (Boolean) undoRedoObject.getNewValue();
+                    Boolean newValueObj = (Boolean) undoRedoObject.getNewValue();
 
-                        reverseCheckbox.setSelected(newValueObj.booleanValue());
-                        reverseColourRamp(newValueObj.booleanValue());
-                    }
+                    reverseCheckbox.setSelected(newValueObj.booleanValue());
+                    reverseColourRamp(newValueObj.booleanValue());
                     break;
                 default:
                     break;

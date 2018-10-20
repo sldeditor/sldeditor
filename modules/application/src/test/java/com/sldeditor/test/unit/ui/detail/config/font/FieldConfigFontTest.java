@@ -70,8 +70,8 @@ public class FieldConfigFontTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.font.FieldConfigFont#internal_setEnabled(boolean)}. Test
-     * method for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#isEnabled()}.
+     * com.sldeditor.ui.detail.config.font.FieldConfigFont#internalSetEnabled(boolean)}. Test method
+     * for {@link com.sldeditor.ui.detail.config.font.FieldConfigFont#isEnabled()}.
      */
     @Test
     public void testSetEnabled() {
@@ -84,7 +84,7 @@ public class FieldConfigFontTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -94,7 +94,7 @@ public class FieldConfigFontTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
 
@@ -107,7 +107,7 @@ public class FieldConfigFontTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -116,7 +116,7 @@ public class FieldConfigFontTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(!expectedValue, field2.isEnabled());

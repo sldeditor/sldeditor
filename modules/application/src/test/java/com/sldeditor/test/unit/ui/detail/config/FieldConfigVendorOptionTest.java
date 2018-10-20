@@ -50,7 +50,7 @@ public class FieldConfigVendorOptionTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.FieldConfigVendorOption#internal_setEnabled(boolean)}. Test
+     * com.sldeditor.ui.detail.config.FieldConfigVendorOption#internalSetEnabled(boolean)}. Test
      * method for {@link com.sldeditor.ui.detail.config.FieldConfigVendorOption#isEnabled()}. Test
      * method for {@link com.sldeditor.ui.detail.config.FieldConfigVendorOption#createUI()}.
      */
@@ -67,7 +67,7 @@ public class FieldConfigVendorOptionTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -76,7 +76,7 @@ public class FieldConfigVendorOptionTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertTrue(field.isEnabled());
 
@@ -90,7 +90,7 @@ public class FieldConfigVendorOptionTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
         assertTrue(field2.isEnabled());
 
         // Create text field
@@ -99,7 +99,7 @@ public class FieldConfigVendorOptionTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
 
         assertTrue(field2.isEnabled());
     }

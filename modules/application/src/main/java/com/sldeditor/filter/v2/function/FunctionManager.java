@@ -39,7 +39,6 @@ import org.locationtech.jts.geom.MultiPoint;
 import org.locationtech.jts.geom.Point;
 import org.opengis.filter.capability.FunctionName;
 import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Function;
 import org.opengis.filter.expression.Literal;
 
 /**
@@ -53,16 +52,16 @@ public class FunctionManager implements FunctionNameInterface {
     private static FunctionNameInterface instance = null;
 
     /** The function name list. */
-    private List<FunctionName> functionNameList = new ArrayList<FunctionName>();
+    private List<FunctionName> functionNameList = new ArrayList<>();
 
     /** The function name map. */
-    private Map<String, FunctionName> functionNameMap = new HashMap<String, FunctionName>();
+    private Map<String, FunctionName> functionNameMap = new HashMap<>();
 
     /** The function factory. */
     private DefaultFunctionFactory functionFactory = new DefaultFunctionFactory();
 
     /** The allowed type map. */
-    private Map<Class<?>, List<Class<?>>> allowedTypeMap = new HashMap<Class<?>, List<Class<?>>>();
+    private Map<Class<?>, List<Class<?>>> allowedTypeMap = new HashMap<>();
 
     /**
      * Gets the single instance of FunctionManager.
@@ -85,7 +84,7 @@ public class FunctionManager implements FunctionNameInterface {
     /** Initialise. */
     private void initialise() {
         functionNameList = functionFactory.getFunctionNames();
-        List<Class<?>> classList = new ArrayList<Class<?>>();
+        List<Class<?>> classList = new ArrayList<>();
 
         Logger logger = Logger.getLogger(getClass());
 
@@ -212,11 +211,11 @@ public class FunctionManager implements FunctionNameInterface {
         }
 
         if (functionNameFilterList == null) {
-            functionNameFilterList = new ArrayList<FunctionNameFilterInterface>();
+            functionNameFilterList = new ArrayList<>();
             functionNameFilterList.add(new FunctionNameFilterAll());
         }
 
-        List<FunctionName> list = new ArrayList<FunctionName>();
+        List<FunctionName> list = new ArrayList<>();
 
         List<Class<?>> allowedTypes = allowedTypeMap.get(expectedType);
         if (allowedTypes != null) {
@@ -261,15 +260,12 @@ public class FunctionManager implements FunctionNameInterface {
             return null;
         }
 
-        List<Expression> parameters = new ArrayList<Expression>();
+        List<Expression> parameters = new ArrayList<>();
         Literal fallback = null;
 
         FunctionExpressionInterface.createNewFunction(functionName, parameters);
 
-        Function function =
-                functionFactory.function(functionName.getFunctionName(), parameters, fallback);
-
-        return function;
+        return functionFactory.function(functionName.getFunctionName(), parameters, fallback);
     }
 
     /**
@@ -282,7 +278,9 @@ public class FunctionManager implements FunctionNameInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.filter.v2.function.FunctionNameInterface#createExpression(org.opengis.filter.capability.FunctionName, java.util.List)
+     * @see
+     * com.sldeditor.filter.v2.function.FunctionNameInterface#createExpression(org.opengis.filter.
+     * capability.FunctionName, java.util.List)
      */
     @Override
     public Expression createExpression(FunctionName functionName, List<Expression> argumentList) {
@@ -291,10 +289,7 @@ public class FunctionManager implements FunctionNameInterface {
         }
 
         Literal fallback = null;
-        Function function =
-                functionFactory.function(functionName.getFunctionName(), argumentList, fallback);
-
-        return function;
+        return functionFactory.function(functionName.getFunctionName(), argumentList, fallback);
     }
 
     /**

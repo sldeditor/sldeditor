@@ -69,7 +69,7 @@ public class ExternalGraphicDetails extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The parent obj. */
-    private ExternalGraphicUpdateInterface parentObj = null;
+    private transient ExternalGraphicUpdateInterface parentObj = null;
 
     /** The external url. */
     private URL externalURL = null;
@@ -78,7 +78,7 @@ public class ExternalGraphicDetails extends StandardPanel
     private String lastURLValue = "";
 
     /** The old value obj. */
-    private Object oldValueObj = null;
+    private transient Object oldValueObj = null;
 
     /** The display relative paths flag. */
     private boolean useRelativePaths = true;
@@ -243,9 +243,7 @@ public class ExternalGraphicDetails extends StandardPanel
     public Expression getExpression() {
         String string = fieldConfigVisitor.getText(FieldIdEnum.EXTERNAL_GRAPHIC);
 
-        Expression expression = getFilterFactory().literal(string);
-
-        return expression;
+        return getFilterFactory().literal(string);
     }
 
     /** Revert to default value. */

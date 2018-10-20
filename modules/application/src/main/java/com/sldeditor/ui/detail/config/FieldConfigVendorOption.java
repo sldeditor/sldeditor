@@ -164,7 +164,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         // Do nothing
     }
 
@@ -229,7 +229,7 @@ public class FieldConfigVendorOption extends FieldConfigBase
     public FieldConfigBase createCopy(FieldConfigBase fieldConfigBase) {
         FieldConfigVendorOption copy = null;
 
-        if ((fieldConfigBase != null) && (fieldConfigBase instanceof FieldConfigVendorOption)) {
+        if (fieldConfigBase instanceof FieldConfigVendorOption) {
             FieldConfigVendorOption existing = (FieldConfigVendorOption) fieldConfigBase;
             copy = new FieldConfigVendorOption(existing.getCommonData(), existing.veList);
         }

@@ -71,13 +71,13 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
     private boolean optional = false;
 
     /** The option map. */
-    private Map<String, OptionGroup> optionMap = new HashMap<String, OptionGroup>();
+    private Map<String, OptionGroup> optionMap = new HashMap<>();
 
     /** The option list. */
-    private List<OptionGroup> optionList = new ArrayList<OptionGroup>();
+    private List<OptionGroup> optionList = new ArrayList<>();
 
     /** The option field list. */
-    private List<FieldConfigBase> optionFieldList = new ArrayList<FieldConfigBase>();
+    private List<FieldConfigBase> optionFieldList = new ArrayList<>();
 
     /** The combo box. */
     private ValueComboBox comboBox;
@@ -225,7 +225,7 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
         }
 
         // Set up options in the drop down
-        List<ValueComboBoxData> valueComboDataMap = new ArrayList<ValueComboBoxData>();
+        List<ValueComboBoxData> valueComboDataMap = new ArrayList<>();
 
         for (OptionGroup optionGroup : optionList) {
             valueComboDataMap.add(
@@ -402,7 +402,9 @@ public class MultiOptionGroup implements GroupConfigInterface, UndoActionInterfa
      * @see com.sldeditor.ui.detail.config.GroupConfigInterface#createTitle(javax.swing.Box)
      */
     @Override
-    public void createTitle(Box textPanel, UpdateSymbolInterface parent) {}
+    public void createTitle(Box textPanel, UpdateSymbolInterface parent) {
+        // Not used
+    }
 
     /**
      * Enable.

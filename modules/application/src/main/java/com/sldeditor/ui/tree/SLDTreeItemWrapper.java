@@ -23,12 +23,17 @@ import org.apache.commons.lang.ObjectUtils;
 
 /**
  * The Class SLDTreeItemWrapper, a wrapper for any class. The return string allows the
- * differentation of object instances even if the object contents are the same. Need to find the
+ * differentiation of object instances even if the object contents are the same. Need to find the
  * difference between 2 default text symbolizers for example.
  *
  * @author Robert Ward (SCISYS)
  */
 public class SLDTreeItemWrapper {
+
+    /** Private default constructor. */
+    private SLDTreeItemWrapper() {
+        // Private default constructor
+    }
 
     /** The Constant NULL_VALUE. */
     private static final String NULL_VALUE = "<null>";

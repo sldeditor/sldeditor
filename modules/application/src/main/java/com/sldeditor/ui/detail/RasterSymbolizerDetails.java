@@ -56,7 +56,7 @@ public class RasterSymbolizerDetails extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The vendor option raster factory. */
-    private VendorOptionRasterFactory vendorOptionRasterFactory = null;
+    private transient VendorOptionRasterFactory vendorOptionRasterFactory = null;
 
     /** Constructor. */
     public RasterSymbolizerDetails() {
@@ -114,119 +114,163 @@ public class RasterSymbolizerDetails extends StandardPanel
                         FieldIdEnum.RASTER_OPACITY, rasterSymbolizer.getOpacity());
 
                 // Contrast enhancement
-                ContrastEnhancement contrast = rasterSymbolizer.getContrastEnhancement();
-
-                GroupConfigInterface group = getGroup(GroupIdEnum.RASTER_CONTRAST);
-                if (group != null) {
-                    group.enable(contrast != null);
-                }
-                if (contrast != null) {
-                    Expression gammaValue = contrast.getGammaValue();
-                    fieldConfigVisitor.populateField(
-                            FieldIdEnum.RASTER_CONTRAST_GAMMAVALUE, gammaValue);
-
-                    populateContrastMethod(contrast, GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD);
-                }
+                populateContrastEnhancement(rasterSymbolizer);
 
                 // Channel selection
-                group = getGroup(GroupIdEnum.RASTER_CHANNELSELECTION);
-                if (group != null) {
-                    MultiOptionGroup channelSelectionGroup = (MultiOptionGroup) group;
-
-                    ChannelSelection channelSelection = rasterSymbolizer.getChannelSelection();
-
-                    boolean enableChannelSelection = false;
-
-                    if (channelSelection != null) {
-                        SelectedChannelType[] rgbChannels = channelSelection.getRGBChannels();
-
-                        enableChannelSelection =
-                                ((channelSelection.getGrayChannel() != null)
-                                        || (rgbChannels[0] != null)
-                                        || (rgbChannels[1] != null)
-                                        || (rgbChannels[2] != null));
-                    }
-                    channelSelectionGroup.enable(enableChannelSelection);
-                    if (enableChannelSelection) {
-                        SelectedChannelType greyChannel = channelSelection.getGrayChannel();
-                        if (greyChannel != null) {
-                            channelSelectionGroup.setOption(GroupIdEnum.RASTER_GREY_CHANNEL_OPTION);
-
-                            populateContrastEnhancementGroup(
-                                    GroupIdEnum.RASTER_GREY_CHANNEL,
-                                    GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST,
-                                    FieldIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA,
-                                    GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD,
-                                    greyChannel);
-                        } else {
-                            SelectedChannelType[] rgbChannels = channelSelection.getRGBChannels();
-
-                            channelSelectionGroup.setOption(GroupIdEnum.RASTER_RGB_CHANNEL_OPTION);
-
-                            populateContrastEnhancementGroup(
-                                    GroupIdEnum.RASTER_RGB_CHANNEL_RED,
-                                    GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST,
-                                    FieldIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA,
-                                    GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD,
-                                    rgbChannels[0]);
-
-                            populateContrastEnhancementGroup(
-                                    GroupIdEnum.RASTER_RGB_CHANNEL_GREEN,
-                                    GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST,
-                                    FieldIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA,
-                                    GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD,
-                                    rgbChannels[1]);
-
-                            populateContrastEnhancementGroup(
-                                    GroupIdEnum.RASTER_RGB_CHANNEL_BLUE,
-                                    GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST,
-                                    FieldIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA,
-                                    GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD,
-                                    rgbChannels[2]);
-                        }
-                    }
-                }
+                populateChannelSelection(rasterSymbolizer);
 
                 // Colour map
-                ColorMap colourMap = rasterSymbolizer.getColorMap();
-
-                fieldConfigVisitor.populateComboBoxField(
-                        FieldIdEnum.RASTER_COLOURMAP_TYPE,
-                        Integer.valueOf(colourMap.getType()).toString());
-                fieldConfigVisitor.populateColourMapField(FieldIdEnum.RASTER_COLOURMAP, colourMap);
+                populateColourMap(rasterSymbolizer);
 
                 // Shaded relief
-                ShadedRelief shadedRelief = rasterSymbolizer.getShadedRelief();
-
-                group = getGroup(GroupIdEnum.RASTER_SHADEDRELIEF);
-                if (group != null) {
-                    group.enable(shadedRelief != null);
-                }
-
-                if (shadedRelief != null) {
-                    fieldConfigVisitor.populateBooleanField(
-                            FieldIdEnum.RASTER_SHADEDRELIEF_BRIGHTNESS,
-                            shadedRelief.isBrightnessOnly());
-                    fieldConfigVisitor.populateField(
-                            FieldIdEnum.RASTER_SHADEDRELIEF_FACTOR, shadedRelief.getReliefFactor());
-                }
+                populateShadedRelief(rasterSymbolizer);
 
                 // Overlap behaviour
-                OverlapBehavior overlapBehaviour = rasterSymbolizer.getOverlapBehavior();
-
-                group = getGroup(GroupIdEnum.RASTER_OVERLAP);
-                if (group != null) {
-                    group.enable(overlapBehaviour != null);
-                }
-                if (overlapBehaviour != null) {
-                    fieldConfigVisitor.populateComboBoxField(
-                            FieldIdEnum.RASTER_OVERLAP_BEHAVIOUR, overlapBehaviour.name());
-                }
+                populateOverlapBehavior(rasterSymbolizer);
 
                 if (vendorOptionRasterFactory != null) {
                     vendorOptionRasterFactory.populate(rasterSymbolizer);
                 }
             }
+        }
+    }
+
+    /**
+     * Populate overlap behavior.
+     *
+     * @param rasterSymbolizer the raster symbolizer
+     */
+    private void populateOverlapBehavior(RasterSymbolizer rasterSymbolizer) {
+        OverlapBehavior overlapBehaviour = rasterSymbolizer.getOverlapBehavior();
+
+        GroupConfigInterface group = getGroup(GroupIdEnum.RASTER_OVERLAP);
+        if (group != null) {
+            group.enable(overlapBehaviour != null);
+        }
+        if (overlapBehaviour != null) {
+            fieldConfigVisitor.populateComboBoxField(
+                    FieldIdEnum.RASTER_OVERLAP_BEHAVIOUR, overlapBehaviour.name());
+        }
+    }
+
+    /**
+     * Populate shaded relief.
+     *
+     * @param rasterSymbolizer the raster symbolizer
+     */
+    private void populateShadedRelief(RasterSymbolizer rasterSymbolizer) {
+        GroupConfigInterface group;
+        ShadedRelief shadedRelief = rasterSymbolizer.getShadedRelief();
+
+        group = getGroup(GroupIdEnum.RASTER_SHADEDRELIEF);
+        if (group != null) {
+            group.enable(shadedRelief != null);
+        }
+
+        if (shadedRelief != null) {
+            fieldConfigVisitor.populateBooleanField(
+                    FieldIdEnum.RASTER_SHADEDRELIEF_BRIGHTNESS, shadedRelief.isBrightnessOnly());
+            fieldConfigVisitor.populateField(
+                    FieldIdEnum.RASTER_SHADEDRELIEF_FACTOR, shadedRelief.getReliefFactor());
+        }
+    }
+
+    /**
+     * Populate colour map.
+     *
+     * @param rasterSymbolizer the raster symbolizer
+     */
+    private void populateColourMap(RasterSymbolizer rasterSymbolizer) {
+        ColorMap colourMap = rasterSymbolizer.getColorMap();
+
+        fieldConfigVisitor.populateComboBoxField(
+                FieldIdEnum.RASTER_COLOURMAP_TYPE, Integer.toString(colourMap.getType()));
+        fieldConfigVisitor.populateColourMapField(FieldIdEnum.RASTER_COLOURMAP, colourMap);
+    }
+
+    /**
+     * Populate channel selection.
+     *
+     * @param rasterSymbolizer the raster symbolizer
+     */
+    private void populateChannelSelection(RasterSymbolizer rasterSymbolizer) {
+        GroupConfigInterface group;
+        group = getGroup(GroupIdEnum.RASTER_CHANNELSELECTION);
+        if (group != null) {
+            MultiOptionGroup channelSelectionGroup = (MultiOptionGroup) group;
+
+            ChannelSelection channelSelection = rasterSymbolizer.getChannelSelection();
+
+            boolean enableChannelSelection = false;
+
+            if (channelSelection != null) {
+                SelectedChannelType[] rgbChannels = channelSelection.getRGBChannels();
+
+                enableChannelSelection =
+                        ((channelSelection.getGrayChannel() != null)
+                                || (rgbChannels[0] != null)
+                                || (rgbChannels[1] != null)
+                                || (rgbChannels[2] != null));
+            }
+            channelSelectionGroup.enable(enableChannelSelection);
+            if (enableChannelSelection) {
+                SelectedChannelType greyChannel = channelSelection.getGrayChannel();
+                if (greyChannel != null) {
+                    channelSelectionGroup.setOption(GroupIdEnum.RASTER_GREY_CHANNEL_OPTION);
+
+                    populateContrastEnhancementGroup(
+                            GroupIdEnum.RASTER_GREY_CHANNEL,
+                            GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST,
+                            FieldIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_GAMMA,
+                            GroupIdEnum.RASTER_RGB_CHANNEL_GREY_CONTRAST_METHOD,
+                            greyChannel);
+                } else {
+                    SelectedChannelType[] rgbChannels = channelSelection.getRGBChannels();
+
+                    channelSelectionGroup.setOption(GroupIdEnum.RASTER_RGB_CHANNEL_OPTION);
+
+                    populateContrastEnhancementGroup(
+                            GroupIdEnum.RASTER_RGB_CHANNEL_RED,
+                            GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST,
+                            FieldIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_GAMMA,
+                            GroupIdEnum.RASTER_RGB_CHANNEL_RED_CONTRAST_METHOD,
+                            rgbChannels[0]);
+
+                    populateContrastEnhancementGroup(
+                            GroupIdEnum.RASTER_RGB_CHANNEL_GREEN,
+                            GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST,
+                            FieldIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_GAMMA,
+                            GroupIdEnum.RASTER_RGB_CHANNEL_GREEN_CONTRAST_METHOD,
+                            rgbChannels[1]);
+
+                    populateContrastEnhancementGroup(
+                            GroupIdEnum.RASTER_RGB_CHANNEL_BLUE,
+                            GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST,
+                            FieldIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_GAMMA,
+                            GroupIdEnum.RASTER_RGB_CHANNEL_BLUE_CONTRAST_METHOD,
+                            rgbChannels[2]);
+                }
+            }
+        }
+    }
+
+    /**
+     * Populate contrast enhancement.
+     *
+     * @param rasterSymbolizer the raster symbolizer
+     */
+    private void populateContrastEnhancement(RasterSymbolizer rasterSymbolizer) {
+        ContrastEnhancement contrast = rasterSymbolizer.getContrastEnhancement();
+
+        GroupConfigInterface group = getGroup(GroupIdEnum.RASTER_CONTRAST);
+        if (group != null) {
+            group.enable(contrast != null);
+        }
+        if (contrast != null) {
+            Expression gammaValue = contrast.getGammaValue();
+            fieldConfigVisitor.populateField(FieldIdEnum.RASTER_CONTRAST_GAMMAVALUE, gammaValue);
+
+            populateContrastMethod(contrast, GroupIdEnum.RASTER_OVERALL_CONTRAST_METHOD);
         }
     }
 
@@ -298,6 +342,67 @@ public class RasterSymbolizerDetails extends StandardPanel
         // Contrast enhancement
         Expression gammaValueExpression =
                 fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_CONTRAST_GAMMAVALUE);
+
+        ContrastEnhancement contrastEnhancement = updateContrastEnhancement(gammaValueExpression);
+
+        // Colour map
+        ColorMap colorMap = updateColourMap();
+
+        // Channel selection
+        ChannelSelection channelSelection = updateEnhancementGroup();
+
+        //
+        // Overlap
+        //
+        OverlapBehavior overlapBehavior = updateOverlapBehavior();
+
+        //
+        // Shaded relief
+        //
+        ShadedRelief shadedRelief = updateShadedRelief();
+
+        Symbolizer symbolizer = null;
+
+        StandardData standardData = getStandardData();
+
+        Expression opacityExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_OPACITY);
+
+        // Geometry field
+        Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
+
+        RasterSymbolizer rasterSymbolizer =
+                getStyleFactory()
+                        .rasterSymbolizer(
+                                standardData.getName(),
+                                geometryField,
+                                standardData.getDescription(),
+                                (standardData.getUnit() != null)
+                                        ? standardData.getUnit().getUnit()
+                                        : null,
+                                opacityExpression,
+                                channelSelection,
+                                overlapBehavior,
+                                colorMap,
+                                contrastEnhancement,
+                                shadedRelief,
+                                symbolizer);
+
+        if (vendorOptionRasterFactory != null) {
+            vendorOptionRasterFactory.updateSymbol(rasterSymbolizer);
+        }
+        rasterSymbolizer.setOverlapBehavior(overlapBehavior);
+        SelectedSymbol.getInstance().replaceSymbolizer(rasterSymbolizer);
+
+        this.fireUpdateSymbol();
+    }
+
+    /**
+     * Update contrast enhancement.
+     *
+     * @param gammaValueExpression the gamma value expression
+     * @return the contrast enhancement
+     */
+    private ContrastEnhancement updateContrastEnhancement(Expression gammaValueExpression) {
         ContrastEnhancement contrastEnhancement = null;
 
         GroupConfigInterface group = getGroup(GroupIdEnum.RASTER_CONTRAST);
@@ -318,15 +423,67 @@ public class RasterSymbolizerDetails extends StandardPanel
                     (ContrastEnhancement)
                             getStyleFactory().contrastEnhancement(gammaValueExpression, method);
         }
+        return contrastEnhancement;
+    }
 
-        // Colour map
+    /**
+     * Update colour map.
+     *
+     * @return the color map
+     */
+    private ColorMap updateColourMap() {
         ColorMap colorMap = fieldConfigVisitor.getColourMap(FieldIdEnum.RASTER_COLOURMAP);
         ValueComboBoxData colourMapType =
                 fieldConfigVisitor.getComboBox(FieldIdEnum.RASTER_COLOURMAP_TYPE);
 
         colorMap.setType(Integer.valueOf(colourMapType.getKey()));
+        return colorMap;
+    }
 
-        // Channel selection
+    /**
+     * Update overlap behavior.
+     *
+     * @return the overlap behavior
+     */
+    private OverlapBehavior updateOverlapBehavior() {
+        GroupConfigInterface group;
+        OverlapBehavior overlapBehavior = null;
+        group = getGroup(GroupIdEnum.RASTER_OVERLAP);
+        if (group.isPanelEnabled()) {
+            ValueComboBoxData overlapBehaviorValue =
+                    fieldConfigVisitor.getComboBox(FieldIdEnum.RASTER_OVERLAP_BEHAVIOUR);
+
+            overlapBehavior = OverlapBehavior.valueOf(overlapBehaviorValue.getKey());
+        }
+        return overlapBehavior;
+    }
+
+    /**
+     * Update shaded relief.
+     *
+     * @return the shaded relief
+     */
+    private ShadedRelief updateShadedRelief() {
+        GroupConfigInterface group;
+        ShadedRelief shadedRelief = null;
+        group = getGroup(GroupIdEnum.RASTER_SHADEDRELIEF);
+        if (group.isPanelEnabled()) {
+            shadedRelief = new ShadedReliefImpl();
+            shadedRelief.setBrightnessOnly(
+                    fieldConfigVisitor.getBoolean(FieldIdEnum.RASTER_SHADEDRELIEF_BRIGHTNESS));
+            shadedRelief.setReliefFactor(
+                    fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_SHADEDRELIEF_FACTOR));
+        }
+        return shadedRelief;
+    }
+
+    /**
+     * Update enhancement group.
+     *
+     * @return the channel selection
+     */
+    private ChannelSelection updateEnhancementGroup() {
+        GroupConfigInterface group;
         ChannelSelection channelSelection = null;
         group = getGroup(GroupIdEnum.RASTER_CHANNELSELECTION);
         if (group != null) {
@@ -374,65 +531,7 @@ public class RasterSymbolizerDetails extends StandardPanel
                 }
             }
         }
-
-        //
-        // Overlap
-        //
-        OverlapBehavior overlapBehavior = null;
-        group = getGroup(GroupIdEnum.RASTER_OVERLAP);
-        if (group.isPanelEnabled()) {
-            ValueComboBoxData overlapBehaviorValue =
-                    fieldConfigVisitor.getComboBox(FieldIdEnum.RASTER_OVERLAP_BEHAVIOUR);
-
-            overlapBehavior = OverlapBehavior.valueOf(overlapBehaviorValue.getKey());
-        }
-
-        //
-        // Shaded relief
-        //
-        ShadedRelief shadedRelief = null;
-        group = getGroup(GroupIdEnum.RASTER_SHADEDRELIEF);
-        if (group.isPanelEnabled()) {
-            shadedRelief = new ShadedReliefImpl();
-            shadedRelief.setBrightnessOnly(
-                    fieldConfigVisitor.getBoolean(FieldIdEnum.RASTER_SHADEDRELIEF_BRIGHTNESS));
-            shadedRelief.setReliefFactor(
-                    fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_SHADEDRELIEF_FACTOR));
-        }
-        Symbolizer symbolizer = null;
-
-        StandardData standardData = getStandardData();
-
-        Expression opacityExpression = fieldConfigVisitor.getExpression(FieldIdEnum.RASTER_OPACITY);
-
-        // Geometry field
-        Expression geometryField = ExtractGeometryField.getGeometryField(fieldConfigVisitor);
-
-        RasterSymbolizer rasterSymbolizer =
-                (RasterSymbolizer)
-                        getStyleFactory()
-                                .rasterSymbolizer(
-                                        standardData.getName(),
-                                        geometryField,
-                                        standardData.getDescription(),
-                                        (standardData.getUnit() != null)
-                                                ? standardData.getUnit().getUnit()
-                                                : null,
-                                        opacityExpression,
-                                        channelSelection,
-                                        overlapBehavior,
-                                        colorMap,
-                                        contrastEnhancement,
-                                        shadedRelief,
-                                        symbolizer);
-
-        if (vendorOptionRasterFactory != null) {
-            vendorOptionRasterFactory.updateSymbol(rasterSymbolizer);
-        }
-        rasterSymbolizer.setOverlapBehavior(overlapBehavior);
-        SelectedSymbol.getInstance().replaceSymbolizer(rasterSymbolizer);
-
-        this.fireUpdateSymbol();
+        return channelSelection;
     }
 
     /**

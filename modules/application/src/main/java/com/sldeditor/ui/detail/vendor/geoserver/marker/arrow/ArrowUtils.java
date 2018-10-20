@@ -50,7 +50,12 @@ public class ArrowUtils {
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
     /** The default map. */
-    private static Map<String, Double> defaultMap = new HashMap<String, Double>();
+    private static Map<String, Double> defaultMap = new HashMap<>();
+
+    /** Private default constructor */
+    private ArrowUtils() {
+        // Private default constructor
+    }
 
     /**
      * Gets the arrow prefix.
@@ -71,18 +76,15 @@ public class ArrowUtils {
      */
     public static String encode(
             Expression hrExpression, Expression tValueExpression, Expression abExpression) {
-        String string =
-                String.format(
-                        "%s?%s=%s&%s=%s&%s=%s",
-                        ARROW_PREFIX,
-                        HEIGHT_OVER_WIDTH_ATTRIBUTE,
-                        getExpression(hrExpression, HEIGHT_OVER_WIDTH_ATTRIBUTE),
-                        ARROW_THICKNESS_ATTRIBUTE,
-                        getExpression(tValueExpression, ARROW_THICKNESS_ATTRIBUTE),
-                        HEAD_BASE_RATIO_ATTRIBUTE,
-                        getExpression(abExpression, HEAD_BASE_RATIO_ATTRIBUTE));
-
-        return string;
+        return String.format(
+                "%s?%s=%s&%s=%s&%s=%s",
+                ARROW_PREFIX,
+                HEIGHT_OVER_WIDTH_ATTRIBUTE,
+                getExpression(hrExpression, HEIGHT_OVER_WIDTH_ATTRIBUTE),
+                ARROW_THICKNESS_ATTRIBUTE,
+                getExpression(tValueExpression, ARROW_THICKNESS_ATTRIBUTE),
+                HEAD_BASE_RATIO_ATTRIBUTE,
+                getExpression(abExpression, HEAD_BASE_RATIO_ATTRIBUTE));
     }
 
     /**
@@ -121,10 +123,9 @@ public class ArrowUtils {
 
                 for (String attribute : attributes) {
                     String[] value = attribute.split("\\=");
-                    if (value.length == 2) {
-                        if (value[0].compareToIgnoreCase(requiredAttribute) == 0) {
-                            expression = ff.literal(value[1]);
-                        }
+                    if ((value.length == 2)
+                            && (value[0].compareToIgnoreCase(requiredAttribute) == 0)) {
+                        expression = ff.literal(value[1]);
                     }
                 }
             }
@@ -153,9 +154,7 @@ public class ArrowUtils {
      * @return the expression
      */
     public static Expression decodeArrowThickness(String string) {
-        Expression expression = getAttribute(ARROW_THICKNESS_ATTRIBUTE, string);
-
-        return expression;
+        return getAttribute(ARROW_THICKNESS_ATTRIBUTE, string);
     }
 
     /**
@@ -165,9 +164,7 @@ public class ArrowUtils {
      * @return the expression
      */
     public static Expression decodeHeightOverWidth(String string) {
-        Expression expression = getAttribute(HEIGHT_OVER_WIDTH_ATTRIBUTE, string);
-
-        return expression;
+        return getAttribute(HEIGHT_OVER_WIDTH_ATTRIBUTE, string);
     }
 
     /**
@@ -177,8 +174,6 @@ public class ArrowUtils {
      * @return the expression
      */
     public static Expression decodeHeadBaseRatio(String string) {
-        Expression expression = getAttribute(HEAD_BASE_RATIO_ATTRIBUTE, string);
-
-        return expression;
+        return getAttribute(HEAD_BASE_RATIO_ATTRIBUTE, string);
     }
 }

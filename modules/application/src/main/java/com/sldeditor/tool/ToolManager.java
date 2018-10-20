@@ -41,11 +41,10 @@ public class ToolManager implements ToolSelectionInterface {
     private static ToolManager instance = null;
 
     /** The tool map. */
-    private Map<Class<?>, List<ToolInterface>> toolMap =
-            new HashMap<Class<?>, List<ToolInterface>>();
+    private Map<Class<?>, List<ToolInterface>> toolMap = new HashMap<>();
 
     /** The unique tool map. */
-    private Map<Class<?>, ToolInterface> uniqueToolMap = new HashMap<Class<?>, ToolInterface>();
+    private Map<Class<?>, ToolInterface> uniqueToolMap = new HashMap<>();
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(ToolManager.class);
@@ -66,8 +65,7 @@ public class ToolManager implements ToolSelectionInterface {
     private boolean recursiveFlag = false;
 
     /** The recursive update listener. */
-    private List<RecursiveUpdateInterface> recursiveUpdateListenerList =
-            new ArrayList<RecursiveUpdateInterface>();
+    private List<RecursiveUpdateInterface> recursiveUpdateListenerList = new ArrayList<>();
 
     /** Default constructor. */
     private ToolManager() {
@@ -92,7 +90,7 @@ public class ToolManager implements ToolSelectionInterface {
         List<ToolInterface> toolList = toolMap.get(nodeType);
 
         if (toolList == null) {
-            toolList = new ArrayList<ToolInterface>();
+            toolList = new ArrayList<>();
             toolMap.put(nodeType, toolList);
         }
         toolList.add(uniqueTool);
@@ -161,7 +159,7 @@ public class ToolManager implements ToolSelectionInterface {
     private void forwardSelectedItems(
             List<NodeInterface> nodeTypeList, List<SLDDataInterface> sldDataList) {
         if (toolPanel != null) {
-            List<Class<?>> uniqueNodeTypeList = new ArrayList<Class<?>>();
+            List<Class<?>> uniqueNodeTypeList = new ArrayList<>();
             if (nodeTypeList != null) {
                 for (NodeInterface o : nodeTypeList) {
                     if (!uniqueNodeTypeList.contains(o.getClass())) {

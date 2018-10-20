@@ -47,14 +47,13 @@ public class VendorOptionInfoManager {
     }
 
     /** The instance map. */
-    private Map<Class<?>, InstanceData> instanceMap = new HashMap<Class<?>, InstanceData>();
+    private Map<Class<?>, InstanceData> instanceMap = new HashMap<>();
 
     /** The list of classes received data from. */
-    private List<Class<?>> receivedFromList = new ArrayList<Class<?>>();
+    private List<Class<?>> receivedFromList = new ArrayList<>();
 
     /** The vendor option factory list. */
-    private List<VendorOptionFactoryInterface> voFactoryList =
-            new ArrayList<VendorOptionFactoryInterface>();
+    private List<VendorOptionFactoryInterface> voFactoryList = new ArrayList<>();
 
     /** Instantiates a new vendor option info manager. */
     private VendorOptionInfoManager() {
@@ -102,7 +101,7 @@ public class VendorOptionInfoManager {
         if (data == null) {
             data = new InstanceData();
 
-            List<VendorOptionInfo> infoList = new ArrayList<VendorOptionInfo>();
+            List<VendorOptionInfo> infoList = new ArrayList<>();
 
             for (VendorOptionFactoryInterface vo : voFactoryList) {
                 List<VendorOptionInfo> vendorOptionInfoList = vo.getVendorOptionInfoList();
@@ -132,7 +131,7 @@ public class VendorOptionInfoManager {
                 data.infoModel.setSelectedVersion(versionData);
             }
 
-            List<VersionData> vendorOptionList = new ArrayList<VersionData>();
+            List<VersionData> vendorOptionList = new ArrayList<>();
             vendorOptionList.add(versionData);
 
             VendorOptionManager.getInstance().setSelectedVendorOptions(vendorOptionList);

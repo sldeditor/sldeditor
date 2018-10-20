@@ -42,7 +42,7 @@ public class WKTSegmentList {
             return wktPointList;
         }
 
-        List<WKTPoint> copyList = new ArrayList<WKTPoint>(wktPointList);
+        List<WKTPoint> copyList = new ArrayList<>(wktPointList);
 
         if (copyList.size() > 1) {
             if (copyList.get(0).equals(copyList.get(copyList.size() - 1))) {
@@ -69,7 +69,7 @@ public class WKTSegmentList {
      */
     public void addPoint(WKTPoint pointToAdd) {
         if (wktPointList == null) {
-            wktPointList = new ArrayList<WKTPoint>();
+            wktPointList = new ArrayList<>();
         }
 
         if (!wktPointList.isEmpty()) {
@@ -101,7 +101,7 @@ public class WKTSegmentList {
     public String getWKTString(boolean useBrackets, boolean makeFirstLastTheSame) {
         StringBuilder sb = new StringBuilder();
 
-        List<WKTPoint> copyList = new ArrayList<WKTPoint>(wktPointList);
+        List<WKTPoint> copyList = new ArrayList<>(wktPointList);
         if (makeFirstLastTheSame) {
             if (copyList.get(0) != copyList.get(copyList.size() - 1)) {
                 copyList.add(copyList.get(0));

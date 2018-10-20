@@ -41,6 +41,11 @@ public class SLDWriterFactory {
     /** The default writer. */
     private static SLDOutputFormatEnum defaultWriter = SLDOutputFormatEnum.SLD;
 
+    /** Private default constructor */
+    private SLDWriterFactory() {
+        // Private default constructor
+    }
+
     /**
      * Creates a new SLDWriter object.
      *
@@ -52,29 +57,56 @@ public class SLDWriterFactory {
             hint = defaultWriter;
         }
 
+        SLDWriterInterface writer;
         switch (hint) {
             case YSLD:
-                {
-                    if (ysldWriterImpl == null) {
-                        ysldWriterImpl = new YSLDWriterImpl();
-                    }
-                    return ysldWriterImpl;
-                }
+                writer = createYSLDWriter();
+                break;
             case MAPBOX:
-                {
-                    if (mapBoxWriterImpl == null) {
-                        mapBoxWriterImpl = new MapBoxWriterImpl();
-                    }
-                    return mapBoxWriterImpl;
-                }
+                writer = createMapBoxWriter();
+                break;
             case SLD:
             default:
-                {
-                    if (sldWriterImpl == null) {
-                        sldWriterImpl = new SLDWriterImpl();
-                    }
-                    return sldWriterImpl;
-                }
+                writer = createSLDWriter();
+                break;
         }
+
+        return writer;
+    }
+
+    /**
+     * Creates a new SLD Writer object.
+     *
+     * @return the SLD writer interface
+     */
+    private static SLDWriterInterface createSLDWriter() {
+        if (sldWriterImpl == null) {
+            sldWriterImpl = new SLDWriterImpl();
+        }
+        return sldWriterImpl;
+    }
+
+    /**
+     * Creates a new MapBox Writer object.
+     *
+     * @return the SLD writer interface
+     */
+    private static SLDWriterInterface createMapBoxWriter() {
+        if (mapBoxWriterImpl == null) {
+            mapBoxWriterImpl = new MapBoxWriterImpl();
+        }
+        return mapBoxWriterImpl;
+    }
+
+    /**
+     * Creates a new YSLD Writer object.
+     *
+     * @return the SLD writer interface
+     */
+    private static SLDWriterInterface createYSLDWriter() {
+        if (ysldWriterImpl == null) {
+            ysldWriterImpl = new YSLDWriterImpl();
+        }
+        return ysldWriterImpl;
     }
 }

@@ -56,10 +56,10 @@ public class WKTDetails extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The parent obj. */
-    private WKTUpdateInterface parentObj = null;
+    private transient WKTUpdateInterface parentObj = null;
 
     /** The old value obj. */
-    private Object oldValueObj = null;
+    private transient Object oldValueObj = null;
 
     /**
      * Instantiates a new WKT details.
@@ -170,9 +170,7 @@ public class WKTDetails extends StandardPanel
     public Expression getExpression() {
         String string = fieldConfigVisitor.getText(FieldIdEnum.WKT);
 
-        Expression expression = getFilterFactory().literal(string);
-
-        return expression;
+        return getFilterFactory().literal(string);
     }
 
     /** Revert to default value. */

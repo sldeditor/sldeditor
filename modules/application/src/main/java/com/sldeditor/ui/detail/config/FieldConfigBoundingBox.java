@@ -44,7 +44,6 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.opengis.filter.expression.Expression;
 import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
@@ -52,7 +51,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -271,7 +270,7 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (this.crsComboBox != null) {
             crsComboBox.setEnabled(enabled);
         }
@@ -320,14 +319,11 @@ public class FieldConfigBoundingBox extends FieldConfigBase implements UndoActio
             if (crsDataValue != null) {
                 crs = CRS.decode(crsDataValue.getKey());
             }
-        } catch (NoSuchAuthorityCodeException e) {
-            ConsoleManager.getInstance().exception(this, e);
         } catch (FactoryException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
-        ReferencedEnvelope envelope = new ReferencedEnvelope(minX, maxX, minY, maxY, crs);
-        return envelope;
+        return new ReferencedEnvelope(minX, maxX, minY, maxY, crs);
     }
 
     /**

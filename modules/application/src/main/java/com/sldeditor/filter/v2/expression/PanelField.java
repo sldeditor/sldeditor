@@ -19,6 +19,7 @@
 
 package com.sldeditor.filter.v2.expression;
 
+import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.rendertransformation.types.RenderTransformValueFactory;
@@ -34,6 +35,11 @@ import java.util.List;
  * @author Robert Ward (SCISYS)
  */
 public class PanelField {
+
+    /** Private default constructor */
+    private PanelField() {
+        // Private default constructor
+    }
 
     /**
      * Gets the field.
@@ -86,7 +92,8 @@ public class PanelField {
                 }
             }
         } else {
-            System.err.println("Unknown field type : " + nodeType);
+            ConsoleManager.getInstance()
+                    .error(PanelField.class, "Unknown field type : " + nodeType);
         }
 
         return fieldConfig;

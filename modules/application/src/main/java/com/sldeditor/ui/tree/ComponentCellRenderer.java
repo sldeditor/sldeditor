@@ -79,7 +79,7 @@ public class ComponentCellRenderer implements TreeCellRenderer {
         String name = getItemText(node, userObject);
 
         boolean showCheckbox = showCheckbox(parentUserObject, userObject);
-        boolean isLeaf = isLeaf(parentUserObject, userObject);
+        boolean isLeaf = isLeaf(userObject);
 
         panel.setCheckboxVisible(showCheckbox);
         if (showCheckbox) {
@@ -127,17 +127,14 @@ public class ComponentCellRenderer implements TreeCellRenderer {
      *   <li>Fill
      * </ul>
      *
-     * @param parentUserObject the parent user object
      * @param userObject the user object
      * @return true, if is leaf
      */
-    public static boolean isLeaf(Object parentUserObject, Object userObject) {
-        boolean leaf =
-                (userObject instanceof TextSymbolizer)
-                        || (userObject instanceof RasterSymbolizer)
-                        || (userObject instanceof Stroke)
-                        || (userObject instanceof Fill);
-        return leaf;
+    public static boolean isLeaf(Object userObject) {
+        return (userObject instanceof TextSymbolizer)
+                || (userObject instanceof RasterSymbolizer)
+                || (userObject instanceof Stroke)
+                || (userObject instanceof Fill);
     }
 
     /**
@@ -149,10 +146,8 @@ public class ComponentCellRenderer implements TreeCellRenderer {
      * @return true, if successful
      */
     public static boolean showCheckbox(Object parentUserObject, Object userObject) {
-        boolean showCheckbox =
-                (parentUserObject instanceof PolygonSymbolizer)
-                        && ((userObject instanceof Stroke) || (userObject instanceof Fill));
-        return showCheckbox;
+        return (parentUserObject instanceof PolygonSymbolizer)
+                && ((userObject instanceof Stroke) || (userObject instanceof Fill));
     }
 
     /**

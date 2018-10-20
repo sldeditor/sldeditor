@@ -94,10 +94,10 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
                     parentObj.startPopulating(connection);
                 }
 
-                List<String> workspaceList = getWorkspaceList();
+                List<String> localWorkspaceList = getWorkspaceList();
 
-                parseStyleList(reader, workspaceList);
-                parseLayerList(reader, workspaceList, null);
+                parseStyleList(reader, localWorkspaceList);
+                parseLayerList(reader, localWorkspaceList, null);
             }
         }
     }
@@ -106,26 +106,25 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
      * Parses the style list.
      *
      * @param reader the reader
-     * @param workspaceList the workspace list
+     * @param localWorkspaceList the workspace list
      */
-    private void parseStyleList(GeoServerRESTReader reader, List<String> workspaceList) {
+    private void parseStyleList(GeoServerRESTReader reader, List<String> localWorkspaceList) {
         Thread t1 =
                 new Thread(
                         new Runnable() {
                             public void run() {
 
-                                Map<String, List<StyleWrapper>> styleMap =
-                                        new LinkedHashMap<String, List<StyleWrapper>>();
+                                Map<String, List<StyleWrapper>> styleMap = new LinkedHashMap<>();
 
                                 int count = 1;
-                                List<StyleWrapper> styleList = new ArrayList<StyleWrapper>();
+                                List<StyleWrapper> styleList = new ArrayList<>();
 
                                 count = parseStyleInDefaultWorkspace(reader, count, styleList);
 
                                 styleMap.put(DEFAULT_WORKSPACE_NAME, styleList);
 
                                 // Read styles from workspaces
-                                for (String workspaceName : workspaceList) {
+                                for (String workspaceName : localWorkspaceList) {
                                     count =
                                             parseStyleInWorkspace(
                                                     reader, styleMap, count, workspaceName);
@@ -152,15 +151,14 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
                 new Thread(
                         new Runnable() {
                             public void run() {
-                                List<String> workspaceList = null;
+                                List<String> localWorkspaceList = null;
 
                                 if (workspaceName == null) {
-                                    workspaceList = existingWorkspaceList;
-                                    workspaceList.add(null); // Add the default workspace last
+                                    localWorkspaceList = existingWorkspaceList;
+                                    localWorkspaceList.add(null); // Add the default workspace last
                                 }
 
-                                Map<String, List<GeoServerLayer>> layerMap =
-                                        new LinkedHashMap<String, List<GeoServerLayer>>();
+                                Map<String, List<GeoServerLayer>> layerMap = new LinkedHashMap<>();
                                 RESTLayerList layers = reader.getLayers();
 
                                 int count = 1;
@@ -173,7 +171,7 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
                                     if (layer != null) {
                                         String layerName = layer.getName();
                                         String workspace = null;
-                                        for (String workspaceNameToTest : workspaceList) {
+                                        for (String workspaceNameToTest : localWorkspaceList) {
                                             if (reader.existsLayer(
                                                     workspaceNameToTest, layerName, true)) {
                                                 if (workspaceNameToTest == null) {
@@ -204,7 +202,7 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
                                         List<GeoServerLayer> layerList = layerMap.get(workspace);
 
                                         if (layerList == null) {
-                                            layerList = new ArrayList<GeoServerLayer>();
+                                            layerList = new ArrayList<>();
                                             layerMap.put(workspace, layerList);
                                         }
                                         layerList.add(geoServerlayer);
@@ -327,18 +325,17 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
                     GeoServerRESTReader reader = manager.getReader();
 
                     if (reader != null) {
-                        if (!reader.existsWorkspace(workspaceName)) {
-                            if (!publisher.createWorkspace(workspaceName)) {
+                        if (!reader.existsWorkspace(workspaceName)
+                                && !publisher.createWorkspace(workspaceName)) {
 
-                                ConsoleManager.getInstance()
-                                        .error(
-                                                this,
-                                                Localisation.getField(
-                                                                GeoServerClient.class,
-                                                                "GeoServerClient.failedToCreateWorkspace")
-                                                        + workspaceName);
-                                return false;
-                            }
+                            ConsoleManager.getInstance()
+                                    .error(
+                                            this,
+                                            Localisation.getField(
+                                                            GeoServerClient.class,
+                                                            "GeoServerClient.failedToCreateWorkspace")
+                                                    + workspaceName);
+                            return false;
                         }
                     } else {
                         return false;
@@ -454,7 +451,7 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
         }
 
         if (workspaceList == null) {
-            workspaceList = new ArrayList<String>();
+            workspaceList = new ArrayList<>();
         }
 
         return workspaceList;
@@ -562,7 +559,7 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
         if (workspaceName != null) {
             RESTStyleList geoServerWorkspaceStyleList = reader.getStyles(workspaceName);
 
-            styleList = new ArrayList<StyleWrapper>();
+            styleList = new ArrayList<>();
 
             for (String style : geoServerWorkspaceStyleList.getNames()) {
                 StyleWrapper newStyleWrapper = new StyleWrapper(workspaceName, style);
@@ -591,19 +588,18 @@ public class GeoServerClient implements Serializable, GeoServerClientInterface {
             GeoServerRESTReader reader = manager.getReader();
 
             if (reader != null) {
-                Map<String, List<StyleWrapper>> styleMap =
-                        new LinkedHashMap<String, List<StyleWrapper>>();
+                Map<String, List<StyleWrapper>> styleMap = new LinkedHashMap<>();
 
                 int count = 1;
-                List<StyleWrapper> styleList = new ArrayList<StyleWrapper>();
+                List<StyleWrapper> styleList = new ArrayList<>();
 
                 if (workspaceName.compareTo(DEFAULT_WORKSPACE_NAME) == 0) {
-                    count = parseStyleInDefaultWorkspace(reader, count, styleList);
+                    parseStyleInDefaultWorkspace(reader, count, styleList);
 
                     styleMap.put(DEFAULT_WORKSPACE_NAME, styleList);
                 } else {
                     // Read styles from workspace
-                    count = parseStyleInWorkspace(reader, styleMap, count, workspaceName);
+                    parseStyleInWorkspace(reader, styleMap, count, workspaceName);
                 }
 
                 if (parentObj != null) {

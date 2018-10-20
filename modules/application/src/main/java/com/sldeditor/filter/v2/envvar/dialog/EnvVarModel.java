@@ -25,6 +25,7 @@ import com.sldeditor.filter.v2.envvar.EnvironmentManagerInterface;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -161,11 +162,7 @@ public class EnvVarModel extends DefaultTableModel {
 
         switch (column) {
             case COL_NAME:
-                {
-                    String nameValue = (String) aValue;
-                    nameValue = nameValue.replace(" ", "_");
-                    envVar.setName(nameValue);
-                }
+                setName(aValue, envVar);
                 break;
             case COL_TYPE:
                 envVar.setType((Class<?>) aValue);
@@ -176,6 +173,18 @@ public class EnvVarModel extends DefaultTableModel {
             default:
                 break;
         }
+    }
+
+    /**
+     * Sets the name.
+     *
+     * @param aValue the a value
+     * @param envVar the env var
+     */
+    private void setName(Object aValue, EnvVar envVar) {
+        String nameValue = (String) aValue;
+        nameValue = nameValue.replace(" ", "_");
+        envVar.setName(nameValue);
     }
 
     /** Populate. */
@@ -195,10 +204,9 @@ public class EnvVarModel extends DefaultTableModel {
         if (this.envMgr != null) {
             Map<String, String> map = SplitURL.extractEnvVar(parameterList);
 
-            for (String envVarName : map.keySet()) {
-
-                String envVarValue = map.get(envVarName);
-                EnvVar envVar = this.envMgr.addNewEnvVar(envVarName, String.class, envVarValue);
+            for (Entry<String, String> entry : map.entrySet()) {
+                EnvVar envVar =
+                        this.envMgr.addNewEnvVar(entry.getKey(), String.class, entry.getValue());
 
                 if (envVar != null) {
                     dataList.add(envVar);

@@ -65,36 +65,59 @@ public class UpdateGraphicalSymbol implements ProcessGraphicSymbolInterface {
                 }
 
                 if (currentValueURL != null) {
-                    if ((resourceLocator == null) || RelativePath.hasHost(currentValueURL)) {
-                        // Just report back the external image
-                        URI uri = null;
-                        try {
-                            uri = new URI(currentValue);
-                            externalImageList.add(uri.toASCIIString());
-                        } catch (URISyntaxException e) {
-                            ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
-                        }
-                    } else {
-                        try {
-                            File file = new File(currentValueURL.getFile());
-                            File folder = new File(resourceLocator.getFile());
-                            currentValue = RelativePath.getRelativePath(file, folder);
-
-                            // If the backslashes are not converted to forward slashes
-                            // creating the URI does not work
-                            currentValue = currentValue.replace('\\', '/');
-                            OnLineResourceImpl updatedOnlineResource = new OnLineResourceImpl();
-                            URI uri = new URI(currentValue);
-                            updatedOnlineResource.setLinkage(uri);
-                            externalGraphic.setOnlineResource(updatedOnlineResource);
-
-                            externalGraphic.setURI(uri.toASCIIString());
-                            externalImageList.add(uri.toASCIIString());
-                        } catch (URISyntaxException e) {
-                            ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
-                        }
-                    }
+                    processExternalImage(
+                            resourceLocator,
+                            externalImageList,
+                            externalGraphic,
+                            currentValue,
+                            currentValueURL);
                 }
+            }
+        }
+    }
+
+    /**
+     * Process external image.
+     *
+     * @param resourceLocator the resource locator
+     * @param externalImageList the external image list
+     * @param externalGraphic the external graphic
+     * @param currentValue the current value
+     * @param currentValueURL the current value URL
+     */
+    private void processExternalImage(
+            URL resourceLocator,
+            List<String> externalImageList,
+            ExternalGraphicImpl externalGraphic,
+            String currentValue,
+            URL currentValueURL) {
+        if ((resourceLocator == null) || RelativePath.hasHost(currentValueURL)) {
+            // Just report back the external image
+            URI uri = null;
+            try {
+                uri = new URI(currentValue);
+                externalImageList.add(uri.toASCIIString());
+            } catch (URISyntaxException e) {
+                ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
+            }
+        } else {
+            try {
+                File file = new File(currentValueURL.getFile());
+                File folder = new File(resourceLocator.getFile());
+                currentValue = RelativePath.getRelativePath(file, folder);
+
+                // If the backslashes are not converted to forward slashes
+                // creating the URI does not work
+                currentValue = currentValue.replace('\\', '/');
+                OnLineResourceImpl updatedOnlineResource = new OnLineResourceImpl();
+                URI uri = new URI(currentValue);
+                updatedOnlineResource.setLinkage(uri);
+                externalGraphic.setOnlineResource(updatedOnlineResource);
+
+                externalGraphic.setURI(uri.toASCIIString());
+                externalImageList.add(uri.toASCIIString());
+            } catch (URISyntaxException e) {
+                ConsoleManager.getInstance().exception(SLDExternalImages.class, e);
             }
         }
     }

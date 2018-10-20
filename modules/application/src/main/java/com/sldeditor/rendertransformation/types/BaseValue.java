@@ -48,7 +48,7 @@ public abstract class BaseValue {
     protected FieldConfigBase createEnum(FieldConfigCommonData commonData) {
         FieldConfigEnum fieldConfigEnum = new FieldConfigEnum(commonData);
 
-        List<SymbolTypeConfig> configList = new ArrayList<SymbolTypeConfig>();
+        List<SymbolTypeConfig> configList = new ArrayList<>();
         SymbolTypeConfig symbolTypeConfig = new SymbolTypeConfig(null);
 
         populateSymbolType(symbolTypeConfig);

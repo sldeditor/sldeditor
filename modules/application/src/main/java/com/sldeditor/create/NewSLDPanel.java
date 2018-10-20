@@ -85,7 +85,7 @@ public class NewSLDPanel extends JDialog {
                 new JLabel(Localisation.getField(NewSLDPanel.class, "NewSLDPanel.symbolField"));
         panel.add(lblSldType);
 
-        comboBoxNewSLD = new JComboBox<String>();
+        comboBoxNewSLD = new JComboBox<>();
         newSLDObjectMap = NewSLDFactory.getAvailable();
         String[] itemArray = new String[newSLDObjectMap.size()];
         int index = 0;

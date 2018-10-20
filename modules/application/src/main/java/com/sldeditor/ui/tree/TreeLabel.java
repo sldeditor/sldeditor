@@ -62,6 +62,7 @@ public class TreeLabel extends JLabel {
      *
      * @see javax.swing.JComponent#setBackground(java.awt.Color)
      */
+    @Override
     public void setBackground(Color color) {
         if (color instanceof ColorUIResource) {
             color = null;
@@ -74,26 +75,25 @@ public class TreeLabel extends JLabel {
      *
      * @see javax.swing.JComponent#paint(java.awt.Graphics)
      */
+    @Override
     public void paint(Graphics g) {
         String str;
-        if ((str = getText()) != null) {
-            if (0 < str.length()) {
-                if (isSelected) {
-                    g.setColor(UIManager.getColor("Tree.selectionBackground"));
-                } else {
-                    g.setColor(UIManager.getColor("Tree.textBackground"));
-                }
-                Dimension d = getPreferredSize();
-                int imageOffset = 0;
-                Icon currentI = getIcon();
-                if (currentI != null) {
-                    imageOffset = currentI.getIconWidth() + Math.max(0, getIconTextGap() - 1);
-                }
-                g.fillRect(imageOffset, 1, d.width - 1 - imageOffset, d.height);
-                if (hasFocus) {
-                    g.setColor(UIManager.getColor("Tree.selectionBorderColor"));
-                    g.drawRect(imageOffset, 1, d.width - 1 - imageOffset, d.height - 1);
-                }
+        if (((str = getText()) != null) && (0 < str.length())) {
+            if (isSelected) {
+                g.setColor(UIManager.getColor("Tree.selectionBackground"));
+            } else {
+                g.setColor(UIManager.getColor("Tree.textBackground"));
+            }
+            Dimension d = getPreferredSize();
+            int imageOffset = 0;
+            Icon currentI = getIcon();
+            if (currentI != null) {
+                imageOffset = currentI.getIconWidth() + Math.max(0, getIconTextGap() - 1);
+            }
+            g.fillRect(imageOffset, 1, d.width - 1 - imageOffset, d.height);
+            if (hasFocus) {
+                g.setColor(UIManager.getColor("Tree.selectionBorderColor"));
+                g.drawRect(imageOffset, 1, d.width - 1 - imageOffset, d.height - 1);
             }
         }
 
@@ -105,6 +105,7 @@ public class TreeLabel extends JLabel {
      *
      * @see javax.swing.JComponent#getPreferredSize()
      */
+    @Override
     public Dimension getPreferredSize() {
         Dimension retDimension = super.getPreferredSize();
         if (retDimension != null) {

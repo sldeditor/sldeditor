@@ -46,9 +46,6 @@ public class TreeTransferHandler extends TransferHandler {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
-    /** The transferred data item. */
-    private TransferableDataItem transferredDataItem;
-
     /** The is dragging. */
     private boolean isDragging = false;
 
@@ -59,7 +56,7 @@ public class TreeTransferHandler extends TransferHandler {
      */
     @Override
     protected Transferable createTransferable(JComponent c) {
-        transferredDataItem = null;
+        TransferableDataItem transferredDataItem = null;
 
         if (!(c instanceof JTree)) {
             return null;
@@ -81,7 +78,7 @@ public class TreeTransferHandler extends TransferHandler {
         if (paths == null) {
             return null;
         } else {
-            Map<NodeInterface, TreePath> map = new LinkedHashMap<NodeInterface, TreePath>();
+            Map<NodeInterface, TreePath> map = new LinkedHashMap<>();
 
             for (TreePath path : paths) {
                 if (path.getLastPathComponent() instanceof NodeInterface) {
@@ -129,9 +126,7 @@ public class TreeTransferHandler extends TransferHandler {
         TransferredData transferredData = null;
         try {
             transferredData = (TransferredData) data.getTransferData(destDataFlavour);
-        } catch (UnsupportedFlavorException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (IOException e) {
+        } catch (IOException | UnsupportedFlavorException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
@@ -177,9 +172,7 @@ public class TreeTransferHandler extends TransferHandler {
         try {
             transferredData = (TransferredData) t.getTransferData(destDataFlavour);
             result = DataFlavourManager.copy(destinationTreeNode, transferredData);
-        } catch (UnsupportedFlavorException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (IOException e) {
+        } catch (IOException | UnsupportedFlavorException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
@@ -222,9 +215,7 @@ public class TreeTransferHandler extends TransferHandler {
         TransferredData transferredData = null;
         try {
             transferredData = (TransferredData) transferable.getTransferData(destDataFlavour);
-        } catch (UnsupportedFlavorException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (IOException e) {
+        } catch (IOException | UnsupportedFlavorException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 

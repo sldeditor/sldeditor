@@ -51,7 +51,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -461,7 +461,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (start.dateTimePanel != null) {
             start.dateTimePanel.setEnabled(enabled);
         }
@@ -479,9 +479,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase
      */
     @Override
     protected Expression generateExpression() {
-        Expression expression = getFilterFactory().literal(getStringValue());
-
-        return expression;
+        return getFilterFactory().literal(getStringValue());
     }
 
     /**
@@ -609,9 +607,7 @@ public class FieldConfigTimePeriod extends FieldConfigBase
             return null;
         }
 
-        ZonedDateTime zonedDateTime = panel.dateTimePanel.getDate();
-
-        return zonedDateTime;
+        return panel.dateTimePanel.getDate();
     }
 
     /**
@@ -692,27 +688,24 @@ public class FieldConfigTimePeriod extends FieldConfigBase
      * @param duration the duration
      */
     private void populateDuration(TimePeriodPanel timePeriodPanel, Duration duration) {
-        if (timePeriodPanel != null) {
+        if ((timePeriodPanel != null)
+                && timePeriodPanel.areFieldsConfigured()
+                && (timePeriodPanel.dateTimePanel != null)) {
+            if (duration.isDate()) {
+                timePeriodPanel.dateRadioButton.setSelected(true);
 
-            if (timePeriodPanel.areFieldsConfigured()) {
-                if (timePeriodPanel.dateTimePanel != null) {
-                    if (duration.isDate()) {
-                        timePeriodPanel.dateRadioButton.setSelected(true);
-
-                        timePeriodPanel.dateTimePanel.populateUI(duration.getDate());
-                    } else {
-                        timePeriodPanel.durationRadioButton.setSelected(true);
-                        timePeriodPanel.yearSpinner.setValue(duration.getDurationYears());
-                        timePeriodPanel.monthSpinner.setValue(duration.getDurationMonths());
-                        timePeriodPanel.daySpinner.setValue(duration.getDurationDays());
-                        timePeriodPanel.hourSpinner.setValue(duration.getDurationHours());
-                        timePeriodPanel.minuteSpinner.setValue(duration.getDurationMinutes());
-                        timePeriodPanel.secondSpinner.setValue(duration.getDurationSeconds());
-                    }
-
-                    updateFields(timePeriodPanel);
-                }
+                timePeriodPanel.dateTimePanel.populateUI(duration.getDate());
+            } else {
+                timePeriodPanel.durationRadioButton.setSelected(true);
+                timePeriodPanel.yearSpinner.setValue(duration.getDurationYears());
+                timePeriodPanel.monthSpinner.setValue(duration.getDurationMonths());
+                timePeriodPanel.daySpinner.setValue(duration.getDurationDays());
+                timePeriodPanel.hourSpinner.setValue(duration.getDurationHours());
+                timePeriodPanel.minuteSpinner.setValue(duration.getDurationMinutes());
+                timePeriodPanel.secondSpinner.setValue(duration.getDurationSeconds());
             }
+
+            updateFields(timePeriodPanel);
         }
     }
 

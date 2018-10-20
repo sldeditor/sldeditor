@@ -76,7 +76,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @param hints the hints
      * @return the filter panel
      */
-    private FilterPanelInterface internal_getFilterPanel(String hints) {
+    private FilterPanelInterface internalGetFilterPanel(String hints) {
         return new FilterPanelv2(this.vendorOptionVersionsList, inTestMode);
     }
 
@@ -86,7 +86,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @param hints the hints
      * @return the expression panel
      */
-    private ExpressionPanelInterface internal_getExpressionPanel(String hints) {
+    private ExpressionPanelInterface internalGetExpressionPanel(String hints) {
         return new ExpressionPanelv2(this.vendorOptionVersionsList, inTestMode);
     }
 
@@ -96,7 +96,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @param hints the hints
      * @return the expression panel
      */
-    private ExpressionPanelInterface internal_getRenderTransformationPanel(String hints) {
+    private ExpressionPanelInterface internalGetRenderTransformationPanel(String hints) {
         return new RenderTransformationExpressionPanelv2(this.vendorOptionVersionsList, inTestMode);
     }
 
@@ -107,7 +107,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @return the filter panel
      */
     public static FilterPanelInterface getFilterPanel(String hints) {
-        return getInstance().internal_getFilterPanel(hints);
+        return getInstance().internalGetFilterPanel(hints);
     }
 
     /**
@@ -117,7 +117,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @return the expression panel
      */
     public static ExpressionPanelInterface getExpressionPanel(String hints) {
-        return getInstance().internal_getExpressionPanel(hints);
+        return getInstance().internalGetExpressionPanel(hints);
     }
 
     /**
@@ -127,7 +127,7 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
      * @return the render transformation panel
      */
     public static ExpressionPanelInterface getRenderTransformationPanel(String hints) {
-        return getInstance().internal_getRenderTransformationPanel(hints);
+        return getInstance().internalGetRenderTransformationPanel(hints);
     }
 
     /**

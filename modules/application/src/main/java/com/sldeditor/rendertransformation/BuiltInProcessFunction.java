@@ -49,8 +49,7 @@ public class BuiltInProcessFunction {
     public List<ProcessFunctionParameterValue> extractParameters(
             FunctionName functionName, ProcessFunction selectedProcessFunctionData) {
 
-        List<ProcessFunctionParameterValue> valueList =
-                new ArrayList<ProcessFunctionParameterValue>();
+        List<ProcessFunctionParameterValue> valueList = new ArrayList<>();
 
         // Populate the parameter definitions first.
         // This ensures if there is parameter data missing we
@@ -67,29 +66,40 @@ public class BuiltInProcessFunction {
 
         // Now populate any parameter values we have
         if (selectedProcessFunctionData != null) {
-            for (Expression parameter : selectedProcessFunctionData.getParameters()) {
-                List<Expression> parameterList =
-                        ParameterFunctionUtils.getExpressionList(parameter);
+            populateParameterValues(selectedProcessFunctionData, valueList);
+        }
 
-                if ((parameterList != null) && !parameterList.isEmpty()) {
-                    Expression paramName = parameterList.get(0);
+        return valueList;
+    }
 
-                    ProcessFunctionParameterValue value =
-                            findParameterValue(valueList, paramName.toString());
+    /**
+     * Populate parameter values.
+     *
+     * @param selectedProcessFunctionData the selected process function data
+     * @param valueList the value list
+     */
+    private void populateParameterValues(
+            ProcessFunction selectedProcessFunctionData,
+            List<ProcessFunctionParameterValue> valueList) {
+        for (Expression parameter : selectedProcessFunctionData.getParameters()) {
+            List<Expression> parameterList = ParameterFunctionUtils.getExpressionList(parameter);
 
-                    if ((parameterList.size() > 1) && (value != null)) {
-                        Expression paramValue = parameterList.get(1);
+            if ((parameterList != null) && !parameterList.isEmpty()) {
+                Expression paramName = parameterList.get(0);
 
-                        value.getObjectValue().setValue(paramValue);
-                        if (value.isOptional()) {
-                            value.setIncluded(true);
-                        }
+                ProcessFunctionParameterValue value =
+                        findParameterValue(valueList, paramName.toString());
+
+                if ((parameterList.size() > 1) && (value != null)) {
+                    Expression paramValue = parameterList.get(1);
+
+                    value.getObjectValue().setValue(paramValue);
+                    if (value.isOptional()) {
+                        value.setIncluded(true);
                     }
                 }
             }
         }
-
-        return valueList;
     }
 
     /**

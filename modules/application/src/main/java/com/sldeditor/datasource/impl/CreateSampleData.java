@@ -88,8 +88,7 @@ public class CreateSampleData {
         }
 
         // Put fields into map for speed
-        Map<String, DataSourceAttributeData> fieldMap =
-                new HashMap<String, DataSourceAttributeData>();
+        Map<String, DataSourceAttributeData> fieldMap = new HashMap<>();
         if (fieldList != null) {
             for (DataSourceAttributeData attributeData : fieldList) {
                 fieldMap.put(attributeData.getName(), attributeData);
@@ -109,6 +108,27 @@ public class CreateSampleData {
 
         SimpleFeature feature = DataUtilities.template(featureType);
 
+        createAttributes(fieldList, fieldMap, featureType, builder, feature);
+
+        SimpleFeature newFeature = builder.buildFeature("1234");
+        memory.addFeature(newFeature);
+    }
+
+    /**
+     * Creates the attributes.
+     *
+     * @param fieldList the field list
+     * @param fieldMap the field map
+     * @param featureType the feature type
+     * @param builder the builder
+     * @param feature the feature
+     */
+    private void createAttributes(
+            List<DataSourceAttributeData> fieldList,
+            Map<String, DataSourceAttributeData> fieldMap,
+            SimpleFeatureType featureType,
+            SimpleFeatureBuilder builder,
+            SimpleFeature feature) {
         builder.init((SimpleFeature) feature);
         int index = 0;
         for (AttributeDescriptor descriptor : featureType.getAttributeDescriptors()) {
@@ -152,9 +172,6 @@ public class CreateSampleData {
             builder.add(value);
             index++;
         }
-
-        SimpleFeature newFeature = builder.buildFeature("1234");
-        memory.addFeature(newFeature);
     }
 
     /**
@@ -176,17 +193,7 @@ public class CreateSampleData {
         Object value = null;
 
         if (fieldType == String.class) {
-            if (valueToTest == null) {
-                value = defaultStringValue(fieldName);
-            } else {
-                // Cater for when the string value is empty
-                String s = (String) valueToTest;
-                if (s.trim().isEmpty()) {
-                    value = defaultStringValue(fieldName);
-                } else {
-                    value = valueToTest;
-                }
-            }
+            value = getStringValue(fieldName, valueToTest);
         } else if (fieldType == Long.class) {
             value = Long.valueOf(index);
         } else if (fieldType == Integer.class) {
@@ -207,6 +214,29 @@ public class CreateSampleData {
             // This should be an Object, so hedge our bets and set the default value to be an
             // integer in a string
             value = String.valueOf(index);
+        }
+        return value;
+    }
+
+    /**
+     * Gets the string value.
+     *
+     * @param fieldName the field name
+     * @param valueToTest the value to test
+     * @return the string value
+     */
+    private static Object getStringValue(String fieldName, Object valueToTest) {
+        Object value;
+        if (valueToTest == null) {
+            value = defaultStringValue(fieldName);
+        } else {
+            // Cater for when the string value is empty
+            String s = (String) valueToTest;
+            if (s.trim().isEmpty()) {
+                value = defaultStringValue(fieldName);
+            } else {
+                value = valueToTest;
+            }
         }
         return value;
     }

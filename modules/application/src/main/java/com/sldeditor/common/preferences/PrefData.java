@@ -36,7 +36,7 @@ public class PrefData {
     private boolean useAntiAlias = false;
 
     /** The vendor option list. */
-    private List<VersionData> vendorOptionList = new ArrayList<VersionData>();
+    private List<VersionData> vendorOptionList = new ArrayList<>();
 
     /** The ui layout class. */
     private String uiLayoutClass;

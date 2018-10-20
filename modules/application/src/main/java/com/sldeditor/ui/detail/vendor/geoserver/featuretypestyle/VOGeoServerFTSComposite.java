@@ -60,7 +60,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
     private static final long serialVersionUID = 1L;
 
     /** The parent obj. */
-    private UpdateSymbolInterface parentObj = null;
+    private transient UpdateSymbolInterface parentObj = null;
 
     /** The vendor option info. */
     private VendorOptionInfo vendorOptionInfo = null;
@@ -265,7 +265,7 @@ public class VOGeoServerFTSComposite extends StandardPanel
 
             StringBuilder composite = new StringBuilder();
             composite.append(name.getKey());
-            if (!(Math.abs(opacity - DEFAULT_COMPOSITE_OPACITY) < 0.0001)) {
+            if (Math.abs(opacity - DEFAULT_COMPOSITE_OPACITY) >= 0.0001) {
                 // Don't add to string if the opacity is set to the default
                 composite.append(",");
                 composite.append(opacity);

@@ -41,7 +41,7 @@ import org.opengis.feature.type.Name;
 public class DatabaseClient implements DatabaseClientInterface {
 
     /** The parent object. */
-    private transient DatabaseReadProgressInterface parentObj = null;
+    private DatabaseReadProgressInterface parentObj = null;
 
     /** The connection. */
     private DatabaseConnection connection = null;
@@ -50,7 +50,7 @@ public class DatabaseClient implements DatabaseClientInterface {
     private boolean connected = false;
 
     /** The feature class list. */
-    private List<String> featureClassList = new ArrayList<String>();
+    private List<String> featureClassList = new ArrayList<>();
 
     /*
      * (non-Javadoc)
@@ -94,23 +94,7 @@ public class DatabaseClient implements DatabaseClientInterface {
             DataStore dataStore = DataStoreFinder.getDataStore(params);
 
             if (dataStore != null) {
-                try {
-                    List<Name> nameList = dataStore.getNames();
-
-                    if (nameList != null) {
-                        for (Name name : nameList) {
-                            if (hasGeometryField(dataStore, name)) {
-                                featureClassList.add(name.getLocalPart());
-                            }
-                        }
-                    }
-
-                    dataStore.dispose();
-                    dataStore = null;
-                    connected = true;
-                } catch (Exception e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
+                connectToDatastore(dataStore);
             } else {
                 String message =
                         String.format(
@@ -127,6 +111,30 @@ public class DatabaseClient implements DatabaseClientInterface {
         }
 
         return connected;
+    }
+
+    /**
+     * Connect to datastore.
+     *
+     * @param dataStore the data store
+     */
+    private void connectToDatastore(DataStore dataStore) {
+        try {
+            List<Name> nameList = dataStore.getNames();
+
+            if (nameList != null) {
+                for (Name name : nameList) {
+                    if (hasGeometryField(dataStore, name)) {
+                        featureClassList.add(name.getLocalPart());
+                    }
+                }
+            }
+
+            dataStore.dispose();
+            connected = true;
+        } catch (Exception e) {
+            ConsoleManager.getInstance().exception(this, e);
+        }
     }
 
     /**

@@ -30,20 +30,20 @@ import javax.swing.filechooser.FileFilter;
  */
 public class ExternalGraphicFilter extends FileFilter {
 
-    /** The Constant jpeg. */
-    public static final String jpeg = "jpeg";
+    /** The Constant JPEG. */
+    public static final String JPEG = "jpeg";
 
-    /** The Constant jpg. */
-    public static final String jpg = "jpg";
+    /** The Constant JPG. */
+    public static final String JPG = "jpg";
 
-    /** The Constant gif. */
-    public static final String gif = "gif";
+    /** The Constant GIF. */
+    public static final String GIF = "gif";
 
-    /** The Constant svg. */
-    public static final String svg = "svg";
+    /** The Constant SVG. */
+    public static final String SVG = "svg";
 
-    /** The Constant png. */
-    public static final String png = "png";
+    /** The Constant PNG. */
+    public static final String PNG = "png";
 
     /*
      * Get the extension of a file.
@@ -68,6 +68,8 @@ public class ExternalGraphicFilter extends FileFilter {
     /**
      * Accept all directories and all gif, jpg, tiff, or png files. (non-Javadoc)
      *
+     * @param f the f
+     * @return true, if successful
      * @see javax.swing.filechooser.FileFilter#accept(java.io.File)
      */
     public boolean accept(File f) {
@@ -76,19 +78,12 @@ public class ExternalGraphicFilter extends FileFilter {
         }
 
         String extension = getExtension(f);
-        if (extension != null) {
-            if (extension.equals(ExternalGraphicFilter.svg)
-                    || extension.equals(ExternalGraphicFilter.gif)
-                    || extension.equals(ExternalGraphicFilter.jpeg)
-                    || extension.equals(ExternalGraphicFilter.jpg)
-                    || extension.equals(ExternalGraphicFilter.png)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        return false;
+        return ((extension != null)
+                && (extension.equals(ExternalGraphicFilter.SVG)
+                        || extension.equals(ExternalGraphicFilter.GIF)
+                        || extension.equals(ExternalGraphicFilter.JPEG)
+                        || extension.equals(ExternalGraphicFilter.JPG)
+                        || extension.equals(ExternalGraphicFilter.PNG)));
     }
 
     /*

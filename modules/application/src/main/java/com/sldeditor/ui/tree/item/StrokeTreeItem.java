@@ -63,11 +63,9 @@ public class StrokeTreeItem implements SLDTreeItemInterface {
 
             // Individual symbol selected
             DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
-            if (parent != null) {
-                if (parent.getUserObject() instanceof Symbolizer) {
-                    Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
-                    selectedSymbol.setSymbolizer(symbolizer);
-                }
+            if ((parent != null) && (parent.getUserObject() instanceof Symbolizer)) {
+                Symbolizer symbolizer = (Symbolizer) parent.getUserObject();
+                selectedSymbol.setSymbolizer(symbolizer);
             }
         }
     }

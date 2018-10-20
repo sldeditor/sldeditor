@@ -101,7 +101,7 @@ public class MultipleFont {
      */
     public Font getFont() {
 
-        List<Expression> family = new ArrayList<Expression>();
+        List<Expression> family = new ArrayList<>();
         Expression style = null;
         Expression weight = null;
         Expression size = null;
@@ -113,7 +113,6 @@ public class MultipleFont {
             size = (sizeMultipleValue ? firstEntry.getSize() : null);
         }
 
-        Font entry = styleFactory.font(family, style, weight, size);
-        return entry;
+        return styleFactory.font(family, style, weight, size);
     }
 }

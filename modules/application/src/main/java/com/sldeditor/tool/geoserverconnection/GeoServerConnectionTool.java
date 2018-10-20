@@ -60,7 +60,7 @@ public class GeoServerConnectionTool implements ToolInterface {
     private GeoServerConnectStateInterface geoServerConnectState = null;
 
     /** The connection list. */
-    private List<GeoServerConnection> connectionList = new ArrayList<GeoServerConnection>();
+    private List<GeoServerConnection> connectionList = new ArrayList<>();
 
     /**
      * Instantiates a new geo server connection state tool.
@@ -200,12 +200,7 @@ public class GeoServerConnectionTool implements ToolInterface {
             List<Class<?>> uniqueNodeTypeList,
             List<NodeInterface> nodeTypeList,
             List<SLDDataInterface> sldDataList) {
-        if (uniqueNodeTypeList != null) {
-            if (uniqueNodeTypeList.size() == 1) {
-                return true;
-            }
-        }
-        return false;
+        return ((uniqueNodeTypeList != null) && (uniqueNodeTypeList.size() == 1));
     }
 
     /**

@@ -57,9 +57,7 @@ public class SLDTreeLeafPolygon implements SLDTreeLeafInterface {
     public boolean hasFill(Symbolizer symbolizer) {
         if (symbolizer instanceof PolygonSymbolizer) {
             PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
-            if (polygon != null) {
-                return (polygon.getFill() != null);
-            }
+            return (polygon.getFill() != null);
         }
         return false;
     }
@@ -73,9 +71,7 @@ public class SLDTreeLeafPolygon implements SLDTreeLeafInterface {
     public boolean hasStroke(Symbolizer symbolizer) {
         if (symbolizer instanceof PolygonSymbolizer) {
             PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
-            if (polygon != null) {
-                return (polygon.getStroke() != null);
-            }
+            return (polygon.getStroke() != null);
         }
         return false;
     }
@@ -92,9 +88,7 @@ public class SLDTreeLeafPolygon implements SLDTreeLeafInterface {
         if (symbolizer instanceof PolygonSymbolizer) {
             PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
 
-            if (polygon != null) {
-                fill = polygon.getFill();
-            }
+            fill = polygon.getFill();
         }
         return fill;
     }
@@ -110,9 +104,7 @@ public class SLDTreeLeafPolygon implements SLDTreeLeafInterface {
         if (symbolizer instanceof PolygonSymbolizer) {
             PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
 
-            if (polygon != null) {
-                stroke = polygon.getStroke();
-            }
+            stroke = polygon.getStroke();
         }
         return stroke;
     }
@@ -120,32 +112,30 @@ public class SLDTreeLeafPolygon implements SLDTreeLeafInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeStroke(org.opengis.style.Symbolizer)
+     * @see
+     * com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#removeStroke(org.opengis.style.Symbolizer)
      */
     @Override
     public void removeStroke(Symbolizer symbolizer) {
         if (symbolizer instanceof PolygonSymbolizer) {
             PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
 
-            if (polygon != null) {
-                polygon.setStroke(null);
-            }
+            polygon.setStroke(null);
         }
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createStroke(org.opengis.style.Symbolizer)
+     * @see
+     * com.sldeditor.ui.tree.leaf.SLDTreeLeafInterface#createStroke(org.opengis.style.Symbolizer)
      */
     @Override
     public void createStroke(Symbolizer symbolizer) {
         if (symbolizer instanceof PolygonSymbolizer) {
             PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
 
-            if (polygon != null) {
-                polygon.setStroke(styleFactory.getDefaultStroke());
-            }
+            polygon.setStroke(styleFactory.getDefaultStroke());
         }
     }
 
@@ -159,9 +149,7 @@ public class SLDTreeLeafPolygon implements SLDTreeLeafInterface {
         if (symbolizer instanceof PolygonSymbolizer) {
             PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
 
-            if (polygon != null) {
-                polygon.setFill(styleFactory.getDefaultFill());
-            }
+            polygon.setFill(styleFactory.getDefaultFill());
         }
     }
 
@@ -175,9 +163,7 @@ public class SLDTreeLeafPolygon implements SLDTreeLeafInterface {
         if (symbolizer instanceof PolygonSymbolizer) {
             PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
 
-            if (polygon != null) {
-                polygon.setFill(null);
-            }
+            polygon.setFill(null);
         }
     }
 

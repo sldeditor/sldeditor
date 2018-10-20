@@ -46,8 +46,6 @@ public class NewPolygonSLD extends NewSLDBase implements NewSLDInterface {
      */
     @Override
     public StyledLayerDescriptor create() {
-        StyledLayerDescriptor sld = DefaultSymbols.createNewPolygon();
-
-        return sld;
+        return DefaultSymbols.createNewPolygon();
     }
 }

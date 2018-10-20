@@ -107,7 +107,7 @@ public class FunctionField extends JPanel {
 
         setLayout(new BorderLayout(5, 0));
 
-        functionComboBox = new JComboBox<String>();
+        functionComboBox = new JComboBox<>();
         add(functionComboBox, BorderLayout.CENTER);
 
         JPanel panel = new JPanel();
@@ -196,8 +196,7 @@ public class FunctionField extends JPanel {
     public void setDataType(Class<?> fieldType) {
         functionNameMap.clear();
 
-        List<FunctionNameFilterInterface> functionNameFilterList =
-                new ArrayList<FunctionNameFilterInterface>();
+        List<FunctionNameFilterInterface> functionNameFilterList = new ArrayList<>();
 
         if (isRasterSymbol) {
             functionNameFilterList.add(new FunctionNameFilterRaster());
@@ -220,12 +219,12 @@ public class FunctionField extends JPanel {
     /** Populate function combo box. */
     private void populateFunctionComboBox() {
         if (functionComboBox != null) {
-            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
             model.addElement("");
 
             // Sort function names alphabetically
-            List<String> functionNameList = new ArrayList<String>(functionNameMap.keySet());
+            List<String> functionNameList = new ArrayList<>(functionNameMap.keySet());
             java.util.Collections.sort(functionNameList);
 
             for (String name : functionNameList) {
@@ -241,7 +240,7 @@ public class FunctionField extends JPanel {
      * @return the function list
      */
     protected List<String> getFunctionList() {
-        List<String> functionList = new ArrayList<String>();
+        List<String> functionList = new ArrayList<>();
 
         ComboBoxModel<String> model = functionComboBox.getModel();
         for (int i = 0; i < model.getSize(); i++) {
@@ -339,34 +338,13 @@ public class FunctionField extends JPanel {
             argCount *= -1;
         }
         if (newExpression instanceof FunctionExpression) {
-            FunctionExpression expression = (FunctionExpression) newExpression;
-
-            if (expression != null) {
-                List<Expression> params = new ArrayList<Expression>();
-
-                boolean validSymbolFlag = (params.size() == argCount);
-                if (validSymbolFlag) {
-                    expression.setParameters(params);
-                }
-            }
+            getFunctionExpression(newExpression, argCount);
         } else if (newExpression instanceof ConcatenateFunction) {
-            ConcatenateFunction expression = (ConcatenateFunction) newExpression;
-
-            if (expression != null) {
-                List<Expression> params = new ArrayList<Expression>();
-
-                for (int i = 0; i < argCount; i++) {
-                    params.add(null);
-                }
-                boolean validSymbolFlag = (params.size() == argCount);
-                if (validSymbolFlag) {
-                    expression.setParameters(params);
-                }
-            }
+            getConcatenate(newExpression, argCount);
         } else if (newExpression instanceof Function) {
             Function function = (Function) newExpression;
 
-            List<Expression> params = new ArrayList<Expression>();
+            List<Expression> params = new ArrayList<>();
 
             for (Parameter<?> param : functionName.getArguments()) {
                 for (int index = 0; index < param.getMinOccurs(); index++) {
@@ -387,6 +365,44 @@ public class FunctionField extends JPanel {
         }
 
         return newExpression;
+    }
+
+    /**
+     * Get function expression.
+     *
+     * @param newExpression the new expression
+     * @param argCount the arg count
+     */
+    private void getFunctionExpression(Expression newExpression, int argCount) {
+        FunctionExpression expression = (FunctionExpression) newExpression;
+
+        List<Expression> params = new ArrayList<>();
+
+        boolean validSymbolFlag = (params.size() == argCount);
+        if (validSymbolFlag) {
+            expression.setParameters(params);
+        }
+    }
+
+    /**
+     * Gets the concatenate.
+     *
+     * @param newExpression the new expression
+     * @param argCount the arg count
+     * @return the concatenate
+     */
+    private void getConcatenate(Expression newExpression, int argCount) {
+        ConcatenateFunction expression = (ConcatenateFunction) newExpression;
+
+        List<Expression> params = new ArrayList<>();
+
+        for (int i = 0; i < argCount; i++) {
+            params.add(null);
+        }
+        boolean validSymbolFlag = (params.size() == argCount);
+        if (validSymbolFlag) {
+            expression.setParameters(params);
+        }
     }
 
     /**

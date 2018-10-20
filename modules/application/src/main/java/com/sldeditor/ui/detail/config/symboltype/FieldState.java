@@ -35,6 +35,7 @@ import com.sldeditor.ui.iface.UpdateSymbolInterface;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
 import com.sldeditor.ui.widgets.ValueComboBoxDataGroup;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,13 +155,13 @@ public abstract class FieldState extends FieldConfigBase {
                     .error(this, "No config for panel details class : " + panelDetails.getName());
         } else {
             if (localSymbolList == null) {
-                localSymbolList = new ArrayList<ValueComboBoxData>();
+                localSymbolList = new ArrayList<>();
             } else {
                 localSymbolList.clear();
             }
 
             for (SymbolTypeConfig config : configList) {
-                List<ValueComboBoxData> groupSymbolList = new ArrayList<ValueComboBoxData>();
+                List<ValueComboBoxData> groupSymbolList = new ArrayList<>();
 
                 for (String key : config.getKeyOrderList()) {
                     ValueComboBoxData data =
@@ -188,7 +189,7 @@ public abstract class FieldState extends FieldConfigBase {
      */
     protected Map<Class<?>, List<SymbolTypeConfig>> getFieldMap() {
         if (fieldEnableMap == null) {
-            fieldEnableMap = new HashMap<Class<?>, List<SymbolTypeConfig>>();
+            fieldEnableMap = new HashMap<>();
 
             SymbolTypeConfigReader.readConfig(getClass(), resourceFile, fieldEnableMap);
         }
@@ -292,7 +293,9 @@ public abstract class FieldState extends FieldConfigBase {
      * @return the localSymbolList
      */
     protected List<ValueComboBoxData> getLocalSymbolList() {
-        return localSymbolList;
+        return (localSymbolList == null)
+                ? Collections.<ValueComboBoxData>emptyList()
+                : localSymbolList;
     }
 
     /**

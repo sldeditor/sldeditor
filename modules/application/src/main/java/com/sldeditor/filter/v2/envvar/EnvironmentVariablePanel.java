@@ -170,10 +170,8 @@ public class EnvironmentVariablePanel extends JPanel {
     protected void applyButton() {
         Expression expression = dataSourceAttributePanel.getExpression();
 
-        if (expression != null) {
-            if (selectedNode != null) {
-                selectedNode.setExpression(expression);
-            }
+        if ((expression != null) && (selectedNode != null)) {
+            selectedNode.setExpression(expression);
         }
 
         if (parentObj != null) {

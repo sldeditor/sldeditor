@@ -28,6 +28,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
@@ -67,7 +68,8 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
         if (selectedData != null) {
             this.data = new TransferredData();
 
-            for (NodeInterface selection : selectedData.keySet()) {
+            for (Entry<NodeInterface, TreePath> entry : selectedData.entrySet()) {
+                NodeInterface selection = entry.getKey();
                 TreePath path = selectedData.get(selection);
 
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
@@ -84,8 +86,7 @@ public class TransferableDataItem extends DefaultMutableTreeNode implements Tran
      */
     public TransferableDataItem(NodeInterface destinationTreeNode, TreePath path) {
         if ((destinationTreeNode != null) && (path != null)) {
-            Map<NodeInterface, TreePath> selectedData =
-                    new LinkedHashMap<NodeInterface, TreePath>();
+            Map<NodeInterface, TreePath> selectedData = new LinkedHashMap<>();
 
             selectedData.put(destinationTreeNode, path);
 

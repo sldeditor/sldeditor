@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.JPanel;
 import org.opengis.filter.Filter;
 
@@ -103,7 +104,7 @@ public class FilterField extends JPanel implements ValueComboBoxDataSelectedInte
 
             List<ValueComboBoxDataGroup> dataSelectionList = new ArrayList<>();
 
-            List<ValueComboBoxData> defaultDataList = new ArrayList<ValueComboBoxData>();
+            List<ValueComboBoxData> defaultDataList = new ArrayList<>();
             defaultDataList.add(
                     new ValueComboBoxData(
                             null,
@@ -115,8 +116,8 @@ public class FilterField extends JPanel implements ValueComboBoxDataSelectedInte
 
             List<ValueComboBoxData> dataList = null;
 
-            for (String name : filterNameMap.keySet()) {
-                FilterConfigInterface filterConfig = filterNameMap.get(name);
+            for (Entry<String, FilterConfigInterface> entry : filterNameMap.entrySet()) {
+                FilterConfigInterface filterConfig = entry.getValue();
 
                 dataList = map.get(filterConfig.category());
                 if (dataList == null) {
@@ -133,9 +134,9 @@ public class FilterField extends JPanel implements ValueComboBoxDataSelectedInte
                                 VendorOptionManager.getInstance().getDefaultVendorOptionVersion()));
             }
 
-            for (String category : map.keySet()) {
+            for (Entry<String, List<ValueComboBoxData>> entry : map.entrySet()) {
                 ValueComboBoxDataGroup value =
-                        new ValueComboBoxDataGroup(category, map.get(category), true);
+                        new ValueComboBoxDataGroup(entry.getKey(), entry.getValue(), true);
                 dataSelectionList.add(value);
             }
 
@@ -149,7 +150,7 @@ public class FilterField extends JPanel implements ValueComboBoxDataSelectedInte
      * @return the selected item
      */
     public String getSelectedItem() {
-        return (String) filterComboBox.getSelectedItem();
+        return filterComboBox.getSelectedItem();
     }
 
     /**
@@ -198,10 +199,9 @@ public class FilterField extends JPanel implements ValueComboBoxDataSelectedInte
      * @return the function name
      */
     public FilterConfigInterface getFilterConfig() {
-        String filterNameString = (String) filterComboBox.getSelectedItem();
+        String filterNameString = filterComboBox.getSelectedItem();
 
-        FilterConfigInterface filterConfig = filterNameMap.get(filterNameString);
-        return filterConfig;
+        return filterNameMap.get(filterNameString);
     }
 
     /* (non-Javadoc)

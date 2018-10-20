@@ -76,7 +76,7 @@ public class BatchUpdateFontData {
     private TextSymbolizer symbolizer;
 
     /** The original font name. */
-    private List<Expression> originalFontName = new ArrayList<Expression>();
+    private List<Expression> originalFontName = new ArrayList<>();
 
     /** The original font style. */
     private Expression originalFontStyle = null;
@@ -280,29 +280,23 @@ public class BatchUpdateFontData {
     public void updateFont(Font fontData) {
 
         if ((fontData != null) && (font != null)) {
-            if (!fontData.getFamily().isEmpty()) {
-                if (!(fontData.getFamily().equals(font.getFamily()))) {
-                    font.getFamily().clear();
-                    font.getFamily().addAll(fontData.getFamily());
-                }
+            if (!fontData.getFamily().isEmpty()
+                    && (!(fontData.getFamily().equals(font.getFamily())))) {
+                font.getFamily().clear();
+                font.getFamily().addAll(fontData.getFamily());
             }
 
-            if (fontData.getWeight() != null) {
-                if (!(fontData.getWeight().equals(font.getWeight()))) {
-                    font.setWeight(fontData.getWeight());
-                }
+            if ((fontData.getWeight() != null)
+                    && (!(fontData.getWeight().equals(font.getWeight())))) {
+                font.setWeight(fontData.getWeight());
             }
 
-            if (fontData.getStyle() != null) {
-                if (!(fontData.getStyle().equals(font.getStyle()))) {
-                    font.setStyle(fontData.getStyle());
-                }
+            if ((fontData.getStyle() != null) && (!(fontData.getStyle().equals(font.getStyle())))) {
+                font.setStyle(fontData.getStyle());
             }
 
-            if (fontData.getSize() != null) {
-                if (!(fontData.getSize().equals(font.getSize()))) {
-                    font.setSize(fontData.getSize());
-                }
+            if ((fontData.getSize() != null) && (!(fontData.getSize().equals(font.getSize())))) {
+                font.setSize(fontData.getSize());
             }
         }
     }
@@ -317,22 +311,22 @@ public class BatchUpdateFontData {
         boolean refreshUI = false;
         if ((rule != null) && (sldWriter != null)) {
             List<Font> fontList = symbolizer.fonts();
-            Font font = fontList.get(0);
+            Font localFont = fontList.get(0);
             if (isFontNameUpdated()) {
-                font.getFamily().clear();
-                font.getFamily().addAll(this.font.getFamily());
+                localFont.getFamily().clear();
+                localFont.getFamily().addAll(this.font.getFamily());
             }
 
             if (isFontStyleUpdated()) {
-                font.setStyle(ff.literal(this.font.getStyle()));
+                localFont.setStyle(ff.literal(this.font.getStyle()));
             }
 
             if (isFontWeightUpdated()) {
-                font.setWeight(ff.literal(this.font.getWeight()));
+                localFont.setWeight(ff.literal(this.font.getWeight()));
             }
 
             if (isFontSizeUpdated()) {
-                font.setSize(ff.literal(this.font.getSize()));
+                localFont.setSize(ff.literal(this.font.getSize()));
             }
 
             String sldContents = sldWriter.encodeSLD(null, this.sld);
@@ -348,13 +342,11 @@ public class BatchUpdateFontData {
                     Symbolizer currentSymbolizer =
                             SLDUtils.findSymbolizer(
                                     sld, symbolizer, SelectedSymbol.getInstance().getSld());
-                    if (currentSymbolizer != null) {
-                        if (currentSymbolizer instanceof TextSymbolizer) {
-                            TextSymbolizer textSymbolizer = (TextSymbolizer) currentSymbolizer;
-                            textSymbolizer.fonts().clear();
-                            textSymbolizer.fonts().add(font);
-                            refreshUI = true;
-                        }
+                    if (currentSymbolizer instanceof TextSymbolizer) {
+                        TextSymbolizer textSymbolizer = (TextSymbolizer) currentSymbolizer;
+                        textSymbolizer.fonts().clear();
+                        textSymbolizer.fonts().add(localFont);
+                        refreshUI = true;
                     }
                 }
             }
@@ -362,7 +354,7 @@ public class BatchUpdateFontData {
                 sldData.updateSLDContents(sldContents);
             }
 
-            setOriginalData(font);
+            setOriginalData(localFont);
         }
         return refreshUI;
     }

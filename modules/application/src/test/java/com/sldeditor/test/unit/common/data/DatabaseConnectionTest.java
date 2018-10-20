@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.data.DatabaseConnectionField;
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionName;
+import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionNameInterface;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +68,7 @@ public class DatabaseConnectionTest {
                         expectedDatabaseTypeLabel,
                         expectedSupportsDuplication,
                         expectedDetailList,
-                        new DatabaseConnectionName() {
+                        new DatabaseConnectionNameInterface() {
                             /** The Constant serialVersionUID. */
                             private static final long serialVersionUID = 1L;
 

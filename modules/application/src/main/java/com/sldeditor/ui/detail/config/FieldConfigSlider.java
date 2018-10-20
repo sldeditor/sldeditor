@@ -37,7 +37,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -92,7 +92,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
                         @Override
                         public void stateChanged(ChangeEvent e) {
                             JSlider source = (JSlider) e.getSource();
-                            Integer newValueObj = (int) source.getValue();
+                            Integer newValueObj = source.getValue();
 
                             valueStored(newValueObj);
                         }
@@ -132,7 +132,7 @@ public class FieldConfigSlider extends FieldConfigBase implements UndoActionInte
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (slider != null) {
             slider.setEnabled(enabled);
         }

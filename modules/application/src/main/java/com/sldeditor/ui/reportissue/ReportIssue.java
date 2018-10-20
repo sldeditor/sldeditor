@@ -68,14 +68,14 @@ public class ReportIssue {
             ConsoleManager.getInstance().exception(this, e1);
         }
 
-        if (url != null) {
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
-                Desktop desktop = Desktop.getDesktop();
-                try {
-                    desktop.browse(url.toURI());
-                } catch (IOException | URISyntaxException e) {
-                    ConsoleManager.getInstance().exception(this, e);
-                }
+        if ((url != null)
+                && (Desktop.isDesktopSupported()
+                        && Desktop.getDesktop().isSupported(Action.BROWSE))) {
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.browse(url.toURI());
+            } catch (IOException | URISyntaxException e) {
+                ConsoleManager.getInstance().exception(this, e);
             }
         }
     }

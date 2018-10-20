@@ -67,8 +67,7 @@ public class SLDEditorFile
     private SLDDataInterface sldData = null;
 
     /** The listener list. */
-    private List<SLDEditorDataUpdateInterface> sldEditorFileUpdateListenerList =
-            new ArrayList<SLDEditorDataUpdateInterface>();
+    private List<SLDEditorDataUpdateInterface> sldEditorFileUpdateListenerList = new ArrayList<>();
 
     /** The data edited flag. */
     private boolean dataEditedFlag = false;
@@ -77,8 +76,7 @@ public class SLDEditorFile
     private boolean stickyDataSource = false;
 
     /** The sticky data source listener list. */
-    private List<StickyDataSourceInterface> stickyDataSourceListenerList =
-            new ArrayList<StickyDataSourceInterface>();
+    private List<StickyDataSourceInterface> stickyDataSourceListenerList = new ArrayList<>();
 
     /**
      * Gets the single instance of SLDEditorFile.

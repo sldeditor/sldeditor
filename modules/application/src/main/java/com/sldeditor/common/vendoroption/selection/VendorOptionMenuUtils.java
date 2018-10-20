@@ -38,12 +38,15 @@ import java.util.Map;
 public class VendorOptionMenuUtils {
 
     /** The data selection list. */
-    private static List<ValueComboBoxDataGroup> dataSelectionList =
-            new ArrayList<ValueComboBoxDataGroup>();
+    private static List<ValueComboBoxDataGroup> dataSelectionList = new ArrayList<>();
 
     /** The value map. */
-    private static Map<String, ValueComboBoxData> valueMap =
-            new HashMap<String, ValueComboBoxData>();
+    private static Map<String, ValueComboBoxData> valueMap = new HashMap<>();
+
+    /** Private default constructor */
+    private VendorOptionMenuUtils() {
+        // Private default constructor
+    }
 
     /**
      * Creates the menu.
@@ -54,9 +57,8 @@ public class VendorOptionMenuUtils {
     public static List<ValueComboBoxDataGroup> createMenu(List<VersionData> versionDataList) {
 
         if (dataSelectionList.isEmpty()) {
-            Map<String, List<ValueComboBoxData>> map =
-                    new HashMap<String, List<ValueComboBoxData>>();
-            List<String> keyOrderList = new ArrayList<String>();
+            Map<String, List<ValueComboBoxData>> map = new HashMap<>();
+            List<String> keyOrderList = new ArrayList<>();
 
             if (versionDataList != null) {
                 createVendorOptionItem(versionDataList, map, keyOrderList);
@@ -92,7 +94,7 @@ public class VendorOptionMenuUtils {
                 List<ValueComboBoxData> dataList = map.get(key);
 
                 if (dataList == null) {
-                    dataList = new ArrayList<ValueComboBoxData>();
+                    dataList = new ArrayList<>();
                     map.put(key, dataList);
                     keyOrderList.add(key);
                 }

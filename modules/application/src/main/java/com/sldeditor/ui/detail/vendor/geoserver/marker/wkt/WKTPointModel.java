@@ -31,7 +31,7 @@ import javax.swing.table.AbstractTableModel;
 public class WKTPointModel extends AbstractTableModel {
 
     /** The point list. */
-    private List<WKTPoint> pointList = new ArrayList<WKTPoint>();
+    private transient List<WKTPoint> pointList = new ArrayList<>();
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -43,7 +43,7 @@ public class WKTPointModel extends AbstractTableModel {
     private static final int Y_COLUMN_ID = 1;
 
     /** The column list. */
-    private List<String> columnList = new ArrayList<String>();
+    private List<String> columnList = new ArrayList<>();
 
     /** The ensure first and last points are the same. */
     private boolean ensureFirstAndLastPointsAreTheSame = false;
@@ -65,6 +65,7 @@ public class WKTPointModel extends AbstractTableModel {
      *
      * @see javax.swing.table.AbstractTableModel#getColumnName(int)
      */
+    @Override
     public String getColumnName(int col) {
         return columnList.get(col);
     }
@@ -81,6 +82,7 @@ public class WKTPointModel extends AbstractTableModel {
      *
      * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
      */
+    @Override
     public boolean isCellEditable(int row, int col) {
         return true;
     }
@@ -150,6 +152,7 @@ public class WKTPointModel extends AbstractTableModel {
      *
      * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
      */
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if ((row < 0) || (row >= pointList.size())) {
             return;

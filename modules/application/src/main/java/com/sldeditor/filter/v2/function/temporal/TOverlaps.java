@@ -61,6 +61,7 @@ public class TOverlaps extends FilterBase implements FilterConfigInterface {
          *
          * @see java.lang.Object#toString()
          */
+        @Override
         public String toString() {
             return "[ " + getExpression1() + " TOverlaps " + getExpression2() + " ]";
         }

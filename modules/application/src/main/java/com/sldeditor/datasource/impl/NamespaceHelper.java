@@ -79,13 +79,10 @@ public class NamespaceHelper {
      * @return true, if is element matches
      */
     public boolean isElement(String requestPrefix, String requestedElementName) {
-        if ((requestPrefix != null) && (requestedElementName != null)) {
-            if ((requestPrefix.compareToIgnoreCase(prefix) == 0)
-                    && (requestedElementName.compareToIgnoreCase(elementName) == 0)) {
-                return true;
-            }
-        }
-        return false;
+        return ((requestPrefix != null)
+                && (requestedElementName != null)
+                && (requestPrefix.compareToIgnoreCase(prefix) == 0)
+                && (requestedElementName.compareToIgnoreCase(elementName) == 0));
     }
 
     /**
@@ -95,12 +92,7 @@ public class NamespaceHelper {
      * @return true, if is element
      */
     public boolean isElement(String requestPrefix) {
-        if (requestPrefix != null) {
-            if (requestPrefix.compareToIgnoreCase(prefix) == 0) {
-                return true;
-            }
-        }
-        return false;
+        return ((requestPrefix != null) && (requestPrefix.compareToIgnoreCase(prefix) == 0));
     }
 
     /**

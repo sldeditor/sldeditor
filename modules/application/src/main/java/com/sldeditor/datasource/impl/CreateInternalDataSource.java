@@ -20,6 +20,7 @@
 package com.sldeditor.datasource.impl;
 
 import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.datasource.SLDEditorFileInterface;
 import com.sldeditor.datasource.attribute.DataSourceAttributeData;
 import java.util.ArrayList;
@@ -27,17 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.geotools.data.memory.MemoryDataStore;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.LineSymbolizer;
-import org.geotools.styling.NamedLayerImpl;
-import org.geotools.styling.PointSymbolizer;
-import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.RasterSymbolizer;
-import org.geotools.styling.Rule;
-import org.geotools.styling.Style;
-import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
-import org.geotools.styling.UserLayerImpl;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.MultiPolygon;
@@ -201,8 +192,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
                 break;
         }
         b.setDefaultGeometry(fieldName);
-        AttributeDescriptor attributeDescriptor = b.createAttributeDescriptor(fieldName, fieldType);
-        return attributeDescriptor;
+        return b.createAttributeDescriptor(fieldName, fieldType);
     }
 
     /**
@@ -221,7 +211,7 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      * @param sld the sld
      */
     private void determineGeometryType(StyledLayerDescriptor sld) {
-        GeometryTypeEnum geometryType = internal_determineGeometryType(sld);
+        GeometryTypeEnum geometryType = internalDetermineGeometryType(sld);
 
         dsInfo.setGeometryType(geometryType);
     }
@@ -232,60 +222,25 @@ public class CreateInternalDataSource implements CreateDataSourceInterface {
      * @param sld the sld
      * @return the geometry type enum
      */
-    protected GeometryTypeEnum internal_determineGeometryType(StyledLayerDescriptor sld) {
+    protected GeometryTypeEnum internalDetermineGeometryType(StyledLayerDescriptor sld) {
         GeometryTypeEnum geometryType = GeometryTypeEnum.UNKNOWN;
 
+        SymbolizerCount symbolizerCount = new SymbolizerCount();
+
         if (sld != null) {
-            List<StyledLayer> styledLayerList = sld.layers();
-            int pointCount = 0;
-            int lineCount = 0;
-            int polygonCount = 0;
-            int rasterCount = 0;
-
-            for (StyledLayer styledLayer : styledLayerList) {
-                List<Style> styleList = null;
-
-                if (styledLayer instanceof NamedLayerImpl) {
-                    NamedLayerImpl namedLayerImpl = (NamedLayerImpl) styledLayer;
-
-                    styleList = namedLayerImpl.styles();
-                } else if (styledLayer instanceof UserLayerImpl) {
-                    UserLayerImpl userLayerImpl = (UserLayerImpl) styledLayer;
-
-                    styleList = userLayerImpl.userStyles();
-                }
-
-                if (styleList != null) {
-                    for (Style style : styleList) {
-                        for (FeatureTypeStyle fts : style.featureTypeStyles()) {
-                            for (Rule rule : fts.rules()) {
-                                for (org.opengis.style.Symbolizer symbolizer : rule.symbolizers()) {
-                                    if (symbolizer instanceof PointSymbolizer) {
-                                        pointCount++;
-                                    } else if (symbolizer instanceof LineSymbolizer) {
-                                        lineCount++;
-                                    } else if (symbolizer instanceof PolygonSymbolizer) {
-                                        polygonCount++;
-                                    } else if (symbolizer instanceof RasterSymbolizer) {
-                                        rasterCount++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (polygonCount > 0) {
-                geometryType = GeometryTypeEnum.POLYGON;
-            } else if (lineCount > 0) {
-                geometryType = GeometryTypeEnum.LINE;
-            } else if (pointCount > 0) {
-                geometryType = GeometryTypeEnum.POINT;
-            } else if (rasterCount > 0) {
-                geometryType = GeometryTypeEnum.RASTER;
-            }
+            SLDUtils.traverseSymbolizers(sld, symbolizerCount);
         }
+
+        if (symbolizerCount.getPolygonSymbolizerCount() > 0) {
+            geometryType = GeometryTypeEnum.POLYGON;
+        } else if (symbolizerCount.getLineSymbolizerCount() > 0) {
+            geometryType = GeometryTypeEnum.LINE;
+        } else if (symbolizerCount.getPointSymbolizerCount() > 0) {
+            geometryType = GeometryTypeEnum.POINT;
+        } else if (symbolizerCount.getRasterSymbolizerCount() > 0) {
+            geometryType = GeometryTypeEnum.RASTER;
+        }
+
         return geometryType;
     }
 }

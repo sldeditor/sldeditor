@@ -64,6 +64,7 @@ public class FidFilter extends FilterBase implements FilterConfigInterface {
          *
          * @see org.geotools.filter.GeometryFilterImpl#toString()
          */
+        @Override
         public String toString() {
             return String.format("%s", getIDs().toString());
         }

@@ -55,12 +55,11 @@ public class VendorOptionManager {
     private static VendorOptionManager instance = null;
 
     /** The vendor option map. */
-    private Map<String, VendorOptionTypeInterface> vendorOptionMap =
-            new ConcurrentHashMap<String, VendorOptionTypeInterface>();
+    private Map<String, VendorOptionTypeInterface> vendorOptionMap = new ConcurrentHashMap<>();
 
     /** The vendor option class map. */
     private Map<Class<?>, VendorOptionTypeInterface> vendorOptionClassMap =
-            new ConcurrentHashMap<Class<?>, VendorOptionTypeInterface>();
+            new ConcurrentHashMap<>();
 
     /** The default vendor option version. */
     private VendorOptionVersion defaultVendorOptionVersion = null;
@@ -70,7 +69,7 @@ public class VendorOptionManager {
 
     /** The vendor option listener list. */
     private List<VendorOptionUpdateInterface> vendorOptionListenerList =
-            Collections.synchronizedList(new ArrayList<VendorOptionUpdateInterface>());
+            Collections.synchronizedList(new ArrayList<>());
 
     /** The selected vendor options. */
     private List<VersionData> selectedVendorOptions =
@@ -81,8 +80,8 @@ public class VendorOptionManager {
 
     /** Instantiates a new vendor option manager. */
     private VendorOptionManager() {
-        internal_addVendorOption(new NoVendorOption());
-        internal_addVendorOption(new GeoServerVendorOption());
+        internalAddVendorOption(new NoVendorOption());
+        internalAddVendorOption(new GeoServerVendorOption());
 
         selectedVendorOptions.add(this.getDefaultVendorOptionVersionData());
 
@@ -123,35 +122,17 @@ public class VendorOptionManager {
                     Element eElement = (Element) nNode;
 
                     String nodeName = nNode.getNodeName();
-                    if (nodeName != null) {
-                        if (nodeName.compareToIgnoreCase("VendorOption") == 0) {
-                            String className = eElement.getAttribute("class");
+                    if ((nodeName != null) && (nodeName.compareToIgnoreCase("VendorOption") == 0)) {
+                        String className = eElement.getAttribute("class");
 
-                            Class<?> classType = Class.forName(className);
+                        Class<?> classType = Class.forName(className);
 
-                            VendorOptionTypeInterface veType = getClass(classType);
+                        VendorOptionTypeInterface veType = getClass(classType);
 
-                            // Add the 'Not Set' option
-                            veType.addVersion(new VersionData());
+                        // Add the 'Not Set' option
+                        veType.addVersion(new VersionData());
 
-                            NodeList versionList = eElement.getElementsByTagName("Version");
-
-                            for (int versionIndex = 0;
-                                    versionIndex < versionList.getLength();
-                                    versionIndex++) {
-                                Node vNode = versionList.item(versionIndex);
-
-                                if (vNode.getNodeType() == Node.ELEMENT_NODE) {
-
-                                    Element vElement = (Element) vNode;
-
-                                    String versionString = vElement.getTextContent();
-
-                                    VersionData versionData = veType.getVersion(versionString);
-                                    veType.addVersion(versionData);
-                                }
-                            }
-                        }
+                        addVendorOptionVersion(eElement, veType);
                     }
                 }
             }
@@ -161,11 +142,35 @@ public class VendorOptionManager {
     }
 
     /**
+     * Adds the vendor option version.
+     *
+     * @param eElement the e element
+     * @param veType the ve type
+     */
+    private void addVendorOptionVersion(Element eElement, VendorOptionTypeInterface veType) {
+        NodeList versionList = eElement.getElementsByTagName("Version");
+
+        for (int versionIndex = 0; versionIndex < versionList.getLength(); versionIndex++) {
+            Node vNode = versionList.item(versionIndex);
+
+            if (vNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                Element vElement = (Element) vNode;
+
+                String versionString = vElement.getTextContent();
+
+                VersionData versionData = veType.getVersion(versionString);
+                veType.addVersion(versionData);
+            }
+        }
+    }
+
+    /**
      * Internal_add vendor option.
      *
      * @param vendorOption the vendor option
      */
-    private void internal_addVendorOption(VendorOptionTypeInterface vendorOption) {
+    private void internalAddVendorOption(VendorOptionTypeInterface vendorOption) {
         vendorOptionClassMap.put(vendorOption.getClass(), vendorOption);
         vendorOptionMap.put(vendorOption.getName(), vendorOption);
     }
@@ -345,7 +350,7 @@ public class VendorOptionManager {
     public List<VersionData> getLatest() {
         VendorOptionTypeInterface geoServer = getClass(GeoServerVendorOption.class);
 
-        List<VersionData> last = new ArrayList<VersionData>();
+        List<VersionData> last = new ArrayList<>();
         List<VersionData> versionList = geoServer.getVersionList();
 
         VersionData data = versionList.get(versionList.size() - 1);
@@ -373,12 +378,10 @@ public class VendorOptionManager {
      * @param selectedVendorOptions the selectedVendorOptions to set
      */
     public void setSelectedVendorOptions(List<VersionData> selectedVendorOptions) {
-        if (!this.selectedVendorOptions.equals(selectedVendorOptions)) {
-            if (!vendorOptionOverridden) {
-                this.selectedVendorOptions = selectedVendorOptions;
+        if (!this.selectedVendorOptions.equals(selectedVendorOptions) && !vendorOptionOverridden) {
+            this.selectedVendorOptions = selectedVendorOptions;
 
-                notifyVendorOptionUpdated();
-            }
+            notifyVendorOptionUpdated();
         }
     }
 

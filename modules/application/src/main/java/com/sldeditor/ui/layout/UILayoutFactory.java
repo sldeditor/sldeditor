@@ -21,6 +21,7 @@ package com.sldeditor.ui.layout;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * A factory for creating UILayout objects.
@@ -29,9 +30,13 @@ import java.util.Map;
  */
 public class UILayoutFactory {
 
+    /** Private default constructor */
+    private UILayoutFactory() {
+        // Private default constructor
+    }
+
     /** The ui layout map. */
-    private static Map<String, UILayoutInterface> uiLayoutMap =
-            new LinkedHashMap<String, UILayoutInterface>();
+    private static Map<String, UILayoutInterface> uiLayoutMap = new LinkedHashMap<>();
 
     /** The default ui layout. */
     private static String defaultUILayout = null;
@@ -113,11 +118,11 @@ public class UILayoutFactory {
             populate();
         }
 
-        Map<String, String> map = new LinkedHashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<>();
 
-        for (String className : uiLayoutMap.keySet()) {
-            String displayName = uiLayoutMap.get(className).getDisplayName();
-            map.put(displayName, className);
+        for (Entry<String, UILayoutInterface> entry : uiLayoutMap.entrySet()) {
+            String displayName = entry.getValue().getDisplayName();
+            map.put(displayName, entry.getKey());
         }
         return map;
     }

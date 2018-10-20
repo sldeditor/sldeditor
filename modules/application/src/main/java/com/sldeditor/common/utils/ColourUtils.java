@@ -42,6 +42,11 @@ public class ColourUtils {
     /** The random number generator. */
     private static SecureRandom rand = new SecureRandom();
 
+    /** Private default constructor */
+    private ColourUtils() {
+        // Private default constructor
+    }
+
     /**
      * Create a #rrggbb string From colour.
      *
@@ -94,9 +99,7 @@ public class ColourUtils {
             tmpColour = colourExpression.toString().substring(1);
         }
 
-        int colour = Integer.parseInt(tmpColour, 16);
-
-        return colour;
+        return Integer.parseInt(tmpColour, 16);
     }
 
     /**
@@ -109,9 +112,7 @@ public class ColourUtils {
         float g = rand.nextFloat();
         float b = rand.nextFloat();
 
-        Color randomColor = new Color(r, g, b);
-
-        return randomColor;
+        return new Color(r, g, b);
     }
 
     /**

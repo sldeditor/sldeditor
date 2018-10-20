@@ -63,7 +63,7 @@ public class VOGeoServerWindbarbSymbol implements VOMarkerSymbolInterface {
             ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField) {
-        List<FieldState> fieldStateList = new ArrayList<FieldState>();
+        List<FieldState> fieldStateList = new ArrayList<>();
 
         windBarbs =
                 new FieldConfigWindBarbs(

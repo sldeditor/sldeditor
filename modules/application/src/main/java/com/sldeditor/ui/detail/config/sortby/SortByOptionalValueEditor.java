@@ -43,7 +43,7 @@ public class SortByOptionalValueEditor extends AbstractCellEditor implements Tab
     private JCheckBox checkBox = new JCheckBox();
 
     /** The current editor. */
-    private Object currentEditor = null;
+    private transient Object currentEditor = null;
 
     /** The table model. */
     private SortByTableModel tableModel = null;

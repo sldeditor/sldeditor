@@ -59,7 +59,7 @@ public class VOGeoServerArrowSymbol implements VOMarkerSymbolInterface {
             ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField) {
 
-        List<FieldState> fieldStateList = new ArrayList<FieldState>();
+        List<FieldState> fieldStateList = new ArrayList<>();
 
         arrowShape =
                 new FieldConfigArrow(

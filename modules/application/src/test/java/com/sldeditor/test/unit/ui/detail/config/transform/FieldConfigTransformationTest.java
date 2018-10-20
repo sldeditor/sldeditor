@@ -88,7 +88,7 @@ public class FieldConfigTransformationTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#internal_setEnabled(boolean)}.
+     * com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#internalSetEnabled(boolean)}.
      * Test method for {@link
      * com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#isEnabled()}. Test method
      * for {@link com.sldeditor.ui.detail.config.transform.FieldConfigTransformation#createUI()}.
@@ -106,7 +106,7 @@ public class FieldConfigTransformationTest {
 
         // Text field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -115,7 +115,7 @@ public class FieldConfigTransformationTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
 
@@ -130,7 +130,7 @@ public class FieldConfigTransformationTest {
 
         // Text field will not have been created
         expectedValue = true;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
         assertFalse(field2.isEnabled());
 
         // Create text field
@@ -140,7 +140,7 @@ public class FieldConfigTransformationTest {
         assertEquals(expectedValue, field2.isEnabled());
 
         expectedValue = false;
-        field2.internal_setEnabled(expectedValue);
+        field2.internalSetEnabled(expectedValue);
 
         // Actual value is coming from the attribute panel, not the text field
         assertEquals(expectedValue, field2.isEnabled());

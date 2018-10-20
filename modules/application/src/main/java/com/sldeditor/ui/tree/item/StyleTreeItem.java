@@ -46,10 +46,8 @@ public class StyleTreeItem implements SLDTreeItemInterface {
         Style style = (Style) nodeObject;
 
         String name = "";
-        if (style != null) {
-            if (style.getName() != null) {
-                name = style.getName();
-            }
+        if ((style != null) && (style.getName() != null)) {
+            name = style.getName();
         }
         return String.format("%s : %s", TITLE, name);
     }

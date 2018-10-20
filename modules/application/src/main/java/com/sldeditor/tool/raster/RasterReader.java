@@ -167,7 +167,7 @@ public class RasterReader implements RasterReaderInterface {
     private void createRGBImageSymbol(
             RasterSymbolizer sym, GridCoverage2D cov, WritableRaster raster) {
         double dest;
-        List<Double> valueList = new ArrayList<Double>();
+        List<Double> valueList = new ArrayList<>();
 
         GridEnvelope2D gridRange2D = cov.getGridGeometry().getGridRange2D();
         for (int x = 0; x < gridRange2D.getWidth(); x++) {

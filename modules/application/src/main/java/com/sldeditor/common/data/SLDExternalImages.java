@@ -19,24 +19,18 @@
 
 package com.sldeditor.common.data;
 
+import com.sldeditor.common.data.traverse.TraverseSymbolizersInterface;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
 import org.geotools.styling.LineSymbolizer;
-import org.geotools.styling.NamedLayer;
-import org.geotools.styling.NamedLayerImpl;
 import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
-import org.geotools.styling.Rule;
+import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Stroke;
-import org.geotools.styling.Style;
-import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
-import org.geotools.styling.UserLayer;
-import org.geotools.styling.UserLayerImpl;
 
 /**
  * The Class SLDExternalImages.
@@ -95,65 +89,72 @@ public class SLDExternalImages {
             StyledLayerDescriptor sld,
             List<String> externalImageList,
             ProcessGraphicSymbolInterface process) {
-        if (sld == null) {
-            return;
-        }
 
+        if (sld != null) {
+            SLDUtils.traverseSymbolizers(
+                    sld,
+                    new TraverseSymbolizersInterface() {
+
+                        @Override
+                        public void rasterSymbolizerCallback(RasterSymbolizer symbolizer) {
+                            processSymbolizer(
+                                    resourceLocator, externalImageList, process, symbolizer);
+                        }
+
+                        @Override
+                        public void pointSymbolizerCallback(PointSymbolizer symbolizer) {
+                            processSymbolizer(
+                                    resourceLocator, externalImageList, process, symbolizer);
+                        }
+
+                        @Override
+                        public void lineSymbolizerCallback(LineSymbolizer symbolizer) {
+                            processSymbolizer(
+                                    resourceLocator, externalImageList, process, symbolizer);
+                        }
+
+                        @Override
+                        public void polygonSymbolizerCallback(PolygonSymbolizer symbolizer) {
+                            processSymbolizer(
+                                    resourceLocator, externalImageList, process, symbolizer);
+                        }
+                    });
+        }
+    }
+
+    /**
+     * Process symbolizer.
+     *
+     * @param resourceLocator the resource locator
+     * @param externalImageList the external image list
+     * @param process the process
+     * @param symbolizer the symbolizer
+     */
+    private static void processSymbolizer(
+            URL resourceLocator,
+            List<String> externalImageList,
+            ProcessGraphicSymbolInterface process,
+            Symbolizer symbolizer) {
         if (process == null) {
             return;
         }
 
-        for (StyledLayer styledLayer : sld.layers()) {
-            List<Style> styles = null;
-            if (styledLayer instanceof NamedLayer) {
-                NamedLayerImpl namedLayer = (NamedLayerImpl) styledLayer;
-                styles = namedLayer.styles();
-            } else if (styledLayer instanceof UserLayer) {
-                UserLayerImpl userLayer = (UserLayerImpl) styledLayer;
-                styles = userLayer.userStyles();
+        if (symbolizer instanceof PointSymbolizer) {
+            PointSymbolizer point = (PointSymbolizer) symbolizer;
+
+            if (point.getGraphic() != null) {
+                process.processGraphicalSymbol(
+                        resourceLocator, point.getGraphic().graphicalSymbols(), externalImageList);
             }
+        } else if (symbolizer instanceof LineSymbolizer) {
+            LineSymbolizer line = (LineSymbolizer) symbolizer;
 
-            if (styles != null) {
-                for (Style style : styles) {
-                    for (FeatureTypeStyle fts : style.featureTypeStyles()) {
-                        for (Rule rule : fts.rules()) {
-                            for (Symbolizer symbolizer : rule.symbolizers()) {
-                                if (symbolizer instanceof PointSymbolizer) {
-                                    PointSymbolizer point = (PointSymbolizer) symbolizer;
+            updateStroke(resourceLocator, line.getStroke(), externalImageList, process);
+        } else if (symbolizer instanceof PolygonSymbolizer) {
+            PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
 
-                                    if (point.getGraphic() != null) {
-                                        process.processGraphicalSymbol(
-                                                resourceLocator,
-                                                point.getGraphic().graphicalSymbols(),
-                                                externalImageList);
-                                    }
-                                } else if (symbolizer instanceof LineSymbolizer) {
-                                    LineSymbolizer line = (LineSymbolizer) symbolizer;
-
-                                    updateStroke(
-                                            resourceLocator,
-                                            line.getStroke(),
-                                            externalImageList,
-                                            process);
-                                } else if (symbolizer instanceof PolygonSymbolizer) {
-                                    PolygonSymbolizer polygon = (PolygonSymbolizer) symbolizer;
-
-                                    updateStroke(
-                                            resourceLocator,
-                                            polygon.getStroke(),
-                                            externalImageList,
-                                            process);
-                                    updateFill(
-                                            resourceLocator,
-                                            polygon.getFill(),
-                                            externalImageList,
-                                            process);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            updateStroke(resourceLocator, polygon.getStroke(), externalImageList, process);
+            updateFill(resourceLocator, polygon.getFill(), externalImageList, process);
         }
     }
 

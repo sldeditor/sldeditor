@@ -32,13 +32,18 @@ import org.opengis.filter.expression.Expression;
  */
 public class FunctionExpressionUtils {
 
+    /** Private default constructor */
+    private FunctionExpressionUtils() {
+        // Private default constructor
+    }
+
     /**
      * The missing toString() method.
      *
      * @param expression the expression
      * @return the string
      */
-    private static String missing_toString(FunctionExpressionImpl expression) {
+    private static String missingToString(FunctionExpressionImpl expression) {
         StringBuilder sb = new StringBuilder();
         sb.append(expression.getName());
         sb.append("(");
@@ -68,7 +73,7 @@ public class FunctionExpressionUtils {
      */
     public static String toString(Expression expression) {
         if (expression instanceof Collection_UniqueFunction) {
-            return missing_toString((Collection_UniqueFunction) expression);
+            return missingToString((Collection_UniqueFunction) expression);
         } else {
             return expression.toString();
         }

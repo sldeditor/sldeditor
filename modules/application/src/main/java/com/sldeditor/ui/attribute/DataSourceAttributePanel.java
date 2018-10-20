@@ -52,22 +52,22 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
     private static final long serialVersionUID = 1L;
 
     /** The attribute combo box. */
-    private JComboBox<String> attributeComboBox = new JComboBox<String>();
+    private JComboBox<String> attributeComboBox = new JComboBox<>();
 
     /** The expected data type. */
     private Class<?> expectedDataType = Object.class;
 
     /** The attribute name list. */
-    private List<String> attributeNameList = null;
+    private transient List<String> attributeNameList = null;
 
     /** The old value obj. */
-    private Object oldValueObj = null;
+    private transient Object oldValueObj = null;
 
     /** The data source. */
-    private DataSourceInterface dataSource = null;
+    private transient DataSourceInterface dataSource = null;
 
     /** The data model. */
-    private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+    private DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
     /** The populating attribute combo box. */
     private boolean populatingAttributeComboBox = false;
@@ -135,11 +135,9 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
         boolean different = (this.expectedDataType != expectedDataType);
         this.expectedDataType = expectedDataType;
 
-        if (different) {
-            if (dataSource != null) {
-                attributeNameList = this.dataSource.getAttributes(expectedDataType);
-                populateAttributeComboBox();
-            }
+        if (different && (dataSource != null)) {
+            attributeNameList = this.dataSource.getAttributes(expectedDataType);
+            populateAttributeComboBox();
         }
 
         if (expectedDataType != null) {
@@ -279,9 +277,7 @@ public class DataSourceAttributePanel extends JPanel implements UndoActionInterf
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        String oldValueObj = (String) undoRedoObject.getOldValue();
-
-        attributeComboBox.setSelectedItem(oldValueObj);
+        attributeComboBox.setSelectedItem((String) undoRedoObject.getOldValue());
     }
 
     /**

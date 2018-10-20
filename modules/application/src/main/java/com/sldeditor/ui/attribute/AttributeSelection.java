@@ -71,8 +71,7 @@ public class AttributeSelection extends JPanel
     private static final long serialVersionUID = 1L;
 
     /** The selected listeners. */
-    private List<AttributeButtonSelectionInterface> selectedListeners =
-            new ArrayList<AttributeButtonSelectionInterface>();
+    private transient List<AttributeButtonSelectionInterface> selectedListeners = new ArrayList<>();
 
     /** The outer panel. */
     private JPanel outerPanel;
@@ -158,7 +157,7 @@ public class AttributeSelection extends JPanel
 
         dataSourceAttributePanel = createDataSourceAttributePanel(expectedDataType);
 
-        attributeChooserComboBox = new JComboBox<String>();
+        attributeChooserComboBox = new JComboBox<>();
         attributeChooserComboBox.addActionListener(
                 new ActionListener() {
 
@@ -194,9 +193,9 @@ public class AttributeSelection extends JPanel
      * @return the j panel
      */
     private ValueSubPanel createValuePanel(boolean addValueField) {
-        ValueSubPanel valuePanel = new ValueSubPanel(addValueField);
-        outerPanel.add(valuePanel, ValueSubPanel.getPanelName());
-        return valuePanel;
+        ValueSubPanel localValuePanel = new ValueSubPanel(addValueField);
+        outerPanel.add(localValuePanel, ValueSubPanel.getPanelName());
+        return localValuePanel;
     }
 
     /**
@@ -273,8 +272,7 @@ public class AttributeSelection extends JPanel
         if (expression != null) {
             populateAttributeComboxBox(expression);
 
-            if ((expression == null)
-                    || (expression instanceof NilExpression)
+            if ((expression instanceof NilExpression)
                     || (expression instanceof ConstantExpression)
                     || (expression instanceof LiteralExpressionImpl)) {
                 valuePanel.populateExpression(expression);
@@ -418,9 +416,7 @@ public class AttributeSelection extends JPanel
      */
     @Override
     public void undoAction(UndoInterface undoRedoObject) {
-        String oldValueObj = (String) undoRedoObject.getOldValue();
-
-        attributeChooserComboBox.setSelectedItem(oldValueObj);
+        attributeChooserComboBox.setSelectedItem((String) undoRedoObject.getOldValue());
     }
 
     /**

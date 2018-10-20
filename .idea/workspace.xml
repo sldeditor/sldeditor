@@ -2,7 +2,118 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4ae0cc8-5d8e-4825-a4e3-ad53b7b9d1c4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/modules/application/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/SLDEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/SLDEditor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/TreeSelectionData.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/TreeSelectionData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/colourramp/ColourRampConfigPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/colourramp/ColourRampConfigPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/data/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/data/DatabaseConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/data/SLDExternalImages.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/data/SLDExternalImages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/data/SelectedSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/data/SelectedSymbol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/data/UpdateGraphicalSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/data/UpdateGraphicalSymbol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/preferences/PrefManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/preferences/PrefManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/property/EncryptedPropertiesApache.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/property/EncryptedPropertiesApache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/property/PropertyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/property/PropertyManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/undo/UndoEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/undo/UndoEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/undo/UndoManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/undo/UndoManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/utils/ExternalFilenames.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/utils/ExternalFilenames.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/utils/ScaleUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/utils/ScaleUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/GeoServerVendorOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/GeoServerVendorOption.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/VendorOptionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/VendorOptionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/VendorOptionStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/VendorOptionStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/VersionData.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/VersionData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/info/VendorOptionInfoCellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/info/VendorOptionInfoCellRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/info/VendorOptionInfoManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/info/VendorOptionInfoManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/info/VendorOptionInfoModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/info/VendorOptionInfoModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/minversion/MinimumVersion.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/minversion/MinimumVersion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/minversion/VendorOptionPresent.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/minversion/VendorOptionPresent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/minversion/VendorOptionPresentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/vendoroption/minversion/VendorOptionPresentModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ParseXML.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ParseXML.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/EnvironmentVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/EnvironmentVariables.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/ObjectFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/ObjectFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/XMLBuiltInEnvVarList.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/XMLBuiltInEnvVarList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/XMLEnvVar.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/XMLEnvVar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/XMLEnvVarType.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/XMLEnvVarType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/XMLEnvVarTypeList.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/envvar/XMLEnvVarTypeList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/ColourRampPresets.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/ColourRampPresets.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/FieldIdEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/FieldIdEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/GroupIdEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/GroupIdEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/MapUnits.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/MapUnits.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/ObjectFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/ObjectFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/PanelConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/PanelConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/SLDXPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/SLDXPath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/SelectedTreeItemEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/SelectedTreeItemEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/SldEditorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/SldEditorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLColourMapEntries.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLColourMapEntries.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLColourMapEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLColourMapEntry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldAttribute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigBoolean.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigBoolean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigColour.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigColour.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigColourMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigColourMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigDSProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigDSProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigData.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigDouble.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigDouble.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnumValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnumValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnumValueField.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnumValueField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnumValueGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnumValueGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnumValueItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnumValueItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnumValueList.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigEnumValueList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigFeatureTypeConstraint.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigFeatureTypeConstraint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigFont.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigFont.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigFontPreview.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigFontPreview.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigGeometry.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigGeometry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigGeometryField.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigGeometryField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigInlineFeature.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigInlineFeature.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigInteger.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigInteger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigMapUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigMapUnit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigSlider.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigSlider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigSortBy.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigSortBy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigString.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigSymbolType.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigSymbolType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigTransformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigTransformation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigVendorOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldConfigVendorOption.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldDisabled.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldDisabled.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldLiteralBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldLiteralBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldLiteralBoolean.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldLiteralBoolean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldLiteralDouble.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldLiteralDouble.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldLiteralInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldLiteralInt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldLiteralString.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldLiteralString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLFieldTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLGroupConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLGroupConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLGroupConfigData.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLGroupConfigData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLIndex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLMultiOptionGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLMultiOptionGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLOptionGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLOptionGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLPanelDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLPanelDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLPanelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLPanelTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldAttribute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldLiteralBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldLiteralBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldLiteralBoolean.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldLiteralBoolean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldLiteralDouble.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldLiteralDouble.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldLiteralInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldLiteralInt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldLiteralString.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetFieldLiteralString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetMultiOptionGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetMultiOptionGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetup.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSetup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSymbolTypeConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLSymbolTypeConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLTestSection.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLTestSection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLTestSectionField.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLTestSectionField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLTwoColourRamp.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLTwoColourRamp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLTwoColourRampList.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLTwoColourRampList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLVendorOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/common/xml/ui/XMLVendorOption.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/map/MapRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/map/MapRender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/rendertransformation/BuiltInProcessFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/rendertransformation/BuiltInProcessFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/rendertransformation/CustomProcessFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/rendertransformation/CustomProcessFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/rendertransformation/FunctionTableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/rendertransformation/FunctionTableModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/tool/ToolManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/tool/ToolManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/tool/layerstyle/LayerStyleModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/tool/layerstyle/LayerStyleModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/tool/savesld/SaveSLD.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/tool/savesld/SaveSLD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/tool/vector/VectorTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/tool/vector/VectorTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/update/CheckUpdateClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/update/CheckUpdateClientFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/update/CheckUpdateGitHub.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/application/src/main/java/com/sldeditor/update/CheckUpdateGitHub.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/modules/import/target/" />
     <ignored path="$PROJECT_DIR$/modules/application/target/" />
@@ -20,11 +131,13 @@
     <session id="-1754795995">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.14" value="1" />
+          <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -58,8 +171,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5933">
-              <caret line="349" selection-start-line="349" selection-end-line="349" />
+            <state relative-caret-position="6205">
+              <caret line="365" selection-start-line="365" selection-end-line="365" />
             </state>
           </provider>
         </entry>
@@ -85,8 +198,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/application/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5729">
-              <caret line="337" selection-start-line="337" selection-end-line="337" />
+            <state relative-caret-position="5746">
+              <caret line="338" selection-start-line="338" selection-end-line="338" />
             </state>
           </provider>
         </entry>
@@ -121,7 +234,12 @@
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
-      <expand />
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Profiles" type="6783ec58:MavenProjectsStructure$ProfilesNode" />
+        </path>
+      </expand>
       <select />
     </treeState>
   </component>
@@ -137,8 +255,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -271,8 +389,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1216" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18283582" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18710022" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -342,8 +461,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5933">
-          <caret line="349" selection-start-line="349" selection-end-line="349" />
+        <state relative-caret-position="6205">
+          <caret line="365" selection-start-line="365" selection-end-line="365" />
         </state>
       </provider>
     </entry>
@@ -356,8 +475,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/application/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5729">
-          <caret line="337" selection-start-line="337" selection-end-line="337" />
+        <state relative-caret-position="5746">
+          <caret line="338" selection-start-line="338" selection-end-line="338" />
         </state>
       </provider>
     </entry>

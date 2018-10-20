@@ -29,9 +29,13 @@ import java.util.List;
  */
 public class CheckAttributeFactory {
 
+    /** Default constructor */
+    private CheckAttributeFactory() {
+        // Default constructor
+    }
+
     /** The check list. */
-    private static List<CheckAttributeInterface> checkList =
-            new ArrayList<CheckAttributeInterface>();
+    private static List<CheckAttributeInterface> checkList = new ArrayList<>();
 
     /**
      * Gets the check list.
@@ -52,7 +56,7 @@ public class CheckAttributeFactory {
      */
     public static void setOverrideCheckList(List<CheckAttributeInterface> checkList) {
         if (checkList == null) {
-            CheckAttributeFactory.checkList = new ArrayList<CheckAttributeInterface>();
+            CheckAttributeFactory.checkList = new ArrayList<>();
         } else {
             CheckAttributeFactory.checkList = checkList;
         }

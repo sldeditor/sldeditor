@@ -37,7 +37,6 @@ import org.geotools.filter.LiteralExpressionImpl;
 import org.geotools.filter.function.EnvFunction;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.filter.expression.Expression;
-import org.opengis.filter.expression.Function;
 
 /**
  * The Class EnvironmentVariableManager.
@@ -62,13 +61,13 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     private static EnvironmentManagerInterface instance = null;
 
     /** The environment variable list. */
-    private List<EnvVar> envVarList = new ArrayList<EnvVar>();
+    private List<EnvVar> envVarList = new ArrayList<>();
 
     /** The built in env var map. */
-    private Map<String, EnvVar> builtInEnvVarMap = new HashMap<String, EnvVar>();
+    private Map<String, EnvVar> builtInEnvVarMap = new HashMap<>();
 
     /** The env var type list. */
-    private List<Class<?>> envVarTypeList = new ArrayList<Class<?>>();
+    private List<Class<?>> envVarTypeList = new ArrayList<>();
 
     /** The filter factory. */
     private static FilterFactory2 ff = (FilterFactory2) CommonFactoryFinder.getFilterFactory(null);
@@ -84,7 +83,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
             Arrays.asList(WMS_BBOX, WMS_HEIGHT, WMS_WIDTH);
 
     /** The env var updated listener list. */
-    private List<EnvVarUpdateInterface> listenerList = new ArrayList<EnvVarUpdateInterface>();
+    private List<EnvVarUpdateInterface> listenerList = new ArrayList<>();
 
     /** Instantiates a new environment variable manager. */
     private EnvironmentVariableManager() {
@@ -203,7 +202,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     @Override
     public List<EnvVar> getEnvVarList() {
 
-        List<EnvVar> newEnvVarList = new ArrayList<EnvVar>();
+        List<EnvVar> newEnvVarList = new ArrayList<>();
         for (EnvVar envVar : envVarList) {
             newEnvVarList.add(new EnvVar(envVar));
         }
@@ -222,9 +221,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
             return null;
         }
 
-        Function function = ff.function("env", ff.literal(envVar.getName()));
-
-        return function;
+        return ff.function("env", ff.literal(envVar.getName()));
     }
 
     /**
@@ -305,14 +302,12 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
         EnvFunction.clearGlobalValues();
 
         for (EnvVar envVar : envVarList) {
-            if (envVar != null) {
-                if (!wmsEnvVarList.contains(envVar.getName())) {
-                    EnvFunction.setGlobalValue(envVar.getName(), envVar.getValue());
-                }
+            if ((envVar != null) && (!wmsEnvVarList.contains(envVar.getName()))) {
+                EnvFunction.setGlobalValue(envVar.getName(), envVar.getValue());
             }
         }
 
-        internal_setWMSEnvVarValues();
+        internalSetWMSEnvVarValues();
 
         notifyUpdates();
     }
@@ -325,7 +320,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     }
 
     /** Internal method to set WMS environment variable values. */
-    private void internal_setWMSEnvVarValues() {
+    private void internalSetWMSEnvVarValues() {
         if (wmsEnvVarValues == null) {
             return;
         }
@@ -387,7 +382,7 @@ public class EnvironmentVariableManager implements EnvironmentManagerInterface {
     public void setWMSEnvVarValues(WMSEnvVarValues wmsEnvVarValues) {
         this.wmsEnvVarValues = wmsEnvVarValues;
 
-        internal_setWMSEnvVarValues();
+        internalSetWMSEnvVarValues();
     }
 
     /**

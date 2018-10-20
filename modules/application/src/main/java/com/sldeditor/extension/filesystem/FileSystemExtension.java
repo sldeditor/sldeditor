@@ -98,7 +98,7 @@ public class FileSystemExtension
     private static Logger logger = Logger.getLogger(FileSystemExtension.class);
 
     /** The extension list. */
-    private List<FileSystemInterface> extensionList = new ArrayList<FileSystemInterface>();
+    private List<FileSystemInterface> extensionList = new ArrayList<>();
 
     /** The tool mgr. */
     private ToolSelectionInterface toolMgr = null;
@@ -165,37 +165,7 @@ public class FileSystemExtension
 
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        if (SwingUtilities.isRightMouseButton(e)) {
-
-                            int row = tree.getClosestRowForLocation(e.getX(), e.getY());
-                            tree.setSelectionRow(row);
-
-                            Object selectedItem = tree.getLastSelectedPathComponent();
-
-                            Thread t1 =
-                                    new Thread(
-                                            new Runnable() {
-                                                public void run() {
-
-                                                    JPopupMenu popupMenu = new JPopupMenu();
-
-                                                    for (FileSystemInterface extension :
-                                                            extensionList) {
-                                                        extension.rightMouseButton(
-                                                                popupMenu, selectedItem, e);
-                                                    }
-
-                                                    if ((popupMenu.getComponentCount() > 0)
-                                                            && (e != null)) {
-                                                        popupMenu.show(
-                                                                e.getComponent(),
-                                                                e.getX(),
-                                                                e.getY());
-                                                    }
-                                                }
-                                            });
-                            t1.start();
-                        }
+                        treeSelected(e);
                     }
 
                     @Override
@@ -226,7 +196,8 @@ public class FileSystemExtension
                     /*
                      * (non-Javadoc)
                      *
-                     * @see javax.swing.event.TreeExpansionListener#treeExpanded(javax.swing.event.TreeExpansionEvent)
+                     * @see javax.swing.event.TreeExpansionListener#treeExpanded(javax.swing.event.
+                     * TreeExpansionEvent)
                      */
                     public void treeExpanded(TreeExpansionEvent evt) {
                         TreePath path = evt.getPath();
@@ -244,7 +215,8 @@ public class FileSystemExtension
                     /*
                      * (non-Javadoc)
                      *
-                     * @see javax.swing.event.TreeExpansionListener#treeCollapsed(javax.swing.event.TreeExpansionEvent)
+                     * @see javax.swing.event.TreeExpansionListener#treeCollapsed(javax.swing.event.
+                     * TreeExpansionEvent)
                      */
                     public void treeCollapsed(TreeExpansionEvent evt) {
                         // Nothing to do
@@ -293,8 +265,8 @@ public class FileSystemExtension
      * @return the selected files
      */
     private SelectedFiles treeItemSelected() {
-        List<SLDDataInterface> sldDataList = new ArrayList<SLDDataInterface>();
-        List<NodeInterface> nodeList = new ArrayList<NodeInterface>();
+        List<SLDDataInterface> sldDataList = new ArrayList<>();
+        List<NodeInterface> nodeList = new ArrayList<>();
 
         SelectedFiles combinedFiles = new SelectedFiles();
 
@@ -522,13 +494,14 @@ public class FileSystemExtension
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.ExtensionInterface#save(java.net.URL, com.sldeditor.ui.iface.SLDDataInterface)
+     * @see com.sldeditor.extension.ExtensionInterface#save(java.net.URL,
+     * com.sldeditor.ui.iface.SLDDataInterface)
      */
     @Override
     public boolean save(SLDDataInterface sldData) {
         boolean saved = false;
         for (FileSystemInterface extension : extensionList) {
-            if (saved == false) {
+            if (!saved) {
                 saved = extension.save(sldData);
             }
         }
@@ -547,40 +520,37 @@ public class FileSystemExtension
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.extension.ExtensionInterface#updateForPreferences(com.sldeditor.common.preferences.PrefData, java.util.List)
+     * @see com.sldeditor.extension.ExtensionInterface#updateForPreferences(com.sldeditor.common.
+     * preferences.PrefData, java.util.List)
      */
     @Override
     public void updateForPreferences(PrefData prefData, List<String> extensionArgList) {
-        if ((prefData != null) && (extensionArgList != null)) {
-            if (prefData.isSaveLastFolderView()) {
-                String folderName = prefData.getLastFolderViewed();
+        if ((prefData != null) && (extensionArgList != null) && prefData.isSaveLastFolderView()) {
+            String folderName = prefData.getLastFolderViewed();
 
-                if (folderName != null) {
-                    String suffix =
-                            (prefData.getLastViewedKey() == PrefDataLastViewedEnum.GEOSERVER)
-                                    ? GEOSERVER_ARG
-                                    : FOLDER_ARG;
-                    String prefix =
-                            String.format(
-                                    "%s.%s.%s=",
-                                    ExtensionFactory.EXTENSION_PREFIX,
-                                    getExtensionArgPrefix(),
-                                    suffix);
+            if (folderName != null) {
+                String suffix =
+                        (prefData.getLastViewedKey() == PrefDataLastViewedEnum.GEOSERVER)
+                                ? GEOSERVER_ARG
+                                : FOLDER_ARG;
+                String prefix =
+                        String.format(
+                                "%s.%s.%s=",
+                                ExtensionFactory.EXTENSION_PREFIX, getExtensionArgPrefix(), suffix);
 
-                    // Check to see if the argument already exists
-                    boolean found = false;
-                    for (String arg : extensionArgList) {
-                        if (arg.startsWith(prefix)) {
-                            found = true;
-                        }
+                // Check to see if the argument already exists
+                boolean found = false;
+                for (String arg : extensionArgList) {
+                    if (arg.startsWith(prefix)) {
+                        found = true;
                     }
+                }
 
-                    // If the argument doesn't already exists then use
-                    if (!found) {
-                        String arg = prefix + folderName;
+                // If the argument doesn't already exists then use
+                if (!found) {
+                    String arg = prefix + folderName;
 
-                        extensionArgList.add(arg);
-                    }
+                    extensionArgList.add(arg);
                 }
             }
         }
@@ -594,5 +564,34 @@ public class FileSystemExtension
     @Override
     public void recursiveValuesUpdated(boolean recurse) {
         treeItemSelected();
+    }
+
+    /** @param e */
+    private void treeSelected(MouseEvent e) {
+        if (SwingUtilities.isRightMouseButton(e)) {
+
+            int row = tree.getClosestRowForLocation(e.getX(), e.getY());
+            tree.setSelectionRow(row);
+
+            Object selectedItem = tree.getLastSelectedPathComponent();
+
+            Thread t1 =
+                    new Thread(
+                            new Runnable() {
+                                public void run() {
+
+                                    JPopupMenu popupMenu = new JPopupMenu();
+
+                                    for (FileSystemInterface extension : extensionList) {
+                                        extension.rightMouseButton(popupMenu, selectedItem, e);
+                                    }
+
+                                    if ((popupMenu.getComponentCount() > 0) && (e != null)) {
+                                        popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                                    }
+                                }
+                            });
+            t1.start();
+        }
     }
 }

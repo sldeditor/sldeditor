@@ -44,16 +44,18 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
 public class FieldConfigTextArea extends FieldConfigBase implements UndoActionInterface {
 
-    /** */
+    /** The Constant NO_OF_COLUMNS. */
     private static final int NO_OF_COLUMNS = 80;
 
+    /** The Constant NO_OF_VISIBLE_ROWS. */
     private static final int NO_OF_VISIBLE_ROWS = 10;
+
     /** The text area. */
     private JTextArea textArea;
 
@@ -192,7 +194,7 @@ public class FieldConfigTextArea extends FieldConfigBase implements UndoActionIn
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (textArea != null) {
             textArea.setEnabled(enabled);
         }
@@ -286,12 +288,8 @@ public class FieldConfigTextArea extends FieldConfigBase implements UndoActionIn
      */
     @Override
     public String getStringValue() {
-        if (textArea != null) {
-            if (getPanel().isValueReadable()) {
-                String value = textArea.getText();
-
-                return value;
-            }
+        if ((textArea != null) && getPanel().isValueReadable()) {
+            return textArea.getText();
         }
         return null;
     }
@@ -342,7 +340,7 @@ public class FieldConfigTextArea extends FieldConfigBase implements UndoActionIn
     public void addButtonPressedListener(FieldConfigStringButtonInterface listener) {
 
         if (buttonPressedListenerList == null) {
-            buttonPressedListenerList = new ArrayList<FieldConfigStringButtonInterface>();
+            buttonPressedListenerList = new ArrayList<>();
         }
 
         if (listener != null) {

@@ -62,12 +62,6 @@ public class DateTimePanel {
     /** The date/time picker. */
     private DateTimePicker dateTimePicker;
 
-    /** The date model. */
-    private DatePickerSettings dateModel = new DatePickerSettings();
-
-    /** The time model. */
-    private TimePickerSettings timeModel = new TimePickerSettings();
-
     /** The offset sign. */
     private JComboBox<String> offsetSign;
 
@@ -103,10 +97,10 @@ public class DateTimePanel {
     public void createUI(int xPos, int indentWidth, int yOffset, JPanel fieldPanel) {
         if (dateTimePicker == null) {
 
-            dateModel = new DatePickerSettings();
+            DatePickerSettings dateModel = new DatePickerSettings();
             dateModel.setAllowEmptyDates(false);
             dateModel.setFormatForDatesCommonEra(DateTimeFormatter.ofPattern("dd MMM yyyy"));
-            timeModel = new TimePickerSettings();
+            TimePickerSettings timeModel = new TimePickerSettings();
             timeModel.setAllowEmptyTimes(false);
             timeModel.setDisplaySpinnerButtons(true);
             timeModel.setDisplayToggleTimeMenuButton(false);
@@ -120,7 +114,7 @@ public class DateTimePanel {
             dateTimePicker.setBounds(x, yOffset, DATEPICKER_WIDTH, BasePanel.WIDGET_HEIGHT);
             fieldPanel.add(dateTimePicker);
 
-            offsetSign = new JComboBox<String>(offsetStrings);
+            offsetSign = new JComboBox<>(offsetStrings);
             int y = BasePanel.WIDGET_HEIGHT + yOffset;
             offsetSign.setBounds(x, y, OFFSET_SIGN_WIDTH, BasePanel.WIDGET_HEIGHT);
             offsetSign.addActionListener(
@@ -251,9 +245,7 @@ public class DateTimePanel {
                         hourSpinner.getValue(),
                         minuteSpinner.getValue());
 
-        ZonedDateTime newDateTime = localDateTime.atZone(ZoneOffset.of(offsetId));
-
-        return newDateTime;
+        return localDateTime.atZone(ZoneOffset.of(offsetId));
     }
 
     /**

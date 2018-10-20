@@ -98,7 +98,9 @@ public class NoSymbolUI implements SymbolPanelInterface {
      * @see com.sldeditor.ui.SymbolPanelInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
      */
     @Override
-    public void populate(SelectedSymbol selectedSymbol) {}
+    public void populate(SelectedSymbol selectedSymbol) {
+        // Not used
+    }
 
     /*
      * (non-Javadoc)

@@ -82,6 +82,7 @@ class BlankIcon implements Icon {
      *
      * @see javax.swing.Icon#getIconHeight()
      */
+    @Override
     public int getIconHeight() {
         return size;
     }

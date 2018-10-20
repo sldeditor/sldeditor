@@ -48,10 +48,10 @@ public class ExternalFilenames {
     private static final String SLD_FILE_EXTENSION = "sld";
 
     /** The format map. */
-    private static Map<String, String> formatMap = new HashMap<String, String>();
+    private static Map<String, String> formatMap = new HashMap<>();
 
     /** Default constructor. */
-    public ExternalFilenames() {
+    private ExternalFilenames() {
         // Default constructor
     }
 
@@ -93,9 +93,7 @@ public class ExternalFilenames {
             }
         }
 
-        File file = new File(filename);
-
-        return file;
+        return new File(filename);
     }
 
     /**
@@ -120,10 +118,8 @@ public class ExternalFilenames {
             if (sldDataInterface.getSLDFile() != null) {
                 String parentFolder = sldDataInterface.getSLDFile().getParent();
 
-                if (parentFolder != null) {
-                    if (text.startsWith(parentFolder)) {
-                        text = text.substring(parentFolder.length());
-                    }
+                if ((parentFolder != null) && text.startsWith(parentFolder)) {
+                    text = text.substring(parentFolder.length());
                 }
             } else {
                 ConsoleManager.getInstance().error(ExternalFilenames.class, "No SLD filename set");

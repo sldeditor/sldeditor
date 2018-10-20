@@ -63,16 +63,16 @@ public class ColourMapModel extends AbstractTableModel {
     private static final int COL_QUANTITY = 4;
 
     /** The colour map list. */
-    private List<ColourMapData> colourMapList = new ArrayList<ColourMapData>();
+    private transient List<ColourMapData> colourMapList = new ArrayList<>();
 
     /** The column list. */
-    private List<String> columnList = new ArrayList<String>();
+    private List<String> columnList = new ArrayList<>();
 
     /** The filter factory. */
     private static FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
 
     /** The parent object to inform of any changes. */
-    private ColourMapModelUpdateInterface parentObj = null;
+    private transient ColourMapModelUpdateInterface parentObj = null;
 
     /**
      * Instantiates a new colour map model.
@@ -335,7 +335,7 @@ public class ColourMapModel extends AbstractTableModel {
         if (selectedRows == null) {
             return null;
         }
-        List<ColorMapEntry> entries = new ArrayList<ColorMapEntry>();
+        List<ColorMapEntry> entries = new ArrayList<>();
 
         for (int selectedRow : selectedRows) {
             ColourMapData colourMapData = colourMapList.get(selectedRow);

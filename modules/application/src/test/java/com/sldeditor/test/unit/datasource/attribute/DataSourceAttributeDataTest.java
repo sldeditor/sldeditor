@@ -148,6 +148,7 @@ public class DataSourceAttributeDataTest {
         assertEquals(expectedValue2, dsa.getValue());
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testEquals() {
         String expectedName1 = "test name";

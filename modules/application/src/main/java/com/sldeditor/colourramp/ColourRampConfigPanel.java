@@ -57,8 +57,7 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
     private JPanel editPanel;
 
     /** The colour ramp map cache. */
-    private transient Map<String, ColourRampPanelInterface> colourRampMapCache =
-            new HashMap<String, ColourRampPanelInterface>();
+    private transient Map<String, ColourRampPanelInterface> colourRampMapCache = new HashMap<>();
 
     /** The model. */
     private ColourMapModel colourMapModel = null;
@@ -119,7 +118,7 @@ public class ColourRampConfigPanel extends JPanel implements ColourRampUpdateInt
                 new Dimension(BasePanel.FIELD_PANEL_WIDTH, BasePanel.WIDGET_HEIGHT));
         add(topPanel, BorderLayout.NORTH);
 
-        List<ValueComboBoxData> dataList = new ArrayList<ValueComboBoxData>();
+        List<ValueComboBoxData> dataList = new ArrayList<>();
 
         if (colourRampMap != null) {
             for (ColourRampPanelInterface data : colourRampMap.keySet()) {

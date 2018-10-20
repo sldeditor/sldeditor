@@ -115,7 +115,7 @@ public class FieldConfigColourMapTest {
 
     /**
      * Test method for {@link
-     * com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#internal_setEnabled(boolean)}.
+     * com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#internalSetEnabled(boolean)}.
      * Test method for {@link
      * com.sldeditor.ui.detail.config.colourmap.FieldConfigColourMap#isEnabled()}.
      */
@@ -128,7 +128,7 @@ public class FieldConfigColourMapTest {
 
         // Field will not have been created
         boolean expectedValue = true;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertFalse(field.isEnabled());
 
@@ -138,7 +138,7 @@ public class FieldConfigColourMapTest {
         assertEquals(expectedValue, field.isEnabled());
 
         expectedValue = false;
-        field.internal_setEnabled(expectedValue);
+        field.internalSetEnabled(expectedValue);
 
         assertEquals(expectedValue, field.isEnabled());
     }

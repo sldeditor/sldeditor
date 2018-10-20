@@ -36,10 +36,10 @@ public class WKTTypeComboBoxModel extends AbstractListModel implements ComboBoxM
     private static final long serialVersionUID = 1L;
 
     /** The wkt type list. */
-    private List<WKTType> wktTypeList = new ArrayList<WKTType>();
+    private transient List<WKTType> wktTypeList = new ArrayList<>();
 
     /** The selection. */
-    private WKTType selection = null;
+    private transient WKTType selection = null;
 
     /**
      * Instantiates a new WKT type combo box model.

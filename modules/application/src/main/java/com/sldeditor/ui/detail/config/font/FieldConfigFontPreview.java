@@ -38,7 +38,7 @@ import org.opengis.filter.expression.Literal;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -53,15 +53,15 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
     /** The Constant DEFAULT_FONT_SIZE. */
     private static final double DEFAULT_FONT_SIZE = 12.0;
 
-    /** The Constant sampleText. */
-    private static final String sampleText =
+    /** The Constant SAMPLE_TEXT. */
+    private static final String SAMPLE_TEXT =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
                     + "abcdefghijklmnopqrstuvwxyz\n"
                     + "0123456789\n"
                     + "The quick brown fox jumped over the lazy dog";
 
-    /** The Constant sampleTextLines. */
-    private static final int sampleTextLines = 4;
+    /** The Constant SAMPLE_TEXT_LINES. */
+    private static final int SAMPLE_TEXT_LINES = 4;
 
     /** The Constant styles. */
     private static final String[] styles = {"Normal", "Italic"};
@@ -88,15 +88,15 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
     public void createUI() {
         if (textField == null) {
             int xPos = getXPos();
-            int height = getRowY(sampleTextLines);
+            int height = getRowY(SAMPLE_TEXT_LINES);
             int width = BasePanel.WIDGET_EXTENDED_WIDTH * 2;
 
             textField = new JTextArea();
             textField.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
             textField.setWrapStyleWord(true);
             textField.setLineWrap(false);
-            textField.setText(sampleText);
-            textField.setRows(sampleTextLines);
+            textField.setText(SAMPLE_TEXT);
+            textField.setRows(SAMPLE_TEXT_LINES);
             JScrollPane scrollPane = new JScrollPane(textField);
             scrollPane.setBounds(xPos + BasePanel.WIDGET_X_START, 0, width, height);
             FieldPanel fieldPanel = createFieldPanel(xPos, height, getLabel());
@@ -140,7 +140,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (textField != null) {
             textField.setEnabled(enabled);
         }
@@ -269,7 +269,7 @@ public class FieldConfigFontPreview extends FieldConfigBase implements UndoActio
                     || (font.getSize() == null)) {
                 textField.setText("");
             } else {
-                textField.setText(sampleText);
+                textField.setText(SAMPLE_TEXT);
 
                 int styleIndex = 0;
                 int weightIndex = 0;

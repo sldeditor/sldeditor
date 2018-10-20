@@ -64,7 +64,7 @@ public class VOGeoServerShapeSymbol implements VOMarkerSymbolInterface {
             ColourFieldConfig fillFieldConfig,
             ColourFieldConfig strokeFieldConfig,
             FieldIdEnum symbolSelectionField) {
-        List<FieldState> fieldStateList = new ArrayList<FieldState>();
+        List<FieldState> fieldStateList = new ArrayList<>();
 
         FieldConfigMarkerShape markerField =
                 new FieldConfigMarkerShape(
@@ -95,14 +95,10 @@ public class VOGeoServerShapeSymbol implements VOMarkerSymbolInterface {
      */
     @Override
     public VendorOptionInfo getVendorOptionInfo() {
-        VendorOptionInfo info =
-                new VendorOptionInfo(
-                        "shape://",
-                        emptyDetails.getVendorOptionVersion(),
-                        Localisation.getString(
-                                VOGeoServerShapeSymbol.class,
-                                "VOGeoServerShapeSymbol.description"));
-
-        return info;
+        return new VendorOptionInfo(
+                "shape://",
+                emptyDetails.getVendorOptionVersion(),
+                Localisation.getString(
+                        VOGeoServerShapeSymbol.class, "VOGeoServerShapeSymbol.description"));
     }
 }

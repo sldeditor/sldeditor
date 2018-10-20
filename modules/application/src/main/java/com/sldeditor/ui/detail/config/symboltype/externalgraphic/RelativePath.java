@@ -34,6 +34,11 @@ import org.apache.commons.io.FilenameUtils;
  */
 public class RelativePath {
 
+    /** Private default constructor */
+    private RelativePath() {
+        // Private default constructor
+    }
+
     /**
      * Checks if is file is a relative path.
      *
@@ -61,10 +66,7 @@ public class RelativePath {
             return true;
         }
         File f = new File(path);
-        if ((prefixLen == 2) && (f.getPath().charAt(0) == '/')) {
-            return true;
-        }
-        return false;
+        return ((prefixLen == 2) && (f.getPath().charAt(0) == '/'));
     }
 
     /**
@@ -89,17 +91,7 @@ public class RelativePath {
         if (externalFileURL != null) {
             if (isLocalFile(externalFileURL)) {
                 if (useRelativePaths) {
-                    File f = new File(externalFileURL.getFile());
-                    File folder = null;
-                    SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
-                    if ((sldData != null) && (sldData.getSLDFile() != null)) {
-                        folder = sldData.getSLDFile().getParentFile();
-                    }
-
-                    if (folder == null) {
-                        folder = new File(System.getProperty("user.dir"));
-                    }
-                    path = getRelativePath(f, folder);
+                    path = convertRelativePaths(externalFileURL);
                 } else {
                     path = externalFileURL.toExternalForm();
                 }
@@ -107,6 +99,28 @@ public class RelativePath {
                 path = externalFileURL.toExternalForm();
             }
         }
+        return path;
+    }
+
+    /**
+     * Convert relative paths.
+     *
+     * @param externalFileURL the external file URL
+     * @return the string
+     */
+    private static String convertRelativePaths(URL externalFileURL) {
+        String path;
+        File f = new File(externalFileURL.getFile());
+        File folder = null;
+        SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
+        if ((sldData != null) && (sldData.getSLDFile() != null)) {
+            folder = sldData.getSLDFile().getParentFile();
+        }
+
+        if (folder == null) {
+            folder = new File(System.getProperty("user.dir"));
+        }
+        path = getRelativePath(f, folder);
         return path;
     }
 

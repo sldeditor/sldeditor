@@ -35,7 +35,7 @@ import java.util.List;
 public class FileSystemExtensionFactory {
 
     /** The extension list. */
-    private static List<FileSystemInterface> extensionList = new ArrayList<FileSystemInterface>();
+    private static List<FileSystemInterface> extensionList = new ArrayList<>();
 
     /** The geo server input. */
     private static GeoServerInput geoServerInput;
@@ -45,6 +45,11 @@ public class FileSystemExtensionFactory {
 
     /** The file system input. */
     private static FileSystemInput fileSystemInput;
+
+    /** Private default constructor */
+    private FileSystemExtensionFactory() {
+        // Private default constructor
+    }
 
     /**
      * Populate default file extensions.

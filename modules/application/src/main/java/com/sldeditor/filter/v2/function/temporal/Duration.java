@@ -164,7 +164,7 @@ public class Duration {
      * @return the list
      */
     private List<String> extractDurationValues(String string) {
-        List<String> outputList = new ArrayList<String>();
+        List<String> outputList = new ArrayList<>();
         Matcher match = Pattern.compile("[0-9]+[A-Z]").matcher(string.replace(" ", ""));
         while (match.find()) {
             outputList.add(match.group());
@@ -184,7 +184,7 @@ public class Duration {
             String value = outputList.get(0);
             if (value.endsWith(suffix)) {
                 outputList.remove(0);
-                return Integer.valueOf(value.substring(0, value.length() - 1)).intValue();
+                return Integer.parseInt(value.substring(0, value.length() - 1));
             }
         }
         return 0;
@@ -230,47 +230,11 @@ public class Duration {
         if (isDate) {
             return DateUtils.getString(date);
         } else {
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
 
-            if (durationDays > 0) {
-                if (durationYears > 0) {
-                    list.add(buildDurationString(durationYears, YEAR_SUFFIX));
-                }
+            createDateString(list);
 
-                if (durationMonths > 0) {
-                    list.add(buildDurationString(durationMonths, MONTH_SUFFIX));
-                }
-
-                list.add(buildDurationString(durationDays, DAY_SUFFIX));
-            } else if (durationMonths > 0) {
-                if (durationYears > 0) {
-                    list.add(buildDurationString(durationYears, YEAR_SUFFIX));
-                }
-                list.add(buildDurationString(durationMonths, MONTH_SUFFIX));
-            } else if (durationYears > 0) {
-                list.add(buildDurationString(durationYears, YEAR_SUFFIX));
-            }
-
-            if (durationSeconds > 0) {
-                if (durationHours > 0) {
-                    list.add(buildDurationString(durationHours, HOUR_SUFFIX));
-                }
-                if (durationMinutes > 0) {
-                    list.add(buildDurationString(durationMinutes, MINUTE_SUFFIX));
-                }
-                list.add(buildDurationString(durationSeconds, SECOND_SUFFIX));
-            } else if (durationMinutes > 0) {
-                if (isDurationDate && (durationYears == 0)) {
-                    list.add(buildDurationString(durationYears, YEAR_SUFFIX));
-                }
-                list.add(buildDurationString(durationHours, HOUR_SUFFIX));
-                list.add(buildDurationString(durationMinutes, MINUTE_SUFFIX));
-            } else if (durationHours > 0) {
-                if (isDurationDate && (durationYears == 0)) {
-                    list.add(buildDurationString(durationYears, YEAR_SUFFIX));
-                }
-                list.add(buildDurationString(durationHours, HOUR_SUFFIX));
-            }
+            createTimeString(list);
 
             StringBuilder sb = new StringBuilder();
 
@@ -280,6 +244,60 @@ public class Duration {
             }
 
             return sb.toString();
+        }
+    }
+
+    /**
+     * Creates the time string.
+     *
+     * @param list the list
+     */
+    private void createTimeString(List<String> list) {
+        if (durationSeconds > 0) {
+            if (durationHours > 0) {
+                list.add(buildDurationString(durationHours, HOUR_SUFFIX));
+            }
+            if (durationMinutes > 0) {
+                list.add(buildDurationString(durationMinutes, MINUTE_SUFFIX));
+            }
+            list.add(buildDurationString(durationSeconds, SECOND_SUFFIX));
+        } else if (durationMinutes > 0) {
+            if (isDurationDate && (durationYears == 0)) {
+                list.add(buildDurationString(durationYears, YEAR_SUFFIX));
+            }
+            list.add(buildDurationString(durationHours, HOUR_SUFFIX));
+            list.add(buildDurationString(durationMinutes, MINUTE_SUFFIX));
+        } else if (durationHours > 0) {
+            if (isDurationDate && (durationYears == 0)) {
+                list.add(buildDurationString(durationYears, YEAR_SUFFIX));
+            }
+            list.add(buildDurationString(durationHours, HOUR_SUFFIX));
+        }
+    }
+
+    /**
+     * Creates the date string.
+     *
+     * @param list the list
+     */
+    private void createDateString(List<String> list) {
+        if (durationDays > 0) {
+            if (durationYears > 0) {
+                list.add(buildDurationString(durationYears, YEAR_SUFFIX));
+            }
+
+            if (durationMonths > 0) {
+                list.add(buildDurationString(durationMonths, MONTH_SUFFIX));
+            }
+
+            list.add(buildDurationString(durationDays, DAY_SUFFIX));
+        } else if (durationMonths > 0) {
+            if (durationYears > 0) {
+                list.add(buildDurationString(durationYears, YEAR_SUFFIX));
+            }
+            list.add(buildDurationString(durationMonths, MONTH_SUFFIX));
+        } else if (durationYears > 0) {
+            list.add(buildDurationString(durationYears, YEAR_SUFFIX));
         }
     }
 

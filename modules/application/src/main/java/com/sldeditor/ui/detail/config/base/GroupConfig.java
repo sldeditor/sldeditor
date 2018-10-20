@@ -64,7 +64,7 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     private boolean showLabel = true;
 
     /** The field list. */
-    private List<FieldConfigBase> fieldList = new ArrayList<FieldConfigBase>();
+    private List<FieldConfigBase> fieldList = new ArrayList<>();
 
     /** The is optional flag. */
     private boolean isOptional = false;
@@ -73,10 +73,10 @@ public class GroupConfig implements GroupConfigInterface, UndoActionInterface {
     private JCheckBox groupCheckbox;
 
     /** The sub group list. */
-    private List<GroupConfigInterface> subGroupList = new ArrayList<GroupConfigInterface>();
+    private List<GroupConfigInterface> subGroupList = new ArrayList<>();
 
     /** The function component list. */
-    private List<Component> componentList = new ArrayList<Component>();
+    private List<Component> componentList = new ArrayList<>();
 
     /** The box containing the headings/fields. */
     private Box parentBox = null;

@@ -37,7 +37,7 @@ import org.opengis.filter.expression.Expression;
  *
  * <p>Supports undo/redo functionality.
  *
- * <p>Instantiated by {@link com.sldeditor.ui.detail.config.ReadPanelConfig}
+ * <p>Instantiated by {@link com.sldeditor.ui.detail.config.panelconfig.ReadPanelConfig}
  *
  * @author Robert Ward (SCISYS)
  */
@@ -51,7 +51,7 @@ public class FieldConfigSortBy extends FieldConfigBase
     private Object oldValueObj = null;
 
     /** The number of rows the sort by panel will have. */
-    private int NO_OF_ROWS = 6;
+    private static final int NO_OF_ROWS = 6;
 
     /**
      * Instantiates a new field config string.
@@ -106,7 +106,7 @@ public class FieldConfigSortBy extends FieldConfigBase
      * @see com.sldeditor.ui.detail.config.FieldConfigBase#setEnabled(boolean)
      */
     @Override
-    public void internal_setEnabled(boolean enabled) {
+    public void internalSetEnabled(boolean enabled) {
         if (sortbyPanel != null) {
             sortbyPanel.setEnabled(enabled);
         }
@@ -200,10 +200,8 @@ public class FieldConfigSortBy extends FieldConfigBase
      */
     @Override
     public String getStringValue() {
-        if (sortbyPanel != null) {
-            if (getPanel().isValueReadable()) {
-                return sortbyPanel.getText();
-            }
+        if ((sortbyPanel != null) && getPanel().isValueReadable()) {
+            return sortbyPanel.getText();
         }
         return null;
     }

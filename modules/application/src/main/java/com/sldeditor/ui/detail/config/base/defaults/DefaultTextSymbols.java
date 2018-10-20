@@ -70,7 +70,7 @@ public class DefaultTextSymbols extends DefaultBase {
     public Object getValue(String defaultValue) {
         for (String expectedPrefix : EXPECTED_PREFIX_LIST) {
             if (defaultValue.startsWith(expectedPrefix)) {
-                int index = defaultValue.lastIndexOf(".");
+                int index = defaultValue.lastIndexOf('.');
 
                 if ((index < 0) || (index >= defaultValue.length())) {
                     return null;
@@ -109,16 +109,11 @@ public class DefaultTextSymbols extends DefaultBase {
         if (expectedInterface != null) {
             try {
                 Field f = expectedInterface.getField(fieldName);
-                Object obj = f.get(expectedInterface);
-
-                return obj;
-            } catch (NoSuchFieldException e) {
-                ConsoleManager.getInstance().exception(DefaultTextSymbols.class, e);
-            } catch (SecurityException e) {
-                ConsoleManager.getInstance().exception(DefaultTextSymbols.class, e);
-            } catch (IllegalArgumentException e) {
-                ConsoleManager.getInstance().exception(DefaultTextSymbols.class, e);
-            } catch (IllegalAccessException e) {
+                return f.get(expectedInterface);
+            } catch (NoSuchFieldException
+                    | SecurityException
+                    | IllegalArgumentException
+                    | IllegalAccessException e) {
                 ConsoleManager.getInstance().exception(DefaultTextSymbols.class, e);
             }
         }

@@ -54,10 +54,10 @@ public class VendorOptionTextFactory
     private VOGeoServerTextSpacing vendorOptionGeoServerLabelSpacing = null;
 
     /** The vendor option list. */
-    private List<VendorOptionInterface> vendorOptionList = new ArrayList<VendorOptionInterface>();
+    private List<VendorOptionInterface> vendorOptionList = new ArrayList<>();
 
     /** The vendor option versions list. */
-    private List<VersionData> vendorOptionVersionsList = new ArrayList<VersionData>();
+    private List<VersionData> vendorOptionVersionsList = new ArrayList<>();
 
     /**
      * Instantiates a new vendor option text factory.
@@ -98,7 +98,7 @@ public class VendorOptionTextFactory
      */
     @Override
     public List<VendorOptionInterface> getVendorOptionList(String className) {
-        List<VendorOptionInterface> matchingList = new ArrayList<VendorOptionInterface>();
+        List<VendorOptionInterface> matchingList = new ArrayList<>();
 
         for (VendorOptionInterface vendorOption : vendorOptionList) {
             if (vendorOption.getClass().getName().compareTo(className) == 0) {
@@ -168,7 +168,7 @@ public class VendorOptionTextFactory
      */
     @Override
     public List<VendorOptionInfo> getVendorOptionInfoList() {
-        List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<VendorOptionInfo>();
+        List<VendorOptionInfo> vendorOptionInfoList = new ArrayList<>();
 
         for (VendorOptionInterface vo : vendorOptionList) {
             VendorOptionInfo vendorOptionInfo = vo.getVendorOptionInfo();

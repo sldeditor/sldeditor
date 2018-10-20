@@ -143,76 +143,105 @@ public class TreeSelectionData {
     }
 
     /**
+     * Determine tree item.
+     *
+     * @param layer the layer
+     * @param style the style
+     * @param featureTypeStyle the feature type style
+     * @param rule the rule
+     * @param symbolizer the symbolizer
+     * @param symbolizerDetail the symbolizer detail
+     * @return true, if successful
+     */
+    private boolean determineTreeItem(
+            boolean layer,
+            boolean style,
+            boolean featureTypeStyle,
+            boolean rule,
+            boolean symbolizer,
+            boolean symbolizerDetail) {
+        return (checkTreeItem(layerIndex, layer)
+                && checkTreeItem(styleIndex, style)
+                && checkTreeItem(featureTypeStyleIndex, featureTypeStyle)
+                && checkTreeItem(ruleIndex, rule)
+                && checkTreeItem(symbolizerIndex, symbolizer)
+                && checkTreeItem(symbolizerDetailIndex, symbolizerDetail));
+    }
+
+    /**
+     * Check tree item.
+     *
+     * @param index the index
+     * @param layer the layer
+     * @return true, if successful
+     */
+    private boolean checkTreeItem(int index, boolean selected) {
+        return (selected ? (index > -1) : (index == -1));
+    }
+
+    /**
      * Gets the selection.
      *
      * @return the selection
      */
     public SelectedTreeItemEnum getSelection() {
         SelectedTreeItemEnum selection = SelectedTreeItemEnum.UNKNOWN;
-
-        if ((layerIndex > -1)
-                && (styleIndex == -1)
-                && (featureTypeStyleIndex == -1)
-                && (ruleIndex == -1)
-                && (symbolizerIndex == -1)
-                && (symbolizerDetailIndex == -1)) {
+        if (determineTreeItem(true, false, false, false, false, false)) {
             selection = SelectedTreeItemEnum.LAYER;
-        } else if ((layerIndex > -1)
-                && (styleIndex > -1)
-                && (featureTypeStyleIndex == -1)
-                && (ruleIndex == -1)
-                && (symbolizerIndex == -1)
-                && (symbolizerDetailIndex == -1)) {
+        } else if (determineTreeItem(true, true, false, false, false, false)) {
             selection = SelectedTreeItemEnum.STYLE;
-        } else if ((layerIndex > -1)
-                && (styleIndex > -1)
-                && (featureTypeStyleIndex > -1)
-                && (ruleIndex == -1)
-                && (symbolizerIndex == -1)
-                && (symbolizerDetailIndex == -1)) {
+        } else if (determineTreeItem(true, true, true, false, false, false)) {
             selection = SelectedTreeItemEnum.FEATURETYPESTYLE;
-        } else if ((layerIndex > -1)
-                && (styleIndex > -1)
-                && (featureTypeStyleIndex > -1)
-                && (ruleIndex > -1)
-                && (symbolizerIndex == -1)
-                && (symbolizerDetailIndex == -1)) {
+        } else if (determineTreeItem(true, true, true, true, false, false)) {
             selection = SelectedTreeItemEnum.RULE;
-        } else if ((layerIndex > -1)
-                && (styleIndex > -1)
-                && (featureTypeStyleIndex > -1)
-                && (ruleIndex > -1)
-                && (symbolizerIndex > -1)
-                && (symbolizerDetailIndex == -1)) {
-            if (selectedPanel == PointSymbolizerDetails.class) {
-                selection = SelectedTreeItemEnum.POINT_SYMBOLIZER;
-            } else if (selectedPanel == LineSymbolizerDetails.class) {
-                selection = SelectedTreeItemEnum.LINE_SYMBOLIZER;
-            } else if (selectedPanel == PolygonSymbolizerDetails.class) {
-                selection = SelectedTreeItemEnum.POLYGON_SYMBOLIZER;
-            } else if (selectedPanel == TextSymbolizerDetails.class) {
-                selection = SelectedTreeItemEnum.TEXT_SYMBOLIZER;
-            } else if (selectedPanel == RasterSymbolizerDetails.class) {
-                selection = SelectedTreeItemEnum.RASTER_SYMBOLIZER;
-            } else {
-                selection = SelectedTreeItemEnum.UNKNOWN;
-            }
-        } else if ((layerIndex > -1)
-                && (styleIndex > -1)
-                && (featureTypeStyleIndex > -1)
-                && (ruleIndex > -1)
-                && (symbolizerIndex > -1)) {
-            if (selectedPanel == PointFillDetails.class) {
-                selection = SelectedTreeItemEnum.POINT_FILL;
-            } else if (selectedPanel == PolygonFillDetails.class) {
-                selection = SelectedTreeItemEnum.POLYGON_FILL;
-            } else if (selectedPanel == StrokeDetails.class) {
-                selection = SelectedTreeItemEnum.STROKE;
-            } else {
-                selection = SelectedTreeItemEnum.UNKNOWN;
-            }
+        } else if (determineTreeItem(true, true, true, true, true, false)) {
+            selection = determineSymbolizer();
+        } else if (determineTreeItem(true, true, true, true, true, true)) {
+            selection = determineSymbolizerDetail();
         }
 
+        return selection;
+    }
+
+    /**
+     * Determine symbolizer detail.
+     *
+     * @return the selected tree item enum
+     */
+    private SelectedTreeItemEnum determineSymbolizerDetail() {
+        SelectedTreeItemEnum selection;
+        if (selectedPanel == PointFillDetails.class) {
+            selection = SelectedTreeItemEnum.POINT_FILL;
+        } else if (selectedPanel == PolygonFillDetails.class) {
+            selection = SelectedTreeItemEnum.POLYGON_FILL;
+        } else if (selectedPanel == StrokeDetails.class) {
+            selection = SelectedTreeItemEnum.STROKE;
+        } else {
+            selection = SelectedTreeItemEnum.UNKNOWN;
+        }
+        return selection;
+    }
+
+    /**
+     * Determine symbolizer.
+     *
+     * @return the selected tree item enum
+     */
+    private SelectedTreeItemEnum determineSymbolizer() {
+        SelectedTreeItemEnum selection;
+        if (selectedPanel == PointSymbolizerDetails.class) {
+            selection = SelectedTreeItemEnum.POINT_SYMBOLIZER;
+        } else if (selectedPanel == LineSymbolizerDetails.class) {
+            selection = SelectedTreeItemEnum.LINE_SYMBOLIZER;
+        } else if (selectedPanel == PolygonSymbolizerDetails.class) {
+            selection = SelectedTreeItemEnum.POLYGON_SYMBOLIZER;
+        } else if (selectedPanel == TextSymbolizerDetails.class) {
+            selection = SelectedTreeItemEnum.TEXT_SYMBOLIZER;
+        } else if (selectedPanel == RasterSymbolizerDetails.class) {
+            selection = SelectedTreeItemEnum.RASTER_SYMBOLIZER;
+        } else {
+            selection = SelectedTreeItemEnum.UNKNOWN;
+        }
         return selection;
     }
 

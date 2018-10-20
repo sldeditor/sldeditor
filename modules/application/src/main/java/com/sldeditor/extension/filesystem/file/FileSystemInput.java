@@ -43,7 +43,7 @@ import com.sldeditor.tool.dbconnectionlist.DatabaseConnectionFactory;
 import com.sldeditor.tool.legend.LegendTool;
 import com.sldeditor.tool.raster.RasterTool;
 import com.sldeditor.tool.scale.ScaleTool;
-import com.sldeditor.tool.stickDataSource.StickyDataSourceTool;
+import com.sldeditor.tool.stickydatasource.StickyDataSourceTool;
 import com.sldeditor.tool.vector.VectorTool;
 import com.sldeditor.tool.ysld.YSLDTool;
 import java.awt.Toolkit;
@@ -65,6 +65,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -89,8 +90,7 @@ public class FileSystemInput implements FileSystemInterface {
     private DefaultTreeModel treeModel = null;
 
     /** The file handler map. */
-    private Map<String, FileHandlerInterface> fileHandlerMap =
-            new LinkedHashMap<String, FileHandlerInterface>();
+    private Map<String, FileHandlerInterface> fileHandlerMap = new LinkedHashMap<>();
 
     /** The logger. */
     private static Logger logger = Logger.getLogger(FileSystemInput.class);
@@ -104,7 +104,7 @@ public class FileSystemInput implements FileSystemInterface {
      * @param toolMgr the tool manager
      */
     public FileSystemInput(ToolSelectionInterface toolMgr) {
-        List<String> fileHandlerClassList = new ArrayList<String>();
+        List<String> fileHandlerClassList = new ArrayList<>();
         fileHandlerClassList.add(SLDFileHandler.class.getName());
         fileHandlerClassList.add(SLDEditorFileHandler.class.getName());
         fileHandlerClassList.add(RasterFileHandler.class.getName());
@@ -185,9 +185,7 @@ public class FileSystemInput implements FileSystemInterface {
                     rootNode.add(fileSystemRootNode);
                 }
             }
-        } catch (SecurityException e) {
-            ConsoleManager.getInstance().exception(this, e);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | SecurityException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
     }
@@ -307,7 +305,8 @@ public class FileSystemInput implements FileSystemInterface {
         String fileExtensionToCheck = DataSourceConnectorFactory.getFileExtension(filename);
 
         if (fileExtensionToCheck != null) {
-            for (String fileExtension : fileHandlerMap.keySet()) {
+            for (Entry<String, FileHandlerInterface> entry : fileHandlerMap.entrySet()) {
+                String fileExtension = entry.getKey();
                 if (fileExtension.compareToIgnoreCase(fileExtensionToCheck) == 0) {
                     return fileHandlerMap.get(fileExtension);
                 }
@@ -358,7 +357,7 @@ public class FileSystemInput implements FileSystemInterface {
             if (fileHandler != null) {
                 result2 = fileHandler.save(sldData);
 
-                if (result2) {;
+                if (result2) {
                     ConsoleManager.getInstance()
                             .information(
                                     this,
@@ -380,9 +379,7 @@ public class FileSystemInput implements FileSystemInterface {
      */
     @Override
     public List<NodeInterface> getNodeTypes() {
-        List<NodeInterface> nodeTypeList = new ArrayList<NodeInterface>();
-
-        return nodeTypeList;
+        return new ArrayList<>();
     }
 
     /*
@@ -406,8 +403,8 @@ public class FileSystemInput implements FileSystemInterface {
 
         File destinationFolder = destinationNode.getFile();
 
-        for (NodeInterface key : copyDataMap.keySet()) {
-            List<SLDDataInterface> sldDataList = copyDataMap.get(key);
+        for (Entry<NodeInterface, List<SLDDataInterface>> entry : copyDataMap.entrySet()) {
+            List<SLDDataInterface> sldDataList = entry.getValue();
 
             for (SLDDataInterface sldData : sldDataList) {
                 String sldFilename = sldData.getSLDFile().getAbsolutePath();

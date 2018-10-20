@@ -31,9 +31,8 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class that manages user preference data.
@@ -76,16 +75,13 @@ public class PrefManager implements UndoActionInterface {
     private PrefData prefData = new PrefData();
 
     /** The listener list. */
-    private List<PrefUpdateInterface> listenerList = new ArrayList<PrefUpdateInterface>();
-
-    /** The old value obj. */
-    private Object oldValueObj = null;
+    private List<PrefUpdateInterface> listenerList = new ArrayList<>();
 
     /** The property manager. */
     private static PropertyManagerInterface propertyManagerInstance = null;
 
     /** The last viewed map. */
-    private Map<PrefDataLastViewedEnum, String> lastViewedMap = null;
+    private EnumMap<PrefDataLastViewedEnum, String> lastViewedMap = null;
 
     /**
      * Gets the single instance of PrefManager.
@@ -107,7 +103,7 @@ public class PrefManager implements UndoActionInterface {
 
     /** Private default constructor. */
     private PrefManager() {
-        lastViewedMap = new HashMap<PrefDataLastViewedEnum, String>();
+        lastViewedMap = new EnumMap<>(PrefDataLastViewedEnum.class);
         lastViewedMap.put(PrefDataLastViewedEnum.FOLDER, LAST_FOLDER_VIEWED_FIELD);
         lastViewedMap.put(PrefDataLastViewedEnum.GEOSERVER, LAST_GEOSERVER_VIEWED_FIELD);
     }
@@ -169,26 +165,8 @@ public class PrefManager implements UndoActionInterface {
             newPrefData.setUseAntiAlias(
                     propertyManagerInstance.getBooleanValue(USE_ANTI_ALIAS_FIELD, true));
 
-            List<String> stringList =
-                    propertyManagerInstance.getStringListValue(VENDOROPTIONS_FIELD);
-            List<VersionData> vendorOptionVersionList = new ArrayList<VersionData>();
+            setVendorOption(newPrefData);
 
-            if (stringList != null) {
-                for (String string : stringList) {
-                    VersionData versionData = VersionData.getDecodedString(string);
-
-                    if (versionData != null) {
-                        vendorOptionVersionList.add(versionData);
-                    }
-                }
-            }
-
-            VersionData defaultVendorOption =
-                    VendorOptionManager.getInstance().getDefaultVendorOptionVersionData();
-            if (!vendorOptionVersionList.contains(defaultVendorOption)) {
-                vendorOptionVersionList.add(defaultVendorOption);
-            }
-            newPrefData.setVendorOptionVersionList(vendorOptionVersionList);
             newPrefData.setBackgroundColour(
                     propertyManagerInstance.getColourValue(BACKGROUND_COLOUR_FIELD, Color.WHITE));
             newPrefData.setSaveLastFolderView(
@@ -200,6 +178,7 @@ public class PrefManager implements UndoActionInterface {
                 newPrefData.setLastViewedKey(PrefDataLastViewedEnum.FOLDER);
                 newPrefData.setLastFolderViewed(folderName);
             }
+
             String geoServerConnection =
                     propertyManagerInstance.getStringValue(LAST_GEOSERVER_VIEWED_FIELD, null);
             if (geoServerConnection != null) {
@@ -212,6 +191,33 @@ public class PrefManager implements UndoActionInterface {
 
             setPrefData(newPrefData);
         }
+    }
+
+    /**
+     * Sets the vendor option.
+     *
+     * @param newPrefData the new vendor option
+     */
+    private void setVendorOption(PrefData newPrefData) {
+        List<String> stringList = propertyManagerInstance.getStringListValue(VENDOROPTIONS_FIELD);
+        List<VersionData> vendorOptionVersionList = new ArrayList<>();
+
+        if (stringList != null) {
+            for (String string : stringList) {
+                VersionData versionData = VersionData.getDecodedString(string);
+
+                if (versionData != null) {
+                    vendorOptionVersionList.add(versionData);
+                }
+            }
+        }
+
+        VersionData defaultVendorOption =
+                VendorOptionManager.getInstance().getDefaultVendorOptionVersionData();
+        if (!vendorOptionVersionList.contains(defaultVendorOption)) {
+            vendorOptionVersionList.add(defaultVendorOption);
+        }
+        newPrefData.setVendorOptionVersionList(vendorOptionVersionList);
     }
 
     /**
@@ -246,7 +252,7 @@ public class PrefManager implements UndoActionInterface {
      * @param newPrefData the new pref data
      */
     public void setPrefData(PrefData newPrefData) {
-        oldValueObj = new PrefData(prefData);
+        Object oldValueObj = new PrefData(prefData);
 
         setUseAntiAlias(newPrefData.isUseAntiAlias());
         setVendorOptionList(newPrefData.getVendorOptionVersionList(), true);
@@ -272,7 +278,7 @@ public class PrefManager implements UndoActionInterface {
             List<VersionData> vendorOptionVersionList, boolean saveChange) {
 
         if (vendorOptionVersionList == null) {
-            vendorOptionVersionList = new ArrayList<VersionData>();
+            vendorOptionVersionList = new ArrayList<>();
             vendorOptionVersionList.add(
                     VendorOptionManager.getInstance().getDefaultVendorOptionVersion().getLatest());
         }
@@ -281,7 +287,7 @@ public class PrefManager implements UndoActionInterface {
 
             this.prefData.setVendorOptionVersionList(vendorOptionVersionList);
 
-            List<String> vendorOptionVersionStringList = new ArrayList<String>();
+            List<String> vendorOptionVersionStringList = new ArrayList<>();
             for (VersionData versionData : vendorOptionVersionList) {
                 vendorOptionVersionStringList.add(versionData.getEncodedString());
             }
@@ -347,15 +353,14 @@ public class PrefManager implements UndoActionInterface {
 
         boolean different =
                 (this.prefData.isSaveLastFolderView() != saveLastFolderViewed)
-                        || ((this.prefData.getLastViewedKey() != key));
+                        || (this.prefData.getLastViewedKey() != key);
 
         if (!different) {
             if ((this.prefData.getLastFolderViewed() == null) || (lastFolderViewed == null)) {
                 different =
                         !((this.prefData.getLastFolderViewed() == null)
                                 && (lastFolderViewed == null));
-            } else if ((this.prefData.getLastFolderViewed() != null)
-                    && (lastFolderViewed != null)) {
+            } else if (this.prefData.getLastFolderViewed() != null) {
                 different = (this.prefData.getLastFolderViewed().compareTo(lastFolderViewed) != 0);
             }
         }
@@ -450,9 +455,7 @@ public class PrefManager implements UndoActionInterface {
     public void undoAction(UndoInterface undoRedoObject) {
         if (undoRedoObject != null) {
             if (undoRedoObject.getOldValue() instanceof PrefData) {
-                PrefData prefData = (PrefData) undoRedoObject.getOldValue();
-
-                setPrefData(prefData);
+                setPrefData((PrefData) undoRedoObject.getOldValue());
             }
         }
     }
@@ -466,9 +469,7 @@ public class PrefManager implements UndoActionInterface {
     public void redoAction(UndoInterface undoRedoObject) {
         if (undoRedoObject != null) {
             if (undoRedoObject.getNewValue() instanceof PrefData) {
-                PrefData prefData = (PrefData) undoRedoObject.getNewValue();
-
-                setPrefData(prefData);
+                setPrefData((PrefData) undoRedoObject.getNewValue());
             }
         }
     }

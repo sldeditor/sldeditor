@@ -103,16 +103,17 @@ public class TimePeriod {
      * @param objValue the obj value
      */
     public void decode(DefaultPeriod objValue) {
-        DefaultPeriod defaultPeriod = (DefaultPeriod) objValue;
+        DefaultPeriod defaultPeriod = objValue;
         Instant beginning = defaultPeriod.getBeginning();
         Duration startDuration = new Duration();
         startDuration.setDate(
                 beginning.getPosition().getDate().toInstant().atZone(ZoneId.systemDefault()));
         setStart(startDuration);
 
-        Instant end = defaultPeriod.getEnding();
+        Instant localEnd = defaultPeriod.getEnding();
         Duration endDuration = new Duration();
-        endDuration.setDate(end.getPosition().getDate().toInstant().atZone(ZoneId.systemDefault()));
+        endDuration.setDate(
+                localEnd.getPosition().getDate().toInstant().atZone(ZoneId.systemDefault()));
         setEnd(endDuration);
     }
 }

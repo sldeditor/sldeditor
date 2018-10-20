@@ -30,13 +30,13 @@ import java.util.List;
 public class FilterName {
 
     /** The filter name. */
-    private String filterName;
+    private String filterNameString;
 
     /** The return type. */
     private Class<?> returnType;
 
     /** The parameter list. */
-    private List<FilterNameParameter> parameterList = new ArrayList<FilterNameParameter>();
+    private List<FilterNameParameter> parameterList = new ArrayList<>();
 
     /**
      * Instantiates a new filter name.
@@ -46,7 +46,7 @@ public class FilterName {
      */
     public FilterName(String filterName, Class<?> returnType) {
         super();
-        this.filterName = filterName;
+        this.filterNameString = filterName;
         this.returnType = returnType;
     }
 
@@ -65,7 +65,7 @@ public class FilterName {
      * @return the filterName
      */
     public String getFilterName() {
-        return filterName;
+        return filterNameString;
     }
 
     /**

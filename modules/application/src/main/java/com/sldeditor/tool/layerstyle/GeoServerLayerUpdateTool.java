@@ -52,9 +52,6 @@ public class GeoServerLayerUpdateTool implements ToolInterface {
     /** The Constant PANEL_WIDTH. */
     private static final int PANEL_WIDTH = 60;
 
-    /** The button. */
-    private JButton button;
-
     /** The panel. */
     private JPanel panel;
 
@@ -62,13 +59,13 @@ public class GeoServerLayerUpdateTool implements ToolInterface {
     private GeoServerLayerUpdateInterface geoServerLayerUpdate = null;
 
     /** The layer list. */
-    protected List<GeoServerLayer> layerList = new ArrayList<GeoServerLayer>();
+    protected List<GeoServerLayer> layerList = new ArrayList<>();
 
     /** The connection data. */
     protected GeoServerConnection connection = null;
 
     /** The supported node type list. */
-    private static List<Class<?>> supportedNodeTypeList = new ArrayList<Class<?>>();
+    private static List<Class<?>> supportedNodeTypeList = new ArrayList<>();
 
     /**
      * Instantiates a new GeoServer layer update tool.
@@ -102,7 +99,7 @@ public class GeoServerLayerUpdateTool implements ToolInterface {
                         Localisation.getString(
                                 GeoServerLayerUpdateTool.class, "GeoServerLayerUpdateTool.title")));
 
-        button =
+        JButton button =
                 new ToolButton(
                         Localisation.getString(
                                 GeoServerLayerUpdateTool.class, "GeoServerLayerUpdateTool.layer"),
@@ -145,39 +142,71 @@ public class GeoServerLayerUpdateTool implements ToolInterface {
             if (node instanceof GeoServerLayerNode) {
                 GeoServerLayerNode layerNode = (GeoServerLayerNode) node;
 
-                GeoServerLayer layer = layerNode.getLayer();
-                layerList.add(layer);
-
-                if (connection == null) {
-                    connection = layer.getConnection();
-                }
+                selectGeoServerLayerNode(layerNode);
             } else if (node instanceof GeoServerLayerHeadingNode) {
                 GeoServerLayerHeadingNode layerHeadingNode = (GeoServerLayerHeadingNode) node;
 
-                connection = layerHeadingNode.getConnection();
-
-                for (int workspaceIndex = 0;
-                        workspaceIndex < layerHeadingNode.getChildCount();
-                        workspaceIndex++) {
-                    TreeNode treeNode = layerHeadingNode.getChildAt(workspaceIndex);
-                    if (treeNode instanceof GeoServerWorkspaceNode) {
-                        GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) treeNode;
-
-                        extractWorkspaceLayers(workspaceNode);
-                    }
-                }
+                selectGeoServerLayerNode(layerHeadingNode);
             } else if (node instanceof GeoServerWorkspaceNode) {
                 GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) node;
 
-                if (!workspaceNode.isStyle()) {
-                    connection = workspaceNode.getConnection();
-
-                    extractWorkspaceLayers(workspaceNode);
-                }
+                selectGeoServerWorkspaceNode(workspaceNode);
             }
         }
     }
 
+    /**
+     * Select geo server workspace node.
+     *
+     * @param workspaceNode the workspace node
+     */
+    private void selectGeoServerWorkspaceNode(GeoServerWorkspaceNode workspaceNode) {
+        if (!workspaceNode.isStyle()) {
+            connection = workspaceNode.getConnection();
+
+            extractWorkspaceLayers(workspaceNode);
+        }
+    }
+
+    /**
+     * Select geo server layer node.
+     *
+     * @param layerNode the layer node
+     */
+    private void selectGeoServerLayerNode(GeoServerLayerNode layerNode) {
+        GeoServerLayer layer = layerNode.getLayer();
+        layerList.add(layer);
+
+        if (connection == null) {
+            connection = layer.getConnection();
+        }
+    }
+
+    /**
+     * Select geo server layer node.
+     *
+     * @param layerHeadingNode the layer heading node
+     */
+    private void selectGeoServerLayerNode(GeoServerLayerHeadingNode layerHeadingNode) {
+        connection = layerHeadingNode.getConnection();
+
+        for (int workspaceIndex = 0;
+                workspaceIndex < layerHeadingNode.getChildCount();
+                workspaceIndex++) {
+            TreeNode treeNode = layerHeadingNode.getChildAt(workspaceIndex);
+            if (treeNode instanceof GeoServerWorkspaceNode) {
+                GeoServerWorkspaceNode workspaceNode = (GeoServerWorkspaceNode) treeNode;
+
+                extractWorkspaceLayers(workspaceNode);
+            }
+        }
+    }
+
+    /**
+     * Extract workspace layers.
+     *
+     * @param workspaceNode the workspace node
+     */
     private void extractWorkspaceLayers(GeoServerWorkspaceNode workspaceNode) {
         for (int layerIndex = 0; layerIndex < workspaceNode.getChildCount(); layerIndex++) {
             TreeNode childTreeNode = workspaceNode.getChildAt(layerIndex);

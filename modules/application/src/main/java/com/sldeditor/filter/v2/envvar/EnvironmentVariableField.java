@@ -87,7 +87,7 @@ public class EnvironmentVariableField extends JPanel {
         setMinimumSize(new Dimension(300, BasePanel.WIDGET_HEIGHT));
         setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
-        envVarComboBox = new JComboBox<String>();
+        envVarComboBox = new JComboBox<>();
         add(envVarComboBox);
         envVarComboBox.addActionListener(
                 new ActionListener() {
@@ -186,9 +186,7 @@ public class EnvironmentVariableField extends JPanel {
 
         EnvVar envVar = envVarMap.get(nameString);
 
-        Expression newExpression = envVarMgr.createExpression(envVar);
-
-        return newExpression;
+        return envVarMgr.createExpression(envVar);
     }
 
     /**
@@ -197,12 +195,10 @@ public class EnvironmentVariableField extends JPanel {
      * @return the vendor option
      */
     public static VendorOptionVersion getVendorOption() {
-        VendorOptionVersion vendorOptionVersion =
-                new VendorOptionVersion(
-                        GeoServerVendorOption.class,
-                        VersionData.decode(GeoServerVendorOption.class, "2.0.2"),
-                        VersionData.getLatestVersion(GeoServerVendorOption.class));
-        return vendorOptionVersion;
+        return new VendorOptionVersion(
+                GeoServerVendorOption.class,
+                VersionData.decode(GeoServerVendorOption.class, "2.0.2"),
+                VersionData.getLatestVersion(GeoServerVendorOption.class));
     }
 
     /**
