@@ -62,6 +62,11 @@ public class FunctionExpressionInterface {
                     Collection_SumFunction.NAME.getName(),
                     Collection_UniqueFunction.NAME.getName());
 
+    /** Private default constructor */
+    private FunctionExpressionInterface() {
+        // Private default constructor
+    }
+
     /**
      * Creates the new function.
      *
@@ -71,20 +76,10 @@ public class FunctionExpressionInterface {
     public static void createNewFunction(FunctionName functionName, List<Expression> parameters) {
         String name = functionName.getName();
 
-        if (name.compareToIgnoreCase("darken") == 0) {
-            System.out.println("");
-        }
-
         if (collectionFunctionList.contains(name)) {
             parameters.add(ff.property("geom"));
         } else if (name.compareToIgnoreCase("Categorize") == 0) {
-            // CategorizeFunction needs all the fields populated
-            for (int index = 0; index < functionName.getArguments().size() - 1; index++) {
-                parameters.add(index, ff.literal(""));
-            }
-
-            parameters.remove(parameters.size() - 1);
-            parameters.add(ff.literal(CategorizeFunction.PRECEDING));
+            createCategorizeFunction(functionName, parameters);
         } else {
             List<Parameter<?>> functionParamList = functionName.getArguments();
 
@@ -92,56 +87,69 @@ public class FunctionExpressionInterface {
                 Parameter<?> param = functionParamList.get(paramIndex);
 
                 Class<?> type = param.getType();
-                if (type == Object.class) {
-                    parameters.add(ff.literal(""));
-                } else if (type == String.class) {
+                if ((type == Object.class) || (type == String.class)) {
                     parameters.add(ff.literal(""));
                 } else if ((type == Number.class) || (type == Double.class)) {
                     parameters.add(ff.literal(0.0));
                 } else if (type == Float.class) {
                     parameters.add(ff.literal(0.0f));
-                } else if ((type == Integer.class) || (type == Long.class)) {
+                } else if ((type == Integer.class)
+                        || (type == Long.class)
+                        || (type.getName()
+                                        .compareToIgnoreCase(
+                                                "org.geotools.styling.visitor.RescalingMode")
+                                == 0)) {
                     parameters.add(ff.literal(0));
                 } else if (type == Boolean.class) {
                     parameters.add(ff.literal(false));
-                } else if (type == Unit.class) {
+                } else if ((type == Unit.class)
+                        || (type == Color.class)
+                        || (type == Geometry.class)
+                        || (type == org.opengis.geometry.Geometry.class)
+                        || (type == LineString.class)
+                        || (type == Classifier.class)
+                        || (type == Class.class)
+                        || (type.getName()
+                                        .compareToIgnoreCase(
+                                                "org.geotools.filter.function.color.AbstractHSLFunction$Method")
+                                == 0)) {
                     parameters.add(null);
-                } else if (type == Color.class) {
-                    parameters.add(null);
-                } else if (type == Geometry.class) {
-                    parameters.add(null);
-                } else if (type == org.opengis.geometry.Geometry.class) {
-                    parameters.add(null);
-                } else if (type == LineString.class) {
-                    parameters.add(null);
-                } else if (type == Classifier.class) {
-                    parameters.add(null);
-                } else if (type == Class.class) {
-                    parameters.add(null);
-                } else if (type.getName()
-                                .compareToIgnoreCase(
-                                        "org.geotools.filter.function.color.AbstractHSLFunction$Method")
-                        == 0) {
-                    parameters.add(null);
-                } else if (type.getName()
-                                .compareToIgnoreCase("org.geotools.styling.visitor.RescalingMode")
-                        == 0) {
-                    parameters.add(ff.literal(0));
                 } else {
-                    Object newObj = null;
-                    try {
-                        newObj = type.newInstance();
-                    } catch (InstantiationException e) {
-                        ConsoleManager.getInstance()
-                                .exception(FunctionExpressionInterface.class, e);
-                    } catch (IllegalAccessException e) {
-                        ConsoleManager.getInstance()
-                                .exception(FunctionExpressionInterface.class, e);
-                    }
-
-                    parameters.add(ff.literal(newObj));
+                    createOtherFunctions(parameters, type);
                 }
             }
         }
+    }
+
+    /**
+     * Creates the other functions.
+     *
+     * @param parameters the parameters
+     * @param type the type
+     */
+    private static void createOtherFunctions(List<Expression> parameters, Class<?> type) {
+        try {
+            Object newObj = type.newInstance();
+            parameters.add(ff.literal(newObj));
+        } catch (InstantiationException | IllegalAccessException e) {
+            ConsoleManager.getInstance().exception(FunctionExpressionInterface.class, e);
+        }
+    }
+
+    /**
+     * Creates the Categorize function.
+     *
+     * @param functionName the function name
+     * @param parameters the parameters
+     */
+    private static void createCategorizeFunction(
+            FunctionName functionName, List<Expression> parameters) {
+        // CategorizeFunction needs all the fields populated
+        for (int index = 0; index < functionName.getArguments().size() - 1; index++) {
+            parameters.add(index, ff.literal(""));
+        }
+
+        parameters.remove(parameters.size() - 1);
+        parameters.add(ff.literal(CategorizeFunction.PRECEDING));
     }
 }

@@ -64,7 +64,7 @@ public class FSTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         Object userObject = node.getUserObject();
 
-        String name = getItemText(node, userObject);
+        String name = getItemText(userObject);
 
         super.getTreeCellRendererComponent(tree, name, selected, expanded, leaf, row, hasFocus);
 
@@ -81,17 +81,14 @@ public class FSTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
     /**
      * Gets the item text.
      *
-     * @param node the node
      * @param userObject the user object
      * @return the item text
      */
-    public static String getItemText(DefaultMutableTreeNode node, Object userObject) {
+    public static String getItemText(Object userObject) {
         String name = null;
 
-        if (userObject != null) {
-            if (userObject instanceof String) {
-                name = (String) userObject;
-            }
+        if (userObject instanceof String) {
+            name = (String) userObject;
         }
         return name;
     }

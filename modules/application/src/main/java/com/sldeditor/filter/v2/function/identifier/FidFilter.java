@@ -130,10 +130,10 @@ public class FidFilter extends FilterBase implements FilterConfigInterface {
 
         FidFilterImpl filter = null;
 
-        if ((parameterList == null) || (parameterList.size() == 0)) {
+        if ((parameterList == null) || (parameterList.isEmpty())) {
             filter = new FidFilterExtended();
         } else {
-            Set<Identifier> fidList = new HashSet<Identifier>();
+            Set<Identifier> fidList = new HashSet<>();
 
             for (Expression exp : parameterList) {
                 fidList.add(new FeatureIdImpl(exp.toString()));

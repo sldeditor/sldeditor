@@ -96,9 +96,7 @@ public class CreateExternalDataSource implements CreateDataSourceInterface {
                 String password = dataSourceProperties.getPassword();
 
                 if (password == null) {
-                    password = "dummy password";
-
-                    dataSourceProperties.setPassword(password);
+                    dataSourceProperties.setPassword("dummy password");
 
                     map = dataSourceProperties.getConnectionProperties();
                 }

@@ -212,10 +212,7 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
 
         switch (columnIndex) {
             case COL_NAME:
-                {
-                    String name = (String) aValue;
-                    ftc.setFeatureTypeName(name);
-                }
+                setName(aValue, ftc);
                 break;
             case COL_FILTER:
                 break;
@@ -228,6 +225,17 @@ public class FeatureTypeConstraintModel extends AbstractTableModel {
         if (parentObj != null) {
             parentObj.featureTypeConstraintUpdated();
         }
+    }
+
+    /**
+     * Sets the name.
+     *
+     * @param aValue the a value
+     * @param ftc the ftc
+     */
+    private void setName(Object aValue, FeatureTypeConstraint ftc) {
+        String name = (String) aValue;
+        ftc.setFeatureTypeName(name);
     }
 
     /**

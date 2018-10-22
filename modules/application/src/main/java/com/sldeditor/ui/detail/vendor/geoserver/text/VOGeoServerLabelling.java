@@ -27,6 +27,7 @@ import com.sldeditor.common.vendoroption.minversion.VendorOptionPresent;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import com.sldeditor.ui.detail.GraphicPanelFieldManager;
 import com.sldeditor.ui.detail.StandardPanel;
+import com.sldeditor.ui.detail.vendor.DefaultOverride;
 import com.sldeditor.ui.detail.vendor.VOPopulation;
 import com.sldeditor.ui.detail.vendor.geoserver.VendorOptionInterface;
 import com.sldeditor.ui.iface.PopulateDetailsInterface;

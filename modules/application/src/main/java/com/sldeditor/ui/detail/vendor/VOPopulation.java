@@ -28,9 +28,7 @@ import com.sldeditor.ui.detail.config.FieldConfigDouble;
 import com.sldeditor.ui.detail.config.FieldConfigEnum;
 import com.sldeditor.ui.detail.config.FieldConfigInteger;
 import com.sldeditor.ui.widgets.ValueComboBoxData;
-import java.util.Arrays;
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import org.geotools.styling.TextSymbolizer;
 import org.geotools.styling.TextSymbolizer.PolygonAlignOptions;
@@ -51,46 +49,6 @@ public class VOPopulation extends StandardPanel {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-
-    /** The Class DefaultOverride. */
-    protected class DefaultOverride {
-
-        /** The field. */
-        private FieldIdEnum field;
-
-        /** The legal values. */
-        private List<String> legalValues;
-
-        /**
-         * Instantiates a new default override.
-         *
-         * @param field the field
-         * @param legalValues the legal values
-         */
-        public DefaultOverride(FieldIdEnum field, String[] legalValues) {
-            super();
-            this.field = field;
-            this.legalValues = Arrays.asList(legalValues);
-        }
-
-        /**
-         * Gets the field.
-         *
-         * @return the field
-         */
-        public FieldIdEnum getField() {
-            return field;
-        }
-
-        /**
-         * Gets the legal values.
-         *
-         * @return the legalValues
-         */
-        public List<String> getLegalValues() {
-            return legalValues;
-        }
-    }
 
     /** The override map. */
     private transient Map<FieldIdEnum, DefaultOverride> overrideMap =
@@ -341,35 +299,31 @@ public class VOPopulation extends StandardPanel {
      * @param field the field
      * @return true, if successful
      */
-    private boolean includeValue(FieldIdEnum field) {
+    protected boolean includeValue(FieldIdEnum field) {
         DefaultOverride override = overrideMap.get(field);
 
-        if (override != null) {
-            String value = null;
-            FieldConfigBase fieldConfig = fieldConfigManager.get(override.getField());
-            if (fieldConfig instanceof FieldConfigBoolean) {
-                value = String.valueOf(fieldConfigVisitor.getBoolean(override.getField()));
-            } else if (fieldConfig instanceof FieldConfigInteger) {
-                value = String.valueOf(fieldConfigVisitor.getInteger(override.getField()));
-            } else if (fieldConfig instanceof FieldConfigDouble) {
-                value = String.valueOf(fieldConfigVisitor.getDouble(override.getField()));
-            } else if (fieldConfig instanceof FieldConfigEnum) {
-                value = String.valueOf(fieldConfigVisitor.getComboBox(override.getField()));
-            } else {
-                ConsoleManager.getInstance()
-                        .error(
-                                this,
-                                UNSUPPORTED_FIELD_TYPE
-                                        + field
-                                        + " "
-                                        + fieldConfig.getClass().getName());
-            }
+        if (override == null) {
+            return false;
+        }
 
-            if (value != null) {
-                for (String legalValue : override.getLegalValues()) {
-                    if (value.compareToIgnoreCase(legalValue) == 0) {
-                        return true;
-                    }
+        String value = null;
+        FieldConfigBase fieldConfig = fieldConfigManager.get(override.getField());
+        if (fieldConfig instanceof FieldConfigEnum) {
+            value = String.valueOf(fieldConfigVisitor.getComboBox(override.getField()));
+        } else {
+            ConsoleManager.getInstance()
+                    .error(
+                            this,
+                            UNSUPPORTED_FIELD_TYPE
+                                    + field
+                                    + " "
+                                    + fieldConfig.getClass().getName());
+        }
+
+        if (value != null) {
+            for (String legalValue : override.getLegalValues()) {
+                if (value.compareToIgnoreCase(legalValue) == 0) {
+                    return true;
                 }
             }
         }

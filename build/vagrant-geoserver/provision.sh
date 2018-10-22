@@ -13,6 +13,8 @@ export GEOSERVER_VERSION
 JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 export JAVA_HOME
 
+echo 'JAVA_HOME ' $JAVA_HOME
+
 echo ' '
 echo --- Installing unzip ---
 
@@ -36,7 +38,7 @@ cd /usr/local
 echo ' '
 echo --- Downloading GeoServer package - please wait ---
 
-wget -nv -O tmp.zip http://sourceforge.net/projects/geoserver/files/GeoServer/$GEOSERVER_VERSION/geoserver-$GEOSERVER_VERSION-bin.zip && unzip tmp.zip -d /usr/local/ && rm tmp.zip
+wget -O tmp.zip http://sourceforge.net/projects/geoserver/files/GeoServer/$GEOSERVER_VERSION/geoserver-$GEOSERVER_VERSION-bin.zip && unzip tmp.zip -d /usr/local/ && rm tmp.zip
 
 echo ' '
 echo --- Package unzipped - configuring GeoServer directory ---
@@ -44,7 +46,7 @@ cp -r /usr/local/geoserver-$GEOSERVER_VERSION/* /usr/local/geoserver && sudo rm 
 
 echo --- Downloading GeoServer WPS package - please wait ---
 
-wget -nv -O tmp.zip http://sourceforge.net/projects/geoserver/files/GeoServer/$GEOSERVER_VERSION/extensions/geoserver-$GEOSERVER_VERSION-wps-plugin.zip && mkdir /usr/local/wps && unzip tmp.zip -d /usr/local/wps && rm tmp.zip
+wget -O tmp.zip http://sourceforge.net/projects/geoserver/files/GeoServer/$GEOSERVER_VERSION/extensions/geoserver-$GEOSERVER_VERSION-wps-plugin.zip && mkdir /usr/local/wps && unzip tmp.zip -d /usr/local/wps && rm tmp.zip
 
 echo ' '
 echo --- Package unzipped - configuring GeoServer directory ---

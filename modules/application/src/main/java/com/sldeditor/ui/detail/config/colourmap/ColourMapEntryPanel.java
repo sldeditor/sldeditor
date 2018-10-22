@@ -74,9 +74,6 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
     /** The apply button. */
     private JButton applyButton;
 
-    /** The cancel button. */
-    private JButton cancelButton;
-
     /** The parent obj. */
     private transient ColourMapEntryUpdateInterface parentObj;
 
@@ -197,7 +194,8 @@ public class ColourMapEntryPanel extends JPanel implements UpdateSymbolInterface
         //
         // Cancel button
         //
-        cancelButton = new JButton(Localisation.getString(FieldConfigBase.class, "common.cancel"));
+        JButton cancelButton =
+                new JButton(Localisation.getString(FieldConfigBase.class, "common.cancel"));
         cancelButton.addActionListener(
                 new ActionListener() {
 

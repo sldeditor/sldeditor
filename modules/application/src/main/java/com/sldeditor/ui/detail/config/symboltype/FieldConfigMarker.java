@@ -415,25 +415,7 @@ public class FieldConfigMarker extends FieldState {
         Stroke stroke = null;
 
         if (symbolTypeName.startsWith(GEOSERVER_MARKER_PREFIX)) {
-            Expression strokeColour = null;
-            FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
-            if (field != null) {
-                strokeColour = ((FieldConfigColour) field).getColourExpression();
-            }
-
-            Expression strokeColourOpacity = null;
-            field = fieldConfigManager.get(fillFieldConfig.getOpacity());
-            if (field != null) {
-                strokeColourOpacity = field.getExpression();
-            }
-
-            Expression strokeWidth = null;
-            field = fieldConfigManager.get(fillFieldConfig.getWidth());
-            if (field != null) {
-                strokeWidth = field.getExpression();
-            }
-
-            stroke = getStyleFactory().createStroke(strokeColour, strokeWidth, strokeColourOpacity);
+            stroke = getGeoServerStrokeValue(fieldConfigManager);
         } else {
             Expression fillColour = null;
 
@@ -480,6 +462,36 @@ public class FieldConfigMarker extends FieldState {
         Mark markerSymbol = getStyleFactory().mark(symbolTypeExpression, fill, stroke);
 
         return SelectedSymbol.getInstance().getSymbolList(markerSymbol);
+    }
+
+    /**
+     * Gets the geo server stroke value.
+     *
+     * @param fieldConfigManager the field config manager
+     * @return the geo server stroke value
+     */
+    private Stroke getGeoServerStrokeValue(GraphicPanelFieldManager fieldConfigManager) {
+        Stroke stroke;
+        Expression strokeColour = null;
+        FieldConfigBase field = fieldConfigManager.get(fillFieldConfig.getColour());
+        if (field != null) {
+            strokeColour = ((FieldConfigColour) field).getColourExpression();
+        }
+
+        Expression strokeColourOpacity = null;
+        field = fieldConfigManager.get(fillFieldConfig.getOpacity());
+        if (field != null) {
+            strokeColourOpacity = field.getExpression();
+        }
+
+        Expression strokeWidth = null;
+        field = fieldConfigManager.get(fillFieldConfig.getWidth());
+        if (field != null) {
+            strokeWidth = field.getExpression();
+        }
+
+        stroke = getStyleFactory().createStroke(strokeColour, strokeWidth, strokeColourOpacity);
+        return stroke;
     }
 
     /**
