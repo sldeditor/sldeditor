@@ -16,25 +16,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.sldeditor.test.unit.ui.legend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.SLDUtils;
+import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.ui.legend.LegendManager;
 import com.sldeditor.ui.legend.option.LegendOptionData;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.io.IOUtils;
+import org.geotools.styling.StyledLayer;
 import org.geotools.styling.StyledLayerDescriptor;
+import org.geotools.styling.UserLayer;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -254,6 +262,11 @@ public class LegendManagerTest {
     }
 
     @Test
+    public void testEmpty() {
+        assertNull(LegendManager.getInstance().createLegend(null, null, null));
+    }
+
+    @Test
     public void testUpdateLegendOptionData() {
         StyledLayerDescriptor sld = testSLD1();
         String heading = "Test Heading";
@@ -268,11 +281,63 @@ public class LegendManagerTest {
         legendOption.setImageHeight(100);
         legendOption.setShowLabels(true);
         legendOption.setShowTitle(true);
+        int mask = java.awt.Font.BOLD | java.awt.Font.ITALIC;
+        Font labelFont = new Font("Serif", mask, 12);
+        legendOption.setLabelFont(labelFont);
 
         LegendManager.getInstance().sldLoaded(legendOption);
 
         boolean actualResult = compareLegendImage(sld, heading);
         assertTrue(actualResult);
+    }
+
+    @Test
+    public void testSeparateSymbolizers() {
+        StyledLayerDescriptor sld = testSLD1();
+        String heading = "Test Heading";
+
+        LegendOptionData legendOption = new LegendOptionData();
+        legendOption.setBackgroundColour(Color.CYAN);
+        legendOption.setBorder(true);
+        legendOption.setBandInformation(true);
+        legendOption.setBorderColour(Color.GREEN);
+        legendOption.setImageHeight(100);
+        legendOption.setImageWidth(100);
+        legendOption.setImageHeight(100);
+        legendOption.setShowLabels(true);
+        legendOption.setShowTitle(true);
+        legendOption.setSplitSymbolizers(true);
+        int mask = java.awt.Font.PLAIN;
+        Font labelFont = new Font("Serif", mask, 12);
+        legendOption.setLabelFont(labelFont);
+
+        SelectedSymbol.getInstance().setSld(sld);
+        StyledLayer styledlayer = sld.layers().get(0);
+        SelectedSymbol.getInstance().setStyledLayer(styledlayer);
+        SelectedSymbol.getInstance().setStyle(((UserLayer) styledlayer).userStyles().get(0));
+
+        LegendManager.getInstance().sldLoaded(legendOption);
+
+        boolean actualResult = compareLegendImage(sld, heading);
+        assertTrue(actualResult);
+
+        File destinationFolder = new File(System.getProperty("java.io.tmpdir"));
+        String filename = "displayed filename";
+        List<String> filenameList = new ArrayList<>();
+        assertTrue(
+                LegendManager.getInstance()
+                        .saveLegendImage(
+                                sld,
+                                destinationFolder,
+                                "layer name",
+                                heading,
+                                filename,
+                                filenameList));
+
+        for (String fileCreated : filenameList) {
+            File f = new File(fileCreated);
+            f.delete();
+        }
     }
 
     @Test
