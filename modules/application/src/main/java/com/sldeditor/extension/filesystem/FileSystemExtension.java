@@ -97,9 +97,6 @@ public class FileSystemExtension
     /** The logger. */
     private static Logger logger = Logger.getLogger(FileSystemExtension.class);
 
-    /** The extension list. */
-    private List<FileSystemInterface> extensionList = new ArrayList<>();
-
     /** The tool mgr. */
     private ToolSelectionInterface toolMgr = null;
 
@@ -122,7 +119,8 @@ public class FileSystemExtension
         }
 
         // Add extensions
-        extensionList = FileSystemExtensionFactory.getFileExtensionList(toolMgr);
+        List<FileSystemInterface> extensionList =
+                FileSystemExtensionFactory.getFileExtensionList(toolMgr);
 
         extensionPanel = new JPanel();
         extensionPanel.setLayout(new BorderLayout());
@@ -475,6 +473,9 @@ public class FileSystemExtension
         if (fileSystemInput != null) {
             fileSystemInput.setFolder(url, true);
 
+            List<FileSystemInterface> extensionList =
+                    FileSystemExtensionFactory.getFileExtensionList(toolMgr);
+
             for (FileSystemInterface extension : extensionList) {
                 List<SLDDataInterface> sldDataList = extension.open(url);
                 if (sldDataList != null) {
@@ -500,6 +501,9 @@ public class FileSystemExtension
     @Override
     public boolean save(SLDDataInterface sldData) {
         boolean saved = false;
+        List<FileSystemInterface> extensionList =
+                FileSystemExtensionFactory.getFileExtensionList(toolMgr);
+
         for (FileSystemInterface extension : extensionList) {
             if (!saved) {
                 saved = extension.save(sldData);
@@ -581,6 +585,10 @@ public class FileSystemExtension
                                 public void run() {
 
                                     JPopupMenu popupMenu = new JPopupMenu();
+
+                                    List<FileSystemInterface> extensionList =
+                                            FileSystemExtensionFactory.getFileExtensionList(
+                                                    toolMgr);
 
                                     for (FileSystemInterface extension : extensionList) {
                                         extension.rightMouseButton(popupMenu, selectedItem, e);

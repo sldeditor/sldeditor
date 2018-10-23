@@ -75,7 +75,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -278,15 +277,6 @@ public class VectorToolTest {
 
             return sldEditor;
         }
-
-        /**
-         * Open file.
-         *
-         * @param url the url
-         */
-        public void openFile(URL url) {
-            super.openFile(url);
-        }
     }
 
     /**
@@ -317,7 +307,7 @@ public class VectorToolTest {
             try {
                 f = stream2file(inputStream);
                 try {
-                    testSLDEditor.openFile(f.toURI().toURL());
+                    testSLDEditor.getTestInterface().openFile(f.toURI().toURL());
                 } catch (NullPointerException nullException) {
                     nullException.printStackTrace();
                     StackTraceElement[] stackTraceElements = nullException.getStackTrace();
@@ -473,7 +463,7 @@ public class VectorToolTest {
             try {
                 f = stream2file(inputStream);
                 try {
-                    testSLDEditor.openFile(f.toURI().toURL());
+                    testSLDEditor.getTestInterface().openFile(f.toURI().toURL());
                 } catch (NullPointerException nullException) {
                     nullException.printStackTrace();
                     StackTraceElement[] stackTraceElements = nullException.getStackTrace();

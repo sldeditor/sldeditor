@@ -28,8 +28,6 @@ import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.property.PropertyManagerFactory;
 import com.sldeditor.common.property.PropertyManagerInterface;
 import com.sldeditor.common.undo.UndoManager;
-import com.sldeditor.common.vendoroption.VendorOptionManager;
-import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.watcher.ReloadManager;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.extension.ExtensionFactory;
@@ -37,13 +35,10 @@ import com.sldeditor.extension.ExtensionInterface;
 import com.sldeditor.generated.Version;
 import com.sldeditor.map.MapRender;
 import com.sldeditor.render.RenderPanelImpl;
-import com.sldeditor.ui.detail.GraphicPanelFieldManager;
-import com.sldeditor.ui.iface.PopulateDetailsInterface;
 import com.sldeditor.ui.layout.UILayoutFactory;
 import com.sldeditor.ui.layout.UILayoutInterface;
 import com.sldeditor.ui.menu.SLDEditorMenus;
 import com.sldeditor.ui.panels.SLDEditorUIPanels;
-import com.sldeditor.ui.tree.SLDTree;
 import com.sldeditor.update.CheckUpdatePanel;
 import it.geosolutions.jaiext.JAIExt;
 import java.awt.Image;
@@ -68,7 +63,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Robert Ward (SCISYS)
  */
-public class SLDEditor extends JPanel implements SLDEditorTestInterface {
+public class SLDEditor extends JPanel {
 
     /** The Constant APPLICATION_FRAME_WIDTH. */
     private static final int APPLICATION_FRAME_WIDTH = 1024;
@@ -93,6 +88,9 @@ public class SLDEditor extends JPanel implements SLDEditorTestInterface {
 
     /** The main class. */
     private transient SLDEditorMain main = new SLDEditorMain(this);
+
+    /** The test interface. */
+    private transient SLDEditorTestInterface testInterface = null;
 
     static {
         JAIExt.initJAIEXT();
@@ -291,7 +289,7 @@ public class SLDEditor extends JPanel implements SLDEditorTestInterface {
      * @param overrideSLDEditorDlg the override SLD editor dlg
      * @return the SLD editor
      */
-    public static SLDEditorTestInterface createAndShowGUI(
+    public static SLDEditor createAndShowGUI(
             String filename,
             List<String> extensionArgList,
             boolean underTest,
@@ -300,7 +298,7 @@ public class SLDEditor extends JPanel implements SLDEditorTestInterface {
         if (underTestFlag) {
             System.out.println("Running in test mode");
         }
-        frame = new JFrame(generateApplicationTitleString());
+        frame = new JFrame(SLDEditorMain.generateApplicationTitleString());
 
         CoordManager.getInstance().populateCRSList();
         Controller.getInstance().setFrame(frame);
@@ -313,76 +311,13 @@ public class SLDEditor extends JPanel implements SLDEditorTestInterface {
         frame.setDefaultCloseOperation(underTest ? JFrame.DISPOSE_ON_CLOSE : JFrame.EXIT_ON_CLOSE);
 
         // Add contents to the window.
-        SLDEditorTestInterface sldEditor =
-                new SLDEditor(filename, extensionArgList, overrideSLDEditorDlg);
+        SLDEditor sldEditor = new SLDEditor(filename, extensionArgList, overrideSLDEditorDlg);
 
         // Display the window.
         frame.pack();
         frame.setVisible(true);
 
         return sldEditor;
-    }
-
-    /**
-     * Generate application title string.
-     *
-     * @return the string
-     */
-    private static String generateApplicationTitleString() {
-        return String.format(
-                "%s %s \251%s %s",
-                Version.getAppName(),
-                Version.getVersionNumber(),
-                Version.getAppCopyrightYear(),
-                Version.getAppCompany());
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.SLDEditorTestInterface#selectTreeItem(com.sldeditor.TreeSelectionData)
-     */
-    @Override
-    public boolean selectTreeItem(TreeSelectionData data) {
-        SLDTree sldTree = SLDEditorUIPanels.getInstance().getSymbolTree();
-
-        if (sldTree == null) {
-            return false;
-        }
-
-        return sldTree.selectTreeItem(data);
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.SLDEditorTestInterface#getSymbolPanel()
-     */
-    @Override
-    public PopulateDetailsInterface getSymbolPanel() {
-        SLDTree sldTree = SLDEditorUIPanels.getInstance().getSymbolTree();
-
-        return sldTree.getSelectedSymbolPanel();
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.SLDEditorTestInterface#getFieldDataManager()
-     */
-    @Override
-    public GraphicPanelFieldManager getFieldDataManager() {
-        return SLDEditorUIPanels.getInstance().getFieldDataManager();
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.SLDEditorTestInterface#setVendorOptions(java.util.List)
-     */
-    @Override
-    public void setVendorOptions(List<VersionData> vendorOptionList) {
-        VendorOptionManager.getInstance().overrideSelectedVendorOptions(vendorOptionList);
-    }
-
-    /* (non-Javadoc)
-     * @see com.sldeditor.SLDEditorTestInterface#getSLDString()
-     */
-    @Override
-    public String getSLDString() {
-        return main.getSLDString();
     }
 
     /** Sets the application icon. */
@@ -412,11 +347,15 @@ public class SLDEditor extends JPanel implements SLDEditorTestInterface {
         return buff;
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.SLDEditorTestInterface#openFile(java.net.URL)
+    /**
+     * Gets the test interface.
+     *
+     * @return the test interface
      */
-    @Override
-    public void openFile(URL url) {
-        main.openFile(url);
+    public SLDEditorTestInterface getTestInterface() {
+        if (testInterface == null) {
+            testInterface = new SLDEditorExternal(main);
+        }
+        return testInterface;
     }
 }

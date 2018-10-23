@@ -20,8 +20,6 @@
 package com.sldeditor.common;
 
 import com.sldeditor.common.filesystem.SelectedFiles;
-import java.io.File;
-import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The Interface LoadSLDInterface.
@@ -43,14 +41,6 @@ public interface LoadSLDInterface {
      * @return true, if successful
      */
     boolean loadSLDString(SelectedFiles selectedFiles);
-
-    /**
-     * Read sld file and return it.
-     *
-     * @param file the filename
-     * @return the styled layer descriptor
-     */
-    StyledLayerDescriptor readSLDFile(File file);
 
     /** Reload SLD file. */
     void reloadSLDFile();

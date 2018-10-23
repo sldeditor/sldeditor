@@ -159,7 +159,8 @@ public class SingleSymbolUI implements SymbolPanelInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.SymbolPanelInterface#populate(com.sldeditor.ui.detail.selectedsymbol.SelectedSymbol)
+     * @see com.sldeditor.ui.SymbolPanelInterface#populate(com.sldeditor.ui.detail.selectedsymbol.
+     * SelectedSymbol)
      */
     @Override
     public void populate(SelectedSymbol selectedSymbol) {
@@ -206,7 +207,9 @@ public class SingleSymbolUI implements SymbolPanelInterface {
     @Override
     public void getMinimumVersion(
             Object parentObj, Object sldObj, List<VendorOptionPresent> vendorOptionsPresentList) {
-        panelSymbolizerDetails.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
+        if (panelSymbolizerDetails != null) {
+            panelSymbolizerDetails.getMinimumVersion(parentObj, sldObj, vendorOptionsPresentList);
+        }
     }
 
     /**
@@ -216,6 +219,8 @@ public class SingleSymbolUI implements SymbolPanelInterface {
      * @param panelClass the panel class
      */
     public void refreshPanel(Class<?> parent, Class<?> panelClass) {
-        panelSymbolizerDetails.refresh(parent, panelClass);
+        if (panelSymbolizerDetails != null) {
+            panelSymbolizerDetails.refresh(parent, panelClass);
+        }
     }
 }

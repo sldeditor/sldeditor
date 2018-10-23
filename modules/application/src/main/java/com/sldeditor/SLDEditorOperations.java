@@ -23,7 +23,6 @@ import com.sldeditor.common.Controller;
 import com.sldeditor.common.LoadSLDInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
-import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.preferences.PrefManager;
@@ -33,10 +32,8 @@ import com.sldeditor.datasource.DataSourceInterface;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.impl.DataSourceFactory;
 import com.sldeditor.ui.panels.SLDEditorUIPanels;
-import java.io.File;
 import java.net.URL;
 import java.util.List;
-import org.geotools.styling.StyledLayerDescriptor;
 
 /**
  * The main application class.
@@ -118,7 +115,7 @@ public class SLDEditorOperations implements LoadSLDInterface {
             SLDDataInterface firstObject = sldFilesToLoad.get(0);
 
             if (firstObject != null) {
-                if (dataEditedFlag && !underTestFlag) {
+                if (dataEditedFlag && !underTestFlag && (sldEditorDlg != null)) {
                     loadNewSymbol = sldEditorDlg.load(Controller.getInstance().getFrame());
                 }
 
@@ -143,22 +140,6 @@ public class SLDEditorOperations implements LoadSLDInterface {
         return loadNewSymbol;
     }
 
-    /**
-     * Read sld file.
-     *
-     * @param file the file
-     * @return the styled layer descriptor
-     */
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.sldeditor.ui.iface.LoadSLDInterface#readSLDFile(java.io.File)
-     */
-    @Override
-    public StyledLayerDescriptor readSLDFile(File file) {
-        return SLDUtils.readSLDFile(file);
-    }
-
     /*
      * (non-Javadoc)
      *
@@ -178,7 +159,7 @@ public class SLDEditorOperations implements LoadSLDInterface {
     @Override
     public void reloadSLDFile() {
         boolean reloadFile = true;
-        if (!underTestFlag) {
+        if (!underTestFlag && (sldEditorDlg != null)) {
             reloadFile = sldEditorDlg.reload(Controller.getInstance().getFrame());
         }
 
@@ -233,5 +214,10 @@ public class SLDEditorOperations implements LoadSLDInterface {
      */
     public void setSldEditorDlg(SLDEditorDlgInterface sldEditorDlg) {
         this.sldEditorDlg = sldEditorDlg;
+    }
+
+    /** Destroy instance. */
+    public static void destroyInstance() {
+        instance = null;
     }
 }

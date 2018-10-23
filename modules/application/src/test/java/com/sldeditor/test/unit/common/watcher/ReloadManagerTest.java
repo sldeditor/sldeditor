@@ -28,7 +28,6 @@ import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.watcher.ReloadManager;
 import java.io.File;
 import java.nio.file.Path;
-import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -70,16 +69,6 @@ public class ReloadManagerTest {
         @Override
         public boolean loadSLDString(SelectedFiles selectedFiles) {
             return false;
-        }
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see com.sldeditor.common.LoadSLDInterface#readSLDFile(java.io.File)
-         */
-        @Override
-        public StyledLayerDescriptor readSLDFile(File file) {
-            return null;
         }
 
         /*

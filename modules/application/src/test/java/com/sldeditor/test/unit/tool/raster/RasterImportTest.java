@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import org.apache.commons.io.IOUtils;
-import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -79,14 +78,6 @@ class RasterImportTest {
         public boolean loadSLDString(SelectedFiles selectedFiles) {
             loadSelectedFiles = selectedFiles;
             return false;
-        }
-
-        /* (non-Javadoc)
-         * @see com.sldeditor.common.LoadSLDInterface#readSLDFile(java.io.File)
-         */
-        @Override
-        public StyledLayerDescriptor readSLDFile(File file) {
-            return null;
         }
 
         /* (non-Javadoc)

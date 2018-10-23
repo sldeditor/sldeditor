@@ -1,7 +1,7 @@
 /*
  * SLD Editor - The Open Source Java SLD Editor
  *
- * Copyright (C) 2016, SCISYS UK Limited
+ * Copyright (C) 2018, SCISYS UK Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ public class SLDEditorMain implements SLDEditorInterface {
      *
      * @return the string
      */
-    private static String generateApplicationTitleString() {
+    public static String generateApplicationTitleString() {
         return String.format(
                 "%s %s \251%s %s",
                 Version.getAppName(),
@@ -99,16 +99,18 @@ public class SLDEditorMain implements SLDEditorInterface {
     public void updateWindowTitle(boolean dataEditedFlag) {
         SLDEditorOperations.getInstance().setDataEditedFlag(dataEditedFlag);
 
-        String docName;
+        String docName = "";
         File file = SLDEditorFile.getInstance().getSldEditorFile();
 
-        String sldLayerName = SLDEditorFile.getInstance().getSLDData().getLayerName();
-        if (file != null) {
-            docName = file.getName() + " - " + sldLayerName;
-        } else {
-            docName = sldLayerName;
+        SLDDataInterface sldData = SLDEditorFile.getInstance().getSLDData();
+        if (sldData != null) {
+            String sldLayerName = sldData.getLayerName();
+            if (file != null) {
+                docName = file.getName() + " - " + sldLayerName;
+            } else {
+                docName = sldLayerName;
+            }
         }
-
         char docDirtyChar = dataEditedFlag ? '*' : ' ';
         JFrame frame = Controller.getInstance().getFrame();
         if (frame != null) {
@@ -133,6 +135,15 @@ public class SLDEditorMain implements SLDEditorInterface {
 
         List<SLDDataInterface> newSLDList = panel.showDialog();
 
+        newSLD(newSLDList);
+    }
+
+    /**
+     * New SLD.
+     *
+     * @param newSLDList the new SLD list
+     */
+    protected void newSLD(List<SLDDataInterface> newSLDList) {
         if (newSLDList != null) {
             SelectedFiles selectedFiles = new SelectedFiles();
             selectedFiles.setSldData(newSLDList);
@@ -155,6 +166,10 @@ public class SLDEditorMain implements SLDEditorInterface {
      */
     @Override
     public void saveFile(URL urlToSave) {
+
+        if (urlToSave == null) {
+            return;
+        }
 
         String sldContents = getSLDString();
 

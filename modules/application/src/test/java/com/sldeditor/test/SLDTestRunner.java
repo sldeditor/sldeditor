@@ -139,7 +139,7 @@ public class SLDTestRunner {
         filenameList.add(FieldIdEnum.TTF_SYMBOL);
 
         try {
-            sldEditor = SLDEditor.createAndShowGUI(null, null, true, null);
+            sldEditor = SLDEditor.createAndShowGUI(null, null, true, null).getTestInterface();
         } catch (Exception e) {
             e.printStackTrace();
         }

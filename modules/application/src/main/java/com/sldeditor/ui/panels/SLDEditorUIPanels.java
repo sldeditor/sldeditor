@@ -147,7 +147,7 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
         // Symbol panel
         SymbolPanelInterface symbolPanelUI = uiSymbolMap.get(selectedItem);
 
-        if (symbolPanelUI != null) {
+        if ((symbolPanelUI != null) && (panelDataTab != null)) {
             CardLayout cl = (CardLayout) (panelDataTab.getLayout());
             cl.show(panelDataTab, selectedItem);
 
@@ -157,14 +157,16 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
         // Legend panel
         SymbolPanelInterface legendPanelUI = uiLegendMap.get(selectedItem);
 
-        if (legendPanelUI != null) {
+        if ((legendPanelUI != null) && (panelLegendTab != null)) {
             CardLayout cl = (CardLayout) (panelLegendTab.getLayout());
             cl.show(panelLegendTab, selectedItem);
 
             legendPanelUI.populate(SelectedSymbol.getInstance());
         }
 
-        vendorOptionUI.populate(SelectedSymbol.getInstance());
+        if (vendorOptionUI != null) {
+            vendorOptionUI.populate(SelectedSymbol.getInstance());
+        }
     }
 
     /**
@@ -273,7 +275,8 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.ui.panels.GetMinimumVersionInterface#getMinimumVersion(java.lang.Object, java.lang.Object, java.util.List)
+     * @see com.sldeditor.ui.panels.GetMinimumVersionInterface#getMinimumVersion(java.lang.Object,
+     * java.lang.Object, java.util.List)
      */
     @Override
     public void getMinimumVersion(

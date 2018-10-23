@@ -378,14 +378,16 @@ public class PrefManager implements UndoActionInterface {
 
     /** Update last folder viewed. */
     private void updateLastFolderViewed() {
-        propertyManagerInstance.clearValue(LAST_FOLDER_VIEWED_FIELD, false);
-        propertyManagerInstance.clearValue(LAST_GEOSERVER_VIEWED_FIELD, false);
+        if (propertyManagerInstance != null) {
+            propertyManagerInstance.clearValue(LAST_FOLDER_VIEWED_FIELD, false);
+            propertyManagerInstance.clearValue(LAST_GEOSERVER_VIEWED_FIELD, false);
 
-        propertyManagerInstance.updateValue(
-                SAVE_LAST_FOLDER_VIEWED_FIELD, this.prefData.isSaveLastFolderView());
-        if (this.prefData.isSaveLastFolderView()) {
-            String key = lastViewedMap.get(this.prefData.getLastViewedKey());
-            propertyManagerInstance.updateValue(key, this.prefData.getLastFolderViewed());
+            propertyManagerInstance.updateValue(
+                    SAVE_LAST_FOLDER_VIEWED_FIELD, this.prefData.isSaveLastFolderView());
+            if (this.prefData.isSaveLastFolderView()) {
+                String key = lastViewedMap.get(this.prefData.getLastViewedKey());
+                propertyManagerInstance.updateValue(key, this.prefData.getLastFolderViewed());
+            }
         }
     }
 

@@ -322,7 +322,7 @@ public class FileSystemInput implements FileSystemInterface {
      */
     @Override
     public boolean save(SLDDataInterface sldData) {
-        if (sldData == null) {
+        if ((sldData == null) || (sldData.getSLDFile() == null)) {
             return false;
         }
 

@@ -41,11 +41,11 @@ import java.util.List;
 import org.geotools.styling.StyledLayerDescriptor;
 
 /**
- * The main application class.
+ * The common SLD Editor methods.
  *
  * @author Robert Ward (SCISYS)
  */
-public class SLDEditorCommon implements SLDEditorCommonInterface {
+public class SLDEditorCommon {
 
     /** The batch import list. */
     private List<ExtensionInterface> extensionList = ExtensionFactory.getAvailableExtensions();
@@ -71,12 +71,12 @@ public class SLDEditorCommon implements SLDEditorCommonInterface {
         // Default constructor
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Open URL.
      *
-     * @see com.sldeditor.SLDEditorCommonInterface#openURL(java.net.URL)
+     * @param url the url
+     * @return the list
      */
-    @Override
     public List<SLDDataInterface> openURL(URL url) {
         List<SLDDataInterface> sldDataList = null;
         for (ExtensionInterface extension : extensionList) {
@@ -88,12 +88,11 @@ public class SLDEditorCommon implements SLDEditorCommonInterface {
         return sldDataList;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Populate.
      *
-     * @see com.sldeditor.SLDEditorCommonInterface#populate(com.sldeditor.common.SLDDataInterface)
+     * @param sldData the sld data
      */
-    @Override
     public void populate(SLDDataInterface sldData) {
         String layerName = sldData.getLayerName();
 
