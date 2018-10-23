@@ -20,7 +20,6 @@
 package com.sldeditor.common;
 
 import java.net.URL;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -72,25 +71,11 @@ public interface SLDEditorInterface {
     LoadSLDInterface getLoadSLDInterface();
 
     /**
-     * Gets the application frame.
-     *
-     * @return the frame
-     */
-    JFrame getApplicationFrame();
-
-    /**
      * Open file.
      *
      * @param selectedURL the selected url
      */
     void openFile(URL selectedURL);
-
-    /**
-     * Gets the application name.
-     *
-     * @return the app name
-     */
-    String getAppName();
 
     /**
      * Refresh panel.

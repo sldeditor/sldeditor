@@ -41,7 +41,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.apache.commons.io.IOUtils;
 import org.geotools.styling.StyledLayerDescriptor;
@@ -159,27 +158,11 @@ class RasterImportTest {
         }
 
         /* (non-Javadoc)
-         * @see com.sldeditor.common.SLDEditorInterface#getApplicationFrame()
-         */
-        @Override
-        public JFrame getApplicationFrame() {
-            return null;
-        }
-
-        /* (non-Javadoc)
          * @see com.sldeditor.common.SLDEditorInterface#openFile(java.net.URL)
          */
         @Override
         public void openFile(URL selectedURL) {
             // Do nothing
-        }
-
-        /* (non-Javadoc)
-         * @see com.sldeditor.common.SLDEditorInterface#getAppName()
-         */
-        @Override
-        public String getAppName() {
-            return null;
         }
 
         /* (non-Javadoc)

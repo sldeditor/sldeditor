@@ -30,7 +30,6 @@ import com.sldeditor.filter.v2.envvar.EnvironmentVariableManager;
 import com.sldeditor.ui.menu.SLDEditorMenus;
 import java.net.URL;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.junit.jupiter.api.Test;
 
@@ -81,17 +80,7 @@ public class SLDEditorMenusTest {
                     }
 
                     @Override
-                    public JFrame getApplicationFrame() {
-                        return null;
-                    }
-
-                    @Override
                     public void openFile(URL selectedURL) {}
-
-                    @Override
-                    public String getAppName() {
-                        return null;
-                    }
 
                     @Override
                     public void refreshPanel(Class<?> parent, Class<?> panelClass) {}

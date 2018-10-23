@@ -92,8 +92,22 @@ public class SLDEditorUIPanels implements GetMinimumVersionInterface {
     /** The vendor option UI. */
     private VendorOptionUI vendorOptionUI = null;
 
+    private static SLDEditorUIPanels instance = null;
+
+    /**
+     * Gets the single instance of SLDEditorUIPanels.
+     *
+     * @return single instance of SLDEditorUIPanels
+     */
+    public static SLDEditorUIPanels getInstance() {
+        if (instance == null) {
+            instance = new SLDEditorUIPanels();
+        }
+        return instance;
+    }
+
     /** Instantiates a new SLD editor ui manager. */
-    public SLDEditorUIPanels() {
+    private SLDEditorUIPanels() {
         singleSymbolUI = new SingleSymbolUI();
         uiSymbolMap.put(SINGLE_SYMBOL, singleSymbolUI);
 

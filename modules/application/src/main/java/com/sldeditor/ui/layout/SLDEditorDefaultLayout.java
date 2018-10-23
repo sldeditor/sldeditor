@@ -19,6 +19,7 @@
 
 package com.sldeditor.ui.layout;
 
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
@@ -54,7 +55,8 @@ public class SLDEditorDefaultLayout implements UILayoutInterface {
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.UILayoutInterface#createUI(com.sldeditor.SLDEditorInterface, com.sldeditor.SLDEditorUIPanels, java.util.List)
+     * @see com.sldeditor.UILayoutInterface#createUI(com.sldeditor.SLDEditorInterface,
+     * com.sldeditor.SLDEditorUIPanels, java.util.List)
      */
     @Override
     public void createUI(
@@ -162,11 +164,9 @@ public class SLDEditorDefaultLayout implements UILayoutInterface {
                     extension.getName(), null, extension.getPanel(), extension.getTooltip());
         }
 
-        if (application != null) {
-            JFrame applicationFrame = application.getApplicationFrame();
-            if (applicationFrame != null) {
-                applicationFrame.getContentPane().add(appPanel);
-            }
+        JFrame applicationFrame = Controller.getInstance().getFrame();
+        if (applicationFrame != null) {
+            applicationFrame.getContentPane().add(appPanel);
         }
     }
 

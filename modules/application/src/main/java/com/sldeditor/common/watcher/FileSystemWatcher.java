@@ -85,7 +85,7 @@ public class FileSystemWatcher implements Runnable {
                                 StandardWatchEventKinds.ENTRY_MODIFY);
                 watcherMap.put(key, parent);
             } catch (IOException e) {
-                ConsoleManager.getInstance().exception(this, e);
+                // Do nothing
             }
         }
     }

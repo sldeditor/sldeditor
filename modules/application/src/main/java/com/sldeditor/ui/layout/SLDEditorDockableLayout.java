@@ -24,6 +24,7 @@ import bibliothek.gui.dock.common.CControl;
 import bibliothek.gui.dock.common.CGrid;
 import bibliothek.gui.dock.common.DefaultSingleCDockable;
 import bibliothek.gui.dock.common.SingleCDockable;
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.SLDEditorInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.localisation.Localisation;
@@ -62,7 +63,7 @@ public class SLDEditorDockableLayout implements UILayoutInterface {
             SLDEditorInterface application,
             SLDEditorUIPanels uiMgr,
             List<ExtensionInterface> extensionList) {
-        JFrame frame = application.getApplicationFrame();
+        JFrame frame = Controller.getInstance().getFrame();
 
         control = new CControl(frame);
 

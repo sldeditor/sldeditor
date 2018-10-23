@@ -136,7 +136,7 @@ public class SLDEditorMenus implements SLDEditorDataUpdateInterface, UndoStateIn
 
         // Menu bar
         JMenuBar menuBar = new JMenuBar();
-        JFrame applicationFrame = application.getApplicationFrame();
+        JFrame applicationFrame = Controller.getInstance().getFrame();
         if (applicationFrame != null) {
             applicationFrame.setJMenuBar(menuBar);
         }

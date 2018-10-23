@@ -29,6 +29,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 import com.google.common.io.Files;
 import com.sldeditor.SLDEditor;
 import com.sldeditor.SLDEditorDlgInterface;
+import com.sldeditor.SLDEditorMain;
+import com.sldeditor.SLDEditorOperations;
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
@@ -73,6 +75,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -81,6 +84,7 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import org.apache.commons.io.IOUtils;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.jupiter.api.AfterAll;
@@ -245,16 +249,6 @@ public class VectorToolTest {
             super(filename, extensionArgList, overrideSLDEditorDlg);
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see com.sldeditor.SLDEditor#populate(com.sldeditor.common.SLDDataInterface)
-         */
-        @Override
-        protected void populate(SLDDataInterface sldData) {
-            super.populate(sldData);
-        }
-
         public static TestSLDEditor createAndShowGUI2(
                 String filename,
                 List<String> extensionArgList,
@@ -270,6 +264,7 @@ public class VectorToolTest {
             MapRender.setUnderTest(underTest);
             RenderPanelImpl.setUnderTest(underTest);
             ReloadManager.setUnderTest(underTest);
+            SLDEditorOperations.setUnderTest(underTest);
 
             frame.setDefaultCloseOperation(
                     underTest ? JFrame.DISPOSE_ON_CLOSE : JFrame.EXIT_ON_CLOSE);
@@ -282,6 +277,15 @@ public class VectorToolTest {
             frame.pack();
 
             return sldEditor;
+        }
+
+        /**
+         * Open file.
+         *
+         * @param url the url
+         */
+        public void openFile(URL url) {
+            super.openFile(url);
         }
     }
 
@@ -343,7 +347,7 @@ public class VectorToolTest {
         assertNotNull(geometry);
 
         File tempFolder = Files.createTempDir();
-        TestVectorTool vectorTool = new TestVectorTool(testSLDEditor);
+        TestVectorTool vectorTool = new TestVectorTool(new SLDEditorMain(new JPanel()));
         try {
             // Set a shape file as a data source - that matches the SLD
             File matchingShpFile = extractShapeFile(tempFolder, "/test/sld_cookbook_polygon.zip");
@@ -422,7 +426,7 @@ public class VectorToolTest {
         }
 
         // Tidy up so the remaining unit tests are ok
-        JFrame frame = testSLDEditor.getApplicationFrame();
+        JFrame frame = Controller.getInstance().getFrame();
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         testSLDEditor = null;
         clearDown();
@@ -499,7 +503,7 @@ public class VectorToolTest {
         assertNotNull(geometry);
 
         File tempFolder = Files.createTempDir();
-        TestVectorTool vectorTool = new TestVectorTool(testSLDEditor);
+        TestVectorTool vectorTool = new TestVectorTool(new SLDEditorMain(new JPanel()));
         try {
             InputStream gpkgInputStream =
                     VectorToolTest.class.getResourceAsStream("/test/sld_cookbook_polygon.gpkg");
@@ -558,7 +562,7 @@ public class VectorToolTest {
         }
 
         // Tidy up so the remaining unit tests are ok
-        JFrame frame = testSLDEditor.getApplicationFrame();
+        JFrame frame = Controller.getInstance().getFrame();
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         testSLDEditor = null;
         clearDown();

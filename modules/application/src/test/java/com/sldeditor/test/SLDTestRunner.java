@@ -26,7 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.SLDEditor;
+import com.sldeditor.SLDEditorTestInterface;
 import com.sldeditor.TreeSelectionData;
+import com.sldeditor.common.Controller;
 import com.sldeditor.common.utils.OSValidator;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
@@ -98,7 +100,7 @@ public class SLDTestRunner {
     private static final String DEFAULT_UNIX_FONT = "Century Schoolbook L";
 
     /** The sld editor. */
-    private SLDEditor sldEditor;
+    private SLDEditorTestInterface sldEditor;
 
     /** The Constant SCHEMA_RESOURCE. */
     private static final String SCHEMA_RESOURCE = "/xsd/testvalue.xsd";
@@ -634,7 +636,7 @@ public class SLDTestRunner {
             }
         }
 
-        JFrame frame = sldEditor.getApplicationFrame();
+        JFrame frame = Controller.getInstance().getFrame();
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }
 

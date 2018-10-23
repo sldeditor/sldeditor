@@ -23,8 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sldeditor.SLDEditor;
 import com.sldeditor.SLDEditorDlgInterface;
+import com.sldeditor.SLDEditorMain;
 import com.sldeditor.common.Controller;
-import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.connection.DatabaseConnectionManager;
 import com.sldeditor.common.connection.GeoServerConnectionManager;
 import com.sldeditor.common.coordinate.CoordManager;
@@ -91,16 +91,6 @@ class SLDEditorDockableLayoutTest {
             super(filename, extensionArgList, overrideSLDEditorDlg);
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see com.sldeditor.SLDEditor#populate(com.sldeditor.common.SLDDataInterface)
-         */
-        @Override
-        protected void populate(SLDDataInterface sldData) {
-            super.populate(sldData);
-        }
-
         public static TestSLDEditor createAndShowGUI2(
                 String filename,
                 List<String> extensionArgList,
@@ -138,7 +128,6 @@ class SLDEditorDockableLayoutTest {
      */
     @Test
     void testCreateUI() {
-        @SuppressWarnings("unused")
         TestSLDEditor testSLDEditor = null;
         PrefData prefData = new PrefData();
 
@@ -152,12 +141,12 @@ class SLDEditorDockableLayoutTest {
 
         File tmpFolder = new File(System.getProperty("java.io.tmpdir"));
 
-        String uiLayout = PrefManager.getInstance().getPrefData().getUiLayoutClass();
+        String uiLayout = SLDEditorDockableLayout.class.getName();
 
         UILayoutInterface ui = UILayoutFactory.getUILayout(uiLayout);
-        SLDEditorUIPanels uiMgr = new SLDEditorUIPanels();
+        SLDEditorUIPanels uiMgr = SLDEditorUIPanels.getInstance();
 
-        ui.createUI(testSLDEditor, uiMgr, new ArrayList<ExtensionInterface>());
+        ui.createUI(new SLDEditorMain(testSLDEditor), uiMgr, new ArrayList<ExtensionInterface>());
         ui.writeLayout(tmpFolder.getAbsolutePath());
         ui.readLayout(tmpFolder.getAbsolutePath());
         File f = new File(tmpFolder, "layout.data");

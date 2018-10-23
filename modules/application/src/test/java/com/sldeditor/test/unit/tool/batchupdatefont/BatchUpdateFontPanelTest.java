@@ -32,7 +32,6 @@ import java.awt.GraphicsEnvironment;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.Font;
@@ -168,30 +167,10 @@ class BatchUpdateFontPanelTest {
         /*
          * (non-Javadoc)
          *
-         * @see com.sldeditor.common.SLDEditorInterface#getApplicationFrame()
-         */
-        @Override
-        public JFrame getApplicationFrame() {
-            return null;
-        }
-
-        /*
-         * (non-Javadoc)
-         *
          * @see com.sldeditor.common.SLDEditorInterface#openFile(java.net.URL)
          */
         @Override
         public void openFile(URL selectedURL) {}
-
-        /*
-         * (non-Javadoc)
-         *
-         * @see com.sldeditor.common.SLDEditorInterface#getAppName()
-         */
-        @Override
-        public String getAppName() {
-            return null;
-        }
 
         /*
          * (non-Javadoc)
