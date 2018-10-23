@@ -314,4 +314,23 @@ public class InLineFeatureModelTest {
         model.updateGeometry(0, null);
         assertTrue(listener.hasInlineFeatureUpdatedCalled());
     }
+
+    @Test
+    public void testAddRemoveFeatures() {
+        DummyInlineFeatureUpdated listener = new DummyInlineFeatureUpdated();
+
+        InLineFeatureModel model = new InLineFeatureModel(listener);
+        assertNull(model.getFeatureCollection());
+
+        DummyInlineSLDFile testData1 = new DummyInlineSLDFile();
+
+        UserLayer userLayer = (UserLayer) testData1.getSLD().layers().get(0);
+        model.populate(userLayer);
+
+        model.addNewFeature();
+
+        model.removeFeature(0);
+
+        assertNull(model.getSelectedCRSCode());
+    }
 }
