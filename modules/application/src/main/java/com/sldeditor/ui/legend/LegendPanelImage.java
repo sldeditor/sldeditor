@@ -22,8 +22,6 @@ package com.sldeditor.ui.legend;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.datasource.attribute.DataSourceAttributeList;
-import com.sldeditor.datasource.attribute.DataSourceAttributeListInterface;
 import com.sldeditor.ui.legend.filechooser.ImageFilter;
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -59,19 +57,20 @@ public class LegendPanelImage extends JLabel {
     /** The legend. */
     private transient LegendManager legend = LegendManager.getInstance();
 
-    /** The attribute data. */
-    @SuppressWarnings("unused")
-    private transient DataSourceAttributeListInterface attributeData =
-            new DataSourceAttributeList();
-
     /** The image icon. */
     private ImageIcon imageIcon = null;
 
-    /** The show filename. */
+    /** The show filename flag. */
     private boolean showFilename = false;
 
-    /** The show stylename. */
+    /** The show stylename flag. */
     private boolean showStyleName = false;
+
+    /** The show filename menu item. */
+    private JCheckBoxMenuItem showFilenameMenuItem;
+
+    /** The show style name menu item. */
+    private JCheckBoxMenuItem showStyleNameMenuItem;
 
     /** Instantiates a new legend panel. */
     public LegendPanelImage() {
@@ -100,7 +99,7 @@ public class LegendPanelImage extends JLabel {
                     }
                 });
 
-        final JCheckBoxMenuItem showFilenameMenuItem =
+        showFilenameMenuItem =
                 new JCheckBoxMenuItem(
                         Localisation.getString(
                                 LegendPanelImage.class, "LegendPanelImage.showFilename"));
@@ -109,13 +108,11 @@ public class LegendPanelImage extends JLabel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        showFilename = showFilenameMenuItem.isSelected();
-
-                        renderSymbol();
+                        showFilenamePressed();
                     }
                 });
 
-        final JCheckBoxMenuItem showStyleNameMenuItem =
+        showStyleNameMenuItem =
                 new JCheckBoxMenuItem(
                         Localisation.getString(
                                 LegendPanelImage.class, "LegendPanelImage.showStyleName"));
@@ -124,9 +121,7 @@ public class LegendPanelImage extends JLabel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        showStyleName = showStyleNameMenuItem.isSelected();
-
-                        renderSymbol();
+                        showStyleNamePressed();
                     }
                 });
 
@@ -198,7 +193,6 @@ public class LegendPanelImage extends JLabel {
      * Show style name.
      *
      * @param sld the sld
-     * @param styleNameHeading the style name heading
      * @return the string
      */
     private String showStyleName(StyledLayerDescriptor sld) {
@@ -246,9 +240,10 @@ public class LegendPanelImage extends JLabel {
      * @param fileFilter the file filter
      * @param selectedFile the selected file
      * @param image the image
+     * @return the file
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private void writeLegendImage(FileFilter fileFilter, File selectedFile, Image image)
+    protected File writeLegendImage(FileFilter fileFilter, File selectedFile, Image image)
             throws IOException {
         String extension = ImageFilter.defaultExtension();
 
@@ -271,10 +266,12 @@ public class LegendPanelImage extends JLabel {
         BufferedImage buffered = (BufferedImage) image;
 
         LegendManager.getInstance().saveLegendImage(buffered, extension, outputFile);
+
+        return outputFile;
     }
 
     /** Copy to clipboard. */
-    private void copyToClipboard() {
+    protected void copyToClipboard() {
         if (imageIcon != null) {
             try {
                 Image image = imageIcon.getImage();
@@ -287,5 +284,46 @@ public class LegendPanelImage extends JLabel {
                 ConsoleManager.getInstance().exception(LegendPanelImage.class, e);
             }
         }
+    }
+
+    /** Show filename pressed. */
+    protected void showFilenamePressed() {
+        showFilename = showFilenameMenuItem.isSelected();
+
+        renderSymbol();
+    }
+
+    /** Show style name pressed. */
+    protected void showStyleNamePressed() {
+        showStyleName = showStyleNameMenuItem.isSelected();
+
+        renderSymbol();
+    }
+
+    /**
+     * Sets the style name displayed.
+     *
+     * @param selected the new style name displayed
+     */
+    protected void setStyleNameDisplayed(boolean selected) {
+        showStyleNameMenuItem.setSelected(selected);
+    }
+
+    /**
+     * Sets the filename displayed.
+     *
+     * @param selected the new filename displayed
+     */
+    protected void setFilenameDisplayed(boolean selected) {
+        showFilenameMenuItem.setSelected(selected);
+    }
+
+    /**
+     * Gets the image icon.
+     *
+     * @return the image icon
+     */
+    public ImageIcon getImageIcon() {
+        return imageIcon;
     }
 }
