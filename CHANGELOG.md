@@ -1,7 +1,33 @@
 # Change Log
 
+## [0.8.2](https://github.com/robward-scisys/sldeditor/tree/0.8.2) (2018-10-26)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.1...0.8.2)
+
+**Merged pull requests:**
+
+- Further SonarQube issues addressed [\#422](https://github.com/robward-scisys/sldeditor/pull/422) ([robward-scisys](https://github.com/robward-scisys))
+- Address Sonarcloud issues [\#421](https://github.com/robward-scisys/sldeditor/pull/421) ([robward-scisys](https://github.com/robward-scisys))
+- Added maths expression panel [\#420](https://github.com/robward-scisys/sldeditor/pull/420) ([robward-scisys](https://github.com/robward-scisys))
+- Added OSValidator unit test [\#418](https://github.com/robward-scisys/sldeditor/pull/418) ([robward-scisys](https://github.com/robward-scisys))
+- Added unit test for ExpressionSubPanel [\#417](https://github.com/robward-scisys/sldeditor/pull/417) ([robward-scisys](https://github.com/robward-scisys))
+- Added unit test for FunctionField [\#416](https://github.com/robward-scisys/sldeditor/pull/416) ([robward-scisys](https://github.com/robward-scisys))
+- RenderPanelImpl unit test [\#415](https://github.com/robward-scisys/sldeditor/pull/415) ([robward-scisys](https://github.com/robward-scisys))
+- Added unit test for DatabaseClient [\#414](https://github.com/robward-scisys/sldeditor/pull/414) ([robward-scisys](https://github.com/robward-scisys))
+- Added unit tests for CheckAttributeFactory and MissingSLDAttributes [\#413](https://github.com/robward-scisys/sldeditor/pull/413) ([robward-scisys](https://github.com/robward-scisys))
+- FunctionalTableModel unit test [\#412](https://github.com/robward-scisys/sldeditor/pull/412) ([robward-scisys](https://github.com/robward-scisys))
+- Added CheckBoxRenderer unit test [\#411](https://github.com/robward-scisys/sldeditor/pull/411) ([robward-scisys](https://github.com/robward-scisys))
+- Added OptionalValueEditor unit test [\#410](https://github.com/robward-scisys/sldeditor/pull/410) ([robward-scisys](https://github.com/robward-scisys))
+- Updated FileSystemInput unit test [\#409](https://github.com/robward-scisys/sldeditor/pull/409) ([robward-scisys](https://github.com/robward-scisys))
+- Added DatabaseFileHandler unit test [\#408](https://github.com/robward-scisys/sldeditor/pull/408) ([robward-scisys](https://github.com/robward-scisys))
+- Filesystemnodemanager unit test updated [\#407](https://github.com/robward-scisys/sldeditor/pull/407) ([robward-scisys](https://github.com/robward-scisys))
+- SLDEditorFileHandler unit test [\#406](https://github.com/robward-scisys/sldeditor/pull/406) ([robward-scisys](https://github.com/robward-scisys))
+
 ## [0.8.1](https://github.com/robward-scisys/sldeditor/tree/0.8.1) (2018-10-05)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.0...0.8.1)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.8.0...0.8.1)
+
+**Implemented enhancements:**
+
+- Allow background render colour to be set [\#398](https://github.com/robward-scisys/sldeditor/issues/398)
 
 **Fixed bugs:**
 
@@ -10,9 +36,19 @@
 **Closed issues:**
 
 - Update date picker ui component [\#401](https://github.com/robward-scisys/sldeditor/issues/401)
+- Remove undo/redo events from filter panel [\#393](https://github.com/robward-scisys/sldeditor/issues/393)
+
+**Merged pull requests:**
+
+- Updated for release 0.8.1 [\#405](https://github.com/robward-scisys/sldeditor/pull/405) ([robward-scisys](https://github.com/robward-scisys))
+- Iss403 multiple monitor support [\#404](https://github.com/robward-scisys/sldeditor/pull/404) ([robward-scisys](https://github.com/robward-scisys))
+- Iss401 update date picker [\#402](https://github.com/robward-scisys/sldeditor/pull/402) ([robward-scisys](https://github.com/robward-scisys))
 
 ## [0.8.0](https://github.com/robward-scisys/sldeditor/tree/0.8.0) (2018-09-25)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.7.8...0.8.0)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.0...0.8.0)
+
+## [v0.8.0](https://github.com/robward-scisys/sldeditor/tree/v0.8.0) (2018-09-25)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.8...v0.8.0)
 
 **Fixed bugs:**
 
@@ -54,11 +90,11 @@
 - in function now works. [\#374](https://github.com/robward-scisys/sldeditor/pull/374) ([robward-scisys](https://github.com/robward-scisys))
 - Iss372 geotools 19 [\#373](https://github.com/robward-scisys/sldeditor/pull/373) ([robward-scisys](https://github.com/robward-scisys))
 
-## [0.7.8](https://github.com/robward-scisys/sldeditor/tree/0.7.8) (2018-02-23)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.8...0.7.8)
-
 ## [v0.7.8](https://github.com/robward-scisys/sldeditor/tree/v0.7.8) (2018-02-23)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.7...v0.7.8)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.7.8...v0.7.8)
+
+## [0.7.8](https://github.com/robward-scisys/sldeditor/tree/0.7.8) (2018-02-23)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.7...0.7.8)
 
 **Implemented enhancements:**
 
