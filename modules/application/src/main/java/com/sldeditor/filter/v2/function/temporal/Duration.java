@@ -88,6 +88,14 @@ public class Duration {
     /** Instantiates a new duration. */
     public Duration() {
         // Default constructor
+        removeNanoSeconds();
+    }
+
+    /**
+     * Removes the nano seconds from the current time so the time is output without nano-seconds.
+     */
+    private void removeNanoSeconds() {
+        date = date.minusNanos(date.getNano());
     }
 
     /**
@@ -96,6 +104,8 @@ public class Duration {
      * @param string the string
      */
     public Duration(String string) {
+        removeNanoSeconds();
+
         if (string.startsWith(DURATION_DATE_PREFIX)) {
             int year = 0;
             int month = 0;
