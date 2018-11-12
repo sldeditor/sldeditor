@@ -58,18 +58,18 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<!-- Java -->
-		<java.version>1.8</java.version>
+        <!-- Java -->
+        <java.version>1.8</java.version>
 
-		<!-- Maven -->
-	    <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
-	    <maven.enforcer.plugin.version>3.0.0-M2</maven.enforcer.plugin.version>
+        <!-- Maven -->
+        <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+        <maven.enforcer.plugin.version>3.0.0-M2</maven.enforcer.plugin.version>
         <maven.enforcer.required.version>3.5.0</maven.enforcer.required.version>
 
-		<!-- GeoTools -->
+        <!-- GeoTools -->
         <geotools.version>20.0</geotools.version>
 
-		<!-- GeoServer -->
+        <!-- GeoServer -->
         <geoserver.version>2.14.0</geoserver.version>
         
         <!-- Log4j -->
@@ -77,12 +77,12 @@
         
         <!-- JUnit -->
         <junit-jupiter-engine.version>5.3.1</junit-jupiter-engine.version>
-        <surefire.version>2.22.0</surefire.version>
+        <surefire.version>3.0.0-M1</surefire.version>
         
-		<!-- GeoServer Manager -->
+        <!-- GeoServer Manager -->
         <geoserver_manager.version>1.7.0</geoserver_manager.version>
 
-		<!-- JavaDoc -->
+        <!-- JavaDoc -->
         <maven.eclipse.version>2.10</maven.eclipse.version>
         <maven.report.version>2.9</maven.report.version>
         <maven.javadoc.plugin.version>3.0.1</maven.javadoc.plugin.version>
@@ -91,8 +91,8 @@
         <!-- Maven clean -->
         <maven.clean.version>3.0.0</maven.clean.version>
 
-		<!-- Coveo Code formatting -->
-        <coveo.fmt.version>2.5.1</coveo.fmt.version>
+        <!-- Coveo Code formatting -->
+        <coveo.fmt.version>2.6.0</coveo.fmt.version>
         <coveo.fmt.action>format</coveo.fmt.action>
         <coveo.fmt.skip>false</coveo.fmt.skip>
     
@@ -111,18 +111,18 @@
     <!-- Dependencies -->
     <!-- =========================================================== -->
     <dependencies>
-	    <dependency>
-	        <groupId>org.junit.jupiter</groupId>
-	        <artifactId>junit-jupiter-api</artifactId>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
             <version>${junit-jupiter-engine.version}</version>
-	        <scope>test</scope>
-	    </dependency>
-		<dependency>
-		    <groupId>org.junit.jupiter</groupId>
-		    <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit-jupiter-engine.version}</version>
-		    <scope>test</scope>
-		</dependency>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <!-- =========================================================== -->
@@ -138,44 +138,6 @@
     <!-- itself. -->
     <!-- ======================================================= -->
     <profiles>
-        <profile>
-            <id>only-eclipse</id>
-            <activation>
-                <property>
-                    <name>m2e.version</name>
-                </property>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.eclipse.m2e</groupId>
-                            <artifactId>lifecycle-mapping</artifactId>
-                            <version>1.0.0</version>
-                            <configuration>
-                                <lifecycleMappingMetadata>
-                                    <pluginExecutions>
-                                        <pluginExecution>
-                                            <pluginExecutionFilter>
-                                                <groupId>org.apache.maven.plugins</groupId>
-                                                <artifactId>maven-antrun-plugin</artifactId>
-                                                <versionRange>[1.6,)</versionRange>
-                                                <goals>
-                                                    <goal>run</goal>
-                                                </goals>
-                                            </pluginExecutionFilter>
-                                            <action>
-                                                <ignore />
-                                            </action>
-                                        </pluginExecution>
-                                    </pluginExecutions>
-                                </lifecycleMappingMetadata>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
         <profile>
             <id>UnitTests</id>
             <activation>

@@ -18,383 +18,383 @@
 <!-- along with this program.  If not, see <http://www.gnu.org/licenses/>. -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<!-- =========================================================== -->
-	<!-- Parent POM -->
-	<!-- =========================================================== -->
-	<parent>
-		<groupId>com.sldeditor</groupId>
-		<artifactId>sldeditor</artifactId>
-		<version>0.8.3-SNAPSHOT</version>
+    <!-- =========================================================== -->
+    <!-- Parent POM -->
+    <!-- =========================================================== -->
+    <parent>
+        <groupId>com.sldeditor</groupId>
+        <artifactId>sldeditor</artifactId>
+        <version>0.8.3-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
-	</parent>
+    </parent>
 
-	<!-- =========================================================== -->
-	<!-- Project Description -->
-	<!-- =========================================================== -->
-	<artifactId>se-app</artifactId>
-	<name>se-app</name>
+    <!-- =========================================================== -->
+    <!-- Project Description -->
+    <!-- =========================================================== -->
+    <artifactId>se-app</artifactId>
+    <name>se-app</name>
 
-	<!-- =========================================================== -->
-	<!-- Developers and Contributors -->
-	<!-- =========================================================== -->
-	<developers>
-		<developer>
-			<name>Robert Ward</name>
-			<email>robert.ward@scisys.co.uk</email>
-			<organization>SCISYS</organization>
-			<organizationUrl>http://www.scisys.co.uk/</organizationUrl>
-			<timezone>Europe/London</timezone>
-			<roles>
-				<role>Architect</role>
-				<role>Java Developer</role>
-			</roles>
-		</developer>
-	</developers>
+    <!-- =========================================================== -->
+    <!-- Developers and Contributors -->
+    <!-- =========================================================== -->
+    <developers>
+        <developer>
+            <name>Robert Ward</name>
+            <email>robert.ward@scisys.co.uk</email>
+            <organization>SCISYS</organization>
+            <organizationUrl>http://www.scisys.co.uk/</organizationUrl>
+            <timezone>Europe/London</timezone>
+            <roles>
+                <role>Architect</role>
+                <role>Java Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
-	<!-- ======================================================= -->
-	<!-- This plugin's configuration is used to store Eclipse m2e -->
-	<!-- settings only. It has no influence on the Maven build -->
-	<!-- itself. -->
-	<!-- ======================================================= -->
-	<profiles>
-		<profile>
-			<id>only-eclipse</id>
-			<activation>
-				<property>
-					<name>m2e.version</name>
-				</property>
-			</activation>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.eclipse.m2e</groupId>
-							<artifactId>lifecycle-mapping</artifactId>
-							<version>1.0.0</version>
-							<configuration>
-								<lifecycleMappingMetadata>
-									<pluginExecutions>
-										<pluginExecution>
-											<pluginExecutionFilter>
-												<groupId>org.apache.maven.plugins</groupId>
-												<artifactId>maven-antrun-plugin</artifactId>
-												<versionRange>[1.6,)</versionRange>
-												<goals>
-													<goal>run</goal>
-												</goals>
-											</pluginExecutionFilter>
-											<action>
-												<ignore />
-											</action>
-										</pluginExecution>
-									</pluginExecutions>
-								</lifecycleMappingMetadata>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
-	</profiles>
+    <!-- ======================================================= -->
+    <!-- This plugin's configuration is used to store Eclipse m2e -->
+    <!-- settings only. It has no influence on the Maven build -->
+    <!-- itself. -->
+    <!-- ======================================================= -->
+    <profiles>
+        <profile>
+            <id>only-eclipse</id>
+            <activation>
+                <property>
+                    <name>m2e.version</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.eclipse.m2e</groupId>
+                            <artifactId>lifecycle-mapping</artifactId>
+                            <version>1.0.0</version>
+                            <configuration>
+                                <lifecycleMappingMetadata>
+                                    <pluginExecutions>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.apache.maven.plugins</groupId>
+                                                <artifactId>maven-antrun-plugin</artifactId>
+                                                <versionRange>[1.6,)</versionRange>
+                                                <goals>
+                                                    <goal>run</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
+                                    </pluginExecutions>
+                                </lifecycleMappingMetadata>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
 
-	<!-- =========================================================== -->
-	<!-- Dependencies -->
-	<!-- =========================================================== -->
-	<dependencies>
-		<dependency>
+    <!-- =========================================================== -->
+    <!-- Dependencies -->
+    <!-- =========================================================== -->
+    <dependencies>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.5.11</version>
             <scope>compile</scope>
         </dependency>
 
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-image</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-geometry</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-process-feature</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-shapefile</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-arcsde</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-cql</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-referencing</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-epsg-hsql</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-process</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-render</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-swing</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-wps</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-geotiff</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-ysld</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools.jdbc</groupId>
-			<artifactId>gt-jdbc-postgis</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools.jdbc</groupId>
-			<artifactId>gt-jdbc-spatialite</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools.jdbc</groupId>
-			<artifactId>gt-jdbc-db2</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools.jdbc</groupId>
-			<artifactId>gt-jdbc-h2</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools.jdbc</groupId>
-			<artifactId>gt-jdbc-mysql</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools.jdbc</groupId>
-			<artifactId>gt-jdbc-oracle</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools.jdbc</groupId>
-			<artifactId>gt-jdbc-sqlserver</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools.jdbc</groupId>
-			<artifactId>gt-jdbc-teradata</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-geopkg</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-image</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geometry</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-process-feature</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-shapefile</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-arcsde</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-cql</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-referencing</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-epsg-hsql</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-process</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-render</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-swing</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-wps</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geotiff</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-ysld</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-postgis</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-spatialite</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-db2</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-h2</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-mysql</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-oracle</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-sqlserver</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools.jdbc</groupId>
+            <artifactId>gt-jdbc-teradata</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geopkg</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.8.5</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.6</version>
-		</dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.6</version>
+        </dependency>
 
-		<!-- Using the GeoServer legend generation code causes a CRS factory -->
-		<!-- to be loaded which results in no CRS codes when the user is asked -->
-		<!-- in the JCRSChooser dialog. -->
-		<!-- By excluding gs-main org.geoserver.platform.ServiceException and -->
-		<!-- including gs-platform the desired result is achieved. -->
-		<dependency>
-			<groupId>org.geoserver</groupId>
-			<artifactId>gs-wms</artifactId>
-			<version>${geoserver.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geoserver</groupId>
-			<artifactId>gs-platform</artifactId>
-			<version>${geoserver.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>it.geosolutions</groupId>
-			<artifactId>geoserver-manager</artifactId>
-			<version>${geoserver_manager.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.github.lgooddatepicker</groupId>
-			<artifactId>LGoodDatePicker</artifactId>
-			<version>10.3.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.dockingframes</groupId>
-			<artifactId>docking-frames-common</artifactId>
-			<version>1.1.2-SNAPSHOT</version>
-		</dependency>
+        <!-- Using the GeoServer legend generation code causes a CRS factory -->
+        <!-- to be loaded which results in no CRS codes when the user is asked -->
+        <!-- in the JCRSChooser dialog. -->
+        <!-- By excluding gs-main org.geoserver.platform.ServiceException and -->
+        <!-- including gs-platform the desired result is achieved. -->
+        <dependency>
+            <groupId>org.geoserver</groupId>
+            <artifactId>gs-wms</artifactId>
+            <version>${geoserver.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geoserver</groupId>
+            <artifactId>gs-platform</artifactId>
+            <version>${geoserver.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>it.geosolutions</groupId>
+            <artifactId>geoserver-manager</artifactId>
+            <version>${geoserver_manager.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.lgooddatepicker</groupId>
+            <artifactId>LGoodDatePicker</artifactId>
+            <version>10.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dockingframes</groupId>
+            <artifactId>docking-frames-common</artifactId>
+            <version>1.1.2-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.4.0-b180830.0359</version>
         </dependency>
-	</dependencies>
-	<build>
-		<plugins>
-			<!-- =========================================================== -->
-			<!-- Generate code coverage statistics using jacoco -->
-			<!-- =========================================================== -->
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${jacoco.version}</version>
-				<configuration>
-					<excludes>
-						<exclude>com/sldeditor/common/xml/envvar/*.class</exclude>
-						<exclude>com/sldeditor/common/xml/ui/*.class</exclude>
-						<exclude>com/sldeditor/generated/*.class</exclude>
-						<exclude>org/geoserver/**</exclude>
-					</excludes>
-				</configuration>
-				<executions>
-					<!-- Prepares the property pointing to the JaCoCo runtime agent which 
-						is passed as VM argument when Maven the Surefire plugin is executed. -->
-					<execution>
-						<id>pre-unit-test</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-						<configuration>
-							<!-- Sets the path to the file which contains the execution data. -->
-							<destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
-							<!-- Sets the name of the property containing the settings for JaCoCo 
-								runtime agent. -->
-							<propertyName>jacoco.agent.argLine</propertyName>
-						</configuration>
-					</execution>
-					<!-- Ensures that the code coverage report for unit tests is created 
-						after unit tests have been run. -->
-					<execution>
-						<id>post-unit-test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-						<configuration>
-							<!-- Sets the path to the file which contains the execution data. -->
-							<dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
-							<!-- Sets the output directory for the code coverage report. -->
-							<outputDirectory>${basedir}/target/coverage-reports/jacoco-unit</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- =========================================================== -->
-			<!-- Surefire plugin -->
-			<!-- =========================================================== -->
-			<plugin>
-			    <groupId>org.apache.maven.plugins</groupId>
-			    <artifactId>maven-surefire-plugin</artifactId>
-			    <version>${surefire.version}</version>
-				<configuration>
-					<forkCount>1</forkCount>
-					<reuseForks>true</reuseForks>
+    </dependencies>
+    <build>
+        <plugins>
+            <!-- =========================================================== -->
+            <!-- Generate code coverage statistics using jacoco -->
+            <!-- =========================================================== -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>com/sldeditor/common/xml/envvar/*.class</exclude>
+                        <exclude>com/sldeditor/common/xml/ui/*.class</exclude>
+                        <exclude>com/sldeditor/generated/*.class</exclude>
+                        <exclude>org/geoserver/**</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <!-- Prepares the property pointing to the JaCoCo runtime agent which 
+                        is passed as VM argument when Maven the Surefire plugin is executed. -->
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+                            <!-- Sets the name of the property containing the settings for JaCoCo 
+                                runtime agent. -->
+                            <propertyName>jacoco.agent.argLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <!-- Ensures that the code coverage report for unit tests is created 
+                        after unit tests have been run. -->
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+                            <!-- Sets the output directory for the code coverage report. -->
+                            <outputDirectory>${basedir}/target/coverage-reports/jacoco-unit</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- =========================================================== -->
+            <!-- Surefire plugin -->
+            <!-- =========================================================== -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
                     <argLine>${jacoco.agent.argLine}</argLine>
-				</configuration>
-			</plugin>
-			<!-- =========================================================== -->
-			<!-- Ant tasks -->
-			<!-- =========================================================== -->
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.8</version>
-				<executions>
-					<!-- =========================================================== -->
-					<!-- Generate Version.java -->
-					<!-- =========================================================== -->
-					<execution>
-						<id>generate-sources</id>
-						<phase>generate-sources</phase>
-						<configuration>
-							<target>
-								<delete file="${app.version.file}.java" />
-								<copy file="${app.version.file}.txt" tofile="${app.version.file}.java" />
+                </configuration>
+            </plugin>
+            <!-- =========================================================== -->
+            <!-- Ant tasks -->
+            <!-- =========================================================== -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <!-- =========================================================== -->
+                    <!-- Generate Version.java -->
+                    <!-- =========================================================== -->
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <target>
+                                <delete file="${app.version.file}.java" />
+                                <copy file="${app.version.file}.txt" tofile="${app.version.file}.java" />
 
-								<replace file="${app.version.file}.java" token="xx"
-									value="${project.version}" />
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-					<!-- =========================================================== -->
-					<!-- Clean up files that were generated by the shade -->
-					<!-- plugin when the <finalName> was set -->
-					<!-- =========================================================== -->
-					<execution>
-						<id>clean-files</id>
-						<phase>install</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<target name="Remove unused shade plugin generated files">
-								<delete>
-									<fileset dir="${sldeditor.dest.folder}" includes="original-*.jar" />
-									<fileset dir="${sldeditor.dest.folder}" includes="*-shaded.jar" />
-								</delete>
-							</target>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- =========================================================== -->
-			<!-- Generate JAXB classes from xsd -->
-			<!-- =========================================================== -->
+                                <replace file="${app.version.file}.java" token="xx"
+                                    value="${project.version}" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <!-- =========================================================== -->
+                    <!-- Clean up files that were generated by the shade -->
+                    <!-- plugin when the <finalName> was set -->
+                    <!-- =========================================================== -->
+                    <execution>
+                        <id>clean-files</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target name="Remove unused shade plugin generated files">
+                                <delete>
+                                    <fileset dir="${sldeditor.dest.folder}" includes="original-*.jar" />
+                                    <fileset dir="${sldeditor.dest.folder}" includes="*-shaded.jar" />
+                                </delete>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- =========================================================== -->
+            <!-- Generate JAXB classes from xsd -->
+            <!-- =========================================================== -->
             <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-xjc-plugin</artifactId>
-                <version>2.3.0</version>
+                <version>3.2.2</version>
                 <configuration>
                     <extensions>
-                        <extension>org.apache.cxf.xjcplugins:cxf-xjc-boolean:2.3.0</extension>
+                        <extension>org.apache.cxf.xjcplugins:cxf-xjc-boolean:3.2.2</extension>
                     </extensions>
                 </configuration>
                 <executions>
@@ -455,111 +455,111 @@
                 </executions>
             </plugin>
 
-			<!-- =========================================================== -->
-			<!-- Replace date/time string in generate JAXB classes with -->
-			<!-- constant string, stops getting lots of git commits. -->
-			<!-- =========================================================== -->
-			<plugin>
-				<groupId>com.google.code.maven-replacer-plugin</groupId>
-				<artifactId>maven-replacer-plugin</artifactId>
-				<version>1.4.1</version>
-				<executions>
-					<execution>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>replace</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<includes>
-						<include>src/main/java/com/sldeditor/common/xml/envvar/*.java</include>
-						<include>src/main/java/com/sldeditor/common/xml/ui/*.java</include>
-					</includes>
-					<token>^// Generated on.*$</token>
-					<value>// Generated on: [TEXT REMOVED by maven-replacer-plugin]</value>
-					<regexFlags>
-						<regexFlag>MULTILINE</regexFlag>
-					</regexFlags>
-				</configuration>
-			</plugin>
-			<!-- =========================================================== -->
-			<!-- Generate single runnable jar -->
-			<!-- =========================================================== -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.2.0</version>
-				<configuration>
-					<finalName>${app.name}</finalName>
-					<outputDirectory>${sldeditor.dest.folder}</outputDirectory>
-					<shadedArtifactAttached>true</shadedArtifactAttached>
-					<filters>
-						<!-- Remove jar signatures, otherwise we get an error when starting: 
-							Invalid signature file digest for Manifest main attributes -->
-						<filter>
-							<artifact>*:*</artifact>
-							<excludes>
-								<exclude>META-INF/*.SF</exclude>
-								<exclude>META-INF/*.DSA</exclude>
-								<exclude>META-INF/*.RSA</exclude>
-							</excludes>
-						</filter>
-					</filters>
-					<transformers>
-						<transformer
-							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-							<manifestEntries>
-								<Main-Class>${app.main.class}</Main-Class>
-								<Specification-Title>Java Advanced Imaging Image I/O Tools</Specification-Title>
-								<Specification-Version>1.1</Specification-Version>
-								<Specification-Vendor>Sun Microsystems, Inc.</Specification-Vendor>
-								<Implementation-Title>com.sun.media.imageio</Implementation-Title>
-								<Implementation-Version>1.1</Implementation-Version>
-								<Implementation-Vendor>Sun Microsystems, Inc.</Implementation-Vendor>
-								<Extension-Name>com.sun.media.imageio</Extension-Name>
-								<SplashScreen-Image>splash/splash.png</SplashScreen-Image>
-							</manifestEntries>
-						</transformer>
-						<!-- This bit merges the various GeoTools META-INF/services files -->
-						<transformer
-							implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-						<transformer
-							implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-							<resource>META-INF/registryFile.jai</resource>
-						</transformer>
-						<transformer
-							implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-							<resource>META-INF/registryFile.jaiext</resource>
-						</transformer>
-					</transformers>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- =========================================================== -->
-			<!-- Using coveralls take the jacoco code coverage and upload to -->
-			<!-- https://coveralls.io/github/robward-scisys/sldeditor -->
-			<!-- =========================================================== -->
-			<plugin>
-				<groupId>org.eluder.coveralls</groupId>
-				<artifactId>coveralls-maven-plugin</artifactId>
-				<version>4.3.0</version>
-				<configuration>
-					<jacocoReports>
-						<jacocoReport>${basedir}/target/coverage-reports/jacoco-unit/jacoco.xml</jacocoReport>
-					</jacocoReports>
-					<sourceDirectories>
-						<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-					</sourceDirectories>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+            <!-- =========================================================== -->
+            <!-- Replace date/time string in generate JAXB classes with -->
+            <!-- constant string, stops getting lots of git commits. -->
+            <!-- =========================================================== -->
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>maven-replacer-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                        <include>src/main/java/com/sldeditor/common/xml/envvar/*.java</include>
+                        <include>src/main/java/com/sldeditor/common/xml/ui/*.java</include>
+                    </includes>
+                    <token>^// Generated on.*$</token>
+                    <value>// Generated on: [TEXT REMOVED by maven-replacer-plugin]</value>
+                    <regexFlags>
+                        <regexFlag>MULTILINE</regexFlag>
+                    </regexFlags>
+                </configuration>
+            </plugin>
+            <!-- =========================================================== -->
+            <!-- Generate single runnable jar -->
+            <!-- =========================================================== -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <finalName>${app.name}</finalName>
+                    <outputDirectory>${sldeditor.dest.folder}</outputDirectory>
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                    <filters>
+                        <!-- Remove jar signatures, otherwise we get an error when starting: 
+                            Invalid signature file digest for Manifest main attributes -->
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                    <transformers>
+                        <transformer
+                            implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <manifestEntries>
+                                <Main-Class>${app.main.class}</Main-Class>
+                                <Specification-Title>Java Advanced Imaging Image I/O Tools</Specification-Title>
+                                <Specification-Version>1.1</Specification-Version>
+                                <Specification-Vendor>Sun Microsystems, Inc.</Specification-Vendor>
+                                <Implementation-Title>com.sun.media.imageio</Implementation-Title>
+                                <Implementation-Version>1.1</Implementation-Version>
+                                <Implementation-Vendor>Sun Microsystems, Inc.</Implementation-Vendor>
+                                <Extension-Name>com.sun.media.imageio</Extension-Name>
+                                <SplashScreen-Image>splash/splash.png</SplashScreen-Image>
+                            </manifestEntries>
+                        </transformer>
+                        <!-- This bit merges the various GeoTools META-INF/services files -->
+                        <transformer
+                            implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                        <transformer
+                            implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                            <resource>META-INF/registryFile.jai</resource>
+                        </transformer>
+                        <transformer
+                            implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                            <resource>META-INF/registryFile.jaiext</resource>
+                        </transformer>
+                    </transformers>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- =========================================================== -->
+            <!-- Using coveralls take the jacoco code coverage and upload to -->
+            <!-- https://coveralls.io/github/robward-scisys/sldeditor        -->
+            <!-- =========================================================== -->
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.3.0</version>
+                <configuration>
+                    <jacocoReports>
+                        <jacocoReport>${basedir}/target/coverage-reports/jacoco-unit/jacoco.xml</jacocoReport>
+                    </jacocoReports>
+                    <sourceDirectories>
+                        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+                    </sourceDirectories>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
