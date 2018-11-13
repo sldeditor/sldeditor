@@ -78,8 +78,7 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
      *
      * @return the connection list
      */
-    @Override
-    public List<DatabaseConnection> getConnectionList() {
+    private List<DatabaseConnection> getConnectionList() {
         List<DatabaseConnection> connectionList = new ArrayList<>();
 
         List<String> valueList =
@@ -108,8 +107,12 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getConnection(java.lang.String)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getConnection(java.lang.
+     * String)
      */
     @Override
     public DatabaseConnection getConnection(String connectionDataName) {
@@ -182,7 +185,9 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.common.connection.DatabaseReadProgressInterface#removeConnection(com.sldeditor.common.data.DatabaseConnection)
+     * @see
+     * com.sldeditor.common.connection.DatabaseReadProgressInterface#removeConnection(com.sldeditor.
+     * common.data.DatabaseConnection)
      */
     @Override
     public void removeConnection(DatabaseConnection connection) {
@@ -192,14 +197,18 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#addNewConnection(com.sldeditor.extension.filesystem.database.
-     * DatabaseReadProgressInterface, com.sldeditor.common.data.DatabaseConnection)
+     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#addNewConnection(com.
+     * sldeditor.extension.filesystem.database. DatabaseReadProgressInterface,
+     * com.sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public void addNewConnection(
             DatabaseReadProgressInterface progress, DatabaseConnection newConnectionDetails) {
-        connectionMap.put(
-                newConnectionDetails, createDatabaseClient(progress, newConnectionDetails));
+
+        if (newConnectionDetails != null) {
+            connectionMap.put(
+                    newConnectionDetails, createDatabaseClient(progress, newConnectionDetails));
+        }
     }
 
     /** Destroy instance. */
@@ -210,7 +219,9 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getDBConnectionParams(com.sldeditor.common.data.DatabaseConnection)
+     * @see
+     * com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getDBConnectionParams(com.
+     * sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public Map<String, Object> getDBConnectionParams(DatabaseConnection databaseConnection) {
@@ -225,7 +236,9 @@ public class DatabaseConnectionManager implements DatabaseConnectionManagerInter
     /*
      * (non-Javadoc)
      *
-     * @see com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getMatchingConnection(com.sldeditor.common.data.DatabaseConnection)
+     * @see
+     * com.sldeditor.common.connection.DatabaseConnectionManagerInterface#getMatchingConnection(com.
+     * sldeditor.common.data.DatabaseConnection)
      */
     @Override
     public DatabaseConnection getMatchingConnection(DatabaseConnection connection) {

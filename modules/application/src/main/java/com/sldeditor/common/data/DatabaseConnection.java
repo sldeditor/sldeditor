@@ -333,7 +333,8 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
             this.connectionDataMap.put(entry.getKey(), entry.getValue());
         }
 
-        if (this.databaseConnectionName != null) {
+        if ((this.databaseConnectionName != null)
+                && ((this.connectionName == null) || this.connectionName.isEmpty())) {
             this.connectionName =
                     this.databaseConnectionName.getConnectionName(
                             DUPLICATE_PREFIX, noOfTimesDuplicated, connectionDataMap);
@@ -543,5 +544,14 @@ public class DatabaseConnection implements Comparable<DatabaseConnection>, Seria
             return false;
         }
         return true;
+    }
+
+    /**
+     * Sets the connection name.
+     *
+     * @param connectionName the connectionName to set
+     */
+    public void setConnectionName(String connectionName) {
+        this.connectionName = connectionName;
     }
 }
