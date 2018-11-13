@@ -22,7 +22,6 @@ package com.sldeditor.common.connection;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface;
 import com.sldeditor.extension.filesystem.database.client.DatabaseClientInterface;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,13 +30,6 @@ import java.util.Map;
  * @author Robert Ward (SCISYS)
  */
 public interface DatabaseConnectionManagerInterface {
-
-    /**
-     * Gets the connection list.
-     *
-     * @return the connection list
-     */
-    List<DatabaseConnection> getConnectionList();
 
     /** Update connection list. */
     void updateList();
