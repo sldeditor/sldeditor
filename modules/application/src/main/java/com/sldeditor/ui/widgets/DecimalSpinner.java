@@ -48,7 +48,7 @@ public class DecimalSpinner extends JSpinner {
     private static final long serialVersionUID = 1L;
 
     /** The observers. */
-    private ArrayList<SpinnerNotifyInterface> observers = new ArrayList<>();
+    private transient ArrayList<SpinnerNotifyInterface> observers = new ArrayList<>();
 
     /** The minimum number is zero. */
     private boolean minIsZero = false;

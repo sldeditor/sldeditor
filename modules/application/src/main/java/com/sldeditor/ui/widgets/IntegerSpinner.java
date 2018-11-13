@@ -41,7 +41,7 @@ public class IntegerSpinner extends JSpinner {
     private static final long serialVersionUID = 1L;
 
     /** The observers. */
-    private ArrayList<SpinnerNotifyInterface> observers = new ArrayList<>();
+    private transient ArrayList<SpinnerNotifyInterface> observers = new ArrayList<>();
 
     /** The minimum value is zero flag. */
     private boolean minIsZero = false;

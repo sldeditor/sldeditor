@@ -69,10 +69,11 @@ public class ExtendedSimpleFeatureTypeBuilder extends SimpleFeatureTypeBuilder {
             // if no crs was set, set to defaultCRS
             if (!attributeBuilder.isCRSSet()) {
                 if (defaultCrs == null && !defaultCrsSet) {
-                    LOGGER.fine(
+                    String message =
                             String.format(
                                     "Creating %s with null CoordinateReferenceSystem - did you mean to setCRS?",
-                                    name));
+                                    name);
+                    LOGGER.fine(message);
                 }
                 attributeBuilder.setCRS(defaultCrs);
             }
