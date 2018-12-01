@@ -32,6 +32,12 @@ public class PropertyFileFolder {
     /** The Constant WINDOWS_PATH. */
     private static final String WINDOWS_PATH = "AppData/Roaming/SLDEditor";
 
+    /** The Constant LINUX_PATH. */
+    private static final String LINUX_PATH = ".config/SLDEditor";
+
+    /** The Constant MAC_PATH. */
+    private static final String MAC_PATH = ".config/SLDEditor";
+
     /** Default constructor */
     private PropertyFileFolder() {
         // Default constructor
@@ -51,6 +57,20 @@ public class PropertyFileFolder {
 
         if (OSValidator.isWindows()) {
             folder = String.format("%s/%s", userHome, WINDOWS_PATH);
+
+            File f = new File(folder);
+            if (!f.exists()) {
+                f.mkdirs();
+            }
+        } else if (OSValidator.isUnix() || OSValidator.isSolaris()) {
+            folder = String.format("%s/%s", userHome, LINUX_PATH);
+
+            File f = new File(folder);
+            if (!f.exists()) {
+                f.mkdirs();
+            }
+        } else if (OSValidator.isMac()) {
+            folder = String.format("%s/%s", userHome, MAC_PATH);
 
             File f = new File(folder);
             if (!f.exists()) {
