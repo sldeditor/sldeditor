@@ -51,6 +51,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
  */
 public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
+    /** The Constant IS_PRERELEASE. */
+    private static final String IS_PRERELEASE = "prerelease";
+
     /** The Constant TAG_PREFIX. */
     private static final String TAG_PREFIX = "v";
 
@@ -70,12 +73,12 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
     private static final String REPO = "sldeditor";
 
     /** The Constant DOWNLOAD_URL. */
-    private static final String DOWNLOAD_URL =
-            String.format("https://github.com/%s/%s/releases", USER, REPO);
+    private static final String DOWNLOAD_URL = String.format("https://github.com/%s/%s/releases",
+            USER, REPO);
 
     /** The Constant URL. */
-    private static final String URL =
-            String.format("https://api.github.com/repos/%s/%s/releases", USER, REPO);
+    private static final String URL = String.format("https://api.github.com/repos/%s/%s/releases",
+            USER, REPO);
 
     /** The destination reached flag. */
     private boolean destinationReached = false;
@@ -118,15 +121,12 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
         StringBuilder sb = new StringBuilder();
         if (url != null) {
             int timeout = 5;
-            RequestConfig config =
-                    RequestConfig.custom()
-                            .setConnectTimeout(timeout * 1000)
-                            .setConnectionRequestTimeout(timeout * 1000)
-                            .setSocketTimeout(timeout * 1000)
-                            .build();
+            RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
+                    .setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000)
+                    .build();
 
-            try (CloseableHttpClient httpClient =
-                    HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
+            try (CloseableHttpClient httpClient = HttpClientBuilder.create()
+                    .setDefaultRequestConfig(config).build()) {
 
                 HttpGet getRequest = new HttpGet(url);
                 getRequest.addHeader("accept", "application/json");
@@ -134,19 +134,14 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
                 HttpResponse response = httpClient.execute(getRequest);
 
                 if (response.getStatusLine().getStatusCode() != 200) {
-                    ConsoleManager.getInstance()
-                            .error(
-                                    this,
-                                    String.format(
-                                            "%s %s",
-                                            Localisation.getField(
-                                                    CheckUpdatePanel.class,
-                                                    "CheckUpdateGitHub.httpError"),
-                                            response.getStatusLine().getStatusCode()));
+                    ConsoleManager.getInstance().error(this,
+                            String.format("%s %s",
+                                    Localisation.getField(CheckUpdatePanel.class,
+                                            "CheckUpdateGitHub.httpError"),
+                                    response.getStatusLine().getStatusCode()));
                 } else {
-                    BufferedReader br =
-                            new BufferedReader(
-                                    new InputStreamReader((response.getEntity().getContent())));
+                    BufferedReader br = new BufferedReader(
+                            new InputStreamReader((response.getEntity().getContent())));
 
                     String output;
                     while ((output = br.readLine()) != null) {
@@ -156,12 +151,8 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
                     destinationReached = true;
                 }
             } catch (IOException e) {
-                ConsoleManager.getInstance()
-                        .error(
-                                this,
-                                Localisation.getString(
-                                        CheckUpdatePanel.class,
-                                        "CheckUpdatePanel.destinationUnreachable"));
+                ConsoleManager.getInstance().error(this, Localisation.getString(
+                        CheckUpdatePanel.class, "CheckUpdatePanel.destinationUnreachable"));
             }
         }
 
@@ -195,18 +186,22 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
             for (int index = 0; index < o.size(); index++) {
                 JsonObject obj = o.get(index).getAsJsonObject();
 
-                String tagName = obj.get(TAG_NAME).getAsString();
-                if (tagName.startsWith(TAG_PREFIX)) {
-                    tagName = tagName.substring(1);
+                boolean prerelease = obj.get(IS_PRERELEASE).getAsBoolean();
+
+                if (!prerelease) {
+                    String tagName = obj.get(TAG_NAME).getAsString();
+                    if (tagName.startsWith(TAG_PREFIX)) {
+                        tagName = tagName.substring(1);
+                    }
+                    String published = obj.get(PUBLISHED_AT).getAsString();
+
+                    ZonedDateTime cal = iso8601toCalendar(published);
+
+                    map.put(cal, tagName);
+                    jsonMap.put(cal, obj);
+                    calList.add(cal);
+                    descriptionMap.put(tagName, obj.get(BODY).getAsString());
                 }
-                String published = obj.get(PUBLISHED_AT).getAsString();
-
-                ZonedDateTime cal = iso8601toCalendar(published);
-
-                map.put(cal, tagName);
-                jsonMap.put(cal, obj);
-                calList.add(cal);
-                descriptionMap.put(tagName, obj.get(BODY).getAsString());
             }
 
             Collections.sort(calList, Collections.reverseOrder());
