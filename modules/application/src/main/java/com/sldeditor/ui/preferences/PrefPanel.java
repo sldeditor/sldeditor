@@ -38,9 +38,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -92,6 +94,9 @@ public class PrefPanel extends JDialog {
 
     /** The ui layout map. */
     private Map<String, String> uiLayoutMap;
+
+    /** The file encoding combo box. */
+    private JComboBox<String> fileEncodingComboBox;
 
     private JLabel uiLayoutPanelLabel;
 
@@ -184,6 +189,23 @@ public class PrefPanel extends JDialog {
                         }
                     }
                 });
+
+        // File encoding
+        Set<String> keySet = Charset.availableCharsets().keySet();
+
+        String[] fileEncodingList = keySet.toArray(new String[keySet.size()]);
+        fileEncodingComboBox = new JComboBox<>(fileEncodingList);
+
+        JPanel fileEncodingPanel = new JPanel();
+        fileEncodingPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+        fileEncodingPanel.add(
+                new JLabel(Localisation.getField(PrefPanel.class, "PrefPanel.fileEncoding")));
+        fileEncodingPanel.add(fileEncodingComboBox);
+
+        JLabel fileEncodingPanelLabel = new JLabel(" ");
+        fileEncodingPanel.add(fileEncodingPanelLabel);
+
+        panel.add(fileEncodingPanel);
 
         // Vendor options
         JPanel panel1 = new JPanel();
@@ -300,6 +322,8 @@ public class PrefPanel extends JDialog {
             model.setSelectedVendorOptionVersions(prefData.getVendorOptionVersionList());
             colourButton.setColour(prefData.getBackgroundColour());
 
+            fileEncodingComboBox.setSelectedItem(prefData.getFileEncoding().name());
+
             for (Entry<String, String> entry : uiLayoutMap.entrySet()) {
                 String className = entry.getValue();
 
@@ -329,6 +353,7 @@ public class PrefPanel extends JDialog {
         prefData.setUiLayoutClass(uiLayoutClass);
         prefData.setSaveLastFolderView(chckbxSetSaveLastFolderViewed.isSelected());
         prefData.setBackgroundColour(colourButton.getColour());
+        prefData.setFileEncoding(Charset.forName((String) fileEncodingComboBox.getSelectedItem()));
 
         return prefData;
     }

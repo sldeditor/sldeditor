@@ -28,6 +28,7 @@ import com.sldeditor.common.preferences.PrefDataLastViewedEnum;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import java.awt.Color;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -66,6 +67,7 @@ public class PrefDataTest {
         assertEquals(newObj.getLastViewedKey(), prefData.getLastViewedKey());
         assertEquals(newObj.getLastFolderViewed(), prefData.getLastFolderViewed());
         assertEquals(newObj.isCheckAppVersionOnStartUp(), prefData.isCheckAppVersionOnStartUp());
+        assertEquals(newObj.getFileEncoding(), prefData.getFileEncoding());
     }
 
     /** Test method for {@link com.sldeditor.common.preferences.PrefData#isUseAntiAlias()}. */
@@ -184,5 +186,18 @@ public class PrefDataTest {
         String expectedValue = "last viewed folder";
         prefData.setLastFolderViewed(expectedValue);
         assertEquals(expectedValue, prefData.getLastFolderViewed());
+    }
+
+    /**
+     * Test method for {@link com.sldeditor.common.preferences.PrefData#charsetName(string)}. Test
+     * method for {@link com.sldeditor.common.preferences.PrefData#getFileEncoding()}.
+     */
+    @Test
+    public void testFileEncoding() {
+        PrefData prefData = new PrefData();
+
+        String charsetName = "windows-1253";
+        prefData.setFileEncoding(Charset.forName(charsetName));
+        assertEquals(charsetName, prefData.getFileEncoding().name());
     }
 }
