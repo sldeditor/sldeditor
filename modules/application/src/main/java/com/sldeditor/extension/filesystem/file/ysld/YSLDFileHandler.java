@@ -29,13 +29,13 @@ import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
+import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -180,7 +180,9 @@ public class YSLDFileHandler implements FileHandlerInterface {
     private void internalOpenFile(File f, List<SLDDataInterface> list) {
         if (f.isFile() && FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList())) {
             try {
-                String contents = readFile(f, Charset.defaultCharset());
+                Charset fileEncoding = PrefManager.getInstance().getPrefData().getFileEncoding();
+
+                String contents = readFile(f, fileEncoding);
 
                 StyledLayerDescriptor sld = Ysld.parse(contents);
 
@@ -221,7 +223,10 @@ public class YSLDFileHandler implements FileHandlerInterface {
             ysldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.YSLD);
         }
 
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(fileToSave))) {
+        // Get file encoding
+        Charset charset = PrefManager.getInstance().getPrefData().getFileEncoding();
+
+        try (BufferedWriter out = Files.newBufferedWriter(fileToSave.toPath(), charset)) {
             String contents =
                     ysldWriter.encodeSLD(
                             sldData.getResourceLocator(), SelectedSymbol.getInstance().getSld());

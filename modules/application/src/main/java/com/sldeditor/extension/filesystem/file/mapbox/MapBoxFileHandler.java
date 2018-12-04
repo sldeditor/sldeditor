@@ -27,14 +27,16 @@ import com.sldeditor.common.filesystem.FileSystemInterface;
 import com.sldeditor.common.output.SLDOutputFormatEnum;
 import com.sldeditor.common.output.SLDWriterInterface;
 import com.sldeditor.common.output.impl.SLDWriterFactory;
+import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileHandlerInterface;
 import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -164,6 +166,7 @@ public class MapBoxFileHandler implements FileHandlerInterface {
         /*
          * if (f.isFile() && FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList())) {
          * try {
+         * Charset fileEncoding = PrefManager.getInstance().getPrefData().getFileEncoding();
          *
          * FileInputStream fis = new FileInputStream(f);
          *
@@ -211,7 +214,10 @@ public class MapBoxFileHandler implements FileHandlerInterface {
             ysldWriter = SLDWriterFactory.createWriter(SLDOutputFormatEnum.YSLD);
         }
 
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(fileToSave))) {
+        // Get file encoding
+        Charset charset = PrefManager.getInstance().getPrefData().getFileEncoding();
+
+        try (BufferedWriter out = Files.newBufferedWriter(fileToSave.toPath(), charset)) {
             String contents =
                     ysldWriter.encodeSLD(
                             sldData.getResourceLocator(), SelectedSymbol.getInstance().getSld());
