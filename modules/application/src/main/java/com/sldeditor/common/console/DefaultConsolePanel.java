@@ -20,8 +20,10 @@
 package com.sldeditor.common.console;
 
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.preferences.PrefData;
 import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
+import com.sldeditor.ui.preferences.FileEncodingComboBox;
 import com.sldeditor.ui.reportissue.ReportIssue;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,6 +32,7 @@ import java.awt.event.ActionListener;
 import java.nio.charset.Charset;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -54,11 +57,13 @@ public class DefaultConsolePanel extends JPanel
     private DefaultListModel<ConsoleData> model = new DefaultListModel<>();
 
     /** The file encoding label. */
-    private String fileEncodingLabelString =
-            Localisation.getString(DefaultConsolePanel.class, "DefaultConsolePanel.fileEncoding");
+    private String fileEncodingLabelString = Localisation.getString(DefaultConsolePanel.class,
+            "DefaultConsolePanel.fileEncoding");
 
     /** The file encoding label. */
     private JLabel fileEncodingLabel;
+
+    private JComboBox<String> fileEncodingComboBox;
 
     /** Instantiates a new console panel. */
     public DefaultConsolePanel() {
@@ -75,28 +80,44 @@ public class DefaultConsolePanel extends JPanel
         add(panel, BorderLayout.SOUTH);
         panel.setLayout(new BorderLayout(0, 0));
 
+        // Feedback button
         JPanel feedbackPanel = new JPanel();
         panel.add(feedbackPanel, BorderLayout.EAST);
 
-        JButton btnFeedback =
-                new JButton(
-                        Localisation.getString(
-                                DefaultConsolePanel.class, "DefaultConsolePanel.feedback"));
+        JButton btnFeedback = new JButton(
+                Localisation.getString(DefaultConsolePanel.class, "DefaultConsolePanel.feedback"));
         feedbackPanel.add(btnFeedback);
+        btnFeedback.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ReportIssue.getInstance().display();
+            }
+        });
 
+        // File encoding
         JPanel fileEncodingPanel = new JPanel();
         panel.add(fileEncodingPanel, BorderLayout.WEST);
 
         fileEncodingLabel = new JLabel(fileEncodingLabelString);
         fileEncodingLabel.setHorizontalAlignment(SwingConstants.LEFT);
         fileEncodingPanel.add(fileEncodingLabel);
-        btnFeedback.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        ReportIssue.getInstance().display();
-                    }
-                });
+        fileEncodingComboBox = FileEncodingComboBox.create();
+        fileEncodingComboBox.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedItem = (String) fileEncodingComboBox.getSelectedItem();
+                Charset fileEncoding = Charset.forName(selectedItem);
+
+                PrefData prefData = PrefManager.getInstance().getPrefData();
+                if (!fileEncoding.equals(prefData.getFileEncoding())) {
+                    prefData.setFileEncoding(fileEncoding);
+                    PrefManager.getInstance().setPrefData(prefData);
+                }
+            }
+        });
+        fileEncodingPanel.add(fileEncodingComboBox);
+
+        // Register for changes in file encoding
         PrefManager.getInstance().addListener(this);
     }
 
@@ -139,18 +160,17 @@ public class DefaultConsolePanel extends JPanel
 
     /** Show last item. */
     private void showLastItem() {
-        SwingUtilities.invokeLater(
-                new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        int lastIndex = model.getSize() - 1;
+            @Override
+            public void run() {
+                int lastIndex = model.getSize() - 1;
 
-                        if (lastIndex >= 0) {
-                            textPane.ensureIndexIsVisible(lastIndex);
-                        }
-                    }
-                });
+                if (lastIndex >= 0) {
+                    textPane.ensureIndexIsVisible(lastIndex);
+                }
+            }
+        });
     }
 
     /*
@@ -183,9 +203,10 @@ public class DefaultConsolePanel extends JPanel
      */
     @Override
     public void fileEncodingUpdate(Charset fileEncoding) {
-        String displayString =
-                String.format("%s : %s", fileEncodingLabelString, fileEncoding.name());
-        fileEncodingLabel.setText(displayString);
+        fileEncodingComboBox.setSelectedItem(fileEncoding.name());
+
+        String displayString = String.format("%s : %s", fileEncodingLabelString,
+                fileEncoding.name());
         ConsoleManager.getInstance().information(this, displayString);
     }
 }
