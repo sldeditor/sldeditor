@@ -51,6 +51,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
  */
 public class CheckUpdateGitHub implements CheckUpdateClientInterface {
 
+    /** The Constant IS_PRERELEASE. */
+    private static final String IS_PRERELEASE = "prerelease";
+
     /** The Constant TAG_PREFIX. */
     private static final String TAG_PREFIX = "v";
 
@@ -195,18 +198,22 @@ public class CheckUpdateGitHub implements CheckUpdateClientInterface {
             for (int index = 0; index < o.size(); index++) {
                 JsonObject obj = o.get(index).getAsJsonObject();
 
-                String tagName = obj.get(TAG_NAME).getAsString();
-                if (tagName.startsWith(TAG_PREFIX)) {
-                    tagName = tagName.substring(1);
+                boolean prerelease = obj.get(IS_PRERELEASE).getAsBoolean();
+
+                if (!prerelease) {
+                    String tagName = obj.get(TAG_NAME).getAsString();
+                    if (tagName.startsWith(TAG_PREFIX)) {
+                        tagName = tagName.substring(1);
+                    }
+                    String published = obj.get(PUBLISHED_AT).getAsString();
+
+                    ZonedDateTime cal = iso8601toCalendar(published);
+
+                    map.put(cal, tagName);
+                    jsonMap.put(cal, obj);
+                    calList.add(cal);
+                    descriptionMap.put(tagName, obj.get(BODY).getAsString());
                 }
-                String published = obj.get(PUBLISHED_AT).getAsString();
-
-                ZonedDateTime cal = iso8601toCalendar(published);
-
-                map.put(cal, tagName);
-                jsonMap.put(cal, obj);
-                calList.add(cal);
-                descriptionMap.put(tagName, obj.get(BODY).getAsString());
             }
 
             Collections.sort(calList, Collections.reverseOrder());
