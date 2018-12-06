@@ -58,7 +58,7 @@ public class PrefData {
     private boolean checkAppVersionOnStartUp = true;
 
     /** The file encoding. */
-    private Charset fileEncoding = Charset.defaultCharset();
+    private Charset fileEncoding = Charset.forName("UTF-8");
 
     /** Default constructor. */
     public PrefData() {

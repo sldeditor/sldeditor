@@ -19,7 +19,6 @@
 
 package com.sldeditor.common.preferences;
 
-import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.GeoServerConnection;
 import com.sldeditor.common.filesystem.SelectedFiles;
 import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
@@ -32,7 +31,6 @@ import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import java.awt.Color;
 import java.nio.charset.Charset;
-import java.nio.charset.UnsupportedCharsetException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -70,9 +68,6 @@ public class PrefManager implements UndoActionInterface {
     /** The Constant CHECK_APP_VERSION_ON_STARTUP_FIELD. */
     private static final String CHECK_APP_VERSION_ON_STARTUP_FIELD =
             "SldEditor.checkAppVersionOnStartUp";
-
-    /** The Constant FILE_ENCODING_FIELD. */
-    private static final String FILE_ENCODING_FIELD = "SldEditor.fileencoding";
 
     /** The singleton instance. */
     private static PrefManager instance = null;
@@ -170,18 +165,6 @@ public class PrefManager implements UndoActionInterface {
                             CHECK_APP_VERSION_ON_STARTUP_FIELD, true));
             newPrefData.setUseAntiAlias(
                     propertyManagerInstance.getBooleanValue(USE_ANTI_ALIAS_FIELD, true));
-
-            Charset fileEncoding = Charset.defaultCharset();
-
-            try {
-                fileEncoding =
-                        Charset.forName(
-                                propertyManagerInstance.getStringValue(
-                                        FILE_ENCODING_FIELD, Charset.defaultCharset().name()));
-            } catch (UnsupportedCharsetException e) {
-                ConsoleManager.getInstance().exception(this, e);
-            }
-            newPrefData.setFileEncoding(fileEncoding);
 
             setVendorOption(newPrefData);
 
@@ -295,10 +278,6 @@ public class PrefManager implements UndoActionInterface {
     private void setFileEncoding(Charset fileEncoding) {
         // Ignore checking whether the file encoding has changed
         this.prefData.setFileEncoding(fileEncoding);
-
-        if (propertyManagerInstance != null) {
-            propertyManagerInstance.updateValue(FILE_ENCODING_FIELD, fileEncoding.name());
-        }
 
         for (PrefUpdateInterface listener : listenerList) {
             listener.fileEncodingUpdate(fileEncoding);

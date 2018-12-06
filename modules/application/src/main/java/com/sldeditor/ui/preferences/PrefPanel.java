@@ -19,28 +19,6 @@
 
 package com.sldeditor.ui.preferences;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.nio.charset.Charset;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.border.TitledBorder;
-
 import com.sldeditor.common.Controller;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.common.preferences.PrefData;
@@ -55,6 +33,25 @@ import com.sldeditor.common.vendoroption.selection.VersionCellRenderer;
 import com.sldeditor.help.Help;
 import com.sldeditor.ui.layout.UILayoutFactory;
 import com.sldeditor.ui.widgets.ColourButton;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 
 /**
  * Dialog that displays the user preferences to the user.
@@ -95,9 +92,6 @@ public class PrefPanel extends JDialog {
 
     /** The ui layout map. */
     private Map<String, String> uiLayoutMap;
-
-    /** The file encoding combo box. */
-    private JComboBox<String> fileEncodingComboBox;
 
     private JLabel uiLayoutPanelLabel;
 
@@ -190,20 +184,6 @@ public class PrefPanel extends JDialog {
                         }
                     }
                 });
-
-        // File encoding
-        fileEncodingComboBox = FileEncodingComboBox.create();
-
-        JPanel fileEncodingPanel = new JPanel();
-        fileEncodingPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-        fileEncodingPanel.add(
-                new JLabel(Localisation.getField(PrefPanel.class, "PrefPanel.fileEncoding")));
-        fileEncodingPanel.add(fileEncodingComboBox);
-
-        JLabel fileEncodingPanelLabel = new JLabel(" ");
-        fileEncodingPanel.add(fileEncodingPanelLabel);
-
-        panel.add(fileEncodingPanel);
 
         // Vendor options
         JPanel panel1 = new JPanel();
@@ -320,8 +300,6 @@ public class PrefPanel extends JDialog {
             model.setSelectedVendorOptionVersions(prefData.getVendorOptionVersionList());
             colourButton.setColour(prefData.getBackgroundColour());
 
-            fileEncodingComboBox.setSelectedItem(prefData.getFileEncoding().name());
-
             for (Entry<String, String> entry : uiLayoutMap.entrySet()) {
                 String className = entry.getValue();
 
@@ -351,7 +329,6 @@ public class PrefPanel extends JDialog {
         prefData.setUiLayoutClass(uiLayoutClass);
         prefData.setSaveLastFolderView(chckbxSetSaveLastFolderViewed.isSelected());
         prefData.setBackgroundColour(colourButton.getColour());
-        prefData.setFileEncoding(Charset.forName((String) fileEncodingComboBox.getSelectedItem()));
 
         return prefData;
     }
