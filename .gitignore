@@ -56,5 +56,7 @@ modules/application/v8\.6\.0\.0/
 bin/SLDEditor_installer\.exe
 
 build/macosInstaller/SLDEditor-Installer\.dmg
-
+build/macosInstaller/release/
 modules/application/testconfig\.properties
+
+modules/application/GeoServerInputTest\.properties

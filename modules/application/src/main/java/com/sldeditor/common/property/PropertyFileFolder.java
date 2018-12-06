@@ -29,6 +29,9 @@ import java.io.File;
  */
 public class PropertyFileFolder {
 
+    /** The Constant FORMAT_STRING. */
+    private static final String FORMAT_STRING = "%s/%s";
+
     /** The Constant WINDOWS_PATH. */
     private static final String WINDOWS_PATH = "AppData/Roaming/SLDEditor";
 
@@ -56,21 +59,21 @@ public class PropertyFileFolder {
         String folder = userHome;
 
         if (OSValidator.isWindows()) {
-            folder = String.format("%s/%s", userHome, WINDOWS_PATH);
+            folder = String.format(FORMAT_STRING, userHome, WINDOWS_PATH);
 
             File f = new File(folder);
             if (!f.exists()) {
                 f.mkdirs();
             }
         } else if (OSValidator.isUnix() || OSValidator.isSolaris()) {
-            folder = String.format("%s/%s", userHome, LINUX_PATH);
+            folder = String.format(FORMAT_STRING, userHome, LINUX_PATH);
 
             File f = new File(folder);
             if (!f.exists()) {
                 f.mkdirs();
             }
         } else if (OSValidator.isMac()) {
-            folder = String.format("%s/%s", userHome, MAC_PATH);
+            folder = String.format(FORMAT_STRING, userHome, MAC_PATH);
 
             File f = new File(folder);
             if (!f.exists()) {
@@ -84,7 +87,11 @@ public class PropertyFileFolder {
             // Migrate if the file does not exist
             File oldConfigFile = new File(oldConfigProperties);
             if (oldConfigFile.exists()) {
-                oldConfigFile.renameTo(newConfigFile);
+                boolean result = oldConfigFile.renameTo(newConfigFile);
+                if(!result)
+                {
+                    // Do nothing
+                }
             }
         }
         return newConfigFile.getAbsolutePath();
