@@ -52,7 +52,7 @@ Main features include:
 
 A compiled single executable jar is available here, runs on macOS, Windows and Linux:
 
-* [SLDEditor Release 0.8.3](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.3/SLDEditor.jar) Released 26 Oct 2018
+* [SLDEditor Release 0.8.3](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.3/SLDEditor.jar) Released 6 Dec 2018
 
 and can be started:
 
