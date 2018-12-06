@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import com.google.common.io.Files;
 import com.sldeditor.SLDEditor;
 import com.sldeditor.SLDEditorDlgInterface;
 import com.sldeditor.SLDEditorMain;
@@ -75,8 +74,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -336,11 +338,19 @@ public class VectorToolTest {
         GeometryDescriptor geometry = (GeometryDescriptor) map.get("geom");
         assertNotNull(geometry);
 
-        File tempFolder = Files.createTempDir();
+        Path tempFolder = null;
+        try {
+            tempFolder = Files.createTempDirectory(getClass().getSimpleName());
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail("Failed to create temp folder in temp folder!");
+        }
+
         TestVectorTool vectorTool = new TestVectorTool(new SLDEditorMain(new JPanel()));
         try {
             // Set a shape file as a data source - that matches the SLD
-            File matchingShpFile = extractShapeFile(tempFolder, "/test/sld_cookbook_polygon.zip");
+            File matchingShpFile =
+                    extractShapeFile(tempFolder.toFile(), "/test/sld_cookbook_polygon.zip");
 
             FileTreeNode fileTreeNode =
                     new FileTreeNode(matchingShpFile.getParentFile(), matchingShpFile.getName());
@@ -364,7 +374,7 @@ public class VectorToolTest {
             assertNotNull(pop);
 
             // Set a shape file as a data source - that does not match the SLD
-            File nonMatchingShpFile = extractShapeFile(tempFolder, "/test/states.zip");
+            File nonMatchingShpFile = extractShapeFile(tempFolder.toFile(), "/test/states.zip");
 
             FileTreeNode fileTreeNode2 =
                     new FileTreeNode(
@@ -492,13 +502,19 @@ public class VectorToolTest {
         GeometryDescriptor geometry = (GeometryDescriptor) map.get("geom");
         assertNotNull(geometry);
 
-        File tempFolder = Files.createTempDir();
+        Path tempFolder = null;
+        try {
+            tempFolder = Files.createTempDirectory(getClass().getSimpleName());
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail("Failed to create temp folder in temp folder!");
+        }
         TestVectorTool vectorTool = new TestVectorTool(new SLDEditorMain(new JPanel()));
         try {
             InputStream gpkgInputStream =
                     VectorToolTest.class.getResourceAsStream("/test/sld_cookbook_polygon.gpkg");
 
-            final File gpkgFile = new File(tempFolder, "sld_cookbook_polygon.gpkg");
+            final File gpkgFile = new File(tempFolder.toFile(), "sld_cookbook_polygon.gpkg");
             try (FileOutputStream out = new FileOutputStream(gpkgFile)) {
                 IOUtils.copy(gpkgInputStream, out);
             }
@@ -566,12 +582,15 @@ public class VectorToolTest {
      *
      * @param dir the dir
      */
-    private void purgeDirectory(File dir) {
-        for (File file : dir.listFiles()) {
-            if (file.isDirectory()) {
-                purgeDirectory(file);
-            }
-            file.delete();
+    private void purgeDirectory(Path tempFolder) {
+        try {
+            Files.walk(tempFolder)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
         }
     }
 

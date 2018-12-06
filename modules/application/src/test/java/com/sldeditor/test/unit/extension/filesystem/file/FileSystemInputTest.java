@@ -45,6 +45,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,6 +114,7 @@ public class FileSystemInputTest {
             assertTrue(input.save(sldData));
 
             saveFile.delete();
+            sldEditorFile.delete();
         } catch (SecurityException e) {
             e.printStackTrace();
             fail(e.getMessage());
@@ -284,7 +286,13 @@ public class FileSystemInputTest {
         assertEquals(1, sldDataList.size());
 
         try {
-            Path tempFolder = Files.createTempDirectory(getClass().getSimpleName());
+            Path tempFolder = null;
+            try {
+                tempFolder = Files.createTempDirectory(getClass().getSimpleName());
+            } catch (IOException e) {
+                e.printStackTrace();
+                fail("Failed to create temp folder in temp folder!");
+            }
 
             File tempFolderFile = tempFolder.toFile();
             FileTreeNode destinationTreeNode =
@@ -306,6 +314,17 @@ public class FileSystemInputTest {
             input.deleteNodes(destinationTreeNode, sldDataList);
 
             tempFolderFile.deleteOnExit();
+
+            try {
+                Files.walk(tempFolder)
+                        .sorted(Comparator.reverseOrder())
+                        .map(Path::toFile)
+                        .forEach(File::delete);
+            } catch (IOException e) {
+                e.printStackTrace();
+                fail(e.getMessage());
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
             fail(e.getMessage());
