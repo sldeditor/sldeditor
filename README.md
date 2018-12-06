@@ -62,11 +62,12 @@ Due to the changes in Java, double clicking on the executable jar file does not 
 
 ### MacOS
 
-An installer is available here: [SLDEditor DMG Installer](https://github.com/robward-scisys/sldeditor/releases/download/0.8.2/SLDEditor-Installer.dmg)
+An installer is available here: [SLDEditor DMG Installer](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.2/SLDEditor-Installer.dmg
+)
 
 ### Windows
 
-An installer is available here: [SLDEditor Windows Installer](https://github.com/robward-scisys/sldeditor/releases/download/0.8.2/SLDEditor_installer.exe)
+An installer is available here: [SLDEditor Windows Installer](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.2/SLDEditor_installer.exe)
 
 ### Ubuntu
 
