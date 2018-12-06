@@ -38,6 +38,7 @@ import com.sldeditor.common.vendoroption.VersionData;
 import com.sldeditor.common.xml.ui.FieldIdEnum;
 import java.awt.Color;
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -229,6 +230,9 @@ public class PrefManagerTest {
         List<VersionData> vendorOptionList = new ArrayList<VersionData>();
         vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
 
+        String charsetName = "windows-1251";
+        prefData.setFileEncoding(Charset.forName(charsetName));
+
         prefData.setVendorOptionVersionList(vendorOptionList);
         String uiLayoutClass = "perfect curve";
 
@@ -240,6 +244,7 @@ public class PrefManagerTest {
                 backgroundColour, PrefManager.getInstance().getPrefData().getBackgroundColour());
         assertEquals(uiLayoutClass, PrefManager.getInstance().getPrefData().getUiLayoutClass());
         assertEquals(true, PrefManager.getInstance().getPrefData().isUseAntiAlias());
+        assertEquals(charsetName, PrefManager.getInstance().getPrefData().getFileEncoding().name());
     }
 
     /**
@@ -259,6 +264,11 @@ public class PrefManagerTest {
         prefData.setBackgroundColour(backgroundColour);
         List<VersionData> vendorOptionList = new ArrayList<VersionData>();
         vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
+
+        String charsetName = "UTF-16";
+        prefData.setFileEncoding(Charset.forName(charsetName));
+        assertEquals(
+                charsetName, propertyManager.getStringValue("SldEditor.fileencoding", charsetName));
 
         prefData.setVendorOptionVersionList(vendorOptionList);
         String uiLayoutClass = "perfect curve";
@@ -391,6 +401,8 @@ public class PrefManagerTest {
         prefData.setLastFolderViewed(lastFolderViewed);
         prefData.setLastViewedKey(PrefDataLastViewedEnum.FOLDER);
         prefData.setSaveLastFolderView(true);
+        String charsetName = "UTF-8";
+        prefData.setFileEncoding(Charset.forName(charsetName));
 
         PrefManager.getInstance().setPrefData(prefData);
         PrefManager.getInstance().finish();
@@ -431,6 +443,8 @@ public class PrefManagerTest {
         prefData.setLastFolderViewed(lastFolderViewed);
         prefData.setLastViewedKey(PrefDataLastViewedEnum.FOLDER);
         prefData.setSaveLastFolderView(true);
+        String charsetName = "windows-1250";
+        prefData.setFileEncoding(Charset.forName(charsetName));
 
         PrefManager.getInstance().setPrefData(prefData);
 

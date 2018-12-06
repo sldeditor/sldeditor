@@ -22,6 +22,7 @@ package com.sldeditor.common.preferences;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import java.awt.Color;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +57,9 @@ public class PrefData {
     /** The check app version on start up. */
     private boolean checkAppVersionOnStartUp = true;
 
+    /** The file encoding. */
+    private Charset fileEncoding = Charset.forName("UTF-8");
+
     /** Default constructor. */
     public PrefData() {
         vendorOptionList.add(VendorOptionManager.getInstance().getDefaultVendorOptionVersionData());
@@ -74,6 +78,7 @@ public class PrefData {
         this.lastFolderViewed = clone.lastFolderViewed;
         this.lastViewedKey = clone.lastViewedKey;
         this.checkAppVersionOnStartUp = clone.checkAppVersionOnStartUp;
+        this.fileEncoding = clone.fileEncoding;
 
         if (clone.vendorOptionList != null) {
             this.vendorOptionList = new ArrayList<>();
@@ -221,6 +226,7 @@ public class PrefData {
         int result = 1;
         result = prime * result + ((backgroundColour == null) ? 0 : backgroundColour.hashCode());
         result = prime * result + (checkAppVersionOnStartUp ? 1231 : 1237);
+        result = prime * result + ((fileEncoding == null) ? 0 : fileEncoding.hashCode());
         result = prime * result + ((lastFolderViewed == null) ? 0 : lastFolderViewed.hashCode());
         result = prime * result + ((lastViewedKey == null) ? 0 : lastViewedKey.hashCode());
         result = prime * result + (saveLastFolderView ? 1231 : 1237);
@@ -255,6 +261,13 @@ public class PrefData {
             return false;
         }
         if (checkAppVersionOnStartUp != other.checkAppVersionOnStartUp) {
+            return false;
+        }
+        if (fileEncoding == null) {
+            if (other.fileEncoding != null) {
+                return false;
+            }
+        } else if (!fileEncoding.equals(other.fileEncoding)) {
             return false;
         }
         if (lastFolderViewed == null) {
@@ -306,5 +319,23 @@ public class PrefData {
      */
     public void setCheckAppVersionOnStartUp(boolean checkAppVersionOnStartUp) {
         this.checkAppVersionOnStartUp = checkAppVersionOnStartUp;
+    }
+
+    /**
+     * Gets the file encoding.
+     *
+     * @return the fileEncoding
+     */
+    public Charset getFileEncoding() {
+        return fileEncoding;
+    }
+
+    /**
+     * Sets the file encoding.
+     *
+     * @param fileEncoding the fileEncoding to set
+     */
+    public void setFileEncoding(Charset fileEncoding) {
+        this.fileEncoding = fileEncoding;
     }
 }

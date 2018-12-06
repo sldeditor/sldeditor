@@ -56,3 +56,5 @@ modules/application/v8\.6\.0\.0/
 bin/SLDEditor_installer\.exe
 
 build/macosInstaller/SLDEditor-Installer\.dmg
+
+modules/application/testconfig\.properties

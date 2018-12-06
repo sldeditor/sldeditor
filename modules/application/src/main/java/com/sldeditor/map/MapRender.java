@@ -47,6 +47,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -758,5 +759,13 @@ public class MapRender extends JPanel
      */
     private boolean hasError() {
         return error;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.preferences.iface.PrefUpdateInterface#fileEncodingUpdate(java.nio.charset.Charset)
+     */
+    @Override
+    public void fileEncodingUpdate(Charset fileEncoding) {
+        // Do nothing
     }
 }

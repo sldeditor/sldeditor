@@ -50,6 +50,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -664,5 +665,13 @@ public class RenderPanelImpl extends JPanel
         vendorOptionString = VendorOptionStatus.getVersionString(vendorOptionVersionsList);
 
         repaint();
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.preferences.iface.PrefUpdateInterface#fileEncodingUpdate(java.nio.charset.Charset)
+     */
+    @Override
+    public void fileEncodingUpdate(Charset fileEncoding) {
+        // Do nothing
     }
 }

@@ -31,8 +31,14 @@ public class PropertyManagerFactory {
     /** The Constant CONFIG_PROPERTIES. */
     private static final String CONFIG_PROPERTIES = "./config.properties";
 
+    /** The Constant TEST_CONFIG_PROPERTIES. */
+    private static final String TEST_CONFIG_PROPERTIES = "./testconfig.properties";
+
     /** The singleton instance. */
     private static PropertyManagerInterface instance = null;
+
+    /** The properties file name, defaults to test filename. */
+    private static String propertiesFileName = TEST_CONFIG_PROPERTIES;
 
     /** Private default constructor. */
     private PropertyManagerFactory() {
@@ -47,14 +53,20 @@ public class PropertyManagerFactory {
     public static synchronized PropertyManagerInterface getInstance() {
         if (instance == null) {
             instance = new PropertyManager();
-            instance.setPropertyFile(new File(CONFIG_PROPERTIES));
+            instance.setPropertyFile(new File(propertiesFileName));
         }
 
         return instance;
     }
 
+    /** Sets the config properties file to be not the test one */
+    public static void setNotUnderTest() {
+        propertiesFileName = CONFIG_PROPERTIES;
+    }
+
     /** Destroy instance. */
     public static synchronized void destroyInstance() {
         instance = null;
+        propertiesFileName = TEST_CONFIG_PROPERTIES;
     }
 }

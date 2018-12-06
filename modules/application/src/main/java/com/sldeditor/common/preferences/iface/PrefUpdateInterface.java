@@ -20,6 +20,7 @@
 package com.sldeditor.common.preferences.iface;
 
 import java.awt.Color;
+import java.nio.charset.Charset;
 
 /**
  * The Interface PrefUpdateInterface.
@@ -41,4 +42,11 @@ public interface PrefUpdateInterface {
      * @param backgroundColour the background colour
      */
     void backgroundColourUpdate(Color backgroundColour);
+
+    /**
+     * File encoding update.
+     *
+     * @param fileEncoding the file encoding
+     */
+    void fileEncodingUpdate(Charset fileEncoding);
 }

@@ -20,11 +20,14 @@
 package com.sldeditor.common.console;
 
 import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.common.preferences.PrefManager;
+import com.sldeditor.common.preferences.iface.PrefUpdateInterface;
 import com.sldeditor.ui.reportissue.ReportIssue;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.charset.Charset;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -37,7 +40,8 @@ import javax.swing.SwingUtilities;
  *
  * @author Robert Ward (SCISYS)
  */
-public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface {
+public class DefaultConsolePanel extends JPanel
+        implements ConsolePanelInterface, PrefUpdateInterface {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -59,23 +63,27 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
         add(jp, BorderLayout.CENTER);
 
         JPanel panel = new JPanel();
-        FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-        flowLayout.setAlignment(FlowLayout.RIGHT);
-        flowLayout.setVgap(0);
-        flowLayout.setHgap(1);
         add(panel, BorderLayout.SOUTH);
+        panel.setLayout(new BorderLayout(0, 0));
+
+        // Feedback button
+        JPanel feedbackPanel = new JPanel();
+        panel.add(feedbackPanel, BorderLayout.EAST);
 
         JButton btnFeedback =
                 new JButton(
                         Localisation.getString(
                                 DefaultConsolePanel.class, "DefaultConsolePanel.feedback"));
+        feedbackPanel.add(btnFeedback);
         btnFeedback.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         ReportIssue.getInstance().display();
                     }
                 });
-        panel.add(btnFeedback);
+
+        // Register for changes in file encoding
+        PrefManager.getInstance().addListener(this);
     }
 
     /**
@@ -129,5 +137,38 @@ public class DefaultConsolePanel extends JPanel implements ConsolePanelInterface
                         }
                     }
                 });
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.sldeditor.common.preferences.iface.PrefUpdateInterface#useAntiAliasUpdated(boolean)
+     */
+    @Override
+    public void useAntiAliasUpdated(boolean value) {
+        // Do nothing
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.sldeditor.common.preferences.iface.PrefUpdateInterface#backgroundColourUpdate(java.awt.
+     * Color)
+     */
+    @Override
+    public void backgroundColourUpdate(Color backgroundColour) {
+        // Do nothing
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.sldeditor.common.preferences.iface.PrefUpdateInterface#fileEncodingUpdate(java.nio.
+     * charset.Charset)
+     */
+    @Override
+    public void fileEncodingUpdate(Charset fileEncoding) {
+        //      Do nothing
     }
 }

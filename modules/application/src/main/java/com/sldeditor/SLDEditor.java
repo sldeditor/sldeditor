@@ -198,6 +198,9 @@ public class SLDEditor extends JPanel {
 
         UndoManager.getInstance().setPopulationCheck(Controller.getInstance());
 
+        if (!underTestFlag) {
+            PropertyManagerFactory.setNotUnderTest();
+        }
         PropertyManagerInterface propertyManager = PropertyManagerFactory.getInstance();
         propertyManager.readConfig();
 
@@ -281,7 +284,7 @@ public class SLDEditor extends JPanel {
     }
 
     /**
-     * Creates the and show gui.
+     * Creates and shows the gui.
      *
      * @param filename the filename
      * @param extensionArgList the extension argument list

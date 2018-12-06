@@ -25,6 +25,7 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
 import com.sldeditor.common.filesystem.FileSystemInterface;
+import com.sldeditor.common.preferences.PrefManager;
 import com.sldeditor.common.utils.ExternalFilenames;
 import com.sldeditor.datasource.SLDEditorFile;
 import com.sldeditor.datasource.extension.filesystem.FileSystemUtils;
@@ -33,7 +34,6 @@ import com.sldeditor.datasource.extension.filesystem.node.file.FileTreeNode;
 import com.sldeditor.tool.ToolManager;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -187,7 +187,9 @@ public class SLDFileHandler implements FileHandlerInterface {
     private void internalOpenFile(File f, List<SLDDataInterface> list) {
         if (f.isFile() && FileSystemUtils.isFileExtensionSupported(f, getFileExtensionList())) {
             try {
-                String sldContents = readFile(f, Charset.defaultCharset());
+                Charset fileEncoding = PrefManager.getInstance().getPrefData().getFileEncoding();
+
+                String sldContents = readFile(f, fileEncoding);
 
                 SLDDataInterface sldData = new SLDData(new StyleWrapper(f.getName()), sldContents);
                 sldData.setSLDFile(f);
@@ -215,7 +217,10 @@ public class SLDFileHandler implements FileHandlerInterface {
         File fileToSave = sldData.getSLDFile();
         String sldString = sldData.getSld();
 
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(fileToSave))) {
+        // Get file encoding
+        Charset charset = PrefManager.getInstance().getPrefData().getFileEncoding();
+
+        try (BufferedWriter out = Files.newBufferedWriter(fileToSave.toPath(), charset)) {
             out.write(sldString);
         } catch (IOException e) {
             ConsoleManager.getInstance().exception(this, e);

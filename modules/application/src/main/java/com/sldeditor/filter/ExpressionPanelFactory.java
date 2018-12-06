@@ -30,6 +30,7 @@ import com.sldeditor.filter.v2.expression.ExpressionNode;
 import com.sldeditor.filter.v2.expression.ExpressionPanelv2;
 import com.sldeditor.filter.v2.expression.FilterPanelv2;
 import java.awt.Color;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -181,5 +182,13 @@ public class ExpressionPanelFactory implements PrefUpdateInterface, VendorOption
         ExpressionNode.setEnvMgr(null);
 
         instance = null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.sldeditor.common.preferences.iface.PrefUpdateInterface#fileEncodingUpdate(java.nio.charset.Charset)
+     */
+    @Override
+    public void fileEncodingUpdate(Charset fileEncoding) {
+        // Do nothing
     }
 }

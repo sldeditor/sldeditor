@@ -30,6 +30,7 @@ import com.sldeditor.common.undo.UndoManager;
 import com.sldeditor.common.vendoroption.VendorOptionManager;
 import com.sldeditor.common.vendoroption.VersionData;
 import java.awt.Color;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -263,9 +264,24 @@ public class PrefManager implements UndoActionInterface {
                 newPrefData.getLastViewedKey(),
                 newPrefData.getLastFolderViewed());
         setCheckAppVersionOnStartUp(newPrefData.isCheckAppVersionOnStartUp());
+        setFileEncoding(newPrefData.getFileEncoding());
 
         UndoManager.getInstance()
                 .addUndoEvent(new UndoEvent(this, "Preferences", oldValueObj, newPrefData));
+    }
+
+    /**
+     * Sets the file encoding.
+     *
+     * @param fileEncoding the new file encoding
+     */
+    private void setFileEncoding(Charset fileEncoding) {
+        // Ignore checking whether the file encoding has changed
+        this.prefData.setFileEncoding(fileEncoding);
+
+        for (PrefUpdateInterface listener : listenerList) {
+            listener.fileEncodingUpdate(fileEncoding);
+        }
     }
 
     /**
