@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.extension.filesystem.database.DatabaseReadProgressInterface;
@@ -32,6 +33,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
@@ -68,12 +72,19 @@ class DatabaseClientTest {
     void testInitialise() {
         TestDatabaseReadProgress progress = new TestDatabaseReadProgress();
 
-        File tempFolder = new File(System.getProperty("java.io.tmpdir"));
+        Path tempFolder = null;
+        try {
+            tempFolder = Files.createTempDirectory("sldeditor_DatabaseClientTest");
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail("Failed to create temp folder in temp folder!");
+        }
+
         try {
             InputStream gpkgInputStream =
                     DatabaseClientTest.class.getResourceAsStream("/test/sld_cookbook_polygon.gpkg");
 
-            File gpkgFile = new File(tempFolder, "sld_cookbook_polygon.gpkg");
+            File gpkgFile = new File(tempFolder.toFile(), "sld_cookbook_polygon.gpkg");
             try (FileOutputStream out = new FileOutputStream(gpkgFile)) {
                 IOUtils.copy(gpkgInputStream, out);
             }
@@ -106,6 +117,15 @@ class DatabaseClientTest {
 
             // Delete the files we extracted
             gpkgFile.delete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Files.walk(tempFolder)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
         } catch (IOException e) {
             e.printStackTrace();
         }

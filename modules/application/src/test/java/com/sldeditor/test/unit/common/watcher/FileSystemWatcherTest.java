@@ -32,6 +32,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -132,5 +133,11 @@ public class FileSystemWatcherTest {
 
         assertEquals("Added " + resultingTempFilename, resultList.get(0));
         assertEquals("Del " + resultingTempFilename, resultList.get(resultList.size() - 1));
+
+        try {
+            FileUtils.deleteDirectory(tempFolder.toFile());
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
     }
 }

@@ -35,6 +35,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -116,6 +117,12 @@ public class FileTreeNodeTest {
             fail(e.getMessage());
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+
+        try {
+            FileUtils.deleteDirectory(tmpFolder.toFile());
+        } catch (IOException e) {
+            fail(e.getMessage());
         }
     }
 }

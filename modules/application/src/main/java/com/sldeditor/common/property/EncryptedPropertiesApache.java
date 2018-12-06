@@ -21,7 +21,6 @@ package com.sldeditor.common.property;
 
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.preferences.PrefManager;
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -96,8 +95,8 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
         try {
             dec = new Base64().decode(str.getBytes(fileEncoding));
             byte[] utf8 = decrypter.doFinal(dec);
-            return new String(utf8, "UTF-8");
-        } catch (IOException | IllegalBlockSizeException | BadPaddingException e) {
+            return new String(utf8, fileEncoding);
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
