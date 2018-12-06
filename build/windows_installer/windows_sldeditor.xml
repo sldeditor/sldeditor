@@ -25,12 +25,12 @@
     <opt>--add-modules=java.xml.bind --add-modules=java.activation -XX:+IgnoreUnrecognizedVMOptions</opt>
   </jre>
   <versionInfo>
-    <fileVersion>0.7.9.0</fileVersion>
-    <txtFileVersion>0.7.9</txtFileVersion>
+    <fileVersion>0.8.3.0</fileVersion>
+    <txtFileVersion>0.8.3</txtFileVersion>
     <fileDescription>OGC SLD file editor</fileDescription>
     <copyright>SCISYS</copyright>
-    <productVersion>0.7.9.0</productVersion>
-    <txtProductVersion>0.7.9</txtProductVersion>
+    <productVersion>0.8.3.0</productVersion>
+    <txtProductVersion>0.8.3</txtProductVersion>
     <productName>SLD Editor</productName>
     <companyName>SCISYS</companyName>
     <internalName>SLD Editor</internalName>

@@ -46,7 +46,7 @@ public class PrefData {
     private Color backgroundColour = Color.WHITE;
 
     /** The save last folder view flag. */
-    private boolean saveLastFolderView = false;
+    private boolean saveLastFolderView = true;
 
     /** The last folder viewed. */
     private String lastFolderViewed = null;
