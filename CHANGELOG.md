@@ -1,10 +1,22 @@
 # Change Log
 
-## [0.8.2](https://github.com/robward-scisys/sldeditor/tree/0.8.2) (2018-10-26)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.1...0.8.2)
+## [0.8.3](https://github.com/robward-scisys/sldeditor/tree/0.8.3) (2018-12-06)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.2...0.8.3)
+
+**Closed issues:**
+
+- Unit tests not tidied up after themselves [\#432](https://github.com/robward-scisys/sldeditor/issues/432)
+- Store property file in user folder [\#431](https://github.com/robward-scisys/sldeditor/issues/431)
+- Ignore pre-release builds [\#427](https://github.com/robward-scisys/sldeditor/issues/427)
+- Invalid cyrillic char using UTF-8 [\#426](https://github.com/robward-scisys/sldeditor/issues/426)
+- Add ability to specify math expression in filters [\#419](https://github.com/robward-scisys/sldeditor/issues/419)
+- Updated jaxb maven plugin version [\#424](https://github.com/robward-scisys/sldeditor/pull/424) ([robward-scisys](https://github.com/robward-scisys))
+## [v0.8.2](https://github.com/robward-scisys/sldeditor/tree/v0.8.2) (2018-10-26)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.1...v0.8.2)
 
 **Merged pull requests:**
 
+- Updated for version 0.8.2 release [\#423](https://github.com/robward-scisys/sldeditor/pull/423) ([robward-scisys](https://github.com/robward-scisys))
 - Further SonarQube issues addressed [\#422](https://github.com/robward-scisys/sldeditor/pull/422) ([robward-scisys](https://github.com/robward-scisys))
 - Address Sonarcloud issues [\#421](https://github.com/robward-scisys/sldeditor/pull/421) ([robward-scisys](https://github.com/robward-scisys))
 - Added maths expression panel [\#420](https://github.com/robward-scisys/sldeditor/pull/420) ([robward-scisys](https://github.com/robward-scisys))
@@ -22,8 +34,11 @@
 - Filesystemnodemanager unit test updated [\#407](https://github.com/robward-scisys/sldeditor/pull/407) ([robward-scisys](https://github.com/robward-scisys))
 - SLDEditorFileHandler unit test [\#406](https://github.com/robward-scisys/sldeditor/pull/406) ([robward-scisys](https://github.com/robward-scisys))
 
+## [v0.8.1](https://github.com/robward-scisys/sldeditor/tree/v0.8.1) (2018-10-05)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.8.1...v0.8.1)
+
 ## [0.8.1](https://github.com/robward-scisys/sldeditor/tree/0.8.1) (2018-10-05)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.8.0...0.8.1)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.0...0.8.1)
 
 **Implemented enhancements:**
 
@@ -44,11 +59,11 @@
 - Iss403 multiple monitor support [\#404](https://github.com/robward-scisys/sldeditor/pull/404) ([robward-scisys](https://github.com/robward-scisys))
 - Iss401 update date picker [\#402](https://github.com/robward-scisys/sldeditor/pull/402) ([robward-scisys](https://github.com/robward-scisys))
 
-## [0.8.0](https://github.com/robward-scisys/sldeditor/tree/0.8.0) (2018-09-25)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.0...0.8.0)
-
 ## [v0.8.0](https://github.com/robward-scisys/sldeditor/tree/v0.8.0) (2018-09-25)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.8...v0.8.0)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.8.0...v0.8.0)
+
+## [0.8.0](https://github.com/robward-scisys/sldeditor/tree/0.8.0) (2018-09-25)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.7.8...0.8.0)
 
 **Fixed bugs:**
 
@@ -90,11 +105,11 @@
 - in function now works. [\#374](https://github.com/robward-scisys/sldeditor/pull/374) ([robward-scisys](https://github.com/robward-scisys))
 - Iss372 geotools 19 [\#373](https://github.com/robward-scisys/sldeditor/pull/373) ([robward-scisys](https://github.com/robward-scisys))
 
-## [v0.7.8](https://github.com/robward-scisys/sldeditor/tree/v0.7.8) (2018-02-23)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.7.8...v0.7.8)
-
 ## [0.7.8](https://github.com/robward-scisys/sldeditor/tree/0.7.8) (2018-02-23)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.7...0.7.8)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.8...0.7.8)
+
+## [v0.7.8](https://github.com/robward-scisys/sldeditor/tree/v0.7.8) (2018-02-23)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.7.7...v0.7.8)
 
 **Implemented enhancements:**
 
