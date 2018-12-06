@@ -22,12 +22,14 @@ package com.sldeditor.common.data;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.traverse.TraverseSymbolizersInterface;
+import com.sldeditor.common.preferences.PrefManager;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.List;
 import org.geotools.factory.CommonFactoryFinder;
@@ -77,7 +79,9 @@ public class SLDUtils {
 
         StyleFactory styleFactory = CommonFactoryFinder.getStyleFactory();
 
-        InputStream stream = new ByteArrayInputStream(sldData.getSld().getBytes());
+        Charset fileEncoding = PrefManager.getInstance().getPrefData().getFileEncoding();
+
+        InputStream stream = new ByteArrayInputStream(sldData.getSld().getBytes(fileEncoding));
 
         SLDParser styleReader = new SLDParser(styleFactory, stream);
 

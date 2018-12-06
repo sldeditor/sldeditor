@@ -20,8 +20,9 @@
 package com.sldeditor.common.property;
 
 import com.sldeditor.common.console.ConsoleManager;
+import com.sldeditor.common.preferences.PrefManager;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -89,9 +90,11 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
      */
     @Override
     public synchronized String decrypt(String str) {
+        Charset fileEncoding = PrefManager.getInstance().getPrefData().getFileEncoding();
+
         byte[] dec;
         try {
-            dec = new Base64().decode(str.getBytes());
+            dec = new Base64().decode(str.getBytes(fileEncoding));
             byte[] utf8 = decrypter.doFinal(dec);
             return new String(utf8, "UTF-8");
         } catch (IOException | IllegalBlockSizeException | BadPaddingException e) {
@@ -108,10 +111,12 @@ public class EncryptedPropertiesApache extends Properties implements EncryptedPr
     public synchronized String encrypt(String str) {
         byte[] utf8;
         try {
-            utf8 = str.getBytes("UTF-8");
+            Charset fileEncoding = PrefManager.getInstance().getPrefData().getFileEncoding();
+
+            utf8 = str.getBytes(fileEncoding);
             byte[] enc = encrypter.doFinal(utf8);
             return new Base64().encodeToString(enc);
-        } catch (UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
             ConsoleManager.getInstance().exception(this, e);
         }
 
