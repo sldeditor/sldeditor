@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import com.google.common.io.Files;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.SLDData;
 import com.sldeditor.common.data.StyleWrapper;
@@ -38,7 +37,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.Icon;
 import org.junit.jupiter.api.Test;
@@ -80,9 +82,22 @@ public class YSLDFileHandlerTest {
     public void testGetSLDContentsFile() {
         assertNull(new YSLDFileHandler().getSLDContents(null));
         assertNull(new YSLDFileHandler().open(null));
-        File tempFolder = Files.createTempDir();
-        assertNull(new YSLDFileHandler().open(tempFolder));
-        tempFolder.delete();
+        Path tempFolder = null;
+        try {
+            tempFolder = Files.createTempDirectory("sldeditor_YSLDFileHandler");
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail("Failed to create temp folder in temp folder!");
+        }
+        assertNull(new YSLDFileHandler().open(tempFolder.toFile()));
+        try {
+            Files.walk(tempFolder)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         URL url = YSLDFileHandlerTest.class.getResource("/point/ysld");
 

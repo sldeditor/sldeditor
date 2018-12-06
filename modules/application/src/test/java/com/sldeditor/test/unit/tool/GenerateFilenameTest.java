@@ -62,5 +62,7 @@ public class GenerateFilenameTest {
         int counter = 1;
         String expectedFilename = String.format("%s%d%s", filename, counter, fileExtension);
         assertEquals(actualFilename, expectedFilename);
+
+        f.delete();
     }
 }

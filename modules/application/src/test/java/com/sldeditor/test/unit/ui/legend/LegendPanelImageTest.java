@@ -176,6 +176,7 @@ class LegendPanelImageTest {
 
         assertTrue(f.exists());
         f.delete();
+        selectedFile.delete();
 
         // Write legend image with file filter and no file suffix
         try {
@@ -204,6 +205,8 @@ class LegendPanelImageTest {
 
         c = Toolkit.getDefaultToolkit().getSystemClipboard();
         assertTrue(c.isDataFlavorAvailable(DataFlavor.imageFlavor));
+
+        selectedFile.delete();
     }
 
     /** Test method for {@link com.sldeditor.ui.legend.LegendPanelImage#renderSymbol()}. */

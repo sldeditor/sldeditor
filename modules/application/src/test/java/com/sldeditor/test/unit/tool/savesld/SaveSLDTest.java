@@ -195,6 +195,8 @@ class SaveSLDTest {
         testDlg.setYesToAll(true);
         testDlg.setWriteOutputFile(true);
         testObj.saveAllSLDToFolder(sldDataList, destFolder, true);
+
+        f.delete();
     }
 
     /**
