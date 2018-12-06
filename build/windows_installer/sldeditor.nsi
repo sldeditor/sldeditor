@@ -90,11 +90,14 @@ Section "Uninstall"
   Delete $INSTDIR\SLDEditor.exe
   Delete $INSTDIR\SLDEditor.jar
   Delete $INSTDIR\uninstall.exe
+  
+  Delete "$PROFILE\AppData\Roaming\SLDEditor\*.*"
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\SLDEditor\*.*"
 
   ; Remove directories used
+  RMDir "$PROFILE\AppData\Roaming\SLDEditor"
   RMDir "$SMPROGRAMS\SLDEditor"
   RMDir $INSTDIR
 
