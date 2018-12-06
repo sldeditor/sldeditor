@@ -28,8 +28,11 @@ import java.io.File;
  */
 public class PropertyManagerFactory {
 
+    /** The Constant OLD_CONFIG_PROPERTIES. */
+    private static final String OLD_CONFIG_PROPERTIES = "./config.properties";
+
     /** The Constant CONFIG_PROPERTIES. */
-    private static final String CONFIG_PROPERTIES = "./config.properties";
+    private static final String CONFIG_PROPERTIES = "sldeditor.properties";
 
     /** The Constant TEST_CONFIG_PROPERTIES. */
     private static final String TEST_CONFIG_PROPERTIES = "./testconfig.properties";
@@ -59,9 +62,11 @@ public class PropertyManagerFactory {
         return instance;
     }
 
-    /** Sets the config properties file to be not the test one */
+    /** Sets the config properties file to be not the test one. */
     public static void setNotUnderTest() {
-        propertiesFileName = CONFIG_PROPERTIES;
+        propertiesFileName =
+                PropertyFileFolder.getFolder(
+                        System.getProperty("user.home"), OLD_CONFIG_PROPERTIES, CONFIG_PROPERTIES);
     }
 
     /** Destroy instance. */
