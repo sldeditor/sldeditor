@@ -329,7 +329,7 @@ public class PrefManagerTest {
         PrefManager.getInstance().setLastFolderViewed(null);
 
         PrefData actualPrefData = PrefManager.getInstance().getPrefData();
-        assertFalse(actualPrefData.isSaveLastFolderView());
+        assertTrue(actualPrefData.isSaveLastFolderView());
         assertEquals(PrefDataLastViewedEnum.FOLDER, actualPrefData.getLastViewedKey());
         assertNull(actualPrefData.getLastFolderViewed());
 
@@ -337,12 +337,16 @@ public class PrefManagerTest {
         SelectedFiles selectedFiles = new SelectedFiles();
         PrefManager.getInstance().setLastFolderViewed(selectedFiles);
         actualPrefData = PrefManager.getInstance().getPrefData();
-        assertFalse(actualPrefData.isSaveLastFolderView());
+        assertTrue(actualPrefData.isSaveLastFolderView());
         assertEquals(PrefDataLastViewedEnum.FOLDER, actualPrefData.getLastViewedKey());
         assertNull(actualPrefData.getLastFolderViewed());
 
         // Set folder
         String expectedFolderName = "/tmp/test/abc";
+        PrefData prefData = PrefManager.getInstance().getPrefData();
+        prefData.setSaveLastFolderView(false);
+        PrefManager.getInstance().setPrefData(prefData);
+
         selectedFiles.setFolderName(expectedFolderName);
         PrefManager.getInstance().setLastFolderViewed(selectedFiles);
         actualPrefData = PrefManager.getInstance().getPrefData();
