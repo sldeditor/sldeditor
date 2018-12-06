@@ -88,8 +88,7 @@ public class PropertyFileFolder {
             File oldConfigFile = new File(oldConfigProperties);
             if (oldConfigFile.exists()) {
                 boolean result = oldConfigFile.renameTo(newConfigFile);
-                if(!result)
-                {
+                if (!result) {
                     // Do nothing
                 }
             }
