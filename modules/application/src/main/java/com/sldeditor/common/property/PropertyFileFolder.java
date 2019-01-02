@@ -23,7 +23,7 @@ import com.sldeditor.common.utils.OSValidator;
 import java.io.File;
 
 /**
- * Class determine where the property file should be stored based on operating system.
+ * Class to determine where the property file should be stored based on operating system.
  *
  * @author Robert Ward (SCISYS)
  */
@@ -54,31 +54,23 @@ public class PropertyFileFolder {
      * @param newConfigProperties the new config properties
      * @return the folder
      */
-    public static String getFolder(
-            String userHome, String oldConfigProperties, String newConfigProperties) {
+    public static String getFolder(String userHome, String oldConfigProperties,
+            String newConfigProperties) {
         String folder = userHome;
 
         if (OSValidator.isWindows()) {
             folder = String.format(FORMAT_STRING, userHome, WINDOWS_PATH);
 
-            File f = new File(folder);
-            if (!f.exists()) {
-                f.mkdirs();
-            }
         } else if (OSValidator.isUnix() || OSValidator.isSolaris()) {
             folder = String.format(FORMAT_STRING, userHome, LINUX_PATH);
 
-            File f = new File(folder);
-            if (!f.exists()) {
-                f.mkdirs();
-            }
         } else if (OSValidator.isMac()) {
             folder = String.format(FORMAT_STRING, userHome, MAC_PATH);
+        }
 
-            File f = new File(folder);
-            if (!f.exists()) {
-                f.mkdirs();
-            }
+        File f = new File(folder);
+        if (!f.exists()) {
+            f.mkdirs();
         }
 
         File newConfigFile = new File(folder, newConfigProperties);
