@@ -1,18 +1,43 @@
 # Change Log
 
-## [0.8.3](https://github.com/robward-scisys/sldeditor/tree/0.8.3) (2018-12-06)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.2...0.8.3)
+## [0.8.4](https://github.com/robward-scisys/sldeditor/tree/0.8.4) (2019-01-18)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.3...0.8.4)
+
+- Iss438 not starting up [\#439](https://github.com/robward-scisys/sldeditor/pull/439) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.8.3](https://github.com/robward-scisys/sldeditor/tree/v0.8.3) (2018-12-06)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.3-alpha...v0.8.3)
 
 **Closed issues:**
 
 - Unit tests not tidied up after themselves [\#432](https://github.com/robward-scisys/sldeditor/issues/432)
 - Store property file in user folder [\#431](https://github.com/robward-scisys/sldeditor/issues/431)
+- link to MacOS/Windows installers failed [\#429](https://github.com/robward-scisys/sldeditor/issues/429)
 - Ignore pre-release builds [\#427](https://github.com/robward-scisys/sldeditor/issues/427)
 - Invalid cyrillic char using UTF-8 [\#426](https://github.com/robward-scisys/sldeditor/issues/426)
+
+**Merged pull requests:**
+
+- Iss435 release 0.8.3 [\#436](https://github.com/robward-scisys/sldeditor/pull/436) ([robward-scisys](https://github.com/robward-scisys))
+- Iss431 user data [\#434](https://github.com/robward-scisys/sldeditor/pull/434) ([robward-scisys](https://github.com/robward-scisys))
+- Tidied up after unit tests [\#433](https://github.com/robward-scisys/sldeditor/pull/433) ([robward-scisys](https://github.com/robward-scisys))
+- Iss426 file encoding [\#430](https://github.com/robward-scisys/sldeditor/pull/430) ([robward-scisys](https://github.com/robward-scisys))
+- When checking for latest release, ignore pre-release releases in GitHub [\#428](https://github.com/robward-scisys/sldeditor/pull/428) ([robward-scisys](https://github.com/robward-scisys))
+
+## [v0.8.3-alpha](https://github.com/robward-scisys/sldeditor/tree/v0.8.3-alpha) (2018-11-13)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.2...v0.8.3-alpha)
+
+**Closed issues:**
+
 - Add ability to specify math expression in filters [\#419](https://github.com/robward-scisys/sldeditor/issues/419)
+
+**Merged pull requests:**
+
+- DatabaseConnectionManager unit test [\#425](https://github.com/robward-scisys/sldeditor/pull/425) ([robward-scisys](https://github.com/robward-scisys))
 - Updated jaxb maven plugin version [\#424](https://github.com/robward-scisys/sldeditor/pull/424) ([robward-scisys](https://github.com/robward-scisys))
+
 ## [v0.8.2](https://github.com/robward-scisys/sldeditor/tree/v0.8.2) (2018-10-26)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.1...v0.8.2)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.8.1...v0.8.2)
 
 **Merged pull requests:**
 
@@ -34,11 +59,11 @@
 - Filesystemnodemanager unit test updated [\#407](https://github.com/robward-scisys/sldeditor/pull/407) ([robward-scisys](https://github.com/robward-scisys))
 - SLDEditorFileHandler unit test [\#406](https://github.com/robward-scisys/sldeditor/pull/406) ([robward-scisys](https://github.com/robward-scisys))
 
-## [v0.8.1](https://github.com/robward-scisys/sldeditor/tree/v0.8.1) (2018-10-05)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/0.8.1...v0.8.1)
-
 ## [0.8.1](https://github.com/robward-scisys/sldeditor/tree/0.8.1) (2018-10-05)
-[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.0...0.8.1)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.1...0.8.1)
+
+## [v0.8.1](https://github.com/robward-scisys/sldeditor/tree/v0.8.1) (2018-10-05)
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.0...v0.8.1)
 
 **Implemented enhancements:**
 
