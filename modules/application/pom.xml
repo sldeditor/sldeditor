@@ -27,7 +27,7 @@
     <parent>
         <groupId>com.sldeditor</groupId>
         <artifactId>sldeditor</artifactId>
-        <version>0.8.4-SNAPSHOT</version>
+        <version>0.8.4</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 

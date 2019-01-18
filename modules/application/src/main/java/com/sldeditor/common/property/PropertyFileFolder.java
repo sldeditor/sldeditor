@@ -54,8 +54,8 @@ public class PropertyFileFolder {
      * @param newConfigProperties the new config properties
      * @return the folder
      */
-    public static String getFolder(String userHome, String oldConfigProperties,
-            String newConfigProperties) {
+    public static String getFolder(
+            String userHome, String oldConfigProperties, String newConfigProperties) {
         String folder = userHome;
 
         if (OSValidator.isWindows()) {
