@@ -26,7 +26,7 @@
     <!-- =========================================================== -->
     <groupId>com.sldeditor</groupId>
     <artifactId>sldeditor</artifactId>
-    <version>0.8.4</version>
+    <version>0.8.5</version>
     <name>SLDEditor</name>
     <packaging>pom</packaging>
 
@@ -67,10 +67,10 @@
         <maven.enforcer.required.version>3.5.0</maven.enforcer.required.version>
 
         <!-- GeoTools -->
-        <geotools.version>20.1</geotools.version>
+        <geotools.version>20.2</geotools.version>
 
         <!-- GeoServer -->
-        <geoserver.version>2.14.0</geoserver.version>
+        <geoserver.version>2.14.2</geoserver.version>
         
         <!-- Log4j -->
         <log4j.version>1.2.17</log4j.version>
