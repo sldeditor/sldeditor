@@ -19,25 +19,26 @@
 
 package com.sldeditor.tool.dbconnectionlist;
 
-import com.sldeditor.common.NodeInterface;
-import com.sldeditor.common.SLDDataInterface;
-import com.sldeditor.common.data.DatabaseConnection;
-import com.sldeditor.common.localisation.Localisation;
-import com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface;
-import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseNode;
-import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOverallNode;
-import com.sldeditor.tool.ToolButton;
-import com.sldeditor.tool.ToolInterface;
-import com.sldeditor.tool.ToolPanel;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import com.sldeditor.common.NodeInterface;
+import com.sldeditor.common.SLDDataInterface;
+import com.sldeditor.common.data.DatabaseConnection;
+import com.sldeditor.common.localisation.Localisation;
+import com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface;
+import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOverallNode;
+import com.sldeditor.tool.ToolButton;
+import com.sldeditor.tool.ToolInterface;
+import com.sldeditor.tool.ToolPanel;
 
 /**
  * Tool that manages all the database connections.
@@ -189,17 +190,7 @@ public class DatabaseConnectionListTool implements ToolInterface {
 
         if (nodeTypeList != null) {
             for (NodeInterface nodeType : nodeTypeList) {
-                if (nodeType instanceof DatabaseNode) {
-                    DatabaseNode databaseNode = (DatabaseNode) nodeType;
-
-                    DatabaseConnection connection = databaseNode.getConnection();
-                    connectionList.add(connection);
-                    databaseNodesSelected = true;
-
-                    if (!connection.isSupportsDuplication()) {
-                        canDuplicate = false;
-                    }
-                } else if (nodeType instanceof DatabaseOverallNode) {
+                if (nodeType instanceof DatabaseOverallNode) {
                     DatabaseOverallNode databaseOverallNode = (DatabaseOverallNode) nodeType;
                     selectedDatabaseType = databaseOverallNode.toString();
                     canDuplicate = false;

@@ -224,6 +224,9 @@ public class DatabaseConnectionTool implements ToolInterface {
                             supported = true;
                         }
                     }
+                    else if (node instanceof DatabaseNode) {
+                        supported = true;
+                    }
                 }
             }
         }

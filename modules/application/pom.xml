@@ -239,6 +239,12 @@
             <version>4.5.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+
         <!-- Using the GeoServer legend generation code causes a CRS factory -->
         <!-- to be loaded which results in no CRS codes when the user is asked -->
         <!-- in the JCRSChooser dialog. -->
