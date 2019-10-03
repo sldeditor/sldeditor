@@ -27,7 +27,7 @@
     <parent>
         <groupId>com.sldeditor</groupId>
         <artifactId>sldeditor</artifactId>
-        <version>0.8.6</version>
+        <version>0.8.7-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -188,11 +188,6 @@
         </dependency>
         <dependency>
             <groupId>org.geotools.jdbc</groupId>
-            <artifactId>gt-jdbc-spatialite</artifactId>
-            <version>${geotools.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.geotools.jdbc</groupId>
             <artifactId>gt-jdbc-db2</artifactId>
             <version>${geotools.version}</version>
         </dependency>
@@ -293,6 +288,13 @@
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
             <version>2.4.0-b180830.0438</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.xml.parsers/jaxp-api -->
+        <dependency>
+            <groupId>javax.xml.parsers</groupId>
+            <artifactId>jaxp-api</artifactId>
+            <version>1.4.5</version>
         </dependency>
     </dependencies>
     <build>
@@ -411,10 +413,10 @@
             <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-xjc-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.3.0</version>
                 <configuration>
                     <extensions>
-                        <extension>org.apache.cxf.xjcplugins:cxf-xjc-boolean:3.2.2</extension>
+                        <extension>org.apache.cxf.xjcplugins:cxf-xjc-boolean:3.3.0</extension>
                     </extensions>
                 </configuration>
                 <executions>

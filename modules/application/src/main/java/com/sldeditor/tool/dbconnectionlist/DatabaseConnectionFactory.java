@@ -28,7 +28,6 @@ import org.geotools.data.h2.H2DataStoreFactory;
 import org.geotools.data.mysql.MySQLDataStoreFactory;
 import org.geotools.data.oracle.OracleNGDataStoreFactory;
 import org.geotools.data.postgis.PostgisNGDataStoreFactory;
-import org.geotools.data.spatialite.SpatiaLiteDataStoreFactory;
 import org.geotools.data.sqlserver.SQLServerDataStoreFactory;
 import org.geotools.data.sqlserver.jtds.JDTSSQLServerJNDIDataStoreFactory;
 import org.geotools.data.sqlserver.jtds.JTDSSqlServerDataStoreFactory;
@@ -48,9 +47,6 @@ public class DatabaseConnectionFactory {
 
     /** The Constant GEOPACKAGE_FILE_EXTENSION. */
     private static final String GEOPACKAGE_FILE_EXTENSION = "gpkg";
-
-    /** The Constant SPATIALITE_FILE_EXTENSION. */
-    private static final String SPATIALITE_FILE_EXTENSION = "db";
 
     /** The Constant DATABASE_TYPE_KEY. */
     public static final String DATABASE_TYPE_KEY = JDBCDataStoreFactory.DBTYPE.key;
@@ -133,61 +129,6 @@ public class DatabaseConnectionFactory {
     private static void addFileDatabase(DatabaseFileHandler databaseFileHandler, Param param) {
         fileHandlerList.add(databaseFileHandler);
         fileHandlerMap.put(databaseFileHandler, (String) param.sample);
-    }
-
-    /**
-     * Creates a new DatabaseConnection object for a GeoPackage.
-     *
-     * @return the database connection
-     */
-    public static DatabaseConnection createSpatiaLite() {
-        List<DatabaseConnectionField> list = new ArrayList<>();
-
-        list.add(new DatabaseConnectionField(SpatiaLiteDataStoreFactory.DATABASE));
-
-        FileNameExtensionFilter filter =
-                new FileNameExtensionFilter(
-                        Localisation.getString(
-                                        DatabaseConnector.class,
-                                        "DatabaseConnectorGeoPkg.fileExtension")
-                                + " (*."
-                                + SPATIALITE_FILE_EXTENSION
-                                + ")",
-                        SPATIALITE_FILE_EXTENSION);
-        list.add(new DatabaseConnectionField(SpatiaLiteDataStoreFactory.USER, filter));
-
-        SpatiaLiteDataStoreFactory factory = new SpatiaLiteDataStoreFactory();
-
-        return new DatabaseConnection(
-                SpatiaLiteDataStoreFactory.DBTYPE,
-                factory.getDisplayName(),
-                false,
-                list,
-                new DatabaseConnectionNameInterface() {
-                    /** The Constant serialVersionUID. */
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public String getConnectionName(
-                            String duplicatePrefix,
-                            int noOfTimesDuplicated,
-                            Map<String, String> properties) {
-                        String connectionName =
-                                Localisation.getString(
-                                        DatabaseConnectionFactory.class,
-                                        Localisation.COMMON_NOT_SET);
-                        String databaseName = properties.get(JDBCDataStoreFactory.DATABASE.key);
-                        if (databaseName != null) {
-                            File f = new File(databaseName);
-                            if (f.isFile()) {
-                                connectionName = f.getName();
-                            }
-                        }
-
-                        return createConnectionName(
-                                connectionName, noOfTimesDuplicated, duplicatePrefix);
-                    }
-                });
     }
 
     /**
@@ -554,8 +495,6 @@ public class DatabaseConnectionFactory {
                 return createGeoPackage();
             } else if (type.equals(PostgisNGDataStoreFactory.DBTYPE.sample)) {
                 return createPostgres();
-            } else if (type.equals(SpatiaLiteDataStoreFactory.DBTYPE.sample)) {
-                return createSpatiaLite();
             } else if (type.equals(TeradataDataStoreFactory.DBTYPE.sample)) {
                 return createTeradata();
             } else if (type.equals(JTDSSqlServerDataStoreFactory.DBTYPE.sample)) {
@@ -675,11 +614,6 @@ public class DatabaseConnectionFactory {
      */
     public static List<FileHandlerInterface> getFileHandlers() {
         if (fileHandlerList.isEmpty()) {
-            addFileDatabase(
-                    new DatabaseFileHandler(
-                            "ui/filesystemicons/spatialite.png",
-                            Arrays.asList(SPATIALITE_FILE_EXTENSION)),
-                    SpatiaLiteDataStoreFactory.DBTYPE);
 
             addFileDatabase(
                     new DatabaseFileHandler(

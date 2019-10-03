@@ -26,7 +26,7 @@
     <!-- =========================================================== -->
     <groupId>com.sldeditor</groupId>
     <artifactId>sldeditor</artifactId>
-    <version>0.8.6</version>
+    <version>0.8.7-SNAPSHOT</version>
     <name>SLDEditor</name>
     <packaging>pom</packaging>
 
@@ -60,6 +60,7 @@
 
         <!-- Java -->
         <java.version>1.8</java.version>
+        <java.release>13</java.release>
 
         <!-- Maven -->
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
@@ -67,10 +68,10 @@
         <maven.enforcer.required.version>3.5.0</maven.enforcer.required.version>
 
         <!-- GeoTools -->
-        <geotools.version>20.2</geotools.version>
+        <geotools.version>22.0</geotools.version>
 
         <!-- GeoServer -->
-        <geoserver.version>2.14.2</geoserver.version>
+        <geoserver.version>2.16.0</geoserver.version>
         
         <!-- Log4j -->
         <log4j.version>1.2.17</log4j.version>
@@ -89,7 +90,7 @@
         <javadoc.maxHeapSize>1536M</javadoc.maxHeapSize>
         
         <!-- Maven clean -->
-        <maven.clean.version>3.0.0</maven.clean.version>
+        <maven.clean.version>3.1.0</maven.clean.version>
 
         <!-- Coveo Code formatting -->
         <coveo.fmt.version>2.6.0</coveo.fmt.version>
@@ -235,8 +236,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>${java.version}</source>  <!-- The -source argument for the Java compiler. -->
-                    <target>${java.version}</target>  <!-- The -target argument for the Java compiler. -->
+                    <release>${java.release}</release>
                     <debug>true</debug>   <!-- Whether to include debugging information. -->
                     <encoding>UTF-8</encoding> <!-- The -encoding argument for the Java compiler. -->
                 </configuration>

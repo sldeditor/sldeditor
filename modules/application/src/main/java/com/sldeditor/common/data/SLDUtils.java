@@ -41,7 +41,6 @@ import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.RasterSymbolizer;
 import org.geotools.styling.Rule;
-import org.geotools.styling.SLDParser;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleFactory;
 import org.geotools.styling.StyledLayer;
@@ -49,6 +48,7 @@ import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.styling.Symbolizer;
 import org.geotools.styling.UserLayerImpl;
 import org.geotools.util.URLs;
+import org.geotools.xml.styling.SLDParser;
 
 /**
  * The Class SLDUtils, contains utility methods to populate StyledLayerDescriptor objects from a

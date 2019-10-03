@@ -47,11 +47,6 @@ public class DatabaseConnectionFactoryTest {
     }
 
     @Test
-    public void testCreateSpatiaLite() {
-        assertNotNull(DatabaseConnectionFactory.createSpatiaLite());
-    }
-
-    @Test
     public void testCreateDB2() {
         assertNotNull(DatabaseConnectionFactory.createDB2());
     }

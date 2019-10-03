@@ -32,7 +32,7 @@ import java.awt.SplashScreen;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
 import org.apache.log4j.Logger;
-import org.geotools.factory.GeoTools;
+import org.geotools.util.factory.GeoTools;
 
 /**
  * The application splash screen.

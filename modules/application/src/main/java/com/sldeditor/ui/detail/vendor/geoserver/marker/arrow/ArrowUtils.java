@@ -22,7 +22,7 @@ package com.sldeditor.ui.detail.vendor.geoserver.marker.arrow;
 import java.util.HashMap;
 import java.util.Map;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.renderer.markwkt.MeteoMarkFactory;
+import org.geotools.renderer.style.markwkt.MeteoMarkFactory;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.Expression;
 

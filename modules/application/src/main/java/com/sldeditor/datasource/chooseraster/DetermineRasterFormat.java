@@ -25,7 +25,7 @@ import java.util.Set;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.GridFormatFinder;
 import org.geotools.coverage.grid.io.UnknownFormat;
-import org.geotools.factory.GeoTools;
+import org.geotools.util.factory.GeoTools;
 
 /**
  * The Class DetermineRasterFormat.
