@@ -1,0 +1,27 @@
+version: 1.0.{build}
+branches:
+  only:
+  - appveyor
+image: Visual Studio 2017
+cache: C:\Users\appveyor\.m2\
+build_script:
+- cmd: >-
+    mvn clean install
+
+    cd build\windows_installer
+
+    "C:\Program Files (x86)\NSIS\makensis.exe" sldeditor.nsi
+
+    cd ..\..
+artifacts:
+- path: bin\SLDEditor_installer.exe
+  name: installer
+deploy:
+- provider: GitHub
+  tag: v0.8.6
+  auth_token:
+    secure: V3p1tEGXUSn0YgxvO1/anZPeHz6Ddy0Bjxo73/IxYu8Z+POmj5Z7lX9zAgkounOo
+  repository: robward-scisys/sldeditor
+  artifact: installer
+  draft: true
+  force_update: true
