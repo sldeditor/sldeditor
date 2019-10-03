@@ -1,4 +1,13 @@
 # Change Log
+## [0.8.6](https://github.com/robward-scisys/sldeditor/tree/0.8.6) (2019-10-03)
+- Iss444 Fixed issue where databases could not be connected to.
+- Updated Travis build files
+
+## [0.8.5](https://github.com/robward-scisys/sldeditor/tree/0.8.5) (2019-01-21)
+- Updated to use GeoTools 20.2
+
+[Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.3...0.8.4)
+
 
 ## [0.8.4](https://github.com/robward-scisys/sldeditor/tree/0.8.4) (2019-01-18)
 [Full Changelog](https://github.com/robward-scisys/sldeditor/compare/v0.8.3...0.8.4)
