@@ -5,7 +5,7 @@ addons:
       secure: "$SONAR_TOKEN"
 
 jdk :
-  - oraclejdk8
+  - openjdk8
 language : java
 cache:
   directories:
