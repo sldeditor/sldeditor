@@ -4,8 +4,8 @@
 [![Code Quality](https://sonarcloud.io/api/project_badges/measure?project=robward-scisys_sldeditor&metric=alert_status)](https://sonarcloud.io/dashboard?id=robward-scisys_sldeditor)
 [![Coverage Status](https://img.shields.io/coveralls/robward-scisys/sldeditor/master.svg)](https://coveralls.io/github/robward-scisys/sldeditor?branch=master)
 [![License](https://img.shields.io/github/license/robward-scisys/sldeditor.svg)](https://github.com/robward-scisys/sldeditor/blob/master/LICENSE)
-[![GitHub release](https://img.shields.io/github/release/robward-scisys/sldeditor.svg)](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.5/SLDEditor.jar)
-[![Github All Releases](https://img.shields.io/github/downloads/robward-scisys/sldeditor/total.svg)](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.5/SLDEditor.jar)
+[![GitHub release](https://img.shields.io/github/release/robward-scisys/sldeditor.svg)](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.6/SLDEditor.jar)
+[![Github All Releases](https://img.shields.io/github/downloads/robward-scisys/sldeditor/total.svg)](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.6/SLDEditor.jar)
 
 The SLD Editor is a Java desktop application developed by [SCISYS](http://gis.scisys.co.uk) that allows the creation and editing of [OGC Styled Layer Descriptors](http://www.opengeospatial.org/standards/sld) interactively using a graphical user interface.<p>
 
@@ -52,7 +52,7 @@ Main features include:
 
 A compiled single executable jar is available here, runs on macOS, Windows and Linux:
 
-* [SLDEditor Release 0.8.5](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.5/SLDEditor.jar) Released 22 Jan 2019
+* [SLDEditor Release 0.8.6](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.6/SLDEditor.jar) Released 03 Oct 2019
 
 and can be started:
 
@@ -62,12 +62,12 @@ Due to the changes in Java, double clicking on the executable jar file does not 
 
 ### MacOS
 
-An installer is available here: [SLDEditor DMG Installer](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.5/SLDEditor-Installer.dmg
+An installer is available here: [SLDEditor DMG Installer](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.6/SLDEditor-Installer.dmg
 )
 
 ### Windows
 
-An installer is available here: [SLDEditor Windows Installer](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.5/SLDEditor_installer.exe)
+An installer is available here: [SLDEditor Windows Installer](https://github.com/robward-scisys/sldeditor/releases/download/v0.8.6/SLDEditor_installer.exe)
 
 ### Ubuntu
 
