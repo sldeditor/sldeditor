@@ -5,8 +5,10 @@ addons:
       secure: "$SONAR_TOKEN"
 
 jdk :
-  - oraclejdk8
+  - openjdk8
 language : java
+services:
+  - xvfb
 cache:
   directories:
   - $HOME/.m2
@@ -18,9 +20,7 @@ script :
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
+  - export DISPLAY=:99.0
 after_success:
   - cd modules/application
   - mvn org.eluder.coveralls:coveralls-maven-plugin:report

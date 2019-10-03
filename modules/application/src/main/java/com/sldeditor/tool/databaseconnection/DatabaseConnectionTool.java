@@ -223,6 +223,8 @@ public class DatabaseConnectionTool implements ToolInterface {
                         if (fileNode.getFileCategory() == FileTreeNodeTypeEnum.DATABASE) {
                             supported = true;
                         }
+                    } else if (node instanceof DatabaseNode) {
+                        supported = true;
                     }
                 }
             }

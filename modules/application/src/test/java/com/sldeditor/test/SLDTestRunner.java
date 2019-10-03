@@ -148,12 +148,24 @@ public class SLDTestRunner {
     /**
      * Writes an InputStream to a temporary file.
      *
-     * @param in the in
-     * @return the file
+     * @param in the input stream
+     * @return the file object represent the stream
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public static File stream2file(InputStream in) throws IOException {
-        final File tempFile = File.createTempFile(PREFIX, SUFFIX);
+        return stream2file(in, SUFFIX);
+    }
+
+    /**
+     * Writes an InputStream to a temporary file with supplied file suffix
+     *
+     * @param in the input stream
+     * @param suffix the filename suffix of the generated file
+     * @return the file object represent the stream
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    public static File stream2file(InputStream in, String suffix) throws IOException {
+        final File tempFile = File.createTempFile(PREFIX, suffix);
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
             IOUtils.copy(in, out);
         }

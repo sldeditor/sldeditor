@@ -24,7 +24,6 @@ import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.DatabaseConnection;
 import com.sldeditor.common.localisation.Localisation;
 import com.sldeditor.datasource.extension.filesystem.DatabaseConnectUpdateInterface;
-import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseNode;
 import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOverallNode;
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
@@ -189,17 +188,7 @@ public class DatabaseConnectionListTool implements ToolInterface {
 
         if (nodeTypeList != null) {
             for (NodeInterface nodeType : nodeTypeList) {
-                if (nodeType instanceof DatabaseNode) {
-                    DatabaseNode databaseNode = (DatabaseNode) nodeType;
-
-                    DatabaseConnection connection = databaseNode.getConnection();
-                    connectionList.add(connection);
-                    databaseNodesSelected = true;
-
-                    if (!connection.isSupportsDuplication()) {
-                        canDuplicate = false;
-                    }
-                } else if (nodeType instanceof DatabaseOverallNode) {
+                if (nodeType instanceof DatabaseOverallNode) {
                     DatabaseOverallNode databaseOverallNode = (DatabaseOverallNode) nodeType;
                     selectedDatabaseType = databaseOverallNode.toString();
                     canDuplicate = false;
