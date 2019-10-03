@@ -11,6 +11,7 @@
 
 ; The name of the installer
 Name "SLDEditor"
+!define MUI_ICON sldeditor.ico
 
 ; The file to write
 OutFile "..\..\bin\SLDEditor_installer.exe"
@@ -52,7 +53,6 @@ Section "SLDEditor (required)"
   SetOutPath $INSTDIR
   
   ; Put file there
-  File "..\..\bin\SLDEditor.exe"
   File "..\..\bin\SLDEditor.jar"
   
   ; Write the installation path into the registry
@@ -72,7 +72,7 @@ Section "Start Menu Shortcuts"
 
   CreateDirectory "$SMPROGRAMS\SLDEditor"
   CreateShortcut "$SMPROGRAMS\SLDEditor\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortcut "$SMPROGRAMS\SLDEditor\SLDEditor.lnk" "$INSTDIR\SLDEditor.exe" "" "$INSTDIR\SLDEditor.exe" 0
+  CreateShortcut "$SMPROGRAMS\SLDEditor\SLDEditor.lnk" "$INSTDIR\SLDEditor.jar" "" "$INSTDIR\SLDEditor.jar" 0
   
 SectionEnd
 
@@ -87,7 +87,6 @@ Section "Uninstall"
   DeleteRegKey HKLM SOFTWARE\SLDEditor
 
   ; Remove files and uninstaller
-  Delete $INSTDIR\SLDEditor.exe
   Delete $INSTDIR\SLDEditor.jar
   Delete $INSTDIR\uninstall.exe
   
