@@ -31,6 +31,7 @@ import com.sldeditor.common.data.SLDUtils;
 import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.datasource.RenderSymbolInterface;
 import com.sldeditor.datasource.impl.GeometryTypeEnum;
+import com.sldeditor.test.SLDTestRunner;
 import com.sldeditor.ui.detail.EmptyPanel;
 import com.sldeditor.ui.detail.FeatureTypeStyleDetails;
 import com.sldeditor.ui.detail.LineSymbolizerDetails;
@@ -54,7 +55,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.List;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.jupiter.api.Test;
@@ -80,9 +81,24 @@ public class SLDTreeTest {
         // Select top level node
         tree1.selectFirstSymbol();
 
-        URL url = SLDTreeTest.class.getResource("/polygon/sld/polygon_attributebasedpolygon.sld");
+        String testsldfile = "/polygon/sld/polygon_attributebasedpolygon.sld";
+        InputStream inputStream = SLDTreeTest.class.getResourceAsStream(testsldfile);
+        String sldContents = "";
 
-        String sldContents = readFile(new File(url.getFile()).getAbsolutePath());
+        if (inputStream == null) {
+            assertNotNull(inputStream, "Failed to find sld test file : " + testsldfile);
+        } else {
+            File f = null;
+            try {
+                f = SLDTestRunner.stream2file(inputStream);
+
+                sldContents = readFile(f.getAbsolutePath());
+
+                f.delete();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
 
         SLDData sldData = new SLDData(null, sldContents);
 
@@ -121,9 +137,24 @@ public class SLDTreeTest {
         SLDTreeTools treeTools = new SLDTreeTools();
         SLDTree tree1 = new SLDTree(renderList, treeTools);
 
-        URL url = SLDTreeTest.class.getResource("/test/polygon_line_point.sld");
+        String testsldfile = "/test/polygon_line_point.sld";
+        InputStream inputStream = SLDTreeTest.class.getResourceAsStream(testsldfile);
+        String sldContents = "";
 
-        String sldContents = readFile(new File(url.getFile()).getAbsolutePath());
+        if (inputStream == null) {
+            assertNotNull(inputStream, "Failed to find sld test file : " + testsldfile);
+        } else {
+            File f = null;
+            try {
+                f = SLDTestRunner.stream2file(inputStream);
+
+                sldContents = readFile(f.getAbsolutePath());
+
+                f.delete();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
 
         SLDData sldData = new SLDData(null, sldContents);
 

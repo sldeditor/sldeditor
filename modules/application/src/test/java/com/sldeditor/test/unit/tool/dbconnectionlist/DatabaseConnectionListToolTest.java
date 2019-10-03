@@ -196,18 +196,18 @@ class DatabaseConnectionListToolTest {
         DatabaseConnection dbConnection = DatabaseConnectionFactory.createPostgres();
         nodeTypeList.add(new DatabaseNode(null, dbConnection));
         testTool.setSelectedItems(nodeTypeList, sldDataList);
-        assertTrue(testTool.isEditButtonEnabled());
-        assertTrue(testTool.isDuplicateButtonEnabled());
-        assertTrue(testTool.isDeleteButtonEnabled());
+        assertFalse(testTool.isEditButtonEnabled());
+        assertFalse(testTool.isDuplicateButtonEnabled());
+        assertFalse(testTool.isDeleteButtonEnabled());
 
         // Try a DatabaseNode -- does not support duplication
         nodeTypeList.clear();
         dbConnection = DatabaseConnectionFactory.createH2();
         nodeTypeList.add(new DatabaseNode(null, dbConnection));
         testTool.setSelectedItems(nodeTypeList, sldDataList);
-        assertTrue(testTool.isEditButtonEnabled());
+        assertFalse(testTool.isEditButtonEnabled());
         assertFalse(testTool.isDuplicateButtonEnabled());
-        assertTrue(testTool.isDeleteButtonEnabled());
+        assertFalse(testTool.isDeleteButtonEnabled());
 
         // Try multiple DatabaseNodes
         nodeTypeList.clear();
@@ -216,7 +216,7 @@ class DatabaseConnectionListToolTest {
         testTool.setSelectedItems(nodeTypeList, sldDataList);
         assertFalse(testTool.isEditButtonEnabled());
         assertFalse(testTool.isDuplicateButtonEnabled());
-        assertTrue(testTool.isDeleteButtonEnabled());
+        assertFalse(testTool.isDeleteButtonEnabled());
     }
 
     /**
@@ -274,23 +274,21 @@ class DatabaseConnectionListToolTest {
         testTool.setSelectedItems(nodeTypeList, sldDataList);
 
         testTool.duplicateButtonPressed();
-        assertEquals(2, receiver.dbList.size());
+        assertEquals(1, receiver.dbList.size());
 
         // Edit
         nodeTypeList.clear();
+        assertEquals(1, receiver.dbList.size());
         nodeTypeList.add(new DatabaseNode(null, receiver.dbList.get(0)));
-        nodeTypeList.add(new DatabaseNode(null, receiver.dbList.get(1)));
         testTool.setSelectedItems(nodeTypeList, sldDataList);
         testTool.editButtonPressed();
-        assertEquals(2, receiver.dbList.size());
 
         // Delete
         nodeTypeList.clear();
         nodeTypeList.add(new DatabaseNode(null, receiver.dbList.get(0)));
-        nodeTypeList.add(new DatabaseNode(null, receiver.dbList.get(1)));
         testTool.setSelectedItems(nodeTypeList, sldDataList);
         testTool.deleteButtonPressed();
-        assertEquals(0, receiver.dbList.size());
+        assertEquals(1, receiver.dbList.size());
         DBConnectorDetailsPanel.setInTestMode(false);
     }
 }

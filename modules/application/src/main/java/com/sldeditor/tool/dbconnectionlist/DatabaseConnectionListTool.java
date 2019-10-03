@@ -19,17 +19,6 @@
 
 package com.sldeditor.tool.dbconnectionlist;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import com.sldeditor.common.NodeInterface;
 import com.sldeditor.common.SLDDataInterface;
 import com.sldeditor.common.data.DatabaseConnection;
@@ -39,6 +28,15 @@ import com.sldeditor.datasource.extension.filesystem.node.database.DatabaseOvera
 import com.sldeditor.tool.ToolButton;
 import com.sldeditor.tool.ToolInterface;
 import com.sldeditor.tool.ToolPanel;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  * Tool that manages all the database connections.

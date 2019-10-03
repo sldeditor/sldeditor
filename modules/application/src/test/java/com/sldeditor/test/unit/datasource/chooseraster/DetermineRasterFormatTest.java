@@ -19,13 +19,16 @@
 
 package com.sldeditor.test.unit.datasource.chooseraster;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sldeditor.datasource.chooseraster.ChooseRasterFormatInterface;
 import com.sldeditor.datasource.chooseraster.DetermineRasterFormat;
+import com.sldeditor.test.SLDTestRunner;
 import com.sldeditor.test.unit.ui.tree.SLDTreeTest;
 import java.io.File;
-import java.net.URL;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Set;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.UnknownFormat;
@@ -51,28 +54,41 @@ public class DetermineRasterFormatTest {
         AbstractGridFormat gridFormat = DetermineRasterFormat.choose(null, null);
         assertTrue(UnknownFormat.class == gridFormat.getClass());
 
-        URL url = SLDTreeTest.class.getResource("/raster/sld/sld_cookbook_raster.tif");
+        String testRasterFile = "/raster/sld/sld_cookbook_raster.tif";
+        InputStream inputStream = SLDTreeTest.class.getResourceAsStream(testRasterFile);
+        File f = null;
 
-        File f = new File(url.getFile());
-        gridFormat = DetermineRasterFormat.choose(f, null);
+        if (inputStream == null) {
+            assertNotNull(inputStream, "Failed to find raster test file : " + testRasterFile);
+        } else {
+            try {
+                f = SLDTestRunner.stream2file(inputStream, ".tif");
 
-        assertTrue(gridFormat != null);
+                gridFormat = DetermineRasterFormat.choose(f, null);
 
-        // Force to WorldImageFormat
-        gridFormat =
-                DetermineRasterFormat.choose(
-                        f,
-                        new ChooseRasterFormatInterface() {
+                assertTrue(gridFormat != null);
 
-                            @Override
-                            public AbstractGridFormat showPanel(
-                                    Set<AbstractGridFormat> formatList) {
-                                WorldImageFormat wif = new WorldImageFormat();
+                // Force to WorldImageFormat
+                gridFormat =
+                        DetermineRasterFormat.choose(
+                                f,
+                                new ChooseRasterFormatInterface() {
 
-                                return wif;
-                            }
-                        });
+                                    @Override
+                                    public AbstractGridFormat showPanel(
+                                            Set<AbstractGridFormat> formatList) {
+                                        WorldImageFormat wif = new WorldImageFormat();
 
-        assertTrue(WorldImageFormat.class == gridFormat.getClass());
+                                        return wif;
+                                    }
+                                });
+
+                assertTrue(WorldImageFormat.class == gridFormat.getClass());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } finally {
+                f.delete();
+            }
+        }
     }
 }
