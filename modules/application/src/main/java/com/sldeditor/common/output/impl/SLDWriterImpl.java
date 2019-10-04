@@ -23,9 +23,7 @@ import com.sldeditor.common.console.ConsoleManager;
 import com.sldeditor.common.data.SLDExternalImages;
 import com.sldeditor.common.output.SLDWriterInterface;
 import java.net.URL;
-
 import javax.xml.transform.TransformerException;
-
 import org.geotools.styling.StyledLayerDescriptor;
 import org.geotools.xml.styling.SLDTransformer;
 

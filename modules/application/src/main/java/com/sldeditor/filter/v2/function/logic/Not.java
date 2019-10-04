@@ -43,7 +43,7 @@ public class Not extends FilterBase implements FilterConfigInterface {
         /** Instantiates a new not extended. */
         @SuppressWarnings("deprecation")
         public NotExtended() {
-            super();
+            super(null);
         }
 
         /**

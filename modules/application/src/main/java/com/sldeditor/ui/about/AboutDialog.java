@@ -46,7 +46,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import org.geotools.factory.GeoTools;
+
+import org.geotools.util.factory.GeoTools;
 
 /**
  * The About dialog class.
