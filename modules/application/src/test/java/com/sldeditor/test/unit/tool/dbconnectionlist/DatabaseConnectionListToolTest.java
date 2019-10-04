@@ -196,18 +196,18 @@ class DatabaseConnectionListToolTest {
         DatabaseConnection dbConnection = DatabaseConnectionFactory.createPostgres();
         nodeTypeList.add(new DatabaseNode(null, dbConnection));
         testTool.setSelectedItems(nodeTypeList, sldDataList);
-        assertFalse(testTool.isEditButtonEnabled());
-        assertFalse(testTool.isDuplicateButtonEnabled());
-        assertFalse(testTool.isDeleteButtonEnabled());
+        assertTrue(testTool.isEditButtonEnabled());
+        assertTrue(testTool.isDuplicateButtonEnabled());
+        assertTrue(testTool.isDeleteButtonEnabled());
 
         // Try a DatabaseNode -- does not support duplication
         nodeTypeList.clear();
         dbConnection = DatabaseConnectionFactory.createH2();
         nodeTypeList.add(new DatabaseNode(null, dbConnection));
         testTool.setSelectedItems(nodeTypeList, sldDataList);
-        assertFalse(testTool.isEditButtonEnabled());
-        assertFalse(testTool.isDuplicateButtonEnabled());
-        assertFalse(testTool.isDeleteButtonEnabled());
+        assertTrue(testTool.isEditButtonEnabled());
+        assertTrue(testTool.isDuplicateButtonEnabled());
+        assertTrue(testTool.isDeleteButtonEnabled());
 
         // Try multiple DatabaseNodes
         nodeTypeList.clear();
@@ -216,7 +216,7 @@ class DatabaseConnectionListToolTest {
         testTool.setSelectedItems(nodeTypeList, sldDataList);
         assertFalse(testTool.isEditButtonEnabled());
         assertFalse(testTool.isDuplicateButtonEnabled());
-        assertFalse(testTool.isDeleteButtonEnabled());
+        assertTrue(testTool.isDeleteButtonEnabled());
     }
 
     /**
@@ -274,11 +274,11 @@ class DatabaseConnectionListToolTest {
         testTool.setSelectedItems(nodeTypeList, sldDataList);
 
         testTool.duplicateButtonPressed();
-        assertEquals(1, receiver.dbList.size());
+        assertEquals(2, receiver.dbList.size());
 
         // Edit
         nodeTypeList.clear();
-        assertEquals(1, receiver.dbList.size());
+        assertEquals(2, receiver.dbList.size());
         nodeTypeList.add(new DatabaseNode(null, receiver.dbList.get(0)));
         testTool.setSelectedItems(nodeTypeList, sldDataList);
         testTool.editButtonPressed();
