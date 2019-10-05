@@ -531,7 +531,7 @@ public class CharMap4 extends JDialog {
             caption = null; // no, follow through with generic caption
         } else // yes, attempt to fetch defined caption
         {
-            caption = captionMap.get(new Integer(value)); // may be <null>
+            caption = captionMap.get(Integer.valueOf(value)); // may be <null>
         }
 
         if (caption == null) // was there a defined caption string?
@@ -858,7 +858,7 @@ public class CharMap4 extends JDialog {
      * @param text the text
      */
     private void captionPut(int value, String text) {
-        captionMap.put(new Integer(value), text);
+        captionMap.put(Integer.valueOf(value), text);
     }
 
     /**
@@ -1026,7 +1026,7 @@ public class CharMap4 extends JDialog {
                 array[0] = (byte) i; // construct byte array for decoding
                 text = new String(array); // convert byte to Unicode, or replace char
                 if ((text.length() == 1) && ((ch = text.charAt(0)) != REPLACE_CHAR)) {
-                    caption = captionMap.get(new Integer((int) ch));
+                    caption = captionMap.get(Integer.valueOf((int) ch));
                     // fetch actual value, not via <captionGet>
                     if (caption == null) // but have we already created a caption?
                     {

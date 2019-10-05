@@ -45,10 +45,7 @@ import java.util.List;
 import javax.swing.JButton;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
-import org.geotools.styling.Graphic;
 import org.opengis.filter.Filter;
-import org.opengis.style.GraphicLegend;
-import org.opengis.style.GraphicalSymbol;
 import org.opengis.style.Rule;
 
 /**
@@ -217,11 +214,6 @@ public class RuleDetails extends StandardPanel
                 }
 
                 //
-                // Legend
-                //
-                Graphic[] legendGraphics = updateLegend(existingRule);
-
-                //
                 // Else filter
                 //
                 boolean isElseFilter = fieldConfigVisitor.getBoolean(FieldIdEnum.ELSE_FILTER);
@@ -234,7 +226,7 @@ public class RuleDetails extends StandardPanel
                                 .createRule(
                                         symbolizerArray,
                                         standardData.getDescription(),
-                                        legendGraphics,
+                                        existingRule.getLegend(),
                                         standardData.getName(),
                                         filter,
                                         isElseFilter,
@@ -246,30 +238,6 @@ public class RuleDetails extends StandardPanel
                 this.fireUpdateSymbol();
             }
         }
-    }
-
-    /**
-     * @param existingRule
-     * @return
-     */
-    private Graphic[] updateLegend(org.geotools.styling.Rule existingRule) {
-        int index;
-        GraphicLegend existingLegend = existingRule.getLegend();
-        Graphic[] legendGraphics = null;
-
-        if (existingLegend != null) {
-            int legendGraphicCount = existingLegend.graphicalSymbols().size();
-            legendGraphics = new Graphic[legendGraphicCount];
-
-            index = 0;
-            for (GraphicalSymbol graphicalSymbol : existingLegend.graphicalSymbols()) {
-                legendGraphics[index] = (Graphic) graphicalSymbol;
-                index++;
-            }
-        } else {
-            legendGraphics = new Graphic[0];
-        }
-        return legendGraphics;
     }
 
     /**

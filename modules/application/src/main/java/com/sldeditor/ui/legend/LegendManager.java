@@ -213,7 +213,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
             Map<String, Style> styleMap) {
         for (Entry<String, Style> entry : styleMap.entrySet()) {
             request.getLegends().clear();
-            LegendRequest legendEntryRequest = request.new LegendRequest();
+            LegendRequest legendEntryRequest = new LegendRequest();
             legendEntryRequest.setStyle(entry.getValue());
             legendEntryRequest.setStyleName(entry.getKey());
             request.getLegends().add(legendEntryRequest);
@@ -246,7 +246,7 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
             if (!style.featureTypeStyles().isEmpty()) {
                 FeatureTypeStyle featureTypeStyle = style.featureTypeStyles().get(0);
                 if ((featureTypeStyle != null) && !featureTypeStyle.rules().isEmpty()) {
-                    LegendRequest legendEntryRequest = request.new LegendRequest();
+                    LegendRequest legendEntryRequest = new LegendRequest();
                     request.getLegends().add(legendEntryRequest);
                     legendEntryRequest.setTitle(entry.getKey());
                     legendEntryRequest.setStyle(style);

@@ -30,6 +30,8 @@ import com.sldeditor.common.data.SelectedSymbol;
 import com.sldeditor.common.defaultsymbol.DefaultSymbols;
 import java.util.List;
 import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.styling.Description;
+import org.geotools.styling.DescriptionImpl;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Fill;
 import org.geotools.styling.Graphic;
@@ -318,7 +320,9 @@ public class SelectedSymbolTest {
         assertEquals(dummyTreeUpdated.objectNew, lineSymbolizer);
 
         Rule newRule = DefaultSymbols.createNewRule();
-        newRule.setTitle("Replacement rule");
+        Description description = new DescriptionImpl();
+        description.setTitle("Replacement rule");
+        newRule.setDescription(description);
 
         instance.replaceRule(newRule);
 

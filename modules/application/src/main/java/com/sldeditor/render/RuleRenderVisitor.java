@@ -20,6 +20,9 @@
 package com.sldeditor.render;
 
 import com.sldeditor.ui.render.RuleRenderOptions;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.FeatureTypeStyleImpl;
 import org.geotools.styling.Graphic;
@@ -94,36 +97,30 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     public void visit(Rule rule) {
         Rule copy = null;
 
-        Symbolizer[] symsCopy = null;
+        List<Symbolizer> symsCopy = null;
 
         if (!displayOverall
                 && ((symbolizerIndex >= 0) && (symbolizerIndex < rule.getSymbolizers().length))) {
-            symsCopy = new Symbolizer[1];
-            symsCopy[0] = copy(rule.getSymbolizers()[symbolizerIndex]);
+            symsCopy = new ArrayList<Symbolizer>();
+            symsCopy.add(copy(rule.getSymbolizers()[symbolizerIndex]));
         }
 
-        // As a catch all copy everything
+        Filter filterCopy = null;
+
         if (symsCopy == null) {
-            symsCopy = rule.getSymbolizers();
-            for (int i = 0; i < symsCopy.length; i++) {
-                symsCopy[i] = copy(symsCopy[i]);
-            }
+            symsCopy = rule.symbolizers().stream().map(s -> copy(s)).collect(Collectors.toList());
         }
 
-        Graphic[] legendCopy = rule.getLegendGraphic();
-        for (int i = 0; i < legendCopy.length; i++) {
-            legendCopy[i] = copy(legendCopy[i]);
-        }
+        Graphic legendCopy = copy((Graphic) rule.getLegend());
 
         Description descCopy = rule.getDescription();
         descCopy = copy(descCopy);
 
         copy = sf.createRule();
-        copy.setSymbolizers(symsCopy);
+        copy.symbolizers().addAll(symsCopy);
         copy.setDescription(descCopy);
-        copy.setLegendGraphic(legendCopy);
+        copy.setLegend(legendCopy);
         copy.setName(rule.getName());
-        Filter filterCopy = null;
         copy.setFilter(filterCopy);
         copy.setElseFilter(rule.isElseFilter());
         // Do not copy the min and max scales
@@ -148,39 +145,47 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     @Override
     public void visit(FeatureTypeStyle fts) {
 
-        FeatureTypeStyle copy = new FeatureTypeStyleImpl((FeatureTypeStyleImpl) fts);
+        FeatureTypeStyle copy = new FeatureTypeStyleImpl(fts);
 
-        if (!options.isTransformationApplied()) {
-            copy.setTransformation(null);
-        }
-
-        Rule[] rules = fts.getRules();
-
-        int length = rules.length;
-        Rule[] rulesCopy = null;
+        List<Rule> rulesCopy = null;
         if (this.ruleToRender == null) {
-            rulesCopy = new Rule[length];
-            for (int i = 0; i < length; i++) {
-                if (rules[i] != null) {
-                    rules[i].accept(this);
-                    rulesCopy[i] = (Rule) pages.pop();
-                }
-            }
+            rulesCopy =
+                    fts.rules()
+                            .stream()
+                            .filter(r -> r != null)
+                            .map(
+                                    r -> {
+                                        r.accept(this);
+                                        return (Rule) pages.pop();
+                                    })
+                            .collect(Collectors.toList());
         } else {
-            rulesCopy = new Rule[1];
-            for (int i = 0; i < length; i++) {
-                if ((rules[i] != null) && (renderRule(rules[i]))) {
-                    rules[i].accept(this);
-                    rulesCopy[0] = (Rule) pages.pop();
+            rulesCopy = new ArrayList<Rule>();
+            for (Rule rule : fts.rules()) {
+                if ((rule != null) && (renderRule(rule))) {
+                    rule.accept(this);
+                    rulesCopy.add((Rule) pages.pop());
                 }
             }
         }
-        copy.setRules(rulesCopy);
+
+        copy.rules().clear();
+        copy.rules().addAll(rulesCopy);
+
+        if ((fts.getTransformation() != null) && !options.isTransformationApplied()) {
+            copy.setTransformation(copy(fts.getTransformation()));
+        }
+        if (fts.getOnlineResource() != null) {
+            copy.setOnlineResource(fts.getOnlineResource());
+        }
+        copy.getOptions().clear();
+        copy.getOptions().putAll(fts.getOptions());
 
         if (STRICT && !copy.equals(fts)) {
             throw new IllegalStateException(
                     "Was unable to duplicate provided FeatureTypeStyle:" + fts);
         }
+
         pages.push(copy);
     }
 
@@ -211,33 +216,29 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
     public void visit(Style style) {
         Style copy = null;
 
-        FeatureTypeStyle[] fts = style.getFeatureTypeStyles();
-        FeatureTypeStyle[] ftsCopy = null;
+        List<FeatureTypeStyle> ftsCopy = new ArrayList<>();
         if (this.ftsToRender != null) {
-            ftsCopy = new FeatureTypeStyle[1];
-            for (int i = 0; i < fts.length; i++) {
-                if (fts[i] != null) {
-                    if (fts[i] == this.ftsToRender) {
-                        fts[i].accept(this);
-                        ftsCopy[0] = (FeatureTypeStyle) pages.pop();
+            for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                if (fts != null) {
+                    if (fts == this.ftsToRender) {
+                        fts.accept(this);
+                        ftsCopy.add((FeatureTypeStyle) pages.pop());
                     }
                 }
             }
         } else {
-            ftsCopy = new FeatureTypeStyle[fts.length];
-            for (int i = 0; i < fts.length; i++) {
-                if (fts[i] != null) {
-                    fts[i].accept(this);
-                    ftsCopy[i] = (FeatureTypeStyle) pages.pop();
+            for (FeatureTypeStyle fts : style.featureTypeStyles()) {
+                if (fts != null) {
+                    fts.accept(this);
+                    ftsCopy.add((FeatureTypeStyle) pages.pop());
                 }
             }
         }
-
         copy = sf.createStyle();
-        copy.setAbstract(style.getAbstract());
+        copy.getDescription().setAbstract(style.getDescription().getAbstract());
         copy.setName(style.getName());
-        copy.setTitle(style.getTitle());
-        copy.setFeatureTypeStyles(ftsCopy);
+        copy.getDescription().setTitle(style.getDescription().getTitle());
+        copy.featureTypeStyles().addAll(ftsCopy);
 
         if (STRICT && !copy.equals(style)) {
             throw new IllegalStateException("Was unable to duplicate provided Style:" + style);
