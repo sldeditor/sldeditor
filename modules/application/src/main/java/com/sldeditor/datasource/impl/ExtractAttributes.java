@@ -30,6 +30,7 @@ import org.geotools.filter.LogicFilterImpl;
 import org.geotools.filter.MultiCompareFilterImpl;
 import org.geotools.filter.NotImpl;
 import org.geotools.geometry.jts.JTSFactoryFinder;
+import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.renderer.style.SLDStyleFactory;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.FeatureTypeStyleImpl;
@@ -442,15 +443,18 @@ public class ExtractAttributes extends DuplicatingStyleVisitor {
      * @return the class
      */
     private Class<?> extractLiteralAttribute(Class<?> returnType, LiteralExpressionImpl literal) {
-        try {
-            Geometry geometry = reader.read(literal.toString());
-            if (geometry != null) {
-                returnType = Geometry.class;
+        if (literal.toString().startsWith(ReferencedEnvelope.class.getSimpleName())) {
+            returnType = Geometry.class;
+        } else {
+            try {
+                Geometry geometry = reader.read(literal.toString());
+                if (geometry != null) {
+                    returnType = Geometry.class;
+                }
+            } catch (ParseException e1) {
+                // Ignore
             }
-        } catch (ParseException e1) {
-            // Ignore
         }
-
         if (returnType == String.class) {
             try {
                 Integer integer = Integer.valueOf(literal.toString());

@@ -1,23 +1,24 @@
 <?xml version='1.0' encoding='utf-8'?>
 
-<!-- SLD Editor - The Open Source Java SLD Editor -->
-<!-- -->
-<!-- Copyright (C) 2016, SCISYS UK Limited -->
-<!-- -->
+<!-- SLD Editor - The Open Source Java SLD Editor                         -->
+<!--                                                                      -->
+<!-- Copyright (C) 2019, SCISYS UK Limited                                -->
+<!--                                                                      -->
 <!-- This program is free software: you can redistribute it and/or modify -->
 <!-- it under the terms of the GNU General Public License as published by -->
-<!-- the Free Software Foundation, either version 3 of the License, or -->
-<!-- (at your option) any later version. -->
-<!-- -->
-<!-- This program is distributed in the hope that it will be useful, -->
-<!-- but WITHOUT ANY WARRANTY; without even the implied warranty of -->
-<!-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the -->
-<!-- GNU General Public License for more details. -->
-<!-- -->
-<!-- You should have received a copy of the GNU General Public License -->
+<!-- the Free Software Foundation, either version 3 of the License, or    -->
+<!-- (at your option) any later version.                                  -->
+<!--                                                                      -->
+<!-- This program is distributed in the hope that it will be useful,      -->
+<!-- but WITHOUT ANY WARRANTY; without even the implied warranty of       -->
+<!-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the         -->
+<!-- GNU General Public License for more details.                         -->
+<!--                                                                      -->
+<!-- You should have received a copy of the GNU General Public License    -->
 <!-- along with this program. If not, see <http://www.gnu.org/licenses/>. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -72,14 +73,14 @@
 
         <!-- GeoServer -->
         <geoserver.version>2.16.0</geoserver.version>
-        
+
         <!-- Log4j -->
         <log4j.version>1.2.17</log4j.version>
-        
+
         <!-- JUnit -->
         <junit-jupiter-engine.version>5.3.1</junit-jupiter-engine.version>
         <surefire.version>3.0.0-M1</surefire.version>
-        
+
         <!-- GeoServer Manager -->
         <geoserver_manager.version>1.7.0</geoserver_manager.version>
 
@@ -88,7 +89,7 @@
         <maven.report.version>2.9</maven.report.version>
         <maven.javadoc.plugin.version>3.0.1</maven.javadoc.plugin.version>
         <javadoc.maxHeapSize>1536M</javadoc.maxHeapSize>
-        
+
         <!-- Maven clean -->
         <maven.clean.version>3.1.0</maven.clean.version>
 
@@ -96,9 +97,9 @@
         <coveo.fmt.version>2.6.0</coveo.fmt.version>
         <coveo.fmt.action>format</coveo.fmt.action>
         <coveo.fmt.skip>false</coveo.fmt.skip>
-    
+
         <!-- Jacoco coverage -->
-        <jacoco.version>0.8.2</jacoco.version>
+        <jacoco.version>0.8.4</jacoco.version>
 
         <!-- CheckStyle -->
         <maven.checkstyle.version>2.17</maven.checkstyle.version>
@@ -212,23 +213,23 @@
     <build>
         <sourceDirectory>src/main</sourceDirectory>
         <plugins>
-             <!-- Read in SonarQube properties file. -->
-             <plugin>
+            <!-- Read in SonarQube properties file. -->
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
                 <version>1.0.0</version>
                 <executions>
-                  <execution>
-                    <phase>initialize</phase>
-                    <goals>
-                      <goal>read-project-properties</goal>
-                    </goals>
-                    <configuration>
-                      <files>
-                        <file>sonar-project.properties</file>
-                      </files>
-                    </configuration>
-                  </execution>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>sonar-project.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -241,40 +242,43 @@
                     <encoding>UTF-8</encoding> <!-- The -encoding argument for the Java compiler. -->
                 </configuration>
             </plugin>
-             <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>${maven.enforcer.plugin.version}</version>
                 <executions>
-                  <execution>
-                    <id>enforce-versions</id>
-                    <goals>
-                      <goal>enforce</goal>
-                    </goals>
-                    <configuration>
-                      <rules>
-                        <bannedPlugins>
-                          <!-- will only display a warning but does not fail the build. -->
-                          <level>WARN</level>
-                          <excludes>
-                            <exclude>org.apache.maven.plugins:maven-verifier-plugin</exclude>
-                          </excludes>
-                          <message>Please consider using the maven-invoker-plugin (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
-                        </bannedPlugins>
-                        <requireMavenVersion>
-                          <version>${maven.enforcer.required.version}</version>
-                        </requireMavenVersion>
-                        <requireJavaVersion>
-                          <version>${java.version}</version>
-                        </requireJavaVersion>
-                      </rules>
-                    </configuration>
-                  </execution>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <bannedPlugins>
+                                    <!-- will only display a warning but 
+                                        does not fail the build. -->
+                                    <level>WARN</level>
+                                    <excludes>
+                                        <exclude>org.apache.maven.plugins:maven-verifier-plugin</exclude>
+                                    </excludes>
+                                    <message>Please consider using the
+                                        maven-invoker-plugin
+                                        (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
+                                </bannedPlugins>
+                                <requireMavenVersion>
+                                    <version>${maven.enforcer.required.version}</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>${java.version}</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
                 </executions>
-              </plugin>
+            </plugin>
 
-              <!--  Code formatting -->
-              <plugin>
+            <!-- Code formatting -->
+            <plugin>
                 <groupId>com.coveo</groupId>
                 <artifactId>fmt-maven-plugin</artifactId>
                 <version>${coveo.fmt.version}</version>
@@ -292,7 +296,7 @@
                     </execution>
                 </executions>
             </plugin>
-              
+
         </plugins>
         <pluginManagement>
             <plugins>
@@ -316,11 +320,13 @@
                         <source>${java.version}</source>
                         <!-- Shuts off non-error and non-warning messages. -->
                         <quiet>true</quiet>
-                        <!-- The maximum Java heap size to be used to run javadoc. -->
+                        <!-- The maximum Java heap size to be used to run 
+                            javadoc. -->
                         <maxmemory>${javadoc.maxHeapSize}</maxmemory>
                         <!-- Specifies the encoding name of the source files. -->
                         <encoding>UTF-8</encoding>
-                        <!-- Set an additional parameter for the command line. -->
+                        <!-- Set an additional parameter for the command 
+                            line. -->
                         <keywords>true</keywords>
                         <doclint>none</doclint>
                         <breakiterator>true</breakiterator>
@@ -362,7 +368,8 @@
                         </filesets>
                     </configuration>
                 </plugin>
-                 <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <!--This plugin's configuration is used to store Eclipse 
+                    m2e settings only. It has no influence on the Maven build itself. -->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
@@ -384,7 +391,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore/>
+                                        <ignore />
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -394,7 +401,7 @@
             </plugins>
         </pluginManagement>
     </build>
-    
+
     <repositories>
         <repository>
             <id>osgeo</id>

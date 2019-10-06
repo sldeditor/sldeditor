@@ -41,9 +41,9 @@ public class Not extends FilterBase implements FilterConfigInterface {
     public class NotExtended extends NotImpl implements FilterExtendedInterface {
 
         /** Instantiates a new not extended. */
-        @SuppressWarnings("deprecation")
         public NotExtended() {
             super(null);
+            this.children.clear();
         }
 
         /**
