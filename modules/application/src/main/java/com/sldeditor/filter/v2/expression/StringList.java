@@ -20,8 +20,9 @@
 package com.sldeditor.filter.v2.expression;
 
 /**
- * @author ward_r
+ * Dummy class.
  *
+ * @author Robert Ward (SCISYS)
  */
 public class StringList {
 

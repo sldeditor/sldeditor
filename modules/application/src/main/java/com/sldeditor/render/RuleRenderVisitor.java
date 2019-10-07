@@ -92,7 +92,6 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      *
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling.Rule)
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void visit(Rule rule) {
         Rule copy = null;
@@ -141,7 +140,6 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      *
      * @see org.geotools.styling.visitor.DuplicatingStyleVisitor#visit(org.geotools.styling. FeatureTypeStyle)
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void visit(FeatureTypeStyle fts) {
 
@@ -208,9 +206,6 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
      *
      * @param style the style
      */
-    // CHECKSTYLE:OFF
-    @SuppressWarnings("deprecation")
-    // CHECKSTYLE:ON
     @Override
     public void visit(Style style) {
         Style copy = null;
