@@ -45,8 +45,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import org.apache.log4j.Logger;
 import org.geotools.styling.StyledLayerDescriptor;
+import java.util.logging.Logger;
 
 /**
  * Groups all the legend tools together.
@@ -71,7 +71,7 @@ public class LegendTool implements ToolInterface {
     private JPanel legendPanel = null;
 
     /** The logger. */
-    private static Logger logger = Logger.getLogger(LegendTool.class);
+    private static Logger logger = Logger.getLogger("com.sldeditor.tool.legend.LegendTool");
 
     /** The sld data list. */
     private List<SLDDataInterface> sldDataList = null;

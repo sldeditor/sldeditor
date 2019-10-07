@@ -60,7 +60,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Java -->
-        <java.version>1.8</java.version>
         <java.release>13</java.release>
 
         <!-- Maven -->
@@ -78,8 +77,8 @@
         <log4j.version>1.2.17</log4j.version>
 
         <!-- JUnit -->
-        <junit-jupiter-engine.version>5.3.1</junit-jupiter-engine.version>
-        <surefire.version>3.0.0-M1</surefire.version>
+        <junit-jupiter-engine.version>5.5.2</junit-jupiter-engine.version>
+        <surefire.version>3.0.0-M3</surefire.version>
 
         <!-- GeoServer Manager -->
         <geoserver_manager.version>1.7.0</geoserver_manager.version>
@@ -94,9 +93,9 @@
         <maven.clean.version>3.1.0</maven.clean.version>
 
         <!-- Coveo Code formatting -->
-        <coveo.fmt.version>2.6.0</coveo.fmt.version>
+        <coveo.fmt.version>2.9</coveo.fmt.version>
         <coveo.fmt.action>format</coveo.fmt.action>
-        <coveo.fmt.skip>false</coveo.fmt.skip>
+        <coveo.fmt.skip>true</coveo.fmt.skip>
 
         <!-- Jacoco coverage -->
         <jacoco.version>0.8.4</jacoco.version>
@@ -156,9 +155,13 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>${surefire.version}</version>
                         <configuration>
+							<argLine>
+							    --illegal-access=permit
+							</argLine>
                             <includes>
                                 <include>**/com/sldeditor/test/unit/**/*.java</include>
                             </includes>
+                            <forkCount>0</forkCount>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -241,6 +244,15 @@
                     <debug>true</debug>   <!-- Whether to include debugging information. -->
                     <encoding>UTF-8</encoding> <!-- The -encoding argument for the Java compiler. -->
                 </configuration>
+			    <dependencies>
+			        <dependency>
+			            <!-- update compiler plugin dependency on
+			                    ASM for Java 11 compatibility -->
+			            <groupId>org.ow2.asm</groupId>
+			            <artifactId>asm</artifactId>
+			            <version>6.2</version>
+			        </dependency>
+			    </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -296,7 +308,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
         <pluginManagement>
             <plugins>

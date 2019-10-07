@@ -150,8 +150,7 @@ public class RuleRenderVisitor extends DuplicatingStyleVisitor {
         List<Rule> rulesCopy = null;
         if (this.ruleToRender == null) {
             rulesCopy =
-                    fts.rules()
-                            .stream()
+                    fts.rules().stream()
                             .filter(r -> r != null)
                             .map(
                                     r -> {

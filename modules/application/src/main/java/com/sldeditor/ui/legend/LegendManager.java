@@ -50,7 +50,7 @@ import javax.imageio.stream.ImageOutputStream;
 import org.geoserver.platform.resource.Files;
 import org.geoserver.wms.GetLegendGraphicRequest;
 import org.geoserver.wms.GetLegendGraphicRequest.LegendRequest;
-import org.geoserver.wms.legendgraphic.SLDEditorBufferedImageLegendGraphicBuilder;
+import org.geoserver.wms.legendgraphic.BufferedImageLegendGraphicBuilder;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayer;
@@ -66,8 +66,8 @@ public class LegendManager implements LegendOptionDataUpdateInterface {
     private static LegendManager instance = null;
 
     /** The legend builder. */
-    private SLDEditorBufferedImageLegendGraphicBuilder legendBuilder =
-            new SLDEditorBufferedImageLegendGraphicBuilder();
+    private BufferedImageLegendGraphicBuilder legendBuilder =
+            new BufferedImageLegendGraphicBuilder();
 
     /** The legend option data. */
     private LegendOptionData legendOptionData = new LegendOptionData();

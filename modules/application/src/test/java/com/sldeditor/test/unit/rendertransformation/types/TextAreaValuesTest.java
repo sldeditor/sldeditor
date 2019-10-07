@@ -23,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.sldeditor.common.xml.ui.FieldIdEnum;
+import com.sldeditor.filter.v2.expression.StringList;
 import com.sldeditor.rendertransformation.types.TextAreaValues;
 import com.sldeditor.ui.detail.config.FieldConfigBase;
 import com.sldeditor.ui.detail.config.FieldConfigCommonData;
 import com.sldeditor.ui.detail.config.FieldConfigTextArea;
 import com.sldeditor.ui.detail.config.symboltype.SymbolTypeConfig;
 import java.util.Arrays;
-import org.bouncycastle.util.StringList;
 import org.geotools.factory.CommonFactoryFinder;
 import org.junit.jupiter.api.Test;
 import org.opengis.filter.FilterFactory;

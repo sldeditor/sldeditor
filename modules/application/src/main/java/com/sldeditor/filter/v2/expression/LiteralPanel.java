@@ -29,7 +29,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
-import org.bouncycastle.util.StringList;
 import org.opengis.filter.expression.Expression;
 
 /**
