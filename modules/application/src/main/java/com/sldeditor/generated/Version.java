@@ -38,7 +38,7 @@ public class Version {
     private static final String APP_COPYRIGHT_YEAR = "2016-2019";
 
     /** The version taken from the maven pom. */
-    public static final String POM_VERSION_STRING = "0.8.6";
+    public static final String POM_VERSION_STRING = "0.8.7-SNAPSHOT";
 
     /** Private default constructor. */
     private Version() {

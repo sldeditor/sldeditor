@@ -27,7 +27,7 @@
     <parent>
         <groupId>com.sldeditor</groupId>
         <artifactId>sldeditor</artifactId>
-        <version>0.8.6</version>
+        <version>0.8.7-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -45,7 +45,7 @@
             <name>Robert Ward</name>
             <email>robert.ward@scisys.co.uk</email>
             <organization>SCISYS</organization>
-            <organizationUrl>http://www.scisys.co.uk/</organizationUrl>
+            <organizationUrl>https://www.scisys.co.uk/</organizationUrl>
             <timezone>Europe/London</timezone>
             <roles>
                 <role>Architect</role>
@@ -411,7 +411,7 @@
             <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-xjc-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.2.3</version>
                 <configuration>
                     <extensions>
                         <extension>org.apache.cxf.xjcplugins:cxf-xjc-boolean:3.2.2</extension>
