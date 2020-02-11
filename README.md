@@ -1,6 +1,6 @@
 <img src="https://github.com/robward-scisys/sldeditor/blob/master/doc/img/sldeditor-logo.png" height="92"><a href="http://gis.scisys.co.uk"><img src="http://www.scisys.co.uk/storage/template/img/logo-scisys.jpg" hspace="100"></a>
 
-[![Build Status](https://img.shields.io/travis/robward-scisys/sldeditor/master.svg)](https://travis-ci.org/robward-scisys/sldeditor)
+[![Build Status](https://img.shields.io/travis/robward-scisys/sldeditor/master.svg)](https://travis-ci.com/robward-scisys/sldeditor)
 [![Code Quality](https://sonarcloud.io/api/project_badges/measure?project=robward-scisys_sldeditor&metric=alert_status)](https://sonarcloud.io/dashboard?id=robward-scisys_sldeditor)
 [![Coverage Status](https://img.shields.io/coveralls/robward-scisys/sldeditor/master.svg)](https://coveralls.io/github/robward-scisys/sldeditor?branch=master)
 [![License](https://img.shields.io/github/license/robward-scisys/sldeditor.svg)](https://github.com/robward-scisys/sldeditor/blob/master/LICENSE)
